@@ -54,7 +54,7 @@ function cssEditorPlugin(): Plugin {
 }
 
 export default defineConfig({
-    base: process.env.GITHUB_PAGES === 'true' ? '/tradehub/' : '/',
+    base: process.env.GITHUB_PAGES === 'true' ? '/tradehubfront/' : '/',
     plugins: [
         tailwindcss(),
         cssEditorPlugin(),
@@ -63,7 +63,6 @@ export default defineConfig({
         rollupOptions: {
             input: {
                 main: resolve(__dirname, 'index.html'),
-                'style-test': resolve(__dirname, 'style-test.html'),
                 'product-detail': resolve(__dirname, 'product-detail.html'),
                 products: resolve(__dirname, 'products.html'),
                 manufacturers: resolve(__dirname, 'manufacturers.html'),
