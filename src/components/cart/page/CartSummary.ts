@@ -64,14 +64,14 @@ export function CartSummary(
   return `
     <div class="cart-summary-container" style="position: sticky; top: 51px; width: 425px;">
       <div class="cart-summary">
-        <h2 class="cart-summary__title">Sipariş özeti (${data.selectedCount} Ürün)</h2>
+        <h2 class="cart-summary__title">Sipariş özeti (<span class="sc-summary-selected-count">${data.selectedCount}</span> Ürün)</h2>
 
         ${renderThumbnailGrid(data.items)}
 
         <div class="cart-summary__line-items">
           <div class="cart-summary__line">
             <span>Ürün ara toplamı</span>
-            ${PriceDisplay({ amount: data.productSubtotal, currency: data.currency })}
+            <span class="sc-summary-product-subtotal">${PriceDisplay({ amount: data.productSubtotal, currency: data.currency })}</span>
           </div>
           <div class="cart-summary__line">
             <span>Kargo ücreti</span>
@@ -83,7 +83,7 @@ export function CartSummary(
 
         <div class="cart-summary__total">
           <span class="cart-summary__total-label">Ara toplam (vergi hariç)</span>
-          ${PriceDisplay({ amount: data.subtotal, currency: data.currency, bold: true })}
+          <span class="sc-summary-subtotal">${PriceDisplay({ amount: data.subtotal, currency: data.currency, bold: true })}</span>
         </div>
 
         <button type="button" class="cart-summary__cta">

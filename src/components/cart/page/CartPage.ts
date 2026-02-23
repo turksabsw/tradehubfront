@@ -88,7 +88,7 @@ function initCheckboxCascading(): void {
 
   // Batch select-all toggle
   page.addEventListener('batch-select-toggle', ((e: CustomEvent) => {
-    const checked = e.detail?.checked ?? false;
+    const checked = e.detail?.selectAll ?? false;
     const allCheckboxes = page.querySelectorAll<HTMLInputElement>('[data-checkbox]');
     allCheckboxes.forEach((cb) => {
       cb.checked = checked;

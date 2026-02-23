@@ -59,7 +59,7 @@ export function SkuRow({ sku }: SkuRowProps): string {
       <div class="sc-c-sku-checkbox">${checkbox}</div>
       <div class="sc-c-sku-image">${thumbnail}</div>
       <div class="sc-c-sku-variant">${variantSelector}</div>
-      <div class="sc-c-sku-price">${price}</div>
+      <div class="sc-c-sku-price" data-unit-price="${sku.unitPrice}">${price}</div>
       <div class="sc-c-sku-quantity">${quantity}</div>
       <div class="sc-c-sku-actions">${deleteBtn}</div>
     </div>

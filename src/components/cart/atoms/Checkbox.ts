@@ -23,6 +23,7 @@ export function Checkbox({ id, checked, indeterminate = false, onChange }: Check
         type="checkbox"
         id="${id}"
         class="next-checkbox-input"
+        data-checkbox
         ${checkedAttr}
         ${indeterminateData}
         ${onChangeAttr}

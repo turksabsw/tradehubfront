@@ -30,6 +30,7 @@ export function QuantityInput({
         type="number"
         id="${id}"
         class="number-picker-input"
+        data-quantity-input
         value="${value}"
         min="${min}"
         max="${max}"
