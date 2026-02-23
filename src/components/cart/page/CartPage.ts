@@ -23,7 +23,6 @@ export interface CartPageProps {
 }
 
 export function CartPage({ suppliers, summary, assuranceItems }: CartPageProps): string {
-  const allSelected = suppliers.length > 0 && suppliers.every((s) => s.selected);
   const totalItems = suppliers.reduce(
     (acc, s) => acc + s.products.reduce((a, p) => a + p.skus.length, 0),
     0,
