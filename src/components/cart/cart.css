@@ -1,0 +1,463 @@
+/* ============================================================
+   CART — Component Styles
+   Shopping cart page: checkbox, number-picker, supplier,
+   price display, summary, and assurance blocks.
+   ============================================================ */
+
+/* ==========================================================
+   1. PAGE LAYOUT
+   ========================================================== */
+
+.sc-shopping-cart {
+  display: flex;
+  justify-content: center;
+  padding: 0 60px;
+  min-width: 1760px;
+}
+
+.sc-shopping-cart-con {
+  width: 1640px;
+  padding-bottom: 28px;
+}
+
+.sc-shopping-cart-title {
+  display: block;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 34px;
+  margin: 32px 0;
+  padding: 0;
+  color: rgb(34, 34, 34);
+  text-align: start;
+}
+
+.cart-container {
+  display: flex;
+  gap: 20px;
+}
+
+.sc-shopping-cart-cart-list {
+  flex: 1;
+  min-width: 0;
+}
+
+.sc-shopping-cart-summary-block {
+  width: 425px;
+  flex-shrink: 0;
+}
+
+/* ==========================================================
+   2. NEXT-CHECKBOX (Alibaba pattern)
+   ========================================================== */
+
+.next-checkbox-wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.next-checkbox-wrapper .next-checkbox {
+  display: inline-block;
+  position: relative;
+  width: 16px;
+  height: 16px;
+  border: 1px solid #c4c6cf;
+  border-radius: 3px;
+  background: #fff;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+.next-checkbox-wrapper .next-checkbox-inner {
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+}
+
+.next-checkbox-wrapper .next-checkbox-input {
+  position: absolute;
+  margin: 0;
+  width: 16px;
+  height: 16px;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.next-checkbox-wrapper .next-checkbox-label {
+  font-size: 14px;
+  line-height: 20px;
+  color: rgb(34, 34, 34);
+}
+
+/* Checked state */
+.next-checkbox-wrapper.checked .next-checkbox {
+  border-color: #ff6a00;
+  background-color: #ff6a00;
+}
+
+.next-checkbox-wrapper.checked .next-checkbox-inner::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 2px;
+  left: 5px;
+  width: 4px;
+  height: 8px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+/* Hover state */
+.next-checkbox-wrapper:hover .next-checkbox {
+  border-color: #ff6a00;
+}
+
+/* ==========================================================
+   3. NUMBER PICKER
+   ========================================================== */
+
+.number-picker {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid #c4c6cf;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.number-picker-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: none;
+  background: #f5f5f5;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+  color: rgb(51, 51, 51);
+  flex-shrink: 0;
+  transition: background-color 0.15s;
+}
+
+.number-picker-button:hover {
+  background: #e5e5e5;
+}
+
+.number-picker-button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.number-picker-input {
+  display: block;
+  width: 50px;
+  height: 32px;
+  padding: 0 4px;
+  border: none;
+  border-left: 1px solid #c4c6cf;
+  border-right: 1px solid #c4c6cf;
+  text-align: center;
+  font-size: 14px;
+  line-height: 32px;
+  color: rgb(34, 34, 34);
+  outline: none;
+  background: #fff;
+}
+
+/* ==========================================================
+   4. SUPPLIER CONTAINER
+   ========================================================== */
+
+.sc-c-supplier-container {
+  display: block;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  padding: 20px;
+  background: #fff;
+}
+
+.sc-c-supplier-container .supplier-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e5e5e5;
+  margin-bottom: 16px;
+}
+
+.sc-c-supplier-container .supplier-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgb(34, 34, 34);
+  line-height: 20px;
+}
+
+.sc-common-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.sc-common-row:last-child {
+  border-bottom: none;
+}
+
+/* ==========================================================
+   5. PRODUCT ROW / ITEM STYLES
+   ========================================================== */
+
+.link-spu-title {
+  display: block;
+  color: rgb(34, 34, 34);
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.link-spu-title:hover {
+  text-decoration: underline;
+  color: #cc9900;
+}
+
+.ellipsis-span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: block;
+}
+
+.hot-point {
+  display: inline-block;
+  background: #ff4747;
+  color: #fff;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 12px;
+  line-height: 16px;
+  margin-left: 4px;
+}
+
+/* ==========================================================
+   6. PRICE DISPLAY
+   ========================================================== */
+
+.sc-c-price {
+  display: inline-block;
+  font-weight: 600;
+  font-size: 16px;
+  color: rgb(34, 34, 34);
+  white-space: nowrap;
+}
+
+.sc-c-price-original {
+  display: inline-block;
+  font-size: 13px;
+  color: #999;
+  text-decoration: line-through;
+  margin-left: 8px;
+}
+
+.sc-c-price-discount {
+  display: inline-block;
+  font-size: 13px;
+  color: #ff4747;
+  margin-left: 4px;
+}
+
+/* ==========================================================
+   7. SUMMARY CONTAINER (sticky sidebar)
+   ========================================================== */
+
+.sc-shopping-cart-summary-container {
+  position: sticky;
+  top: 51px;
+  max-height: 822px;
+  width: 425px;
+  padding: 36px 32px;
+  background: rgb(255, 255, 255);
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+}
+
+.summary-title {
+  display: block;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 28px;
+  color: rgb(34, 34, 34);
+  margin-bottom: 20px;
+}
+
+.summary-body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.checkout-items-wrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+}
+
+.checkout-items-images {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.checkout-item-card {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid #e5e5e5;
+}
+
+.checkout-item-card .item-image-container {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.checkout-item-card .item-image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.checkout-item-card .item-quantity-badge {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  border-radius: 4px 0 0 0;
+  padding: 1px 4px;
+  font-weight: 700;
+  font-size: 11px;
+  line-height: 16px;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  line-height: 20px;
+  color: rgb(51, 51, 51);
+}
+
+.summary-row-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 24px;
+  color: rgb(34, 34, 34);
+  padding-top: 16px;
+  border-top: 1px solid #e5e5e5;
+  margin-top: 8px;
+}
+
+.summary-checkout-button {
+  @apply w-full mt-4 py-3 rounded-lg text-base font-semibold;
+  background: #ff6a00;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.2s;
+}
+
+.summary-checkout-button:hover {
+  background: #e55d00;
+}
+
+.summary-checkout-button:disabled {
+  @apply opacity-50 cursor-not-allowed;
+}
+
+/* ==========================================================
+   8. ASSURANCE BLOCK
+   ========================================================== */
+
+.assurance-block {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border-top: 1px solid #e5e5e5;
+  padding-top: 20px;
+  margin-top: 20px;
+}
+
+.assurance-block-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 20px;
+  color: rgb(34, 34, 34);
+  margin-bottom: 8px;
+}
+
+.assurance-block ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.assurance-block li {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.assurance-block .item-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 18px;
+  color: rgb(51, 51, 51);
+}
+
+.assurance-block .item-desc {
+  font-size: 12px;
+  line-height: 16px;
+  color: #999;
+}
+
+.assurance-block .logo-wrap {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+.assurance-block .logo-wrap img {
+  width: 40px;
+  height: 20px;
+  object-fit: contain;
+}
