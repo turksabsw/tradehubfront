@@ -19,6 +19,9 @@ import { FloatingPanel, initFloatingPanel } from './components/floating'
 // Cart components
 import { CartPage, initCartPage } from './components/cart'
 
+// Mock data
+import { mockCartSuppliers, mockCartSummary, mockAssuranceItems } from './data/mockCart'
+
 const appEl = document.querySelector<HTMLDivElement>('#app')!;
 appEl.classList.add('relative');
 appEl.innerHTML = `
@@ -32,7 +35,7 @@ appEl.innerHTML = `
 
   <!-- Main Content -->
   <main>
-    ${CartPage({ suppliers: [], summary: { selectedCount: 0, items: [], productSubtotal: 0, shippingFee: 0, subtotal: 0, currency: '₺' }, assuranceItems: [] })}
+    ${CartPage({ suppliers: mockCartSuppliers, summary: mockCartSummary, assuranceItems: mockAssuranceItems })}
   </main>
 
   <!-- Footer -->

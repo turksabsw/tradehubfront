@@ -33,7 +33,7 @@ export const mockCartSuppliers: CartSupplier[] = [
             skuImage: '',
             variantText: 'Kahverengi',
             unitPrice: 15.9,
-            currency: 'USD',
+            currency: '$',
             unit: 'adet',
             quantity: 12,
             minQty: 1,
@@ -72,7 +72,7 @@ export const mockCartSuppliers: CartSupplier[] = [
             skuImage: '',
             variantText: 'Siyah',
             unitPrice: 16.9,
-            currency: 'USD',
+            currency: '$',
             unit: 'adet',
             quantity: 1,
             minQty: 1,
@@ -84,7 +84,7 @@ export const mockCartSuppliers: CartSupplier[] = [
             skuImage: '',
             variantText: 'Haki',
             unitPrice: 16.9,
-            currency: 'USD',
+            currency: '$',
             unit: 'adet',
             quantity: 1,
             minQty: 1,
@@ -108,7 +108,7 @@ export const mockCartSummary: CartSummaryData = {
   productSubtotal: 224.6,
   shippingFee: 182.56,
   subtotal: 407.16,
-  currency: 'USD',
+  currency: '$',
 };
 
 export const mockAssuranceItems: AssuranceItem[] = [

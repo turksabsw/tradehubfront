@@ -239,10 +239,11 @@ function recalculateSummary(): void {
   const countEl = page.querySelector('.sc-summary-selected-count');
   if (countEl) countEl.textContent = String(selectedCount);
 
-  // Update subtotal
+  // Update subtotal (Turkish locale: comma as decimal separator)
+  const formattedSubtotal = `$${productSubtotal.toFixed(2).replace('.', ',')}`;
   const subtotalEl = page.querySelector('.sc-summary-product-subtotal');
-  if (subtotalEl) subtotalEl.textContent = `₺${productSubtotal.toFixed(2)}`;
+  if (subtotalEl) subtotalEl.textContent = formattedSubtotal;
 
   const totalEl = page.querySelector('.sc-summary-subtotal');
-  if (totalEl) totalEl.textContent = `₺${productSubtotal.toFixed(2)}`;
+  if (totalEl) totalEl.textContent = formattedSubtotal;
 }
