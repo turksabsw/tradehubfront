@@ -25,7 +25,7 @@ export function QuantityInput({
 
   return `
     <div class="number-picker" data-id="${id}" data-min="${min}" data-max="${max}" data-step="${step}">
-      <button type="button" class="number-picker-btn number-picker-minus"${minusDisabled} aria-label="Decrease quantity">&minus;</button>
+      <button type="button" class="number-picker-button number-picker-minus"${minusDisabled} aria-label="Decrease quantity">&minus;</button>
       <input
         type="number"
         id="${id}"
@@ -37,7 +37,7 @@ export function QuantityInput({
         step="${step}"
         aria-label="Quantity"
       />
-      <button type="button" class="number-picker-btn number-picker-plus"${plusDisabled} aria-label="Increase quantity">+</button>
+      <button type="button" class="number-picker-button number-picker-plus"${plusDisabled} aria-label="Increase quantity">+</button>
     </div>
   `.trim();
 }
@@ -52,7 +52,7 @@ export function initQuantityInputs(container?: HTMLElement): void {
 
   pickers.forEach((picker) => {
     const input = picker.querySelector<HTMLInputElement>('.number-picker-input');
-    const minusBtn = picker.querySelector<HTMLButtonElement>('.number-picker-minus');
+    const minusBtn = picker.querySelector<HTMLButtonElement>('.number-picker-button.number-picker-minus');
     const plusBtn = picker.querySelector<HTMLButtonElement>('.number-picker-plus');
     if (!input || !minusBtn || !plusBtn) return;
 

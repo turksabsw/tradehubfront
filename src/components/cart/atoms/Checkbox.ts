@@ -17,20 +17,24 @@ export function Checkbox({ id, checked, indeterminate = false, onChange }: Check
   const indeterminateData = indeterminate ? ' data-indeterminate="true"' : '';
   const onChangeAttr = onChange ? ` data-onchange="${onChange}"` : '';
 
+  const wrapperClass = checked ? 'next-checkbox-wrapper checked' : 'next-checkbox-wrapper';
+
   return `
-    <label class="next-checkbox-wrapper" for="${id}">
-      <input
-        type="checkbox"
-        id="${id}"
-        class="next-checkbox-input"
-        data-checkbox
-        ${checkedAttr}
-        ${indeterminateData}
-        ${onChangeAttr}
-        role="checkbox"
-        aria-checked="${indeterminate ? 'mixed' : String(checked)}"
-      />
-      <span class="next-checkbox-icon"></span>
+    <label class="${wrapperClass}" for="${id}">
+      <span class="next-checkbox">
+        <input
+          type="checkbox"
+          id="${id}"
+          class="next-checkbox-input"
+          data-checkbox
+          ${checkedAttr}
+          ${indeterminateData}
+          ${onChangeAttr}
+          role="checkbox"
+          aria-checked="${indeterminate ? 'mixed' : String(checked)}"
+        />
+        <span class="next-checkbox-inner"></span>
+      </span>
     </label>
   `.trim();
 }
@@ -52,6 +56,7 @@ export function initCheckbox(container?: HTMLElement): void {
       input.indeterminate = false;
       input.removeAttribute('data-indeterminate');
       input.setAttribute('aria-checked', String(input.checked));
+      wrapper.classList.toggle('checked', input.checked);
 
       // Dispatch custom event for parent components
       const handlerId = input.dataset.onchange;
