@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html><head><script src="https://cdn.tailwindcss.com"></script></head>
+<body>
+  <!-- simulate the header -->
+  <div class="h-24 bg-gray-100 p-4">
+    <div id="topbar-compact-search-shell" class="hidden lg:flex flex-col justify-center relative min-w-0 flex-1 h-[60px] lg:mx-4 mt-10">
+      <form id="topbar-compact-search" class="absolute left-0 right-0 bottom-0 z-[100] w-full rounded-full border border-gray-300 bg-white">
+        <!-- primary row -->
+        <div id="topbar-compact-primary-row" class="flex items-center gap-2 px-3 py-1.5 h-11">
+           <input class="flex-1 border" placeholder="Input" />
+        </div>
+        <!-- secondary -->
+        <div id="topbar-compact-secondary-row" class="hidden h-11 bg-red-100">Secondary</div>
+      </form>
+      <div id="topbar-compact-dropdown" class="hidden absolute left-0 right-0 z-[101] bg-blue-100 top-[unset]">
+        Dropdown
+      </div>
+    </div>
+  </div>
+  <script>
+    const form = document.getElementById('topbar-compact-search');
+    const sec = document.getElementById('topbar-compact-secondary-row');
+    const drop = document.getElementById('topbar-compact-dropdown');
+    setTimeout(() => {
+      form.classList.remove('rounded-full');
+      form.classList.add('rounded-3xl');
+      sec.classList.remove('hidden');
+      sec.classList.add('block');
+      drop.classList.remove('hidden');
+      const offset = form.offsetHeight + 8;
+      drop.style.top = offset + 'px';
+      
+      console.log('Form h:', form.offsetHeight);
+      console.log('Drop top:', offset);
+    }, 1000);
+  </script>
+</body>
+</html>
