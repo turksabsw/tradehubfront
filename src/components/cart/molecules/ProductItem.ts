@@ -23,7 +23,7 @@ function escapeHtml(str: string): string {
 }
 
 function renderTag(tag: CartProductTag): string {
-  return `<span class="sc-c-spu-tag" style="color:${escapeHtml(tag.color)};background:${escapeHtml(tag.bgColor)}">${escapeHtml(tag.text)}</span>`;
+  return `<span class="inline-block px-2 py-0.5 rounded text-xs leading-[18px] whitespace-nowrap" style="color:${escapeHtml(tag.color)};background:${escapeHtml(tag.bgColor)}">${escapeHtml(tag.text)}</span>`;
 }
 
 export function ProductItem({ product }: ProductItemProps): string {
@@ -33,39 +33,41 @@ export function ProductItem({ product }: ProductItemProps): string {
     onChange: `product-select-${product.id}`,
   });
 
-  const titleLink = `<a class="sc-c-spu-title-link" href="${escapeHtml(product.href)}">${escapeHtml(product.title)}</a>`;
+  const titleLink = `<a class="block text-[#222] no-underline text-sm leading-5 overflow-hidden text-ellipsis whitespace-nowrap hover:text-[#cc9900] hover:underline" href="${escapeHtml(product.href)}">${escapeHtml(product.title)}</a>`;
 
-  const favoriteBtn = `<button type="button" class="sc-c-spu-favorite-btn" data-product-id="${escapeHtml(product.id)}" aria-label="Favorite">`
+  const actionBtnCls = 'inline-flex items-center justify-center w-7 h-7 border-none bg-transparent cursor-pointer text-[#999] text-base rounded transition-colors duration-150 hover:text-[#ff4747] hover:bg-[#fff0f0]';
+
+  const favoriteBtn = `<button type="button" class="sc-c-spu-favorite-btn ${actionBtnCls}" data-product-id="${escapeHtml(product.id)}" aria-label="Favorite">`
     + `<i class="sc-c-spu-favorite-icon ${escapeHtml(product.favoriteIcon)}"></i>`
     + `</button>`;
 
-  const deleteBtn = `<button type="button" class="sc-c-spu-delete-btn" data-product-id="${escapeHtml(product.id)}" aria-label="Delete product">`
+  const deleteBtn = `<button type="button" class="sc-c-spu-delete-btn ${actionBtnCls}" data-product-id="${escapeHtml(product.id)}" aria-label="Delete product">`
     + `<i class="sc-c-spu-delete-icon ${escapeHtml(product.deleteIcon)}"></i>`
     + `</button>`;
 
   const tags = product.tags.length > 0
-    ? `<div class="sc-c-spu-tags">${product.tags.map(renderTag).join('')}</div>`
+    ? `<div class="flex gap-2 mb-2 pl-7 flex-wrap">${product.tags.map(renderTag).join('')}</div>`
     : '';
 
   const moqLabel = product.moqLabel
-    ? `<span class="sc-c-spu-moq-label">${escapeHtml(product.moqLabel)}</span>`
+    ? `<span class="block text-xs text-[#999] mb-2 pl-7">${escapeHtml(product.moqLabel)}</span>`
     : '';
 
   const skuRows = product.skus.map((sku) => SkuRow({ sku })).join('\n');
 
   return `
-    <div class="sc-c-spu-container-new" data-product-id="${escapeHtml(product.id)}">
-      <div class="sc-c-spu-header">
-        <div class="sc-c-spu-checkbox">${checkbox}</div>
-        <div class="sc-c-spu-title">${titleLink}</div>
-        <div class="sc-c-spu-actions">
+    <div class="sc-c-spu-container-new py-4 border-b border-[#f0f0f0] last:border-b-0" data-product-id="${escapeHtml(product.id)}">
+      <div class="flex items-start gap-3 mb-2">
+        <div class="flex-shrink-0 pt-0.5">${checkbox}</div>
+        <div class="flex-1 min-w-0">${titleLink}</div>
+        <div class="flex items-center gap-2 flex-shrink-0">
           ${favoriteBtn}
           ${deleteBtn}
         </div>
       </div>
       ${tags}
       ${moqLabel}
-      <div class="sc-c-spu-sku-list">
+      <div class="flex flex-col">
         ${skuRows}
       </div>
     </div>

@@ -4,7 +4,6 @@
  */
 
 import './style.css'
-import './components/cart/cart.css'
 import { initFlowbite } from 'flowbite'
 
 // Header components (reuse from main page)
@@ -55,5 +54,5 @@ initHeaderCart();
 initFloatingPanel();
 initMobileDrawer();
 
-// Cart-specific inits
-initCartPage();
+// Cart-specific inits — store'u mock data ile başlat
+initCartPage(mockCartSuppliers, mockCartSummary.shippingFee, mockCartSummary.discount);

@@ -2,6 +2,9 @@
  * Cart Components Barrel Export
  */
 
+// State
+export { CartStore, cartStore } from './state/CartStore';
+
 // Atoms
 export { Checkbox, initCheckbox } from './atoms/Checkbox';
 export type { CheckboxProps } from './atoms/Checkbox';

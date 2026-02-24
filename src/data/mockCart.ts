@@ -114,8 +114,9 @@ export const mockCartSummary: CartSummaryData = {
     { image: PLACEHOLDER_IMG, quantity: 1 },
   ],
   productSubtotal: 224.6,
+  discount: 18.81,
   shippingFee: 182.56,
-  subtotal: 407.16,
+  subtotal: 388.35,
   currency: '$',
 };
 

@@ -24,12 +24,12 @@ export function QuantityInput({
   const plusDisabled = value >= max ? ' disabled' : '';
 
   return `
-    <div class="number-picker" data-id="${id}" data-min="${min}" data-max="${max}" data-step="${step}">
-      <button type="button" class="number-picker-button number-picker-minus"${minusDisabled} aria-label="Decrease quantity">&minus;</button>
+    <div class="number-picker inline-flex items-center border border-[#c4c6cf] rounded overflow-hidden" data-id="${id}" data-min="${min}" data-max="${max}" data-step="${step}">
+      <button type="button" class="number-picker-button number-picker-minus inline-flex items-center justify-center w-8 h-8 p-0 border-none bg-[#f5f5f5] cursor-pointer text-base flex-shrink-0 transition-colors duration-150 hover:bg-[#e5e5e5] disabled:opacity-40 disabled:cursor-not-allowed"${minusDisabled} aria-label="Decrease quantity">&minus;</button>
       <input
         type="number"
         id="${id}"
-        class="number-picker-input"
+        class="number-picker-input block w-[50px] h-8 px-1 border-x border-[#c4c6cf] text-center text-sm leading-8 text-[#222] outline-none bg-white [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
         data-quantity-input
         value="${value}"
         min="${min}"
@@ -37,7 +37,7 @@ export function QuantityInput({
         step="${step}"
         aria-label="Quantity"
       />
-      <button type="button" class="number-picker-button number-picker-plus"${plusDisabled} aria-label="Increase quantity">+</button>
+      <button type="button" class="number-picker-button number-picker-plus inline-flex items-center justify-center w-8 h-8 p-0 border-none bg-[#f5f5f5] cursor-pointer text-base flex-shrink-0 transition-colors duration-150 hover:bg-[#e5e5e5] disabled:opacity-40 disabled:cursor-not-allowed"${plusDisabled} aria-label="Increase quantity">+</button>
     </div>
   `.trim();
 }
@@ -52,7 +52,7 @@ export function initQuantityInputs(container?: HTMLElement): void {
 
   pickers.forEach((picker) => {
     const input = picker.querySelector<HTMLInputElement>('.number-picker-input');
-    const minusBtn = picker.querySelector<HTMLButtonElement>('.number-picker-button.number-picker-minus');
+    const minusBtn = picker.querySelector<HTMLButtonElement>('.number-picker-minus');
     const plusBtn = picker.querySelector<HTMLButtonElement>('.number-picker-plus');
     if (!input || !minusBtn || !plusBtn) return;
 

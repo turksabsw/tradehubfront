@@ -26,7 +26,8 @@ export function PriceDisplay({
 }: PriceDisplayProps): string {
   const price = formatPrice(amount, currency);
   const tag = bold ? 'strong' : 'span';
-  const unitHtml = unit ? `<span class="price-display-unit">${unit}</span>` : '';
+  const boldCls = bold ? ' font-bold text-lg' : '';
+  const unitHtml = unit ? `<span class="text-xs text-[#999] ml-0.5">${unit}</span>` : '';
 
-  return `<${tag} class="price-display${bold ? ' price-display--bold' : ''}">${price}${unitHtml}</${tag}>`;
+  return `<${tag} class="text-sm text-[#222] whitespace-nowrap${boldCls}">${price}${unitHtml}</${tag}>`;
 }

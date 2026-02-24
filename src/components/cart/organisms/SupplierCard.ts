@@ -30,20 +30,20 @@ export function SupplierCard({ supplier }: SupplierCardProps): string {
     onChange: `supplier-select-${supplier.id}`,
   });
 
-  const nameLink = `<a class="sc-c-supplier-name-link" href="${escapeHtml(supplier.href)}">${escapeHtml(supplier.name)}</a>`;
+  const nameLink = `<a class="text-[#222] no-underline font-semibold hover:text-[#cc9900] hover:underline" href="${escapeHtml(supplier.href)}">${escapeHtml(supplier.name)}</a>`;
 
   const productItems = supplier.products
     .map((product) => ProductItem({ product }))
     .join('\n');
 
   return `
-    <div class="sc-c-supplier-container" data-supplier-id="${escapeHtml(supplier.id)}">
-      <div class="sc-c-supplier-header">
-        <div class="sc-c-supplier-checkbox">${checkbox}</div>
-        <div class="sc-c-supplier-name">${nameLink}</div>
-        <div class="sc-c-supplier-badge"></div>
+    <div class="sc-c-supplier-container block border border-[#e5e5e5] rounded-lg bg-white overflow-hidden" data-supplier-id="${escapeHtml(supplier.id)}">
+      <div class="sc-c-supplier-header flex items-center gap-3 px-5 py-4 border-b border-[#e5e5e5] bg-[#fafafa]">
+        <div class="flex-shrink-0">${checkbox}</div>
+        <div class="text-sm font-semibold text-[#222] leading-5 flex-1 min-w-0">${nameLink}</div>
+        <div class="flex-shrink-0"></div>
       </div>
-      <div class="sc-c-supplier-products">
+      <div class="px-5">
         ${productItems}
       </div>
     </div>
@@ -73,7 +73,7 @@ export function initSupplierCards(container?: HTMLElement): void {
 
         // Select/deselect all nested SKU checkboxes
         const skuCheckboxes = card.querySelectorAll<HTMLInputElement>(
-          '.sc-c-sku-row input[type="checkbox"]',
+          '.sc-c-sku-container-new-wrapper input[type="checkbox"]',
         );
         skuCheckboxes.forEach((cb) => {
           cb.checked = checked;

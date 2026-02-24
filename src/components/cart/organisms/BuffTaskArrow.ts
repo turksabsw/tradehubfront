@@ -39,12 +39,12 @@ export function BuffTaskArrow({
   return `
     <button
       type="button"
-      class="sc-c-buff-task-arrow"
+      class="sc-c-buff-task-arrow inline-flex items-center justify-center w-10 h-10 border border-[#e5e5e5] rounded-full bg-white cursor-pointer text-[#333] text-lg transition-colors duration-150 fixed bottom-10 right-10 z-[100] shadow-md hover:bg-[#f5f5f5] hover:border-[#ff6a00]"
       aria-label="${ariaLabel}"
       title="${ariaLabel}"${onClickAttr}
       data-direction="${direction}"
     >
-      <svg xmlns="http://www.w3.org/2000/svg" class="sc-c-buff-task-arrow-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="${path}" />
       </svg>
     </button>

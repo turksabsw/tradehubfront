@@ -7211,3 +7211,48 @@ body.pdm-sheet-open {
     background-color: #000;
     border-radius: 2px;
 }
+
+/* ==========================================================
+   CART — Pseudo-element styles (cannot be done with Tailwind)
+   ========================================================== */
+
+/* Checkbox checkmark (checked state) */
+.next-checkbox-wrapper.checked .next-checkbox-inner::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 2px;
+    left: 5px;
+    width: 4px;
+    height: 8px;
+    border: solid #fff;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+/* Checkbox hover border */
+.next-checkbox-wrapper:hover .next-checkbox {
+    border-color: #ff6a00;
+}
+
+/* Icon pseudo-elements */
+.sc-c-spu-favorite-icon::before {
+    content: "\2661";
+}
+
+.sc-c-spu-delete-icon::before {
+    content: "\1F5D1";
+    font-size: 14px;
+}
+
+.sc-c-sku-delete-icon::before {
+    content: "\2715";
+    font-size: 14px;
+}
+
+/* Number picker: hide browser spin buttons */
+.number-picker-input::-webkit-outer-spin-button,
+.number-picker-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}

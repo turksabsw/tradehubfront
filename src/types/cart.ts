@@ -47,6 +47,7 @@ export interface CartSummaryData {
   selectedCount: number;
   items: CartSummaryItem[];
   productSubtotal: number;
+  discount: number;
   shippingFee: number;
   subtotal: number;
   currency: string;

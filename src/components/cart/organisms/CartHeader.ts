@@ -1,8 +1,6 @@
 /**
  * CartHeader Organism
  * Page title 'Sepetim' rendered as <h1>.
- * Matches sc-shopping-cart-title codex brief: font-size 26px, font-weight 600,
- * proper margin/padding.
  */
 
 export interface CartHeaderProps {
@@ -11,8 +9,8 @@ export interface CartHeaderProps {
 
 export function CartHeader({ title = 'Sepetim' }: CartHeaderProps = {}): string {
   return `
-    <header class="sc-shopping-cart-header">
-      <h1 class="sc-shopping-cart-title">${title}</h1>
+    <header class="mb-4">
+      <h1 class="block text-[28px] font-bold leading-[34px] my-6 mb-4 text-[#222]">${title}</h1>
     </header>
   `.trim();
 }
