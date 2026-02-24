@@ -7890,5 +7890,83 @@ body.pdm-sheet-open {
 /* ============================================================
    BUYER DASHBOARD — Responsive Overrides
    ============================================================ */
-/* @media (max-width: 1024px) { } */
-/* @media (max-width: 768px) { } */
+@media (max-width: 1024px) {
+  /* Sidebar: collapse to icon-only */
+  .sidebar.sidebar--expanded {
+    width: var(--sidebar-collapsed-width, 56px) !important;
+  }
+
+  .sidebar--expanded .sidebar__section-title,
+  .sidebar--expanded .sidebar-item--expanded span,
+  .sidebar--expanded .sidebar-item--expanded .sidebar-item__badge,
+  .sidebar--expanded .sidebar-item--expanded svg.ml-auto {
+    display: none;
+  }
+
+  .sidebar--expanded .sidebar-item--expanded {
+    justify-content: center;
+    padding-left: 0;
+    padding-right: 0;
+    gap: 0;
+  }
+
+  .sidebar--expanded .sidebar__discover .sidebar-item--expanded {
+    justify-content: center;
+  }
+
+  /* Dashboard layout: reduce sidebar column */
+  .sc-buyer-dashboard .flex.gap-\[14px\] > :first-child {
+    width: var(--sidebar-collapsed-width, 56px);
+  }
+
+  /* Right panel: narrower on tablet */
+  .sc-buyer-dashboard .flex.gap-\[14px\] > :last-child {
+    width: 300px;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Stack layout vertically */
+  .sc-buyer-dashboard .flex.gap-\[14px\] {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  /* Sidebar: hide on mobile (toggle via JS) */
+  .sc-buyer-dashboard .flex.gap-\[14px\] > :first-child {
+    display: none;
+  }
+
+  /* Center content: full width */
+  .sc-buyer-dashboard .flex.gap-\[14px\] > :nth-child(2) {
+    width: 100%;
+  }
+
+  /* Right panel: full width, stack below */
+  .sc-buyer-dashboard .flex.gap-\[14px\] > :last-child {
+    width: 100%;
+  }
+
+  /* Orders tabs: horizontal scroll on mobile */
+  .orders__tabs {
+    padding-left: 12px;
+    padding-right: 12px;
+    gap: 8px;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+  }
+
+  .orders__tab {
+    scroll-snap-align: start;
+    flex-shrink: 0;
+  }
+
+  /* Reduce card padding on mobile */
+  .user-info-card {
+    padding: 14px;
+  }
+
+  .operation-slider__slide {
+    padding: 12px;
+  }
+}
