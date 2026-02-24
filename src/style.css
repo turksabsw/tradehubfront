@@ -7221,18 +7221,33 @@ body.pdm-sheet-open {
     content: "";
     display: block;
     position: absolute;
-    top: 2px;
-    left: 5px;
-    width: 4px;
-    height: 8px;
+    top: 3px;
+    left: 8px;
+    width: 6px;
+    height: 11px;
     border: solid #fff;
     border-width: 0 2px 2px 0;
     transform: rotate(45deg);
 }
 
+/* Checkbox indeterminate dash */
+.next-checkbox-wrapper.indeterminate .next-checkbox-inner::after,
+.next-checkbox-wrapper .next-checkbox:has(input[data-indeterminate="true"]) .next-checkbox-inner::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 11px;
+    left: 5px;
+    width: 14px;
+    height: 0;
+    border: solid #fff;
+    border-width: 0 0 2px 0;
+    transform: none;
+}
+
 /* Checkbox hover border */
 .next-checkbox-wrapper:hover .next-checkbox {
-    border-color: #ff6a00;
+    border-color: #FF6600;
 }
 
 /* Icon pseudo-elements */

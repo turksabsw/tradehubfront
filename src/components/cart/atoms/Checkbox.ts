@@ -17,15 +17,16 @@ export function Checkbox({ id, checked, indeterminate = false, onChange }: Check
   const indeterminateData = indeterminate ? ' data-indeterminate="true"' : '';
   const onChangeAttr = onChange ? ` data-onchange="${onChange}"` : '';
 
-  const checkedCls = checked ? ' border-[#ff6a00] bg-[#ff6a00]' : '';
+  const isActive = checked || indeterminate;
+  const activeCls = isActive ? ' border-transparent bg-[#FF6600]' : '';
 
   return `
-    <label class="next-checkbox-wrapper inline-flex items-center gap-2 cursor-pointer select-none${checked ? ' checked' : ''}" for="${id}">
-      <span class="next-checkbox inline-block relative w-4 h-4 border border-[#c4c6cf] rounded-sm bg-white flex-shrink-0 transition-colors duration-200${checkedCls}">
+    <label class="next-checkbox-wrapper inline-flex items-center gap-2 cursor-pointer select-none${checked ? ' checked' : ''}${indeterminate ? ' indeterminate' : ''}" for="${id}">
+      <span class="next-checkbox inline-block relative w-6 h-6 border border-[#d8d8d8] rounded-[4px] bg-white flex-shrink-0 transition-all duration-100${activeCls}">
         <input
           type="checkbox"
           id="${id}"
-          class="next-checkbox-input absolute opacity-0 w-4 h-4 cursor-pointer z-[1] m-0"
+          class="next-checkbox-input absolute opacity-0 w-6 h-6 cursor-pointer z-[1] m-0"
           data-checkbox
           ${checkedAttr}
           ${indeterminateData}
@@ -33,7 +34,7 @@ export function Checkbox({ id, checked, indeterminate = false, onChange }: Check
           role="checkbox"
           aria-checked="${indeterminate ? 'mixed' : String(checked)}"
         />
-        <span class="next-checkbox-inner absolute inset-0"></span>
+        <span class="next-checkbox-inner absolute inset-0 block h-6 w-6"></span>
       </span>
     </label>
   `.trim();
@@ -52,18 +53,29 @@ export function initCheckbox(container?: HTMLElement): void {
       input.indeterminate = true;
     }
 
+    // İlk render'da indeterminate görsel stilini uygula
+    if (input.indeterminate) {
+      wrapper.classList.add('indeterminate');
+      const checkboxSpan = wrapper.querySelector('.next-checkbox');
+      if (checkboxSpan) {
+        checkboxSpan.classList.add('border-transparent', 'bg-[#FF6600]');
+        checkboxSpan.classList.remove('border-[#d8d8d8]', 'bg-white');
+      }
+    }
+
     input.addEventListener('change', () => {
       input.indeterminate = false;
       input.removeAttribute('data-indeterminate');
       input.setAttribute('aria-checked', String(input.checked));
       wrapper.classList.toggle('checked', input.checked);
+      wrapper.classList.remove('indeterminate');
 
       // Toggle checked styling on the checkbox span
       const checkboxSpan = wrapper.querySelector('.next-checkbox');
       if (checkboxSpan) {
-        checkboxSpan.classList.toggle('border-[#ff6a00]', input.checked);
-        checkboxSpan.classList.toggle('bg-[#ff6a00]', input.checked);
-        checkboxSpan.classList.toggle('border-[#c4c6cf]', !input.checked);
+        checkboxSpan.classList.toggle('border-transparent', input.checked);
+        checkboxSpan.classList.toggle('bg-[#FF6600]', input.checked);
+        checkboxSpan.classList.toggle('border-[#d8d8d8]', !input.checked);
         checkboxSpan.classList.toggle('bg-white', !input.checked);
       }
 

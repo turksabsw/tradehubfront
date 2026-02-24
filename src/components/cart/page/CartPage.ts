@@ -350,18 +350,29 @@ function syncBatchBar(): void {
   }
 }
 
-/** Checkbox'un görsel stilini checked durumuna göre senkronize et */
+/** Checkbox'un görsel stilini checked/indeterminate durumuna göre senkronize et */
 function syncCheckboxVisual(input: HTMLInputElement): void {
   const wrapper = input.closest('.next-checkbox-wrapper');
   if (!wrapper) return;
 
+  const isActive = input.checked || input.indeterminate;
+
   wrapper.classList.toggle('checked', input.checked);
+  wrapper.classList.toggle('indeterminate', input.indeterminate);
+
+  // data-indeterminate attribute'ünü CSS pseudo-element için senkronize et
+  if (input.indeterminate) {
+    input.setAttribute('data-indeterminate', 'true');
+  } else {
+    input.removeAttribute('data-indeterminate');
+  }
+
   const span = wrapper.querySelector('.next-checkbox');
   if (span) {
-    span.classList.toggle('border-[#ff6a00]', input.checked);
-    span.classList.toggle('bg-[#ff6a00]', input.checked);
-    span.classList.toggle('border-[#c4c6cf]', !input.checked);
-    span.classList.toggle('bg-white', !input.checked);
+    span.classList.toggle('border-transparent', isActive);
+    span.classList.toggle('bg-[#FF6600]', isActive);
+    span.classList.toggle('border-[#d8d8d8]', !isActive);
+    span.classList.toggle('bg-white', !isActive);
   }
 }
 
@@ -382,7 +393,9 @@ function updateParentCheckboxStates(skuRow: Element): void {
     ':scope > .sc-product-item [data-checkbox], :scope [data-checkbox]',
   );
   if (productCheckbox && !productCheckbox.closest('[data-sku-id]')) {
+    const someSkusChecked = skuCbArr.some((cb) => cb.checked);
     productCheckbox.checked = allSkusChecked;
+    productCheckbox.indeterminate = someSkusChecked && !allSkusChecked;
     syncCheckboxVisual(productCheckbox);
   }
 
@@ -401,7 +414,11 @@ function updateParentCheckboxStates(skuRow: Element): void {
     ':scope > [data-checkbox], .sc-c-supplier-header [data-checkbox]',
   );
   if (supplierCheckbox) {
+    const someProductsChecked = prodCbArr
+      .filter((cb) => !cb.closest('[data-sku-id]'))
+      .some((cb) => cb.checked || cb.indeterminate);
     supplierCheckbox.checked = allProductsChecked;
+    supplierCheckbox.indeterminate = someProductsChecked && !allProductsChecked;
     syncCheckboxVisual(supplierCheckbox);
   }
 }
