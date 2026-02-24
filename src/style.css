@@ -7490,6 +7490,24 @@ body.pdm-sheet-open {
 
 
 /* ============================================================
+   BUYER DASHBOARD — Sidebar
+   ============================================================ */
+/* .sidebar { } */
+/* .sidebar--expanded { } */
+/* .sidebar--collapsed { } */
+/* .sidebar__menu { } */
+/* .sidebar__section { } */
+/* .sidebar__section-title { } */
+/* .sidebar__item-wrapper { } */
+/* .sidebar__discover { } */
+/* .sidebar-item { } */
+/* .sidebar-item--expanded { } */
+/* .sidebar-item--collapsed { } */
+/* .sidebar-flyout { } */
+/* .sidebar-flyout__section { } */
+
+
+/* ============================================================
    BUYER DASHBOARD — Responsive Overrides
    ============================================================ */
 /* @media (max-width: 1024px) { } */
