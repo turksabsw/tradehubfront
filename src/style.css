@@ -663,6 +663,24 @@
     --z-spotlight: 90;
     --z-max: 100;
 
+    /* ==========================================================
+     RFQ PAGE — SPECIFIC TOKENS
+     ========================================================== */
+
+    /* --- Shadows --- */
+    --shadow-form: 0 10px 40px rgba(0, 0, 0, 0.12);
+    --shadow-card-hover: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+    /* --- Colors --- */
+    --color-product-name: #222222;
+    --color-cta-text: #111827;
+
+    /* --- Font Sizes --- */
+    --font-size-caption: 0.8125rem;
+    /* 13px */
+    --font-size-hero-lg: 2rem;
+    /* 32px */
+
 }
 
 
