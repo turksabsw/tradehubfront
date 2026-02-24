@@ -7633,20 +7633,171 @@ body.pdm-sheet-open {
 /* ============================================================
    BUYER DASHBOARD — Orders Section
    ============================================================ */
-/* .orders { } */
-/* .orders__header { } */
-/* .orders__tabs { } */
-/* .orders__tab { } */
-/* .orders__tab--active { } */
-/* .orders__tab-dropdown { } */
-/* .orders__dropdown { } */
-/* .orders__dropdown-item { } */
-/* .orders__dropdown-item--selected { } */
-/* .orders__content { } */
-/* .orders__empty { } */
-/* .orders__empty-icon { } */
-/* .orders__empty-text { } */
-/* .orders__empty-btn { } */
+.orders {
+  background: #ffffff;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+}
+
+.orders__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px 12px;
+}
+
+.orders__title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #333333;
+  margin: 0;
+}
+
+.orders__view-all {
+  font-size: 13px;
+  color: #999999;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  transition: color var(--transition-fast);
+}
+.orders__view-all:hover {
+  color: var(--color-primary-500);
+}
+
+/* --- Tabs --- */
+.orders__tabs-wrapper {
+  position: relative;
+  padding: 0 20px;
+}
+
+.orders__tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.orders__tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 14px;
+  border-radius: var(--radius-tab);
+  border: none;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background var(--transition-fast), color var(--transition-fast);
+  background: var(--color-orders-tab-inactive-bg);
+  color: var(--color-orders-tab-inactive-text);
+  white-space: nowrap;
+}
+.orders__tab:hover {
+  background: var(--color-orders-tab-hover-bg);
+}
+.orders__tab--active {
+  background: var(--color-orders-tab-active-bg);
+  color: var(--color-orders-tab-active-text);
+}
+.orders__tab--active:hover {
+  background: var(--color-orders-tab-active-bg);
+}
+
+.orders__tab-chevron {
+  transition: transform var(--transition-fast);
+}
+.orders__tab--active .orders__tab-chevron {
+  transform: rotate(180deg);
+}
+
+/* --- Dropdown --- */
+.orders__dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 20px;
+  z-index: 20;
+  min-width: 200px;
+  background: var(--color-dropdown-bg);
+  border: 1px solid var(--color-dropdown-border);
+  border-radius: var(--radius-dropdown);
+  box-shadow: 0 4px 12px var(--color-dropdown-shadow);
+  padding: 4px 0;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-4px);
+  transition: opacity var(--transition-fast), visibility var(--transition-fast), transform var(--transition-fast);
+}
+.orders__dropdown--open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.orders__dropdown-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 8px 14px;
+  border: none;
+  background: none;
+  font-size: 13px;
+  color: #333333;
+  cursor: pointer;
+  transition: background var(--transition-fast);
+  text-align: left;
+}
+.orders__dropdown-item:hover {
+  background: var(--color-dropdown-hover-bg);
+}
+.orders__dropdown-item--selected {
+  font-weight: 600;
+}
+
+/* --- Content / Empty State --- */
+.orders__content {
+  margin: 12px 20px 20px;
+  border-radius: var(--radius-card);
+  background: linear-gradient(135deg, var(--color-orders-empty-gradient-start), var(--color-orders-empty-gradient-end));
+  min-height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.orders__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 32px 20px;
+}
+
+.orders__empty-icon {
+  color: var(--color-orders-empty-icon);
+}
+
+.orders__empty-text {
+  font-size: 14px;
+  color: var(--color-orders-empty-text);
+  margin: 0;
+}
+
+.orders__empty-btn {
+  display: inline-block;
+  padding: 8px 24px;
+  border-radius: var(--radius-btn);
+  background: var(--color-orders-empty-btn-bg);
+  color: var(--color-orders-empty-btn-text);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: opacity var(--transition-fast);
+}
+.orders__empty-btn:hover {
+  opacity: 0.9;
+}
 
 
 /* ============================================================
