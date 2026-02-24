@@ -7256,3 +7256,241 @@ body.pdm-sheet-open {
     -webkit-appearance: none;
     margin: 0;
 }
+
+
+/* ============================================================
+   BUYER DASHBOARD — CSS CUSTOM PROPERTIES
+   Dashboard-specific variables (OUTSIDE @theme)
+   ============================================================ */
+:root {
+    /* --- Page Colors --- */
+    --color-page-bg: #F5F5F5;
+    --color-card-bg: #FFFFFF;
+    --color-card-border: #E8E8E8;
+
+    /* --- Sidebar Colors --- */
+    --color-sidebar-bg: #FFFFFF;
+    --color-sidebar-text: #333333;
+    --color-sidebar-text-muted: #999999;
+    --color-sidebar-hover-bg: #F7F7F7;
+    --color-sidebar-active-bg: #F0FFF0;
+    --color-sidebar-active-border: #00B96B;
+    --color-sidebar-active-text: #00B96B;
+    --color-sidebar-icon: #666666;
+    --color-sidebar-chevron: #CCCCCC;
+    --color-sidebar-divider: #F0F0F0;
+    --color-sidebar-badge-bg: #FF4D4F;
+    --color-sidebar-badge-text: #FFFFFF;
+    --color-sidebar-flyout-bg: #FFFFFF;
+    --color-sidebar-flyout-shadow: rgba(0, 0, 0, 0.12);
+    --color-sidebar-flyout-border: #E8E8E8;
+    --color-sidebar-flyout-link: #333333;
+    --color-sidebar-flyout-link-hover: #CC9900;
+    --color-sidebar-explore-bg: #FFF8E6;
+    --color-sidebar-explore-text: #CC9900;
+
+    /* --- Dropdown Colors --- */
+    --color-dropdown-bg: #FFFFFF;
+    --color-dropdown-border: #E8E8E8;
+    --color-dropdown-shadow: rgba(0, 0, 0, 0.1);
+    --color-dropdown-hover-bg: #F7F7F7;
+    --color-dropdown-check: #CC9900;
+
+    /* --- Slider / Notification Colors --- */
+    --color-slider-bg: #F7F7F7;
+    --color-slider-dot-active: #333333;
+    --color-slider-dot-inactive: #D9D9D9;
+    --color-slider-arrow-bg: rgba(255, 255, 255, 0.9);
+    --color-slider-arrow-icon: #666666;
+
+    /* --- Orders Colors --- */
+    --color-orders-tab-active-bg: #333333;
+    --color-orders-tab-active-text: #FFFFFF;
+    --color-orders-tab-inactive-bg: #F0F0F0;
+    --color-orders-tab-inactive-text: #666666;
+    --color-orders-tab-hover-bg: #E8E8E8;
+    --color-orders-empty-gradient-start: #F5F0FF;
+    --color-orders-empty-gradient-end: #FFF5F0;
+    --color-orders-empty-icon: #CCCCCC;
+    --color-orders-empty-text: #999999;
+    --color-orders-empty-btn-bg: #CC9900;
+    --color-orders-empty-btn-text: #FFFFFF;
+
+    /* --- Right Panel Colors --- */
+    --color-rp-header-text: #333333;
+    --color-rp-action-text: #999999;
+    --color-rp-action-hover: #CC9900;
+    --color-rp-empty-icon: #CCCCCC;
+    --color-rp-empty-text: #999999;
+    --color-rp-empty-link: #CC9900;
+    --color-rp-product-price: #CC0000;
+    --color-rp-product-moq: #999999;
+
+    /* --- New Buyer Info Colors --- */
+    --color-nbi-profile-link: #2080D0;
+    --color-nbi-support-bg: #E6F7E6;
+    --color-nbi-support-text: #00B96B;
+    --color-nbi-stat-label: #999999;
+    --color-nbi-stat-value: #333333;
+    --color-nbi-stat-divider: #E8E8E8;
+
+    /* --- Dimensions --- */
+    --sidebar-expanded-width: 260px;
+    --sidebar-collapsed-width: 56px;
+    --right-panel-width: 380px;
+    --max-content-width: 1425px;
+    --dashboard-header-height: 56px;
+    --dashboard-avatar-size: 48px;
+    --dashboard-card-padding: 20px;
+    --dashboard-gap: 14px;
+
+    /* --- Transitions --- */
+    --transition-speed: 0.25s;
+    --transition-fast: 0.15s;
+    --transition-easing: cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* --- Border Radius --- */
+    --radius-card: 8px;
+    --radius-tab: 20px;
+    --radius-dropdown: 8px;
+    --radius-avatar: 50%;
+    --radius-badge: 10px;
+    --radius-btn: 20px;
+}
+
+
+/* ============================================================
+   BUYER DASHBOARD — LAYOUT
+   ============================================================ */
+/* .buyer-dashboard { } */
+/* .buyer-dashboard__sidebar { } */
+/* .buyer-dashboard__content { } */
+/* .buyer-dashboard__right-panel { } */
+
+
+/* ============================================================
+   SIDEBAR NAVIGATION
+   ============================================================ */
+/* .sidebar { } */
+/* .sidebar__menu { } */
+/* .sidebar__item { } */
+/* .sidebar__item--active { } */
+/* .sidebar__item-icon { } */
+/* .sidebar__item-label { } */
+/* .sidebar__item-chevron { } */
+/* .sidebar__item-badge { } */
+/* .sidebar__section-divider { } */
+/* .sidebar__explore { } */
+/* .sidebar--collapsed { } */
+/* .sidebar-flyout { } */
+/* .sidebar-flyout__header { } */
+/* .sidebar-flyout__content { } */
+/* .sidebar-flyout__link { } */
+
+
+/* ============================================================
+   BUYER DASHBOARD — NewBuyerInfo
+   ============================================================ */
+/* .new-buyer-info { } */
+/* .new-buyer-info__avatar { } */
+/* .new-buyer-info__username { } */
+/* .new-buyer-info__profile-link { } */
+/* .new-buyer-info__support-badge { } */
+/* .new-buyer-info__stats { } */
+/* .new-buyer-info__stat { } */
+/* .new-buyer-info__stat-value { } */
+/* .new-buyer-info__stat-label { } */
+/* .new-buyer-info__stat-divider { } */
+/* .new-buyer-info__slider { } */
+/* .new-buyer-info--loading { } */
+
+
+/* ============================================================
+   BUYER DASHBOARD — Operation Slider
+   ============================================================ */
+/* .operation-slider { } */
+/* .operation-slider__slide { } */
+/* .operation-slider__arrow { } */
+/* .operation-slider__arrow--prev { } */
+/* .operation-slider__arrow--next { } */
+/* .operation-slider__dots { } */
+/* .operation-slider__dot { } */
+/* .operation-slider__dot--active { } */
+
+
+/* ============================================================
+   BUYER DASHBOARD — Orders Section
+   ============================================================ */
+/* .orders { } */
+/* .orders__header { } */
+/* .orders__tabs { } */
+/* .orders__tab { } */
+/* .orders__tab--active { } */
+/* .orders__tab-dropdown { } */
+/* .orders__dropdown { } */
+/* .orders__dropdown-item { } */
+/* .orders__dropdown-item--selected { } */
+/* .orders__content { } */
+/* .orders__empty { } */
+/* .orders__empty-icon { } */
+/* .orders__empty-text { } */
+/* .orders__empty-btn { } */
+
+
+/* ============================================================
+   BUYER DASHBOARD — Right Panel
+   ============================================================ */
+/* .right-panel { } */
+/* .right-panel__section { } */
+
+
+/* ============================================================
+   BUYER DASHBOARD — Favorites
+   ============================================================ */
+/* .favorites { } */
+/* .favorites__empty { } */
+
+
+/* ============================================================
+   BUYER DASHBOARD — Browsing History
+   ============================================================ */
+/* .browsing-history { } */
+/* .browsing-history__scroll { } */
+/* .browsing-history__card { } */
+
+
+/* ============================================================
+   BUYER DASHBOARD — Promotion Section
+   ============================================================ */
+/* .promotion { } */
+/* .promotion__carousel { } */
+/* .promotion__banner { } */
+/* .promotion__dots { } */
+
+
+/* ============================================================
+   BUYER DASHBOARD — Shared Components
+   ============================================================ */
+/* .section-card { } */
+/* .section-header { } */
+/* .section-header__title { } */
+/* .section-header__action { } */
+/* .empty-state { } */
+/* .empty-state__icon { } */
+/* .empty-state__text { } */
+/* .empty-state__link { } */
+/* .product-card { } */
+/* .product-card__image { } */
+/* .product-card__price { } */
+/* .product-card__moq { } */
+/* .promotion-banner { } */
+/* .dot-indicator { } */
+/* .dot-indicator__dot { } */
+/* .dot-indicator__dot--active { } */
+
+
+/* ============================================================
+   BUYER DASHBOARD — Responsive Overrides
+   ============================================================ */
+/* @media (max-width: 1024px) { } */
+/* @media (max-width: 768px) { } */
