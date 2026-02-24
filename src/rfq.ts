@@ -13,7 +13,7 @@ import 'swiper/swiper-bundle.css'
 import { customizationCards, selectedProducts, customProducts, testimonials } from './data/rfq-mock-data'
 
 // Types
-import type { Product } from './types/rfq'
+import type { Product, RFQFormData } from './types/rfq'
 import { FILE_UPLOAD_CONFIG } from './types/rfq'
 
 // --- Helper: Product Card HTML ---
@@ -202,7 +202,7 @@ appEl.innerHTML = `
 initFlowbite();
 
 // --- Initialize Swiper Testimonial Carousel ---
-new Swiper('#rfq-testimonials .swiper', {
+new Swiper('.rfq-testimonial .swiper', {
   modules: [Autoplay, Pagination, EffectFade],
   effect: 'fade',
   fadeEffect: { crossFade: true },
@@ -213,7 +213,7 @@ new Swiper('#rfq-testimonials .swiper', {
     pauseOnMouseEnter: true,
   },
   pagination: {
-    el: '#rfq-testimonials .swiper-pagination',
+    el: '.rfq-testimonial .swiper-pagination',
     clickable: true,
   },
 });
@@ -291,11 +291,12 @@ form.addEventListener('submit', (e) => {
   textareaContainer.classList.remove('border-error-500');
 
   const aiCheckbox = document.getElementById('rfq-ai-toggle') as HTMLInputElement;
-  const formData = {
+  const formData: RFQFormData = {
     details,
     files: fileInput.files ? Array.from(fileInput.files) : [],
     aiEnabled: aiCheckbox.checked,
   };
 
-  console.log('RFQ Form submitted:', formData);
+  // eslint-disable-next-line no-console
+  console.log('RFQFormData:', formData);
 });
