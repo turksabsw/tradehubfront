@@ -7871,6 +7871,23 @@ body.pdm-sheet-open {
 
 
 /* ============================================================
+   BUYER DASHBOARD — Right Panel
+   ============================================================ */
+
+.browsing-history__scroll {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.browsing-history__scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.promotion-carousel__slide {
+  min-height: 0;
+}
+
+/* ============================================================
    BUYER DASHBOARD — Responsive Overrides
    ============================================================ */
 /* @media (max-width: 1024px) { } */
