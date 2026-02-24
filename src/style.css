@@ -7391,31 +7391,243 @@ body.pdm-sheet-open {
 /* ============================================================
    BUYER DASHBOARD — NewBuyerInfo
    ============================================================ */
-/* .new-buyer-info { } */
-/* .new-buyer-info__avatar { } */
-/* .new-buyer-info__username { } */
-/* .new-buyer-info__profile-link { } */
-/* .new-buyer-info__support-badge { } */
-/* .new-buyer-info__stats { } */
-/* .new-buyer-info__stat { } */
-/* .new-buyer-info__stat-value { } */
-/* .new-buyer-info__stat-label { } */
-/* .new-buyer-info__stat-divider { } */
-/* .new-buyer-info__slider { } */
-/* .new-buyer-info--loading { } */
+.new-buyer-info {
+  background: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* --- UserInfoCard --- */
+.user-info-card {
+  position: relative;
+  padding: 20px;
+}
+
+.user-info-card__support-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #2563EB;
+  background: #EFF6FF;
+  border-radius: 12px;
+  padding: 4px 10px;
+}
+
+.user-info-card__profile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.user-info-card__avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #f3f4f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.user-info-card__info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.user-info-card__username {
+  font-size: 16px;
+  font-weight: 700;
+  color: #333333;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.user-info-card__profile-link {
+  font-size: 13px;
+  color: #2563EB;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  transition: color 150ms;
+}
+.user-info-card__profile-link:hover {
+  color: #1d4ed8;
+  text-decoration: underline;
+}
+
+/* Stats Grid */
+.user-info-card__stats {
+  display: flex;
+  align-items: stretch;
+  border-top: 1px solid #f0f0f0;
+  padding-top: 16px;
+}
+
+.user-info-card__stat {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  text-decoration: none;
+  transition: opacity 150ms;
+}
+.user-info-card__stat:hover {
+  opacity: 0.8;
+}
+
+.user-info-card__stat-count {
+  font-size: 20px;
+  font-weight: 700;
+  color: #333333;
+  line-height: 1;
+}
+
+.user-info-card__stat-label {
+  font-size: 12px;
+  color: #6b7280;
+  text-align: center;
+  line-height: 1.3;
+}
+
+.user-info-card__stat-divider {
+  width: 1px;
+  background: #e5e7eb;
+  align-self: stretch;
+}
 
 
 /* ============================================================
    BUYER DASHBOARD — Operation Slider
    ============================================================ */
-/* .operation-slider { } */
-/* .operation-slider__slide { } */
-/* .operation-slider__arrow { } */
-/* .operation-slider__arrow--prev { } */
-/* .operation-slider__arrow--next { } */
-/* .operation-slider__dots { } */
-/* .operation-slider__dot { } */
-/* .operation-slider__dot--active { } */
+.operation-slider {
+  position: relative;
+  border-top: 1px solid #f0f0f0;
+}
+
+.operation-slider__slide {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  min-height: 80px;
+}
+
+.operation-slider__slide-icon {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.operation-slider__slide-icon svg {
+  width: 32px;
+  height: 32px;
+}
+
+.operation-slider__slide-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.operation-slider__slide-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333333;
+  margin-bottom: 2px;
+}
+
+.operation-slider__slide-desc {
+  font-size: 12px;
+  color: #6b7280;
+  margin-bottom: 4px;
+  line-height: 1.4;
+}
+
+.operation-slider__slide-link {
+  font-size: 12px;
+  color: #2563EB;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  transition: color 150ms;
+}
+.operation-slider__slide-link:hover {
+  color: #1d4ed8;
+  text-decoration: underline;
+}
+
+/* Navigation Arrows — hidden by default, visible on group hover */
+.operation-slider__prev,
+.operation-slider__next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid #e5e7eb;
+  color: #6b7280;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 200ms, color 150ms;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+.operation-slider__prev {
+  left: 4px;
+}
+.operation-slider__next {
+  right: 4px;
+}
+.group\/opslider:hover .operation-slider__prev,
+.group\/opslider:hover .operation-slider__next {
+  opacity: 1;
+  pointer-events: auto;
+}
+.operation-slider__prev:hover,
+.operation-slider__next:hover {
+  color: #333333;
+}
+
+/* Pagination Bullets */
+.operation-slider__pagination {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  padding-bottom: 12px;
+}
+.operation-slider__pagination .swiper-pagination-bullet {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #d1d5db;
+  opacity: 1;
+  transition: all 200ms;
+}
+.operation-slider__pagination .swiper-pagination-bullet-active {
+  width: 16px;
+  height: 8px;
+  border-radius: 4px;
+  background: #333333;
+}
 
 
 /* ============================================================
