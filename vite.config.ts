@@ -69,6 +69,7 @@ export default defineConfig({
                 login: resolve(__dirname, 'login.html'),
                 register: resolve(__dirname, 'register.html'),
                 cart: resolve(__dirname, 'cart.html'),
+                'buyer-dashboard': resolve(__dirname, 'buyer-dashboard.html'),
             },
         },
     },
