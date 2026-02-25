@@ -12,6 +12,19 @@ import 'swiper/swiper-bundle.css'
 // Assets
 import rfqVideoUrl from './assets/images/rfqvidehero.mp4'
 
+// Header & Footer components
+import { TopBar, MobileSearchTabs, initMobileDrawer, SubHeader, initStickyHeaderSearch, MegaMenu, initMegaMenu } from './components/header'
+import { FooterLinks } from './components/footer'
+
+// Shared components
+import { Breadcrumb } from './components/shared/Breadcrumb'
+
+// Icons
+import aiIconUrl from './assets/images/O1CN01WQ8Lqg1SIdpcL5OHE_!!6000000002224-55-tps-16-16.svg'
+
+// Utilities
+import { initAnimatedPlaceholder } from './utils/animatedPlaceholder'
+
 // Mock data
 import { selectedProducts, customProducts, testimonials } from './data/rfq-mock-data'
 
@@ -32,7 +45,7 @@ function renderProductCard(product: Product): string {
         />
       </div>
       <div class="p-3">
-        <p class="product-card__supplier">${product.supplierCount} tedarikçi</p>
+        <p class="product-card__supplier">${product.supplierCount} tedarikçi sağlıyor</p>
         <h3 class="product-card__name">${product.name}</h3>
         <a href="#" class="product-card__cta">${product.ctaText}</a>
       </div>
@@ -43,17 +56,30 @@ function renderProductCard(product: Product): string {
 const appEl = document.querySelector<HTMLDivElement>('#app')!;
 appEl.classList.add('relative');
 appEl.innerHTML = `
-  <!-- Header placeholder -->
+  <!-- Sticky Header (global) -->
+  <div id="sticky-header" class="sticky top-0 z-[var(--z-header)]" style="background-color:var(--header-scroll-bg);border-bottom:1px solid var(--header-scroll-border)">
+    ${TopBar()}
+    ${SubHeader()}
+  </div>
+
+  <!-- Mobile Search Tabs (Products | Manufacturers | Worldwide) -->
+  ${MobileSearchTabs()}
+
+  <!-- Mega Menu -->
+  ${MegaMenu()}
 
   <!-- Main Content -->
   <main>
+    <div class="container-boxed">
+      ${Breadcrumb([{ label: 'Teklif İste' }])}
+    </div>
     <!-- Section 1: Hero Banner -->
-    <section id="rfq-hero" class="rfq-hero relative overflow-hidden" aria-label="RFQ fiyat teklifi talebi" style="min-height: 516px; background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAxIiBoZWlnaHQ9IjcyMiIgdmlld0JveD0iMCAwIDMwMSA3MjIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTAuNzcxMzYyIDY4My44OTRIMjU3LjQ4MkwwLjc3MTM2MiAxNjguNDY3VjY4My44OTRaIiBmaWxsPSJ1cmwoI3BhaW50MF9saW5lYXJfNV81NikiLz48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9InBhaW50MF9saW5lYXJfNV81NiIgeDE9Ii0zNC4zMjQyIiB5MT0iMjA2LjAxNCIgeDI9IjEyNy4zNDEiIHkyPSI2OTUuMzY1IiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHN0b3Agc3RvcC1jb2xvcj0iIzIyMjU4NCIgc3RvcC1vcGFjaXR5PSIwLjkiLz48c3RvcCBvZmZzZXQ9IjAuNDI3ODg1IiBzdG9wLWNvbG9yPSIjMjIyNTg0IiBzdG9wLW9wYWNpdHk9IjAuNSIvPjxzdG9wIG9mZnNldD0iMC42NTM4NDYiIHN0b3AtY29sb3I9IiMyMjI1ODQiIHN0b3Atb3BhY2l0eT0iMC4zIi8+PHN0b3Agb2Zmc2V0PSIwLjkzMzYxMiIgc3RvcC1jb2xvcj0iIzIyMjU4NCIgc3RvcC1vcGFjaXR5PSIwIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PC9zdmc+'), linear-gradient(to right, rgb(35, 29, 104) 0%, rgb(38, 39, 114) 70%, rgb(36, 37, 112) 71%, rgb(36, 37, 107) 100%); background-size: cover; background-position: left center;">
+    <section id="rfq-hero" class="rfq-hero relative overflow-hidden" aria-label="RFQ fiyat teklifi talebi" style="height: 360px; background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAxIiBoZWlnaHQ9IjcyMiIgdmlld0JveD0iMCAwIDMwMSA3MjIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTAuNzcxMzYyIDY4My44OTRIMjU3LjQ4MkwwLjc3MTM2MiAxNjguNDY3VjY4My44OTRaIiBmaWxsPSJ1cmwoI3BhaW50MF9saW5lYXJfNV81NikiLz48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9InBhaW50MF9saW5lYXJfNV81NiIgeDE9Ii0zNC4zMjQyIiB5MT0iMjA2LjAxNCIgeDI9IjEyNy4zNDEiIHkyPSI2OTUuMzY1IiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHN0b3Agc3RvcC1jb2xvcj0iIzIyMjU4NCIgc3RvcC1vcGFjaXR5PSIwLjkiLz48c3RvcCBvZmZzZXQ9IjAuNDI3ODg1IiBzdG9wLWNvbG9yPSIjMjIyNTg0IiBzdG9wLW9wYWNpdHk9IjAuNSIvPjxzdG9wIG9mZnNldD0iMC42NTM4NDYiIHN0b3AtY29sb3I9IiMyMjI1ODQiIHN0b3Atb3BhY2l0eT0iMC4zIi8+PHN0b3Agb2Zmc2V0PSIwLjkzMzYxMiIgc3RvcC1jb2xvcj0iIzIyMjU4NCIgc3RvcC1vcGFjaXR5PSIwIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PC9zdmc+'), linear-gradient(to right, rgb(35, 29, 104) 0%, rgb(38, 39, 114) 70%, rgb(36, 37, 112) 71%, rgb(36, 37, 107) 100%); background-size: cover; background-position: left center;">
       <!-- Video Background -->
       <video src="${rfqVideoUrl}" autoplay loop muted playsinline class="absolute right-0 w-full max-w-[664px] h-[360px] object-cover z-0 opacity-100 pointer-events-none" style="-webkit-mask-image: linear-gradient(to right, transparent, black 15%); mask-image: linear-gradient(to right, transparent, black 15%); object-position: center; top: 50%; transform: translateY(-50%);"></video>
       
-      <div class="container-boxed relative z-10 flex flex-col justify-center max-w-[1200px] mx-auto" style="min-height: 516px;">
-        <div class="flex flex-col xl:flex-row gap-8 items-center py-10 w-full justify-between">
+      <div class="container-boxed relative z-10 flex flex-col justify-center max-w-[1200px] mx-auto" style="height: 360px;">
+        <div class="flex flex-col xl:flex-row gap-8 items-center py-6 w-full justify-between">
           <!-- Left Column: Text Content -->
           <div class="flex-1 text-center xl:text-left">
             <span class="rfq-hero__badge">RFQ</span>
@@ -77,64 +103,73 @@ appEl.innerHTML = `
     </section>
 
     <!-- Section 2: RFQ Form Card (overlapping hero) -->
-    <section id="rfq-form" class="rfq-form" aria-label="Fiyat teklifi formu">
-      <div class="container-boxed">
-        <div class="rfq-form__card">
-          <h2 class="text-xl font-bold text-[var(--color-text-primary)] mb-4">Fiyat Teklifi Talebi</h2>
-          <form id="rfq-form-element" novalidate>
-            <div id="rfq-textarea-container" class="border border-[var(--color-border-default)] rounded-lg overflow-hidden transition-colors duration-200">
+    <section id="rfq-form" class="rfq-form -mt-10 relative z-20" aria-label="Fiyat teklifi formu">
+      <div class="max-w-[1200px] mx-auto px-4 xl:px-0">
+        <div class="bg-white rounded-lg shadow-md w-full" style="padding: 20px 24px;">
+          <h2 class="font-bold text-[#222222] mb-[20px]" style="font-size: 18px; font-family: Alibaba_B2B_Sans, Inter, sans-serif;">Talebinizin detaylarını yazın</h2>
+          <form id="rfq-form-element" class="w-full" novalidate>
+            <div id="rfq-textarea-container" class="border border-solid border-[#e5e5e5] rounded overflow-hidden transition-colors duration-200 hover:border-[#cc9900]" style="padding: 16px 16px 8px; min-height: 146px; background-color: #f8f8f8;">
+              
+              <!-- File Upload Button inside textbox area (Alibaba style) -->
+              <div class="mb-3">
+                <button
+                  type="button"
+                  id="rfq-upload-btn"
+                  class="inline-flex items-center justify-center px-3 py-1.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#cc9900]"
+                  data-tooltip-target="upload-tooltip"
+                  data-tooltip-placement="top"
+                >
+                  <svg class="w-4 h-4 mr-1.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                  </svg>
+                  Dosya yükle
+                </button>
+                <input
+                  type="file"
+                  id="rfq-file-input"
+                  class="hidden"
+                  multiple
+                  accept="${FILE_UPLOAD_CONFIG.allowedExtensions.join(',')}"
+                />
+              </div>
+
               <textarea
                 id="rfq-details"
-                class="w-full p-4 text-sm text-[var(--color-text-primary)] bg-[var(--color-input-bg)] placeholder:text-[var(--color-input-placeholder)] resize-y min-h-[120px] border-none outline-none focus-ring"
-                placeholder="Ürün detaylarını yazın... (örn: malzeme, boyut, miktar, renk tercihleri)"
-                rows="4"
+                class="w-full p-0 text-sm text-[#222222] bg-transparent placeholder:text-[#999999] resize-none border-none outline-none focus:ring-0"
+                placeholder="Bir görsel, dosya ekleyin veya anahtar kelimeler yazın. Örneğin: &quot;Eklediğim tasarıma göre 100 adet oyuncak ayı&quot;"
+                rows="2"
               ></textarea>
-              <div class="flex flex-wrap items-center justify-between gap-3 p-3 border-t border-[var(--color-border-muted)]">
-                <div class="flex items-center gap-3">
-                  <!-- File Upload Button -->
-                  <button
-                    type="button"
-                    id="rfq-upload-btn"
-                    class="rfq-form__upload-btn focus-ring"
-                    data-tooltip-target="upload-tooltip"
-                    data-tooltip-placement="top"
-                  >
-                    <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
-                    </svg>
-                    Dosya yükle
-                  </button>
-                  <input
-                    type="file"
-                    id="rfq-file-input"
-                    class="hidden"
-                    multiple
-                    accept="${FILE_UPLOAD_CONFIG.allowedExtensions.join(',')}"
-                  />
-                  <!-- Flowbite Tooltip -->
-                  <div id="upload-tooltip" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-xs opacity-0 tooltip dark:bg-gray-700">
-                    En fazla ${FILE_UPLOAD_CONFIG.maxFiles} dosya. Desteklenen: ${FILE_UPLOAD_CONFIG.allowedFormatsDisplay}
-                    <div class="tooltip-arrow" data-popper-arrow></div>
-                  </div>
-
-                  <!-- AI Toggle -->
-                  <label class="flex items-center gap-2 cursor-pointer">
-                    <input
-                      type="checkbox"
-                      id="rfq-ai-toggle"
-                      class="w-4 h-4 text-[var(--color-primary-500)] bg-gray-100 border-gray-300 rounded focus:ring-[var(--color-primary-500)] focus:ring-2"
-                      checked
-                    />
-                    <span class="rfq-ai-badge">AI</span>
-                    <span class="text-sm text-[var(--color-text-secondary)]">Akıllı eşleştirme</span>
-                  </label>
+            </div>
+              
+            <!-- Action Bar (Outside Textarea) -->
+            <div class="flex flex-wrap items-center justify-between gap-3 mt-4">
+              <div class="flex items-center gap-3">
+                <!-- Flowbite Tooltip -->
+                <div id="upload-tooltip" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-xs opacity-0 tooltip dark:bg-gray-700">
+                  En fazla ${FILE_UPLOAD_CONFIG.maxFiles} dosya. Desteklenen: ${FILE_UPLOAD_CONFIG.allowedFormatsDisplay}
+                  <div class="tooltip-arrow" data-popper-arrow></div>
                 </div>
 
-                <!-- Submit CTA -->
-                <button type="submit" class="rfq-form__cta focus-ring">
-                  RFQ detaylarını yaz
-                </button>
+                <!-- AI Toggle -->
+                <label class="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    id="rfq-ai-toggle"
+                    class="w-4 h-4 text-[var(--color-primary-600)] bg-white border-gray-300 rounded focus:ring-[var(--color-primary-600)] focus:ring-2"
+                    checked
+                  />
+                  <div class="flex items-center text-sm text-[#666666]">
+                    <img src="${aiIconUrl}" alt="AI" class="w-4 h-4 mr-1 object-contain" />
+                    Yapay Zeka ile kolayca RFQ oluşturun
+                    <svg class="w-3.5 h-3.5 ml-1 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                  </div>
+                </label>
               </div>
+
+              <!-- Submit CTA (Dynamic Color) -->
+              <button type="submit" class="px-8 py-2.5 text-base font-bold text-white bg-[var(--color-primary-600)] hover:bg-[var(--color-primary-700)] rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--color-primary-600)]">
+                RFQ detaylarını yaz
+              </button>
             </div>
           </form>
         </div>
@@ -193,11 +228,18 @@ appEl.innerHTML = `
     </section>
   </main>
 
-  <!-- Footer placeholder -->
+  <!-- Footer Section -->
+  <footer>
+    ${FooterLinks()}
+  </footer>
 `;
 
-// --- Initialize Flowbite ---
+// --- Initialize Flowbite & Custom Behaviors ---
+initMegaMenu();
 initFlowbite();
+initStickyHeaderSearch();
+initMobileDrawer();
+initAnimatedPlaceholder('#topbar-compact-search-input');
 
 // --- Initialize Swiper Testimonial Carousel ---
 new Swiper('.rfq-testimonial .swiper', {

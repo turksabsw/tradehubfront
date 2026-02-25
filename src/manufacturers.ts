@@ -4,6 +4,9 @@ import { initFlowbite } from 'flowbite'
 // Header components
 import { TopBar, MobileSearchTabs, initMobileDrawer, SubHeader, initStickyHeaderSearch, MegaMenu, initMegaMenu } from './components/header'
 
+// Shared components
+import { Breadcrumb } from './components/shared/Breadcrumb'
+
 // Footer components
 import { FooterLinks } from './components/footer'
 
@@ -34,6 +37,9 @@ appEl.innerHTML = `
 
   <!-- Main Content -->
   <main class="flex-1 min-w-0 bg-[#f0f2f5] dark:bg-gray-900 pb-12">
+    <div class="container-boxed">
+      ${Breadcrumb([{ label: 'Üreticiler' }])}
+    </div>
     ${ManufacturersLayout()}
   </main>
 

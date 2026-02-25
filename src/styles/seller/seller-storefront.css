@@ -1,0 +1,240 @@
+/**
+ * Seller Storefront — Custom BEM CSS
+ * Component-specific styles that cannot be achieved with Tailwind utilities alone.
+ * Imported by src/seller-storefront.ts
+ */
+
+/* ═══════════════════════════════════════════════════════════
+   C2: Store Nav — Sticky Shadow
+   ═══════════════════════════════════════════════════════════ */
+
+.store-nav {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-sticky, 20);
+  transition: box-shadow 0.2s ease;
+}
+
+.store-nav--scrolled {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   C3: Hero Banner — Dot Pagination
+   ═══════════════════════════════════════════════════════════ */
+
+.store-hero__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+  padding: 0;
+  margin: 0 2px;
+  display: inline-block;
+  opacity: 1;
+}
+
+.store-hero__dot--active {
+  background: #f97316; /* var(--store-accent) */
+  transform: scale(1.2);
+}
+
+.store-hero__dot:hover:not(.store-hero__dot--active) {
+  background: rgba(255, 255, 255, 0.8);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   C7: Company Info Variant B — Custom Scrollbar
+   ═══════════════════════════════════════════════════════════ */
+
+.company-info__scrollable-text {
+  scrollbar-width: thin;
+  scrollbar-color: #d1d5db transparent;
+}
+
+.company-info__scrollable-text::-webkit-scrollbar {
+  width: 6px;
+}
+
+.company-info__scrollable-text::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.company-info__scrollable-text::-webkit-scrollbar-thumb {
+  background-color: #d1d5db;
+  border-radius: 3px;
+}
+
+.company-info__scrollable-text::-webkit-scrollbar-thumb:hover {
+  background-color: #9ca3af;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   C8: Certificates — Navigation Arrows & Dots
+   ═══════════════════════════════════════════════════════════ */
+
+.certificates__prev,
+.certificates__next {
+  width: 32px;
+  height: 48px;
+  background: #e5e5e5;
+  border-radius: var(--radius-sm, 4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  transition: background-color 0.2s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.certificates__prev {
+  left: -16px;
+}
+
+.certificates__next {
+  right: -16px;
+}
+
+.certificates__prev:hover,
+.certificates__next:hover {
+  background: #d1d5db;
+}
+
+/* Swiper disabled state */
+.certificates__prev.swiper-button-disabled,
+.certificates__next.swiper-button-disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Certificates Dot Pagination */
+.certificates__dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.certificates__dots .swiper-pagination-bullet {
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  background: #d1d5db;
+  opacity: 1;
+  transition: background-color 0.2s ease;
+}
+
+.certificates__dots .swiper-pagination-bullet-active {
+  background: #f97316;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   C13: Floating Actions — Responsive Bottom Bar
+   ═══════════════════════════════════════════════════════════ */
+
+/* Tablet — smaller buttons, icon only */
+@media (max-width: 768px) and (min-width: 481px) {
+  .floating-actions__btn {
+    width: 44px;
+    height: 60px;
+  }
+  .floating-actions__btn span {
+    display: none;
+  }
+}
+
+/* Mobile — bottom bar transformation */
+@media (max-width: 480px) {
+  .floating-actions {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: auto !important;
+    flex-direction: row;
+    z-index: var(--z-fixed, 40);
+  }
+  .floating-actions__btn {
+    width: 50%;
+    height: 48px;
+    border-radius: 0;
+    flex-direction: row;
+    gap: 8px;
+  }
+  .floating-actions__btn span {
+    display: inline;
+    font-size: 13px;
+  }
+  /* Add bottom padding to body so content not hidden behind bar */
+  body {
+    padding-bottom: 48px;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   C6: Category Product Listing — Video Play Button
+   ═══════════════════════════════════════════════════════════ */
+
+.product-card__video-play {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  width: 28px;
+  height: 28px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+  cursor: pointer;
+}
+
+.product-card__video-play:hover {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Badge System (C6)
+   ═══════════════════════════════════════════════════════════ */
+
+.badge--main-product {
+  background: #fef3c7;
+  color: #92400e;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.badge--certified {
+  background: #dbeafe;
+  color: #1e40af;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Mobile Nav Panel (C2)
+   ═══════════════════════════════════════════════════════════ */
+
+.store-nav__mobile-menu {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.store-nav__mobile-menu--open {
+  max-height: 80vh;
+  overflow-y: auto;
+}

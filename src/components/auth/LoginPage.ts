@@ -31,7 +31,7 @@ export function LoginPage(): string {
         <!-- Sign in with code link (Absolute positioned on desktop, relative on mobile) -->
         <a 
           href="javascript:void(0)" 
-          class="lg:absolute lg:top-1 lg:right-0 text-sm text-gray-500 hover:text-orange-600 dark:text-gray-400 dark:hover:text-orange-400 transition-colors flex items-center gap-1"
+          class="lg:absolute lg:top-1 lg:right-0 text-sm text-gray-500 auth-link-hover dark:text-gray-400 dark:auth-link-hover transition-colors flex items-center gap-1"
         >
           <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
@@ -50,7 +50,7 @@ export function LoginPage(): string {
             type="email" 
             id="email" 
             name="email"
-            class="w-full h-12 px-4 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded text-gray-900 dark:text-white placeholder-gray-500 focus:ring-1 focus:ring-orange-500 focus:border-orange-500 transition-colors"
+            class="w-full h-12 px-4 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded text-gray-900 dark:text-white placeholder-gray-500 auth-input-focus transition-colors"
             placeholder="E-posta adresi"
             required
           >
@@ -63,7 +63,7 @@ export function LoginPage(): string {
             type="password" 
             id="password" 
             name="password"
-            class="w-full h-12 px-4 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded text-gray-900 dark:text-white placeholder-gray-500 focus:ring-1 focus:ring-orange-500 focus:border-orange-500 transition-colors"
+            class="w-full h-12 px-4 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded text-gray-900 dark:text-white placeholder-gray-500 auth-input-focus transition-colors"
             placeholder="Şifre"
             required
           >
@@ -80,7 +80,7 @@ export function LoginPage(): string {
 
         <!-- Forgot Password -->
         <div class="text-right">
-          <a href="javascript:void(0)" class="text-sm font-medium text-gray-900 dark:text-gray-300 hover:underline">
+          <a href="${baseUrl}forgot-password.html" class="text-sm font-medium text-gray-900 dark:text-gray-300 hover:underline">
             Şifremi unuttum?
           </a>
         </div>
@@ -88,7 +88,7 @@ export function LoginPage(): string {
         <!-- Submit Button -->
         <button 
           type="submit" 
-          class="w-full h-12 bg-[#FF6600] hover:bg-[#E65C00] text-white font-bold rounded-full transition-colors text-lg"
+          class="w-full h-12 auth-btn-primary font-bold rounded-full transition-colors text-lg"
         >
           Devam Et
         </button>

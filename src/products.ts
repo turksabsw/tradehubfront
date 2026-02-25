@@ -10,6 +10,9 @@ import { initFlowbite } from 'flowbite'
 // Header components (reuse from main page)
 import { TopBar, initMobileDrawer, SubHeader, initStickyHeaderSearch, MegaMenu, initMegaMenu, initHeaderCart } from './components/header'
 
+// Shared components
+import { Breadcrumb } from './components/shared/Breadcrumb'
+
 // Footer components
 import { FooterLinks } from './components/footer'
 
@@ -75,6 +78,20 @@ function resolveKeyword(): string {
 
 const searchKeyword = resolveKeyword();
 
+// Build dynamic breadcrumb from URL params
+const productsBreadcrumb = (() => {
+  const crumbs: { label: string; href?: string }[] = [
+    { label: 'Ürünler', href: 'products.html' },
+  ];
+  if (categoryParam) {
+    const cat = megaCategories.find(c => c.id === categoryParam);
+    crumbs.push({ label: cat ? cat.name : escapeHtml(categoryParam) });
+  } else if (queryParam) {
+    crumbs.push({ label: escapeHtml(queryParam.replace(/\+/g, ' ')) });
+  }
+  return crumbs;
+})();
+
 const appEl = document.querySelector<HTMLDivElement>('#app')!;
 appEl.classList.add('relative');
 appEl.innerHTML = `
@@ -90,6 +107,7 @@ appEl.innerHTML = `
   <main>
     <section class="py-4 lg:py-6" style="background: var(--products-bg, #f9fafb);">
       <div class="container-boxed">
+        ${Breadcrumb(productsBreadcrumb)}
         <!-- Search Header (keyword, product count, sorting, view toggle) -->
         ${SearchHeader({ keyword: searchKeyword })}
 

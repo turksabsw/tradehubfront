@@ -1,0 +1,117 @@
+/**
+ * C10: Company Introduction Detail (Optional — PRO sellers)
+ * Structured company info grid with verification badges, photo grid, CTAs
+ */
+import type { CompanyInfoCell, CompanyPhoto, SellerProfile } from '../../types/seller/types';
+
+function getInfoIconSvg(iconName: string): string {
+  const icons: Record<string, string> = {
+    'globe': '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>',
+    'calendar': '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>',
+    'factory': '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>',
+    'box': '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>',
+    'map': '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/>',
+    'chart': '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>',
+  };
+  return icons[iconName] || icons['globe'];
+}
+
+export function CompanyIntroduction(
+  seller: SellerProfile,
+  cells: CompanyInfoCell[],
+  photos: CompanyPhoto[]
+): string {
+  if (!cells || !cells.length) return '';
+
+  return `
+    <section id="company-introduction" class="py-12" aria-label="Şirket tanıtımı">
+      <div class="max-w-[var(--container-lg)] mx-auto px-4 lg:px-6 xl:px-8">
+        <div class="bg-white border border-[var(--card-border-color)] rounded-[var(--radius-lg)] shadow-md p-6 lg:p-8">
+
+          <!-- Header with badges -->
+          <div class="flex items-center gap-3 mb-6">
+            <h2 class="text-[22px] font-bold text-[#111827]">${seller.name}</h2>
+            <span class="inline-flex items-center gap-1 text-[13px] text-[#2563eb]">
+              <svg class="w-4 h-4" viewBox="0 0 16 16" fill="none">
+                <circle cx="8" cy="8" r="7" fill="#2563eb"/>
+                <path d="M5.5 8.5l2 2 4-4" stroke="#fff" stroke-width="1.5" fill="none"/>
+              </svg>
+              ${seller.verificationType}
+            </span>
+            ${seller.verificationBadgeType === 'pro' ? `
+              <span class="inline-flex items-center bg-[var(--store-accent)] text-white text-[11px] font-semibold px-2 py-0.5 rounded-sm uppercase">PRO</span>
+            ` : ''}
+          </div>
+
+          <!-- 3×2 Info Grid -->
+          <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 mb-8">
+            ${cells.map(cell => `
+              <div class="flex items-start gap-3">
+                <div class="w-10 h-10 rounded-full bg-[#fff7ed] flex items-center justify-center flex-shrink-0">
+                  <svg class="w-5 h-5 text-[var(--store-accent)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    ${getInfoIconSvg(cell.icon)}
+                  </svg>
+                </div>
+                <div class="flex flex-col">
+                  <span class="text-[12px] text-[var(--store-accent)] font-medium uppercase">${cell.label}</span>
+                  <span class="text-[14px] text-[#111827] font-medium mt-0.5">${cell.value}</span>
+                  ${cell.verified ? `
+                    <span class="flex items-center gap-1 text-[11px] text-[#16a34a] mt-0.5">
+                      <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                      </svg>
+                      Doğrulandı
+                    </span>
+                  ` : ''}
+                </div>
+              </div>
+            `).join('')}
+          </div>
+
+          <!-- Photo Grid -->
+          ${photos && photos.length ? `
+            <div class="grid grid-cols-2 xl:grid-cols-4 gap-3 mb-6">
+              ${photos.map(photo => `
+                <div class="relative rounded-[var(--radius-md)] overflow-hidden aspect-[4/3]">
+                  <img src="${photo.image}" alt="${photo.caption}" class="w-full h-full object-cover" loading="lazy" />
+                  ${photo.hasVideo ? `
+                    <div class="absolute inset-0 flex items-center justify-center">
+                      <div class="w-14 h-14 bg-black/50 hover:bg-black/70 rounded-full flex items-center justify-center transition-colors cursor-pointer">
+                        <svg class="w-6 h-6 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M8 5v14l11-7z"/>
+                        </svg>
+                      </div>
+                    </div>
+                  ` : ''}
+                  <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/50 to-transparent py-2 px-3">
+                    <span class="text-white text-[11px] font-medium">${photo.caption}</span>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          ` : ''}
+
+          <!-- CTA Buttons -->
+          <div class="flex flex-wrap items-center gap-3">
+            <button class="bg-[#f97316] hover:bg-[#ea580c] text-white font-semibold text-[14px] rounded-[var(--radius-button)] px-6 py-2.5 transition-colors cursor-pointer flex items-center gap-2"
+                    onclick="document.getElementById('contact-form')?.scrollIntoView({behavior:'smooth'})">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+              </svg>
+              Contact Supplier
+            </button>
+            <button class="bg-transparent border border-[#d1d5db] hover:bg-[#f9fafb] text-[#374151] font-medium text-[14px] rounded-[var(--radius-button)] px-6 py-2.5 transition-colors cursor-pointer">
+              Start Order
+            </button>
+            <a href="#company-info" class="text-[#f97316] font-medium text-[14px] hover:underline flex items-center gap-1">
+              Learn more
+              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  `;
+}

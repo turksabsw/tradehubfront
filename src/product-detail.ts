@@ -15,9 +15,11 @@ import { FooterLinks } from './components/footer'
 // Floating components
 import { FloatingPanel, initFloatingPanel } from './components/floating'
 
+// Shared components
+import { Breadcrumb } from './components/shared/Breadcrumb'
+
 // Product detail components
 import {
-  Breadcrumb,
   ProductTitleBar,
   ProductImageGallery,
   initImageGallery,
@@ -41,8 +43,17 @@ import {
   initMobileLayout,
 } from './components/product'
 
+// Product mock data (for breadcrumb)
+import { mockProduct } from './data/mockProduct'
+
 // Utilities
 import { initAnimatedPlaceholder } from './utils/animatedPlaceholder'
+
+// Build breadcrumb from product category data (skip first "Ana Sayfa" since Breadcrumb adds it)
+const pdCrumbs = mockProduct.category.slice(1).map((label, i, arr) => ({
+  label,
+  ...(i < arr.length - 1 ? { href: `products.html?q=${encodeURIComponent(label)}` } : {}),
+}));
 
 const appEl = document.querySelector<HTMLDivElement>('#app')!;
 appEl.classList.add('relative');
@@ -63,7 +74,7 @@ appEl.innerHTML = `
         <div class="container-boxed">
           <div id="pd-hero-grid">
             <div id="pd-hero-left">
-              ${Breadcrumb()}
+              ${Breadcrumb(pdCrumbs)}
               ${ProductTitleBar()}
               <div id="pd-hero-gallery">
                 ${ProductImageGallery()}

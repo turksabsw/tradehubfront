@@ -9,6 +9,9 @@ import { initFlowbite } from 'flowbite'
 // Header components (reuse from main page)
 import { TopBar, initMobileDrawer, SubHeader, initStickyHeaderSearch, MegaMenu, initMegaMenu, initHeaderCart } from './components/header'
 
+// Shared components
+import { Breadcrumb } from './components/shared/Breadcrumb'
+
 // Footer components
 import { FooterLinks } from './components/footer'
 
@@ -34,6 +37,9 @@ appEl.innerHTML = `
 
   <!-- Main Content -->
   <main>
+    <div class="container-boxed">
+      ${Breadcrumb([{ label: 'Hesabım' }])}
+    </div>
     ${BuyerDashboardLayout({ data: mockBuyerDashboardData })}
   </main>
 

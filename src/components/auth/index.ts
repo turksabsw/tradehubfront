@@ -68,6 +68,14 @@ export {
   type PasswordRequirements
 } from './AccountSetupForm';
 
+// Forgot Password Page
+export {
+  ForgotPasswordPage,
+  initForgotPasswordPage,
+  type ForgotPasswordStep,
+  type ForgotPasswordState
+} from './ForgotPasswordPage';
+
 // Register Page
 export {
   RegisterPage,

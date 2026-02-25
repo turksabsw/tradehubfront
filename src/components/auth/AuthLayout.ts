@@ -73,7 +73,7 @@ function renderMobileHeader(options: AuthLayoutOptions = {}): string {
  */
 function renderPromoBanner(): string {
   return `
-    <div class="auth-promo-banner flex flex-col items-center justify-center px-12 py-12 text-center text-white h-full relative overflow-hidden bg-[#FF6600]">
+    <div class="auth-promo-banner flex flex-col items-center justify-center px-12 py-12 text-center text-white h-full relative overflow-hidden auth-accent-bg">
       <!-- Background Pattern/Effect -->
       <div class="absolute inset-0 opacity-10">
          <svg class="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
@@ -146,7 +146,7 @@ export function AuthLayout(content: string, options: AuthLayoutOptions = {}): st
       <div class="flex min-h-screen">
 
         <!-- Left: Promo Banner (Desktop only) -->
-        <div class="hidden lg:flex lg:w-[45%] xl:w-[50%] bg-[#FF6600]">
+        <div class="hidden lg:flex lg:w-[45%] xl:w-[50%] auth-accent-bg">
           ${renderPromoBanner()}
         </div>
 
@@ -154,7 +154,7 @@ export function AuthLayout(content: string, options: AuthLayoutOptions = {}): st
         <div class="flex-1 lg:w-[55%] xl:w-[50%] relative bg-white dark:bg-gray-900">
 
           <!-- Mobile: Full-height orange background -->
-          <div class="lg:hidden absolute inset-0 bg-[#FF6600]"></div>
+          <div class="lg:hidden absolute inset-0 auth-accent-bg"></div>
 
           <!-- Responsive content wrapper -->
           <div class="relative z-10 w-full min-h-screen flex flex-col lg:items-center lg:justify-center">
