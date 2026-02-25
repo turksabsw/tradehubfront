@@ -2,6 +2,7 @@
  * C9: Why Choose Us / Advantages (Optional)
  * Variant A: 5 icon cards (Standard sellers)
  * Variant B: 3 feature bars (PRO sellers)
+ * BEM Block: why-choose
  */
 import type { Advantage, Feature } from '../../types/seller/types';
 
@@ -21,21 +22,21 @@ function getIconSvg(iconName: string): string {
 
 function renderVariantA(advantages: Advantage[]): string {
   return `
-    <section id="why-choose" class="why-choose why-choose__variant-a py-12" aria-label="Neden bizi tercih etmelisiniz">
+    <section id="why-choose" class="why-choose why-choose__variant-a py-16" aria-label="Neden bizi tercih etmelisiniz">
       <div class="max-w-[var(--container-lg)] mx-auto px-4 lg:px-6 xl:px-8">
-        <h2 class="text-[28px] font-bold text-[#1e3a5f] uppercase text-center mb-8">
+        <h2 class="why-choose__title text-[54px] xl:text-[48px] md:text-[36px] font-black text-[#f97316] uppercase text-center tracking-tight mb-12">
           Why Choose Us
         </h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-6">
+        <div class="why-choose__grid grid grid-cols-5 xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-1 gap-6">
           ${advantages.map(adv => `
-            <div class="flex flex-col items-center text-center p-4">
-              <div class="w-[120px] h-[120px] rounded-full border-2 border-[var(--store-accent)] flex items-center justify-center mb-4">
-                <svg class="w-10 h-10 text-[var(--store-accent)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div class="why-choose__icon-card flex flex-col items-center text-center p-4">
+              <div class="why-choose__icon w-[120px] h-[120px] rounded-full border-[3px] border-[#f97316] flex items-center justify-center mb-4">
+                <svg class="w-12 h-12 text-[#f97316]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   ${getIconSvg(adv.icon)}
                 </svg>
               </div>
-              <h3 class="text-[16px] font-bold text-[#111827] uppercase mb-2">${adv.title}</h3>
-              <p class="text-[13px] text-[#6b7280] leading-relaxed">${adv.description}</p>
+              <h3 class="text-[16px] font-bold text-[#111827] dark:text-gray-50 uppercase mb-2">${adv.title}</h3>
+              <p class="text-[13px] text-[#6b7280] dark:text-gray-400 leading-relaxed">${adv.description}</p>
             </div>
           `).join('')}
         </div>
@@ -48,9 +49,9 @@ function renderVariantB(features: Feature[]): string {
   return `
     <section id="why-choose" class="why-choose why-choose__variant-b py-12" aria-label="Neden bizi tercih etmelisiniz">
       <div class="max-w-[var(--container-lg)] mx-auto px-4 lg:px-6 xl:px-8">
-        <div class="why-choose__bars grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <div class="why-choose__bars grid grid-cols-3 lg:grid-cols-1 gap-4">
           ${features.map(feat => `
-            <div class="why-choose__feature-bar flex items-center gap-4 bg-[#7c6340] rounded-[var(--radius-lg)] px-8 py-5 hover:bg-[#6b5535] transition-colors cursor-pointer">
+            <div class="why-choose__feature-bar flex items-center gap-4 bg-[#7c6340] dark:bg-[#5a4a2a] rounded-[var(--radius-lg)] px-8 py-5 hover:bg-[#6b5535] dark:hover:bg-[#4a3d22] transition-colors cursor-pointer">
               <svg class="w-10 h-10 text-white flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 ${getIconSvg(feat.icon)}
               </svg>
