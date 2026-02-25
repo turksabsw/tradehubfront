@@ -672,6 +672,17 @@
     --z-max: 100;
 
     /* ==========================================================
+     SELLER STOREFRONT — STORE-SPECIFIC TOKENS
+     ========================================================== */
+
+    --color-store-nav-bg: #e8540c;
+    --color-store-nav-text: #ffffff;
+    --color-store-nav-active-overlay: rgba(0, 0, 0, 0.15);
+    --color-store-accent: #f97316;
+    --color-store-accent-hover: #ea580c;
+    --z-fixed: 40;
+
+    /* ==========================================================
      RFQ PAGE — SPECIFIC TOKENS
      ========================================================== */
 
