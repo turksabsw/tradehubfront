@@ -215,7 +215,7 @@ export function FooterLinks(): string {
   return `
     <section
       class="border-t"
-      style="background-color: var(--footer-bg); border-color: var(--footer-border-color);"
+      style="background-color: var(--footer-bg); border-color: var(--footer-border-color); min-height: 437px;"
       aria-label="Footer navigation"
     >
       <div class="container-boxed py-10 md:py-14">

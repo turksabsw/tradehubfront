@@ -16,13 +16,12 @@ export function Checkbox({ id, checked, indeterminate = false, onChange }: Check
   const checkedAttr = checked ? ' checked' : '';
   const indeterminateData = indeterminate ? ' data-indeterminate="true"' : '';
   const onChangeAttr = onChange ? ` data-onchange="${onChange}"` : '';
-
   const isActive = checked || indeterminate;
-  const activeCls = isActive ? ' border-transparent bg-[#FF6600]' : '';
+  const activeCls = isActive ? ' border-transparent bg-[#222]' : ' border-2 border-gray-400';
 
   return `
     <label class="next-checkbox-wrapper inline-flex items-center gap-2 cursor-pointer select-none${checked ? ' checked' : ''}${indeterminate ? ' indeterminate' : ''}" for="${id}">
-      <span class="next-checkbox inline-block relative w-6 h-6 border border-[#d8d8d8] rounded-[4px] bg-white flex-shrink-0 transition-all duration-100${activeCls}">
+      <span class="next-checkbox inline-block relative w-6 h-6 rounded-[4px] bg-white flex-shrink-0 transition-all duration-100${activeCls}">
         <input
           type="checkbox"
           id="${id}"
@@ -58,7 +57,7 @@ export function initCheckbox(container?: HTMLElement): void {
       wrapper.classList.add('indeterminate');
       const checkboxSpan = wrapper.querySelector('.next-checkbox');
       if (checkboxSpan) {
-        checkboxSpan.classList.add('border-transparent', 'bg-[#FF6600]');
+        checkboxSpan.classList.add('border-transparent', 'bg-[#222]');
         checkboxSpan.classList.remove('border-[#d8d8d8]', 'bg-white');
       }
     }
@@ -74,8 +73,13 @@ export function initCheckbox(container?: HTMLElement): void {
       const checkboxSpan = wrapper.querySelector('.next-checkbox');
       if (checkboxSpan) {
         checkboxSpan.classList.toggle('border-transparent', input.checked);
-        checkboxSpan.classList.toggle('bg-[#FF6600]', input.checked);
-        checkboxSpan.classList.toggle('border-[#d8d8d8]', !input.checked);
+        checkboxSpan.classList.toggle('bg-[#222]', input.checked);
+        checkboxSpan.classList.toggle('border-gray-400', !input.checked);
+        checkboxSpan.classList.toggle('border-2', !input.checked);
+        // Ensure standard border is removed when checked
+        if (input.checked) {
+          checkboxSpan.classList.remove('border-2');
+        }
         checkboxSpan.classList.toggle('bg-white', !input.checked);
       }
 

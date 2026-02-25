@@ -19,7 +19,7 @@ import type { SidebarSection } from '../../types/buyerDashboard';
  */
 function renderSection(section: SidebarSection, expanded: boolean): string {
   const title = section.title && expanded
-    ? `<h3 class="sidebar__section-title px-4 pt-4 pb-1 text-[11px] font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">${section.title}</h3>`
+    ? `<h3 class="sidebar__section-title px-6 pt-4 pb-1 text-[12px] font-normal uppercase tracking-wider text-[#999] dark:text-gray-500">${section.title}</h3>`
     : '';
 
   const items = section.items
@@ -60,11 +60,11 @@ export function renderSidebar(expanded = true): string {
   return `
     <aside
       id="buyer-sidebar"
-      class="sidebar sidebar--${expanded ? 'expanded' : 'collapsed'} fixed top-0 left-0 z-40 h-screen flex flex-col bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700 transition-[width] duration-200 ease-in-out ${expanded ? 'w-[240px]' : 'w-[64px]'}"
+      class="sidebar sidebar--${expanded ? 'expanded' : 'collapsed'} sticky top-[42px] z-20 flex flex-col bg-[#F5F5F5] dark:bg-gray-900 rounded-lg h-[calc(100vh-42px)] transition-shadow"
       role="navigation"
       aria-label="Buyer dashboard sidebar"
     >
-      <div class="sidebar__menu flex-1 overflow-y-auto overflow-x-hidden py-2">
+      <div class="sidebar__menu flex-1 py-2">
         ${sections}
       </div>
       ${discoverLink}
@@ -87,12 +87,41 @@ export function initSidebar(): void {
   const sidebar = document.getElementById('buyer-sidebar');
   if (!sidebar) return;
 
+  /* ──── URL-based active state ──── */
+  const currentPath = window.location.pathname;
+  const allItems = sidebar.querySelectorAll<HTMLElement>('[data-sidebar-item]');
+  const activeClasses = ['bg-white', 'text-gray-900', 'shadow-sm'];
+  const inactiveClasses = ['text-gray-700'];
+
+  allItems.forEach((el) => {
+    const href = el.getAttribute('href') || '';
+    const hrefPath = href.split('#')[0]; // strip hash
+    const isActive = hrefPath && currentPath.endsWith(hrefPath.replace(/^\//, ''));
+
+    // Remove old active styling
+    el.classList.remove(...activeClasses, 'bg-[#F0FFF0]', 'text-[#00B96B]');
+
+    if (isActive) {
+      el.classList.add(...activeClasses);
+      el.classList.remove(...inactiveClasses);
+    } else {
+      el.classList.add(...inactiveClasses);
+    }
+  });
+
   let closeTimer: ReturnType<typeof setTimeout> | null = null;
   let activeFlyout: HTMLElement | null = null;
 
   /* ──── Flyout helpers ──── */
 
-  function showFlyout(flyout: HTMLElement): void {
+  function positionFlyout(flyout: HTMLElement, _wrapper: HTMLElement): void {
+    const sidebarRect = sidebar!.getBoundingClientRect();
+    flyout.style.left = `${sidebarRect.right}px`;
+    flyout.style.top = `${sidebarRect.top}px`;
+    flyout.style.height = `${sidebarRect.height}px`;
+  }
+
+  function showFlyout(flyout: HTMLElement, wrapper: HTMLElement): void {
     if (activeFlyout && activeFlyout !== flyout) {
       activeFlyout.style.display = 'none';
     }
@@ -100,8 +129,11 @@ export function initSidebar(): void {
       clearTimeout(closeTimer);
       closeTimer = null;
     }
+    positionFlyout(flyout, wrapper);
     flyout.style.display = 'block';
     activeFlyout = flyout;
+    // Sidebar + flyout become one unified card
+    sidebar!.classList.add('shadow-md', 'rounded-r-none');
   }
 
   function scheduleClose(): void {
@@ -110,6 +142,8 @@ export function initSidebar(): void {
       if (activeFlyout) {
         activeFlyout.style.display = 'none';
         activeFlyout = null;
+        // Restore sidebar card shape
+        sidebar!.classList.remove('shadow-md', 'rounded-r-none');
       }
     }, 150);
   }
@@ -121,7 +155,7 @@ export function initSidebar(): void {
     if (!wrapper) return;
 
     const flyout = wrapper.querySelector<HTMLElement>('[data-sidebar-flyout]');
-    if (flyout) showFlyout(flyout);
+    if (flyout) showFlyout(flyout, wrapper);
   }, true);
 
   sidebar.addEventListener('mouseleave', (e: MouseEvent) => {
@@ -147,24 +181,12 @@ export function initSidebar(): void {
     if (flyout && activeFlyout === flyout) scheduleClose();
   }, true);
 
-  /* ──── Responsive breakpoint: 1024px ──── */
-
-  function applyBreakpoint(): void {
-    if (!sidebar) return;
-    const isWide = window.innerWidth >= 1024;
-    const isExpanded = sidebar.classList.contains('sidebar--expanded');
-
-    if (isWide && !isExpanded) {
-      sidebar.classList.replace('sidebar--collapsed', 'sidebar--expanded');
-      sidebar.classList.replace('w-[64px]', 'w-[240px]');
-      sidebar.innerHTML = renderSidebar(true).replace(/^<aside[^>]*>/, '').replace(/<\/aside>$/, '');
-    } else if (!isWide && isExpanded) {
-      sidebar.classList.replace('sidebar--expanded', 'sidebar--collapsed');
-      sidebar.classList.replace('w-[240px]', 'w-[64px]');
-      sidebar.innerHTML = renderSidebar(false).replace(/^<aside[^>]*>/, '').replace(/<\/aside>$/, '');
+  /* ──── Close flyout on scroll ──── */
+  window.addEventListener('scroll', () => {
+    if (activeFlyout) {
+      activeFlyout.style.display = 'none';
+      activeFlyout = null;
+      sidebar!.classList.remove('shadow-md', 'rounded-r-none');
     }
-  }
-
-  const mql = window.matchMedia('(min-width: 1024px)');
-  mql.addEventListener('change', applyBreakpoint);
+  }, { passive: true });
 }

@@ -5,7 +5,7 @@
  */
 
 import type { BuyerDashboardData } from '../../types/buyerDashboard';
-import { renderSidebar, initSidebar } from '../sidebar';
+import { initSidebar } from '../sidebar';
 import { NewBuyerInfo, initNewBuyerInfo } from './NewBuyerInfo';
 import { OrdersSection, initOrdersSection } from './OrdersSection';
 import { initOperationSlider } from './OperationSlider';
@@ -30,15 +30,10 @@ export function BuyerDashboardLayout({ data, emailVerified = true }: BuyerDashbo
     : '';
 
   return `
-    <div class="sc-buyer-dashboard bg-[#F5F5F5] min-h-screen">
+    <div class="sc-buyer-dashboard bg-[#F5F5F5]">
       <div class="max-w-[1425px] mx-auto px-4 py-4">
         ${emailBanner}
         <div class="flex gap-[14px] items-start">
-          <!-- Sidebar -->
-          <div class="w-[260px] flex-shrink-0">
-            ${renderSidebar()}
-          </div>
-
           <!-- Center Column -->
           <div class="flex-1 min-w-0 flex flex-col gap-[14px]">
             ${NewBuyerInfo({ user: data.user, stats: data.stats, notifications: data.notifications })}

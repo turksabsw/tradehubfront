@@ -80,7 +80,8 @@ const SUB_TAB_MORE_FILTERS = [
 
 export function HorizontalCategoryBar(): string {
   return `
-    <div class="relative bg-white rounded-md mb-8" data-factory-tab-wrapper>
+    <!-- Desktop layout (Category bar) -->
+    <div class="hidden lg:block relative bg-white rounded-md mb-8" data-factory-tab-wrapper>
 
       <!-- Tab Bar -->
       <div class="flex items-center h-[62px] border-b border-[#d8d8d8]">
@@ -110,8 +111,8 @@ export function HorizontalCategoryBar(): string {
       <div id="hm-mega-menu" class="hidden absolute left-0 right-0 top-[62px] z-50 bg-white rounded-b-lg py-8 px-5" style="box-shadow: rgba(0,0,0,0.12) 0 8px 20px 0">
         <ul class="grid grid-cols-4 grid-flow-col max-h-[400px] overflow-y-auto list-none m-0 p-0" style="grid-template-rows: repeat(11, auto);">
           ${ALL_CATEGORIES.map((cat, i) => {
-            const isHeader = COLUMN_HEADERS.includes(i);
-            return `
+    const isHeader = COLUMN_HEADERS.includes(i);
+    return `
               <li class="mb-3 pr-4 ${isHeader ? 'font-bold' : 'font-normal'} text-[#222]"
                   style="font-size: 14px; line-height: 21px;"
                   data-dropdown-cat="${cat}"
@@ -119,7 +120,7 @@ export function HorizontalCategoryBar(): string {
                 <a href="#" class="hover:text-primary-600 transition-colors">${cat}</a>
               </li>
             `;
-          }).join('')}
+  }).join('')}
         </ul>
       </div>
 
@@ -150,6 +151,18 @@ export function HorizontalCategoryBar(): string {
         </ul>
       </div>
 
+    </div>
+
+    <!-- Mobile layout (Filter bar) -->
+    <div class="lg:hidden flex items-center overflow-x-auto gap-2.5 pb-2 mb-1 no-scrollbar scroll-smooth">
+      <button class="flex items-center justify-center w-[30px] h-[30px] border border-gray-300 rounded-full shrink-0 bg-white">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" class="w-4 h-4 text-[#222]">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 0H3.75m12 12h3.75m-3.75 0a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 0H3.75m9.75-6h3.75m-3.75 0a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 0H3.75" />
+        </svg>
+      </button>
+      <button class="px-3.5 h-[30px] border border-gray-300 rounded-full text-[12px] font-medium whitespace-nowrap text-[#222] hover:bg-gray-50 flex items-center shrink-0">
+        Onaylanmış üreticiler
+      </button>
     </div>
   `;
 }

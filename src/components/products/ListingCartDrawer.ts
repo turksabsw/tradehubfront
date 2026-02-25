@@ -20,14 +20,14 @@ const productVisuals: Record<ProductImageKind, ProductVisual> = {
 
 /* ── Color maps per category ── */
 const categoryColorMap: Record<string, { label: string; hex: string }[]> = {
-  jewelry:     [{ label: 'Altin', hex: '#D4AF37' }, { label: 'Gumus', hex: '#C0C0C0' }, { label: 'Rose Gold', hex: '#B76E79' }, { label: 'Siyah', hex: '#1a1a1a' }, { label: 'Beyaz', hex: '#F5F5F5' }],
+  jewelry: [{ label: 'Altin', hex: '#D4AF37' }, { label: 'Gumus', hex: '#C0C0C0' }, { label: 'Rose Gold', hex: '#B76E79' }, { label: 'Siyah', hex: '#1a1a1a' }, { label: 'Beyaz', hex: '#F5F5F5' }],
   electronics: [{ label: 'Siyah', hex: '#1a1a1a' }, { label: 'Beyaz', hex: '#F5F5F5' }, { label: 'Mavi', hex: '#3B82F6' }, { label: 'Gumus', hex: '#C0C0C0' }],
-  clothing:    [{ label: 'Siyah', hex: '#1a1a1a' }, { label: 'Beyaz', hex: '#F5F5F5' }, { label: 'Gri', hex: '#9CA3AF' }, { label: 'Lacivert', hex: '#1E3A5F' }, { label: 'Kirmizi', hex: '#DC2626' }],
-  accessory:   [{ label: 'Siyah', hex: '#1a1a1a' }, { label: 'Kahverengi', hex: '#8B4513' }, { label: 'Taba', hex: '#D2691E' }, { label: 'Lacivert', hex: '#1E3A5F' }],
-  tools:       [{ label: 'Gumus', hex: '#C0C0C0' }, { label: 'Siyah', hex: '#1a1a1a' }, { label: 'Kirmizi', hex: '#DC2626' }, { label: 'Sari', hex: '#EAB308' }],
-  label:       [{ label: 'Beyaz', hex: '#F5F5F5' }, { label: 'Kraft', hex: '#C4A35A' }, { label: 'Seffaf', hex: '#E0E7EE' }, { label: 'Siyah', hex: '#1a1a1a' }],
-  crafts:      [{ label: 'Dogal', hex: '#DEB887' }, { label: 'Beyaz', hex: '#F5F5F5' }, { label: 'Pembe', hex: '#F9A8D4' }, { label: 'Mavi', hex: '#93C5FD' }],
-  packaging:   [{ label: 'Kraft', hex: '#C4A35A' }, { label: 'Beyaz', hex: '#F5F5F5' }, { label: 'Siyah', hex: '#1a1a1a' }, { label: 'Kahverengi', hex: '#8B4513' }],
+  clothing: [{ label: 'Siyah', hex: '#1a1a1a' }, { label: 'Beyaz', hex: '#F5F5F5' }, { label: 'Gri', hex: '#9CA3AF' }, { label: 'Lacivert', hex: '#1E3A5F' }, { label: 'Kirmizi', hex: '#DC2626' }],
+  accessory: [{ label: 'Siyah', hex: '#1a1a1a' }, { label: 'Kahverengi', hex: '#8B4513' }, { label: 'Taba', hex: '#D2691E' }, { label: 'Lacivert', hex: '#1E3A5F' }],
+  tools: [{ label: 'Gumus', hex: '#C0C0C0' }, { label: 'Siyah', hex: '#1a1a1a' }, { label: 'Kirmizi', hex: '#DC2626' }, { label: 'Sari', hex: '#EAB308' }],
+  label: [{ label: 'Beyaz', hex: '#F5F5F5' }, { label: 'Kraft', hex: '#C4A35A' }, { label: 'Seffaf', hex: '#E0E7EE' }, { label: 'Siyah', hex: '#1a1a1a' }],
+  crafts: [{ label: 'Dogal', hex: '#DEB887' }, { label: 'Beyaz', hex: '#F5F5F5' }, { label: 'Pembe', hex: '#F9A8D4' }, { label: 'Mavi', hex: '#93C5FD' }],
+  packaging: [{ label: 'Kraft', hex: '#C4A35A' }, { label: 'Beyaz', hex: '#F5F5F5' }, { label: 'Siyah', hex: '#1a1a1a' }, { label: 'Kahverengi', hex: '#8B4513' }],
 };
 
 /* ── Helpers ── */
@@ -103,7 +103,9 @@ function renderPreviewImage(color: ListingColorVariant): string {
   return `
     <div style="width:100%;height:100%;background:${v.background};display:flex;align-items:center;justify-content:center;position:relative;">
       <div style="position:absolute;inset:0;background:${color.hex};opacity:0.12;"></div>
-      ${renderPlaceholderSvg(color.imageKind, 120)}
+      <div style="position:relative;z-index:1;display:flex;align-items:center;justify-content:center;width:100%;height:100%;">
+        ${renderPlaceholderSvg(color.imageKind, 120)}
+      </div>
     </div>`;
 }
 
@@ -604,14 +606,18 @@ export function initListingCartDrawer(products: ProductListingCard[]): void {
       // Brief visual feedback on the card button
       const cardBtn = document.querySelector<HTMLElement>(`[data-add-to-cart="${product.id}"]`);
       if (cardBtn) {
-        const original = cardBtn.textContent;
+        const originalText = cardBtn.textContent;
+        const originalBg = cardBtn.style.background;
+        const originalColor = cardBtn.style.color;
+
         cardBtn.textContent = 'Eklendi!';
-        cardBtn.classList.replace('bg-orange-500', 'bg-green-500');
-        cardBtn.classList.replace('hover:bg-orange-600', 'hover:bg-green-600');
+        cardBtn.style.background = '#22c55e'; // Tailwind green-500
+        cardBtn.style.color = '#ffffff';
+
         setTimeout(() => {
-          cardBtn.textContent = original;
-          cardBtn.classList.replace('bg-green-500', 'bg-orange-500');
-          cardBtn.classList.replace('hover:bg-green-600', 'hover:bg-orange-600');
+          cardBtn.textContent = originalText;
+          cardBtn.style.background = originalBg;
+          cardBtn.style.color = originalColor;
         }, 1500);
       }
     }

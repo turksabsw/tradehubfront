@@ -284,8 +284,7 @@ function renderProductListingCard(card: ProductListingCard): string {
       <!-- Action buttons -->
       <div class="action-area-layout">
         <button type="button" class="searchx-product-e-abutton"
-                data-add-to-cart="${card.id}"
-                onclick="event.preventDefault(); event.stopPropagation();">
+                data-add-to-cart="${card.id}">
           Sepete ekle
         </button>
         <button type="button" class="searchx-product-e-abutton"
@@ -336,7 +335,7 @@ function renderNoResults(): string {
 }
 
 /** No-op — ProductListingGrid uses CSS grid, no JS initialization needed. */
-export function initProductListingGrid(): void {}
+export function initProductListingGrid(): void { }
 
 /**
  * Navigate a product slider to the given index using translateX.

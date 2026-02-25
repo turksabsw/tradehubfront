@@ -43,7 +43,7 @@ appEl.innerHTML = `
   </div>
 
   <!-- Mobile Search Tabs (Products | Manufacturers | Worldwide) — non-sticky -->
-  ${MobileSearchTabs()}
+  ${MobileSearchTabs('products')}
 
   <!-- Mobile Category Bar (Alibaba-style, mobile/tablet only) -->
   ${MobileCategoryBar()}

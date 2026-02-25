@@ -40,9 +40,9 @@ export function CartPage({ suppliers, summary, assuranceItems }: CartPageProps):
 
   return `
     <div class="sc-cart-page max-w-[1640px] mx-auto px-4 py-6">
-      <div class="flex gap-5 items-start">
+      <div class="flex flex-col lg:flex-row gap-5 items-start w-full">
         <!-- Left Column -->
-        <div class="flex-1 min-w-0 flex flex-col gap-4">
+        <div class="w-full lg:flex-1 lg:min-w-0 flex flex-col gap-4">
           ${CartHeader()}
           ${BatchSelectBar({ totalCount: totalItems, selectedCount })}
           <div class="sc-cart-supplier-list flex flex-col gap-4">
@@ -51,7 +51,7 @@ export function CartPage({ suppliers, summary, assuranceItems }: CartPageProps):
         </div>
 
         <!-- Right Column (Sticky Summary) -->
-        <div class="w-[425px] flex-shrink-0 sticky top-5 self-start">
+        <div class="w-full lg:w-[425px] flex-shrink-0 lg:sticky lg:top-[71px] self-start">
           ${CartSummary(summary, assuranceItems)}
         </div>
       </div>
@@ -332,7 +332,7 @@ function syncBatchBar(): void {
   // Count text
   const countEl = page.querySelector('.sc-c-batch-count');
   if (countEl) {
-    countEl.textContent = selected > 0 ? `(${selected}/${total})` : '';
+    countEl.textContent = `(${total})`;
   }
 
   // Delete button disabled state
@@ -370,8 +370,10 @@ function syncCheckboxVisual(input: HTMLInputElement): void {
   const span = wrapper.querySelector('.next-checkbox');
   if (span) {
     span.classList.toggle('border-transparent', isActive);
-    span.classList.toggle('bg-[#FF6600]', isActive);
-    span.classList.toggle('border-[#d8d8d8]', !isActive);
+    span.classList.toggle('bg-[#222]', isActive);
+    span.classList.toggle('border-gray-400', !isActive);
+    span.classList.toggle('border-2', !isActive);
+    if (isActive) span.classList.remove('border-2');
     span.classList.toggle('bg-white', !isActive);
   }
 }

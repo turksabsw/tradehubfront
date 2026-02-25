@@ -63,7 +63,7 @@ appEl.innerHTML = `
   </div>
 
   <!-- Mobile Search Tabs (Products | Manufacturers | Worldwide) -->
-  ${MobileSearchTabs()}
+  ${MobileSearchTabs('products')}
 
   <!-- Mega Menu -->
   ${MegaMenu()}

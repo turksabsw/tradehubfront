@@ -6,8 +6,8 @@
 import './style.css'
 import { initFlowbite } from 'flowbite'
 
-// Header components (reuse from main page)
-import { TopBar, initMobileDrawer, SubHeader, initStickyHeaderSearch, MegaMenu, initMegaMenu, initHeaderCart } from './components/header'
+// Header components (simplified for dashboard — no search bar / mega menu)
+import { TopBar, initMobileDrawer, initHeaderCart } from './components/header'
 
 // Shared components
 import { Breadcrumb } from './components/shared/Breadcrumb'
@@ -20,6 +20,7 @@ import { FloatingPanel, initFloatingPanel } from './components/floating'
 
 // Buyer Dashboard components
 import { BuyerDashboardLayout, initBuyerDashboardLayout } from './components/buyer-dashboard'
+import { renderSidebar } from './components/sidebar'
 
 // Mock data
 import { mockBuyerDashboardData } from './data/mockBuyerDashboard'
@@ -27,35 +28,45 @@ import { mockBuyerDashboardData } from './data/mockBuyerDashboard'
 const appEl = document.querySelector<HTMLDivElement>('#app')!;
 appEl.classList.add('relative');
 appEl.innerHTML = `
-  <!-- Sticky Header -->
-  <div id="sticky-header" class="sticky top-0 z-[var(--z-header)]" style="background-color:var(--header-scroll-bg);border-bottom:1px solid var(--header-scroll-border)">
-    ${TopBar()}
-    ${SubHeader()}
+  <!-- Simplified Dashboard Header (TopBar only, no search/mega menu) -->
+  <div id="sticky-header" class="sticky top-0 z-[var(--z-header)]" style="background-color:var(--header-scroll-bg)">
+    ${TopBar({ compact: true })}
   </div>
 
-  ${MegaMenu()}
+  <!-- Page body: Sidebar spans entire page including footer -->
+  <div class="bg-[#F5F5F5] min-h-screen">
+    <div class="max-w-[1425px] mx-auto px-4 flex gap-[14px]">
+      <!-- Sidebar Column (spans main + footer) -->
+      <div class="w-[260px] flex-shrink-0 pt-4">
+        ${renderSidebar()}
+      </div>
 
-  <!-- Main Content -->
-  <main>
-    <div class="container-boxed">
-      ${Breadcrumb([{ label: 'Hesabım' }])}
+      <!-- Content Column (main + footer) -->
+      <div class="flex-1 min-w-0">
+        <!-- Breadcrumb -->
+        <div class="pt-4">
+          ${Breadcrumb([{ label: 'Hesabım' }])}
+        </div>
+
+        <!-- Main Content -->
+        <main>
+          ${BuyerDashboardLayout({ data: mockBuyerDashboardData })}
+        </main>
+
+        <!-- Footer -->
+        <footer>
+          ${FooterLinks()}
+        </footer>
+      </div>
     </div>
-    ${BuyerDashboardLayout({ data: mockBuyerDashboardData })}
-  </main>
-
-  <!-- Footer -->
-  <footer>
-    ${FooterLinks()}
-  </footer>
+  </div>
 
   <!-- Floating Panel -->
   ${FloatingPanel()}
 `;
 
 // Initialize behaviors
-initMegaMenu();
 initFlowbite();
-initStickyHeaderSearch();
 initHeaderCart();
 initFloatingPanel();
 initMobileDrawer();

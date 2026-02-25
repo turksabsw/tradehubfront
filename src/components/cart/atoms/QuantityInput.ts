@@ -24,7 +24,7 @@ export function QuantityInput({
   const plusDisabled = value >= max ? ' disabled' : '';
 
   return `
-    <div class="number-picker inline-flex items-center border border-[#c4c6cf] rounded overflow-hidden" data-id="${id}" data-min="${min}" data-max="${max}" data-step="${step}">
+    <div class="number-picker inline-flex items-center border border-[#c4c6cf] rounded-full overflow-hidden" data-id="${id}" data-min="${min}" data-max="${max}" data-step="${step}">
       <button type="button" class="number-picker-button number-picker-minus inline-flex items-center justify-center w-8 h-8 p-0 border-none bg-[#f5f5f5] cursor-pointer text-base flex-shrink-0 transition-colors duration-150 hover:bg-[#e5e5e5] disabled:opacity-40 disabled:cursor-not-allowed"${minusDisabled} aria-label="Decrease quantity">&minus;</button>
       <input
         type="number"

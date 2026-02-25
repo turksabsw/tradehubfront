@@ -7,6 +7,7 @@
 
 import type { LocaleOption, CurrencyOption } from '../../types/navigation';
 import { megaCategories } from './MegaMenu';
+import { cartStore } from '../cart/state/CartStore';
 
 /** Default country options for the delivery selector */
 const countryOptions: LocaleOption[] = [
@@ -57,6 +58,59 @@ function renderLogo(): string {
     <a href="${baseUrl}" class="flex items-center hover:opacity-80 transition-opacity" aria-label="iSTOC Home">
       <img src="${baseUrl}images/istoc-logo.png" alt="iSTOC" class="h-8 lg:h-9" />
     </a>
+  `;
+}
+
+/**
+ * Generates a smaller logo for compact dashboard header
+ */
+function renderCompactLogo(): string {
+  const baseUrl = getBaseUrl();
+  return `
+    <a href="${baseUrl}" class="flex items-center hover:opacity-80 transition-opacity" aria-label="iSTOC Home">
+      <img src="${baseUrl}images/istoc-logo.png" alt="iSTOC" class="h-6" />
+    </a>
+  `;
+}
+
+/**
+ * User profile button with dropdown for compact header (Alibaba-style)
+ */
+function renderUserButton(): string {
+  return `
+    <div class="relative">
+      <button
+        id="user-dropdown-btn"
+        data-dropdown-toggle="user-dropdown-menu"
+        data-dropdown-placement="bottom-end"
+        class="th-header-icon inline-flex items-center justify-center w-7 h-7 rounded-full hover:bg-gray-200 transition-colors"
+        aria-label="Hesabım"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"/>
+        </svg>
+      </button>
+
+      <!-- User Dropdown Menu -->
+      <div
+        id="user-dropdown-menu"
+        class="z-50 hidden bg-white rounded-lg shadow-lg border border-gray-200 w-[220px] py-2"
+      >
+        <div class="px-4 py-2 border-b border-gray-100">
+          <p class="text-[14px] font-semibold text-[#222]">Merhaba, Metin</p>
+        </div>
+        <ul class="py-1">
+          <li><a href="/buyer-dashboard.html" class="block px-4 py-2 text-[13px] text-[#222] hover:bg-gray-50 transition-colors">Siparişlerim</a></li>
+          <li><a href="/buyer-dashboard.html" class="block px-4 py-2 text-[13px] text-[#222] hover:bg-gray-50 transition-colors">Mesajlarım</a></li>
+          <li><a href="/rfq.html" class="block px-4 py-2 text-[13px] text-[#222] hover:bg-gray-50 transition-colors">Fiyat Teklifi Taleplerim (RFQ)</a></li>
+          <li><a href="/buyer-dashboard.html" class="block px-4 py-2 text-[13px] text-[#222] hover:bg-gray-50 transition-colors">Favorilerim</a></li>
+          <li><a href="/buyer-dashboard.html" class="block px-4 py-2 text-[13px] text-[#222] hover:bg-gray-50 transition-colors">Hesap Bilgilerim</a></li>
+        </ul>
+        <div class="border-t border-gray-100 pt-1">
+          <a href="/login" class="block px-4 py-2 text-[13px] text-[#222] hover:bg-gray-50 transition-colors">Çıkış yap</a>
+        </div>
+      </div>
+    </div>
   `;
 }
 
@@ -903,11 +957,15 @@ export function initMobileDrawer(): void {
  * Mobile Search Tabs (Products | Manufacturers | Worldwide)
  * Rendered outside the sticky header as a separate non-sticky section.
  */
-export function MobileSearchTabs(): string {
+export function MobileSearchTabs(activeTab: 'products' | 'manufacturers' | 'country' = 'products'): string {
+  const activeClass = "topbar-search-tab relative py-2 text-[13px] font-semibold text-gray-900 dark:text-white whitespace-nowrap after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-gray-900 after:dark:bg-white after:rounded-full";
+  const inactiveClass = "topbar-search-tab relative py-2 text-[13px] font-normal text-gray-400 dark:text-gray-500 whitespace-nowrap after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-transparent after:rounded-full";
+
   return `
-    <div class="lg:hidden flex items-center gap-6 px-3 border-b border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-900">
-      <a href="/" class="topbar-search-tab relative py-2 text-[13px] font-semibold text-gray-900 dark:text-white whitespace-nowrap after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-gray-900 after:dark:bg-white after:rounded-full" data-search-tab="products">Products</a>
-      <a href="/manufacturers.html" class="topbar-search-tab relative py-2 text-[13px] font-normal text-gray-400 dark:text-gray-500 whitespace-nowrap after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-transparent after:rounded-full" data-search-tab="manufacturers">Manufacturers</a>
+    <div class="lg:hidden flex items-center gap-6 px-4 border-b border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-900 overflow-x-auto no-scrollbar scroll-smooth">
+      <a href="/" class="${activeTab === 'products' ? activeClass : inactiveClass}" data-search-tab="products">Ürünler</a>
+      <a href="/manufacturers.html" class="${activeTab === 'manufacturers' ? activeClass : inactiveClass}" data-search-tab="manufacturers">Tedarikçiler</a>
+      <a href="#" class="${activeTab === 'country' ? activeClass : inactiveClass}" data-search-tab="country">Ülkeye göre tedarikler</a>
     </div>
   `;
 }
@@ -923,7 +981,90 @@ export function MobileSearchTabs(): string {
  * - Cart with empty/items popover
  * - Auth buttons (Sign In / Join Free pill)
  */
-export function TopBar(): string {
+export interface TopBarProps {
+  /** Compact mode for dashboard pages — no search, no tabs, shorter height */
+  compact?: boolean;
+}
+
+export function TopBar(props?: TopBarProps): string {
+  const compact = props?.compact ?? false;
+
+  if (compact) {
+    /* ──── Compact Dashboard Header (Alibaba-style ~40px) ──── */
+    return `
+      <div class="relative z-30" style="background:#F5F5F5">
+        <div class="container-boxed">
+          <div class="flex items-center h-10 gap-4">
+            <!-- Logo (smaller, white for gradient bg) -->
+            <div class="flex-shrink-0">
+              ${renderCompactLogo()}
+            </div>
+
+            <!-- "Hesabım" label like Alibaba's "Alibabam" -->
+            <span class="text-[#666] text-[13px] font-normal border-l border-gray-300 pl-3">Hesabım</span>
+
+            <!-- Spacer -->
+            <div class="flex-1"></div>
+
+            <!-- Right Side: Selectors + Icons -->
+            <div class="flex items-center gap-3 flex-shrink-0 text-[#333] [&_.th-header-icon]:text-[#333] [&_.th-header-icon:hover]:text-[#000]">
+              <!-- Country Selector -->
+              <div class="hidden lg:block">
+                ${renderCountrySelector()}
+              </div>
+
+              <!-- Language/Currency Selector -->
+              <div class="hidden lg:block">
+                ${renderLanguageCurrencySelector()}
+              </div>
+
+              <!-- Sell on iSTOC link -->
+              <a href="/seller/register" class="hidden lg:inline-flex items-center text-[13px] text-[#333] hover:text-[#000] transition-opacity whitespace-nowrap">
+                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 21v-7.5a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 .75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349M3.75 21V9.349m0 0a3.001 3.001 0 0 0 3.75-.615A2.993 2.993 0 0 0 9.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 0 0 2.25 1.016c.896 0 1.7-.393 2.25-1.015a3.001 3.001 0 0 0 3.75.614m-16.5 0a3.004 3.004 0 0 1-.621-4.72l1.189-1.19A1.5 1.5 0 0 1 5.378 3h13.243a1.5 1.5 0 0 1 1.06.44l1.19 1.189a3 3 0 0 1-.621 4.72M6.75 18h3.75a.75.75 0 0 0 .75-.75V13.5a.75.75 0 0 0-.75-.75H6.75a.75.75 0 0 0-.75.75v3.75c0 .414.336.75.75.75Z"/></svg>
+                Satışa başlayın
+              </a>
+
+              <!-- Messages Button -->
+              <div class="hidden lg:block">
+                ${renderMessagesButton()}
+              </div>
+
+              <!-- Orders Button -->
+              <div class="hidden lg:block">
+                ${renderOrdersButton()}
+              </div>
+
+              <!-- Cart Button -->
+              ${renderCartButton(0)}
+
+              <!-- User Button -->
+              <div class="hidden lg:block">
+                ${renderUserButton()}
+              </div>
+
+              <!-- Mobile Menu Button -->
+              <button
+                data-drawer-target="mobile-menu-drawer"
+                data-drawer-toggle="mobile-menu-drawer"
+                class="inline-flex items-center p-1.5 rounded-md lg:hidden text-[#333] hover:text-[#000] hover:bg-gray-200 focus:outline-none"
+                type="button"
+                aria-controls="mobile-menu-drawer"
+                aria-label="Open main menu"
+              >
+                <svg class="w-5 h-5" aria-hidden="true" fill="none" viewBox="0 0 17 14">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        ${renderMobileDrawer()}
+      </div>
+    `;
+  }
+
+  /* ──── Full Header (default — with search + tabs) ──── */
   return `
     <div class="relative z-30 dark:bg-gray-900" style="background-color:var(--header-bg);border-bottom:1px solid var(--header-border-color)">
       <div class="container-boxed">
@@ -1035,104 +1176,172 @@ export function TopBar(): string {
  *   2. Legacy single-product — product detail page sends single product with colorItems
  */
 export function initHeaderCart(): void {
-  document.addEventListener('cart-add', ((e: CustomEvent) => {
-    const { quantity, grandTotal, groupedItems } = e.detail;
+  // Sync UI to store state
+  const renderFromStore = () => {
+    const suppliers = cartStore.getSuppliers();
+    const count = cartStore.getTotalSkuCount();
+    const summary = cartStore.getSummary();
 
-    // Update badge
     const badge = document.getElementById('header-cart-badge');
     if (badge) {
-      const totalQty = quantity || 0;
-      badge.textContent = totalQty > 99 ? '99+' : String(totalQty);
-      badge.classList.remove('hidden');
+      badge.textContent = count > 99 ? '99+' : String(count);
+      if (count > 0) badge.classList.remove('hidden');
+      else badge.classList.add('hidden');
     }
 
-    // Hide empty state
     const emptyState = document.getElementById('header-cart-empty');
-    if (emptyState) emptyState.style.display = 'none';
-
-    // Update items
     const itemsContainer = document.getElementById('header-cart-items');
+    const subtotalContainer = document.getElementById('header-cart-subtotal');
+    const subtotalPrice = document.getElementById('header-cart-subtotal-price');
+
+    if (count === 0) {
+      if (emptyState) emptyState.style.display = 'flex';
+      if (itemsContainer) itemsContainer.classList.add('hidden');
+      if (subtotalContainer) subtotalContainer.style.display = 'none';
+      return;
+    }
+
+    if (emptyState) emptyState.style.display = 'none';
+    if (subtotalContainer) subtotalContainer.style.display = 'flex';
+    if (subtotalPrice) {
+      const gTotal = summary.subtotal || 0;
+      subtotalPrice.textContent = `$${gTotal.toFixed(2)}`;
+    }
+
     if (itemsContainer) {
-      let html = '';
+      let html = '<div class="max-h-72 overflow-y-auto">';
+      for (const supplier of suppliers) {
+        html += `
+          <div class="mb-3 last:mb-0">
+            <p class="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1.5 truncate">${supplier.name}</p>`;
 
-      if (groupedItems && groupedItems.length > 0) {
-        // Multi-supplier mode (products listing page)
-        html += '<div class="max-h-72 overflow-y-auto">';
-        for (const group of groupedItems) {
-          html += `
-            <div class="mb-3 last:mb-0">
-              <p class="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1.5 truncate">${group.supplierName || 'Supplier'}</p>
-              <p class="text-[13px] font-medium text-gray-900 dark:text-white mb-2 leading-tight" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">${group.productTitle}</p>`;
+        for (const product of supplier.products) {
+          html += `<p class="text-[13px] font-medium text-gray-900 dark:text-white mb-2 leading-tight" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">${product.title}</p>`;
+          for (const sku of product.skus) {
+            const thumbHtml = sku.skuImage
+              ? `<img src="${sku.skuImage}" alt="sku" class="w-12 h-12 rounded-md object-cover border border-gray-200 dark:border-gray-600 flex-shrink-0">`
+              : `<div class="w-12 h-12 rounded-md flex-shrink-0" style="background:#e5e7eb"></div>`;
 
-          for (const item of group.items) {
             html += `
               <div class="flex items-center gap-3 py-1.5 border-b border-gray-100 dark:border-gray-700 last:border-0">
-                <div class="w-10 h-10 rounded-md flex-shrink-0" style="background:${item.colorValue || '#e5e7eb'}"></div>
+                ${thumbHtml}
                 <div class="flex-1 min-w-0">
-                  <p class="text-[11px] text-gray-500 dark:text-gray-400 truncate">${item.label}</p>
+                  <p class="text-[11px] text-gray-500 dark:text-gray-400 truncate">${sku.variantText || ''}</p>
                   <div class="flex items-center justify-between mt-0.5">
-                    <span class="text-[13px] font-semibold text-gray-900 dark:text-white">$${item.unitPrice.toFixed(2)}</span>
-                    <span class="text-xs text-gray-500">x ${item.qty}</span>
+                    <span class="text-[13px] font-semibold text-gray-900 dark:text-white">$${sku.unitPrice.toFixed(2)}</span>
+                    <span class="text-xs text-gray-500">x ${sku.quantity}</span>
                   </div>
                 </div>
               </div>`;
           }
-
-          html += '</div>';
-        }
-        html += '</div>';
-      } else {
-        // Legacy single-product mode (product detail page)
-        const { productTitle, supplierName, unitPrice, colorItems } = e.detail;
-        html += `<p class="text-xs text-gray-500 dark:text-gray-400 mb-1 truncate">${supplierName}</p>`;
-        html += `<p class="text-sm text-gray-900 dark:text-white mb-2 leading-tight" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">${productTitle}</p>`;
-        html += '<div class="max-h-52 overflow-y-auto">';
-
-        const items = colorItems && colorItems.length > 0 ? colorItems : null;
-        if (items) {
-          for (const ci of items) {
-            const thumbHtml = ci.colorThumb
-              ? `<img src="${ci.colorThumb}" alt="${ci.colorLabel}" class="w-12 h-12 rounded-md object-cover border border-gray-200 dark:border-gray-600 flex-shrink-0">`
-              : `<div class="w-12 h-12 rounded-md flex-shrink-0" style="background:${ci.colorValue || '#e5e7eb'}"></div>`;
-
-            for (const vi of ci.variants) {
-              const desc = [vi.label, ci.colorLabel].filter(Boolean).join(', ');
-              html += `
-                <div class="flex items-center gap-3 py-2 border-b border-gray-100 dark:border-gray-700 last:border-0">
-                  ${thumbHtml}
-                  <div class="flex-1 min-w-0">
-                    <p class="text-xs text-gray-500 dark:text-gray-400">${desc}</p>
-                    <div class="flex items-center justify-between mt-0.5">
-                      <span class="text-sm font-semibold text-gray-900 dark:text-white">$${unitPrice.toFixed(2)}</span>
-                      <span class="text-xs text-gray-500">x ${vi.qty}</span>
-                    </div>
-                  </div>
-                </div>`;
-            }
-          }
-        } else {
-          html += `
-            <div class="flex items-center gap-3 py-2">
-              <div class="w-12 h-12 rounded-md flex-shrink-0" style="background:#e5e7eb"></div>
-              <div class="flex-1 min-w-0">
-                <div class="flex items-center justify-between mt-0.5">
-                  <span class="text-sm font-semibold text-gray-900 dark:text-white">$${unitPrice.toFixed(2)}</span>
-                  <span class="text-xs text-gray-500">x ${quantity}</span>
-                </div>
-              </div>
-            </div>`;
         }
         html += '</div>';
       }
+      html += '</div>';
 
       itemsContainer.innerHTML = html;
       itemsContainer.classList.remove('hidden');
     }
+  };
 
-    // Update subtotal
-    const subtotalContainer = document.getElementById('header-cart-subtotal');
-    const subtotalPrice = document.getElementById('header-cart-subtotal-price');
-    if (subtotalContainer) subtotalContainer.style.display = 'flex';
-    if (subtotalPrice) subtotalPrice.textContent = `$${grandTotal.toFixed(2)}`;
+  // Initial read and subscribe to future cart metadata
+  renderFromStore();
+  cartStore.subscribe(renderFromStore);
+
+  document.addEventListener('cart-add', ((e: CustomEvent) => {
+    // If we're relying on legacy data injection, we can manually parse e.detail here
+    // But ideal path is making components add to cartStore directly.
+    // For now, let's keep it simple: just render what store has.
+    // In our case cartStore might not be updated for other pages unless updated there.
+    // Let me fall back to custom logic if store is empty but event fires:
+    if (cartStore.getTotalSkuCount() === 0) {
+      const { quantity, grandTotal, groupedItems, productTitle, supplierName, unitPrice, colorItems } = e.detail;
+      const count = quantity || 0;
+
+      const badge = document.getElementById('header-cart-badge');
+      if (badge) {
+        badge.textContent = count > 99 ? '99+' : String(count);
+        if (count > 0) badge.classList.remove('hidden');
+      }
+
+      const emptyState = document.getElementById('header-cart-empty');
+      if (emptyState) emptyState.style.display = 'none';
+
+      const itemsContainer = document.getElementById('header-cart-items');
+      if (itemsContainer) {
+        let html = '';
+        if (groupedItems && groupedItems.length > 0) {
+          html += '<div class="max-h-72 overflow-y-auto">';
+          for (const group of groupedItems) {
+            html += `
+              <div class="mb-3 last:mb-0">
+                <p class="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1.5 truncate">${group.supplierName || 'Supplier'}</p>
+                <p class="text-[13px] font-medium text-gray-900 dark:text-white mb-2 leading-tight" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">${group.productTitle}</p>`;
+            for (const item of group.items) {
+              html += `
+                <div class="flex items-center gap-3 py-1.5 border-b border-gray-100 dark:border-gray-700 last:border-0">
+                  <div class="w-10 h-10 rounded-md flex-shrink-0" style="background:${item.colorValue || '#e5e7eb'}"></div>
+                  <div class="flex-1 min-w-0">
+                    <p class="text-[11px] text-gray-500 dark:text-gray-400 truncate">${item.label}</p>
+                    <div class="flex items-center justify-between mt-0.5">
+                      <span class="text-[13px] font-semibold text-gray-900 dark:text-white">$${item.unitPrice.toFixed(2)}</span>
+                      <span class="text-xs text-gray-500">x ${item.qty}</span>
+                    </div>
+                  </div>
+                </div>`;
+            }
+            html += '</div>';
+          }
+          html += '</div>';
+        } else {
+          html += `<p class="text-xs text-gray-500 dark:text-gray-400 mb-1 truncate">${supplierName}</p>`;
+          html += `<p class="text-sm text-gray-900 dark:text-white mb-2 leading-tight" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">${productTitle}</p>`;
+          html += '<div class="max-h-52 overflow-y-auto">';
+          const items = colorItems && colorItems.length > 0 ? colorItems : null;
+          if (items) {
+            for (const ci of items) {
+              const thumbHtml = ci.colorThumb
+                ? `<img src="${ci.colorThumb}" alt="${ci.colorLabel}" class="w-12 h-12 rounded-md object-cover border border-gray-200 dark:border-gray-600 flex-shrink-0">`
+                : `<div class="w-12 h-12 rounded-md flex-shrink-0" style="background:${ci.colorValue || '#e5e7eb'}"></div>`;
+              for (const vi of ci.variants) {
+                const desc = [vi.label, ci.colorLabel].filter(Boolean).join(', ');
+                html += `
+                  <div class="flex items-center gap-3 py-2 border-b border-gray-100 dark:border-gray-700 last:border-0">
+                    ${thumbHtml}
+                    <div class="flex-1 min-w-0">
+                      <p class="text-xs text-gray-500 dark:text-gray-400">${desc}</p>
+                      <div class="flex items-center justify-between mt-0.5">
+                        <span class="text-sm font-semibold text-gray-900 dark:text-white">$${unitPrice.toFixed(2)}</span>
+                        <span class="text-xs text-gray-500">x ${vi.qty}</span>
+                      </div>
+                    </div>
+                  </div>`;
+              }
+            }
+          } else {
+            html += `
+              <div class="flex items-center gap-3 py-2">
+                <div class="w-12 h-12 rounded-md flex-shrink-0" style="background:#e5e7eb"></div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-center justify-between mt-0.5">
+                    <span class="text-sm font-semibold text-gray-900 dark:text-white">$${unitPrice.toFixed(2)}</span>
+                    <span class="text-xs text-gray-500">x ${quantity}</span>
+                  </div>
+                </div>
+              </div>`;
+          }
+          html += '</div>';
+        }
+        itemsContainer.innerHTML = html;
+        itemsContainer.classList.remove('hidden');
+      }
+
+      const subtotalContainer = document.getElementById('header-cart-subtotal');
+      const subtotalPrice = document.getElementById('header-cart-subtotal-price');
+      if (subtotalContainer) subtotalContainer.style.display = 'flex';
+      if (subtotalPrice) subtotalPrice.textContent = `$${grandTotal.toFixed(2)}`;
+    } else {
+      renderFromStore();
+    }
   }) as EventListener);
 }

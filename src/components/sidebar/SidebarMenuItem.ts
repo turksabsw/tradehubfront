@@ -28,10 +28,10 @@ export function renderSidebarMenuItem({ item, expanded }: SidebarMenuItemProps):
   const chevron = sidebarIcons.chevronRight;
 
   const activeClasses = item.active
-    ? 'border-l-[3px] border-[#00B96B] bg-[#F0FFF0] text-gray-900 dark:bg-green-900/20 dark:text-white'
-    : 'border-l-[3px] border-transparent text-gray-700 dark:text-gray-300';
+    ? 'bg-white text-gray-900 shadow-sm dark:bg-gray-800 dark:text-white'
+    : 'text-gray-700 dark:text-gray-300';
 
-  const hoverClasses = 'hover:bg-gray-100 dark:hover:bg-gray-700';
+  const hoverClasses = 'hover:bg-white hover:shadow-sm dark:hover:bg-gray-800';
 
   if (!expanded) {
     /* ──── Collapsed mode: icon only ──── */
@@ -59,14 +59,14 @@ export function renderSidebarMenuItem({ item, expanded }: SidebarMenuItemProps):
   return `
     <a
       href="${item.href}"
-      class="sidebar-item sidebar-item--expanded group flex items-center gap-3 px-4 py-2.5 ${activeClasses} ${hoverClasses} transition-colors cursor-pointer"
+      class="sidebar-item sidebar-item--expanded group flex items-center gap-3 px-4 h-10 rounded-lg mx-2 ${activeClasses} ${hoverClasses} transition-all cursor-pointer"
       data-sidebar-item="${item.id}"
       role="menuitem"
       aria-label="${item.label}"
       ${hasSubmenu ? 'aria-haspopup="true" aria-expanded="false"' : ''}
     >
       <span class="w-5 h-5 flex-shrink-0">${icon}</span>
-      <span class="flex-1 text-sm font-medium truncate">${item.label}</span>
+      <span class="flex-1 text-[14px] font-normal text-[#222] dark:text-gray-200 truncate">${item.label}</span>
       ${item.badge ? `<span class="inline-flex items-center px-1.5 py-0.5 text-[10px] font-semibold leading-none text-white bg-red-500 rounded-full">${item.badge}</span>` : ''}
       ${hasSubmenu ? `<span class="w-4 h-4 flex-shrink-0 text-gray-400 dark:text-gray-500 transition-transform">${chevron}</span>` : ''}
     </a>

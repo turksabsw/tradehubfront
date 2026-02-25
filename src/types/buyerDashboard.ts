@@ -52,9 +52,9 @@ export interface UserStat {
 }
 
 export interface NotificationSlide {
-  icon: string;
+  icon?: string;
   title: string;
-  description: string;
+  description?: string;
   linkText: string;
   linkHref: string;
   bgColor: string;

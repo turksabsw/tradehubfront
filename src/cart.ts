@@ -56,9 +56,11 @@ appEl.innerHTML = `
 initMegaMenu();
 initFlowbite();
 initStickyHeaderSearch();
-initHeaderCart();
 initFloatingPanel();
 initMobileDrawer();
 
 // Cart-specific inits — store'u mock data ile başlat
 initCartPage(mockCartSuppliers, mockCartSummary.shippingFee, mockCartSummary.discount);
+
+// Header cart init'i store doldurulduktan SONRA gelsin ki badge güncellensin
+initHeaderCart();

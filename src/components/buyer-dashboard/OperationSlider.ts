@@ -18,20 +18,14 @@ export interface OperationSliderProps {
 function renderSlide(slide: NotificationSlide): string {
   return `
     <div class="swiper-slide">
-      <div class="operation-slider__slide" style="background-color: ${slide.bgColor};">
-        <div class="operation-slider__slide-icon" aria-hidden="true">
-          ${slide.icon}
-        </div>
-        <div class="operation-slider__slide-content">
-          <p class="operation-slider__slide-title">${slide.title}</p>
-          <p class="operation-slider__slide-desc">${slide.description}</p>
-          <a href="${slide.linkHref}" class="operation-slider__slide-link">
-            ${slide.linkText}
-            <svg class="w-3 h-3 ml-1 inline-block" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
-            </svg>
-          </a>
-        </div>
+      <div class="operation-slider__slide">
+        <span class="operation-slider__slide-title">${slide.title}</span>
+        <a href="${slide.linkHref}" class="operation-slider__slide-link">
+          ${slide.linkText}
+          <svg class="w-3 h-3 ml-1 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+          </svg>
+        </a>
       </div>
     </div>
   `;

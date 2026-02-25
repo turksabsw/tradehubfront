@@ -30,7 +30,7 @@ appEl.innerHTML = `
   </div>
 
   <!-- Mobile Search Tabs (Products | Manufacturers) — non-sticky -->
-  ${MobileSearchTabs()}
+  ${MobileSearchTabs('manufacturers')}
 
   <!-- Mega Menu (fixed overlay, positioned by JS) -->
   ${MegaMenu()}

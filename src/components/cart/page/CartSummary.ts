@@ -68,7 +68,7 @@ function renderAssurance(items: AssuranceItem[]): string {
     .join('');
 
   return `
-    <div class="flex flex-col gap-3 border-t border-[#e5e5e5] pt-5 mt-5">
+    <div class="hidden lg:flex flex-col gap-3 border-t border-[#e5e5e5] pt-5 mt-5">
       <div class="flex items-center justify-between font-bold text-sm leading-5 text-[#222] mb-2">Alibaba.com sipariş koruması</div>
       <ul class="list-none p-0 m-0 flex flex-col gap-3">${rows}</ul>
     </div>
@@ -80,8 +80,8 @@ export function CartSummary(
   assuranceItems: AssuranceItem[] = defaultAssuranceItems
 ): string {
   return `
-    <div class="sc-shopping-cart-summary-container w-[425px] p-8 bg-white border border-[#e5e5e5] rounded-lg overflow-y-auto sticky top-[51px] max-h-[822px]">
-      <div class="block text-xl font-bold leading-7 text-[#222] mb-5">Sipariş özeti (<span class="sc-summary-selected-count">${data.selectedCount}</span> Ürün)</div>
+    <div class="sc-shopping-cart-summary-container w-full lg:w-[425px] p-5 lg:p-8 bg-white border border-[#e5e5e5] rounded-lg overflow-y-auto lg:sticky lg:top-[71px] max-h-[822px]">
+      <div class="block text-lg lg:text-xl font-bold leading-7 text-[#222] mb-4 lg:mb-5">Sipariş özeti (<span class="sc-summary-selected-count">${data.selectedCount}</span> Ürün)</div>
 
       ${renderThumbnailGrid(data.items)}
 

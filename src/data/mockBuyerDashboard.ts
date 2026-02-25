@@ -41,28 +41,22 @@ export const mockUserStats: UserStat[] = [
 
 export const mockNotifications: NotificationSlide[] = [
   {
-    icon: '📋',
-    title: 'Profil bilgilerinizi tamamlayın',
-    description: 'Tedarikçilerden daha iyi teklifler alabilmek için şirket profilinizi doldurun.',
-    linkText: 'Şimdi tamamla',
+    title: 'Vergiden muaf statüsü için hesabınızı doğrulatın',
+    linkText: 'İş bilgilerini doğrulayın',
+    linkHref: '/profile/verify',
+    bgColor: '#F4F4F4',
+  },
+  {
+    title: 'TradeHub.com deneyiminizi kişiselleştirin',
+    linkText: 'Profilinizi tamamlayın',
     linkHref: '/profile/edit',
-    bgColor: '#FFF7E6',
+    bgColor: '#F4F4F4',
   },
   {
-    icon: '🔔',
-    title: 'Yeni tedarikçi teklifleri',
-    description: 'İlgilendiğiniz ürünler için 3 yeni teklif mevcut.',
-    linkText: 'Teklifleri gör',
-    linkHref: '/quotations',
-    bgColor: '#E6F7FF',
-  },
-  {
-    icon: '🎉',
-    title: 'Hoş geldiniz!',
-    description: 'TR TradeHub\'a hoş geldiniz. Binlerce tedarikçi arasından ihtiyacınız olan ürünleri bulun.',
-    linkText: 'Keşfetmeye başla',
-    linkHref: '/products',
-    bgColor: '#F0FFF0',
+    title: 'Tedarikçilerden daha iyi teklifler alabilmek için şirket profilinizi doldurun',
+    linkText: 'Şimdi tamamlayın',
+    linkHref: '/profile/company',
+    bgColor: '#F4F4F4',
   },
 ];
 
