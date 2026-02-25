@@ -12,11 +12,23 @@ import type {
   PromotionBannerData,
 } from '../types/buyerDashboard';
 
-const PLACEHOLDER_IMG = 'https://placehold.co/170x170/f5f5f5/999?text=Ürün';
-const PROMO_IMG = 'https://placehold.co/80x80/ffffff/999?text=Promo';
+/* Real product images from Unsplash (e-commerce style) */
+const PRODUCT_IMGS = [
+  'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=340&h=340&fit=crop', // watch
+  'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=340&h=340&fit=crop', // headphones
+  'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=340&h=340&fit=crop', // camera
+];
+
+const PROMO_IMGS = [
+  'https://images.unsplash.com/photo-1607082349566-187342175e2f?w=160&h=160&fit=crop', // shopping bags
+  'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=160&h=160&fit=crop', // store
+  'https://images.unsplash.com/photo-1556742111-a301076d9d18?w=160&h=160&fit=crop', // boxes
+  'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=160&h=160&fit=crop', // delivery
+  'https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=160&h=160&fit=crop', // shipping
+];
 
 export const mockUserProfile: UserProfile = {
-  avatar: 'https://placehold.co/48x48/e0e0e0/999?text=U',
+  avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=96&h=96&fit=crop&crop=face',
   username: 'Metin K.',
   profileHref: '/profile',
 };
@@ -57,7 +69,7 @@ export const mockNotifications: NotificationSlide[] = [
 export const mockBrowsingHistory: BrowsingHistoryProduct[] = [
   {
     id: 'bh-001',
-    image: PLACEHOLDER_IMG,
+    image: PRODUCT_IMGS[0],
     price: 15.90,
     currency: '$',
     minOrder: 'Min. sipariş: 1 Adet',
@@ -65,7 +77,7 @@ export const mockBrowsingHistory: BrowsingHistoryProduct[] = [
   },
   {
     id: 'bh-002',
-    image: PLACEHOLDER_IMG,
+    image: PRODUCT_IMGS[1],
     price: 24.50,
     currency: '$',
     minOrder: 'Min. sipariş: 2 Adet',
@@ -73,7 +85,7 @@ export const mockBrowsingHistory: BrowsingHistoryProduct[] = [
   },
   {
     id: 'bh-003',
-    image: PLACEHOLDER_IMG,
+    image: PRODUCT_IMGS[2],
     price: 8.75,
     currency: '$',
     minOrder: 'Min. sipariş: 5 Adet',
@@ -86,7 +98,7 @@ export const mockPromotions: PromotionBannerData[] = [
     id: 'promo-001',
     title: 'Süper İndirimler',
     subtitle: '%50\'ye varan indirimlerle alışveriş yapın',
-    image: PROMO_IMG,
+    image: PROMO_IMGS[0],
     bgColor: '#FFF1F0',
     href: '/promotions/super-deals',
   },
@@ -94,7 +106,7 @@ export const mockPromotions: PromotionBannerData[] = [
     id: 'promo-002',
     title: 'Yeni Sezon Ürünleri',
     subtitle: 'En yeni ürünleri keşfedin',
-    image: PROMO_IMG,
+    image: PROMO_IMGS[1],
     bgColor: '#F0F5FF',
     href: '/promotions/new-season',
   },
@@ -102,7 +114,7 @@ export const mockPromotions: PromotionBannerData[] = [
     id: 'promo-003',
     title: 'Toplu Alım Fırsatları',
     subtitle: 'Toplu alımlarda ekstra indirimler',
-    image: PROMO_IMG,
+    image: PROMO_IMGS[2],
     bgColor: '#F6FFED',
     href: '/promotions/bulk-deals',
   },
@@ -110,7 +122,7 @@ export const mockPromotions: PromotionBannerData[] = [
     id: 'promo-004',
     title: 'Güvenli Ticaret',
     subtitle: 'Doğrulanmış tedarikçilerle güvenli alışveriş',
-    image: PROMO_IMG,
+    image: PROMO_IMGS[3],
     bgColor: '#FFFBE6',
     href: '/promotions/trade-assurance',
   },
@@ -118,7 +130,7 @@ export const mockPromotions: PromotionBannerData[] = [
     id: 'promo-005',
     title: 'Hızlı Teslimat',
     subtitle: '7 gün içinde teslimat garantisi',
-    image: PROMO_IMG,
+    image: PROMO_IMGS[4],
     bgColor: '#FFF0F6',
     href: '/promotions/fast-delivery',
   },

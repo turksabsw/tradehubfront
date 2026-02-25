@@ -7385,12 +7385,12 @@ body.pdm-sheet-open {
     --color-orders-tab-inactive-bg: #F0F0F0;
     --color-orders-tab-inactive-text: #666666;
     --color-orders-tab-hover-bg: #E8E8E8;
-    --color-orders-empty-gradient-start: #F5F0FF;
-    --color-orders-empty-gradient-end: #FFF5F0;
+    --color-orders-empty-bg: #FAFAFA;
     --color-orders-empty-icon: #CCCCCC;
     --color-orders-empty-text: #999999;
-    --color-orders-empty-btn-bg: #CC9900;
-    --color-orders-empty-btn-text: #FFFFFF;
+    --color-orders-empty-btn-bg: transparent;
+    --color-orders-empty-btn-text: #222222;
+    --color-orders-empty-btn-border: #CCCCCC;
 
     /* --- Right Panel Colors --- */
     --color-rp-header-text: #333333;
@@ -7853,7 +7853,7 @@ body.pdm-sheet-open {
 .orders__content {
     margin: 12px 20px 20px;
     border-radius: var(--radius-card);
-    background: linear-gradient(135deg, var(--color-orders-empty-gradient-start), var(--color-orders-empty-gradient-end));
+    background: var(--color-orders-empty-bg);
     min-height: 180px;
     display: flex;
     align-items: center;
@@ -7884,14 +7884,16 @@ body.pdm-sheet-open {
     border-radius: var(--radius-btn);
     background: var(--color-orders-empty-btn-bg);
     color: var(--color-orders-empty-btn-text);
+    border: 1px solid var(--color-orders-empty-btn-border);
     font-size: 13px;
     font-weight: 600;
     text-decoration: none;
-    transition: opacity var(--transition-fast);
+    transition: all var(--transition-fast);
 }
 
 .orders__empty-btn:hover {
-    opacity: 0.9;
+    background: #f5f5f5;
+    border-color: #999;
 }
 
 
