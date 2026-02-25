@@ -9,8 +9,11 @@ import Swiper from 'swiper'
 import { Autoplay, Pagination, EffectFade } from 'swiper/modules'
 import 'swiper/swiper-bundle.css'
 
+// Assets
+import rfqVideoUrl from './assets/images/rfqvidehero.mp4'
+
 // Mock data
-import { customizationCards, selectedProducts, customProducts, testimonials } from './data/rfq-mock-data'
+import { selectedProducts, customProducts, testimonials } from './data/rfq-mock-data'
 
 // Types
 import type { Product, RFQFormData } from './types/rfq'
@@ -45,35 +48,30 @@ appEl.innerHTML = `
   <!-- Main Content -->
   <main>
     <!-- Section 1: Hero Banner -->
-    <section id="rfq-hero" class="rfq-hero" aria-label="RFQ fiyat teklifi talebi">
-      <div class="container-boxed">
-        <div class="flex flex-col xl:flex-row gap-8 items-center">
+    <section id="rfq-hero" class="rfq-hero relative overflow-hidden" aria-label="RFQ fiyat teklifi talebi" style="min-height: 516px; background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAxIiBoZWlnaHQ9IjcyMiIgdmlld0JveD0iMCAwIDMwMSA3MjIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTAuNzcxMzYyIDY4My44OTRIMjU3LjQ4MkwwLjc3MTM2MiAxNjguNDY3VjY4My44OTRaIiBmaWxsPSJ1cmwoI3BhaW50MF9saW5lYXJfNV81NikiLz48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9InBhaW50MF9saW5lYXJfNV81NiIgeDE9Ii0zNC4zMjQyIiB5MT0iMjA2LjAxNCIgeDI9IjEyNy4zNDEiIHkyPSI2OTUuMzY1IiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHN0b3Agc3RvcC1jb2xvcj0iIzIyMjU4NCIgc3RvcC1vcGFjaXR5PSIwLjkiLz48c3RvcCBvZmZzZXQ9IjAuNDI3ODg1IiBzdG9wLWNvbG9yPSIjMjIyNTg0IiBzdG9wLW9wYWNpdHk9IjAuNSIvPjxzdG9wIG9mZnNldD0iMC42NTM4NDYiIHN0b3AtY29sb3I9IiMyMjI1ODQiIHN0b3Atb3BhY2l0eT0iMC4zIi8+PHN0b3Agb2Zmc2V0PSIwLjkzMzYxMiIgc3RvcC1jb2xvcj0iIzIyMjU4NCIgc3RvcC1vcGFjaXR5PSIwIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PC9zdmc+'), linear-gradient(to right, rgb(35, 29, 104) 0%, rgb(38, 39, 114) 70%, rgb(36, 37, 112) 71%, rgb(36, 37, 107) 100%); background-size: cover; background-position: left center;">
+      <!-- Video Background -->
+      <video src="${rfqVideoUrl}" autoplay loop muted playsinline class="absolute right-0 w-full max-w-[664px] h-[360px] object-cover z-0 opacity-100 pointer-events-none" style="-webkit-mask-image: linear-gradient(to right, transparent, black 15%); mask-image: linear-gradient(to right, transparent, black 15%); object-position: center; top: 50%; transform: translateY(-50%);"></video>
+      
+      <div class="container-boxed relative z-10 flex flex-col justify-center max-w-[1200px] mx-auto" style="min-height: 516px;">
+        <div class="flex flex-col xl:flex-row gap-8 items-center py-10 w-full justify-between">
           <!-- Left Column: Text Content -->
           <div class="flex-1 text-center xl:text-left">
             <span class="rfq-hero__badge">RFQ</span>
-            <h1 class="text-[length:var(--font-size-hero-lg)] font-bold text-[var(--color-text-inverted)] mt-4 mb-2 leading-tight">
+            <h1 class="text-[length:var(--font-size-hero-lg)] font-bold text-[var(--color-text-inverse)] mt-4 mb-2 leading-tight">
               Fiyat Teklifi Talebi Oluşturun
             </h1>
-            <p class="rfq-hero__subtitle">
+            <p class="rfq-hero__subtitle text-white/90">
               Binlerce tedarikçiden anında fiyat teklifi alın. Ürünlerinizi özelleştirin, en iyi fiyatları karşılaştırın.
             </p>
             <div class="flex items-center gap-4 mt-6 justify-center xl:justify-start">
-              <a href="#" class="rfq-hero__outlined-btn focus-ring">
+              <a href="#" class="rfq-hero__outlined-btn focus-ring group hover:bg-white/10 transition-colors">
                 Nasıl çalışır?
               </a>
             </div>
           </div>
 
-          <!-- Right Column: Customization Cards 2x2 Grid -->
-          <div class="grid grid-cols-2 gap-4 w-full xl:w-auto xl:max-w-[400px]">
-            ${customizationCards.map(card => `
-              <div class="rfq-hero__card" data-card-id="${card.id}" data-position="${card.position}">
-                <span class="text-3xl mb-2 block">${card.icon}</span>
-                <h3 class="font-semibold text-[var(--color-text-inverted)] text-base">${card.title}</h3>
-                <p class="text-sm text-white/70">${card.subtitle}</p>
-              </div>
-            `).join('')}
-          </div>
+          <!-- Right Area: Empty space for Video -->
+          <div class="hidden xl:block xl:w-[50%] h-full min-h-[300px]"></div>
         </div>
       </div>
     </section>
