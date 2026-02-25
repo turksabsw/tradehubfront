@@ -160,7 +160,7 @@ export interface CompanyInfoCell {
   label: string;
   value: string;
   icon: string;
-  verified?: boolean;
+  verified: boolean;
 }
 
 export interface CompanyPhoto {
