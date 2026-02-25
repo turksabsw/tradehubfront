@@ -1,15 +1,19 @@
 /**
  * C6: Category Product Listing — Banner + Grid (Optional — PRO sellers only)
  * Full-width category banner + 4-column detailed product cards with badges
+ * BEM Block: category-listing
  */
 import type { ProductCategory, DetailedProduct } from '../../types/seller/types';
 
-function getBadgeClass(type: string): string {
-  switch (type) {
-    case 'main-product': return 'badge--main-product';
-    case 'certified': return 'badge--certified';
-    default: return 'badge--certified';
-  }
+function getBadgeClasses(type: string): string {
+  const base = 'inline-flex items-center gap-0.5 text-[11px] rounded-sm px-1.5 py-0.5';
+  const map: Record<string, string> = {
+    'main-product': 'bg-[#f3f4f6] text-[#374151] dark:bg-gray-700 dark:text-gray-300',
+    'fsc-certified': 'bg-[#f0fdf4] text-[#166534] dark:bg-emerald-900 dark:text-emerald-300',
+    'certified': 'bg-[#f0fdf4] text-[#166534] dark:bg-emerald-900 dark:text-emerald-300',
+    'custom': 'bg-[#eff6ff] text-[#1e40af] dark:bg-blue-900 dark:text-blue-300',
+  };
+  return `${base} ${map[type] || 'bg-[#f3f4f6] text-[#374151] dark:bg-gray-700 dark:text-gray-300'}`;
 }
 
 function formatSoldCount(count: number): string {
@@ -20,43 +24,44 @@ function formatSoldCount(count: number): string {
 
 function renderProductCard(product: DetailedProduct): string {
   return `
-    <div class="bg-white border border-[var(--card-border-color)] border-t-0 p-4 flex flex-col">
+    <div class="category-listing__card bg-white dark:bg-gray-800 border-r border-b border-[var(--card-border-color)] dark:border-gray-700 p-4 lg:p-3 flex flex-col hover:shadow-lg dark:hover:shadow-xl transition-shadow relative group">
       <!-- Image -->
-      <div class="relative w-full aspect-square mb-3 overflow-hidden rounded-[var(--radius-sm)]">
-        <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover" loading="lazy"
+      <div class="category-listing__image relative w-full h-[200px] lg:h-[180px] md:h-[160px] flex items-center justify-center mb-3">
+        <img src="${product.image}" alt="${product.name}" class="max-h-full max-w-full object-contain group-hover:scale-[1.02] transition-transform" loading="lazy"
              onerror="this.parentElement.style.background='#f3f4f6'" />
         ${product.hasVideo ? `
-          <div class="product-card__video-play" aria-label="Video">
-            <svg class="w-3 h-3 text-white ml-0.5" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M8 5v14l11-7z"/>
+          <button class="category-listing__play-btn absolute inset-0 m-auto w-10 h-10 rounded-full bg-black/50 hover:bg-black/70 focus:ring-2 focus:ring-white focus:ring-offset-2 active:bg-black/80 flex items-center justify-center transition-colors"
+                  aria-label="Ürün videosunu oynat">
+            <svg class="w-4 h-4 text-white ml-0.5" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M6.5 5.5v9l7-4.5-7-4.5z" />
             </svg>
-          </div>
+          </button>
         ` : ''}
       </div>
 
       <!-- Badges -->
       ${product.badges.length ? `
-        <div class="flex flex-wrap gap-1 mb-2">
-          ${product.badges.map(b => `<span class="${getBadgeClass(b.type)}">${b.label}</span>`).join('')}
+        <div class="category-listing__badges flex flex-wrap gap-1 mb-2">
+          ${product.badges.map(b => `<span class="${getBadgeClasses(b.type)}">${b.label}</span>`).join('')}
         </div>
       ` : ''}
 
       <!-- Name -->
-      <h3 class="text-[13px] text-[#222222] font-normal leading-snug mb-2 line-clamp-2">${product.name}</h3>
+      <p class="category-listing__name text-[14px] text-[#222222] dark:text-gray-50 font-normal leading-snug line-clamp-2 mb-2">${product.name}</p>
 
       <!-- Price -->
-      <p class="text-[16px] text-[#111827] font-bold mb-1">
-        $${product.priceMin.toFixed(2)} - $${product.priceMax.toFixed(2)}
+      <p class="category-listing__price text-[16px] text-[#111827] dark:text-gray-50 font-bold">
+        $${product.priceMin.toFixed(2)}-$${product.priceMax.toFixed(2)}
       </p>
 
       <!-- MOQ -->
-      <p class="text-[12px] text-[#6b7280] mb-1">
-        Min. sipariş: ${product.moq} ${product.moqUnit}
+      <p class="category-listing__moq text-[13px] text-[#6b7280] dark:text-gray-400 mt-1">
+        Min. Order ${product.moq} ${product.moqUnit}
       </p>
 
       <!-- Sold -->
-      <p class="text-[11px] text-[#9ca3af]">
-        ${formatSoldCount(product.soldCount)} satıldı
+      <p class="category-listing__sold text-[12px] text-[#9ca3af] dark:text-gray-500 mt-0.5">
+        ${formatSoldCount(product.soldCount)} sold
       </p>
     </div>
   `;
@@ -64,21 +69,25 @@ function renderProductCard(product: DetailedProduct): string {
 
 function renderCategory(category: ProductCategory): string {
   return `
-    <div class="mb-8">
+    <section id="category-listing-${category.id}" class="category-listing mb-12">
       <!-- Banner -->
-      <div class="relative w-full h-[160px] lg:h-[200px] rounded-t-[var(--radius-md)] overflow-hidden">
-        <img src="${category.bannerImage}" alt="${category.name}" class="w-full h-full object-cover" loading="lazy"
+      <div class="category-listing__banner relative w-full overflow-hidden">
+        <img src="${category.bannerImage}" alt="${category.name}"
+             class="w-full h-[350px] xl:h-[300px] md:h-[200px] sm:h-[160px] object-cover" loading="lazy"
              onerror="this.parentElement.style.background='linear-gradient(135deg,#1e3a5f,#f97316)'" />
-        <div class="absolute inset-0 bg-gradient-to-r from-black/50 to-transparent flex items-center pl-8">
-          <h3 class="text-white text-[24px] lg:text-[28px] font-bold uppercase tracking-wide">${category.name}</h3>
+        <div class="absolute inset-0 flex items-center justify-center bg-black/10 dark:bg-black/20">
+          <h3 class="text-[46px] xl:text-[40px] md:text-[28px] sm:text-[22px] font-black text-white uppercase tracking-tight drop-shadow-xl"
+              style="text-shadow: 0 2px 12px rgba(0,0,0,0.4);">
+            ${category.name}
+          </h3>
         </div>
       </div>
 
-      <!-- Product Grid -->
-      <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 border border-[var(--card-border-color)] border-t-0 rounded-b-[var(--radius-md)] overflow-hidden">
+      <!-- Product Grid (Shared Border System) -->
+      <div class="category-listing__grid grid grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-1 border-t border-l border-[var(--card-border-color)] dark:border-gray-700">
         ${category.products.map(p => renderProductCard(p)).join('')}
       </div>
-    </div>
+    </section>
   `;
 }
 
@@ -86,10 +95,10 @@ export function CategoryProductListing(categories: ProductCategory[]): string {
   if (!categories || !categories.length) return '';
 
   return `
-    <section id="category-listings" class="py-12" aria-label="Kategori ürün listeleri">
+    <div id="category-listings" aria-label="Kategori ürün listeleri">
       <div class="max-w-[var(--container-lg)] mx-auto px-4 lg:px-6 xl:px-8">
         ${categories.map(cat => renderCategory(cat)).join('')}
       </div>
-    </section>
+    </div>
   `;
 }
