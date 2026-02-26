@@ -1,12 +1,4 @@
 /* ============================================================
-   TAILWIND v4 — MASTER THEME CONFIG
-   Project: TR TradeHub / General Design System
-   Prefix: (Removed for Flowbite compatibility)
-   Dark Mode: class-based
-   UI Kit: Flowbite Pro
-   ============================================================ */
-
-/* ============================================================
    GOOGLE FONTS — Roboto Variable
    ============================================================ */
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100..900&display=swap');
@@ -7423,10 +7415,6 @@ body.pdm-sheet-open {
 /* ============================================================
    BUYER DASHBOARD — LAYOUT
    ============================================================ */
-/* .buyer-dashboard { } */
-/* .buyer-dashboard__sidebar { } */
-/* .buyer-dashboard__content { } */
-/* .buyer-dashboard__right-panel { } */
 
 /* ── Other Services Layout ─────────────────────────────────────── */
 
@@ -10286,26 +10274,6 @@ body.pdm-sheet-open {
 
 
 /* ============================================================
-   SIDEBAR NAVIGATION
-   ============================================================ */
-/* .sidebar { } */
-/* .sidebar__menu { } */
-/* .sidebar__item { } */
-/* .sidebar__item--active { } */
-/* .sidebar__item-icon { } */
-/* .sidebar__item-label { } */
-/* .sidebar__item-chevron { } */
-/* .sidebar__item-badge { } */
-/* .sidebar__section-divider { } */
-/* .sidebar__explore { } */
-/* .sidebar--collapsed { } */
-/* .sidebar-flyout { } */
-/* .sidebar-flyout__header { } */
-/* .sidebar-flyout__content { } */
-/* .sidebar-flyout__link { } */
-
-
-/* ============================================================
    BUYER DASHBOARD — NewBuyerInfo
    ============================================================ */
 .new-buyer-info {
@@ -10722,76 +10690,6 @@ body.pdm-sheet-open {
 /* ============================================================
    BUYER DASHBOARD — Right Panel
    ============================================================ */
-/* .right-panel { } */
-/* .right-panel__section { } */
-
-
-/* ============================================================
-   BUYER DASHBOARD — Favorites
-   ============================================================ */
-/* .favorites { } */
-/* .favorites__empty { } */
-
-
-/* ============================================================
-   BUYER DASHBOARD — Browsing History
-   ============================================================ */
-/* .browsing-history { } */
-/* .browsing-history__scroll { } */
-/* .browsing-history__card { } */
-
-
-/* ============================================================
-   BUYER DASHBOARD — Promotion Section
-   ============================================================ */
-/* .promotion { } */
-/* .promotion__carousel { } */
-/* .promotion__banner { } */
-/* .promotion__dots { } */
-
-
-/* ============================================================
-   BUYER DASHBOARD — Shared Components
-   ============================================================ */
-/* .section-card { } */
-/* .section-header { } */
-/* .section-header__title { } */
-/* .section-header__action { } */
-/* .empty-state { } */
-/* .empty-state__icon { } */
-/* .empty-state__text { } */
-/* .empty-state__link { } */
-/* .product-card { } */
-/* .product-card__image { } */
-/* .product-card__price { } */
-/* .product-card__moq { } */
-/* .promotion-banner { } */
-/* .dot-indicator { } */
-/* .dot-indicator__dot { } */
-/* .dot-indicator__dot--active { } */
-
-
-/* ============================================================
-   BUYER DASHBOARD — Sidebar
-   ============================================================ */
-/* .sidebar { } */
-/* .sidebar--expanded { } */
-/* .sidebar--collapsed { } */
-/* .sidebar__menu { } */
-/* .sidebar__section { } */
-/* .sidebar__section-title { } */
-/* .sidebar__item-wrapper { } */
-/* .sidebar__discover { } */
-/* .sidebar-item { } */
-/* .sidebar-item--expanded { } */
-/* .sidebar-item--collapsed { } */
-/* .sidebar-flyout { } */
-/* .sidebar-flyout__section { } */
-
-
-/* ============================================================
-   BUYER DASHBOARD — Right Panel
-   ============================================================ */
 
 .browsing-history__scroll {
     scrollbar-width: none;
@@ -10868,10 +10766,6 @@ body.pdm-sheet-open {
         padding: 12px;
     }
 }
-
-/* ============================================================
-   RFQ PAGE — CUSTOM CSS CLASSES
-   ============================================================ */
 
 /* ==========================================================
    Hero Section
