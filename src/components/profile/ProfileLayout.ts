@@ -71,34 +71,33 @@ const sourcingInfo: InfoSection = {
 
 function renderInfoField(field: InfoField): string {
   const isEmpty = field.value === 'Yok';
-  const valueClass = isEmpty ? 'profile-grid__value profile-grid__value--empty' : 'profile-grid__value';
 
   let valueHtml = field.value;
   if (field.isVerified) {
-    valueHtml = `${field.value} <span class="profile-grid__verified">${ICONS.verified} Doğrulandı</span>`;
+    valueHtml = `${field.value} <span class="inline-flex items-center gap-[3px] text-xs font-medium text-green-500">${ICONS.verified} Doğrulandı</span>`;
   }
   if (field.isLink && !isEmpty) {
-    valueHtml = `<a href="#" class="profile-grid__link">${field.value}</a>`;
+    valueHtml = `<a href="#" class="text-blue-600 no-underline font-medium hover:underline">${field.value}</a>`;
   }
 
   return `
-    <div class="profile-grid__label">${field.label}</div>
-    <div class="${valueClass}">${valueHtml}</div>
+    <div class="text-[13px] py-1.5" style="color:var(--color-text-placeholder, #999999)">${field.label}</div>
+    <div class="text-[13px] py-1.5 flex items-center gap-1.5" style="color:${isEmpty ? 'var(--color-text-placeholder, #999999)' : 'var(--color-text-heading, #111827)'}">${valueHtml}</div>
   `;
 }
 
 function renderInfoSection(section: InfoSection): string {
   return `
-    <div class="profile-section">
-      <div class="profile-section__header">
-        <h3 class="profile-section__title">${section.title}</h3>
-        <a href="#" class="profile-section__edit">
+    <div class="bg-white rounded-lg py-6 px-8 max-md:p-5 max-sm:p-4">
+      <div class="flex items-center justify-between">
+        <h3 class="text-base font-bold m-0" style="color:var(--color-text-heading, #111827)">${section.title}</h3>
+        <a href="#" class="inline-flex items-center gap-1 text-[13px] text-blue-600 no-underline font-medium transition-colors hover:text-blue-700">
           ${ICONS.edit}
           <span>Düzenle</span>
         </a>
       </div>
-      <div class="profile-section__divider"></div>
-      <div class="profile-grid">
+      <div class="h-px bg-gray-200 my-4"></div>
+      <div class="grid grid-cols-2 gap-x-8 gap-y-3 max-md:grid-cols-1 max-md:gap-y-1">
         ${section.fields.map(renderInfoField).join('')}
       </div>
     </div>
@@ -107,11 +106,11 @@ function renderInfoSection(section: InfoSection): string {
 
 function renderCover(): string {
   return `
-    <div class="profile-cover">
+    <div class="w-full h-[180px] rounded-t-lg overflow-hidden bg-gray-200 max-md:h-[120px]">
       <img
         src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&h=360&fit=crop&crop=center"
         alt="Kapak fotoğrafı"
-        class="profile-cover__img"
+        class="w-full h-full object-cover"
       />
     </div>
   `;
@@ -119,41 +118,41 @@ function renderCover(): string {
 
 function renderProfileCard(): string {
   return `
-    <div class="profile-header">
-      <div class="profile-header__left">
-        <div class="profile-header__avatar">
-          <span class="profile-header__initial">m</span>
+    <div class="flex items-start justify-between gap-6 bg-white rounded-b-lg py-6 px-8 -mt-px max-md:flex-col max-md:p-5 max-md:gap-4">
+      <div class="flex gap-5 flex-1 min-w-0 max-md:flex-col max-md:items-start">
+        <div class="w-20 h-20 rounded-full flex items-center justify-center flex-shrink-0 -mt-10 border-3 border-white shadow-md max-md:w-16 max-md:h-16 max-md:-mt-8" style="background:var(--color-border-medium)">
+          <span class="text-4xl font-bold text-white lowercase leading-none max-md:text-[28px]">m</span>
         </div>
-        <div class="profile-header__info">
-          <div class="profile-header__name-row">
-            <h1 class="profile-header__name">Metin K.</h1>
-            <a href="#" class="profile-header__link-icon" title="Profil bağlantısını kopyala">${ICONS.link}</a>
+        <div class="flex flex-col gap-1 min-w-0">
+          <div class="flex items-center gap-2">
+            <h1 class="text-xl font-bold m-0 max-sm:text-[17px]" style="color:var(--color-text-heading, #111827)">Metin K.</h1>
+            <a href="#" class="inline-flex items-center justify-center w-7 h-7 rounded transition-all hover:bg-surface-raised" style="color:var(--color-text-placeholder, #999999)" title="Profil bağlantısını kopyala">${ICONS.link}</a>
           </div>
-          <div class="profile-header__meta">
-            <span class="profile-header__flag">${ICONS.flag}</span>
-            <span class="profile-header__country">TR</span>
+          <div class="flex items-center gap-1.5 text-[13px]" style="color:var(--color-text-muted, #666666)">
+            <span class="inline-flex items-center">${ICONS.flag}</span>
+            <span>TR</span>
           </div>
-          <div class="profile-header__company">at Metin K.</div>
-          <div class="profile-header__details">
-            <span class="profile-header__detail">
+          <div class="text-[13px]" style="color:var(--color-text-muted, #666666)">at Metin K.</div>
+          <div class="flex items-center gap-2 text-[13px] flex-wrap mt-1 max-sm:flex-col max-sm:items-start max-sm:gap-1" style="color:var(--color-text-muted, #666666)">
+            <span class="inline-flex items-center gap-1">
               E-posta met***@gmail.com
-              <span class="profile-header__verified">${ICONS.verified} Doğrulandı</span>
+              <span class="inline-flex items-center gap-[3px] text-xs font-medium text-green-500">${ICONS.verified} Doğrulandı</span>
             </span>
-            <span class="profile-header__detail-separator">|</span>
-            <span class="profile-header__detail">Katılım 2026</span>
+            <span class="max-sm:hidden" style="color:var(--color-border-medium)">|</span>
+            <span>Katılım 2026</span>
           </div>
-          <div class="profile-header__tags">
-            <span class="profile-header__tag-label">Ana ürünler</span>
-            <span class="profile-header__tag-value">—</span>
+          <div class="flex items-center gap-2 text-[13px] mt-1">
+            <span style="color:var(--color-text-placeholder, #999999)">Ana ürünler</span>
+            <span style="color:var(--color-text-muted, #666666)">—</span>
           </div>
         </div>
       </div>
-      <div class="profile-header__actions">
-        <a href="#" class="profile-header__action-btn profile-header__action-btn--secondary">
+      <div class="flex items-center gap-3 flex-shrink-0 max-md:w-full">
+        <a href="#" class="inline-flex items-center gap-1.5 py-2 px-4 rounded-md text-[13px] font-medium no-underline transition-all whitespace-nowrap bg-surface-raised hover:bg-gray-200 max-md:flex-1 max-md:justify-center" style="color:var(--color-text-body, #333333)">
           ${ICONS.eye}
           <span>Diğerlerinin gördüğü</span>
         </a>
-        <a href="#" class="profile-header__action-btn profile-header__action-btn--primary">
+        <a href="#" class="inline-flex items-center gap-1.5 py-2 px-4 rounded-md text-[13px] font-medium no-underline transition-all whitespace-nowrap text-white hover:bg-gray-800 max-md:flex-1 max-md:justify-center" style="background:var(--color-text-heading)">
           ${ICONS.edit}
           <span>Düzenle</span>
         </a>
@@ -192,34 +191,34 @@ function renderFormField(field: FormField): string {
 
   if (field.isVerified) {
     valueHtml = `
-      <span class="profile-form__value">${field.value}</span>
-      <span class="profile-form__verified">${ICONS.verified} Eposta adresi doğrulandı</span>
+      <span style="color:var(--color-text-body, #333333)">${field.value}</span>
+      <span class="inline-flex items-center gap-[3px] text-xs italic" style="color:var(--color-cta-primary, #cc9900)">${ICONS.verified} Eposta adresi doğrulandı</span>
     `;
   } else {
-    valueHtml = `<span class="profile-form__value">${field.value || ''}</span>`;
+    valueHtml = `<span style="color:var(--color-text-body, #333333)">${field.value || ''}</span>`;
   }
 
   return `
-    <div class="profile-form__row">
-      <div class="profile-form__label">${field.label}:</div>
-      <div class="profile-form__field">${valueHtml}</div>
+    <div class="flex items-baseline py-2.5 min-h-[38px] max-md:flex-col max-md:gap-1">
+      <div class="w-[220px] flex-shrink-0 text-sm font-bold text-right pr-4 max-md:w-auto max-md:text-left max-md:pr-0" style="color:var(--color-text-heading, #111827)">${field.label}:</div>
+      <div class="flex-1 flex items-center gap-2 text-sm" style="color:var(--color-text-body, #333333)">${valueHtml}</div>
     </div>
   `;
 }
 
 function renderAccountEditForm(): string {
   return `
-    <div class="profile-form">
-      <div class="profile-form__header">
-        <h2 class="profile-form__title">Hesap Bilgilerinizi Düzenleyin</h2>
-        <a href="#" class="profile-form__close-account">Hesabı Kapat</a>
+    <div class="bg-white rounded-lg p-8 max-md:p-5">
+      <div class="flex items-center justify-between">
+        <h2 class="text-lg font-semibold m-0" style="color:var(--color-text-heading, #111827)">Hesap Bilgilerinizi Düzenleyin</h2>
+        <a href="#" class="text-[13px] text-blue-600 no-underline font-medium hover:underline">Hesabı Kapat</a>
       </div>
-      <div class="profile-form__divider"></div>
-      <div class="profile-form__body">
+      <div class="h-px bg-gray-200 mt-5 mb-6"></div>
+      <div class="flex flex-col">
         ${accountFields.map(renderFormField).join('')}
       </div>
-      <div class="profile-form__footer">
-        <button class="profile-form__submit" type="button">Düzenle</button>
+      <div class="mt-6 py-4 bg-[#eff1f7] rounded-md flex justify-center">
+        <button class="py-1.5 px-7 rounded border-[1.5px] border-primary-600 bg-white text-sm font-medium cursor-pointer transition-all hover:bg-amber-50 hover:border-amber-700" style="color:var(--color-text-heading, #111827)" type="button">Düzenle</button>
       </div>
     </div>
   `;
@@ -229,7 +228,7 @@ function renderAccountEditForm(): string {
 
 export function ProfileLayout(): string {
   return `
-    <div class="profile-page">
+    <div class="py-4 flex flex-col gap-4">
       ${renderCover()}
       ${renderProfileCard()}
       ${renderAccountEditForm()}
@@ -240,17 +239,6 @@ export function ProfileLayout(): string {
   `;
 }
 
-// ── Init ─────────────────────────────────────────────────────────
-
 export function initProfileLayout(): void {
-  // Copy profile link
-  const linkBtn = document.querySelector<HTMLAnchorElement>('.profile-header__link-icon');
-  if (linkBtn) {
-    linkBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      navigator.clipboard.writeText(window.location.href);
-      linkBtn.title = 'Kopyalandı!';
-      setTimeout(() => { linkBtn.title = 'Profil bağlantısını kopyala'; }, 2000);
-    });
-  }
+  // Profile page is read-only, no interactive logic needed
 }

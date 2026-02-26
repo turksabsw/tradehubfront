@@ -50,20 +50,20 @@ const defaultSections: PrivacySection[] = [
 
 function renderPrivacySection(section: PrivacySection): string {
   const optionsHtml = section.options.map(opt => `
-    <label class="privacy__radio">
-      <input type="radio" name="privacy-${section.id}" value="${opt.value}" ${opt.value === section.selected ? 'checked' : ''} />
-      <span class="privacy__radio-label">${opt.label}</span>
-      ${opt.tooltip ? `<span class="privacy__tooltip" title="Daha fazla bilgi">?</span>` : ''}
+    <label class="privacy__radio flex items-center gap-2 text-sm cursor-pointer leading-normal" style="color:var(--color-text-body, #333333)">
+      <input type="radio" name="privacy-${section.id}" value="${opt.value}" class="m-0 flex-shrink-0" style="accent-color:var(--color-primary-500, #cc9900)" ${opt.value === section.selected ? 'checked' : ''} />
+      <span class="flex-1">${opt.label}</span>
+      ${opt.tooltip ? `<span class="inline-flex items-center justify-center w-4 h-4 rounded-full border border-gray-300 text-[10px] cursor-help flex-shrink-0" style="color:var(--color-text-placeholder, #999999)" title="Daha fazla bilgi">?</span>` : ''}
     </label>
   `).join('');
 
   return `
-    <div class="privacy__section">
-      <h3 class="privacy__section-title">
+    <div>
+      <h3 class="text-sm font-bold mb-3 m-0 flex items-center gap-1.5" style="color:var(--color-text-heading, #111827)">
         ${section.title}
-        ${section.tooltip ? `<span class="privacy__tooltip" title="Daha fazla bilgi">?</span>` : ''}
+        ${section.tooltip ? `<span class="inline-flex items-center justify-center w-4 h-4 rounded-full border border-gray-300 text-[10px] cursor-help flex-shrink-0" style="color:var(--color-text-placeholder, #999999)" title="Daha fazla bilgi">?</span>` : ''}
       </h3>
-      <div class="privacy__options">
+      <div class="flex flex-col gap-2 pl-1">
         ${optionsHtml}
       </div>
     </div>
@@ -74,14 +74,14 @@ export function SettingsPrivacy(sections?: PrivacySection[]): string {
   const items = sections || defaultSections;
 
   return `
-    <div class="privacy">
-      <h2 class="privacy__title">Gizlilik Ayarları</h2>
-      <div class="privacy__divider"></div>
-      <div class="privacy__sections">
+    <div class="bg-white rounded-lg p-8 max-md:p-5">
+      <h2 class="text-xl font-bold m-0" style="color:var(--color-text-heading, #111827)">Gizlilik Ayarları</h2>
+      <div class="h-px bg-gray-200 mt-4 mb-6"></div>
+      <div class="flex flex-col gap-7">
         ${items.map(renderPrivacySection).join('')}
       </div>
-      <div class="privacy__actions">
-        <button class="privacy__save-btn" type="button">Kaydet</button>
+      <div class="mt-8">
+        <button class="privacy__save-btn py-2.5 px-7 border-none rounded text-sm font-semibold cursor-pointer transition-colors text-white hover:opacity-90 disabled:opacity-60 disabled:cursor-default" style="background:var(--color-cta-primary, #cc9900)" type="button">Kaydet</button>
       </div>
     </div>
   `;
@@ -102,7 +102,6 @@ function savePrivacyData(data: Record<string, string>): void {
 }
 
 export function initSettingsPrivacy(): void {
-  // Restore saved selections
   const saved = readPrivacyData();
   for (const [name, value] of Object.entries(saved)) {
     const radio = document.querySelector<HTMLInputElement>(`input[name="${name}"][value="${value}"]`);
@@ -112,7 +111,6 @@ export function initSettingsPrivacy(): void {
   const saveBtn = document.querySelector<HTMLButtonElement>('.privacy__save-btn');
   if (saveBtn) {
     saveBtn.addEventListener('click', () => {
-      // Collect all radio selections
       const data: Record<string, string> = {};
       document.querySelectorAll<HTMLInputElement>('.privacy__radio input[type="radio"]:checked').forEach(r => {
         if (r.name) data[r.name] = r.value;

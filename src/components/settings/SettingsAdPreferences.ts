@@ -45,14 +45,14 @@ function savePreferences(prefs: Record<string, boolean>): void {
 
 function renderToggle(pref: AdPreference): string {
   return `
-    <div class="ad-pref__item">
-      <div class="ad-pref__content">
-        <h3 class="ad-pref__item-title">${pref.title}</h3>
-        <p class="ad-pref__item-desc">${pref.description}</p>
+    <div class="flex items-start justify-between gap-6 py-6 border-b border-[var(--color-border-light,#f0f0f0)] last:border-b-0">
+      <div class="flex-1 min-w-0">
+        <h3 class="text-[15px] font-bold mb-2 m-0" style="color:var(--color-text-heading, #111827)">${pref.title}</h3>
+        <p class="text-[13px] leading-relaxed m-0" style="color:var(--color-text-placeholder, #999999)">${pref.description}</p>
       </div>
-      <label class="ad-pref__toggle">
-        <input type="checkbox" data-pref-id="${pref.id}" ${pref.enabled ? 'checked' : ''} />
-        <span class="ad-pref__toggle-slider"></span>
+      <label class="relative inline-flex w-12 h-[26px] flex-shrink-0 cursor-pointer">
+        <input type="checkbox" data-pref-id="${pref.id}" ${pref.enabled ? 'checked' : ''} class="opacity-0 w-0 h-0 absolute" />
+        <span class="ad-pref__toggle-slider absolute inset-0 rounded-[13px] transition-colors" style="background:var(--color-border-medium)"></span>
       </label>
     </div>
   `;
@@ -61,20 +61,19 @@ function renderToggle(pref: AdPreference): string {
 export function SettingsAdPreferences(): string {
   const prefs = readPreferences();
   return `
-    <div class="ad-pref">
-      <h2 class="ad-pref__title">Veri tercihleri</h2>
-      <div class="ad-pref__list">
+    <div class="bg-white rounded-lg p-8 max-md:p-5">
+      <h2 class="text-xl font-bold mb-6 m-0" style="color:var(--color-text-heading, #111827)">Veri tercihleri</h2>
+      <div class="flex flex-col">
         ${prefs.map(renderToggle).join('')}
       </div>
-      <div class="ad-pref__actions">
-        <a href="#" class="ad-pref__back-btn">Geri</a>
+      <div class="mt-12 flex justify-center">
+        <a href="#" class="ad-pref__back-btn inline-flex items-center justify-center py-3 px-20 border border-gray-300 rounded-3xl text-sm font-medium no-underline transition-all hover:bg-surface-raised hover:border-gray-400" style="color:var(--color-text-heading, #111827)">Geri</a>
       </div>
     </div>
   `;
 }
 
 export function initSettingsAdPreferences(): void {
-  // Toggle change → save immediately
   document.querySelectorAll<HTMLInputElement>('[data-pref-id]').forEach(input => {
     input.addEventListener('change', () => {
       const prefs: Record<string, boolean> = {};
@@ -85,7 +84,6 @@ export function initSettingsAdPreferences(): void {
     });
   });
 
-  // Back button
   const backBtn = document.querySelector<HTMLAnchorElement>('.ad-pref__back-btn');
   if (backBtn) {
     backBtn.addEventListener('click', (e) => {

@@ -1,6 +1,6 @@
 /**
  * SettingsTaxInfo Component
- * Tax information page with tabs (Vergi Bilgileri / Gümrük muayenesi bilgileri).
+ * Tax information page with tabs.
  */
 
 const ICONS = {
@@ -57,22 +57,22 @@ const defaultFaqs: FaqItem[] = [
 
 function renderTaxSection(section: TaxSection): string {
   return `
-    <div class="tax-info__section">
-      <div class="tax-info__section-content">
-        <h3 class="tax-info__section-title">${section.title}</h3>
-        <p class="tax-info__section-desc">${section.description}</p>
+    <div class="flex items-center justify-between gap-6 p-6 border border-border-default rounded-lg max-md:flex-col max-md:items-start">
+      <div class="flex-1 min-w-0">
+        <h3 class="text-[15px] font-bold mb-2 m-0" style="color:var(--color-text-heading, #111827)">${section.title}</h3>
+        <p class="text-[13px] leading-normal m-0" style="color:var(--color-text-muted, #666666)">${section.description}</p>
       </div>
-      <button class="tax-info__section-btn" type="button">${section.buttonLabel}</button>
+      <button class="py-2.5 px-6 border border-[var(--color-text-heading)] rounded-[20px] bg-white text-[13px] font-medium whitespace-nowrap cursor-pointer transition-all flex-shrink-0 hover:bg-surface-raised" style="color:var(--color-text-heading, #111827)" type="button">${section.buttonLabel}</button>
     </div>
   `;
 }
 
 function renderFaqCard(faq: FaqItem): string {
   return `
-    <div class="tax-info__faq-card">
-      <h4 class="tax-info__faq-title">${faq.title}</h4>
-      <p class="tax-info__faq-desc">${faq.description}</p>
-      ${faq.linkText ? `<a href="#" class="tax-info__faq-link">${faq.linkText}</a>` : ''}
+    <div class="p-5 border border-border-default rounded-lg">
+      <h4 class="text-sm font-bold mb-2 m-0" style="color:var(--color-text-heading, #111827)">${faq.title}</h4>
+      <p class="text-[13px] leading-normal mb-2 m-0" style="color:var(--color-text-muted, #666666)">${faq.description}</p>
+      ${faq.linkText ? `<a href="#" class="text-[13px] text-blue-600 underline">${faq.linkText}</a>` : ''}
     </div>
   `;
 }
@@ -82,30 +82,30 @@ export function SettingsTaxInfo(sections?: TaxSection[], faqs?: FaqItem[]): stri
   const faqItems = faqs || defaultFaqs;
 
   return `
-    <div class="tax-info">
-      <h2 class="tax-info__title">Information</h2>
+    <div class="bg-white rounded-lg p-8 max-md:p-5">
+      <h2 class="text-xl font-bold mb-5 m-0" style="color:var(--color-text-heading, #111827)">Information</h2>
 
-      <div class="tax-info__tabs">
-        <button class="tax-info__tab tax-info__tab--active" data-tab="vergi">Vergi Bilgileri</button>
-        <button class="tax-info__tab" data-tab="gumruk">Gümrük muayenesi bilgileri</button>
+      <div class="flex border-b-2 border-border-default mb-5">
+        <button class="tax-info__tab py-2.5 px-5 text-sm font-medium bg-none border-none border-b-2 -mb-[2px] cursor-pointer transition-all" style="color:var(--color-text-heading, #111827); border-bottom-color:var(--color-text-heading)" data-tab="vergi">Vergi Bilgileri</button>
+        <button class="tax-info__tab py-2.5 px-5 text-sm font-medium bg-none border-none border-b-2 border-transparent -mb-[2px] cursor-pointer transition-all" style="color:var(--color-text-muted, #666666)" data-tab="gumruk">Gümrük muayenesi bilgileri</button>
       </div>
 
-      <div class="tax-info__alert">
-        ${ICONS.info}
+      <div class="flex items-center gap-2.5 py-3 px-4 bg-blue-50 rounded-md text-[13px] text-blue-800 mb-6 flex-wrap">
+        <span class="flex-shrink-0">${ICONS.info}</span>
         <span>Vergiden muaf statüsü elde edin. Yeniden satış veya üretim için ürün satın alıyorsanız vergi muafiyetinin doğrulanması amacıyla vergi bilgilerinizi gönderin.</span>
-        <a href="#" class="tax-info__alert-link">Daha fazla bilgi edinin</a>
+        <a href="#" class="text-blue-600 font-medium no-underline ml-auto hover:underline">Daha fazla bilgi edinin</a>
       </div>
 
-      <div class="tax-info__sections" id="tax-tab-vergi">
+      <div class="flex flex-col gap-4 mb-8" id="tax-tab-vergi">
         ${taxSections.map(renderTaxSection).join('')}
       </div>
 
-      <div class="tax-info__sections" id="tax-tab-gumruk" style="display:none">
-        <div class="tax-info__empty">Gümrük muayenesi bilgileri burada görüntülenecek.</div>
+      <div class="flex flex-col gap-4 mb-8" id="tax-tab-gumruk" style="display:none">
+        <div class="p-10 text-center text-sm" style="color:var(--color-text-placeholder, #999999)">Gümrük muayenesi bilgileri burada görüntülenecek.</div>
       </div>
 
-      <h3 class="tax-info__faq-heading">Sıkça Sorulan Sorular</h3>
-      <div class="tax-info__faq-grid">
+      <h3 class="text-lg font-bold mb-4 m-0" style="color:var(--color-text-heading, #111827)">Sıkça Sorulan Sorular</h3>
+      <div class="grid grid-cols-3 gap-4 max-md:grid-cols-1">
         ${faqItems.map(renderFaqCard).join('')}
       </div>
     </div>
@@ -116,8 +116,12 @@ export function initSettingsTaxInfo(): void {
   const tabs = document.querySelectorAll<HTMLButtonElement>('.tax-info__tab');
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
-      tabs.forEach(t => t.classList.remove('tax-info__tab--active'));
-      tab.classList.add('tax-info__tab--active');
+      tabs.forEach(t => {
+        t.style.color = 'var(--color-text-muted, #666666)';
+        t.style.borderBottomColor = 'transparent';
+      });
+      tab.style.color = 'var(--color-text-heading, #111827)';
+      tab.style.borderBottomColor = 'var(--color-text-heading)';
       const target = tab.dataset.tab;
       document.getElementById('tax-tab-vergi')!.style.display = target === 'vergi' ? '' : 'none';
       document.getElementById('tax-tab-gumruk')!.style.display = target === 'gumruk' ? '' : 'none';
