@@ -459,7 +459,7 @@ export function ProductListingGrid(products: ProductListingCard[] = mockProductL
     return `
       <section aria-label="Ürün Listesi" class="flex-1">
         <div
-          class="grid product-grid"
+          class="grid grid-cols-2 md:grid-cols-4 product-grid"
           style="gap: var(--product-grid-gap, 12px);"
           role="list"
           aria-label="Ürün listesi"
@@ -473,7 +473,7 @@ export function ProductListingGrid(products: ProductListingCard[] = mockProductL
   return `
     <section aria-label="Ürün Listesi" class="flex-1">
       <div
-        class="grid product-grid"
+        class="grid grid-cols-2 md:grid-cols-4 product-grid"
         style="gap: var(--product-grid-gap, 12px);"
         role="list"
         aria-label="Ürün listesi"

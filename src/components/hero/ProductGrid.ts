@@ -235,7 +235,7 @@ export function ProductGrid(): string {
       style="background-color: var(--product-bg, #f4f4f4); padding-top: 28px; padding-bottom: 28px;"
     >
       <div class="container-wide">
-        <div class="grid product-grid home-product-grid" style="gap: var(--product-grid-gap, 8px);" role="list" aria-label="Product listings">
+        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 product-grid home-product-grid" style="gap: var(--product-grid-gap, 8px);" role="list" aria-label="Product listings">
           ${productCardSeed.map((card, index) => renderProductCard(card, index)).join('')}
         </div>
       </div>

@@ -1701,9 +1701,7 @@
     }
 
     /* --- Product Grid: snapshot-matched hFR19 card --- */
-    .product-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
+    /* Grid columns migrated to Tailwind: grid-cols-2 md:grid-cols-4 lg:grid-cols-6 */
 
     .hFR19 {
         display: flex;
@@ -2116,21 +2114,7 @@
         background: var(--color-surface-raised, #f5f5f5);
     }
 
-    @media (width >=768px) {
-        .product-grid {
-            grid-template-columns: repeat(4, minmax(0, 1fr));
-        }
-    }
-
-    @media (width >=1024px) {
-        .product-grid {
-            grid-template-columns: repeat(4, minmax(0, 1fr));
-        }
-
-        .home-product-grid {
-            grid-template-columns: repeat(6, minmax(0, 1fr));
-        }
-    }
+    /* Responsive grid columns migrated to Tailwind classes in templates */
 
     /* --- List View Mode --- */
     .product-grid--list {
