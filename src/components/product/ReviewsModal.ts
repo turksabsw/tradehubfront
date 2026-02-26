@@ -25,8 +25,8 @@ export function ReviewsModal(): string {
     <div id="rv-reviews-modal" class="rv-modal-overlay rv-modal-hidden">
       <div class="rv-modal">
         <!-- Fixed Header -->
-        <div class="rv-modal-header">
-          <span class="rv-modal-title">Mağaza Yorumları (${p.storeReviewCount})</span>
+        <div class="rv-modal-header flex justify-between items-center px-6 py-5 shrink-0">
+          <span class="rv-modal-title">${p.storeReviewCount} Mağaza Yorumları</span>
           <button type="button" class="rv-modal-close" id="rv-modal-close">
             <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
@@ -35,9 +35,9 @@ export function ReviewsModal(): string {
         </div>
 
         <!-- Scrollable Body -->
-        <div class="rv-modal-body">
+        <div class="rv-modal-body overflow-y-auto px-6 pb-6 flex-1">
           <!-- Filter Row -->
-          <div class="rv-filter-row">
+          <div class="rv-filter-row flex items-center gap-2 flex-wrap mb-4">
             <button type="button" class="rv-filter-pill active" data-rv-modal-filter="all">Tümü</button>
             <button type="button" class="rv-filter-pill" data-rv-modal-filter="photo">Fotoğraflı/Videolu (${photoReviewCount})</button>
 
@@ -71,7 +71,7 @@ export function ReviewsModal(): string {
           </div>
 
           <!-- Mention Tags -->
-          <div class="rv-mention-tags">
+          <div class="flex gap-2 flex-wrap mb-5">
             <span style="font-size: 12px; color: var(--pd-rating-text-color, #6b7280); align-self: center;">Sık bahsedilenler:</span>
             ${p.reviewMentionTags.map(tag => `
               <button type="button" class="rv-mention-tag" data-rv-modal-mention="${tag.label}">${tag.label} (${tag.count})</button>
@@ -79,9 +79,9 @@ export function ReviewsModal(): string {
           </div>
 
           <!-- Language Toggle -->
-          <div class="rv-lang-row">
-            <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM4.332 8.027a6.012 6.012 0 011.912-2.706C6.512 5.73 6.974 6 7.5 6A1.5 1.5 0 019 7.5V8a2 2 0 004 0 2 2 0 011.523-1.943A5.977 5.977 0 0116 10c0 .34-.028.675-.083 1H15a2 2 0 00-2 2v2.197A5.973 5.973 0 0110 16v-2a2 2 0 00-2-2 2 2 0 01-2-2 2 2 0 00-1.668-1.973z" clip-rule="evenodd"/></svg>
-            <span>Seçtiğiniz dilde tüm yorumlar gösteriliyor.</span>
+          <div class="rv-lang-row flex items-center gap-2 mt-2">
+            <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM4.332 8.027a6.012 6.012 0 011.912-2.706C6.512 5.73 6.974 6 7.5 6A1.5 1.5 0 019 7.5V8a2 2 0 004 0 2 2 0 011.523-1.943A5.977 5.977 0 0116 10c0 .34-.028.675-.083 1H15a2 2 0 00-2 2v2.197A5.973 5.973 0 0110 16v-2a2 2 0 00-2-2 2 2 0 01-2-2 2 2 0 00-1.668-1.973z" clip-rule="evenodd"/></svg>
+            <span class="text-[13px]">Seçtiğiniz dilde tüm yorumlar gösteriliyor.</span>
             <a class="rv-lang-toggle-link" href="javascript:void(0)">Orijinalini Göster</a>
           </div>
 
