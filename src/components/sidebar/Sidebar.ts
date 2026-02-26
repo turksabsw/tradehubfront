@@ -19,7 +19,7 @@ import type { SidebarSection } from '../../types/buyerDashboard';
  */
 function renderSection(section: SidebarSection, expanded: boolean): string {
   const title = section.title && expanded
-    ? `<h3 class="sidebar__section-title px-6 pt-4 pb-1 text-[12px] font-normal uppercase tracking-wider text-[#999] dark:text-gray-500">${section.title}</h3>`
+    ? `<h3 class="sidebar__section-title px-6 pt-4 pb-1 text-xs font-normal uppercase tracking-wider text-gray-400 dark:text-gray-500">${section.title}</h3>`
     : '';
 
   const items = section.items
@@ -60,7 +60,7 @@ export function renderSidebar(expanded = true): string {
   return `
     <aside
       id="buyer-sidebar"
-      class="sidebar sidebar--${expanded ? 'expanded' : 'collapsed'} sticky top-[42px] z-20 flex flex-col bg-[#F5F5F5] dark:bg-gray-900 rounded-lg h-[calc(100vh-42px)] transition-shadow"
+      class="sidebar sidebar--${expanded ? 'expanded' : 'collapsed'} sticky top-[42px] z-20 flex flex-col bg-gray-100 dark:bg-gray-900 rounded-lg h-[calc(100vh-42px)] transition-shadow"
       role="navigation"
       aria-label="Buyer dashboard sidebar"
     >
@@ -99,7 +99,7 @@ export function initSidebar(): void {
     const isActive = hrefPath && currentPath.endsWith(hrefPath.replace(/^\//, ''));
 
     // Remove old active styling
-    el.classList.remove(...activeClasses, 'bg-[#F0FFF0]', 'text-[#00B96B]');
+    el.classList.remove(...activeClasses, 'bg-green-50', 'text-green-600');
 
     if (isActive) {
       el.classList.add(...activeClasses);

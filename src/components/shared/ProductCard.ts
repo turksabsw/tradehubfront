@@ -8,7 +8,7 @@ import type { ProductCardProps } from '../../types/buyerDashboard';
 export function ProductCard({ image, price, currency, minOrder, href }: ProductCardProps): string {
   return `
     <a href="${href}" class="block w-[169.5px] flex-shrink-0 rounded-lg overflow-hidden hover:shadow-md transition-shadow">
-      <div class="w-full aspect-square bg-[#f5f5f5] overflow-hidden">
+      <div class="w-full aspect-square bg-gray-100 dark:bg-gray-700 overflow-hidden">
         <img
           src="${image}"
           alt=""
@@ -17,8 +17,8 @@ export function ProductCard({ image, price, currency, minOrder, href }: ProductC
         />
       </div>
       <div class="p-2">
-        <p class="text-[14px] font-semibold text-[#222] leading-tight">${currency}${price}</p>
-        <p class="text-[12px] text-[#999] mt-0.5">${minOrder}</p>
+        <p class="text-sm font-semibold text-gray-900 dark:text-gray-100 leading-tight">${currency}${price}</p>
+        <p class="text-xs text-gray-400 dark:text-gray-500 mt-0.5">${minOrder}</p>
       </div>
     </a>
   `;

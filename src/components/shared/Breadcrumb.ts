@@ -24,12 +24,12 @@ export function Breadcrumb(items: BreadcrumbItem[]): string {
     const isLast = i === allItems.length - 1;
 
     if (isLast) {
-      return `<span class="text-sm truncate max-w-[200px]" style="color: var(--breadcrumb-color, #6b7280);">${item.label}</span>`;
+      return `<span class="text-sm truncate max-w-[200px] text-gray-500 dark:text-gray-400">${item.label}</span>`;
     }
 
     return `
-      <a href="${item.href ?? '#'}" class="text-sm hover:underline whitespace-nowrap" style="color: var(--breadcrumb-link-color, var(--pd-breadcrumb-link-color, #cc9900));">${item.label}</a>
-      <svg class="h-3 w-3 flex-shrink-0" style="color: var(--breadcrumb-color, #9ca3af);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <a href="${item.href ?? '#'}" class="text-sm hover:underline whitespace-nowrap text-primary-500 dark:text-primary-400">${item.label}</a>
+      <svg class="h-3 w-3 flex-shrink-0 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
       </svg>
     `;

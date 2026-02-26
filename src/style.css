@@ -6302,12 +6302,7 @@ body.pdm-sheet-open {
     }
 }
 
-/* ── Floating panel — hide on mobile ──────────────── */
-@media (width < 1024px) {
-    #floating-panel {
-        display: none !important;
-    }
-}
+/* Floating panel responsive hiding now handled via Tailwind classes (hidden lg:flex) */
 
 /* ── 17. Shipping Modal — Mobile bottom sheet ──────── */
 @media (width < 1024px) {
