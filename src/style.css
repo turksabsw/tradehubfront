@@ -653,6 +653,38 @@
 
 
     /* ==========================================================
+     9b. SEMANTIC CTA & NORMALIZATION TOKENS
+     ========================================================== */
+
+    /* --- CTA Semantic --- */
+    --color-cta-primary: var(--color-primary-500);
+    --color-cta-primary-hover: var(--color-primary-600);
+    --color-cta-primary-light: var(--color-primary-400);
+    --color-cta-primary-tint: var(--color-primary-50);
+
+    /* --- Text Normalizasyon --- */
+    --color-text-heading: #111827;
+    --color-text-body: #333333;
+    --color-text-muted: #666666;
+    --color-text-placeholder: #999999;
+
+    /* --- Border Normalizasyon --- */
+    --color-border-light: #f0f0f0;
+    --color-border-medium: #d1d5db;
+
+    /* --- CTA Button Token'ları --- */
+    --pd-cta-primary-bg: var(--color-cta-primary);
+    --pd-cta-primary-hover: var(--color-cta-primary-hover);
+    --search-btn-bg: var(--color-cta-primary);
+    --search-btn-hover: var(--color-cta-primary-hover);
+
+    /* --- Genel Aksiyon Token'ları --- */
+    --toggle-active-bg: var(--color-cta-primary);
+    --modal-btn-primary-bg: var(--color-cta-primary);
+    --stepper-active-bg: var(--color-cta-primary);
+
+
+    /* ==========================================================
      10. Z-INDEX
      ========================================================== */
 
