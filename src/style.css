@@ -1865,42 +1865,7 @@
    PRODUCT TITLE BAR — Above gallery, full-width (Alibaba-style)
    ============================================================ */
 
-#pd-title-bar {
-    margin-bottom: 20px;
-}
-
-#pd-product-title {
-    font-size: 18px;
-    font-weight: 700;
-    line-height: 1.4;
-    color: var(--pd-title-color, #222222);
-    margin: 0 0 6px;
-}
-
-#pd-rating-line {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    flex-wrap: wrap;
-    font-size: 13px;
-    margin-bottom: 12px;
-}
-
-#pd-company-bar {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    flex-wrap: wrap;
-    font-size: 13px;
-    padding: 8px 12px;
-    background: var(--color-surface-raised, #f5f5f5);
-    border-radius: 6px;
-    color: var(--pd-rating-text-color, #6b7280);
-}
-
-#pd-company-bar a {
-    font-size: 13px;
-}
+/* ProductTitleBar — migrated to Tailwind in ProductTitleBar.ts */
 
 /* ============================================================
    PRODUCT IMAGE GALLERY — Alibaba-style
@@ -1917,44 +1882,11 @@
     overflow: hidden;
 }
 
-/* Thumbnail strip — vertical column */
-#pd-thumb-strip {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    flex-shrink: 0;
-    width: 68px;
-}
-
-/* Scroll arrow buttons (up/down) */
-.pd-thumb-arrow {
-    width: 56px;
-    height: 28px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--color-surface, #ffffff);
-    border: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
-    border-radius: 6px;
-    cursor: pointer;
-    color: var(--color-text-placeholder, #999999);
-    flex-shrink: 0;
-    transition: color .15s, border-color .15s;
-}
+/* Thumbnail strip — migrated to Tailwind in ProductImageGallery.ts */
 
 .pd-thumb-arrow:hover {
     color: var(--color-text-body, #333333);
     border-color: var(--color-border-medium, #d1d5db);
-}
-
-/* Scrollable thumbnail container */
-#gallery-thumb-list {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    overflow: hidden;
-    flex: 1;
-    padding: 6px 0;
 }
 
 /* Individual thumbnail */
@@ -2047,45 +1979,13 @@
     right: 10px;
 }
 
-/* Top-right action buttons (favorite + camera) */
-#gallery-action-btns {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    z-index: 5;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.gallery-action-btn {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background: var(--color-surface, #ffffff);
-    box-shadow: 0 1px 6px rgba(0, 0, 0, .12);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    cursor: pointer;
-    color: var(--color-text-placeholder, #999999);
-    transition: color .15s;
-}
+/* Action buttons — migrated to Tailwind in ProductImageGallery.ts */
 
 .gallery-action-btn:hover {
     color: var(--color-text-body, #333333);
 }
 
-/* Photos / Attributes segmented control below gallery */
-#pd-gallery-tabs {
-    display: inline-flex;
-    gap: 2px;
-    margin-top: 12px;
-    background: var(--color-border-light);
-    border-radius: 24px;
-    padding: 3px;
-}
+/* pd-gallery-tabs — migrated to Tailwind in ProductImageGallery.ts */
 
 #pd-hero-gallery {
     text-align: center;
@@ -2408,33 +2308,7 @@ body.gallery-lightbox-open {
 
 /* Attributes card — replaces gallery when "Ozellikler" tab is active
    Lives inside #product-gallery flex container, same position as #gallery-main-image */
-#pd-attributes-card {
-    flex: 1;
-    min-width: 0;
-    overflow-y: auto;
-    background: var(--pd-spec-header-bg, #f9fafb);
-    border-radius: 8px;
-    border: 1px solid var(--pd-spec-border, #e5e5e5);
-    padding: 20px;
-}
-
-.pd-attr-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    border: 1px solid var(--pd-spec-border, #e5e5e5);
-    border-radius: 6px;
-    overflow: hidden;
-    background: var(--color-surface, #ffffff);
-}
-
-.pd-attr-cell {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    padding: 14px 16px;
-    border-bottom: 1px solid var(--pd-spec-border, #e5e5e5);
-    border-right: 1px solid var(--pd-spec-border, #e5e5e5);
-}
+/* ProductAttributes — migrated to Tailwind in ProductAttributes.ts */
 
 .pd-attr-cell:nth-child(even) {
     border-right: none;
@@ -2444,51 +2318,11 @@ body.gallery-lightbox-open {
     border-bottom: none;
 }
 
-.pd-attr-value {
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--pd-spec-value-color, #111827);
-}
-
-.pd-attr-key {
-    font-size: 12px;
-    color: var(--pd-spec-key-color, #6b7280);
-}
-
-.pd-attr-list {
-    margin-top: 16px;
-}
-
-.pd-attr-row {
-    display: flex;
-    gap: 12px;
-    padding: 10px 0;
-    border-bottom: 1px solid var(--pd-spec-border, #e5e5e5);
-    font-size: 13px;
-}
-
 .pd-attr-row:last-child {
     border-bottom: none;
 }
 
-.pd-attr-row-key {
-    color: var(--pd-spec-key-color, #6b7280);
-    min-width: 120px;
-    flex-shrink: 0;
-}
-
-.pd-attr-row-value {
-    color: var(--pd-spec-value-color, #111827);
-    font-weight: 500;
-}
-
-/* Section heading for lower content */
-.pd-section-heading {
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--pd-title-color, #111827);
-    margin-bottom: 16px;
-}
+/* pd-section-heading — migrated to Tailwind in AttributesTabContent.ts */
 
 /* 4-column attributes table */
 .pd-attrs-table {
@@ -2523,20 +2357,7 @@ body.gallery-lightbox-open {
     width: 25%;
 }
 
-/* Collapsible section heading */
-.pd-section-collapsible {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    cursor: pointer;
-    padding: 16px 0;
-    border: none;
-    background: none;
-    width: 100%;
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--pd-title-color, #111827);
-}
+/* pd-section-collapsible layout — migrated to Tailwind in AttributesTabContent.ts */
 
 .pd-section-collapsible svg {
     transition: transform .2s;
@@ -2557,48 +2378,7 @@ body.gallery-lightbox-open {
     text-align: left;
 }
 
-/* Customization options */
-.pd-customization-item {
-    display: flex;
-    align-items: baseline;
-    gap: 8px;
-    margin-bottom: 8px;
-    font-size: 14px;
-}
-
-.pd-customization-item strong {
-    color: var(--pd-spec-value-color, #111827);
-}
-
-.pd-customization-item span {
-    color: var(--pd-spec-key-color, #6b7280);
-}
-
-.pd-customization-link {
-    color: var(--pd-title-color, #111827);
-    text-decoration: underline;
-    font-size: 14px;
-    cursor: pointer;
-}
-
-.pd-customization-chat {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    margin-top: 12px;
-    padding: 10px 24px;
-    border: 1px solid #333;
-    border-radius: 20px;
-    background: var(--color-surface, #ffffff);
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background .15s;
-}
-
-.pd-customization-chat:hover {
-    background: var(--color-surface-raised, #f5f5f5);
-}
+/* Customization styles — migrated to Tailwind in AttributesTabContent.ts */
 
 /* ============================================================
    REVIEWS REDESIGN — Alibaba-style reviews section

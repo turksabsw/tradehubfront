@@ -110,21 +110,21 @@ export function ProductImageGallery(): string {
     <div id="product-gallery">
 
       <!-- LEFT: Vertical Thumbnail Strip -->
-      <div id="pd-thumb-strip">
+      <div id="pd-thumb-strip" class="flex flex-col items-center flex-shrink-0 w-[68px]">
 
         ${needsScroll ? `
-        <button type="button" id="thumb-scroll-up" class="pd-thumb-arrow" aria-label="Yukarı kaydır">
+        <button type="button" id="thumb-scroll-up" class="pd-thumb-arrow flex items-center justify-center w-[56px] h-[28px] rounded-md border cursor-pointer flex-shrink-0 transition-colors" style="background: var(--color-surface, #ffffff); border-color: var(--color-border-default, #e5e5e5); color: var(--color-text-placeholder, #999999);" aria-label="Yukarı kaydır">
           <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/></svg>
         </button>
         ` : ''}
 
-        <div id="gallery-thumb-list">
+        <div id="gallery-thumb-list" class="flex flex-col gap-1.5 overflow-hidden flex-1 py-1.5">
           ${thumbsHtml}
           ${attrThumbHtml}
         </div>
 
         ${needsScroll ? `
-        <button type="button" id="thumb-scroll-down" class="pd-thumb-arrow" aria-label="Aşağı kaydır">
+        <button type="button" id="thumb-scroll-down" class="pd-thumb-arrow flex items-center justify-center w-[56px] h-[28px] rounded-md border cursor-pointer flex-shrink-0 transition-colors" style="background: var(--color-surface, #ffffff); border-color: var(--color-border-default, #e5e5e5); color: var(--color-text-placeholder, #999999);" aria-label="Aşağı kaydır">
           <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
         </button>
         ` : ''}
@@ -148,11 +148,11 @@ export function ProductImageGallery(): string {
       </button>
 
       <!-- Action buttons — always visible -->
-      <div id="gallery-action-btns">
-        <button type="button" class="gallery-action-btn" aria-label="Favorilere ekle">
+      <div class="absolute top-3 right-3 z-5 flex flex-col gap-2">
+        <button type="button" class="gallery-action-btn w-9 h-9 rounded-full flex items-center justify-center border-0 cursor-pointer transition-colors" style="background: var(--color-surface, #ffffff); box-shadow: 0 1px 6px rgba(0,0,0,.12); color: var(--color-text-placeholder, #999999);" aria-label="Favorilere ekle">
           <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
         </button>
-        <button type="button" class="gallery-action-btn" aria-label="Görsel ile ara">
+        <button type="button" class="gallery-action-btn w-9 h-9 rounded-full flex items-center justify-center border-0 cursor-pointer transition-colors" style="background: var(--color-surface, #ffffff); box-shadow: 0 1px 6px rgba(0,0,0,.12); color: var(--color-text-placeholder, #999999);" aria-label="Görsel ile ara">
           <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9a2 2 0 012-2h2l1-2h8l1 2h2a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><circle cx="12" cy="13" r="3"/></svg>
         </button>
       </div>
@@ -160,7 +160,7 @@ export function ProductImageGallery(): string {
     </div>
 
     <!-- Photos / Attributes tabs -->
-    <div id="pd-gallery-tabs">
+    <div id="pd-gallery-tabs" class="inline-flex gap-0.5 mt-3 rounded-full p-[3px]" style="background: var(--color-border-light);">
       <button type="button" class="gallery-view-tab active">Fotoğraflar</button>
       <button type="button" class="gallery-view-tab">Özellikler</button>
     </div>
