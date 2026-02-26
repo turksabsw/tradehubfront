@@ -246,7 +246,7 @@ export function TopRanking(): string {
               </div>
               <a
                 href="/ranking"
-                class="th-topranking-link flex-shrink-0 text-[13px] font-semibold transition-colors duration-150 hover:underline"
+                class="flex-shrink-0 text-[13px] font-semibold transition-colors duration-150 hover:underline"
                 style="color: var(--topranking-link-color, #111827);"
               >View more &gt;</a>
             </div>

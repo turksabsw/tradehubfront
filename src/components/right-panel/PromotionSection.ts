@@ -36,7 +36,7 @@ export function PromotionSection(promotions: PromotionBannerData[]): string {
     ).join('');
 
     return `
-      <div class="promotion-carousel__slide flex flex-col gap-3${idx === 0 ? '' : ' hidden'}" data-promo-slide="${idx}">
+      <div class="min-h-0 flex flex-col gap-3${idx === 0 ? '' : ' hidden'}" data-promo-slide="${idx}">
         ${bannersHtml}
       </div>
     `;

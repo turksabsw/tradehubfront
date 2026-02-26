@@ -1170,64 +1170,12 @@
         border-color: var(--mega-card-hover-border);
     }
 
-    /* --- Category Browse sidebar item --- */
-    .category-browse-item:hover {
-        background-color: var(--catpopup-sidebar-hover-bg);
-        color: var(--catpopup-heading);
-    }
-
-    /* --- Category Popup sidebar item --- */
-    .th-catpopup-sidebar-item {
-        color: var(--catpopup-text);
-        border-left: 2px solid transparent;
-        transition: color 0.15s ease, background-color 0.15s ease;
-    }
-
-    .th-catpopup-sidebar-item:hover {
-        background-color: var(--catpopup-sidebar-active-bg);
-        color: var(--catpopup-heading);
-    }
-
+    /* --- Category Popup sidebar item (active state — JS-toggled) --- */
     .th-catpopup-sidebar-item--active {
         background-color: var(--catpopup-sidebar-active-bg);
         color: var(--catpopup-heading);
         font-weight: 500;
         border-left-color: var(--catpopup-sidebar-active-border);
-    }
-
-    /* --- Category Popup link --- */
-    .th-catpopup-link {
-        color: var(--catpopup-link);
-        transition: color 0.15s ease;
-    }
-
-    .th-catpopup-link:hover {
-        color: var(--catpopup-link-hover);
-    }
-
-    /* --- Category Popup product name hover --- */
-    .th-catpopup-product-name {
-        color: var(--catpopup-text);
-        transition: color 0.15s ease;
-    }
-
-    /* --- Top Deals Section --- */
-    .th-topdeals-link {
-        color: var(--topdeals-link-color);
-        transition: color 0.15s ease;
-    }
-
-
-    /* --- Top Ranking Section --- */
-    .th-topranking-link {
-        color: var(--topranking-link-color);
-        transition: color 0.15s ease;
-    }
-
-    /* --- Tailored Selections Section --- */
-    .th-tailored-link {
-        color: var(--tailored-link-color);
-        transition: color 0.15s ease;
     }
 
 }
@@ -10262,18 +10210,7 @@ body.pdm-sheet-open {
    BUYER DASHBOARD — Right Panel
    ============================================================ */
 
-.browsing-history__scroll {
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-}
-
-.browsing-history__scroll::-webkit-scrollbar {
-    display: none;
-}
-
-.promotion-carousel__slide {
-    min-height: 0;
-}
+/* browsing-history scroll + promotion-carousel migrated to Tailwind */
 
 /* ============================================================
    BUYER DASHBOARD — Responsive Overrides
