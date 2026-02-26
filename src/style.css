@@ -3246,119 +3246,7 @@ body.gallery-lightbox-open {
    ============================================================ */
 
 /* Hero banner */
-.sp-hero-banner {
-    background: linear-gradient(135deg, var(--pd-spec-header-bg, #f9fafb) 0%, #fff 100%);
-    border: 1px solid var(--pd-spec-border, #e5e5e5);
-    border-radius: 8px;
-    padding: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
-    margin-bottom: 24px;
-}
-
-.sp-company-name {
-    font-size: 20px;
-    font-weight: 700;
-    color: var(--pd-title-color, #111827);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.sp-company-subtitle {
-    font-size: 13px;
-    color: var(--pd-rating-text-color, #6b7280);
-    margin-top: 4px;
-}
-
-.sp-contact-btn {
-    padding: 10px 24px;
-    border-radius: 20px;
-    border: 1px solid var(--pd-title-color, #111827);
-    background: var(--color-surface, #ffffff);
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--pd-title-color, #111827);
-    cursor: pointer;
-    white-space: nowrap;
-    transition: background 0.15s;
-}
-
-.sp-contact-btn:hover {
-    background: var(--pd-spec-header-bg, #f9fafb);
-}
-
-/* Stat counter row */
-.sp-stats-row {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-    margin-bottom: 24px;
-}
-
-.sp-stat-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    padding: 16px;
-    border: 1px solid var(--pd-spec-border, #e5e5e5);
-    border-radius: 8px;
-    background: var(--color-surface, #ffffff);
-}
-
-.sp-stat-value {
-    font-size: 20px;
-    font-weight: 800;
-    color: var(--pd-title-color, #111827);
-}
-
-.sp-stat-label {
-    font-size: 12px;
-    color: var(--pd-rating-text-color, #6b7280);
-    margin-top: 4px;
-}
-
-/* Factory images grid */
-.sp-factory-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
-    margin-bottom: 24px;
-}
-
-.sp-factory-item {
-    aspect-ratio: 4/3;
-    border-radius: 6px;
-    overflow: hidden;
-    border: 1px solid var(--pd-spec-border, #e5e5e5);
-    background: var(--pd-spec-header-bg, #f9fafb);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    gap: 6px;
-    font-size: 11px;
-    color: var(--pd-rating-text-color, #6b7280);
-}
-
-/* Responsive */
-@media (max-width: 639px) {
-    .sp-hero-banner {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .sp-stats-row {
-        grid-template-columns: 1fr;
-    }
-
-    .sp-factory-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
+/* sp-* classes migrated to Tailwind in CompanyProfile.ts */
 
 /* ============================================================
    PRODUCT INFO CARD — Alibaba layout-stick style
@@ -3473,24 +3361,7 @@ body.gallery-lightbox-open {
     color: #cc0000;
 }
 
-/* Sample Price row */
-#pd-sample-price {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 16px;
-    background: var(--color-surface-raised, #f5f5f5);
-    border-radius: 8px;
-    margin-bottom: 20px;
-}
-
-.pd-sample-left {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 14px;
-    color: var(--color-text-body, #333333);
-}
+/* #pd-sample-price and .pd-sample-left migrated to Tailwind in ProductInfo.ts */
 
 .pd-sample-btn {
     padding: 6px 20px;
@@ -3508,36 +3379,7 @@ body.gallery-lightbox-open {
     background: var(--color-surface-raised, #f5f5f5);
 }
 
-/* Variations Section */
-#pd-variations-section {
-    padding-bottom: 16px;
-    border-bottom: 1px solid var(--color-border-light, #f0f0f0);
-}
-
-.pd-section-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 16px;
-}
-
-.pd-section-header h3 {
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--pd-title-color, #111827);
-    margin: 0;
-}
-
-.pd-select-now {
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--pd-breadcrumb-link-color, #cc9900);
-    text-decoration: none;
-}
-
-.pd-select-now:hover {
-    text-decoration: underline;
-}
+/* #pd-variations-section, .pd-section-header, .pd-select-now migrated to Tailwind in ProductInfo.ts */
 
 .pd-variant-label {
     font-size: 14px;
@@ -3615,116 +3457,8 @@ body.gallery-lightbox-open {
     border-color: #999;
 }
 
-/* Info sections (customization, shipping) */
-.pd-info-section {
-    padding: 20px 0;
-    border-bottom: 1px solid var(--color-border-light, #f0f0f0);
-}
-
-.pd-info-section:last-of-type {
-    border-bottom: none;
-}
-
-.pd-section-title {
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--pd-title-color, #111827);
-    margin: 0 0 12px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
-.pd-verified-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 3px;
-    font-size: 12px;
-    font-weight: 600;
-    color: #16a34a;
-}
-
-.pd-customization-list {
-    list-style: disc;
-    padding-left: 18px;
-    margin: 0;
-    font-size: 13px;
-    color: var(--pd-title-color, #111827);
-    line-height: 1.8;
-}
-
-.pd-shipping-text {
-    font-size: 13px;
-    color: var(--pd-rating-text-color, #6b7280);
-    margin: 0 0 10px;
-}
-
-.pd-shipping-details {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-}
-
-.pd-shipping-row {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 13px;
-}
-
-.pd-shipping-method {
-    font-weight: 600;
-    color: var(--pd-title-color, #111827);
-}
-
-.pd-shipping-days {
-    color: var(--pd-rating-text-color, #6b7280);
-}
-
-.pd-shipping-cost {
-    margin-left: auto;
-    font-weight: 600;
-    color: var(--pd-title-color, #111827);
-}
-
-/* Selected shipping card */
-.pd-shipping-card {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    margin-top: 12px;
-    padding: 12px 14px;
-    background: var(--pd-spec-header-bg, #f9fafb);
-    border: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
-    border-radius: 8px;
-}
-
-.pd-shipping-card-left {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-}
-
-.pd-shipping-card-method {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--pd-title-color, #111827);
-}
-
-.pd-shipping-card-detail {
-    font-size: 12px;
-    color: var(--pd-rating-text-color, #6b7280);
-}
-
-.pd-shipping-card-change {
-    color: var(--pd-price-color, #cc9900);
-    font-size: 13px;
-    font-weight: 500;
-    text-decoration: none;
-    white-space: nowrap;
-    cursor: pointer;
-}
+/* .pd-info-section, .pd-section-title, .pd-verified-badge, .pd-customization-list,
+   .pd-shipping-card and children migrated to Tailwind in ProductInfo.ts */
 
 /* CTA Buttons — two-state positioning (Alibaba-style)
    Non-sticky: normal flow with top+bottom dividers
@@ -3783,7 +3517,7 @@ body.gallery-lightbox-open {
     border-color: #999;
 }
 
-/* Trade Assurance / Order Protection */
+/* Trade Assurance section — keep #pd-trade-assurance and .pd-sticky ordering in CSS */
 #pd-trade-assurance {
     padding: 20px 0 0;
     border-top: 1px solid var(--color-border-light, #f0f0f0);
@@ -3795,96 +3529,7 @@ body.gallery-lightbox-open {
     order: 0;
 }
 
-.pd-ta-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    cursor: pointer;
-    margin-bottom: 14px;
-}
-
-.pd-ta-header h4 {
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--color-text-heading, #111827);
-    margin: 0;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
-.pd-ta-header svg {
-    width: 16px;
-    height: 16px;
-    color: var(--color-text-placeholder, #999999);
-    transition: transform .2s;
-}
-
-.pd-ta-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    margin-bottom: 14px;
-}
-
-.pd-ta-item:last-child {
-    margin-bottom: 0;
-}
-
-.pd-ta-item-icon {
-    flex-shrink: 0;
-    width: 20px;
-    height: 20px;
-    color: #16a34a;
-    margin-top: 1px;
-}
-
-.pd-ta-item-content h5 {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--color-text-heading, #111827);
-    margin: 0 0 4px;
-}
-
-.pd-ta-item-content p {
-    font-size: 12px;
-    color: var(--color-text-muted, #666666);
-    margin: 0;
-    line-height: 1.5;
-}
-
-.pd-ta-payment-icons {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    margin-top: 6px;
-}
-
-.pd-ta-payment-icon {
-    height: 20px;
-    padding: 2px 6px;
-    border-radius: 3px;
-    border: 1px solid var(--color-border-default, #e5e5e5);
-    font-size: 10px;
-    font-weight: 700;
-    color: var(--color-text-body, #333333);
-    display: inline-flex;
-    align-items: center;
-    background: var(--color-surface, #ffffff);
-}
-
-.pd-ta-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    margin-top: 12px;
-    padding: 6px 10px;
-    background: #f0fdf4;
-    border-radius: 6px;
-    font-size: 12px;
-    font-weight: 600;
-    color: #16a34a;
-}
+/* .pd-ta-header, .pd-ta-item, .pd-ta-payment-icons, .pd-ta-badge migrated to Tailwind in ProductInfo.ts */
 
 /* ============================================================
    CART DRAWER — "Sepete Ekle" slide-out panel
