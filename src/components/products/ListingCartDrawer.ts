@@ -118,29 +118,29 @@ function formatTierLabel(tier: ListingPriceTier): string {
 
 export function ListingCartDrawer(): string {
   return `
-    <div class="cart-drawer-overlay" id="listing-cart-overlay">
+    <div class="cart-drawer-overlay fixed inset-0 bg-black/50 z-40 opacity-0 pointer-events-none transition-opacity duration-300" id="listing-cart-overlay">
       <!-- Large Image Preview Panel (left of drawer) -->
       <div id="listing-preview-panel" class="listing-preview-panel hidden">
-        <div class="listing-preview-inner">
-          <button type="button" id="listing-preview-prev" class="listing-preview-arrow left">&lsaquo;</button>
-          <div id="listing-preview-image" class="listing-preview-image"></div>
-          <button type="button" id="listing-preview-next" class="listing-preview-arrow right">&rsaquo;</button>
-          <div id="listing-preview-label" class="listing-preview-label">color : —</div>
+        <div class="listing-preview-inner relative w-[600px] max-w-[45vw] bg-white rounded-xl overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.15)] pointer-events-auto">
+          <button type="button" id="listing-preview-prev" class="listing-preview-arrow left absolute top-1/2 -translate-y-1/2 left-3 w-10 h-10 bg-white rounded-full border-none shadow-[0_2px_8px_rgba(0,0,0,0.15)] text-2xl cursor-pointer z-2 flex items-center justify-center text-[#333] transition-[background] duration-150 hover:bg-gray-100">&lsaquo;</button>
+          <div id="listing-preview-image" class="listing-preview-image w-full aspect-square"></div>
+          <button type="button" id="listing-preview-next" class="listing-preview-arrow right absolute top-1/2 -translate-y-1/2 right-3 w-10 h-10 bg-white rounded-full border-none shadow-[0_2px_8px_rgba(0,0,0,0.15)] text-2xl cursor-pointer z-2 flex items-center justify-center text-[#333] transition-[background] duration-150 hover:bg-gray-100">&rsaquo;</button>
+          <div id="listing-preview-label" class="listing-preview-label absolute bottom-0 left-0 right-0 px-4 py-3 bg-gradient-to-t from-black/50 to-transparent text-white text-sm">color : —</div>
         </div>
       </div>
 
       <!-- Cart Drawer (right panel) -->
-      <div class="cart-drawer listing-cart-drawer" id="listing-cart-drawer">
-        <div class="cart-drawer-header">
-          <h3>Sepete Ekle</h3>
-          <button type="button" class="cart-drawer-close" id="listing-cart-close">
+      <div class="cart-drawer listing-cart-drawer fixed top-0 right-0 h-full w-[600px] max-w-full bg-white z-50 shadow-[-4px_0_24px_rgba(0,0,0,0.15)] flex flex-col translate-x-full transition-transform duration-300" id="listing-cart-drawer">
+        <div class="cart-drawer-header flex justify-between items-center px-6 py-5 border-b border-gray-200 shrink-0">
+          <h3 class="text-lg font-semibold text-gray-900">Sepete Ekle</h3>
+          <button type="button" class="cart-drawer-close w-8 h-8 flex items-center justify-center border-none bg-transparent rounded-full text-gray-500 cursor-pointer transition-[background,color] duration-150 hover:bg-gray-50 hover:text-gray-900" id="listing-cart-close">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M18 6 6 18M6 6l12 12"/>
             </svg>
           </button>
         </div>
-        <div class="cart-drawer-body" id="listing-cart-body"></div>
-        <div class="cart-drawer-footer" id="listing-cart-footer"></div>
+        <div class="cart-drawer-body overflow-y-auto flex-1 px-6 py-5" id="listing-cart-body"></div>
+        <div class="cart-drawer-footer px-6 py-4 border-t border-gray-200 shrink-0 bg-white" id="listing-cart-footer"></div>
       </div>
     </div>
   `;
@@ -330,11 +330,11 @@ export function initListingCartDrawer(products: ProductListingCard[]): void {
 
     // Build price tiers HTML
     const tiersHtml = `
-      <div class="cart-tier-row">
+      <div class="cart-tier-row flex gap-6 pb-4 mb-5 border-b border-gray-200">
         ${state.priceTiers.map((tier, i) => `
-          <div class="cart-tier-item${i === 0 ? ' active' : ''}" data-tier-index="${i}">
-            <span class="cart-tier-qty">${formatTierLabel(tier)}</span>
-            <span class="cart-tier-price">$${tier.price.toFixed(2)}</span>
+          <div class="cart-tier-item flex flex-col cursor-pointer${i === 0 ? ' active' : ''}" data-tier-index="${i}">
+            <span class="cart-tier-qty text-xs text-gray-500 mb-1">${formatTierLabel(tier)}</span>
+            <span class="cart-tier-price text-[22px] font-bold text-gray-900 transition-colors duration-150">$${tier.price.toFixed(2)}</span>
           </div>
         `).join('')}
       </div>
@@ -342,18 +342,18 @@ export function initListingCartDrawer(products: ProductListingCard[]): void {
 
     // Build color rows HTML
     const colorRowsHtml = state.colors.map(color => `
-      <div class="cart-color-row cart-size-row" data-color-id="${color.id}">
-        <div class="cart-color-row-thumb" style="border:1px solid #e5e7eb;border-radius:8px;overflow:hidden;cursor:pointer;flex-shrink:0;" data-thumb-color="${color.id}">
+      <div class="cart-color-row cart-size-row flex items-center gap-3 py-2.5 border-b border-gray-100 last:border-b-0" data-color-id="${color.id}">
+        <div class="cart-color-row-thumb transition-[border-color] duration-150" style="border:1px solid #e5e7eb;border-radius:8px;overflow:hidden;cursor:pointer;flex-shrink:0;" data-thumb-color="${color.id}">
           ${renderColorThumbnail(color, 56)}
         </div>
-        <div style="flex:1;min-width:0;">
-          <div style="font-size:13px;font-weight:500;color:#111827;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${color.label}</div>
+        <div class="flex-1 min-w-0">
+          <div class="text-[13px] font-medium text-gray-900 whitespace-nowrap overflow-hidden text-ellipsis">${color.label}</div>
         </div>
-        <span class="cart-color-row-price cart-size-row-price">$${activePrice.toFixed(2)}</span>
-        <div class="cart-size-row-qty">
-          <button type="button" class="cart-size-row-btn" data-qty-action="minus" data-qty-color="${color.id}">&minus;</button>
-          <input type="number" class="cart-size-row-input" data-qty-input="${color.id}" value="0" min="0">
-          <button type="button" class="cart-size-row-btn" data-qty-action="plus" data-qty-color="${color.id}">+</button>
+        <span class="cart-color-row-price cart-size-row-price text-sm font-semibold text-gray-900 whitespace-nowrap ml-auto">$${activePrice.toFixed(2)}</span>
+        <div class="cart-size-row-qty flex items-center shrink-0">
+          <button type="button" class="cart-size-row-btn w-[30px] h-[30px] flex items-center justify-center border border-gray-200 bg-white text-[15px] text-gray-900 cursor-pointer transition-[background] duration-150" data-qty-action="minus" data-qty-color="${color.id}">&minus;</button>
+          <input type="number" class="cart-size-row-input w-9 h-[30px] text-center border-y border-gray-200 border-x-0 text-[13px] font-semibold text-gray-900 bg-transparent outline-none appearance-textfield" data-qty-input="${color.id}" value="0" min="0">
+          <button type="button" class="cart-size-row-btn w-[30px] h-[30px] flex items-center justify-center border border-gray-200 bg-white text-[15px] text-gray-900 cursor-pointer transition-[background] duration-150" data-qty-action="plus" data-qty-color="${color.id}">+</button>
         </div>
       </div>
     `).join('');
@@ -361,9 +361,9 @@ export function initListingCartDrawer(products: ProductListingCard[]): void {
     body!.innerHTML = `
       <h4 style="font-size:15px;font-weight:600;color:#111827;line-height:1.4;margin-bottom:16px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;">${product.name}</h4>
       ${tiersHtml}
-      <div class="cart-variant-section">
-        <div class="cart-variant-label">Renk</div>
-        <div class="cart-size-rows">
+      <div class="cart-variant-section mb-5">
+        <div class="cart-variant-label text-sm font-semibold text-gray-900 mb-2">Renk</div>
+        <div class="cart-size-rows flex flex-col">
           ${colorRowsHtml}
         </div>
       </div>

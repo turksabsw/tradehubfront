@@ -1481,178 +1481,8 @@
         line-height: 18px;
     }
 
-    /* --- Fy26 Product Card Wrapper (snapshot-matched) --- */
-    .fy26-product-card-wrapper {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        width: 100%;
-        border-radius: 12px;
-        overflow: hidden;
-        background: var(--color-surface, #ffffff);
-        padding: 0 0 8px;
-        border: 0;
-        font-family: var(--product-font-family, Alibaba_B2B_Sans, Inter, "SF Pro Text", Roboto, "Helvetica Neue", Helvetica, Tahoma, Arial, "PingFang SC", "Microsoft YaHei", sans-serif);
-    }
-
-    .searchx-img-area {
-        position: relative;
-        margin-bottom: 8px;
-    }
-
-    .fy26-product-card-content {
-        flex: 1 1 auto;
-        padding: 0;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .searchx-title-area {
-        padding: 0 4px;
-    }
-
-    .searchx-product-e-title {
-        font-size: 14px;
-        font-weight: 400;
-        line-height: 18px;
-        height: 54px;
-        color: var(--color-text-body, #333333);
-        overflow: hidden;
-        text-overflow: ellipsis;
-        display: -webkit-box;
-        -webkit-line-clamp: 3;
-        -webkit-box-orient: vertical;
-        margin: 0;
-    }
-
-    .searchx-product-e-title a {
-        color: inherit;
-        text-decoration: none;
-    }
-
-    .searchx-product-e-title a:hover {
-        color: var(--color-cta-primary, #cc9900);
-    }
-
-    .searchx-selling-point-content {
-        display: flex;
-        align-items: center;
-        gap: 4px;
-        height: 16px;
-        margin-top: 4px;
-        font-size: 12px;
-        color: rgb(34, 137, 31);
-    }
-
-    .searchx-selling-point-icon {
-        width: 14px;
-        height: 14px;
-        flex-shrink: 0;
-        color: rgb(34, 137, 31);
-    }
-
-    .searchx-price-area {
-        padding: 0 4px;
-        margin-top: 4px;
-    }
-
-    .searchx-product-price-price-main {
-        font-size: 20px;
-        font-weight: 600;
-        line-height: 26px;
-        color: var(--color-text-heading, #111827);
-    }
-
-    .price-area-center {
-        display: flex;
-        gap: 6px;
-        flex-wrap: wrap;
-        margin-top: 2px;
-    }
-
-    .searchx-moq {
-        font-size: 14px;
-        font-weight: 400;
-        line-height: 18px;
-        color: var(--color-text-heading, #111827);
-    }
-
-    .searchx-sold-order {
-        font-size: 14px;
-        font-weight: 400;
-        line-height: 18px;
-        color: #767676;
-    }
-
-    .searchx-product-area {
-        padding: 0 4px;
-        margin-top: 8px;
-    }
-
-    .searchx-product-e-company {
-        display: block;
-        font-size: 12px;
-        font-weight: 400;
-        color: #767676;
-        text-decoration: none;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        margin: 0 0 2px;
-    }
-
-    .searchx-supplier-content {
-        display: flex;
-        align-items: center;
-        gap: 4px;
-        font-size: 12px;
-        font-weight: 400;
-        line-height: 16px;
-        color: #000;
-        margin-top: 2px;
-    }
-
-    .searchx-product-e-supplier__year {
-        font-size: 12px;
-        font-weight: 400;
-        color: #000;
-        text-decoration: none;
-    }
-
-    .searchx-product-e-review {
-        font-size: 12px;
-        font-weight: 400;
-        color: var(--color-text-heading, #111827);
-        line-height: 16px;
-    }
-
-    .action-area-layout {
-        display: flex;
-        gap: 8px;
-        padding: 0 4px;
-        align-items: center;
-    }
-
-    .searchx-product-e-abutton {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 36px;
-        padding: 0 15px;
-        border: 1px solid #222;
-        border-radius: 999px;
-        font-size: 14px;
-        font-weight: 500;
-        color: var(--color-text-heading, #111827);
-        background: transparent;
-        cursor: pointer;
-        white-space: nowrap;
-        transition: background-color 0.2s;
-    }
-
-    .searchx-product-e-abutton:hover {
-        background: var(--color-surface-raised, #f5f5f5);
-    }
+    /* --- Fy26 Product Card — Layout now in Tailwind (ProductListingGrid.ts) --- */
+    /* searchx-*, fy26-*, price-area-center, action-area-layout migrated to Tailwind */
 
     /* Responsive grid columns migrated to Tailwind classes in templates */
 
@@ -3407,86 +3237,24 @@ body.gallery-lightbox-open {
 
 /* ── 2b. Listing page — wider drawer ────────────────── */
 
-.listing-cart-drawer {
-    width: 600px;
-}
+/* Layout now in Tailwind (ListingCartDrawer.ts) — listing-cart-drawer, listing-preview-* migrated */
 
-/* ── 2c. Large Image Preview Panel ──────────────────── */
-
+/* listing-preview-panel: positioning kept in CSS, visual layout in Tailwind */
 .listing-preview-panel {
     position: fixed;
     left: 0;
     right: 600px;
     top: 0;
     bottom: 0;
+    z-index: var(--z-modal, 50);
+    pointer-events: none;
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: var(--z-modal, 50);
-    pointer-events: none;
 }
 
 .listing-preview-panel.hidden {
     display: none;
-}
-
-.listing-preview-inner {
-    position: relative;
-    width: 600px;
-    max-width: 45vw;
-    background: var(--color-surface, #ffffff);
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
-    pointer-events: auto;
-}
-
-.listing-preview-image {
-    width: 100%;
-    aspect-ratio: 1 / 1;
-}
-
-.listing-preview-arrow {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 40px;
-    height: 40px;
-    background: var(--color-surface, #ffffff);
-    border-radius: 50%;
-    border: none;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-    font-size: 24px;
-    cursor: pointer;
-    z-index: 2;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--color-text-body, #333333);
-    transition: background 0.15s ease;
-}
-
-.listing-preview-arrow:hover {
-    background: var(--color-surface-raised, #f5f5f5);
-}
-
-.listing-preview-arrow.left {
-    left: 12px;
-}
-
-.listing-preview-arrow.right {
-    right: 12px;
-}
-
-.listing-preview-label {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 12px 16px;
-    background: linear-gradient(transparent, rgba(0, 0, 0, 0.5));
-    color: #fff;
-    font-size: 14px;
 }
 
 /* ── 2d. Color row thumbnail border ─────────────────── */
