@@ -4677,25 +4677,12 @@ body.pdm-sheet-open {
    Account Type Selector (Register Page)
    ═══════════════════════════════════════════════════════ */
 
-.auth-account-type-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
+/* Layout now in Tailwind: flex flex-col gap-3 */
 
+/* Layout now in Tailwind: flex items-center gap-3.5 w-full py-4 px-[18px] rounded-xl text-left relative cursor-pointer transition-all */
 .auth-account-type-card {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    width: 100%;
-    padding: 16px 18px;
-    border: 1.5px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
-    border-radius: 12px;
+    border: 1.5px solid var(--color-border-default, #e5e5e5);
     background: var(--color-surface, #ffffff);
-    cursor: pointer;
-    transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
-    text-align: left;
-    position: relative;
 }
 
 /* Radio circle via pseudo-element */
@@ -4735,34 +4722,21 @@ body.pdm-sheet-open {
 }
 
 /* Content takes remaining space, icon goes to end */
-.auth-account-type-content {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    flex: 1;
-    min-width: 0;
-}
+/* Layout now in Tailwind: flex flex-col gap-0.5 flex-1 min-w-0 */
 
+/* Layout now in Tailwind: text-[15px] font-semibold leading-tight */
 .auth-account-type-label {
-    font-size: 15px;
-    font-weight: 600;
     color: var(--color-text-heading, #111827);
-    line-height: 1.3;
 }
 
+/* Layout now in Tailwind: text-[13px] leading-snug */
 .auth-account-type-desc {
-    font-size: 13px;
     color: var(--color-text-muted, #666666);
-    line-height: 1.4;
 }
 
+/* Layout now in Tailwind: shrink-0 order-1 w-9 h-9 transition-colors */
 .auth-account-type-icon {
-    flex-shrink: 0;
-    order: 1;
-    width: 36px;
-    height: 36px;
     color: var(--color-text-placeholder, #999999);
-    transition: color 0.2s;
 }
 
 .auth-account-type-icon svg {
@@ -4823,31 +4797,19 @@ body.pdm-sheet-open {
    Auth Shared Styles (Login / Register pages)
    ═══════════════════════════════════════════════════════ */
 
-.auth-page-content {
-    width: 100%;
-}
+/* Layout now in Tailwind: w-full */
 
-.auth-form-field {
-    position: relative;
-}
+/* Layout now in Tailwind: relative */
 
 /* ═══════════════════════════════════════════════════════
    Password Requirements (AccountSetupForm)
    ═══════════════════════════════════════════════════════ */
 
-.auth-password-requirements {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-}
+/* Layout now in Tailwind: flex flex-col gap-1.5 */
 
+/* Layout now in Tailwind: flex items-center gap-2 text-[13px] transition-colors */
 .auth-password-req-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 13px;
     color: var(--color-text-placeholder, #999999);
-    transition: color 0.2s;
 }
 
 .auth-password-req-item.valid {
@@ -4858,12 +4820,7 @@ body.pdm-sheet-open {
     color: #dc2626;
 }
 
-.auth-password-req-icon {
-    flex-shrink: 0;
-    width: 8px;
-    height: 8px;
-    transition: color 0.2s, opacity 0.2s;
-}
+/* Layout now in Tailwind: shrink-0 w-2 h-2 transition-all */
 
 /* Valid state: hide bullet, show checkmark via pseudo-element on the item */
 .auth-password-req-item.valid .auth-password-req-icon {
