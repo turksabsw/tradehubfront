@@ -34,7 +34,7 @@ export function OrdersTabs({ tabs, filters, activeTabId, selectedFilterId, dropd
 
     return `
       <button
-        class="orders__tab ${activeClass}"
+        class="orders__tab ${activeClass} inline-flex items-center gap-1 px-3.5 py-1.5 rounded-[var(--radius-tab)] border-none text-[13px] font-medium cursor-pointer whitespace-nowrap transition-all"
         data-orders-tab="${tab.id}"
         ${dropdownAttr}
         role="tab"
@@ -53,7 +53,7 @@ export function OrdersTabs({ tabs, filters, activeTabId, selectedFilterId, dropd
 
     return `
       <button
-        class="orders__dropdown-item ${selectedClass}"
+        class="orders__dropdown-item ${selectedClass} flex items-center justify-between w-full py-2 px-3.5 border-none bg-transparent text-[13px] text-[var(--color-text-body,#333333)] cursor-pointer transition-colors text-left"
         data-orders-filter="${filter.id}"
         role="menuitem"
       >
@@ -66,8 +66,8 @@ export function OrdersTabs({ tabs, filters, activeTabId, selectedFilterId, dropd
   const dropdownVisibility = dropdownOpen ? 'orders__dropdown--open' : '';
 
   return `
-    <div class="orders__tabs-wrapper">
-      <div class="orders__tabs" role="tablist" aria-label="Sipariş filtreleri">
+    <div class="orders__tabs-wrapper relative px-5">
+      <div class="orders__tabs flex gap-2 flex-wrap" role="tablist" aria-label="Sipariş filtreleri">
         ${tabsHtml}
       </div>
       <div class="orders__dropdown ${dropdownVisibility}" role="menu" aria-label="Sipariş durumu filtresi">

@@ -5140,62 +5140,16 @@ body.pdm-sheet-open {
 /* ============================================================
    BUYER DASHBOARD — NewBuyerInfo
    ============================================================ */
-.new-buyer-info {
-    background: var(--color-surface, #ffffff);
-    border-radius: 8px;
-    overflow: hidden;
-}
-
+/* --- NewBuyerInfo: migrated to Tailwind in NewBuyerInfo.ts --- */
 /* --- UserInfoCard: migrated to Tailwind in UserInfoCard.ts --- */
 
-
 /* ============================================================
-   BUYER DASHBOARD — Operation Slider (Alibaba-style single-row)
+   BUYER DASHBOARD — Operation Slider (Swiper integration)
+   Only keeping: nav arrows (absolute positioning + group-hover),
+   pagination bullets (swiper overrides)
    ============================================================ */
-.operation-slider {
-    position: relative;
-    overflow: hidden;
-}
 
-.operation-slider__swiper {
-    background: var(--color-surface-raised, #f5f5f5);
-}
-
-.operation-slider__slide {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 12px 20px;
-    min-height: 44px;
-    gap: 16px;
-}
-
-.operation-slider__slide-title {
-    font-size: 14px;
-    font-weight: 400;
-    color: var(--color-text-heading, #111827);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    min-width: 0;
-}
-
-.operation-slider__slide-link {
-    font-size: 14px;
-    color: var(--color-text-heading, #111827);
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    white-space: nowrap;
-    flex-shrink: 0;
-    transition: color 150ms;
-}
-
-.operation-slider__slide-link:hover {
-    color: var(--color-cta-primary, #cc9900);
-}
-
-/* Navigation Arrows — visible on group hover, overlapping slide edges */
+/* Navigation Arrows — visible on group hover */
 .operation-slider__prev,
 .operation-slider__next {
     position: absolute;
@@ -5216,13 +5170,8 @@ body.pdm-sheet-open {
     transition: opacity 200ms, color 150ms;
 }
 
-.operation-slider__prev {
-    left: 2px;
-}
-
-.operation-slider__next {
-    right: 2px;
-}
+.operation-slider__prev { left: 2px; }
+.operation-slider__next { right: 2px; }
 
 .group\/opslider:hover .operation-slider__prev,
 .group\/opslider:hover .operation-slider__next {
@@ -5235,14 +5184,7 @@ body.pdm-sheet-open {
     color: var(--color-text-heading, #111827);
 }
 
-/* Pagination Bullets */
-.operation-slider__pagination {
-    display: flex;
-    justify-content: center;
-    gap: 6px;
-    padding: 8px 0 10px;
-}
-
+/* Pagination Bullets — swiper overrides */
 .operation-slider__pagination .swiper-pagination-bullet {
     width: 8px;
     height: 8px;
@@ -5259,70 +5201,15 @@ body.pdm-sheet-open {
     background: var(--color-text-body);
 }
 
-
 /* ============================================================
-   BUYER DASHBOARD — Orders Section
+   BUYER DASHBOARD — Orders Section (state-driven CSS only)
+   Layout migrated to Tailwind in OrdersSection.ts, OrdersTabs.ts, OrdersContent.ts
    ============================================================ */
-.orders {
-    background: var(--color-surface, #ffffff);
-    border-radius: var(--radius-card);
-    overflow: hidden;
-}
 
-.orders__header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 16px 20px 12px;
-}
-
-.orders__title {
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--color-text-body, #333333);
-    margin: 0;
-}
-
-.orders__view-all {
-    font-size: 13px;
-    color: var(--color-text-placeholder, #999999);
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 2px;
-    transition: color var(--transition-fast);
-}
-
-.orders__view-all:hover {
-    color: var(--color-primary-500);
-}
-
-/* --- Tabs --- */
-.orders__tabs-wrapper {
-    position: relative;
-    padding: 0 20px;
-}
-
-.orders__tabs {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-}
-
+/* --- Tab state colors (kept for JS classList.toggle) --- */
 .orders__tab {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    padding: 6px 14px;
-    border-radius: var(--radius-tab);
-    border: none;
-    font-size: 13px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background var(--transition-fast), color var(--transition-fast);
     background: var(--color-orders-tab-inactive-bg);
     color: var(--color-orders-tab-inactive-text);
-    white-space: nowrap;
 }
 
 .orders__tab:hover {
@@ -5346,7 +5233,7 @@ body.pdm-sheet-open {
     transform: rotate(180deg);
 }
 
-/* --- Dropdown --- */
+/* --- Dropdown (absolute positioning + animation) --- */
 .orders__dropdown {
     position: absolute;
     top: calc(100% + 6px);
@@ -5370,21 +5257,6 @@ body.pdm-sheet-open {
     transform: translateY(0);
 }
 
-.orders__dropdown-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    padding: 8px 14px;
-    border: none;
-    background: none;
-    font-size: 13px;
-    color: var(--color-text-body, #333333);
-    cursor: pointer;
-    transition: background var(--transition-fast);
-    text-align: left;
-}
-
 .orders__dropdown-item:hover {
     background: var(--color-dropdown-hover-bg);
 }
@@ -5393,68 +5265,11 @@ body.pdm-sheet-open {
     font-weight: 600;
 }
 
-/* --- Content / Empty State --- */
-.orders__content {
-    margin: 12px 20px 20px;
-    border-radius: var(--radius-card);
-    background: var(--color-orders-empty-bg);
-    min-height: 180px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.orders__empty {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-    padding: 32px 20px;
-}
-
-.orders__empty-icon {
-    color: var(--color-orders-empty-icon);
-}
-
-.orders__empty-text {
-    font-size: 14px;
-    color: var(--color-orders-empty-text);
-    margin: 0;
-}
-
-.orders__empty-btn {
-    display: inline-block;
-    padding: 8px 24px;
-    border-radius: var(--radius-btn);
-    background: var(--color-orders-empty-btn-bg);
-    color: var(--color-orders-empty-btn-text);
-    border: 1px solid var(--color-orders-empty-btn-border);
-    font-size: 13px;
-    font-weight: 600;
-    text-decoration: none;
-    transition: all var(--transition-fast);
-}
-
-.orders__empty-btn:hover {
-    background: var(--color-surface-raised, #f5f5f5);
-    border-color: #999;
-}
-
-
-/* ============================================================
-   BUYER DASHBOARD — Right Panel
-   ============================================================ */
-
-/* browsing-history scroll + promotion-carousel migrated to Tailwind */
-
-/* --- Buyer Dashboard responsive: migrated to Tailwind in BuyerDashboardLayout.ts --- */
-
+/* --- Responsive: Orders mobile scroll --- */
 @media (max-width: 768px) {
-    /* Orders tabs: horizontal scroll on mobile */
     .orders__tabs {
         padding-left: 12px;
         padding-right: 12px;
-        gap: 8px;
         -webkit-overflow-scrolling: touch;
         scroll-snap-type: x mandatory;
     }
@@ -5462,10 +5277,6 @@ body.pdm-sheet-open {
     .orders__tab {
         scroll-snap-align: start;
         flex-shrink: 0;
-    }
-
-    .operation-slider__slide {
-        padding: 12px;
     }
 }
 

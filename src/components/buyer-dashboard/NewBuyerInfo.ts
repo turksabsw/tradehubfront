@@ -9,7 +9,7 @@ import { OperationSlider, initOperationSlider } from './OperationSlider';
 
 export function NewBuyerInfo(props: NewBuyerInfoProps): string {
   return `
-    <div class="new-buyer-info">
+    <div class="bg-[var(--color-surface,#ffffff)] rounded-lg overflow-hidden">
       ${UserInfoCard({ user: props.user, stats: props.stats })}
       ${OperationSlider({ notifications: props.notifications })}
     </div>
