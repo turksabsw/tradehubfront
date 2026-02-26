@@ -1319,7 +1319,7 @@
         z-index: 24;
         height: 44px;
         transform: translateY(-50%);
-        background: #ffffff;
+        background: var(--color-surface, #ffffff);
         border: 1px solid #c8c9cc;
         border-radius: 22px;
         transition: height 0.2s ease, top 0.2s ease, transform 0.2s ease, border-radius 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
@@ -1341,7 +1341,7 @@
         width: 100%;
         height: 100%;
         padding: 4px 4px 4px 0;
-        background: #ffffff;
+        background: var(--color-surface, #ffffff);
         border-radius: inherit;
     }
 
@@ -1461,7 +1461,7 @@
     }
 
     .topbar-image-search-link:hover {
-        background-color: #f3f4f6;
+        background-color: var(--color-surface-raised, #f5f5f5);
     }
 
     .topbar-image-search-icon {
@@ -1556,7 +1556,7 @@
         left: 0;
         z-index: 23;
         padding: 28px 34px 34px;
-        background: #ffffff;
+        background: var(--color-surface, #ffffff);
         border: 1px solid #d5d6d9;
         border-radius: 28px;
         box-shadow: 0 20px 42px rgba(0, 0, 0, 0.18);
@@ -1954,7 +1954,7 @@
         width: 100%;
         border-radius: 12px;
         overflow: hidden;
-        background: #fff;
+        background: var(--color-surface, #ffffff);
         padding: 0 0 8px;
         border: 0;
         font-family: var(--product-font-family, Alibaba_B2B_Sans, Inter, "SF Pro Text", Roboto, "Helvetica Neue", Helvetica, Tahoma, Arial, "PingFang SC", "Microsoft YaHei", sans-serif);
@@ -2116,7 +2116,7 @@
     }
 
     .searchx-product-e-abutton:hover {
-        background: #f5f5f5;
+        background: var(--color-surface-raised, #f5f5f5);
     }
 
     @media (width >=768px) {
@@ -2372,7 +2372,7 @@
     flex-wrap: wrap;
     font-size: 13px;
     padding: 8px 12px;
-    background: #f8f8f8;
+    background: var(--color-surface-raised, #f5f5f5);
     border-radius: 6px;
     color: var(--pd-rating-text-color, #6b7280);
 }
@@ -2412,7 +2412,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     border: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     border-radius: 6px;
     cursor: pointer;
@@ -2463,7 +2463,7 @@
     position: relative;
     border-radius: 4px;
     overflow: hidden;
-    background: #f5f5f5;
+    background: var(--color-surface-raised, #f5f5f5);
 }
 
 #gallery-main-image.zoom-enabled {
@@ -2504,7 +2504,7 @@
     width: 36px;
     height: 36px;
     border-radius: 50%;
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     box-shadow: 0 1px 6px rgba(0, 0, 0, .12);
     display: flex;
     align-items: center;
@@ -2541,7 +2541,7 @@
     width: 36px;
     height: 36px;
     border-radius: 50%;
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     box-shadow: 0 1px 6px rgba(0, 0, 0, .12);
     display: flex;
     align-items: center;
@@ -2583,7 +2583,7 @@
 }
 
 .gallery-view-tab.active {
-    background: #ffffff;
+    background: var(--color-surface, #ffffff);
     color: #111;
     font-weight: 700;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
@@ -2700,7 +2700,7 @@ body.gallery-lightbox-open {
 }
 
 .gallery-lightbox-scroll:hover {
-    background: #ffffff;
+    background: var(--color-surface, #ffffff);
 }
 
 #gallery-lightbox-thumb-list {
@@ -2903,7 +2903,7 @@ body.gallery-lightbox-open {
     border: 1px solid var(--pd-spec-border, #e5e5e5);
     border-radius: 6px;
     overflow: hidden;
-    background: #fff;
+    background: var(--color-surface, #ffffff);
 }
 
 .pd-attr-cell {
@@ -3068,7 +3068,7 @@ body.gallery-lightbox-open {
     padding: 10px 24px;
     border: 1px solid #333;
     border-radius: 20px;
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     font-size: 14px;
     font-weight: 500;
     cursor: pointer;
@@ -3076,7 +3076,7 @@ body.gallery-lightbox-open {
 }
 
 .pd-customization-chat:hover {
-    background: #f5f5f5;
+    background: var(--color-surface-raised, #f5f5f5);
 }
 
 /* ============================================================
@@ -3217,7 +3217,7 @@ body.gallery-lightbox-open {
     font-weight: 500;
     border-radius: 20px;
     border: 1px solid var(--pd-spec-border, #e5e5e5);
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     color: var(--pd-rating-text-color, #6b7280);
     cursor: pointer;
     transition: all 0.15s;
@@ -3242,7 +3242,7 @@ body.gallery-lightbox-open {
     font-weight: 500;
     border-radius: 20px;
     border: 1px solid var(--pd-spec-border, #e5e5e5);
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     color: var(--pd-rating-text-color, #6b7280);
     cursor: pointer;
     display: flex;
@@ -3339,7 +3339,7 @@ body.gallery-lightbox-open {
 }
 
 .rv-badge-repeat {
-    background: #fff7ed;
+    background: var(--color-primary-50, #fef9e7);
     color: var(--color-cta-primary, #cc9900);
 }
 
@@ -3454,7 +3454,7 @@ body.gallery-lightbox-open {
     text-align: center;
     border: 1px solid var(--pd-spec-border, #e5e5e5);
     border-radius: 8px;
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     color: var(--pd-title-color, #111827);
     cursor: pointer;
     transition: all 0.15s;
@@ -3494,7 +3494,7 @@ body.gallery-lightbox-open {
     font-weight: 500;
     border-radius: 20px;
     border: 1px solid var(--pd-spec-border, #e5e5e5);
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     color: var(--pd-rating-text-color, #6b7280);
     cursor: pointer;
     display: flex;
@@ -3519,7 +3519,7 @@ body.gallery-lightbox-open {
     top: calc(100% + 4px);
     left: 0;
     min-width: 180px;
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     border: 1px solid var(--pd-spec-border, #e5e5e5);
     border-radius: 8px;
     box-shadow: var(--shadow-dropdown);
@@ -3570,7 +3570,7 @@ body.gallery-lightbox-open {
     font-weight: 500;
     border-radius: 20px;
     border: 1px solid var(--pd-spec-border, #e5e5e5);
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     color: var(--pd-rating-text-color, #6b7280);
     cursor: pointer;
     display: flex;
@@ -3589,7 +3589,7 @@ body.gallery-lightbox-open {
     top: calc(100% + 4px);
     right: 0;
     min-width: 160px;
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     border: 1px solid var(--pd-spec-border, #e5e5e5);
     border-radius: 8px;
     box-shadow: var(--shadow-dropdown);
@@ -3690,7 +3690,7 @@ body.gallery-lightbox-open {
 }
 
 .rv-modal {
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     max-width: 800px;
     width: 95%;
     max-height: 85vh;
@@ -3762,7 +3762,7 @@ body.gallery-lightbox-open {
     width: 95%;
     padding: 0;
     border-radius: 16px;
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     box-shadow: var(--shadow-modal);
     overflow: hidden;
     position: relative;
@@ -3813,7 +3813,7 @@ body.gallery-lightbox-open {
     font-size: 15px;
     font-weight: 500;
     color: var(--pd-title-color, #111827);
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     transition: background 0.15s;
     margin-bottom: 12px;
 }
@@ -3905,7 +3905,7 @@ body.gallery-lightbox-open {
     display: flex;
     align-items: center;
     gap: 12px;
-    background: #f5f5f5;
+    background: var(--color-surface-raised, #f5f5f5);
     border-radius: 8px;
     padding: 12px;
     margin-top: 12px;
@@ -4058,7 +4058,7 @@ body.gallery-lightbox-open {
     padding: 10px 24px;
     border-radius: 20px;
     border: 1px solid var(--pd-title-color, #111827);
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     font-size: 14px;
     font-weight: 600;
     color: var(--pd-title-color, #111827);
@@ -4087,7 +4087,7 @@ body.gallery-lightbox-open {
     padding: 16px;
     border: 1px solid var(--pd-spec-border, #e5e5e5);
     border-radius: 8px;
-    background: #fff;
+    background: var(--color-surface, #ffffff);
 }
 
 .sp-stat-value {
@@ -4146,7 +4146,7 @@ body.gallery-lightbox-open {
    ============================================================ */
 
 #product-info {
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     display: flex;
     flex-direction: column;
     border: 1px solid var(--color-border-default, #e5e5e5);
@@ -4167,7 +4167,7 @@ body.gallery-lightbox-open {
     display: flex;
     margin: -20px -20px 0;
     padding: 0;
-    background: #f5f5f5;
+    background: var(--color-surface-raised, #f5f5f5);
     border-bottom: 1px solid var(--color-border-default, #e5e5e5);
 }
 
@@ -4193,7 +4193,7 @@ body.gallery-lightbox-open {
 .pd-card-tab.active {
     color: #111;
     font-weight: 700;
-    background: #ffffff;
+    background: var(--color-surface, #ffffff);
     border-top-color: var(--pd-tab-active-border, #cc9900);
 }
 
@@ -4260,7 +4260,7 @@ body.gallery-lightbox-open {
     align-items: center;
     justify-content: space-between;
     padding: 10px 16px;
-    background: #f7f7f7;
+    background: var(--color-surface-raised, #f5f5f5);
     border-radius: 8px;
     margin-bottom: 20px;
 }
@@ -4279,14 +4279,14 @@ body.gallery-lightbox-open {
     font-weight: 500;
     border: 1px solid #222;
     border-radius: 20px;
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     color: var(--color-text-heading, #111827);
     cursor: pointer;
     transition: background .15s;
 }
 
 .pd-sample-btn:hover {
-    background: #f5f5f5;
+    background: var(--color-surface-raised, #f5f5f5);
 }
 
 /* Variations Section */
@@ -4381,7 +4381,7 @@ body.gallery-lightbox-open {
     font-size: 13px;
     font-weight: 500;
     border: 1px solid var(--color-border-medium, #d1d5db);
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     color: var(--pd-title-color, #111827);
     cursor: pointer;
     transition: all .15s;
@@ -4516,14 +4516,14 @@ body.gallery-lightbox-open {
     padding: 16px 20px;
     border-top: 1px solid var(--color-border-default, #e5e5e5);
     border-bottom: 1px solid var(--color-border-default, #e5e5e5);
-    background: #fff;
+    background: var(--color-surface, #ffffff);
 }
 
 .pd-sticky #pd-cta-buttons {
     position: sticky;
     bottom: -22px;
     z-index: 2;
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     border-bottom: none;
     margin: 0 -20px -20px;
     padding: 16px 20px 20px;
@@ -4553,7 +4553,7 @@ body.gallery-lightbox-open {
     border-radius: 24px;
     font-size: 15px;
     font-weight: 700;
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     color: var(--pd-title-color, #111827);
     border: 1px solid var(--color-border-medium, #d1d5db);
     cursor: pointer;
@@ -4651,7 +4651,7 @@ body.gallery-lightbox-open {
     color: var(--color-text-body, #333333);
     display: inline-flex;
     align-items: center;
-    background: #fff;
+    background: var(--color-surface, #ffffff);
 }
 
 .pd-ta-badge {
@@ -4697,7 +4697,7 @@ body.gallery-lightbox-open {
     height: 100%;
     width: 420px;
     max-width: 100%;
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     z-index: var(--z-modal, 50);
     box-shadow: -4px 0 24px rgba(0, 0, 0, 0.15);
     display: flex;
@@ -4739,7 +4739,7 @@ body.gallery-lightbox-open {
     position: relative;
     width: 600px;
     max-width: 45vw;
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     border-radius: 12px;
     overflow: hidden;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
@@ -4757,7 +4757,7 @@ body.gallery-lightbox-open {
     transform: translateY(-50%);
     width: 40px;
     height: 40px;
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     border-radius: 50%;
     border: none;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
@@ -4772,7 +4772,7 @@ body.gallery-lightbox-open {
 }
 
 .listing-preview-arrow:hover {
-    background: #f3f4f6;
+    background: var(--color-surface-raised, #f5f5f5);
 }
 
 .listing-preview-arrow.left {
@@ -4914,7 +4914,7 @@ body.gallery-lightbox-open {
     border-radius: 10px;
     overflow: visible;
     cursor: pointer;
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     padding: 0;
     transition: border-color 0.15s ease;
 }
@@ -5002,7 +5002,7 @@ body.gallery-lightbox-open {
     font-size: 13px;
     font-weight: 500;
     color: var(--pd-title-color, #111827);
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     white-space: nowrap;
     min-width: 70px;
     justify-content: center;
@@ -5029,7 +5029,7 @@ body.gallery-lightbox-open {
     align-items: center;
     justify-content: center;
     border: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     font-size: 15px;
     color: var(--pd-title-color, #111827);
     cursor: pointer;
@@ -5045,7 +5045,7 @@ body.gallery-lightbox-open {
 }
 
 .cart-size-row-btn:hover {
-    background: #f3f4f6;
+    background: var(--color-surface-raised, #f5f5f5);
 }
 
 .cart-size-row-btn:disabled {
@@ -5100,7 +5100,7 @@ body.gallery-lightbox-open {
     align-items: center;
     justify-content: center;
     border: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     font-size: 18px;
     color: var(--pd-title-color, #111827);
     cursor: pointer;
@@ -5201,7 +5201,7 @@ body.gallery-lightbox-open {
 }
 
 .cart-ship-modal-content {
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     border-radius: 12px;
     width: calc(100% - 32px);
     max-width: 380px;
@@ -5238,7 +5238,7 @@ body.gallery-lightbox-open {
 }
 
 .cart-ship-modal-close:hover {
-    background: #f3f4f6;
+    background: var(--color-surface-raised, #f5f5f5);
 }
 
 .cart-ship-modal-subtitle {
@@ -5330,7 +5330,7 @@ body.gallery-lightbox-open {
     padding: 16px 24px;
     border-top: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     flex-shrink: 0;
-    background: #fff;
+    background: var(--color-surface, #ffffff);
 }
 
 .cart-footer-hidden {
@@ -5638,7 +5638,7 @@ body.gallery-lightbox-open {
         width: 100%;
         aspect-ratio: 1 / 1;
         overflow: hidden;
-        background: #f5f5f5;
+        background: var(--color-surface-raised, #f5f5f5);
     }
 
     #pdm-gallery-track {
@@ -5687,7 +5687,7 @@ body.gallery-lightbox-open {
         bottom: 14px;
         left: 50%;
         transform: translateX(-50%);
-        background: #fff;
+        background: var(--color-surface, #ffffff);
         color: var(--color-text-body, #333333);
         font-size: 12px;
         font-weight: 500;
@@ -5737,7 +5737,7 @@ body.gallery-lightbox-open {
         display: flex;
         align-items: center;
         gap: 0;
-        background: #fff;
+        background: var(--color-surface, #ffffff);
         border-bottom: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
         position: sticky;
         top: 0;
@@ -5780,7 +5780,7 @@ body.gallery-lightbox-open {
         display: flex;
         gap: 8px;
         padding: 12px 16px 0;
-        background: #fff;
+        background: var(--color-surface, #ffffff);
     }
 
     .pdm-badge-dark {
@@ -5815,7 +5815,7 @@ body.gallery-lightbox-open {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 0;
-        background: #F8F8F8;
+        background: var(--color-surface-raised, #f5f5f5);
         border-radius: 8px;
         margin: 12px 16px 0;
         padding: 14px 0;
@@ -5855,7 +5855,7 @@ body.gallery-lightbox-open {
         align-items: center;
         justify-content: space-between;
         padding: 10px 16px;
-        background: #fff;
+        background: var(--color-surface, #ffffff);
         font-size: 13px;
         color: var(--color-text-body, #333333);
     }
@@ -5866,14 +5866,14 @@ body.gallery-lightbox-open {
         border-radius: 20px;
         font-size: 13px;
         font-weight: 500;
-        background: #fff;
+        background: var(--color-surface, #ffffff);
         cursor: pointer;
         color: var(--color-text-body, #333333);
         transition: background 0.15s;
     }
 
     .pdm-sample-btn:active {
-        background: #f5f5f5;
+        background: var(--color-surface-raised, #f5f5f5);
     }
 }
 
@@ -5884,7 +5884,7 @@ body.gallery-lightbox-open {
         flex-direction: column;
         gap: 4px;
         padding: 14px 16px 6px;
-        background: #fff;
+        background: var(--color-surface, #ffffff);
     }
 
     #pdm-title-row {
@@ -5929,7 +5929,7 @@ body.gallery-lightbox-open {
         align-items: center;
         gap: 6px;
         padding: 0 16px 12px;
-        background: #fff;
+        background: var(--color-surface, #ffffff);
         font-size: 13px;
         color: var(--color-text-muted, #666666);
         cursor: pointer;
@@ -5951,11 +5951,11 @@ body.gallery-lightbox-open {
 @media (width < 1024px) {
     .pdm-section-divider {
         height: 8px;
-        background: #F5F5F5;
+        background: var(--color-surface-raised, #f5f5f5);
     }
 
     .pdm-collapsible-section {
-        background: #fff;
+        background: var(--color-surface, #ffffff);
     }
 
     .pdm-collapsible-header {
@@ -6047,7 +6047,7 @@ body.gallery-lightbox-open {
         border-radius: 16px;
         font-size: 13px;
         color: var(--color-text-body, #333333);
-        background: #fff;
+        background: var(--color-surface, #ffffff);
         cursor: pointer;
         transition: border-color 0.15s;
     }
@@ -6189,7 +6189,7 @@ body.gallery-lightbox-open {
 /* ── 13. Supplier Card ──────────────────────────────── */
 @media (width < 1024px) {
     #pdm-supplier-card {
-        background: #fff;
+        background: var(--color-surface, #ffffff);
         padding: 16px;
     }
 
@@ -6281,7 +6281,7 @@ body.gallery-lightbox-open {
         padding: 10px 8px;
         border: 1px solid var(--color-border-medium, #d1d5db);
         border-radius: 22px;
-        background: #fff;
+        background: var(--color-surface, #ffffff);
         font-size: 13px;
         font-weight: 500;
         color: var(--color-text-heading, #111827);
@@ -6291,7 +6291,7 @@ body.gallery-lightbox-open {
     }
 
     .pdm-supplier-btn:active {
-        background: #f5f5f5;
+        background: var(--color-surface-raised, #f5f5f5);
     }
 }
 
@@ -6320,7 +6320,7 @@ body.gallery-lightbox-open {
     width: 100%;
     max-width: 100vw;
     box-sizing: border-box;
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     border-radius: 16px 16px 0 0;
     max-height: 85vh;
     overflow-y: auto;
@@ -6457,7 +6457,7 @@ body.pdm-sheet-open {
     font-size: 11px;
     font-weight: 600;
     color: var(--color-text-body, #333333);
-    background: #fafafa;
+    background: var(--color-surface-muted, #fafafa);
 }
 
 /* Bottom sheet — Key Attributes table */
@@ -6532,7 +6532,7 @@ body.pdm-sheet-open {
         left: 0;
         right: 0;
         z-index: 100;
-        background: #fff;
+        background: var(--color-surface, #ffffff);
         border-top: 1px solid var(--color-border-default, #e5e5e5);
         box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.08);
         overflow: hidden;
@@ -6543,7 +6543,7 @@ body.pdm-sheet-open {
         height: 44px;
         border: 1px solid var(--color-border-medium, #d1d5db);
         border-radius: 22px;
-        background: #fff;
+        background: var(--color-surface, #ffffff);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -6553,14 +6553,14 @@ body.pdm-sheet-open {
     }
 
     .pdm-bar-chat-btn:active {
-        background: #f5f5f5;
+        background: var(--color-surface-raised, #f5f5f5);
     }
 
     .pdm-bar-cart-btn {
         height: 44px;
         border: 1px solid #222;
         border-radius: 22px;
-        background: #fff;
+        background: var(--color-surface, #ffffff);
         font-size: 14px;
         font-weight: 600;
         color: var(--color-text-heading, #111827);
@@ -6569,7 +6569,7 @@ body.pdm-sheet-open {
     }
 
     .pdm-bar-cart-btn:active {
-        background: #f5f5f5;
+        background: var(--color-surface-raised, #f5f5f5);
     }
 
     .pdm-bar-order-btn {
@@ -6993,7 +6993,7 @@ body.pdm-sheet-open {
     padding: 16px 18px;
     border: 1.5px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     border-radius: 12px;
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     cursor: pointer;
     transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
     text-align: left;
@@ -7013,7 +7013,7 @@ body.pdm-sheet-open {
 
 .auth-account-type-card:hover {
     border-color: var(--color-border-medium, #d1d5db);
-    background-color: #f9fafb;
+    background-color: var(--color-surface-muted, #fafafa);
 }
 
 .auth-account-type-card:focus-visible {
@@ -7033,7 +7033,7 @@ body.pdm-sheet-open {
 }
 
 .auth-account-type-card.selected:hover {
-    background-color: #fff;
+    background-color: var(--color-surface, #ffffff);
 }
 
 /* Content takes remaining space, icon goes to end */
@@ -7107,7 +7107,7 @@ body.pdm-sheet-open {
     }
 
     .auth-account-type-label {
-        color: #f3f4f6;
+        color: var(--color-surface-raised, #f5f5f5);
     }
 
     .auth-account-type-desc {
@@ -7153,7 +7153,7 @@ body.pdm-sheet-open {
 }
 
 .dark .auth-account-type-label {
-    color: #f3f4f6;
+    color: var(--color-surface-raised, #f5f5f5);
 }
 
 .dark .auth-account-type-desc {
@@ -7505,7 +7505,7 @@ body.pdm-sheet-open {
 .os-nav {
     width: 240px;
     flex-shrink: 0;
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     border-radius: 8px;
     overflow: hidden;
 }
@@ -7529,7 +7529,7 @@ body.pdm-sheet-open {
 }
 
 .os-nav__item:hover {
-    background: #f9fafb;
+    background: var(--color-surface-muted, #fafafa);
     color: #1f2937;
 }
 
@@ -7548,7 +7548,7 @@ body.pdm-sheet-open {
 }
 
 .os-notice {
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     border-radius: 8px;
     padding: 48px 40px 60px;
     text-align: center;
@@ -7583,7 +7583,7 @@ body.pdm-sheet-open {
     max-width: 760px;
     margin: 0 auto;
     text-align: left;
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     border: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     border-radius: 8px;
     padding: 32px;
@@ -7685,7 +7685,7 @@ body.pdm-sheet-open {
     align-items: center;
     justify-content: space-between;
     gap: 24px;
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     border-radius: 8px;
     padding: 24px 32px;
 }
@@ -7727,7 +7727,7 @@ body.pdm-sheet-open {
     width: 28px;
     height: 28px;
     border-radius: 50%;
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     border: 1.5px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     display: flex;
     align-items: center;
@@ -7738,7 +7738,7 @@ body.pdm-sheet-open {
 }
 
 .settings-profile__camera:hover {
-    background: #f3f4f6;
+    background: var(--color-surface-raised, #f5f5f5);
     color: var(--color-text-body, #333333);
 }
 
@@ -7790,7 +7790,7 @@ body.pdm-sheet-open {
 .settings-profile__edit-btn:hover,
 .settings-profile__copy-btn:hover {
     color: var(--color-text-body, #333333);
-    background: #f3f4f6;
+    background: var(--color-surface-raised, #f5f5f5);
 }
 
 .settings-profile__actions {
@@ -7855,7 +7855,7 @@ body.pdm-sheet-open {
 
 /* Settings Card */
 .settings-card {
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     border-radius: 8px;
     padding: 24px;
 }
@@ -7906,7 +7906,7 @@ body.pdm-sheet-open {
 }
 
 .settings-item:hover {
-    background: #f9fafb;
+    background: var(--color-surface-muted, #fafafa);
 }
 
 .settings-item__label {
@@ -7996,7 +7996,7 @@ body.pdm-sheet-open {
 /* ── Account Edit (Hesap Bilgileri Düzenleme) ─────────────────── */
 
 .acc-edit {
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     border-radius: 8px;
     padding: 32px;
 }
@@ -8134,7 +8134,7 @@ body.pdm-sheet-open {
     border-radius: 4px;
     font-size: 14px;
     color: var(--color-text-heading, #111827);
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     outline: none;
     min-width: 180px;
 }
@@ -8215,7 +8215,7 @@ body.pdm-sheet-open {
 
 .acc-edit__btn--edit {
     border: 1.5px solid var(--color-primary-600, #b38600);
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     color: var(--color-text-heading, #111827);
 }
 
@@ -8226,7 +8226,7 @@ body.pdm-sheet-open {
 
 .acc-edit__btn--submit {
     border: 1.5px solid var(--color-primary-600, #b38600);
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     color: var(--color-text-heading, #111827);
 }
 
@@ -8262,7 +8262,7 @@ body.pdm-sheet-open {
 /* ── Tax Info (Vergi Bilgileri) ───────────────────────────────── */
 
 .tax-info {
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     border-radius: 8px;
     padding: 32px;
 }
@@ -8371,7 +8371,7 @@ body.pdm-sheet-open {
     padding: 10px 24px;
     border: 1px solid #111827;
     border-radius: 20px;
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     font-size: 13px;
     font-weight: 500;
     color: var(--color-text-heading, #111827);
@@ -8382,7 +8382,7 @@ body.pdm-sheet-open {
 }
 
 .tax-info__section-btn:hover {
-    background: #f3f4f6;
+    background: var(--color-surface-raised, #f5f5f5);
 }
 
 .tax-info__empty {
@@ -8450,7 +8450,7 @@ body.pdm-sheet-open {
 /* ── Linked Accounts (Bağlı Hesaplar) ────────────────────────── */
 
 .linked-acc {
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     border-radius: 8px;
     padding: 32px;
 }
@@ -8538,7 +8538,7 @@ body.pdm-sheet-open {
 /* ── Privacy Settings (Gizlilik Ayarları) ─────────────────────── */
 
 .privacy {
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     border-radius: 8px;
     padding: 32px;
 }
@@ -8648,7 +8648,7 @@ body.pdm-sheet-open {
 /* ── Ad Preferences (Reklam Tercihleri) ───────────────────────── */
 
 .ad-pref {
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     border-radius: 8px;
     padding: 32px;
 }
@@ -8734,7 +8734,7 @@ body.pdm-sheet-open {
     height: 20px;
     left: 3px;
     top: 3px;
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     border-radius: 50%;
     transition: transform 0.2s;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
@@ -8771,7 +8771,7 @@ body.pdm-sheet-open {
 }
 
 .ad-pref__back-btn:hover {
-    background: #f3f4f6;
+    background: var(--color-surface-raised, #f5f5f5);
     border-color: #9ca3af;
 }
 
@@ -8785,7 +8785,7 @@ body.pdm-sheet-open {
 /* ── Email Preferences (E-posta Tercihleri) ───────────────────── */
 
 .email-pref {
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     border-radius: 8px;
     padding: 32px;
 }
@@ -8831,7 +8831,7 @@ body.pdm-sheet-open {
     justify-content: space-between;
     gap: 24px;
     padding: 20px 24px;
-    background: #f9fafb;
+    background: var(--color-surface-muted, #fafafa);
     border: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     border-bottom: none;
 }
@@ -8899,7 +8899,7 @@ body.pdm-sheet-open {
     height: 18px;
     border: 2px solid var(--color-border-medium, #d1d5db);
     border-radius: 4px;
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     transition: all 0.15s;
     display: flex;
     align-items: center;
@@ -8975,7 +8975,7 @@ body.pdm-sheet-open {
 /* ── Change Password (Şifre Değiştir) ────────────────────────── */
 
 .pw-change {
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     border-radius: 8px;
     padding: 32px;
 }
@@ -9282,7 +9282,7 @@ body.pdm-sheet-open {
 }
 
 .email-change__card {
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     border-radius: 12px;
     padding: 40px;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
@@ -9404,7 +9404,7 @@ body.pdm-sheet-open {
 }
 
 .email-change__form-input--disabled {
-    background: #f3f4f6;
+    background: var(--color-surface-raised, #f5f5f5);
     color: var(--color-text-muted, #666666);
 }
 
@@ -9462,7 +9462,7 @@ body.pdm-sheet-open {
 }
 
 .phone-change__card {
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     border-radius: 12px;
     padding: 40px;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
@@ -9608,7 +9608,7 @@ body.pdm-sheet-open {
 }
 
 .del-acc__card {
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     border: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     border-radius: 12px;
     padding: 32px;
@@ -9704,7 +9704,7 @@ body.pdm-sheet-open {
     border-radius: 8px;
     font-size: 14px;
     color: var(--color-text-heading, #111827);
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     appearance: auto;
     cursor: pointer;
 }
@@ -9843,7 +9843,7 @@ body.pdm-sheet-open {
 }
 
 .del-acc__btn--secondary:hover {
-    background: #f9fafb;
+    background: var(--color-surface-muted, #fafafa);
     color: var(--color-text-body, #333333);
 }
 
@@ -9896,7 +9896,7 @@ body.pdm-sheet-open {
     align-items: flex-start;
     justify-content: space-between;
     gap: 24px;
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     border-radius: 0 0 8px 8px;
     padding: 24px 32px;
     margin-top: -1px;
@@ -9964,7 +9964,7 @@ body.pdm-sheet-open {
 
 .profile-header__link-icon:hover {
     color: var(--color-text-body, #333333);
-    background: #f3f4f6;
+    background: var(--color-surface-raised, #f5f5f5);
 }
 
 .profile-header__meta {
@@ -10066,7 +10066,7 @@ body.pdm-sheet-open {
 }
 
 .profile-header__action-btn--secondary {
-    background: #f3f4f6;
+    background: var(--color-surface-raised, #f5f5f5);
     color: var(--color-text-body, #333333);
 }
 
@@ -10076,7 +10076,7 @@ body.pdm-sheet-open {
 
 /* Info Sections */
 .profile-section {
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     border-radius: 8px;
     padding: 24px 32px;
 }
@@ -10162,7 +10162,7 @@ body.pdm-sheet-open {
 
 /* Account Edit Form */
 .profile-form {
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     border-radius: 8px;
     padding: 32px;
 }
@@ -10255,7 +10255,7 @@ body.pdm-sheet-open {
     padding: 6px 28px;
     border: 1.5px solid var(--color-primary-600, #b38600);
     border-radius: 4px;
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     color: var(--color-text-heading, #111827);
     font-size: 14px;
     font-weight: 500;
@@ -10374,7 +10374,7 @@ body.pdm-sheet-open {
    BUYER DASHBOARD — NewBuyerInfo
    ============================================================ */
 .new-buyer-info {
-    background: #ffffff;
+    background: var(--color-surface, #ffffff);
     border-radius: 8px;
     overflow: hidden;
 }
@@ -10411,7 +10411,7 @@ body.pdm-sheet-open {
     width: 48px;
     height: 48px;
     border-radius: 50%;
-    background: #f3f4f6;
+    background: var(--color-surface-raised, #f5f5f5);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -10501,7 +10501,7 @@ body.pdm-sheet-open {
 }
 
 .operation-slider__swiper {
-    background: #F4F4F4;
+    background: var(--color-surface-raised, #f5f5f5);
 }
 
 .operation-slider__slide {
@@ -10607,7 +10607,7 @@ body.pdm-sheet-open {
    BUYER DASHBOARD — Orders Section
    ============================================================ */
 .orders {
-    background: #ffffff;
+    background: var(--color-surface, #ffffff);
     border-radius: var(--radius-card);
     overflow: hidden;
 }
@@ -10779,7 +10779,7 @@ body.pdm-sheet-open {
 }
 
 .orders__empty-btn:hover {
-    background: #f5f5f5;
+    background: var(--color-surface-raised, #f5f5f5);
     border-color: #999;
 }
 
@@ -11187,7 +11187,7 @@ body.pdm-sheet-open {
     display: flex;
     flex-direction: column;
     height: calc(100vh - 48px);
-    background: #ffffff;
+    background: var(--color-surface, #ffffff);
     border-radius: 8px;
     overflow: hidden;
 }
@@ -11205,7 +11205,7 @@ body.pdm-sheet-open {
     border-right: 1px solid var(--color-border-light, #f0f0f0);
     display: flex;
     flex-direction: column;
-    background: #ffffff;
+    background: var(--color-surface, #ffffff);
 }
 
 .msg-inbox__search {
@@ -11233,7 +11233,7 @@ body.pdm-sheet-open {
     border-radius: 18px;
     font-size: 13px;
     color: var(--color-text-body, #333333);
-    background: #f9fafb;
+    background: var(--color-surface-muted, #fafafa);
     outline: none;
     transition: border-color 150ms;
 }
@@ -11244,7 +11244,7 @@ body.pdm-sheet-open {
 
 .msg-inbox__search-input:focus {
     border-color: var(--color-cta-primary, #cc9900);
-    background: #ffffff;
+    background: var(--color-surface, #ffffff);
 }
 
 .msg-inbox__heading {
@@ -11276,7 +11276,7 @@ body.pdm-sheet-open {
 }
 
 .msg-inbox__cat:hover {
-    background: #f5f5f5;
+    background: var(--color-surface-raised, #f5f5f5);
 }
 
 .msg-inbox__cat--active {
@@ -11317,7 +11317,7 @@ body.pdm-sheet-open {
 
 .msg-inbox__toolbar-btn:hover {
     color: var(--color-text-body, #333333);
-    background: #f5f5f5;
+    background: var(--color-surface-raised, #f5f5f5);
 }
 
 .msg-inbox__toolbar-divider {
@@ -11333,7 +11333,7 @@ body.pdm-sheet-open {
     border-right: 1px solid var(--color-border-light, #f0f0f0);
     display: flex;
     flex-direction: column;
-    background: #ffffff;
+    background: var(--color-surface, #ffffff);
 }
 
 .msg-list__header {
@@ -11379,17 +11379,17 @@ body.pdm-sheet-open {
     gap: 12px;
     padding: 14px 20px;
     text-decoration: none;
-    border-bottom: 1px solid #f5f5f5;
+    border-bottom: 1px solid var(--color-surface-raised, #f5f5f5);
     cursor: pointer;
     transition: background 150ms;
 }
 
 .msg-list__item:hover {
-    background: #fafafa;
+    background: var(--color-surface-muted, #fafafa);
 }
 
 .msg-list__item--active {
-    background: #f5f5f5;
+    background: var(--color-surface-raised, #f5f5f5);
 }
 
 .msg-list__avatar {
@@ -11479,7 +11479,7 @@ body.pdm-sheet-open {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #ffffff;
+    background: var(--color-surface, #ffffff);
     min-width: 0;
 }
 
@@ -11516,7 +11516,7 @@ body.pdm-sheet-open {
 
 .msg-content__cta:hover {
     border-color: #999999;
-    background: #fafafa;
+    background: var(--color-surface-muted, #fafafa);
 }
 
 /* --- Feedback Banner --- */
@@ -11598,7 +11598,7 @@ body.pdm-sheet-open {
    ============================================================ */
 
 .inq-layout {
-    background: #ffffff;
+    background: var(--color-surface, #ffffff);
     border-radius: 8px;
     min-height: calc(100vh - 80px);
     display: flex;
@@ -11662,7 +11662,7 @@ body.pdm-sheet-open {
     border: 1px solid var(--color-border-medium, #d1d5db);
     border-radius: 4px;
     cursor: pointer;
-    background: #ffffff;
+    background: var(--color-surface, #ffffff);
     transition: border-color 150ms;
 }
 
@@ -11682,7 +11682,7 @@ body.pdm-sheet-open {
 }
 
 .inq-actions__delete-btn:hover {
-    background: #FFF7ED;
+    background: var(--color-primary-50, #fef9e7);
 }
 
 .inq-actions__right {
@@ -11716,7 +11716,7 @@ body.pdm-sheet-open {
     border: 1px solid var(--color-border-medium, #d1d5db);
     border-radius: 20px;
     cursor: pointer;
-    background: #ffffff;
+    background: var(--color-surface, #ffffff);
     transition: border-color 150ms;
 }
 
@@ -11740,7 +11740,7 @@ body.pdm-sheet-open {
     color: var(--color-text-body, #333333);
     border: none;
     outline: none;
-    background: #ffffff;
+    background: var(--color-surface, #ffffff);
 }
 
 .inq-actions__search-input::placeholder {
@@ -11759,7 +11759,7 @@ body.pdm-sheet-open {
     height: 32px;
     border: none;
     border-left: 1px solid var(--color-border-medium, #d1d5db);
-    background: #fafafa;
+    background: var(--color-surface-muted, #fafafa);
     color: var(--color-text-muted, #666666);
     cursor: pointer;
     transition: background 150ms, color 150ms;
@@ -11827,7 +11827,7 @@ body.pdm-sheet-open {
     align-items: center;
     gap: 8px;
     padding: 10px 20px;
-    background: #ffffff;
+    background: var(--color-surface, #ffffff);
     border-bottom: 1px solid var(--color-border-light, #f0f0f0);
     border-radius: 8px 8px 0 0;
 }
@@ -11857,7 +11857,7 @@ body.pdm-sheet-open {
 .contacts-panels {
     display: flex;
     flex: 1;
-    background: #ffffff;
+    background: var(--color-surface, #ffffff);
     border-radius: 0 0 8px 8px;
     overflow: hidden;
 }
@@ -11911,7 +11911,7 @@ body.pdm-sheet-open {
     color: var(--color-text-body, #333333);
     border: none;
     outline: none;
-    background: #ffffff;
+    background: var(--color-surface, #ffffff);
 }
 
 .contacts-list__search-input::placeholder {
@@ -11930,7 +11930,7 @@ body.pdm-sheet-open {
     height: 32px;
     border: none;
     border-left: 1px solid var(--color-border-medium, #d1d5db);
-    background: #fafafa;
+    background: var(--color-surface-muted, #fafafa);
     color: var(--color-text-muted, #666666);
     cursor: pointer;
 }
@@ -11988,7 +11988,7 @@ body.pdm-sheet-open {
     align-items: center;
     justify-content: center;
     position: relative;
-    background: #F9FAFB;
+    background: var(--color-surface-muted, #fafafa);
     min-height: 500px;
 }
 
@@ -12061,7 +12061,7 @@ body.pdm-sheet-open {
 
 .orders-page {
     display: flex;
-    background: #ffffff;
+    background: var(--color-surface, #ffffff);
     border-radius: 8px;
     min-height: calc(100vh - 80px);
     overflow: hidden;
@@ -12099,7 +12099,7 @@ body.pdm-sheet-open {
 }
 
 .orders-page__nav-link:hover {
-    background: #fafafa;
+    background: var(--color-surface-muted, #fafafa);
     color: var(--color-text-heading, #111827);
 }
 
@@ -12137,7 +12137,7 @@ body.pdm-sheet-open {
     padding: 8px 20px;
     font-size: 14px;
     color: var(--color-text-body, #333333);
-    background: #ffffff;
+    background: var(--color-surface, #ffffff);
     border: 1px solid var(--color-border-medium, #d1d5db);
     border-radius: 20px;
     cursor: pointer;
@@ -12147,7 +12147,7 @@ body.pdm-sheet-open {
 
 .orders-page__upload-btn:hover {
     border-color: #999999;
-    background: #fafafa;
+    background: var(--color-surface-muted, #fafafa);
 }
 
 /* --- Empty State --- */
@@ -12312,7 +12312,7 @@ body.pdm-sheet-open {
     height: 32px;
     border: none;
     border-left: 1px solid var(--color-border-medium, #d1d5db);
-    background: #fafafa;
+    background: var(--color-surface-muted, #fafafa);
     color: var(--color-text-muted, #666666);
     cursor: pointer;
 }
@@ -12333,7 +12333,7 @@ body.pdm-sheet-open {
     padding: 6px 16px;
     font-size: 13px;
     color: var(--color-text-muted, #666666);
-    background: #ffffff;
+    background: var(--color-surface, #ffffff);
     border: 1px solid var(--color-border-medium, #d1d5db);
     border-radius: 20px;
     cursor: pointer;
@@ -12407,7 +12407,7 @@ body.pdm-sheet-open {
     font-size: 13px;
     font-weight: 600;
     color: var(--color-text-body, #333333);
-    background: #fafafa;
+    background: var(--color-surface-muted, #fafafa);
     border-bottom: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     text-align: left;
     white-space: nowrap;
@@ -12453,7 +12453,7 @@ body.pdm-sheet-open {
     height: 32px;
     border: 1px solid var(--color-border-medium, #d1d5db);
     border-radius: 50%;
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     color: var(--color-text-muted, #666666);
     cursor: pointer;
 }
@@ -12513,7 +12513,7 @@ body.pdm-sheet-open {
     padding: 8px 20px;
     font-size: 13px;
     color: var(--color-text-body, #333333);
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     border: 1px solid var(--color-border-medium, #d1d5db);
     border-radius: 20px;
     cursor: pointer;
@@ -12548,7 +12548,7 @@ body.pdm-sheet-open {
 
 .os-modal__dialog {
     position: relative;
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     border-radius: 12px;
     width: 480px;
     max-width: calc(100vw - 32px);
@@ -12597,7 +12597,7 @@ body.pdm-sheet-open {
 }
 
 .os-modal__close:hover {
-    background: #f5f5f5;
+    background: var(--color-surface-raised, #f5f5f5);
 }
 
 .os-modal__body {
@@ -12654,7 +12654,7 @@ body.pdm-sheet-open {
     border-radius: 6px;
     outline: none;
     color: var(--color-text-heading, #111827);
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     appearance: none;
     cursor: pointer;
     transition: border-color 150ms;
@@ -12768,11 +12768,11 @@ body.pdm-sheet-open {
     align-items: flex-start;
     gap: 10px;
     padding: 12px 14px;
-    background: #FFF7ED;
-    border: 1px solid #FED7AA;
+    background: var(--color-primary-50, #fef9e7);
+    border: 1px solid var(--color-primary-200, #fbe08a);
     border-radius: 6px;
     font-size: 13px;
-    color: #92400E;
+    color: var(--color-primary-800, #6b5100);
     line-height: 1.5;
     margin-bottom: 20px;
 }
@@ -12840,7 +12840,7 @@ body.pdm-sheet-open {
 }
 
 .os-modal__btn--cancel {
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     color: var(--color-text-body, #333333);
     border: 1px solid var(--color-border-medium, #d1d5db);
 }
@@ -12960,7 +12960,7 @@ body.pdm-sheet-open {
    ╚══════════════════════════════════════════╝ */
 
 .fav-page {
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     border-radius: 8px;
     min-height: 600px;
 }
@@ -13069,11 +13069,11 @@ body.pdm-sheet-open {
 }
 
 .fav-products__list-item:hover {
-    background: #f5f5f5;
+    background: var(--color-surface-raised, #f5f5f5);
 }
 
 .fav-products__list-item--active {
-    background: #f5f5f5;
+    background: var(--color-surface-raised, #f5f5f5);
 }
 
 .fav-products__list-name {
@@ -13147,7 +13147,7 @@ body.pdm-sheet-open {
 
 .fav-modal__dialog {
     position: relative;
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     border-radius: 12px;
     width: 440px;
     max-width: calc(100vw - 32px);
@@ -13193,7 +13193,7 @@ body.pdm-sheet-open {
 }
 
 .fav-modal__close:hover {
-    background: #f5f5f5;
+    background: var(--color-surface-raised, #f5f5f5);
 }
 
 .fav-modal__body {
@@ -13250,7 +13250,7 @@ body.pdm-sheet-open {
 }
 
 .fav-modal__btn--cancel {
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     color: var(--color-text-body, #333333);
     border: 1px solid var(--color-border-medium, #d1d5db);
 }
@@ -13260,7 +13260,7 @@ body.pdm-sheet-open {
 }
 
 .fav-modal__btn--save {
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     color: var(--color-text-placeholder, #999999);
     border: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
 }
@@ -13367,7 +13367,7 @@ body.pdm-sheet-open {
    ╚══════════════════════════════════════════╝ */
 
 .sub-page {
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     border-radius: 8px;
     min-height: 600px;
 }
@@ -13390,7 +13390,7 @@ body.pdm-sheet-open {
     padding: 8px 20px;
     font-size: 14px;
     color: var(--color-text-body, #333333);
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     border: 1px solid var(--color-border-medium, #d1d5db);
     border-radius: 20px;
     cursor: pointer;
@@ -13444,7 +13444,7 @@ body.pdm-sheet-open {
     align-items: center;
     justify-content: space-between;
     padding: 14px 24px;
-    background: #FFF3E8;
+    background: var(--color-primary-50, #fef9e7);
     font-size: 14px;
     color: var(--color-text-body, #333333);
 }
@@ -13490,7 +13490,7 @@ body.pdm-sheet-open {
     color: var(--color-text-muted, #666666);
     padding: 12px 16px;
     border-bottom: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
-    background: #fafafa;
+    background: var(--color-surface-muted, #fafafa);
 }
 
 .sub-invoice-table td {
@@ -13534,7 +13534,7 @@ body.pdm-sheet-open {
 }
 
 .sub-pricing-header__back:hover {
-    background: #f5f5f5;
+    background: var(--color-surface-raised, #f5f5f5);
 }
 
 .sub-pricing-header__title {
@@ -13555,7 +13555,7 @@ body.pdm-sheet-open {
     padding: 10px 28px;
     font-size: 14px;
     color: var(--color-text-muted, #666666);
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     border: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     cursor: pointer;
     transition: all 150ms;
@@ -13571,7 +13571,7 @@ body.pdm-sheet-open {
 }
 
 .sub-billing-toggle__btn--active {
-    background: #f5f5f5;
+    background: var(--color-surface-raised, #f5f5f5);
     color: var(--color-text-heading, #111827);
     font-weight: 600;
     border-color: var(--color-border-medium, #d1d5db);
@@ -13625,7 +13625,7 @@ body.pdm-sheet-open {
     font-size: 12px;
     font-weight: 600;
     color: var(--color-cta-primary, #cc9900);
-    background: #FFF3E8;
+    background: var(--color-primary-50, #fef9e7);
     padding: 3px 10px;
     border-radius: 10px;
 }
@@ -13811,7 +13811,7 @@ body.pdm-sheet-open {
    ╚══════════════════════════════════════════╝ */
 
 .log-page {
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     border-radius: 8px;
     min-height: 600px;
 }
@@ -13931,7 +13931,7 @@ body.pdm-sheet-open {
     padding: 10px 20px;
     font-size: 14px;
     color: var(--color-text-body, #333333);
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     border: none;
     border-left: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     cursor: pointer;
@@ -13940,7 +13940,7 @@ body.pdm-sheet-open {
 }
 
 .log-search__btn:hover {
-    background: #f5f5f5;
+    background: var(--color-surface-raised, #f5f5f5);
 }
 
 .log-search__reset {
@@ -13983,7 +13983,7 @@ body.pdm-sheet-open {
     border-radius: 6px;
     outline: none;
     color: var(--color-text-heading, #111827);
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     cursor: pointer;
     box-sizing: border-box;
 }
@@ -14004,7 +14004,7 @@ body.pdm-sheet-open {
     border-radius: 6px;
     outline: none;
     color: var(--color-text-heading, #111827);
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     appearance: none;
     cursor: pointer;
     box-sizing: border-box;
@@ -14032,7 +14032,7 @@ body.pdm-sheet-open {
     color: var(--color-text-muted, #666666);
     padding: 12px 12px;
     border-bottom: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
-    background: #fafafa;
+    background: var(--color-surface-muted, #fafafa);
 }
 
 .log-table td {
@@ -14087,7 +14087,7 @@ body.pdm-sheet-open {
     padding: 10px 20px;
     font-size: 14px;
     color: var(--color-text-body, #333333);
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     border: none;
     border-left: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     cursor: pointer;
@@ -14096,7 +14096,7 @@ body.pdm-sheet-open {
 }
 
 .log-review-search__btn:hover {
-    background: #f5f5f5;
+    background: var(--color-surface-raised, #f5f5f5);
 }
 
 /* ─── Logistics Responsive ─── */
@@ -14123,7 +14123,7 @@ body.pdm-sheet-open {
 /* ─── Layout ─── */
 .pay-layout {
     display: flex;
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     border-radius: 8px;
     min-height: calc(100vh - 80px);
     overflow: hidden;
@@ -14175,7 +14175,7 @@ body.pdm-sheet-open {
 }
 
 .pay-nav__link:hover {
-    background: #fafafa;
+    background: var(--color-surface-muted, #fafafa);
     color: var(--color-text-heading, #111827);
 }
 
@@ -14233,7 +14233,7 @@ body.pdm-sheet-open {
     padding: 8px 16px;
     font-size: 13px;
     color: var(--color-text-body, #333333);
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     border: 1px solid var(--color-border-medium, #d1d5db);
     border-radius: 20px;
     cursor: pointer;
@@ -14243,7 +14243,7 @@ body.pdm-sheet-open {
 
 .pay-header__action-btn:hover {
     border-color: #999;
-    background: #fafafa;
+    background: var(--color-surface-muted, #fafafa);
 }
 
 .pay-header__info-btn {
@@ -14261,7 +14261,7 @@ body.pdm-sheet-open {
 
 .pay-header__info-btn:hover {
     border-color: #999;
-    background: #fafafa;
+    background: var(--color-surface-muted, #fafafa);
 }
 
 /* ─── Section ─── */
@@ -14290,7 +14290,7 @@ body.pdm-sheet-open {
 
 .pay-add-card:hover {
     border-color: #999;
-    background: #fafafa;
+    background: var(--color-surface-muted, #fafafa);
 }
 
 .pay-add-card__icon {
@@ -14300,7 +14300,7 @@ body.pdm-sheet-open {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background: #f3f4f6;
+    background: var(--color-surface-raised, #f5f5f5);
     font-size: 24px;
     color: var(--color-text-muted, #666666);
     font-weight: 300;
@@ -14380,7 +14380,7 @@ body.pdm-sheet-open {
     padding: 6px 14px;
     font-size: 12px;
     color: var(--color-text-muted, #666666);
-    background: #f3f4f6;
+    background: var(--color-surface-raised, #f5f5f5);
     border: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     border-radius: 16px;
     cursor: pointer;
@@ -14461,7 +14461,7 @@ body.pdm-sheet-open {
     border-radius: 6px;
     outline: none;
     color: var(--color-text-heading, #111827);
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     cursor: pointer;
     min-width: 120px;
 }
@@ -14549,7 +14549,7 @@ body.pdm-sheet-open {
 }
 
 .pay-tt-filters__search-btn:hover {
-    background: #f5f5f5;
+    background: var(--color-surface-raised, #f5f5f5);
 }
 
 .pay-tt-summary {
@@ -14580,7 +14580,7 @@ body.pdm-sheet-open {
     padding: 12px 16px;
     font-weight: 600;
     color: var(--color-text-muted, #666666);
-    background: #f9fafb;
+    background: var(--color-surface-muted, #fafafa);
     border-bottom: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     white-space: nowrap;
 }
@@ -14646,7 +14646,7 @@ body.pdm-sheet-open {
 .pay-modal__dialog {
     position: relative;
     z-index: 2;
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     border-radius: 12px;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
     width: 90%;
@@ -14697,7 +14697,7 @@ body.pdm-sheet-open {
 }
 
 .pay-modal__close:hover {
-    background: #f3f4f6;
+    background: var(--color-surface-raised, #f5f5f5);
 }
 
 .pay-modal__body {
@@ -14722,7 +14722,7 @@ body.pdm-sheet-open {
     font-weight: 500;
     border-radius: 8px;
     border: 1px solid var(--color-border-medium, #d1d5db);
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     color: var(--color-text-body, #333333);
     cursor: pointer;
     transition: all 150ms;
@@ -14730,7 +14730,7 @@ body.pdm-sheet-open {
 
 .pay-modal__btn:hover {
     border-color: #999;
-    background: #fafafa;
+    background: var(--color-surface-muted, #fafafa);
 }
 
 .pay-modal__btn--primary {
@@ -14744,7 +14744,7 @@ body.pdm-sheet-open {
 }
 
 .pay-modal__btn--cancel {
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     color: var(--color-text-muted, #666666);
 }
 
@@ -14800,7 +14800,7 @@ body.pdm-sheet-open {
     border-radius: 8px;
     outline: none;
     color: var(--color-text-heading, #111827);
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     cursor: pointer;
 }
 
@@ -14851,7 +14851,7 @@ body.pdm-sheet-open {
     font-size: 10px;
     font-weight: 700;
     color: var(--color-text-muted, #666666);
-    background: #f9fafb;
+    background: var(--color-surface-muted, #fafafa);
     letter-spacing: 0.3px;
 }
 
@@ -14896,7 +14896,7 @@ body.pdm-sheet-open {
     background: #FEF3C7;
     border-radius: 8px;
     font-size: 13px;
-    color: #92400E;
+    color: var(--color-primary-800, #6b5100);
     margin-bottom: 16px;
 }
 
@@ -14923,7 +14923,7 @@ body.pdm-sheet-open {
     right: 0;
     margin-top: 8px;
     padding: 14px 18px;
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     border: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     border-radius: 8px;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
@@ -14979,7 +14979,7 @@ body.pdm-sheet-open {
     padding: 24px;
     border: 2px dashed var(--color-border-medium, #d1d5db);
     border-radius: 8px;
-    background: #fafafa;
+    background: var(--color-surface-muted, #fafafa);
 }
 
 .pay-upload-area__preview {
@@ -15219,7 +15219,7 @@ body.pdm-sheet-open {
 /* ── Page & Navigation ─────────────────────────────────────────── */
 
 .ds-page {
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     border-radius: 8px;
     overflow: hidden;
 }
@@ -15228,7 +15228,7 @@ body.pdm-sheet-open {
     display: flex;
     gap: 0;
     border-bottom: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
-    background: #fff;
+    background: var(--color-surface, #ffffff);
 }
 
 .ds-page__nav-link {
@@ -15326,7 +15326,7 @@ body.pdm-sheet-open {
     display: flex;
     align-items: center;
     height: 40px;
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     border: 2px solid var(--color-cta-primary, #cc9900);
     border-radius: 9999px;
     padding: 4px 4px 4px 20px;
@@ -15456,7 +15456,7 @@ body.pdm-sheet-open {
     padding: 6px 14px;
     border: 1px solid var(--color-border-medium, #d1d5db);
     border-radius: 16px;
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     font-size: 13px;
     color: var(--color-text-body, #333333);
     cursor: pointer;
@@ -15466,13 +15466,13 @@ body.pdm-sheet-open {
 
 .ds-chip:hover {
     border-color: #9ca3af;
-    background: #f9fafb;
+    background: var(--color-surface-muted, #fafafa);
 }
 
 .ds-chip--active {
     border-color: var(--color-cta-primary, #cc9900);
     color: var(--color-cta-primary, #cc9900);
-    background: #fff7ed;
+    background: var(--color-primary-50, #fef9e7);
 }
 
 .ds-chip--orange {
@@ -15508,7 +15508,7 @@ body.pdm-sheet-open {
     padding: 6px 28px 6px 12px;
     border: 1px solid var(--color-border-medium, #d1d5db);
     border-radius: 6px;
-    background: #fff url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%236B7280' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 10px center;
+    background: var(--color-surface, #ffffff) url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%236B7280' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 10px center;
     font-size: 13px;
     color: var(--color-text-body, #333333);
     cursor: pointer;
@@ -15560,7 +15560,7 @@ body.pdm-sheet-open {
     top: calc(100% + 4px);
     left: 0;
     min-width: 180px;
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     border: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -15586,13 +15586,13 @@ body.pdm-sheet-open {
 }
 
 .ds-category-tag__dropdown-item:hover {
-    background: #f3f4f6;
+    background: var(--color-surface-raised, #f5f5f5);
 }
 
 .ds-category-tag--active {
     border-color: var(--color-cta-primary, #cc9900);
     color: var(--color-cta-primary, #cc9900);
-    background: #fff7ed;
+    background: var(--color-primary-50, #fef9e7);
 }
 
 .ds-category-toggle {
@@ -15639,7 +15639,7 @@ body.pdm-sheet-open {
     padding: 4px 12px;
     border: 1px solid var(--color-cta-primary, #cc9900);
     border-radius: 16px;
-    background: #fff7ed;
+    background: var(--color-primary-50, #fef9e7);
     font-size: 12px;
     color: var(--color-cta-primary, #cc9900);
     cursor: pointer;
@@ -15647,7 +15647,7 @@ body.pdm-sheet-open {
 }
 
 .ds-active-chip:hover {
-    background: #fed7aa;
+    background: var(--color-primary-200, #fbe08a);
 }
 
 /* ── Product Grid ──────────────────────────────────────────────── */
@@ -15669,7 +15669,7 @@ body.pdm-sheet-open {
     padding: 6px 28px 6px 12px;
     border: 1px solid var(--color-border-medium, #d1d5db);
     border-radius: 6px;
-    background: #fff url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%236B7280' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 10px center;
+    background: var(--color-surface, #ffffff) url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%236B7280' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 10px center;
     font-size: 13px;
     color: var(--color-text-body, #333333);
     cursor: pointer;
@@ -15701,7 +15701,7 @@ body.pdm-sheet-open {
     aspect-ratio: 1 / 1;
     overflow: hidden;
     border-radius: 8px;
-    background: #f3f4f6;
+    background: var(--color-surface-raised, #f5f5f5);
 }
 
 .ds-card__img img {
@@ -15750,7 +15750,7 @@ body.pdm-sheet-open {
 }
 
 .ds-card__overlay-btn:hover {
-    background: #fff;
+    background: var(--color-surface, #ffffff);
 }
 
 .ds-card__body {
@@ -15889,7 +15889,7 @@ body.pdm-sheet-open {
     border-radius: 12px;
     font-size: 12px;
     font-weight: 500;
-    background: #f3f4f6;
+    background: var(--color-surface-raised, #f5f5f5);
     color: var(--color-text-muted, #666666);
     border: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     cursor: pointer;
@@ -16026,7 +16026,7 @@ body.pdm-sheet-open {
 
 .ds-modal__dialog {
     position: relative;
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     border-radius: 12px;
     width: 480px;
     max-width: 90vw;
@@ -16064,7 +16064,7 @@ body.pdm-sheet-open {
 }
 
 .ds-modal__close:hover {
-    background: #f3f4f6;
+    background: var(--color-surface-raised, #f5f5f5);
     color: var(--color-text-body, #333333);
 }
 
@@ -16120,7 +16120,7 @@ body.pdm-sheet-open {
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     position: absolute;
     top: 2px;
     left: 2px;
@@ -16163,7 +16163,7 @@ body.pdm-sheet-open {
     font-size: 14px;
     font-weight: 500;
     border: 1px solid var(--color-border-medium, #d1d5db);
-    background: #fff;
+    background: var(--color-surface, #ffffff);
     color: var(--color-text-body, #333333);
     cursor: pointer;
     transition: all 0.15s;
