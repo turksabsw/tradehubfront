@@ -21,21 +21,21 @@ function renderVariantSection(variant: ProductVariant, unitPrice: number): strin
   if (variant.type === 'color') {
     const firstAvailable = variant.options.find(o => o.available) || variant.options[0];
     return `
-      <div class="cart-variant-section">
-        <div class="cart-variant-label">${variant.label}: <span id="cart-selected-color">${firstAvailable.label}</span></div>
-        <div class="cart-color-grid">
+      <div class="cart-variant-section mb-5 lg:max-lg:mb-4">
+        <div class="cart-variant-label flex gap-2 text-sm font-semibold text-secondary-900 mb-2 lg:max-lg:text-[13px]">${variant.label}: <span id="cart-selected-color" class="font-normal text-secondary-400">${firstAvailable.label}</span></div>
+        <div class="cart-color-grid flex flex-wrap gap-2.5 mt-2 lg:max-lg:gap-2">
           ${variant.options.map((opt, i) => `
             <button
               type="button"
-              class="cart-color-grid-item ${i === 0 && opt.available ? 'active' : ''} ${!opt.available ? 'disabled' : ''}"
+              class="cart-color-grid-item relative w-16 h-16 border-2 border-border-default rounded-[10px] overflow-visible cursor-pointer bg-surface p-0 transition-[border-color] duration-150 hover:not-disabled:border-primary-400 lg:max-lg:w-12 lg:max-lg:h-12 ${i === 0 && opt.available ? 'active !border-primary-500' : ''} ${!opt.available ? 'disabled opacity-35 pointer-events-none' : ''}"
               data-variant="color"
               data-value="${opt.id}"
               data-label="${opt.label}"
               data-color="${opt.value}"
               ${opt.available ? '' : 'disabled'}
             >
-              ${opt.thumbnail ? `<img src="${opt.thumbnail}" alt="${opt.label}">` : `<div class="cart-color-swatch" style="background:${opt.value}"></div>`}
-              <span class="cart-color-badge hidden">x0</span>
+              ${opt.thumbnail ? `<img class="w-full h-full object-cover block rounded-lg" src="${opt.thumbnail}" alt="${opt.label}">` : `<div class="cart-color-swatch w-full h-full rounded-lg" style="background:${opt.value}"></div>`}
+              <span class="cart-color-badge absolute -top-2 -right-2 bg-error-500 text-white text-[11px] font-bold px-1.5 py-0.5 rounded-[10px] min-w-[22px] text-center leading-[1.3] pointer-events-none z-[1] hidden">x0</span>
             </button>
           `).join('')}
         </div>
@@ -43,17 +43,17 @@ function renderVariantSection(variant: ProductVariant, unitPrice: number): strin
   }
 
   return `
-    <div class="cart-variant-section">
-      <div class="cart-variant-label">${variant.label}</div>
-      <div class="cart-size-rows">
+    <div class="cart-variant-section mb-5 lg:max-lg:mb-4">
+      <div class="cart-variant-label flex gap-2 text-sm font-semibold text-secondary-900 mb-2 lg:max-lg:text-[13px]">${variant.label}</div>
+      <div class="cart-size-rows flex flex-col gap-0 mt-1">
         ${variant.options.map(opt => `
-          <div class="cart-size-row ${!opt.available ? 'disabled' : ''}" data-variant="${variant.type}" data-value="${opt.id}" data-label="${opt.label}">
-            <span class="cart-size-row-pill">${opt.label}</span>
-            <span class="cart-size-row-price">$${unitPrice.toFixed(2)}</span>
-            <div class="cart-size-row-qty">
-              <button type="button" class="cart-size-row-btn cart-size-minus" ${!opt.available ? 'disabled' : ''}>&minus;</button>
-              <input type="number" class="cart-size-row-input" value="0" min="0" ${!opt.available ? 'disabled' : ''}>
-              <button type="button" class="cart-size-row-btn cart-size-plus" ${!opt.available ? 'disabled' : ''}>+</button>
+          <div class="cart-size-row flex items-center gap-3 py-2.5 border-b border-[#f0f0f0] last:border-b-0 lg:max-lg:py-2 ${!opt.available ? 'disabled opacity-35 pointer-events-none' : ''}" data-variant="${variant.type}" data-value="${opt.id}" data-label="${opt.label}">
+            <span class="cart-size-row-pill inline-flex items-center justify-center px-3.5 py-1.5 border border-border-default rounded-md text-[13px] font-medium text-secondary-900 bg-surface whitespace-nowrap min-w-[70px]">${opt.label}</span>
+            <span class="cart-size-row-price text-sm font-semibold text-secondary-900 whitespace-nowrap ml-auto lg:max-lg:text-[13px]">$${unitPrice.toFixed(2)}</span>
+            <div class="cart-size-row-qty flex items-center shrink-0">
+              <button type="button" class="cart-size-row-btn cart-size-minus w-[30px] h-[30px] flex items-center justify-center border border-border-default bg-surface text-[15px] text-secondary-900 cursor-pointer transition-colors hover:bg-surface-raised disabled:opacity-35 disabled:cursor-not-allowed rounded-l-[15px] lg:max-lg:w-7 lg:max-lg:h-7 lg:max-lg:text-sm" ${!opt.available ? 'disabled' : ''}>&minus;</button>
+              <input type="number" class="cart-size-row-input w-9 h-[30px] text-center border-y border-border-default border-x-0 text-[13px] font-semibold text-secondary-900 bg-transparent outline-none appearance-textfield lg:max-lg:h-7" value="0" min="0" ${!opt.available ? 'disabled' : ''}>
+              <button type="button" class="cart-size-row-btn cart-size-plus w-[30px] h-[30px] flex items-center justify-center border border-border-default bg-surface text-[15px] text-secondary-900 cursor-pointer transition-colors hover:bg-surface-raised disabled:opacity-35 disabled:cursor-not-allowed rounded-r-[15px] lg:max-lg:w-7 lg:max-lg:h-7 lg:max-lg:text-sm" ${!opt.available ? 'disabled' : ''}>+</button>
             </div>
           </div>
         `).join('')}
@@ -76,12 +76,12 @@ export function CartDrawer(): string {
   const perPiece = grandTotal / p.moq;
 
   return `
-    <div class="cart-drawer-overlay" id="cart-drawer-overlay">
-      <div class="cart-drawer" id="cart-drawer">
+    <div class="cart-drawer-overlay fixed inset-0 bg-black/50 z-[var(--z-backdrop,40)] opacity-0 pointer-events-none transition-opacity duration-300" id="cart-drawer-overlay">
+      <div class="cart-drawer fixed top-0 right-0 h-full w-[420px] max-w-full bg-surface z-[var(--z-modal,50)] shadow-[-4px_0_24px_rgba(0,0,0,0.15)] flex flex-col translate-x-full transition-transform duration-300" id="cart-drawer">
         <!-- Header -->
-        <div class="cart-drawer-header">
-          <h3>Varyasyon ve miktar seçin</h3>
-          <button type="button" class="cart-drawer-close" id="cart-drawer-close">
+        <div class="cart-drawer-header flex justify-between items-center px-6 py-5 border-b border-border-default shrink-0">
+          <h3 class="text-lg font-semibold text-secondary-900">Varyasyon ve miktar seçin</h3>
+          <button type="button" class="cart-drawer-close w-8 h-8 flex items-center justify-center border-none bg-transparent rounded-full text-secondary-400 cursor-pointer transition-colors hover:bg-surface-raised hover:text-secondary-900" id="cart-drawer-close">
             <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
             </svg>
@@ -89,17 +89,17 @@ export function CartDrawer(): string {
         </div>
 
         <!-- Body -->
-        <div class="cart-drawer-body">
+        <div class="cart-drawer-body overflow-y-auto flex-1 px-6 py-5">
           <!-- Price Tiers -->
-          <div class="cart-tier-row">
+          <div class="cart-tier-row flex gap-6 pb-4 mb-5 border-b border-border-default">
             ${p.priceTiers.map((tier, i) => {
               const qtyLabel = tier.maxQty
                 ? `${tier.minQty} - ${tier.maxQty} ${p.unit}`
                 : `\u2265 ${tier.minQty} ${p.unit}`;
               return `
-                <div class="cart-tier-item ${i === 0 ? 'active' : ''}" data-tier-index="${i}">
-                  <span class="cart-tier-qty">${qtyLabel}</span>
-                  <span class="cart-tier-price">$${tier.price.toFixed(2)}</span>
+                <div class="cart-tier-item flex flex-col cursor-pointer ${i === 0 ? 'active' : ''}" data-tier-index="${i}">
+                  <span class="cart-tier-qty text-xs text-secondary-400 mb-1">${qtyLabel}</span>
+                  <span class="cart-tier-price text-[22px] font-bold text-secondary-900 transition-colors">${'$'}${tier.price.toFixed(2)}</span>
                 </div>`;
             }).join('')}
           </div>
@@ -108,63 +108,63 @@ export function CartDrawer(): string {
           ${p.variants.map(v => renderVariantSection(v, firstTierPrice)).join('')}
 
           <!-- Price + Quantity Row -->
-          <div style="display:flex;align-items:center;justify-content:space-between;">
-            <span class="cart-current-price" id="cart-current-price">$${firstTierPrice.toFixed(2)}</span>
-            <div class="cart-qty-stepper">
-              <button type="button" class="cart-qty-btn" id="cart-qty-minus">&minus;</button>
-              <input type="number" class="cart-qty-input" id="cart-qty-input" value="${p.moq}" min="1">
-              <button type="button" class="cart-qty-btn" id="cart-qty-plus">+</button>
+          <div class="flex items-center justify-between">
+            <span class="cart-current-price text-xl font-bold text-primary-500" id="cart-current-price">${'$'}${firstTierPrice.toFixed(2)}</span>
+            <div class="cart-qty-stepper flex items-center mt-2">
+              <button type="button" class="cart-qty-btn w-9 h-9 flex items-center justify-center border border-border-default bg-surface text-lg text-secondary-900 cursor-pointer transition-colors hover:bg-surface-raised disabled:opacity-35 disabled:cursor-not-allowed rounded-l-md" id="cart-qty-minus">&minus;</button>
+              <input type="number" class="cart-qty-input w-[60px] h-9 text-center border-y border-border-default border-x-0 text-sm font-semibold text-secondary-900 bg-transparent outline-none appearance-textfield" id="cart-qty-input" value="${p.moq}" min="1">
+              <button type="button" class="cart-qty-btn w-9 h-9 flex items-center justify-center border border-border-default bg-surface text-lg text-secondary-900 cursor-pointer transition-colors hover:bg-surface-raised disabled:opacity-35 disabled:cursor-not-allowed rounded-r-md" id="cart-qty-plus">+</button>
             </div>
           </div>
 
           <!-- Shipping -->
-          <div class="cart-shipping-card">
-            <div class="cart-shipping-title">
+          <div class="cart-shipping-card border border-border-default rounded-lg p-4 mb-5">
+            <div class="cart-shipping-title flex items-center justify-between text-sm font-semibold text-secondary-900 mb-3">
               <span id="cart-ship-method">${p.shipping[0].method}</span>
-              <a href="javascript:void(0)" id="cart-ship-change">Değiştir ›</a>
+              <a href="javascript:void(0)" id="cart-ship-change" class="text-primary-500 text-[13px] font-medium no-underline cursor-pointer">Değiştir ›</a>
             </div>
-            <div class="cart-shipping-detail" id="cart-ship-detail">
+            <div class="cart-shipping-detail text-[13px] text-secondary-400 mt-0.5" id="cart-ship-detail">
               Kargo: ${p.shipping[0].cost} · ${p.shipping[0].estimatedDays}
             </div>
           </div>
         </div>
 
         <!-- Footer -->
-        <div class="cart-drawer-footer">
+        <div class="cart-drawer-footer px-6 py-4 border-t border-border-default shrink-0 bg-surface">
           <!-- Collapsed view (default) -->
-          <div class="cart-footer-collapsed" id="cart-footer-collapsed">
-            <span class="cart-subtotal-label"><strong>Ara Toplam</strong></span>
-            <div class="cart-subtotal-right">
-              <span class="cart-subtotal-price" id="cart-subtotal">$${grandTotal.toFixed(2)}</span>
-              <span class="cart-subtotal-per" id="cart-per-piece">($${perPiece.toFixed(2)}/adet)</span>
-              <svg class="cart-chevron" width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M14.77 12.79a.75.75 0 01-1.06-.02L10 8.832 6.29 12.77a.75.75 0 11-1.08-1.04l4.25-4.5a.75.75 0 011.08 0l4.25 4.5a.75.75 0 01-.02 1.06z" clip-rule="evenodd"/></svg>
+          <div class="cart-footer-collapsed flex justify-between items-center mb-3 cursor-pointer select-none" id="cart-footer-collapsed">
+            <span class="cart-subtotal-label text-sm font-medium text-secondary-900"><strong>Ara Toplam</strong></span>
+            <div class="cart-subtotal-right flex items-center gap-1">
+              <span class="cart-subtotal-price text-base font-bold text-primary-500" id="cart-subtotal">${'$'}${grandTotal.toFixed(2)}</span>
+              <span class="cart-subtotal-per text-xs text-secondary-400" id="cart-per-piece">($${perPiece.toFixed(2)}/adet)</span>
+              <svg class="cart-chevron text-secondary-400 shrink-0 ml-1" width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M14.77 12.79a.75.75 0 01-1.06-.02L10 8.832 6.29 12.77a.75.75 0 11-1.08-1.04l4.25-4.5a.75.75 0 011.08 0l4.25 4.5a.75.75 0 01-.02 1.06z" clip-rule="evenodd"/></svg>
             </div>
           </div>
 
           <!-- Expanded view (hidden by default) -->
-          <div class="cart-footer-expanded cart-footer-hidden" id="cart-footer-expanded">
-            <div class="cart-breakdown-header" id="cart-breakdown-toggle">
+          <div class="cart-footer-expanded cart-footer-hidden mb-3" id="cart-footer-expanded">
+            <div class="cart-breakdown-header flex justify-center items-center gap-1.5 pb-3 border-b border-border-default mb-3 cursor-pointer select-none text-sm font-semibold text-secondary-900" id="cart-breakdown-toggle">
               <span>Fiyat</span>
-              <svg class="cart-chevron" width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
+              <svg class="cart-chevron text-secondary-400 shrink-0 ml-1" width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
             </div>
-            <div class="cart-breakdown-row">
+            <div class="cart-breakdown-row flex justify-between items-center py-1.5 text-[13px] text-secondary-400">
               <span>Ürün toplamı (<span id="cart-variation-info">1 varyasyon ${p.moq} adet</span>)</span>
-              <span id="cart-item-subtotal">$${itemTotal.toFixed(2)}</span>
+              <span id="cart-item-subtotal">${'$'}${itemTotal.toFixed(2)}</span>
             </div>
-            <div class="cart-breakdown-row">
+            <div class="cart-breakdown-row flex justify-between items-center py-1.5 text-[13px] text-secondary-400">
               <span>Kargo toplamı</span>
               <span id="cart-shipping-total">${p.shipping[0].cost}</span>
             </div>
-            <div class="cart-breakdown-row cart-breakdown-total">
+            <div class="cart-breakdown-row cart-breakdown-total flex justify-between items-center py-1.5 text-sm text-secondary-900 pt-2.5 mt-1 border-t border-border-default">
               <span><strong>Ara Toplam</strong></span>
               <div>
-                <span class="cart-subtotal-price" id="cart-total-price">$${grandTotal.toFixed(2)}</span>
-                <span class="cart-subtotal-per" id="cart-total-per">($${perPiece.toFixed(2)}/adet)</span>
+                <span class="cart-subtotal-price text-base font-bold text-primary-500" id="cart-total-price">${'$'}${grandTotal.toFixed(2)}</span>
+                <span class="cart-subtotal-per text-xs text-secondary-400" id="cart-total-per">($${perPiece.toFixed(2)}/adet)</span>
               </div>
             </div>
           </div>
 
-          <button type="button" class="cart-add-btn" id="cart-add-btn">Sepete Ekle</button>
+          <button type="button" class="cart-add-btn w-full h-12 bg-primary-500 text-white text-base font-semibold border-none rounded-3xl cursor-pointer transition-[filter,transform] hover:brightness-[0.92] active:scale-[0.98]" id="cart-add-btn">Sepete Ekle</button>
         </div>
       </div>
     </div>
