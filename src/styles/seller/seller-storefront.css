@@ -61,8 +61,7 @@
 }
 
 .store-hero__dot--active {
-  background: #f97316;
-  /* var(--store-accent) */
+  background: var(--color-store-accent, #cc9900);
   transform: scale(1.2);
 }
 
@@ -157,7 +156,7 @@
 }
 
 .certificates__dots .swiper-pagination-bullet-active {
-  background: #f97316;
+  background: var(--color-store-accent, #cc9900);
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -341,7 +340,7 @@
 }
 
 .category-grid__card:focus-visible {
-  outline: 2px solid var(--color-store-accent, #f97316);
+  outline: 2px solid var(--color-store-accent, #cc9900);
   outline-offset: 2px;
 }
 
@@ -380,13 +379,13 @@
 }
 
 .hot-products__buy-btn:hover {
-  background-color: var(--color-store-accent-hover, #ea580c);
+  background-color: var(--color-store-accent-hover, #b38600);
   box-shadow: var(--shadow-md, 0 4px 6px rgba(0, 0, 0, 0.07));
 }
 
 .hot-products__buy-btn:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px var(--color-store-accent, #f97316), 0 0 0 4px #ffffff;
+  box-shadow: 0 0 0 2px var(--color-store-accent, #cc9900), 0 0 0 4px #ffffff;
 }
 
 .hot-products__image-wrapper {
@@ -552,7 +551,7 @@
 }
 
 .contact-form__send:hover {
-  background-color: var(--color-store-accent-hover, #ea580c);
+  background-color: var(--color-store-accent-hover, #b38600);
 }
 
 .contact-form__send:active {
@@ -561,7 +560,7 @@
 
 .contact-form__send:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px var(--color-store-accent, #f97316), 0 0 0 4px #ffffff;
+  box-shadow: 0 0 0 2px var(--color-store-accent, #cc9900), 0 0 0 4px #ffffff;
 }
 
 /* Dark mode overrides — C12 */
@@ -592,7 +591,7 @@
 }
 
 :where(.dark, .dark *) .store-hero__dot--active {
-  background: var(--color-store-accent, #f97316);
+  background: var(--color-store-accent, #cc9900);
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -642,7 +641,7 @@
 }
 
 .company-profile__main-tab:focus-visible {
-  box-shadow: 0 0 0 2px var(--color-store-accent, #f97316);
+  box-shadow: 0 0 0 2px var(--color-store-accent, #cc9900);
 }
 
 .company-profile__prod-cat.active {
@@ -662,6 +661,6 @@
 
 .company-profile__contact-btn:focus-visible,
 .company-profile__inquiry-btn:focus-visible {
-  outline: 2px solid var(--color-store-accent, #f97316);
+  outline: 2px solid var(--color-store-accent, #cc9900);
   outline-offset: 2px;
 }
