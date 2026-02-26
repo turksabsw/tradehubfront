@@ -35,12 +35,12 @@ const EMPTY_RECEIPT_ICON = `
 
 function renderAllOrders(): string {
   return `
-    <div class="orders-page__header">
-      <h1 class="orders-page__title">Siparişlerim</h1>
-      <button class="orders-page__upload-btn">Havale dekontu yükle</button>
+    <div class="flex items-center justify-between px-7 pt-6 pb-5 border-b border-[var(--color-border-light,#f0f0f0)]">
+      <h1 class="text-[22px] font-bold text-[var(--color-text-heading,#111827)]">Siparişlerim</h1>
+      <button class="orders-page__upload-btn px-5 py-2 text-sm text-[var(--color-text-body,#333)] bg-[var(--color-surface,#fff)] border border-[var(--color-border-medium,#d1d5db)] rounded-[20px] cursor-pointer whitespace-nowrap transition-colors hover:border-[var(--color-text-placeholder)] hover:bg-[var(--color-surface-muted,#fafafa)]">Havale dekontu yükle</button>
     </div>
-    <div class="orders-page__empty">
-      <div class="orders-page__empty-illustration">
+    <div class="flex-1 flex flex-col items-center justify-center gap-3 px-10 py-[60px] text-center">
+      <div class="w-[120px] h-[100px] mb-2">
         <svg width="120" height="100" viewBox="0 0 120 100" fill="none">
           <rect x="25" y="10" width="60" height="75" rx="6" fill="#F3F4F6" stroke="#D1D5DB" stroke-width="1.5"/>
           <rect x="40" y="4" width="30" height="12" rx="4" fill="#E5E7EB" stroke="#D1D5DB" stroke-width="1"/>
@@ -54,51 +54,51 @@ function renderAllOrders(): string {
           <circle cx="55" cy="47" r="40" fill="none" stroke="#F0F0F0" stroke-width="1" stroke-dasharray="4 4" opacity="0.6"/>
         </svg>
       </div>
-      <h3 class="orders-page__empty-title">Henüz siparişiniz bulunmamaktadır</h3>
-      <p class="orders-page__empty-desc">Tedarik etmeye başlamak için ana sayfaya gidin veya aşağıya tıklayın</p>
-      <a href="/" class="orders-page__empty-cta">Tedarik etmeye başla</a>
+      <h3 class="text-base font-bold text-[var(--color-text-heading,#111827)]">Henüz siparişiniz bulunmamaktadır</h3>
+      <p class="text-sm text-[var(--color-text-muted,#666)] max-w-[400px]">Tedarik etmeye başlamak için ana sayfaya gidin veya aşağıya tıklayın</p>
+      <a href="/" class="inline-block px-8 py-2.5 text-sm text-[var(--color-text-body,#333)] border border-[var(--color-text-body)] rounded-[24px] no-underline mt-2 transition-colors hover:bg-[var(--color-text-heading)] hover:text-[var(--color-surface)]">Tedarik etmeye başla</a>
     </div>
   `;
 }
 
 function renderRefunds(): string {
   return `
-    <div class="orders-page__header">
-      <h1 class="orders-page__title">Satış sonrası işlemler ve para iadeleri</h1>
+    <div class="flex items-center justify-between px-7 pt-6 pb-5 border-b border-[var(--color-border-light,#f0f0f0)]">
+      <h1 class="text-[22px] font-bold text-[var(--color-text-heading,#111827)]">Satış sonrası işlemler ve para iadeleri</h1>
     </div>
-    <div class="os-tabs" data-tabgroup="refunds">
-      <button class="os-tabs__tab os-tabs__tab--active" data-tab="refund-returns">Para İadeleri</button>
-      <button class="os-tabs__tab" data-tab="refund-tax">Vergi iadeleri</button>
-      <button class="os-tabs__tab" data-tab="refund-after">Satış sonrası hizmetler</button>
+    <div class="os-tabs flex border-b border-[var(--color-border-default,#e5e5e5)] px-7" data-tabgroup="refunds">
+      <button class="os-tabs__tab os-tabs__tab--active py-3 px-4 text-sm bg-transparent border-none border-b-2 border-b-transparent cursor-pointer whitespace-nowrap transition-colors" data-tab="refund-returns">Para İadeleri</button>
+      <button class="os-tabs__tab py-3 px-4 text-sm bg-transparent border-none border-b-2 border-b-transparent cursor-pointer whitespace-nowrap transition-colors text-[var(--color-text-muted,#666)]" data-tab="refund-tax">Vergi iadeleri</button>
+      <button class="os-tabs__tab py-3 px-4 text-sm bg-transparent border-none border-b-2 border-b-transparent cursor-pointer whitespace-nowrap transition-colors text-[var(--color-text-muted,#666)]" data-tab="refund-after">Satış sonrası hizmetler</button>
     </div>
 
     <!-- Tab: Para İadeleri (empty) -->
     <div class="os-tab-content os-tab-content--active" data-content="refund-returns">
-      <div class="os-empty">
+      <div class="flex flex-col items-center justify-center gap-3 px-10 py-20 text-center">
         ${EMPTY_RECEIPT_ICON}
-        <p class="os-empty__text">Şu anda satış sonrası servis talebi yok</p>
+        <p class="text-sm text-[var(--color-text-muted,#666)]">Şu anda satış sonrası servis talebi yok</p>
       </div>
     </div>
 
     <!-- Tab: Vergi iadeleri (table) -->
     <div class="os-tab-content" data-content="refund-tax">
-      <div class="os-table-wrap">
-        <table class="os-table">
+      <div class="px-7">
+        <table class="os-table w-full border-collapse border border-[var(--color-border-default,#e5e5e5)] rounded-md overflow-hidden">
           <thead>
             <tr>
-              <th>Sipariş numarası</th>
-              <th>Vaka numarası</th>
-              <th>Başvuru Tarihi</th>
-              <th>Para iadesi tutarı</th>
-              <th>Durum</th>
-              <th>Banka iade durumu</th>
+              <th class="px-4 py-3 text-[13px] font-semibold text-[var(--color-text-body,#333)] bg-[var(--color-surface-muted,#fafafa)] border-b border-[var(--color-border-default,#e5e5e5)] text-left whitespace-nowrap">Sipariş numarası</th>
+              <th class="px-4 py-3 text-[13px] font-semibold text-[var(--color-text-body,#333)] bg-[var(--color-surface-muted,#fafafa)] border-b border-[var(--color-border-default,#e5e5e5)] text-left whitespace-nowrap">Vaka numarası</th>
+              <th class="px-4 py-3 text-[13px] font-semibold text-[var(--color-text-body,#333)] bg-[var(--color-surface-muted,#fafafa)] border-b border-[var(--color-border-default,#e5e5e5)] text-left whitespace-nowrap">Başvuru Tarihi</th>
+              <th class="px-4 py-3 text-[13px] font-semibold text-[var(--color-text-body,#333)] bg-[var(--color-surface-muted,#fafafa)] border-b border-[var(--color-border-default,#e5e5e5)] text-left whitespace-nowrap">Para iadesi tutarı</th>
+              <th class="px-4 py-3 text-[13px] font-semibold text-[var(--color-text-body,#333)] bg-[var(--color-surface-muted,#fafafa)] border-b border-[var(--color-border-default,#e5e5e5)] text-left whitespace-nowrap">Durum</th>
+              <th class="px-4 py-3 text-[13px] font-semibold text-[var(--color-text-body,#333)] bg-[var(--color-surface-muted,#fafafa)] border-b border-[var(--color-border-default,#e5e5e5)] text-left whitespace-nowrap">Banka iade durumu</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td colspan="6" class="os-table__empty">
+              <td colspan="6" class="text-center !py-[60px] px-4">
                 ${EMPTY_RECEIPT_ICON}
-                <p>Şu anda satış sonrası servis talebi yok</p>
+                <p class="text-sm text-[var(--color-text-muted,#666)]">Şu anda satış sonrası servis talebi yok</p>
               </td>
             </tr>
           </tbody>
@@ -108,9 +108,9 @@ function renderRefunds(): string {
 
     <!-- Tab: Satış sonrası hizmetler (empty) -->
     <div class="os-tab-content" data-content="refund-after">
-      <div class="os-empty">
+      <div class="flex flex-col items-center justify-center gap-3 px-10 py-20 text-center">
         ${EMPTY_RECEIPT_ICON}
-        <p class="os-empty__text">Şu anda satış sonrası servis talebi yok</p>
+        <p class="text-sm text-[var(--color-text-muted,#666)]">Şu anda satış sonrası servis talebi yok</p>
       </div>
     </div>
   `;
@@ -118,24 +118,24 @@ function renderRefunds(): string {
 
 function renderReviews(): string {
   return `
-    <div class="orders-page__header">
-      <h1 class="orders-page__title">Değerlendirmelerim</h1>
-      <div class="os-header-right">
-        <span class="os-header-right__label">Puanlama Kuralları</span>
+    <div class="flex items-center justify-between px-7 pt-6 pb-5 border-b border-[var(--color-border-light,#f0f0f0)]">
+      <h1 class="text-[22px] font-bold text-[var(--color-text-heading,#111827)]">Değerlendirmelerim</h1>
+      <div class="flex items-center gap-1">
+        <span class="text-[13px] text-[var(--color-text-muted,#666)]">Puanlama Kuralları</span>
         <svg class="w-4 h-4" fill="none" stroke="#999" stroke-width="1.5" viewBox="0 0 24 24">
           <circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 16v-4m0-4h.01"/>
         </svg>
       </div>
     </div>
-    <div class="os-tabs" data-tabgroup="reviews">
-      <button class="os-tabs__tab os-tabs__tab--active os-tabs__tab--orange" data-tab="review-pending">Bekleyen değerlendirmeler (0)</button>
-      <button class="os-tabs__tab" data-tab="review-done">Değerlendirilenler (0)</button>
+    <div class="os-tabs flex border-b border-[var(--color-border-default,#e5e5e5)] px-7" data-tabgroup="reviews">
+      <button class="os-tabs__tab os-tabs__tab--active os-tabs__tab--orange py-3 px-4 text-sm bg-transparent border-none border-b-2 border-b-transparent cursor-pointer whitespace-nowrap transition-colors" data-tab="review-pending">Bekleyen değerlendirmeler (0)</button>
+      <button class="os-tabs__tab py-3 px-4 text-sm bg-transparent border-none border-b-2 border-b-transparent cursor-pointer whitespace-nowrap transition-colors text-[var(--color-text-muted,#666)]" data-tab="review-done">Değerlendirilenler (0)</button>
     </div>
 
-    <div class="os-reviews-toolbar">
-      <div class="os-reviews-toolbar__search">
-        <input type="text" placeholder="Sipariş numarası, E-posta, Hesap" class="os-reviews-toolbar__input" />
-        <button class="os-reviews-toolbar__btn" aria-label="Ara">
+    <div class="flex justify-end px-7 py-3">
+      <div class="flex border border-[var(--color-border-medium,#d1d5db)] rounded overflow-hidden">
+        <input type="text" placeholder="Sipariş numarası, E-posta, Hesap" class="os-reviews-toolbar__input w-[240px] h-8 px-2.5 text-[13px] border-none outline-none text-[var(--color-text-body,#333)]" />
+        <button class="flex items-center justify-center w-8 h-8 border-none border-l border-l-[var(--color-border-medium,#d1d5db)] bg-[var(--color-surface-muted,#fafafa)] text-[var(--color-text-muted,#666)] cursor-pointer hover:bg-[var(--color-border-light)] hover:text-[var(--color-text-heading,#111827)]" aria-label="Ara">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <circle cx="11" cy="11" r="8"/><path stroke-linecap="round" d="m21 21-4.35-4.35"/>
           </svg>
@@ -144,7 +144,7 @@ function renderReviews(): string {
     </div>
 
     <div class="os-tab-content os-tab-content--active" data-content="review-pending">
-      <div class="os-empty">
+      <div class="flex flex-col items-center justify-center gap-3 px-10 py-20 text-center">
         <svg width="100" height="80" viewBox="0 0 100 80" fill="none">
           <rect x="10" y="10" width="50" height="55" rx="4" fill="#FFECD2" stroke="#F7A84B" stroke-width="1"/>
           <rect x="15" y="18" width="40" height="4" rx="2" fill="#F7A84B" opacity="0.3"/>
@@ -152,14 +152,14 @@ function renderReviews(): string {
           <circle cx="72" cy="38" r="8" fill="#FBBF24"/>
           <rect x="66" y="48" width="12" height="20" rx="3" fill="#1E3A5F"/>
         </svg>
-        <p class="os-empty__text">Bekleyen yorum yok</p>
+        <p class="text-sm text-[var(--color-text-muted,#666)]">Bekleyen yorum yok</p>
       </div>
     </div>
 
     <div class="os-tab-content" data-content="review-done">
-      <div class="os-empty">
+      <div class="flex flex-col items-center justify-center gap-3 px-10 py-20 text-center">
         ${EMPTY_RECEIPT_ICON}
-        <p class="os-empty__text">Değerlendirme bulunamadı</p>
+        <p class="text-sm text-[var(--color-text-muted,#666)]">Değerlendirme bulunamadı</p>
       </div>
     </div>
   `;
@@ -167,59 +167,59 @@ function renderReviews(): string {
 
 function renderCoupons(): string {
   return `
-    <div class="orders-page__header">
-      <h1 class="orders-page__title">Kupon ve krediler</h1>
+    <div class="flex items-center justify-between px-7 pt-6 pb-5 border-b border-[var(--color-border-light,#f0f0f0)]">
+      <h1 class="text-[22px] font-bold text-[var(--color-text-heading,#111827)]">Kupon ve krediler</h1>
     </div>
-    <div class="os-tabs" data-tabgroup="coupons">
-      <button class="os-tabs__tab os-tabs__tab--active" data-tab="coupons-list">Kuponlar</button>
-      <button class="os-tabs__tab" data-tab="coupons-credit">Kredi</button>
+    <div class="os-tabs flex border-b border-[var(--color-border-default,#e5e5e5)] px-7" data-tabgroup="coupons">
+      <button class="os-tabs__tab os-tabs__tab--active py-3 px-4 text-sm bg-transparent border-none border-b-2 border-b-transparent cursor-pointer whitespace-nowrap transition-colors" data-tab="coupons-list">Kuponlar</button>
+      <button class="os-tabs__tab py-3 px-4 text-sm bg-transparent border-none border-b-2 border-b-transparent cursor-pointer whitespace-nowrap transition-colors text-[var(--color-text-muted,#666)]" data-tab="coupons-credit">Kredi</button>
     </div>
 
     <!-- Tab: Kuponlar -->
     <div class="os-tab-content os-tab-content--active" data-content="coupons-list">
-      <div class="os-pill-filters">
-        <button class="os-pill os-pill--active">Mevcut</button>
-        <button class="os-pill">Kullanıldı</button>
-        <button class="os-pill">Süresi doldu</button>
+      <div class="os-pill-filters flex gap-2 px-7 py-4">
+        <button class="os-pill os-pill--active px-4 py-1.5 text-[13px] bg-[var(--color-surface,#fff)] border border-[var(--color-border-medium,#d1d5db)] rounded-[20px] cursor-pointer transition-all">Mevcut</button>
+        <button class="os-pill px-4 py-1.5 text-[13px] text-[var(--color-text-muted,#666)] bg-[var(--color-surface,#fff)] border border-[var(--color-border-medium,#d1d5db)] rounded-[20px] cursor-pointer transition-all">Kullanıldı</button>
+        <button class="os-pill px-4 py-1.5 text-[13px] text-[var(--color-text-muted,#666)] bg-[var(--color-surface,#fff)] border border-[var(--color-border-medium,#d1d5db)] rounded-[20px] cursor-pointer transition-all">Süresi doldu</button>
       </div>
-      <div class="os-empty os-empty--short">
-        <p class="os-empty__text">Kupon Yok</p>
+      <div class="flex flex-col items-center justify-center gap-3 px-10 py-[60px] text-center">
+        <p class="text-sm text-[var(--color-text-muted,#666)]">Kupon Yok</p>
       </div>
     </div>
 
     <!-- Tab: Kredi -->
     <div class="os-tab-content" data-content="coupons-credit">
-      <div class="os-credit-card">
-        <p class="os-credit-card__label">Toplam kredi bakiyesi</p>
-        <p class="os-credit-card__amount">0.00</p>
-        <p class="os-credit-card__note">1 kredi 1 USD'ye eşittir <a href="#terms" class="os-credit-card__link">Hükümler ve koşullar</a></p>
+      <div class="mx-7 my-5 p-5 border border-[var(--color-border-default,#e5e5e5)] rounded-lg">
+        <p class="text-sm text-[var(--color-text-body,#333)] mb-2">Toplam kredi bakiyesi</p>
+        <p class="text-[28px] font-bold text-[var(--color-text-heading,#111827)] mb-2">0.00</p>
+        <p class="text-[13px] text-[var(--color-text-muted,#666)]">1 kredi 1 USD'ye eşittir <a href="#terms" class="text-[#2563EB] underline">Hükümler ve koşullar</a></p>
       </div>
 
-      <h3 class="os-section-title">Geçmiş</h3>
-      <div class="os-table-wrap">
-        <table class="os-table">
+      <h3 class="text-base font-bold text-[var(--color-text-heading,#111827)] px-7 pt-5 pb-3">Geçmiş</h3>
+      <div class="px-7">
+        <table class="os-table w-full border-collapse border border-[var(--color-border-default,#e5e5e5)] rounded-md overflow-hidden">
           <thead>
             <tr>
-              <th>İşlem</th>
-              <th>Ayrıntılar</th>
-              <th>Tarih (UTC-8)</th>
-              <th>Tutar</th>
+              <th class="px-4 py-3 text-[13px] font-semibold text-[var(--color-text-body,#333)] bg-[var(--color-surface-muted,#fafafa)] border-b border-[var(--color-border-default,#e5e5e5)] text-left whitespace-nowrap">İşlem</th>
+              <th class="px-4 py-3 text-[13px] font-semibold text-[var(--color-text-body,#333)] bg-[var(--color-surface-muted,#fafafa)] border-b border-[var(--color-border-default,#e5e5e5)] text-left whitespace-nowrap">Ayrıntılar</th>
+              <th class="px-4 py-3 text-[13px] font-semibold text-[var(--color-text-body,#333)] bg-[var(--color-surface-muted,#fafafa)] border-b border-[var(--color-border-default,#e5e5e5)] text-left whitespace-nowrap">Tarih (UTC-8)</th>
+              <th class="px-4 py-3 text-[13px] font-semibold text-[var(--color-text-body,#333)] bg-[var(--color-surface-muted,#fafafa)] border-b border-[var(--color-border-default,#e5e5e5)] text-left whitespace-nowrap">Tutar</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td colspan="4" class="os-table__empty-text">Henüz bir kayıt yok.</td>
+              <td colspan="4" class="text-center py-10 px-4 text-[13px] text-[var(--color-text-placeholder,#999)]">Henüz bir kayıt yok.</td>
             </tr>
           </tbody>
         </table>
       </div>
 
-      <div class="os-pagination">
-        <button class="os-pagination__btn" disabled>
+      <div class="flex items-center justify-end gap-2 px-7 py-4">
+        <button class="flex items-center justify-center w-8 h-8 border border-[var(--color-border-medium,#d1d5db)] rounded-full bg-[var(--color-surface,#fff)] text-[var(--color-text-muted,#666)] cursor-pointer disabled:opacity-40 disabled:cursor-default" disabled>
           <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M15 19l-7-7 7-7"/></svg>
         </button>
-        <span class="os-pagination__page os-pagination__page--active">1</span>
-        <button class="os-pagination__btn" disabled>
+        <span class="flex items-center justify-center w-8 h-8 text-[13px] text-[var(--color-text-heading,#111827)] border border-[#222] rounded-full font-semibold">1</span>
+        <button class="flex items-center justify-center w-8 h-8 border border-[var(--color-border-medium,#d1d5db)] rounded-full bg-[var(--color-surface,#fff)] text-[var(--color-text-muted,#666)] cursor-pointer disabled:opacity-40 disabled:cursor-default" disabled>
           <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M9 5l7 7-7 7"/></svg>
         </button>
       </div>
@@ -229,124 +229,124 @@ function renderCoupons(): string {
 
 function renderTaxInfo(): string {
   return `
-    <div class="orders-page__header">
-      <h1 class="orders-page__title">Vergi bilgileri</h1>
+    <div class="flex items-center justify-between px-7 pt-6 pb-5 border-b border-[var(--color-border-light,#f0f0f0)]">
+      <h1 class="text-[22px] font-bold text-[var(--color-text-heading,#111827)]">Vergi bilgileri</h1>
     </div>
-    <div class="os-tabs" data-tabgroup="tax">
-      <button class="os-tabs__tab os-tabs__tab--active" data-tab="tax-info-tab">Vergi Bilgileri</button>
-      <button class="os-tabs__tab" data-tab="tax-customs">Gümrük muayenesi bilgileri</button>
+    <div class="os-tabs flex border-b border-[var(--color-border-default,#e5e5e5)] px-7" data-tabgroup="tax">
+      <button class="os-tabs__tab os-tabs__tab--active py-3 px-4 text-sm bg-transparent border-none border-b-2 border-b-transparent cursor-pointer whitespace-nowrap transition-colors" data-tab="tax-info-tab">Vergi Bilgileri</button>
+      <button class="os-tabs__tab py-3 px-4 text-sm bg-transparent border-none border-b-2 border-b-transparent cursor-pointer whitespace-nowrap transition-colors text-[var(--color-text-muted,#666)]" data-tab="tax-customs">Gümrük muayenesi bilgileri</button>
     </div>
 
     <!-- Tab: Vergi Bilgileri -->
     <div class="os-tab-content os-tab-content--active" data-content="tax-info-tab">
-      <div class="os-info-card">
-        <div class="os-info-card__text">
-          <h4 class="os-info-card__title">KDV muafiyeti için</h4>
-          <p class="os-info-card__desc">Yeniden satış veya üretim için ürün satın alıyorsanız doğrulanması için vergi bilgilerinizi gönderin ve TradeHub.com'da vergiden muaf siparişler verin.</p>
+      <div class="flex items-center justify-between gap-6 px-7 py-5 border-b border-[var(--color-border-light,#f0f0f0)] max-md:flex-col max-md:items-start">
+        <div class="flex-1 min-w-0">
+          <h4 class="text-sm font-semibold text-[var(--color-text-heading,#111827)] mb-1.5">KDV muafiyeti için</h4>
+          <p class="text-[13px] text-[var(--color-text-muted,#666)] leading-normal">Yeniden satış veya üretim için ürün satın alıyorsanız doğrulanması için vergi bilgilerinizi gönderin ve TradeHub.com'da vergiden muaf siparişler verin.</p>
         </div>
-        <button class="os-info-card__btn" data-modal="pst-modal">Vergi muafiyeti ekleyin veya değiştirin</button>
+        <button class="os-info-card__btn px-5 py-2 text-[13px] text-[var(--color-text-body,#333)] bg-[var(--color-surface,#fff)] border border-[var(--color-border-medium,#d1d5db)] rounded-[20px] cursor-pointer whitespace-nowrap shrink-0 transition-colors hover:border-[#999]" data-modal="pst-modal">Vergi muafiyeti ekleyin veya değiştirin</button>
       </div>
 
-      <div class="os-info-card">
-        <div class="os-info-card__text">
-          <h4 class="os-info-card__title">AB/Norveç/Birleşik Krallık/İsviçre veya Avustralya/Yeni Zelanda/Singapur/Şili vergi bilgisi gönderimi</h4>
-          <p class="os-info-card__desc">Ticari satın alımlarda, doğrulanması için vergi bilgilerinizi göndererek TradeHub.com'da vergiden muaf siparişler verebilirsiniz.</p>
+      <div class="flex items-center justify-between gap-6 px-7 py-5 border-b border-[var(--color-border-light,#f0f0f0)] max-md:flex-col max-md:items-start">
+        <div class="flex-1 min-w-0">
+          <h4 class="text-sm font-semibold text-[var(--color-text-heading,#111827)] mb-1.5">AB/Norveç/Birleşik Krallık/İsviçre veya Avustralya/Yeni Zelanda/Singapur/Şili vergi bilgisi gönderimi</h4>
+          <p class="text-[13px] text-[var(--color-text-muted,#666)] leading-normal">Ticari satın alımlarda, doğrulanması için vergi bilgilerinizi göndererek TradeHub.com'da vergiden muaf siparişler verebilirsiniz.</p>
         </div>
-        <button class="os-info-card__btn" data-modal="vat-modal">Vergi bilgilerinizi ekleyin</button>
+        <button class="os-info-card__btn px-5 py-2 text-[13px] text-[var(--color-text-body,#333)] bg-[var(--color-surface,#fff)] border border-[var(--color-border-medium,#d1d5db)] rounded-[20px] cursor-pointer whitespace-nowrap shrink-0 transition-colors hover:border-[#999]" data-modal="vat-modal">Vergi bilgilerinizi ekleyin</button>
       </div>
 
-      <h3 class="os-section-title">Sıkça Sorulan Sorular</h3>
+      <h3 class="text-base font-bold text-[var(--color-text-heading,#111827)] px-7 pt-5 pb-3">Sıkça Sorulan Sorular</h3>
 
-      <div class="os-faq">
-        <div class="os-faq__grid">
-          <div class="os-faq__card">
-            <h5 class="os-faq__card-title">Vergi bilgilerim yoksa ne yapmalıyım?</h5>
-            <p class="os-faq__card-desc">Yerel vergi kurumunuzun web sitesini kontrol ederek vergi muafiyeti için uygunluk kriterlerinizi inceleyin.</p>
+      <div class="px-7 pb-7">
+        <div class="grid grid-cols-3 gap-4 mb-5 max-md:grid-cols-1">
+          <div class="p-5 border border-[var(--color-border-default,#e5e5e5)] rounded-lg">
+            <h5 class="text-sm font-semibold text-[var(--color-text-heading,#111827)] mb-2">Vergi bilgilerim yoksa ne yapmalıyım?</h5>
+            <p class="text-[13px] text-[var(--color-text-muted,#666)] leading-normal">Yerel vergi kurumunuzun web sitesini kontrol ederek vergi muafiyeti için uygunluk kriterlerinizi inceleyin.</p>
           </div>
-          <div class="os-faq__card">
-            <h5 class="os-faq__card-title">Vergi bilgilerim neden onaylanmadı?</h5>
-            <p class="os-faq__card-desc">Vergi bilgilerinizin süresinin dolup dolmadığını veya yanlış bilgi gönderip göndermediğinizi kontrol edin.</p>
+          <div class="p-5 border border-[var(--color-border-default,#e5e5e5)] rounded-lg">
+            <h5 class="text-sm font-semibold text-[var(--color-text-heading,#111827)] mb-2">Vergi bilgilerim neden onaylanmadı?</h5>
+            <p class="text-[13px] text-[var(--color-text-muted,#666)] leading-normal">Vergi bilgilerinizin süresinin dolup dolmadığını veya yanlış bilgi gönderip göndermediğinizi kontrol edin.</p>
           </div>
-          <div class="os-faq__card">
-            <h5 class="os-faq__card-title">Vergi iadesi için nasıl başvurabilirim?</h5>
-            <p class="os-faq__card-desc">Vergi bilgileriniz gönderilmişse ve siparişiniz kargoya verilmeden önce doğrulanmışsa vergi iadesi alabilirsiniz.</p>
+          <div class="p-5 border border-[var(--color-border-default,#e5e5e5)] rounded-lg">
+            <h5 class="text-sm font-semibold text-[var(--color-text-heading,#111827)] mb-2">Vergi iadesi için nasıl başvurabilirim?</h5>
+            <p class="text-[13px] text-[var(--color-text-muted,#666)] leading-normal">Vergi bilgileriniz gönderilmişse ve siparişiniz kargoya verilmeden önce doğrulanmışsa vergi iadesi alabilirsiniz.</p>
           </div>
         </div>
 
-        <details class="os-faq__accordion">
-          <summary>Satış vergisi nedir?</summary>
-          <p>Satış vergisi, mal ve hizmetlerin satışından alınan bir tüketim vergisidir.</p>
+        <details class="os-faq__accordion border-b border-[var(--color-border-default,#e5e5e5)] py-3.5">
+          <summary class="text-sm text-[var(--color-text-heading,#111827)] cursor-pointer list-none flex justify-between items-center">Satış vergisi nedir?</summary>
+          <p class="pt-3 pb-1 text-[13px] text-[var(--color-text-muted,#666)] leading-relaxed">Satış vergisi, mal ve hizmetlerin satışından alınan bir tüketim vergisidir.</p>
         </details>
-        <details class="os-faq__accordion">
-          <summary>Katma Değer Vergisi (KDV) nedir?</summary>
-          <p>KDV, üretim ve dağıtım sürecinin her aşamasında eklenen değer üzerinden alınan bir vergidir.</p>
+        <details class="os-faq__accordion border-b border-[var(--color-border-default,#e5e5e5)] py-3.5">
+          <summary class="text-sm text-[var(--color-text-heading,#111827)] cursor-pointer list-none flex justify-between items-center">Katma Değer Vergisi (KDV) nedir?</summary>
+          <p class="pt-3 pb-1 text-[13px] text-[var(--color-text-muted,#666)] leading-relaxed">KDV, üretim ve dağıtım sürecinin her aşamasında eklenen değer üzerinden alınan bir vergidir.</p>
         </details>
       </div>
     </div>
 
     <!-- Tab: Gümrük muayenesi bilgileri -->
     <div class="os-tab-content" data-content="tax-customs">
-      <div class="os-info-card">
-        <div class="os-info-card__text">
-          <h4 class="os-info-card__title">Gümrük işlemleri (tüm bölgeleri kapsar)</h4>
-          <p class="os-info-card__desc">Vergi bilgileriniz gümrük yetkilileri tarafından talep edilmektedir. Bu, bir İşveren Kimlik Numarası veya Sosyal Güvenlik Numarası olabilir.</p>
+      <div class="flex items-center justify-between gap-6 px-7 py-5 border-b border-[var(--color-border-light,#f0f0f0)] max-md:flex-col max-md:items-start">
+        <div class="flex-1 min-w-0">
+          <h4 class="text-sm font-semibold text-[var(--color-text-heading,#111827)] mb-1.5">Gümrük işlemleri (tüm bölgeleri kapsar)</h4>
+          <p class="text-[13px] text-[var(--color-text-muted,#666)] leading-normal">Vergi bilgileriniz gümrük yetkilileri tarafından talep edilmektedir. Bu, bir İşveren Kimlik Numarası veya Sosyal Güvenlik Numarası olabilir.</p>
         </div>
-        <button class="os-info-card__btn" data-modal="customs-modal">Gümrük muayenesi bilgileri ekleyin</button>
+        <button class="os-info-card__btn px-5 py-2 text-[13px] text-[var(--color-text-body,#333)] bg-[var(--color-surface,#fff)] border border-[var(--color-border-medium,#d1d5db)] rounded-[20px] cursor-pointer whitespace-nowrap shrink-0 transition-colors hover:border-[#999]" data-modal="customs-modal">Gümrük muayenesi bilgileri ekleyin</button>
       </div>
     </div>
 
     <!-- ═══ MODAL: PST bilgileri ═══ -->
-    <div class="os-modal" id="pst-modal">
-      <div class="os-modal__overlay"></div>
-      <div class="os-modal__dialog">
-        <div class="os-modal__header">
-          <h3 class="os-modal__title">PST bilgileri</h3>
-          <button class="os-modal__close" aria-label="Kapat">
+    <div class="os-modal hidden fixed inset-0 z-[9999] items-center justify-center" id="pst-modal">
+      <div class="os-modal__overlay absolute inset-0 bg-black/45"></div>
+      <div class="os-modal__dialog relative bg-[var(--color-surface,#fff)] rounded-xl w-[480px] max-w-[calc(100vw-32px)] max-h-[calc(100vh-64px)] overflow-y-auto shadow-[0_20px_60px_rgba(0,0,0,0.2)]" style="animation: osModalIn 200ms ease-out">
+        <div class="flex items-center justify-between px-6 pt-5 pb-4 border-b border-[var(--color-border-light,#f0f0f0)]">
+          <h3 class="text-base font-semibold text-[var(--color-text-heading,#111827)]">PST bilgileri</h3>
+          <button class="os-modal__close bg-transparent border-none cursor-pointer p-1 rounded flex items-center justify-center transition-colors hover:bg-[var(--color-surface-raised,#f5f5f5)]" aria-label="Kapat">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M12 4L4 12M4 4l8 8" stroke="#666" stroke-width="1.5" stroke-linecap="round"/></svg>
           </button>
         </div>
-        <div class="os-modal__body">
-          <div class="os-modal__field">
-            <label class="os-modal__label">İl <span class="os-modal__required">*</span></label>
-            <div class="os-modal__radio-group">
-              <label class="os-modal__radio">
-                <input type="radio" name="pst-province" value="manitoba" checked />
-                <span class="os-modal__radio-custom"></span>
+        <div class="px-6 py-5">
+          <div class="mb-5">
+            <label class="block text-[13px] font-semibold text-[var(--color-text-body,#333)] mb-2">İl <span class="text-[#e53935]">*</span></label>
+            <div class="flex flex-col gap-2.5">
+              <label class="os-modal__radio flex items-center gap-2 text-sm text-[var(--color-text-body,#333)] cursor-pointer">
+                <input type="radio" name="pst-province" value="manitoba" checked class="hidden" />
+                <span class="os-modal__radio-custom w-[18px] h-[18px] border-2 border-[var(--color-border-medium,#d1d5db)] rounded-full shrink-0 relative transition-colors"></span>
                 Manitoba
               </label>
-              <label class="os-modal__radio">
-                <input type="radio" name="pst-province" value="saskatchewan" />
-                <span class="os-modal__radio-custom"></span>
+              <label class="os-modal__radio flex items-center gap-2 text-sm text-[var(--color-text-body,#333)] cursor-pointer">
+                <input type="radio" name="pst-province" value="saskatchewan" class="hidden" />
+                <span class="os-modal__radio-custom w-[18px] h-[18px] border-2 border-[var(--color-border-medium,#d1d5db)] rounded-full shrink-0 relative transition-colors"></span>
                 Saskatchewan
               </label>
             </div>
           </div>
-          <div class="os-modal__field">
-            <label class="os-modal__label">RST numarası <span class="os-modal__required">*</span></label>
-            <input type="text" class="os-modal__input" placeholder="RST numaranızı girin" />
+          <div class="mb-5">
+            <label class="block text-[13px] font-semibold text-[var(--color-text-body,#333)] mb-2">RST numarası <span class="text-[#e53935]">*</span></label>
+            <input type="text" class="os-modal__input w-full py-2.5 px-3 text-sm border border-[var(--color-border-medium,#d1d5db)] rounded-md outline-none text-[var(--color-text-heading,#111827)] transition-colors box-border focus:border-[var(--color-cta-primary,#cc9900)] focus:shadow-[0_0_0_2px_rgba(249,115,22,0.1)]" placeholder="RST numaranızı girin" />
           </div>
         </div>
-        <div class="os-modal__footer">
-          <button class="os-modal__btn os-modal__btn--primary">Doğrula</button>
+        <div class="px-6 pt-4 pb-5 flex justify-end gap-3 border-t border-[var(--color-border-light,#f0f0f0)]">
+          <button class="os-modal__btn os-modal__btn--primary px-6 py-2.5 text-sm font-medium rounded-[20px] cursor-pointer border-none transition-all bg-[var(--color-cta-primary,#cc9900)] text-white hover:bg-[#EA580C]">Doğrula</button>
         </div>
       </div>
     </div>
 
     <!-- ═══ MODAL: KDV/GST Numarası Ekleyin ═══ -->
-    <div class="os-modal" id="vat-modal">
-      <div class="os-modal__overlay"></div>
-      <div class="os-modal__dialog">
-        <div class="os-modal__header">
-          <h3 class="os-modal__title">KDV/GST Numarası Ekleyin</h3>
-          <button class="os-modal__close" aria-label="Kapat">
+    <div class="os-modal hidden fixed inset-0 z-[9999] items-center justify-center" id="vat-modal">
+      <div class="os-modal__overlay absolute inset-0 bg-black/45"></div>
+      <div class="os-modal__dialog relative bg-[var(--color-surface,#fff)] rounded-xl w-[480px] max-w-[calc(100vw-32px)] max-h-[calc(100vh-64px)] overflow-y-auto shadow-[0_20px_60px_rgba(0,0,0,0.2)]" style="animation: osModalIn 200ms ease-out">
+        <div class="flex items-center justify-between px-6 pt-5 pb-4 border-b border-[var(--color-border-light,#f0f0f0)]">
+          <h3 class="text-base font-semibold text-[var(--color-text-heading,#111827)]">KDV/GST Numarası Ekleyin</h3>
+          <button class="os-modal__close bg-transparent border-none cursor-pointer p-1 rounded flex items-center justify-center transition-colors hover:bg-[var(--color-surface-raised,#f5f5f5)]" aria-label="Kapat">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M12 4L4 12M4 4l8 8" stroke="#666" stroke-width="1.5" stroke-linecap="round"/></svg>
           </button>
         </div>
-        <div class="os-modal__body">
-          <div class="os-modal__field">
-            <label class="os-modal__label">Ülke/bölge <span class="os-modal__required">*</span></label>
-            <div class="os-modal__select-wrap">
-              <select class="os-modal__select">
+        <div class="px-6 py-5">
+          <div class="mb-5">
+            <label class="block text-[13px] font-semibold text-[var(--color-text-body,#333)] mb-2">Ülke/bölge <span class="text-[#e53935]">*</span></label>
+            <div class="relative">
+              <select class="os-modal__select w-full py-2.5 pl-3 pr-9 text-sm border border-[var(--color-border-medium,#d1d5db)] rounded-md outline-none text-[var(--color-text-heading,#111827)] bg-[var(--color-surface,#fff)] appearance-none cursor-pointer transition-colors focus:border-[var(--color-cta-primary,#cc9900)] focus:shadow-[0_0_0_2px_rgba(249,115,22,0.1)]">
                 <option value="">Ülke/bölge seçin</option>
                 <option value="TR">Türkiye</option>
                 <option value="DE">Almanya</option>
@@ -362,72 +362,72 @@ function renderTaxInfo(): string {
                 <option value="SG">Singapur</option>
                 <option value="CL">Şili</option>
               </select>
-              <svg class="os-modal__select-arrow" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5l3 3 3-3" stroke="#666" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <svg class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5l3 3 3-3" stroke="#666" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
           </div>
-          <div class="os-modal__field">
-            <label class="os-modal__label">Vergi numarası <span class="os-modal__required">*</span></label>
-            <input type="text" class="os-modal__input" placeholder="Vergi numaranızı girin" />
+          <div class="mb-5">
+            <label class="block text-[13px] font-semibold text-[var(--color-text-body,#333)] mb-2">Vergi numarası <span class="text-[#e53935]">*</span></label>
+            <input type="text" class="os-modal__input w-full py-2.5 px-3 text-sm border border-[var(--color-border-medium,#d1d5db)] rounded-md outline-none text-[var(--color-text-heading,#111827)] transition-colors box-border focus:border-[var(--color-cta-primary,#cc9900)] focus:shadow-[0_0_0_2px_rgba(249,115,22,0.1)]" placeholder="Vergi numaranızı girin" />
           </div>
-          <div class="os-modal__field">
-            <label class="os-modal__label">Tam kayıt adı <span class="os-modal__required">*</span></label>
-            <input type="text" class="os-modal__input" placeholder="Tam kayıt adınızı girin" />
+          <div class="mb-5">
+            <label class="block text-[13px] font-semibold text-[var(--color-text-body,#333)] mb-2">Tam kayıt adı <span class="text-[#e53935]">*</span></label>
+            <input type="text" class="os-modal__input w-full py-2.5 px-3 text-sm border border-[var(--color-border-medium,#d1d5db)] rounded-md outline-none text-[var(--color-text-heading,#111827)] transition-colors box-border focus:border-[var(--color-cta-primary,#cc9900)] focus:shadow-[0_0_0_2px_rgba(249,115,22,0.1)]" placeholder="Tam kayıt adınızı girin" />
           </div>
         </div>
-        <div class="os-modal__footer">
-          <button class="os-modal__btn os-modal__btn--primary">Doğrula</button>
+        <div class="px-6 pt-4 pb-5 flex justify-end gap-3 border-t border-[var(--color-border-light,#f0f0f0)]">
+          <button class="os-modal__btn os-modal__btn--primary px-6 py-2.5 text-sm font-medium rounded-[20px] cursor-pointer border-none transition-all bg-[var(--color-cta-primary,#cc9900)] text-white hover:bg-[#EA580C]">Doğrula</button>
         </div>
       </div>
     </div>
 
     <!-- ═══ MODAL: Gümrük muayenesi bilgileri ═══ -->
-    <div class="os-modal" id="customs-modal">
-      <div class="os-modal__overlay"></div>
-      <div class="os-modal__dialog">
-        <div class="os-modal__header">
-          <h3 class="os-modal__title">Gümrük muayenesi bilgileri</h3>
-          <button class="os-modal__close" aria-label="Kapat">
+    <div class="os-modal hidden fixed inset-0 z-[9999] items-center justify-center" id="customs-modal">
+      <div class="os-modal__overlay absolute inset-0 bg-black/45"></div>
+      <div class="os-modal__dialog relative bg-[var(--color-surface,#fff)] rounded-xl w-[480px] max-w-[calc(100vw-32px)] max-h-[calc(100vh-64px)] overflow-y-auto shadow-[0_20px_60px_rgba(0,0,0,0.2)]" style="animation: osModalIn 200ms ease-out">
+        <div class="flex items-center justify-between px-6 pt-5 pb-4 border-b border-[var(--color-border-light,#f0f0f0)]">
+          <h3 class="text-base font-semibold text-[var(--color-text-heading,#111827)]">Gümrük muayenesi bilgileri</h3>
+          <button class="os-modal__close bg-transparent border-none cursor-pointer p-1 rounded flex items-center justify-center transition-colors hover:bg-[var(--color-surface-raised,#f5f5f5)]" aria-label="Kapat">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M12 4L4 12M4 4l8 8" stroke="#666" stroke-width="1.5" stroke-linecap="round"/></svg>
           </button>
         </div>
-        <div class="os-modal__body">
-          <div class="os-modal__info-banner">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="#E8912D" stroke-width="1.5"/><path d="M8 5v3m0 2.5h.01" stroke="#E8912D" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <div class="px-6 py-5">
+          <div class="flex items-start gap-2.5 px-3.5 py-3 bg-primary-50 border border-primary-200 rounded-md text-[13px] text-primary-800 leading-normal mb-5">
+            <svg class="shrink-0 mt-px" width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="#E8912D" stroke-width="1.5"/><path d="M8 5v3m0 2.5h.01" stroke="#E8912D" stroke-width="1.5" stroke-linecap="round"/></svg>
             <span>Vergi bilgileriniz, gümrük yetkilileri tarafından talep edilmektedir. Bu bir İşveren Kimlik Numarası (EIN) veya Sosyal Güvenlik Numarası (SSN) olabilir.</span>
           </div>
 
-          <div class="os-modal__field">
-            <label class="os-modal__label">Vergi mükellefi türü <span class="os-modal__required">*</span></label>
-            <div class="os-modal__radio-group">
-              <label class="os-modal__radio">
-                <input type="radio" name="customs-type" value="business" checked />
-                <span class="os-modal__radio-custom"></span>
+          <div class="mb-5">
+            <label class="block text-[13px] font-semibold text-[var(--color-text-body,#333)] mb-2">Vergi mükellefi türü <span class="text-[#e53935]">*</span></label>
+            <div class="flex flex-col gap-2.5">
+              <label class="os-modal__radio flex items-center gap-2 text-sm text-[var(--color-text-body,#333)] cursor-pointer">
+                <input type="radio" name="customs-type" value="business" checked class="hidden" />
+                <span class="os-modal__radio-custom w-[18px] h-[18px] border-2 border-[var(--color-border-medium,#d1d5db)] rounded-full shrink-0 relative transition-colors"></span>
                 İşletme (Business)
               </label>
-              <label class="os-modal__radio">
-                <input type="radio" name="customs-type" value="personal" />
-                <span class="os-modal__radio-custom"></span>
+              <label class="os-modal__radio flex items-center gap-2 text-sm text-[var(--color-text-body,#333)] cursor-pointer">
+                <input type="radio" name="customs-type" value="personal" class="hidden" />
+                <span class="os-modal__radio-custom w-[18px] h-[18px] border-2 border-[var(--color-border-medium,#d1d5db)] rounded-full shrink-0 relative transition-colors"></span>
                 Bireysel (Personal)
               </label>
             </div>
           </div>
-          <div class="os-modal__field">
-            <label class="os-modal__label">İşveren Kimlik Numarası (EIN) <span class="os-modal__required">*</span></label>
-            <input type="text" class="os-modal__input" placeholder="EIN numaranızı girin" />
+          <div class="mb-5">
+            <label class="block text-[13px] font-semibold text-[var(--color-text-body,#333)] mb-2">İşveren Kimlik Numarası (EIN) <span class="text-[#e53935]">*</span></label>
+            <input type="text" class="os-modal__input w-full py-2.5 px-3 text-sm border border-[var(--color-border-medium,#d1d5db)] rounded-md outline-none text-[var(--color-text-heading,#111827)] transition-colors box-border focus:border-[var(--color-cta-primary,#cc9900)] focus:shadow-[0_0_0_2px_rgba(249,115,22,0.1)]" placeholder="EIN numaranızı girin" />
           </div>
-          <div class="os-modal__privacy-note">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1a4 4 0 00-4 4v2H2a1 1 0 00-1 1v4a1 1 0 001 1h10a1 1 0 001-1V8a1 1 0 00-1-1h-1V5a4 4 0 00-4-4zm-2 4a2 2 0 114 0v2H5V5z" fill="#999"/></svg>
-            <span>Gizlilik bilgilendirmesi: Bilgileriniz <a href="#" class="os-modal__link">Gizlilik Politikamız</a> uyarınca korunmaktadır.</span>
+          <div class="flex items-start gap-1.5 text-xs text-[var(--color-text-placeholder,#999)] leading-normal mb-1">
+            <svg class="shrink-0 mt-px" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1a4 4 0 00-4 4v2H2a1 1 0 00-1 1v4a1 1 0 001 1h10a1 1 0 001-1V8a1 1 0 00-1-1h-1V5a4 4 0 00-4-4zm-2 4a2 2 0 114 0v2H5V5z" fill="#999"/></svg>
+            <span>Gizlilik bilgilendirmesi: Bilgileriniz <a href="#" class="text-[var(--color-cta-primary,#cc9900)] no-underline hover:underline">Gizlilik Politikamız</a> uyarınca korunmaktadır.</span>
           </div>
-          <label class="os-modal__checkbox">
-            <input type="checkbox" />
-            <span class="os-modal__checkbox-custom"></span>
+          <label class="os-modal__checkbox flex items-start gap-2.5 text-[13px] text-[var(--color-text-body,#333)] leading-normal cursor-pointer mt-4">
+            <input type="checkbox" class="hidden" />
+            <span class="os-modal__checkbox-custom w-4 h-4 border-2 border-[var(--color-border-medium,#d1d5db)] rounded-[3px] shrink-0 mt-0.5 relative transition-all"></span>
             <span>Yukarıdaki bilgilerin doğru olduğunu ve vergi bilgilerimin gümrük işlemleri için kullanılabileceğini kabul ediyorum.</span>
           </label>
         </div>
-        <div class="os-modal__footer os-modal__footer--split">
-          <button class="os-modal__btn os-modal__btn--cancel">İptal et</button>
-          <button class="os-modal__btn os-modal__btn--primary">Kaydet</button>
+        <div class="px-6 pt-4 pb-5 flex justify-end gap-3 border-t border-[var(--color-border-light,#f0f0f0)]">
+          <button class="os-modal__btn os-modal__btn--cancel px-6 py-2.5 text-sm font-medium rounded-[20px] cursor-pointer transition-all bg-[var(--color-surface,#fff)] text-[var(--color-text-body,#333)] border border-[var(--color-border-medium,#d1d5db)] hover:border-[#999]">İptal et</button>
+          <button class="os-modal__btn os-modal__btn--primary px-6 py-2.5 text-sm font-medium rounded-[20px] cursor-pointer border-none transition-all bg-[var(--color-cta-primary,#cc9900)] text-white hover:bg-[#EA580C]">Kaydet</button>
         </div>
       </div>
     </div>
@@ -455,8 +455,11 @@ function getActiveSection(): string {
 
 function renderNav(activeId: string): string {
   return NAV_ITEMS.map(item => {
-    const active = item.id === activeId ? 'orders-page__nav-link--active' : '';
-    return `<a href="#${item.id}" class="orders-page__nav-link ${active}" data-nav="${item.id}">${item.label}</a>`;
+    const isActive = item.id === activeId;
+    const activeClasses = isActive
+      ? 'orders-page__nav-link--active font-semibold text-[var(--color-text-heading,#111827)] border-l-[var(--color-text-heading)] underline underline-offset-[3px]'
+      : 'text-[var(--color-text-body,#333)]';
+    return `<a href="#${item.id}" class="orders-page__nav-link block py-2.5 px-5 text-sm no-underline border-l-[3px] border-l-transparent transition-colors leading-[1.4] hover:bg-[var(--color-surface-muted,#fafafa)] hover:text-[var(--color-text-heading,#111827)] ${activeClasses}" data-nav="${item.id}">${item.label}</a>`;
   }).join('');
 }
 
@@ -465,14 +468,14 @@ export function OrdersPageLayout(): string {
   const renderFn = SECTIONS[activeId] ?? renderAllOrders;
 
   return `
-    <div class="orders-page">
-      <aside class="orders-page__nav">
-        <h2 class="orders-page__nav-title">Siparişlerim</h2>
-        <nav class="orders-page__nav-links">
+    <div class="orders-page flex bg-[var(--color-surface,#fff)] rounded-lg min-h-[calc(100vh-80px)] overflow-hidden max-md:flex-col">
+      <aside class="orders-page__nav w-[240px] shrink-0 border-r border-[var(--color-border-light,#f0f0f0)] py-6 max-md:w-full max-md:border-r-0 max-md:border-b max-md:border-b-[var(--color-border-light,#f0f0f0)] max-md:py-4">
+        <h2 class="text-base font-bold text-[var(--color-text-heading,#111827)] px-5 pb-4">Siparişlerim</h2>
+        <nav class="orders-page__nav-links flex flex-col max-md:flex-row max-md:overflow-x-auto max-md:px-4 max-md:gap-1">
           ${renderNav(activeId)}
         </nav>
       </aside>
-      <div class="orders-page__content" id="orders-content">
+      <div class="orders-page__content flex-1 flex flex-col min-w-0" id="orders-content">
         ${renderFn()}
       </div>
     </div>
@@ -493,7 +496,11 @@ export function initOrdersPageLayout(): void {
 
     // Update nav active state
     document.querySelectorAll<HTMLAnchorElement>('.orders-page__nav-link').forEach(link => {
-      link.classList.toggle('orders-page__nav-link--active', link.dataset.nav === activeId);
+      const isActive = link.dataset.nav === activeId;
+      link.classList.toggle('orders-page__nav-link--active', isActive);
+      link.classList.toggle('font-semibold', isActive);
+      link.classList.toggle('underline', isActive);
+      link.classList.toggle('underline-offset-[3px]', isActive);
     });
 
     // Init inner tabs
@@ -558,12 +565,14 @@ function initPillFilters(): void {
 function openModal(id: string): void {
   const modal = document.getElementById(id);
   if (!modal) return;
-  modal.classList.add('os-modal--open');
+  modal.classList.remove('hidden');
+  modal.classList.add('flex');
   document.body.style.overflow = 'hidden';
 }
 
 function closeModal(modal: HTMLElement): void {
-  modal.classList.remove('os-modal--open');
+  modal.classList.add('hidden');
+  modal.classList.remove('flex');
   document.body.style.overflow = '';
 }
 
@@ -590,8 +599,8 @@ function initTaxModals(): void {
   // Close modal on Escape key
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
-      const openModal = document.querySelector<HTMLElement>('.os-modal--open');
-      if (openModal) closeModal(openModal);
+      const openModalEl = document.querySelector<HTMLElement>('.os-modal:not(.hidden)');
+      if (openModalEl) closeModal(openModalEl);
     }
   });
 }

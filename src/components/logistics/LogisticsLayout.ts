@@ -16,14 +16,14 @@ const EMPTY_ENVELOPE_ICON = `
 </svg>`;
 
 const INFO_BANNER_ORDERS = `
-<div class="log-banner">
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="#3B82F6" stroke-width="1.3"/><path d="M8 5v3m0 2.5h.01" stroke="#3B82F6" stroke-width="1.3" stroke-linecap="round"/></svg>
+<div class="flex items-start gap-2.5 px-6 py-3.5 bg-[#EFF6FF] text-[13px] text-gray-700 leading-normal rounded-t-lg">
+  <svg class="shrink-0 mt-px" width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="#3B82F6" stroke-width="1.3"/><path d="M8 5v3m0 2.5h.01" stroke="#3B82F6" stroke-width="1.3" stroke-linecap="round"/></svg>
   <span>Uyarı: lojistik pazar yeri siparişleri artık ticaret güvence emirlerine yükseltildi. Ticaret güvence siparişlerinizi alibaba> sipariş menüsünde yönetebilirsiniz.</span>
 </div>`;
 
 const INFO_BANNER_REVIEWS = `
-<div class="log-banner">
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="#3B82F6" stroke-width="1.3"/><path d="M8 5v3m0 2.5h.01" stroke="#3B82F6" stroke-width="1.3" stroke-linecap="round"/></svg>
+<div class="flex items-start gap-2.5 px-6 py-3.5 bg-[#EFF6FF] text-[13px] text-gray-700 leading-normal rounded-t-lg">
+  <svg class="shrink-0 mt-px" width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="#3B82F6" stroke-width="1.3"/><path d="M8 5v3m0 2.5h.01" stroke="#3B82F6" stroke-width="1.3" stroke-linecap="round"/></svg>
   <span>Uyarı: lojistik pazar yeri siparişleri, yaklaşık 20 şubat tarihinden itibaren ticaret güvence siparişlerine yükseltilecektir.</span>
 </div>`;
 
@@ -47,37 +47,37 @@ const ORDER_TABS = [
 
 function renderOrders(): string {
   const tabs = ORDER_TABS.map((t, i) =>
-    `<button class="log-tabs__tab${i === 0 ? ' log-tabs__tab--active' : ''}" data-tab="log-order-${i}">${t}</button>`
+    `<button class="log-tabs__tab px-4 py-3 text-[13px] font-medium text-gray-500 bg-transparent border-none border-b-2 border-b-transparent cursor-pointer transition-colors whitespace-nowrap -mb-px hover:text-gray-900${i === 0 ? ' log-tabs__tab--active !text-gray-900 !font-semibold !border-b-[#222]' : ''}" data-tab="log-order-${i}">${t}</button>`
   ).join('');
 
   return `
     ${INFO_BANNER_ORDERS}
 
-    <div class="log-page__header">
-      <h1 class="log-page__title">Lojistik siparişlerini yönet</h1>
+    <div class="px-7 pt-6">
+      <h1 class="text-[22px] font-bold text-gray-900">Lojistik siparişlerini yönet</h1>
     </div>
 
-    <div class="log-tabs" data-tabgroup="log-orders">
+    <div class="flex px-7 max-md:px-4 border-b border-border-default mt-4 overflow-x-auto" data-tabgroup="log-orders">
       ${tabs}
     </div>
 
     <!-- Search + Filters -->
-    <div class="log-search">
-      <div class="log-search__row">
-        <div class="log-search__input-wrap">
-          <input type="text" class="log-search__input" placeholder="Sipariş numarasına göre ara" />
-          <button class="log-search__btn">${SEARCH_ICON} Arama</button>
+    <div class="px-7 py-5">
+      <div class="flex items-center gap-4 mb-4">
+        <div class="flex-1 flex border border-border-default rounded-md overflow-hidden">
+          <input type="text" class="flex-1 px-3.5 py-2.5 text-[14px] border-none outline-none text-gray-900 placeholder:text-gray-400" placeholder="Sipariş numarasına göre ara" />
+          <button class="flex items-center gap-1.5 px-5 py-2.5 text-[14px] text-gray-700 bg-white border-none border-l border-l-border-default cursor-pointer whitespace-nowrap hover:bg-gray-100 transition-colors">${SEARCH_ICON} Arama</button>
         </div>
-        <a href="#" class="log-search__reset">Hepsini sıfırla</a>
+        <a href="#" class="text-[13px] text-primary-500 no-underline whitespace-nowrap hover:underline">Hepsini sıfırla</a>
       </div>
-      <div class="log-filters">
-        <div class="log-filters__item">
-          <input type="text" class="log-filters__date" placeholder="Sipariş verildi" readonly />
-          <svg class="log-filters__date-icon" width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="11" rx="2" stroke="#999" stroke-width="1.2"/><path d="M2 6h12M5 1v3M11 1v3" stroke="#999" stroke-width="1.2" stroke-linecap="round"/></svg>
+      <div class="grid grid-cols-3 max-md:grid-cols-1 gap-4">
+        <div class="relative">
+          <input type="text" class="w-full py-2.5 pl-3.5 pr-9 text-[14px] border border-border-default rounded-md outline-none text-gray-900 bg-white cursor-pointer box-border" placeholder="Sipariş verildi" readonly />
+          <svg class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="11" rx="2" stroke="#999" stroke-width="1.2"/><path d="M2 6h12M5 1v3M11 1v3" stroke="#999" stroke-width="1.2" stroke-linecap="round"/></svg>
         </div>
-        <div class="log-filters__item">
-          <label class="log-filters__label">Hizmet türü</label>
-          <select class="log-filters__select">
+        <div class="relative">
+          <label class="absolute left-3 top-1/2 -translate-y-1/2 text-[13px] text-gray-500 pointer-events-none">Hizmet türü</label>
+          <select class="w-full py-2.5 pl-[110px] pr-3 text-[14px] border border-border-default rounded-md outline-none text-gray-900 bg-white appearance-none cursor-pointer box-border">
             <option>Seçin</option>
             <option>Deniz yolu</option>
             <option>Hava yolu</option>
@@ -85,9 +85,9 @@ function renderOrders(): string {
             <option>Ekspres</option>
           </select>
         </div>
-        <div class="log-filters__item">
-          <label class="log-filters__label">Gönderi durumu</label>
-          <select class="log-filters__select">
+        <div class="relative">
+          <label class="absolute left-3 top-1/2 -translate-y-1/2 text-[13px] text-gray-500 pointer-events-none">Gönderi durumu</label>
+          <select class="w-full py-2.5 pl-[110px] pr-3 text-[14px] border border-border-default rounded-md outline-none text-gray-900 bg-white appearance-none cursor-pointer box-border">
             <option>Seçin</option>
             <option>Beklemede</option>
             <option>Transitte</option>
@@ -99,23 +99,23 @@ function renderOrders(): string {
     </div>
 
     <!-- Data Table -->
-    <div class="log-table-wrap">
-      <table class="log-table">
+    <div class="px-7 pb-7">
+      <table class="w-full border-collapse">
         <thead>
           <tr>
-            <th>Servis tipi ve taşıyıcı</th>
-            <th>Menşe ve varış yeri</th>
-            <th>Ürün bilgileri</th>
-            <th>Gönderi durumu</th>
-            <th>Miktar</th>
-            <th>Eylem</th>
+            <th class="text-left text-[13px] font-semibold text-gray-500 px-3 py-3 border-b border-border-default bg-surface-muted">Servis tipi ve taşıyıcı</th>
+            <th class="text-left text-[13px] font-semibold text-gray-500 px-3 py-3 border-b border-border-default bg-surface-muted">Menşe ve varış yeri</th>
+            <th class="text-left text-[13px] font-semibold text-gray-500 px-3 py-3 border-b border-border-default bg-surface-muted">Ürün bilgileri</th>
+            <th class="text-left text-[13px] font-semibold text-gray-500 px-3 py-3 border-b border-border-default bg-surface-muted">Gönderi durumu</th>
+            <th class="text-left text-[13px] font-semibold text-gray-500 px-3 py-3 border-b border-border-default bg-surface-muted">Miktar</th>
+            <th class="text-left text-[13px] font-semibold text-gray-500 px-3 py-3 border-b border-border-default bg-surface-muted">Eylem</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td colspan="6" class="log-table__empty">
-              ${EMPTY_ENVELOPE_ICON}
-              <p>Sonuç bulunamadı</p>
+            <td colspan="6" class="text-center py-20 px-4 text-gray-400 text-[14px]">
+              <div class="flex justify-center mb-3">${EMPTY_ENVELOPE_ICON}</div>
+              <p class="m-0">Sonuç bulunamadı</p>
             </td>
           </tr>
         </tbody>
@@ -131,42 +131,42 @@ function renderReviews(): string {
   return `
     ${INFO_BANNER_REVIEWS}
 
-    <div class="log-page__header log-page__header--reviews">
-      <h1 class="log-page__title">Değerlendirmelerim</h1>
-      <p class="log-page__subtitle">Siparişiniz tamamlandıktan sonraki 90 gün içinde deneyiminizi puanlayın ve siparişinizle ilgili bir yorum bırakın</p>
+    <div class="px-7 pt-6 flex items-baseline gap-3 flex-wrap max-md:flex-col max-md:gap-1">
+      <h1 class="text-[22px] font-bold text-gray-900">Değerlendirmelerim</h1>
+      <p class="text-[14px] text-gray-400 m-0">Siparişiniz tamamlandıktan sonraki 90 gün içinde deneyiminizi puanlayın ve siparişinizle ilgili bir yorum bırakın</p>
     </div>
 
-    <div class="log-tabs" data-tabgroup="log-reviews">
-      <button class="log-tabs__tab log-tabs__tab--active" data-tab="log-review-pending">Değerlendirilecek (0)</button>
-      <button class="log-tabs__tab" data-tab="log-review-done">Değerlendirildi (0)</button>
+    <div class="flex px-7 max-md:px-4 border-b border-border-default mt-4 overflow-x-auto" data-tabgroup="log-reviews">
+      <button class="log-tabs__tab log-tabs__tab--active px-4 py-3 text-[13px] font-semibold text-gray-900 bg-transparent border-none border-b-2 border-b-[#222] cursor-pointer whitespace-nowrap -mb-px" data-tab="log-review-pending">Değerlendirilecek (0)</button>
+      <button class="log-tabs__tab px-4 py-3 text-[13px] font-medium text-gray-500 bg-transparent border-none border-b-2 border-b-transparent cursor-pointer whitespace-nowrap -mb-px hover:text-gray-900" data-tab="log-review-done">Değerlendirildi (0)</button>
     </div>
 
     <!-- Search -->
-    <div class="log-review-search">
-      <div class="log-review-search__wrap">
-        <input type="text" class="log-review-search__input" placeholder="" />
-        <button class="log-review-search__btn">${SEARCH_ICON} Arama</button>
+    <div class="px-7 py-5">
+      <div class="flex border border-border-default rounded-md overflow-hidden max-w-[500px]">
+        <input type="text" class="flex-1 px-3.5 py-2.5 text-[14px] border-none outline-none text-gray-900" placeholder="" />
+        <button class="flex items-center gap-1.5 px-5 py-2.5 text-[14px] text-gray-700 bg-white border-none border-l border-l-border-default cursor-pointer whitespace-nowrap hover:bg-gray-100 transition-colors">${SEARCH_ICON} Arama</button>
       </div>
     </div>
 
     <!-- Data Table -->
-    <div class="log-table-wrap">
-      <table class="log-table">
+    <div class="px-7 pb-7">
+      <table class="w-full border-collapse">
         <thead>
           <tr>
-            <th>Nakliye komisyoncusu</th>
-            <th>Hizmet türü</th>
-            <th>Menşe ve varış yeri</th>
-            <th>Ürün bilgileri</th>
-            <th>Durum</th>
-            <th>Eylem</th>
+            <th class="text-left text-[13px] font-semibold text-gray-500 px-3 py-3 border-b border-border-default bg-surface-muted">Nakliye komisyoncusu</th>
+            <th class="text-left text-[13px] font-semibold text-gray-500 px-3 py-3 border-b border-border-default bg-surface-muted">Hizmet türü</th>
+            <th class="text-left text-[13px] font-semibold text-gray-500 px-3 py-3 border-b border-border-default bg-surface-muted">Menşe ve varış yeri</th>
+            <th class="text-left text-[13px] font-semibold text-gray-500 px-3 py-3 border-b border-border-default bg-surface-muted">Ürün bilgileri</th>
+            <th class="text-left text-[13px] font-semibold text-gray-500 px-3 py-3 border-b border-border-default bg-surface-muted">Durum</th>
+            <th class="text-left text-[13px] font-semibold text-gray-500 px-3 py-3 border-b border-border-default bg-surface-muted">Eylem</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td colspan="6" class="log-table__empty">
-              ${EMPTY_ENVELOPE_ICON}
-              <p>Sonuç bulunamadı</p>
+            <td colspan="6" class="text-center py-20 px-4 text-gray-400 text-[14px]">
+              <div class="flex justify-center mb-3">${EMPTY_ENVELOPE_ICON}</div>
+              <p class="m-0">Sonuç bulunamadı</p>
             </td>
           </tr>
         </tbody>
@@ -196,7 +196,7 @@ export function LogisticsLayout(): string {
   const renderFn = SECTIONS[activeId] ?? renderOrders;
 
   return `
-    <div class="log-page" id="log-content">
+    <div class="bg-white rounded-lg min-h-[600px]" id="log-content">
       ${renderFn()}
     </div>
   `;
@@ -221,13 +221,16 @@ export function initLogisticsLayout(): void {
 }
 
 function initLogTabs(): void {
-  document.querySelectorAll<HTMLElement>('.log-tabs').forEach(tabGroup => {
-    const tabs = tabGroup.querySelectorAll<HTMLButtonElement>('.log-tabs__tab');
-    tabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        tabs.forEach(t => t.classList.remove('log-tabs__tab--active'));
-        tab.classList.add('log-tabs__tab--active');
+  document.querySelectorAll<HTMLElement>('.log-tabs__tab').forEach(tab => {
+    const parent = tab.parentElement;
+    if (!parent) return;
+    tab.addEventListener('click', () => {
+      parent.querySelectorAll<HTMLButtonElement>('.log-tabs__tab').forEach(t => {
+        t.classList.remove('log-tabs__tab--active', '!text-gray-900', '!font-semibold', '!border-b-[#222]');
+        t.classList.add('text-gray-500');
       });
+      tab.classList.add('log-tabs__tab--active', '!text-gray-900', '!font-semibold', '!border-b-[#222]');
+      tab.classList.remove('text-gray-500');
     });
   });
 }

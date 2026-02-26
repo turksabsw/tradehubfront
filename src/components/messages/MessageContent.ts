@@ -5,10 +5,10 @@
 
 export function MessageContent(): string {
   return `
-    <div class="msg-content">
-      <div class="msg-content__empty">
+    <div class="flex-1 flex items-center justify-center bg-[var(--color-surface,#ffffff)] min-w-0 max-md:hidden">
+      <div class="flex flex-col items-center gap-5 p-10 text-center">
         <!-- Illustration: laptop + shield + chat bubble -->
-        <div class="msg-content__illustration">
+        <div class="w-[160px] h-[120px]">
           <svg width="160" height="120" viewBox="0 0 160 120" fill="none">
             <!-- Laptop -->
             <rect x="20" y="20" width="90" height="60" rx="4" fill="#F3F4F6" stroke="#D1D5DB" stroke-width="1.5"/>
@@ -28,12 +28,12 @@ export function MessageContent(): string {
           </svg>
         </div>
 
-        <p class="msg-content__text">
+        <p class="text-sm text-[var(--color-text-body,#333333)] leading-relaxed">
           TradeHub'da sohbet ederek ve ticaret yaparak<br>
           keyifli bir alışveriş deneyimi yaşayın
         </p>
 
-        <a href="/help" class="msg-content__cta">Daha fazla bilgi</a>
+        <a href="/help" class="inline-block px-6 py-2 border border-[var(--color-border-medium,#d1d5db)] rounded-full text-sm text-[var(--color-text-body,#333333)] no-underline transition-[border-color,background] duration-150 hover:border-[var(--color-text-placeholder)] hover:bg-[var(--color-surface-muted,#fafafa)]">Daha fazla bilgi</a>
       </div>
     </div>
   `;

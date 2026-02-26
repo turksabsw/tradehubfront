@@ -35,19 +35,20 @@ import { FILE_UPLOAD_CONFIG } from './types/rfq'
 // --- Helper: Product Card HTML ---
 function renderProductCard(product: Product): string {
   return `
-    <div class="product-card" data-product-id="${product.id}">
-      <div class="product-card__image">
+    <div class="border border-border-default rounded-xl bg-white overflow-hidden transition-shadow duration-200 hover:shadow-lg" data-product-id="${product.id}">
+      <div class="aspect-square overflow-hidden bg-surface-raised">
         <img
           src="${product.image || ''}"
           alt="${product.name}"
           loading="lazy"
-          onerror="this.parentElement.classList.add('product-card__image--fallback');this.style.display='none';"
+          class="w-full h-full object-cover"
+          onerror="this.parentElement.classList.add('flex','items-center','justify-center','text-text-tertiary');this.style.display='none';"
         />
       </div>
       <div class="p-3">
-        <p class="product-card__supplier">${product.supplierCount} tedarikçi sağlıyor</p>
-        <h3 class="product-card__name">${product.name}</h3>
-        <a href="#" class="product-card__cta">${product.ctaText}</a>
+        <p class="text-xs text-[#767676]" style="font-family: Alibaba_B2B_Sans, Inter, sans-serif;">${product.supplierCount} tedarikçi sağlıyor</p>
+        <h3 class="line-clamp-2 text-sm text-[var(--color-text-heading,#111827)] my-1 mb-3" style="font-family: Alibaba_B2B_Sans, Inter, sans-serif;">${product.name}</h3>
+        <a href="#" class="inline-block text-sm text-[var(--color-text-heading,#111827)] underline transition-colors duration-200 hover:text-primary-600 mb-3" style="font-family: Alibaba_B2B_Sans, Inter, sans-serif;">${product.ctaText}</a>
       </div>
     </div>
   `;
@@ -82,15 +83,15 @@ appEl.innerHTML = `
         <div class="flex flex-col xl:flex-row gap-8 items-center py-6 w-full justify-between">
           <!-- Left Column: Text Content -->
           <div class="flex-1 text-center xl:text-left">
-            <span class="rfq-hero__badge">RFQ</span>
+            <span class="inline-block bg-primary-500 text-white text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide">RFQ</span>
             <h1 class="text-[length:var(--font-size-hero-lg)] font-bold text-[var(--color-text-inverse)] mt-4 mb-2 leading-tight">
               Fiyat Teklifi Talebi Oluşturun
             </h1>
-            <p class="rfq-hero__subtitle text-white/90">
+            <p class="text-white/80">
               Binlerce tedarikçiden anında fiyat teklifi alın. Ürünlerinizi özelleştirin, en iyi fiyatları karşılaştırın.
             </p>
             <div class="flex items-center gap-4 mt-6 justify-center xl:justify-start">
-              <a href="#" class="rfq-hero__outlined-btn focus-ring group hover:bg-white/10 transition-colors">
+              <a href="#" class="inline-flex items-center gap-2 px-6 py-2.5 border-2 border-white/60 rounded-full text-white font-medium transition-all duration-200 hover:bg-white/15 hover:border-white focus-ring group">
                 Nasıl çalışır?
               </a>
             </div>
@@ -197,18 +198,18 @@ appEl.innerHTML = `
     </section>
 
     <!-- Section 5: Testimonials -->
-    <section id="rfq-testimonials" class="rfq-testimonial py-16" aria-label="Müşteri yorumları">
+    <section id="rfq-testimonials" class="rfq-testimonial py-16 bg-gradient-to-br from-[#1f1f1f] to-[#0a0a0a]" aria-label="Müşteri yorumları">
       <div class="container-boxed max-w-3xl mx-auto text-center">
         <h2 class="text-xl font-bold text-[var(--color-text-inverted)] mb-8">Müşterilerimiz Ne Diyor?</h2>
         <div class="swiper">
           <div class="swiper-wrapper">
             ${testimonials.map(t => `
               <div class="swiper-slide" data-testimonial-id="${t.id}">
-                <blockquote class="rfq-testimonial__quote">
+                <blockquote class="italic text-white text-center text-xl leading-relaxed">
                   "${t.quote}"
                 </blockquote>
                 <div class="flex flex-col items-center mt-6">
-                  <div class="rfq-testimonial__avatar">
+                  <div class="w-16 h-16 rounded-full border-3 border-white/30 overflow-hidden">
                     <img
                       src="${t.avatar || ''}"
                       alt="${t.name}"
@@ -216,8 +217,8 @@ appEl.innerHTML = `
                       onerror="this.style.display='none';"
                     />
                   </div>
-                  <p class="rfq-testimonial__name">${t.name}</p>
-                  <p class="rfq-testimonial__title">${t.title}, ${t.company}</p>
+                  <p class="font-bold text-white">${t.name}</p>
+                  <p class="text-white/60 text-sm">${t.title}, ${t.company}</p>
                 </div>
               </div>
             `).join('')}

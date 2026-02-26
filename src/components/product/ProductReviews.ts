@@ -84,9 +84,9 @@ export function renderReviewCard(review: ProductReview, showProductThumb = false
     : '';
 
   const productThumbHtml = showProductThumb && review.productTitle
-    ? `<div class="rv-product-card">
-        <img class="rv-product-card-img" src="${review.productImage || ''}" alt="Ürün görseli">
-        <div class="rv-product-card-info">
+    ? `<div class="rv-product-card flex items-center gap-3 rounded-lg p-3 mt-3">
+        <img class="rv-product-card-img w-12 h-12 rounded object-cover shrink-0" src="${review.productImage || ''}" alt="Ürün görseli">
+        <div class="flex-1 min-w-0">
           <span class="rv-product-card-title">${review.productTitle}</span>
           <span class="rv-product-card-price">${review.productPrice || ''}</span>
         </div>
@@ -96,17 +96,17 @@ export function renderReviewCard(review: ProductReview, showProductThumb = false
 
   return `
     <div class="rv-card">
-      <div class="rv-card-header">
+      <div class="flex items-start gap-3 mb-2.5">
         <div class="rv-avatar" style="background: ${avatarColor(review.author)};">
           ${review.author.charAt(0)}
         </div>
-        <div class="rv-card-meta">
-          <div class="rv-card-name-row">
+        <div class="flex-1 min-w-0">
+          <div class="flex items-center gap-2 flex-wrap">
             <span class="rv-card-name">${anonymizeName(review.author)}</span>
             <span class="rv-card-country">${countryFlag(review.country)} ${review.countryName || review.country}</span>
             ${badges.join('')}
           </div>
-          <div class="rv-card-stars-row">
+          <div class="flex items-center gap-2 mt-1">
             <div class="flex items-center gap-0.5">${renderStars(review.rating, true)}</div>
             <span class="rv-card-date">${review.date}</span>
           </div>
@@ -162,9 +162,9 @@ function sortDropdownHtml(idPrefix: string): string {
 
 function langToggleHtml(): string {
   return `
-    <div class="rv-lang-row">
-      <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM4.332 8.027a6.012 6.012 0 011.912-2.706C6.512 5.73 6.974 6 7.5 6A1.5 1.5 0 019 7.5V8a2 2 0 004 0 2 2 0 011.523-1.943A5.977 5.977 0 0116 10c0 .34-.028.675-.083 1H15a2 2 0 00-2 2v2.197A5.973 5.973 0 0110 16v-2a2 2 0 00-2-2 2 2 0 01-2-2 2 2 0 00-1.668-1.973z" clip-rule="evenodd"/></svg>
-      <span>Seçtiğiniz dilde tüm yorumlar gösteriliyor.</span>
+    <div class="rv-lang-row flex items-center gap-2 mt-2">
+      <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM4.332 8.027a6.012 6.012 0 011.912-2.706C6.512 5.73 6.974 6 7.5 6A1.5 1.5 0 019 7.5V8a2 2 0 004 0 2 2 0 011.523-1.943A5.977 5.977 0 0116 10c0 .34-.028.675-.083 1H15a2 2 0 00-2 2v2.197A5.973 5.973 0 0110 16v-2a2 2 0 00-2-2 2 2 0 01-2-2 2 2 0 00-1.668-1.973z" clip-rule="evenodd"/></svg>
+      <span class="text-[13px]">Seçtiğiniz dilde tüm yorumlar gösteriliyor.</span>
       <a class="rv-lang-toggle-link" href="javascript:void(0)">Orijinalini Göster</a>
     </div>`;
 }
@@ -178,7 +178,7 @@ export function ProductReviews(): string {
   return `
     <div class="py-6">
       <!-- Sub-tabs -->
-      <div class="rv-sub-tabs">
+      <div class="rv-sub-tabs flex border-b-2 border-border-default mb-6">
         <button type="button" class="rv-sub-tab active" data-rv-panel="rv-product-panel">Ürün Yorumları (${p.reviewCount})</button>
         <button type="button" class="rv-sub-tab" data-rv-panel="rv-store-panel">Mağaza Yorumları (${p.storeReviewCount})</button>
       </div>
@@ -191,7 +191,7 @@ export function ProductReviews(): string {
         </p>
 
         <!-- Filter Row -->
-        <div class="rv-filter-row">
+        <div class="rv-filter-row flex items-center gap-2 flex-wrap mb-4">
           <button type="button" class="rv-filter-pill active" data-rv-filter="all">Tümü</button>
           ${ratingDropdownHtml('rv-product')}
           ${sortDropdownHtml('rv-product')}
@@ -207,16 +207,16 @@ export function ProductReviews(): string {
       <!-- Store Reviews Panel (hidden) -->
       <div id="rv-store-panel" class="hidden">
         <!-- Rating Summary -->
-        <div class="rv-rating-summary">
-          <div class="rv-rating-big">
+        <div class="rv-rating-summary flex gap-8 pb-6 mb-5">
+          <div class="flex flex-col items-center justify-center min-w-[140px]">
             <span class="rv-rating-number">${p.rating}</span>
             <div class="flex items-center gap-0.5 mt-1">${renderStars(p.rating)}</div>
             <span class="rv-rating-label">${satisfactionLabel(p.rating)}</span>
             <span class="rv-rating-subtitle">${p.storeReviewCount} doğrulanmış alışveriş yorumuna dayalı</span>
           </div>
-          <div class="rv-category-bars">
+          <div class="flex-1 flex flex-col gap-2.5 justify-center">
             ${p.reviewCategoryRatings.map(cat => `
-              <div class="rv-category-row">
+              <div class="flex items-center gap-2.5">
                 <span class="rv-category-label">${cat.label}</span>
                 <div class="rv-category-bar-track">
                   <div class="rv-category-bar-fill" style="width: ${(cat.score / 5) * 100}%;"></div>
@@ -228,7 +228,7 @@ export function ProductReviews(): string {
         </div>
 
         <!-- Filter Row -->
-        <div class="rv-filter-row">
+        <div class="rv-filter-row flex items-center gap-2 flex-wrap mb-4">
           <button type="button" class="rv-filter-pill active" data-rv-filter="all">Tümü</button>
           <button type="button" class="rv-filter-pill" data-rv-filter="photo">Fotoğraflı/Videolu (${photoReviewCount})</button>
           ${ratingDropdownHtml('rv-store')}
@@ -236,7 +236,7 @@ export function ProductReviews(): string {
         </div>
 
         <!-- Mention Tags -->
-        <div class="rv-mention-tags">
+        <div class="flex gap-2 flex-wrap mb-5">
           <span style="font-size: 12px; color: var(--pd-rating-text-color, #6b7280); align-self: center;">Sık bahsedilenler:</span>
           ${p.reviewMentionTags.map(tag => `
             <button type="button" class="rv-mention-tag" data-rv-mention="${tag.label}">${tag.label} (${tag.count})</button>

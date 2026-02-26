@@ -18,7 +18,7 @@ function renderProductItem(product: { name: string; href: string; badge?: boolea
         </svg>
         ${product.badge ? '<span class="absolute top-0 right-0 w-3 h-3 bg-red-500 rounded-full border-2 border-white"></span>' : ''}
       </div>
-      <span class="th-catpopup-product-name text-xs text-center leading-tight max-w-20">${product.name}</span>
+      <span class="text-xs text-center leading-tight transition-colors duration-150" style="color:var(--catpopup-text) max-w-20">${product.name}</span>
     </a>
   `;
 }
@@ -43,7 +43,7 @@ function renderCategoryPopup(): string {
         <div id="cat-popup-header" class="flex items-center justify-between px-4 lg:px-6 py-3 lg:py-4 border-b flex-shrink-0 select-none" style="border-color:var(--catpopup-border)">
           <h2 id="cat-popup-title" class="text-lg font-bold" style="color:var(--catpopup-heading)">Categories</h2>
           <div class="flex items-center gap-4">
-            <a href="/featured" class="th-catpopup-link text-sm hidden lg:inline">Browse featured selections</a>
+            <a href="/featured" class="text-sm hidden lg:inline transition-colors duration-150 hover:text-[var(--catpopup-link-hover)]" style="color:var(--catpopup-link)">Browse featured selections</a>
             <button id="cat-popup-close" class="p-1.5 transition-colors" style="color:var(--catpopup-close-color)" aria-label="Close">
               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 18 6M6 6l12 12"/>
@@ -61,7 +61,8 @@ function renderCategoryPopup(): string {
                 <li class="flex-shrink-0 lg:flex-shrink">
                   <button
                     type="button"
-                    class="cat-popup-btn th-catpopup-sidebar-item flex items-center gap-2 lg:gap-3 w-full px-3 lg:px-4 py-2 lg:py-2.5 text-sm text-left transition-colors whitespace-nowrap lg:whitespace-normal ${index === 0 ? 'th-catpopup-sidebar-item--active' : ''}"
+                    class="cat-popup-btn th-catpopup-sidebar-item flex items-center gap-2 lg:gap-3 w-full px-3 lg:px-4 py-2 lg:py-2.5 text-sm text-left border-l-2 border-l-transparent transition-colors duration-150 whitespace-nowrap lg:whitespace-normal hover:bg-[var(--catpopup-sidebar-active-bg)] hover:text-[var(--catpopup-heading)] ${index === 0 ? 'th-catpopup-sidebar-item--active' : ''}"
+                    style="color:var(--catpopup-text)"
                     data-category="${cat.id}"
                   >
                     <span class="flex-shrink-0" style="color:var(--catpopup-icon)">${getCategoryIcon(cat.icon)}</span>
@@ -86,7 +87,7 @@ function renderCategoryPopup(): string {
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.75 6A2.25 2.25 0 0 1 6 3.75h2.25A2.25 2.25 0 0 1 10.5 6v2.25a2.25 2.25 0 0 1-2.25 2.25H6a2.25 2.25 0 0 1-2.25-2.25V6ZM3.75 15.75A2.25 2.25 0 0 1 6 13.5h2.25a2.25 2.25 0 0 1 2.25 2.25V18a2.25 2.25 0 0 1-2.25 2.25H6A2.25 2.25 0 0 1 3.75 18v-2.25ZM13.5 6a2.25 2.25 0 0 1 2.25-2.25H18A2.25 2.25 0 0 1 20.25 6v2.25A2.25 2.25 0 0 1 18 10.5h-2.25a2.25 2.25 0 0 1-2.25-2.25V6ZM13.5 15.75a2.25 2.25 0 0 1 2.25-2.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-2.25a2.25 2.25 0 0 1-2.25-2.25v-2.25Z"/>
                       </svg>
                     </div>
-                    <span class="th-catpopup-product-name text-xs text-center leading-tight">View all</span>
+                    <span class="text-xs text-center leading-tight transition-colors duration-150" style="color:var(--catpopup-text)">View all</span>
                   </a>
                 </div>
               </div>
@@ -109,7 +110,7 @@ export function CategoryBrowse(): string {
               <li>
                 <button
                   type="button"
-                  class="category-browse-item flex items-center gap-3.5 w-full transition-colors group text-left dark:text-gray-300 dark:hover:bg-gray-700/60 dark:hover:text-white"
+                  class="category-browse-item flex items-center gap-3.5 w-full transition-colors duration-150 group text-left hover:bg-[var(--catpopup-sidebar-hover-bg)] hover:text-[var(--catpopup-heading)] dark:text-gray-300 dark:hover:bg-gray-700/60 dark:hover:text-white"
                   style="color:var(--catpopup-text);font-size:var(--catpopup-sidebar-font-size);font-weight:var(--catpopup-sidebar-font-weight);padding:var(--catpopup-sidebar-padding-y) var(--catpopup-sidebar-padding-x)"
                   data-category-id="${cat.id}"
                 >

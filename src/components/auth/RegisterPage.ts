@@ -73,7 +73,7 @@ export interface RegisterPageState {
  */
 export function RegisterPage(initialStep: RegisterStep = 'account-type'): string {
   return `
-    <div id="register-page" class="auth-page-content" data-current-step="${initialStep}">
+    <div id="register-page" class="w-full" data-current-step="${initialStep}">
       <!-- Step Container - only one step visible at a time -->
       <div id="register-step-container">
         ${renderStep(initialStep)}
@@ -159,7 +159,7 @@ function renderEmailStep(): string {
 
       <!-- Email Input Form -->
       <form id="register-email-form" class="space-y-4" novalidate>
-        <div class="auth-form-field">
+        <div class="auth-form-field relative">
           <label for="register-email-input" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
             E-posta
           </label>

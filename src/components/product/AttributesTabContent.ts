@@ -22,14 +22,14 @@ function buildTableRows(specs: { key: string; value: string }[]): string {
 export function AttributesTabContent(): string {
   return `
     <div id="pd-tab-attributes">
-      <h3 class="pd-section-heading">Temel Özellikler</h3>
+      <h3 class="text-lg font-bold mb-4" style="color: var(--pd-title-color, #111827);">Temel Özellikler</h3>
       <table class="pd-attrs-table">
         <tbody>
           ${buildTableRows(mockProduct.specs)}
         </tbody>
       </table>
 
-      <h3 class="pd-section-heading" style="margin-top: 32px;">Paketleme ve Teslimat</h3>
+      <h3 class="text-lg font-bold mb-4 mt-8" style="color: var(--pd-title-color, #111827);">Paketleme ve Teslimat</h3>
       <table class="pd-attrs-table">
         <tbody>
           ${buildTableRows(mockProduct.packagingSpecs)}
@@ -37,8 +37,8 @@ export function AttributesTabContent(): string {
       </table>
 
       <!-- Lead Time — collapsible -->
-      <div style="margin-top: 32px; border-top: 1px solid var(--pd-spec-border, #e5e5e5);">
-        <button type="button" class="pd-section-collapsible" id="pd-leadtime-toggle">
+      <div class="mt-8" style="border-top: 1px solid var(--pd-spec-border, #e5e5e5);">
+        <button type="button" class="pd-section-collapsible flex items-center justify-between w-full py-4 border-0 bg-transparent text-lg font-bold cursor-pointer" id="pd-leadtime-toggle" style="color: var(--pd-title-color, #111827);">
           <span>Teslim Süresi</span>
           <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
@@ -63,18 +63,18 @@ export function AttributesTabContent(): string {
       </div>
 
       <!-- Customization Options -->
-      <div style="margin-top: 32px; border-top: 1px solid var(--pd-spec-border, #e5e5e5); padding-top: 24px;">
-        <h3 class="pd-section-heading">Özelleştirme Seçenekleri</h3>
+      <div class="mt-8 pt-6" style="border-top: 1px solid var(--pd-spec-border, #e5e5e5);">
+        <h3 class="text-lg font-bold mb-4" style="color: var(--pd-title-color, #111827);">Özelleştirme Seçenekleri</h3>
         ${mockProduct.customizationOptions.map(opt => `
-          <div class="pd-customization-item">
-            <strong>${opt.name}</strong>
-            <span>${opt.priceAddon}</span>
-            <span>(${opt.minOrder})</span>
+          <div class="flex items-baseline gap-2 mb-2 text-sm">
+            <strong style="color: var(--pd-spec-value-color, #111827);">${opt.name}</strong>
+            <span style="color: var(--pd-spec-key-color, #6b7280);">${opt.priceAddon}</span>
+            <span style="color: var(--pd-spec-key-color, #6b7280);">(${opt.minOrder})</span>
           </div>
         `).join('')}
-        <a class="pd-customization-link">Detayları Gör</a>
+        <a class="text-sm underline cursor-pointer" style="color: var(--pd-title-color, #111827);">Detayları Gör</a>
         <div>
-          <button type="button" class="pd-customization-chat">Sohbet Başlat</button>
+          <button type="button" class="inline-flex items-center gap-1.5 mt-3 px-6 py-2.5 text-sm font-medium rounded-full cursor-pointer transition-colors" style="border: 1px solid #333; background: var(--color-surface, #ffffff);">Sohbet Başlat</button>
         </div>
       </div>
     </div>

@@ -1,10 +1,6 @@
 /**
  * SettingsAccountEdit Component
  * Account information view/edit form with localStorage CRUD.
- * - read(): localStorage'dan veri oku
- * - save(data): localStorage'a kaydet
- * - View mode: kayıtlı veriyi göster + "Düzenle" butonu
- * - Edit mode: form inputları + "Gönder" butonu → kaydet → view'a dön
  */
 
 const STORAGE_KEY = 'tradehub_account_data';
@@ -85,68 +81,68 @@ function renderViewMode(data: AccountData): string {
   const fullName = `${data.firstName} ${data.lastName}`.trim();
 
   return `
-    <div class="acc-edit" id="acc-edit-view">
-      <div class="acc-edit__header">
-        <h2 class="acc-edit__title">Hesap Bilgilerinizi Düzenleyin</h2>
-        <a href="#" class="acc-edit__close-link">Hesabı Kapat</a>
+    <div class="bg-white rounded-lg p-8 max-md:p-5" id="acc-edit-view">
+      <div class="flex items-center justify-between">
+        <h2 class="text-lg font-semibold m-0" style="color:var(--color-text-heading, #111827)">Hesap Bilgilerinizi Düzenleyin</h2>
+        <a href="#" class="text-[13px] text-blue-600 no-underline font-medium hover:underline">Hesabı Kapat</a>
       </div>
-      <div class="acc-edit__divider"></div>
-      <div class="acc-edit__hint">* zorunlu bilgi</div>
-      <div class="acc-edit__rows">
-        <div class="acc-edit__row">
-          <div class="acc-edit__label">Hesap Numarası:</div>
-          <div class="acc-edit__value">${data.accountId}</div>
+      <div class="h-px bg-gray-200 mt-5 mb-3"></div>
+      <div class="text-xs text-red-600 text-right mb-3">* zorunlu bilgi</div>
+      <div class="flex flex-col">
+        <div class="flex items-baseline py-2.5 min-h-[38px] max-md:flex-col max-md:gap-1">
+          <div class="w-[220px] flex-shrink-0 text-sm font-bold text-right pr-4 max-md:w-auto max-md:text-left max-md:pr-0" style="color:var(--color-text-heading, #111827)">Hesap Numarası:</div>
+          <div class="flex-1 text-sm flex items-center gap-2" style="color:var(--color-text-body, #333333)">${data.accountId}</div>
         </div>
-        <div class="acc-edit__row">
-          <div class="acc-edit__label">Ad - Soyad:</div>
-          <div class="acc-edit__value">${fullName}</div>
+        <div class="flex items-baseline py-2.5 min-h-[38px] max-md:flex-col max-md:gap-1">
+          <div class="w-[220px] flex-shrink-0 text-sm font-bold text-right pr-4 max-md:w-auto max-md:text-left max-md:pr-0" style="color:var(--color-text-heading, #111827)">Ad - Soyad:</div>
+          <div class="flex-1 text-sm flex items-center gap-2" style="color:var(--color-text-body, #333333)">${fullName}</div>
         </div>
-        <div class="acc-edit__row">
-          <div class="acc-edit__label">Cinsiyet:</div>
-          <div class="acc-edit__value">${data.gender || ''}</div>
+        <div class="flex items-baseline py-2.5 min-h-[38px] max-md:flex-col max-md:gap-1">
+          <div class="w-[220px] flex-shrink-0 text-sm font-bold text-right pr-4 max-md:w-auto max-md:text-left max-md:pr-0" style="color:var(--color-text-heading, #111827)">Cinsiyet:</div>
+          <div class="flex-1 text-sm flex items-center gap-2" style="color:var(--color-text-body, #333333)">${data.gender || ''}</div>
         </div>
-        <div class="acc-edit__row">
-          <div class="acc-edit__label">E-posta Adresi:</div>
-          <div class="acc-edit__value">
+        <div class="flex items-baseline py-2.5 min-h-[38px] max-md:flex-col max-md:gap-1">
+          <div class="w-[220px] flex-shrink-0 text-sm font-bold text-right pr-4 max-md:w-auto max-md:text-left max-md:pr-0" style="color:var(--color-text-heading, #111827)">E-posta Adresi:</div>
+          <div class="flex-1 text-sm flex items-center gap-2" style="color:var(--color-text-body, #333333)">
             ${data.email}
-            ${data.emailVerified ? `<span class="acc-edit__verified">${ICONS.verified} Eposta adresi doğrulandı</span>` : ''}
+            ${data.emailVerified ? `<span class="inline-flex items-center gap-[3px] text-xs italic" style="color:var(--color-primary-500, #cc9900)">${ICONS.verified} Eposta adresi doğrulandı</span>` : ''}
           </div>
         </div>
-        <div class="acc-edit__row">
-          <div class="acc-edit__label">Alternatif E-posta Adresi:</div>
-          <div class="acc-edit__value">${data.altEmail || ''}</div>
+        <div class="flex items-baseline py-2.5 min-h-[38px] max-md:flex-col max-md:gap-1">
+          <div class="w-[220px] flex-shrink-0 text-sm font-bold text-right pr-4 max-md:w-auto max-md:text-left max-md:pr-0" style="color:var(--color-text-heading, #111827)">Alternatif E-posta Adresi:</div>
+          <div class="flex-1 text-sm flex items-center gap-2" style="color:var(--color-text-body, #333333)">${data.altEmail || ''}</div>
         </div>
-        <div class="acc-edit__row">
-          <div class="acc-edit__label">İletişim Adresi:</div>
-          <div class="acc-edit__value">${[data.address, data.city, data.country].filter(Boolean).join(', ') || ''}</div>
+        <div class="flex items-baseline py-2.5 min-h-[38px] max-md:flex-col max-md:gap-1">
+          <div class="w-[220px] flex-shrink-0 text-sm font-bold text-right pr-4 max-md:w-auto max-md:text-left max-md:pr-0" style="color:var(--color-text-heading, #111827)">İletişim Adresi:</div>
+          <div class="flex-1 text-sm flex items-center gap-2" style="color:var(--color-text-body, #333333)">${[data.address, data.city, data.country].filter(Boolean).join(', ') || ''}</div>
         </div>
-        <div class="acc-edit__row">
-          <div class="acc-edit__label">Posta Kodu:</div>
-          <div class="acc-edit__value">${data.postalCode || ''}</div>
+        <div class="flex items-baseline py-2.5 min-h-[38px] max-md:flex-col max-md:gap-1">
+          <div class="w-[220px] flex-shrink-0 text-sm font-bold text-right pr-4 max-md:w-auto max-md:text-left max-md:pr-0" style="color:var(--color-text-heading, #111827)">Posta Kodu:</div>
+          <div class="flex-1 text-sm flex items-center gap-2" style="color:var(--color-text-body, #333333)">${data.postalCode || ''}</div>
         </div>
-        <div class="acc-edit__row">
-          <div class="acc-edit__label">Tel:</div>
-          <div class="acc-edit__value">${phone}</div>
+        <div class="flex items-baseline py-2.5 min-h-[38px] max-md:flex-col max-md:gap-1">
+          <div class="w-[220px] flex-shrink-0 text-sm font-bold text-right pr-4 max-md:w-auto max-md:text-left max-md:pr-0" style="color:var(--color-text-heading, #111827)">Tel:</div>
+          <div class="flex-1 text-sm flex items-center gap-2" style="color:var(--color-text-body, #333333)">${phone}</div>
         </div>
-        <div class="acc-edit__row">
-          <div class="acc-edit__label">Faks:</div>
-          <div class="acc-edit__value">${fax}</div>
+        <div class="flex items-baseline py-2.5 min-h-[38px] max-md:flex-col max-md:gap-1">
+          <div class="w-[220px] flex-shrink-0 text-sm font-bold text-right pr-4 max-md:w-auto max-md:text-left max-md:pr-0" style="color:var(--color-text-heading, #111827)">Faks:</div>
+          <div class="flex-1 text-sm flex items-center gap-2" style="color:var(--color-text-body, #333333)">${fax}</div>
         </div>
-        <div class="acc-edit__row">
-          <div class="acc-edit__label">Mobil:</div>
-          <div class="acc-edit__value">${data.mobile || ''}</div>
+        <div class="flex items-baseline py-2.5 min-h-[38px] max-md:flex-col max-md:gap-1">
+          <div class="w-[220px] flex-shrink-0 text-sm font-bold text-right pr-4 max-md:w-auto max-md:text-left max-md:pr-0" style="color:var(--color-text-heading, #111827)">Mobil:</div>
+          <div class="flex-1 text-sm flex items-center gap-2" style="color:var(--color-text-body, #333333)">${data.mobile || ''}</div>
         </div>
-        <div class="acc-edit__row">
-          <div class="acc-edit__label">Departman:</div>
-          <div class="acc-edit__value">${data.department || ''}</div>
+        <div class="flex items-baseline py-2.5 min-h-[38px] max-md:flex-col max-md:gap-1">
+          <div class="w-[220px] flex-shrink-0 text-sm font-bold text-right pr-4 max-md:w-auto max-md:text-left max-md:pr-0" style="color:var(--color-text-heading, #111827)">Departman:</div>
+          <div class="flex-1 text-sm flex items-center gap-2" style="color:var(--color-text-body, #333333)">${data.department || ''}</div>
         </div>
-        <div class="acc-edit__row">
-          <div class="acc-edit__label">Meslek:</div>
-          <div class="acc-edit__value">${data.occupation || ''}</div>
+        <div class="flex items-baseline py-2.5 min-h-[38px] max-md:flex-col max-md:gap-1">
+          <div class="w-[220px] flex-shrink-0 text-sm font-bold text-right pr-4 max-md:w-auto max-md:text-left max-md:pr-0" style="color:var(--color-text-heading, #111827)">Meslek:</div>
+          <div class="flex-1 text-sm flex items-center gap-2" style="color:var(--color-text-body, #333333)">${data.occupation || ''}</div>
         </div>
       </div>
-      <div class="acc-edit__footer">
-        <button class="acc-edit__btn acc-edit__btn--edit" type="button" id="acc-edit-toggle">Düzenle</button>
+      <div class="mt-6 py-4 bg-[#eff1f7] rounded-md flex justify-center">
+        <button class="py-1.5 px-7 rounded border-[1.5px] border-primary-600 bg-white text-sm font-medium cursor-pointer transition-all hover:bg-amber-50 hover:border-amber-700" style="color:var(--color-text-heading, #111827)" type="button" id="acc-edit-toggle">Düzenle</button>
       </div>
     </div>
   `;
@@ -168,110 +164,115 @@ function renderEditMode(data: AccountData): string {
     `<option value="${d.value}" ${d.value === data.department ? 'selected' : ''}>${d.label}</option>`
   ).join('');
 
+  const rowCls = "flex items-baseline py-2.5 min-h-[38px] max-md:flex-col max-md:gap-1";
+  const labelCls = "w-[220px] flex-shrink-0 text-sm font-bold text-right pr-4 max-md:w-auto max-md:text-left max-md:pr-0";
+  const fieldCls = "flex-1 flex items-center gap-2 text-sm";
+  const inputCls = "py-1.5 px-2.5 border border-gray-300 rounded text-sm outline-none transition-colors focus:border-blue-600";
+
   return `
-    <div class="acc-edit acc-edit--form" id="acc-edit-form" style="display:none">
-      <div class="acc-edit__header">
-        <h2 class="acc-edit__title">Hesap Bilgilerinizi Düzenleyin</h2>
-        <a href="#" class="acc-edit__close-link">Hesabı Kapat</a>
+    <div class="bg-white rounded-lg p-8 max-md:p-5" id="acc-edit-form" style="display:none">
+      <div class="flex items-center justify-between">
+        <h2 class="text-lg font-semibold m-0" style="color:var(--color-text-heading, #111827)">Hesap Bilgilerinizi Düzenleyin</h2>
+        <a href="#" class="text-[13px] text-blue-600 no-underline font-medium hover:underline">Hesabı Kapat</a>
       </div>
-      <div class="acc-edit__divider"></div>
-      <div class="acc-edit__hint">* zorunlu bilgi</div>
-      <div class="acc-edit__rows">
-        <div class="acc-edit__row">
-          <div class="acc-edit__label"><span class="acc-edit__req">*</span> Ad - Soyad:</div>
-          <div class="acc-edit__field">
-            <input type="text" class="acc-edit__input acc-edit__input--half" data-field="firstName" value="${data.firstName}" placeholder="Ad" />
-            <input type="text" class="acc-edit__input acc-edit__input--half" data-field="lastName" value="${data.lastName}" placeholder="Soyad" />
+      <div class="h-px bg-gray-200 mt-5 mb-3"></div>
+      <div class="text-xs text-red-600 text-right mb-3">* zorunlu bilgi</div>
+      <div class="flex flex-col">
+        <div class="${rowCls}">
+          <div class="${labelCls}" style="color:var(--color-text-heading, #111827)"><span class="text-red-600 mr-0.5">*</span> Ad - Soyad:</div>
+          <div class="${fieldCls}" style="color:var(--color-text-body, #333333)">
+            <input type="text" class="${inputCls} w-[140px]" data-field="firstName" value="${data.firstName}" placeholder="Ad" />
+            <input type="text" class="${inputCls} w-[140px]" data-field="lastName" value="${data.lastName}" placeholder="Soyad" />
           </div>
         </div>
-        <div class="acc-edit__row">
-          <div class="acc-edit__label"><span class="acc-edit__req">*</span> Cinsiyet:</div>
-          <div class="acc-edit__field">
-            <label class="acc-edit__radio"><input type="radio" name="gender" value="Erkek" ${data.gender === 'Erkek' ? 'checked' : ''} /> Erkek</label>
-            <label class="acc-edit__radio"><input type="radio" name="gender" value="Kadın" ${data.gender === 'Kadın' ? 'checked' : ''} /> Kadın</label>
+        <div class="${rowCls}">
+          <div class="${labelCls}" style="color:var(--color-text-heading, #111827)"><span class="text-red-600 mr-0.5">*</span> Cinsiyet:</div>
+          <div class="${fieldCls}" style="color:var(--color-text-body, #333333)">
+            <label class="inline-flex items-center gap-1 text-sm cursor-pointer" style="color:var(--color-text-body, #333333)"><input type="radio" name="gender" value="Erkek" class="m-0" ${data.gender === 'Erkek' ? 'checked' : ''} /> Erkek</label>
+            <label class="inline-flex items-center gap-1 text-sm cursor-pointer" style="color:var(--color-text-body, #333333)"><input type="radio" name="gender" value="Kadın" class="m-0" ${data.gender === 'Kadın' ? 'checked' : ''} /> Kadın</label>
           </div>
         </div>
-        <div class="acc-edit__row">
-          <div class="acc-edit__label"><span class="acc-edit__req">*</span> E-posta Adresi:</div>
-          <div class="acc-edit__field">
+        <div class="${rowCls}">
+          <div class="${labelCls}" style="color:var(--color-text-heading, #111827)"><span class="text-red-600 mr-0.5">*</span> E-posta Adresi:</div>
+          <div class="${fieldCls}" style="color:var(--color-text-body, #333333)">
             <span>${data.email}</span>
-            ${data.emailVerified ? `<span class="acc-edit__verified">${ICONS.verified} Eposta adresi doğrulandı,</span>` : ''}
-            <a href="#" class="acc-edit__link">eposta adresini değiştirin</a>
+            ${data.emailVerified ? `<span class="inline-flex items-center gap-[3px] text-xs italic" style="color:var(--color-primary-500, #cc9900)">${ICONS.verified} Eposta adresi doğrulandı,</span>` : ''}
+            <a href="#" class="text-[13px] text-blue-600 no-underline hover:underline">eposta adresini değiştirin</a>
           </div>
         </div>
-        <div class="acc-edit__row">
-          <div class="acc-edit__label">Alternatif E-posta Adresi:</div>
-          <div class="acc-edit__field acc-edit__field--col">
-            <input type="email" class="acc-edit__input" data-field="altEmail" value="${data.altEmail}" />
-            <span class="acc-edit__helper">(Alternatif E-posta adresinize e-posta alabilmeniz için alternatif eposta adresinizin doğru ve güncel olduğundan emin olun.)</span>
+        <div class="${rowCls}">
+          <div class="${labelCls}" style="color:var(--color-text-heading, #111827)">Alternatif E-posta Adresi:</div>
+          <div class="flex-1 flex flex-col items-start gap-2.5 text-sm" style="color:var(--color-text-body, #333333)">
+            <input type="email" class="${inputCls}" data-field="altEmail" value="${data.altEmail}" />
+            <span class="text-xs italic" style="color:var(--color-text-placeholder, #999999)">(Alternatif E-posta adresinize e-posta alabilmeniz için alternatif eposta adresinizin doğru ve güncel olduğundan emin olun.)</span>
           </div>
         </div>
-        <div class="acc-edit__row">
-          <div class="acc-edit__label"><span class="acc-edit__req">*</span> İletişim Adresi:</div>
-          <div class="acc-edit__field acc-edit__field--col">
-            <div class="acc-edit__addr-group">
-              <label class="acc-edit__addr-label">Açık Adres:</label>
-              <input type="text" class="acc-edit__input" data-field="address" value="${data.address}" />
+        <div class="${rowCls}">
+          <div class="${labelCls}" style="color:var(--color-text-heading, #111827)"><span class="text-red-600 mr-0.5">*</span> İletişim Adresi:</div>
+          <div class="flex-1 flex flex-col items-start gap-2.5 text-sm" style="color:var(--color-text-body, #333333)">
+            <div class="flex items-center gap-2 w-full">
+              <label class="text-[13px] min-w-[80px] flex-shrink-0" style="color:var(--color-text-muted, #666666)">Açık Adres:</label>
+              <input type="text" class="${inputCls}" data-field="address" value="${data.address}" />
             </div>
-            <div class="acc-edit__addr-group">
-              <label class="acc-edit__addr-label">Şehir:</label>
-              <input type="text" class="acc-edit__input" data-field="city" value="${data.city}" />
+            <div class="flex items-center gap-2 w-full">
+              <label class="text-[13px] min-w-[80px] flex-shrink-0" style="color:var(--color-text-muted, #666666)">Şehir:</label>
+              <input type="text" class="${inputCls}" data-field="city" value="${data.city}" />
             </div>
-            <div class="acc-edit__addr-group">
-              <label class="acc-edit__addr-label">Ülke/Bölge:</label>
-              <select class="acc-edit__select" data-field="country">
+            <div class="flex items-center gap-2 w-full">
+              <label class="text-[13px] min-w-[80px] flex-shrink-0" style="color:var(--color-text-muted, #666666)">Ülke/Bölge:</label>
+              <select class="py-1.5 px-2.5 border border-gray-300 rounded text-sm outline-none min-w-[180px] bg-white" style="color:var(--color-text-heading, #111827)" data-field="country">
                 <option value="Turkey" ${data.country === 'Turkey' ? 'selected' : ''}>Turkey</option>
               </select>
             </div>
-            <div class="acc-edit__addr-group">
-              <label class="acc-edit__addr-label">Posta Kodu:</label>
-              <input type="text" class="acc-edit__input acc-edit__input--short" data-field="postalCode" value="${data.postalCode}" />
+            <div class="flex items-center gap-2 w-full">
+              <label class="text-[13px] min-w-[80px] flex-shrink-0" style="color:var(--color-text-muted, #666666)">Posta Kodu:</label>
+              <input type="text" class="${inputCls} w-[160px]" data-field="postalCode" value="${data.postalCode}" />
             </div>
           </div>
         </div>
-        <div class="acc-edit__row">
-          <div class="acc-edit__label"><span class="acc-edit__req">*</span> Tel:</div>
-          <div class="acc-edit__field">
-            <div class="acc-edit__phone-group">
-              <div><label class="acc-edit__phone-label">Ülke kodu:</label><input type="text" class="acc-edit__input acc-edit__input--xs" data-field="phoneCountry" value="${data.phoneCountry}" /></div>
-              <div><label class="acc-edit__phone-label">Bölge kodu:</label><input type="text" class="acc-edit__input acc-edit__input--xs" data-field="phoneArea" value="${data.phoneArea}" /></div>
-              <div><label class="acc-edit__phone-label">Numara:</label><input type="text" class="acc-edit__input acc-edit__input--sm" data-field="phoneNumber" value="${data.phoneNumber}" /></div>
+        <div class="${rowCls}">
+          <div class="${labelCls}" style="color:var(--color-text-heading, #111827)"><span class="text-red-600 mr-0.5">*</span> Tel:</div>
+          <div class="${fieldCls}" style="color:var(--color-text-body, #333333)">
+            <div class="flex items-end gap-3 max-md:flex-col max-md:items-start max-md:gap-2">
+              <div><label class="block text-xs mb-1" style="color:var(--color-text-muted, #666666)">Ülke kodu:</label><input type="text" class="${inputCls} w-[90px]" data-field="phoneCountry" value="${data.phoneCountry}" /></div>
+              <div><label class="block text-xs mb-1" style="color:var(--color-text-muted, #666666)">Bölge kodu:</label><input type="text" class="${inputCls} w-[90px]" data-field="phoneArea" value="${data.phoneArea}" /></div>
+              <div><label class="block text-xs mb-1" style="color:var(--color-text-muted, #666666)">Numara:</label><input type="text" class="${inputCls} w-[140px]" data-field="phoneNumber" value="${data.phoneNumber}" /></div>
             </div>
           </div>
         </div>
-        <div class="acc-edit__row">
-          <div class="acc-edit__label">Faks:</div>
-          <div class="acc-edit__field">
-            <div class="acc-edit__phone-group">
-              <div><label class="acc-edit__phone-label">Ülke kodu:</label><input type="text" class="acc-edit__input acc-edit__input--xs" data-field="faxCountry" value="${data.faxCountry}" /></div>
-              <div><label class="acc-edit__phone-label">Bölge kodu:</label><input type="text" class="acc-edit__input acc-edit__input--xs" data-field="faxArea" value="${data.faxArea}" /></div>
-              <div><label class="acc-edit__phone-label">Numara:</label><input type="text" class="acc-edit__input acc-edit__input--sm" data-field="faxNumber" value="${data.faxNumber}" /></div>
+        <div class="${rowCls}">
+          <div class="${labelCls}" style="color:var(--color-text-heading, #111827)">Faks:</div>
+          <div class="${fieldCls}" style="color:var(--color-text-body, #333333)">
+            <div class="flex items-end gap-3 max-md:flex-col max-md:items-start max-md:gap-2">
+              <div><label class="block text-xs mb-1" style="color:var(--color-text-muted, #666666)">Ülke kodu:</label><input type="text" class="${inputCls} w-[90px]" data-field="faxCountry" value="${data.faxCountry}" /></div>
+              <div><label class="block text-xs mb-1" style="color:var(--color-text-muted, #666666)">Bölge kodu:</label><input type="text" class="${inputCls} w-[90px]" data-field="faxArea" value="${data.faxArea}" /></div>
+              <div><label class="block text-xs mb-1" style="color:var(--color-text-muted, #666666)">Numara:</label><input type="text" class="${inputCls} w-[140px]" data-field="faxNumber" value="${data.faxNumber}" /></div>
             </div>
           </div>
         </div>
-        <div class="acc-edit__row">
-          <div class="acc-edit__label">Mobil:</div>
-          <div class="acc-edit__field">
-            <input type="text" class="acc-edit__input acc-edit__input--short" data-field="mobile" value="${data.mobile}" />
+        <div class="${rowCls}">
+          <div class="${labelCls}" style="color:var(--color-text-heading, #111827)">Mobil:</div>
+          <div class="${fieldCls}" style="color:var(--color-text-body, #333333)">
+            <input type="text" class="${inputCls} w-[160px]" data-field="mobile" value="${data.mobile}" />
           </div>
         </div>
-        <div class="acc-edit__row">
-          <div class="acc-edit__label">Departman:</div>
-          <div class="acc-edit__field">
-            <select class="acc-edit__select" data-field="department">
+        <div class="${rowCls}">
+          <div class="${labelCls}" style="color:var(--color-text-heading, #111827)">Departman:</div>
+          <div class="${fieldCls}" style="color:var(--color-text-body, #333333)">
+            <select class="py-1.5 px-2.5 border border-gray-300 rounded text-sm outline-none min-w-[180px] bg-white" style="color:var(--color-text-heading, #111827)" data-field="department">
               ${deptOptions}
             </select>
           </div>
         </div>
-        <div class="acc-edit__row">
-          <div class="acc-edit__label">Meslek:</div>
-          <div class="acc-edit__field">
-            <input type="text" class="acc-edit__input" data-field="occupation" value="${data.occupation}" />
+        <div class="${rowCls}">
+          <div class="${labelCls}" style="color:var(--color-text-heading, #111827)">Meslek:</div>
+          <div class="${fieldCls}" style="color:var(--color-text-body, #333333)">
+            <input type="text" class="${inputCls}" data-field="occupation" value="${data.occupation}" />
           </div>
         </div>
       </div>
-      <div class="acc-edit__footer">
-        <button class="acc-edit__btn acc-edit__btn--submit" type="button" id="acc-edit-submit">Gönder</button>
+      <div class="mt-6 py-4 bg-[#eff1f7] rounded-md flex justify-center">
+        <button class="py-1.5 px-7 rounded border-[1.5px] border-primary-600 bg-white text-sm font-medium cursor-pointer transition-all hover:bg-amber-50 hover:border-amber-700" style="color:var(--color-text-heading, #111827)" type="button" id="acc-edit-submit">Gönder</button>
       </div>
     </div>
   `;
@@ -301,7 +302,6 @@ export function initSettingsAccountEdit(): void {
     const formEl = document.getElementById('acc-edit-form');
     if (!formEl) return current;
 
-    // Read all data-field inputs/selects
     formEl.querySelectorAll<HTMLInputElement | HTMLSelectElement>('[data-field]').forEach(el => {
       const field = el.dataset.field as keyof AccountData;
       if (field && field in current) {
@@ -309,7 +309,6 @@ export function initSettingsAccountEdit(): void {
       }
     });
 
-    // Read gender radio
     const genderRadio = formEl.querySelector<HTMLInputElement>('input[name="gender"]:checked');
     if (genderRadio) {
       current.gender = genderRadio.value;
@@ -324,7 +323,6 @@ export function initSettingsAccountEdit(): void {
     const editBtn = document.getElementById('acc-edit-toggle');
     const submitBtn = document.getElementById('acc-edit-submit');
 
-    // Düzenle → show form
     if (editBtn && viewEl && formEl) {
       editBtn.addEventListener('click', () => {
         viewEl.style.display = 'none';
@@ -332,7 +330,6 @@ export function initSettingsAccountEdit(): void {
       });
     }
 
-    // Gönder → collect, save, re-render view
     if (submitBtn) {
       submitBtn.addEventListener('click', () => {
         const data = collectFormData();

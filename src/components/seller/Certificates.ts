@@ -34,12 +34,12 @@ export function Certificates(certificates: Certificate[]): string {
           </div>
 
           <!-- Navigation Arrows -->
-          <button class="certificates__prev absolute -left-4 top-1/2 -translate-y-1/2 w-8 h-12 rounded-sm flex items-center justify-center z-10 transition-colors" aria-label="Önceki sertifika">
+          <button class="certificates__prev absolute -left-4 top-1/2 -translate-y-1/2 w-8 h-12 bg-[#e5e5e5] hover:bg-[#d1d5db] dark:bg-gray-700 dark:hover:bg-gray-600 rounded-sm flex items-center justify-center z-10 transition-colors duration-200 border-none cursor-pointer" aria-label="Önceki sertifika">
             <svg class="w-4 h-4 text-[#6b7280]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
             </svg>
           </button>
-          <button class="certificates__next absolute -right-4 top-1/2 -translate-y-1/2 w-8 h-12 rounded-sm flex items-center justify-center z-10 transition-colors" aria-label="Sonraki sertifika">
+          <button class="certificates__next absolute -right-4 top-1/2 -translate-y-1/2 w-8 h-12 bg-[#e5e5e5] hover:bg-[#d1d5db] dark:bg-gray-700 dark:hover:bg-gray-600 rounded-sm flex items-center justify-center z-10 transition-colors duration-200 border-none cursor-pointer" aria-label="Sonraki sertifika">
             <svg class="w-4 h-4 text-[#6b7280]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
             </svg>

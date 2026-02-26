@@ -100,7 +100,7 @@ export function AccountSetupForm(defaultCountry: string = 'TR'): string {
   const selectedCountry = countryOptions.find(c => c.code === defaultCountry) || countryOptions[0];
 
   return `
-    <div id="account-setup-form" class="auth-page-content">
+    <div id="account-setup-form" class="w-full">
       <!-- Header -->
       <div class="mb-6 text-center lg:text-left">
         <h1 class="text-xl lg:text-2xl font-bold text-gray-900 dark:text-white mb-2">
@@ -113,7 +113,7 @@ export function AccountSetupForm(defaultCountry: string = 'TR'): string {
 
       <form id="account-setup-form-element" class="space-y-5" novalidate>
         <!-- Country/Region Dropdown -->
-        <div class="auth-form-field">
+        <div class="auth-form-field relative">
           <label for="country-select" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
             Ülke / Bölge
           </label>
@@ -151,7 +151,7 @@ export function AccountSetupForm(defaultCountry: string = 'TR'): string {
         <!-- Name Fields (side by side) -->
         <div class="grid grid-cols-2 gap-4">
           <!-- First Name -->
-          <div class="auth-form-field">
+          <div class="auth-form-field relative">
             <label for="first-name-input" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
               Ad
             </label>
@@ -167,7 +167,7 @@ export function AccountSetupForm(defaultCountry: string = 'TR'): string {
           </div>
 
           <!-- Last Name -->
-          <div class="auth-form-field">
+          <div class="auth-form-field relative">
             <label for="last-name-input" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
               Soyad
             </label>
@@ -184,7 +184,7 @@ export function AccountSetupForm(defaultCountry: string = 'TR'): string {
         </div>
 
         <!-- Password Field -->
-        <div class="auth-form-field">
+        <div class="auth-form-field relative">
           <label for="password-input" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
             Şifre
           </label>
@@ -217,27 +217,27 @@ export function AccountSetupForm(defaultCountry: string = 'TR'): string {
           </div>
 
           <!-- Password Requirements -->
-          <div id="password-requirements" class="auth-password-requirements mt-3">
-            <div class="auth-password-req-item" data-requirement="minLength">
-              <svg class="auth-password-req-icon" viewBox="0 0 16 16" fill="currentColor">
+          <div id="password-requirements" class="auth-password-requirements flex flex-col gap-1.5 mt-3">
+            <div class="auth-password-req-item flex items-center gap-2 text-[13px] transition-colors" data-requirement="minLength">
+              <svg class="auth-password-req-icon shrink-0 w-2 h-2 transition-all" viewBox="0 0 16 16" fill="currentColor">
                 <circle cx="8" cy="8" r="3"/>
               </svg>
               <span>En az 8 karakter</span>
             </div>
-            <div class="auth-password-req-item" data-requirement="hasUppercase">
-              <svg class="auth-password-req-icon" viewBox="0 0 16 16" fill="currentColor">
+            <div class="auth-password-req-item flex items-center gap-2 text-[13px] transition-colors" data-requirement="hasUppercase">
+              <svg class="auth-password-req-icon shrink-0 w-2 h-2 transition-all" viewBox="0 0 16 16" fill="currentColor">
                 <circle cx="8" cy="8" r="3"/>
               </svg>
               <span>En az 1 büyük harf (A-Z)</span>
             </div>
-            <div class="auth-password-req-item" data-requirement="hasLowercase">
-              <svg class="auth-password-req-icon" viewBox="0 0 16 16" fill="currentColor">
+            <div class="auth-password-req-item flex items-center gap-2 text-[13px] transition-colors" data-requirement="hasLowercase">
+              <svg class="auth-password-req-icon shrink-0 w-2 h-2 transition-all" viewBox="0 0 16 16" fill="currentColor">
                 <circle cx="8" cy="8" r="3"/>
               </svg>
               <span>En az 1 küçük harf (a-z)</span>
             </div>
-            <div class="auth-password-req-item" data-requirement="hasNumber">
-              <svg class="auth-password-req-icon" viewBox="0 0 16 16" fill="currentColor">
+            <div class="auth-password-req-item flex items-center gap-2 text-[13px] transition-colors" data-requirement="hasNumber">
+              <svg class="auth-password-req-icon shrink-0 w-2 h-2 transition-all" viewBox="0 0 16 16" fill="currentColor">
                 <circle cx="8" cy="8" r="3"/>
               </svg>
               <span>En az 1 rakam (0-9)</span>

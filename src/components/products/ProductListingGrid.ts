@@ -186,7 +186,7 @@ function countryFlag(code?: string): string {
  */
 function checkIcon(): string {
   return `
-    <svg class="searchx-selling-point-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+    <svg class="w-3.5 h-3.5 shrink-0 text-[rgb(34,137,31)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
       <polyline points="20 6 9 17 4 12"/>
     </svg>
   `;
@@ -206,7 +206,7 @@ function renderProductListingCard(card: ProductListingCard): string {
   // Selling point badge
   const sellingPointText = card.sellingPoint || card.promo || '';
   const sellingPointHtml = sellingPointText
-    ? `<div class="searchx-selling-point-content">
+    ? `<div class="flex items-center gap-1 h-4 mt-1 text-xs text-[rgb(34,137,31)]">
         ${checkIcon()}
         <span>${sellingPointText}</span>
       </div>`
@@ -214,17 +214,17 @@ function renderProductListingCard(card: ProductListingCard): string {
 
   // MOQ
   const moqHtml = card.moq
-    ? `<div class="searchx-moq">Minimum siparis: ${card.moq}</div>`
+    ? `<div class="text-sm font-normal leading-[18px] text-gray-900">Minimum siparis: ${card.moq}</div>`
     : '';
 
   // Sold
   const soldHtml = card.stats
-    ? `<div class="searchx-sold-order">${card.stats}</div>`
+    ? `<div class="text-sm font-normal leading-[18px] text-[#767676]">${card.stats}</div>`
     : '';
 
   // Supplier name
   const supplierNameHtml = card.supplierName
-    ? `<a class="searchx-product-e-company">${card.supplierName}</a>`
+    ? `<a class="block text-xs font-normal text-[#767676] no-underline whitespace-nowrap overflow-hidden text-ellipsis mb-0.5">${card.supplierName}</a>`
     : '';
 
   // Supplier info: year, country, rating
@@ -233,61 +233,61 @@ function renderProductListingCard(card: ProductListingCard): string {
   if (card.supplierCountry) yearCountryParts.push(`${countryFlag(card.supplierCountry)} <span>${card.supplierCountry}</span>`);
 
   const yearCountryHtml = yearCountryParts.length > 0
-    ? `<a class="searchx-product-e-supplier__year">${yearCountryParts.join(' ')}</a>`
+    ? `<a class="text-xs font-normal text-black no-underline">${yearCountryParts.join(' ')}</a>`
     : '';
 
   const ratingHtml = card.rating
-    ? `<span class="searchx-product-e-review"><span>${card.rating}</span>/5.0${card.reviewCount ? ` <span>(${card.reviewCount.toLocaleString()})</span>` : ''}</span>`
+    ? `<span class="text-xs font-normal text-gray-900 leading-4"><span>${card.rating}</span>/5.0${card.reviewCount ? ` <span>(${card.reviewCount.toLocaleString()})</span>` : ''}</span>`
     : '';
 
   const supplierInfoParts = [yearCountryHtml, ratingHtml].filter(Boolean);
   const supplierContentHtml = (card.supplierYears || card.supplierCountry || card.rating)
-    ? `<div class="searchx-supplier-content">
+    ? `<div class="flex items-center gap-1 text-xs font-normal leading-4 text-black mt-0.5">
         ${starIcon()}
         ${supplierInfoParts.join('')}
       </div>`
     : '';
 
   return `
-    <div class="fy26-product-card-wrapper">
+    <div class="fy26-product-card-wrapper flex flex-col justify-between w-full rounded-xl overflow-hidden bg-white pb-2 border-0">
       <!-- Image area -->
-      <div class="searchx-img-area">
+      <div class="relative mb-2">
         ${renderImageSlider(card)}
       </div>
 
       <!-- Content area -->
-      <div class="fy26-product-card-content">
+      <div class="flex-1 flex flex-col">
         <!-- Title area -->
-        <div class="searchx-title-area">
-          <h2 class="searchx-product-e-title">
-            <a href="${card.href}" target="_blank"><span>${card.name}</span></a>
+        <div class="px-1">
+          <h2 class="searchx-product-e-title text-sm font-normal leading-[18px] h-[54px] text-[#333] overflow-hidden text-ellipsis line-clamp-3 m-0">
+            <a href="${card.href}" target="_blank" class="text-inherit no-underline hover:text-primary-500"><span>${card.name}</span></a>
           </h2>
           ${sellingPointHtml}
         </div>
 
         <!-- Price area -->
-        <div class="searchx-price-area">
-          <div class="searchx-product-price-price-main">${card.price}</div>
-          <div class="price-area-center">
+        <div class="px-1 mt-1">
+          <div class="text-xl font-semibold leading-[26px] text-gray-900">${card.price}</div>
+          <div class="flex gap-1.5 flex-wrap mt-0.5">
             ${moqHtml}
             ${soldHtml}
           </div>
         </div>
 
         <!-- Supplier area -->
-        <div class="searchx-product-area">
+        <div class="px-1 mt-2">
           ${supplierNameHtml}
           ${supplierContentHtml}
         </div>
       </div>
 
       <!-- Action buttons -->
-      <div class="action-area-layout">
-        <button type="button" class="searchx-product-e-abutton"
+      <div class="flex gap-2 px-1 items-center">
+        <button type="button" class="searchx-product-e-abutton flex items-center justify-center h-9 px-[15px] border border-[#222] rounded-full text-sm font-medium text-gray-900 bg-transparent cursor-pointer whitespace-nowrap transition-colors hover:bg-gray-100"
                 data-add-to-cart="${card.id}">
           Sepete ekle
         </button>
-        <button type="button" class="searchx-product-e-abutton"
+        <button type="button" class="searchx-product-e-abutton flex items-center justify-center h-9 px-[15px] border border-[#222] rounded-full text-sm font-medium text-gray-900 bg-transparent cursor-pointer whitespace-nowrap transition-colors hover:bg-gray-100"
                 onclick="event.preventDefault(); event.stopPropagation();">
           Hemen sohbet et
         </button>
@@ -459,7 +459,7 @@ export function ProductListingGrid(products: ProductListingCard[] = mockProductL
     return `
       <section aria-label="Ürün Listesi" class="flex-1">
         <div
-          class="grid product-grid"
+          class="grid grid-cols-2 md:grid-cols-4 product-grid"
           style="gap: var(--product-grid-gap, 12px);"
           role="list"
           aria-label="Ürün listesi"
@@ -473,7 +473,7 @@ export function ProductListingGrid(products: ProductListingCard[] = mockProductL
   return `
     <section aria-label="Ürün Listesi" class="flex-1">
       <div
-        class="grid product-grid"
+        class="grid grid-cols-2 md:grid-cols-4 product-grid"
         style="gap: var(--product-grid-gap, 12px);"
         role="list"
         aria-label="Ürün listesi"

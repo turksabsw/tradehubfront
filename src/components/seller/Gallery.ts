@@ -17,7 +17,7 @@ export function Gallery(photos: GalleryPhoto[], title?: string): string {
         </h2>
         <div class="gallery__grid grid grid-cols-3 lg:grid-cols-2 md:grid-cols-1 gap-4">
           ${photos.map(photo => `
-            <div class="gallery__item relative rounded-[var(--radius-md)] overflow-hidden aspect-[4/3] group cursor-pointer focus-visible:ring-2 focus-visible:ring-[#cc9900] focus-visible:ring-offset-2 outline-none"
+            <div class="gallery__item relative rounded-[var(--radius-md)] overflow-hidden aspect-[4/3] group cursor-pointer hover:shadow-md transition-shadow duration-300 focus-visible:ring-2 focus-visible:ring-[#cc9900] focus-visible:ring-offset-2 outline-none"
                  tabindex="0"
                  role="button"
                  aria-label="${photo.caption || 'Fabrika fotoğrafı'}">

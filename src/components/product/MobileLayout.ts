@@ -38,14 +38,14 @@ function collapsibleSection(cfg: CollapsibleConfig): string {
     : cfg.bodyHtml ? `data-pdm-target="${cfg.id}-body"` : '';
 
   return `
-    <div class="pdm-section-divider"></div>
-    <div class="pdm-collapsible-section${cfg.sectionClass ? ' ' + cfg.sectionClass : ''}" id="${cfg.id}">
-      <button type="button" class="pdm-collapsible-header" ${headerAttr}>
+    <div class="pdm-section-divider h-2 bg-surface-raised"></div>
+    <div class="pdm-collapsible-section bg-surface${cfg.sectionClass ? ' ' + cfg.sectionClass : ''}" id="${cfg.id}">
+      <button type="button" class="pdm-collapsible-header w-full flex items-center justify-between px-4 py-3.5 border-none bg-none text-sm font-semibold text-text-heading cursor-pointer text-left" ${headerAttr}>
         <span>${cfg.title}</span>
         ${chevronSvg}
       </button>
       ${cfg.previewHtml ?? ''}
-      ${cfg.bodyHtml ? `<div class="pdm-collapsible-body pdm-hidden" id="${cfg.id}-body">${cfg.bodyHtml}</div>` : ''}
+      ${cfg.bodyHtml ? `<div class="pdm-collapsible-body pdm-hidden px-4 pb-3.5" id="${cfg.id}-body">${cfg.bodyHtml}</div>` : ''}
     </div>
   `;
 }
@@ -73,10 +73,10 @@ function renderVariantSection(variant: typeof mockProduct.variants[number]): str
 
   if (variant.type === 'color') {
     const thumbs = variant.options.map(opt => `
-      <button type="button" class="pdm-color-thumb${!opt.available ? ' pdm-disabled' : ''}"
+      <button type="button" class="pdm-color-thumb w-14 h-14 rounded-[6px] border-2 border-border-default overflow-hidden cursor-pointer p-0 bg-none${!opt.available ? ' pdm-disabled' : ''}"
         data-value="${opt.id}" data-label="${opt.label}" ${!opt.available ? 'disabled' : ''}>
         ${opt.thumbnail
-          ? `<img src="${opt.thumbnail}" alt="${opt.label}" />`
+          ? `<img src="${opt.thumbnail}" alt="${opt.label}" class="w-full h-full object-cover" />`
           : `<span class="pdm-color-swatch" style="background:${opt.value}"></span>`}
       </button>
     `).join('');
@@ -84,13 +84,13 @@ function renderVariantSection(variant: typeof mockProduct.variants[number]): str
     return collapsibleSection({
       id: `pdm-color-section`,
       title: `${variant.label} <em>(${available})</em>`,
-      bodyHtml: `<div class="pdm-color-thumbs">${thumbs}</div>`,
+      bodyHtml: `<div class="pdm-color-thumbs flex flex-wrap gap-2">${thumbs}</div>`,
     });
   }
 
   // Size / Material — pill layout
   const pills = variant.options.map(opt => `
-    <button type="button" class="pdm-variant-pill${!opt.available ? ' pdm-disabled' : ''}"
+    <button type="button" class="pdm-variant-pill px-4 py-[7px] border border-border-medium rounded-2xl text-[13px] text-text-body bg-surface cursor-pointer${!opt.available ? ' pdm-disabled' : ''}"
       data-value="${opt.id}" data-label="${opt.label}" ${!opt.available ? 'disabled' : ''}>
       ${opt.label}
     </button>
@@ -99,7 +99,7 @@ function renderVariantSection(variant: typeof mockProduct.variants[number]): str
   return collapsibleSection({
     id: `pdm-${variant.type}-section`,
     title: `${variant.label} <em>(${available})</em>`,
-    bodyHtml: `<div class="pdm-variant-pills">${pills}</div>`,
+    bodyHtml: `<div class="pdm-variant-pills flex flex-wrap gap-2">${pills}</div>`,
   });
 }
 
@@ -143,18 +143,18 @@ export function MobileProductLayout(): string {
   `;
 
   const badgesSection = `
-    <div id="pdm-badges">
-      <span class="pdm-badge-dark">Sevkiyata Hazır</span>
-      <span class="pdm-badge-orange">Özelleştirilebilir</span>
+    <div id="pdm-badges" class="flex gap-2 pt-3 px-4 bg-surface">
+      <span class="pdm-badge-dark inline-flex items-center text-[11px] font-semibold px-2.5 py-1 rounded bg-[#222] text-white leading-[1.4]">Sevkiyata Hazır</span>
+      <span class="pdm-badge-orange inline-flex items-center text-[11px] font-semibold px-2.5 py-1 rounded border border-cta-primary text-cta-primary bg-transparent leading-[1.4]">Özelleştirilebilir</span>
     </div>
   `;
 
   const priceTiersSection = `
-    <div id="pdm-price-tiers">
+    <div id="pdm-price-tiers" class="grid grid-cols-3 bg-surface-raised rounded-lg mx-4 mt-3 py-3.5">
       ${p.priceTiers.map(tier => `
-        <div class="pdm-tier-col">
-          <span class="pdm-tier-price">$${tier.price.toFixed(2)}</span>
-          <span class="pdm-tier-qty">${tier.maxQty !== null
+        <div class="pdm-tier-col flex flex-col items-center px-3 border-r border-border-default last:border-r-0">
+          <span class="pdm-tier-price text-lg font-bold text-[#111] leading-[1.3]">$${tier.price.toFixed(2)}</span>
+          <span class="pdm-tier-qty text-[11px] text-text-placeholder mt-[3px] text-center">${tier.maxQty !== null
             ? `${tier.minQty} - ${tier.maxQty} ${p.unit}`
             : `>= ${tier.minQty} ${p.unit}`}</span>
         </div>
@@ -163,22 +163,22 @@ export function MobileProductLayout(): string {
   `;
 
   const sampleSection = `
-    <div id="pdm-sample-row">
+    <div id="pdm-sample-row" class="flex items-center justify-between px-4 py-2.5 bg-surface text-[13px] text-text-body">
       <span>Numune fiyatı: <strong>$${p.samplePrice?.toFixed(2) ?? '30.00'}</strong></span>
-      <button type="button" class="pdm-sample-btn">Numune Al</button>
+      <button type="button" class="pdm-sample-btn px-[18px] py-1.5 border border-[#333] rounded-[20px] text-[13px] font-medium bg-surface cursor-pointer text-text-body">Numune Al</button>
     </div>
   `;
 
   const titleSection = `
-    <div id="pdm-title-section">
-      <div id="pdm-title-row">
-        <h1 id="pdm-product-title">${p.title}</h1>
-        <button type="button" class="pdm-share-btn" aria-label="Paylaş">
+    <div id="pdm-title-section" class="flex flex-col gap-1 pt-3.5 px-4 pb-1.5 bg-surface">
+      <div id="pdm-title-row" class="flex items-start justify-between gap-3">
+        <h1 id="pdm-product-title" class="text-[15px] font-semibold leading-[1.45] text-text-heading m-0 flex-1 line-clamp-3">${p.title}</h1>
+        <button type="button" class="pdm-share-btn shrink-0 w-8 h-8 border-none bg-none cursor-pointer text-text-muted p-1 flex items-center justify-center" aria-label="Paylaş">
           <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
         </button>
       </div>
-      <div id="pdm-reviews-row">
-        <span class="pdm-stars">${renderStars(p.rating)}</span>
+      <div id="pdm-reviews-row" class="flex items-center gap-1.5 px-4 pb-3 text-[13px] text-text-muted cursor-pointer">
+        <span class="pdm-stars flex gap-0.5 text-[#f5a623]">${renderStars(p.rating)}</span>
         <span>${p.reviewCount} yorum</span>
       </div>
     </div>
@@ -196,11 +196,11 @@ export function MobileProductLayout(): string {
     sectionClass: 'pdm-shipping-section',
     sheetId: 'shipping-modal',  // special: opens existing ShippingModal
     previewHtml: `
-      <div id="pdm-ship-preview">
-        <div class="pdm-ship-method">${p.shipping[0].method}</div>
-        <div class="pdm-ship-detail">
-          <span>Tahmini Maliyet: <strong>${p.shipping[0].cost}</strong></span>
-          <span>Süre: <strong>${p.shipping[0].estimatedDays}</strong></span>
+      <div id="pdm-ship-preview" class="px-4 pb-3.5 text-[13px] text-text-body leading-[1.6]">
+        <div class="pdm-ship-method font-semibold text-text-heading">${p.shipping[0].method}</div>
+        <div class="pdm-ship-detail flex gap-4 mt-1">
+          <span class="text-text-muted">Tahmini Maliyet: <strong>${p.shipping[0].cost}</strong></span>
+          <span class="text-text-muted">Süre: <strong>${p.shipping[0].estimatedDays}</strong></span>
         </div>
       </div>
     `,
@@ -211,20 +211,20 @@ export function MobileProductLayout(): string {
     title: 'Bu ürün için güvenceler',
     sheetId: 'pdm-sheet-protections',
     previewHtml: `
-      <div id="pdm-protections-preview">
-        <div class="pdm-protection-item">
-          <div class="pdm-protection-icon">
+      <div id="pdm-protections-preview" class="px-4 pb-3.5">
+        <div class="pdm-protection-item flex items-center gap-2.5 py-1.5 text-[13px] text-text-body">
+          <div class="pdm-protection-icon shrink-0 w-5 h-5 text-text-muted">
             <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
           </div>
           <span>Güvenli ödemeler</span>
         </div>
-        <div class="pdm-protection-item">
-          <div class="pdm-protection-icon">
+        <div class="pdm-protection-item flex items-center gap-2.5 py-1.5 text-[13px] text-text-body">
+          <div class="pdm-protection-icon shrink-0 w-5 h-5 text-text-muted">
             <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M9 14l-4-4 4-4"/><path d="M5 10h11a4 4 0 010 8h-1"/></svg>
           </div>
           <span>Standart iade politikası</span>
         </div>
-        <div class="pdm-trade-badge">
+        <div class="pdm-trade-badge flex items-center gap-1.5 pt-2 text-[13px] font-semibold text-cta-primary">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="#e85d04"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4" fill="none" stroke="#fff" stroke-width="2"/></svg>
           Ticaret Güvencesi
         </div>
@@ -237,12 +237,12 @@ export function MobileProductLayout(): string {
     title: 'Temel Özellikler',
     sheetId: 'pdm-sheet-keyattrs',
     previewHtml: `
-      <div id="pdm-keyattrs-preview">
-        <div class="pdm-attrs-grid">
+      <div id="pdm-keyattrs-preview" class="px-4 pb-3.5">
+        <div class="pdm-attrs-grid grid grid-cols-2 gap-y-2 gap-x-4">
           ${p.specs.slice(0, 4).map(s => `
-            <div class="pdm-attr-item">
-              <span class="pdm-attr-key">${s.key}</span>
-              <span class="pdm-attr-val">${s.value}</span>
+            <div class="pdm-attr-item flex flex-col">
+              <span class="pdm-attr-key text-[11px] text-text-placeholder">${s.key}</span>
+              <span class="pdm-attr-val text-[13px] text-text-heading font-medium">${s.value}</span>
             </div>
           `).join('')}
         </div>
@@ -255,10 +255,10 @@ export function MobileProductLayout(): string {
     title: 'Özelleştirme Seçenekleri',
     sheetId: 'pdm-sheet-customization',
     previewHtml: `
-      <div id="pdm-custom-preview">
+      <div id="pdm-custom-preview" class="px-4 pb-3.5">
         ${p.customizationOptions.map(o => `
-          <div class="pdm-custom-item">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg>
+          <div class="pdm-custom-item flex items-center gap-2 text-[13px] text-text-body">
+            <svg class="w-4 h-4 text-text-muted shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg>
             <span>${o.name}</span>
           </div>
         `).join('')}
@@ -270,29 +270,29 @@ export function MobileProductLayout(): string {
 
   const si = p.supplier;
   const supplierSection = `
-    <div class="pdm-section-divider"></div>
-    <div id="pdm-supplier-card">
-      <div class="pdm-supplier-header">
-        <div class="pdm-supplier-logo">${si.name.charAt(0)}${si.name.split(' ')[1]?.charAt(0) || ''}</div>
+    <div class="pdm-section-divider h-2 bg-surface-raised"></div>
+    <div id="pdm-supplier-card" class="bg-surface p-4">
+      <div class="pdm-supplier-header flex items-center gap-3 mb-1">
+        <div class="pdm-supplier-logo w-12 h-12 rounded-lg bg-[#fef9e7] flex items-center justify-center shrink-0 text-lg font-bold text-primary-600">${si.name.charAt(0)}${si.name.split(' ')[1]?.charAt(0) || ''}</div>
         <div>
-          <div class="pdm-supplier-name">${si.name}</div>
-          <div class="pdm-supplier-meta">
+          <div class="pdm-supplier-name text-sm font-bold text-text-heading leading-[1.3]">${si.name}</div>
+          <div class="pdm-supplier-meta text-xs text-text-muted mt-0.5 flex items-center gap-1.5">
             ${si.yearsInBusiness} yıl <span>&middot;</span> ${si.verified ? 'Doğrulanmış Tedarikçi' : ''}
           </div>
         </div>
       </div>
-      <div class="pdm-supplier-stats">
+      <div class="pdm-supplier-stats grid grid-cols-3 border border-border-default rounded-lg my-3 overflow-hidden">
         ${[
           { val: si.onTimeDelivery, label: 'Zamanında Teslimat' },
           { val: si.annualRevenue, label: 'Yıllık Gelir' },
           { val: si.responseTime, label: 'Yanıt Süresi' },
         ].map(s => `
-          <div class="pdm-supplier-stat"><strong>${s.val}</strong><span>${s.label}</span></div>
+          <div class="pdm-supplier-stat flex flex-col items-center py-2.5 px-1 border-r border-border-default last:border-r-0 text-center"><strong class="text-sm font-bold text-text-heading">${s.val}</strong><span class="text-[11px] text-text-placeholder mt-0.5">${s.label}</span></div>
         `).join('')}
       </div>
-      <div class="pdm-supplier-btns">
-        <button type="button" class="pdm-supplier-btn">Şirket Profili</button>
-        <button type="button" class="pdm-supplier-btn">Diğer Ürünler</button>
+      <div class="pdm-supplier-btns grid grid-cols-2 gap-2">
+        <button type="button" class="pdm-supplier-btn py-2.5 px-2 border border-border-medium rounded-[22px] bg-surface text-[13px] font-medium text-text-heading cursor-pointer text-center">Şirket Profili</button>
+        <button type="button" class="pdm-supplier-btn py-2.5 px-2 border border-border-medium rounded-[22px] bg-surface text-[13px] font-medium text-text-heading cursor-pointer text-center">Diğer Ürünler</button>
       </div>
     </div>
   `;
@@ -313,7 +313,7 @@ export function MobileProductLayout(): string {
         <h4>İade politikası</h4>
         <p>30 gün içinde iade başvurusu yapabilirsiniz. Ürünler hasarlı veya tanımlandığı gibi değilse iade kabul edilir.</p>
       </div>
-      <div class="pdm-trade-badge">
+      <div class="pdm-trade-badge flex items-center gap-1.5 pt-2 text-[13px] font-semibold text-cta-primary">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="#e85d04"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4" fill="none" stroke="#fff" stroke-width="2"/></svg>
         Ticaret Güvencesi
       </div>

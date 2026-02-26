@@ -13,13 +13,13 @@ export interface UserInfoCardProps {
 
 function renderStatItem(stat: UserStat, index: number, total: number): string {
   const divider = index < total - 1
-    ? '<div class="user-info-card__stat-divider"></div>'
+    ? '<div class="w-px bg-gray-200 self-stretch"></div>'
     : '';
 
   return `
-    <a href="${stat.href}" class="user-info-card__stat" aria-label="${stat.label}: ${stat.count}">
-      <span class="user-info-card__stat-count">${stat.count}</span>
-      <span class="user-info-card__stat-label">${stat.label}</span>
+    <a href="${stat.href}" class="flex-1 flex flex-col items-center gap-1 no-underline transition-opacity hover:opacity-80" aria-label="${stat.label}: ${stat.count}">
+      <span class="text-xl font-bold leading-none" style="color:var(--color-text-body, #333333)">${stat.count}</span>
+      <span class="text-xs text-center leading-[1.3]" style="color:var(--color-text-muted, #666666)">${stat.label}</span>
     </a>
     ${divider}
   `;
@@ -29,9 +29,9 @@ export function UserInfoCard(props: UserInfoCardProps): string {
   const { user, stats } = props;
 
   return `
-    <div class="user-info-card">
+    <div class="relative p-5 max-md:p-3.5">
       <!-- 24H Online Support Badge -->
-      <div class="user-info-card__support-badge" aria-label="24 saat çevrimiçi destek">
+      <div class="absolute top-3 right-3 inline-flex items-center gap-1 text-xs font-medium text-blue-600 bg-blue-50 rounded-xl px-2.5 py-1" aria-label="24 saat çevrimiçi destek">
         <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
         </svg>
@@ -39,8 +39,8 @@ export function UserInfoCard(props: UserInfoCardProps): string {
       </div>
 
       <!-- User Profile Row -->
-      <div class="user-info-card__profile">
-        <div class="user-info-card__avatar" aria-hidden="true">
+      <div class="flex items-center gap-3 mb-4">
+        <div class="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 overflow-hidden" style="background:var(--color-surface-raised, #f5f5f5)" aria-hidden="true">
           ${user.avatar
             ? `<img src="${user.avatar}" alt="${user.username}" class="w-full h-full object-cover rounded-full" />`
             : `<svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 24 24">
@@ -48,9 +48,9 @@ export function UserInfoCard(props: UserInfoCardProps): string {
               </svg>`
           }
         </div>
-        <div class="user-info-card__info">
-          <span class="user-info-card__username" title="${user.username}">${user.username}</span>
-          <a href="${user.profileHref}" class="user-info-card__profile-link">
+        <div class="flex flex-col gap-1 min-w-0">
+          <span class="text-base font-bold whitespace-nowrap overflow-hidden text-ellipsis" style="color:var(--color-text-body, #333333)" title="${user.username}">${user.username}</span>
+          <a href="${user.profileHref}" class="text-[13px] text-blue-600 no-underline inline-flex items-center transition-colors hover:text-blue-700 hover:underline">
             Profili görüntüle
             <svg class="w-3 h-3 ml-1 inline-block" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
@@ -60,7 +60,7 @@ export function UserInfoCard(props: UserInfoCardProps): string {
       </div>
 
       <!-- Stats Grid -->
-      <div class="user-info-card__stats" role="list" aria-label="Kullanıcı istatistikleri">
+      <div class="flex items-stretch border-t pt-4" style="border-color:var(--color-border-light, #f0f0f0)" role="list" aria-label="Kullanıcı istatistikleri">
         ${stats.map((stat, i) => renderStatItem(stat, i, stats.length)).join('')}
       </div>
     </div>

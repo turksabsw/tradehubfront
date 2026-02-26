@@ -10,7 +10,7 @@
  */
 export function BottomNav(): string {
   return `
-    <div id="bottom-nav" class="fixed bottom-0 left-0 z-[var(--z-sticky)] w-full h-16 bg-white border-t border-gray-200 dark:bg-gray-800 dark:border-gray-700 md:hidden">
+    <div id="bottom-nav" class="fixed bottom-0 left-0 z-30 w-full h-16 bg-white border-t border-gray-200 dark:bg-gray-800 dark:border-gray-700 md:hidden">
       <div class="grid h-full grid-cols-5 mx-auto">
         <!-- Home -->
         <button type="button" id="bottom-nav-home" class="inline-flex flex-col items-center justify-center px-1 group" aria-label="Home">
@@ -38,7 +38,7 @@ export function BottomNav(): string {
             <svg class="w-6 h-6 text-gray-500 group-hover:text-primary-500 dark:text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17h6l3 3v-3h2V9a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h3Z"/>
             </svg>
-            <span class="th-badge absolute -top-1.5 -right-2 flex items-center justify-center min-w-4 h-4 px-0.5" style="background:var(--color-error-500);color:#fff">1</span>
+            <span class="th-badge absolute -top-1.5 -right-2 flex items-center justify-center min-w-4 h-4 px-0.5 bg-error-500 text-white text-[10px] font-bold rounded-full">1</span>
           </div>
           <span class="text-[10px] mt-0.5 text-gray-500 group-hover:text-primary-500 dark:text-gray-400">Messages</span>
         </button>
@@ -49,7 +49,7 @@ export function BottomNav(): string {
             <svg class="w-6 h-6 text-gray-500 group-hover:text-primary-500 dark:text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7H7.312"/>
             </svg>
-            <span class="th-badge absolute -top-1.5 -right-2 flex items-center justify-center min-w-4 h-4 px-0.5" style="background:var(--color-error-500);color:#fff">3</span>
+            <span class="th-badge absolute -top-1.5 -right-2 flex items-center justify-center min-w-4 h-4 px-0.5 bg-error-500 text-white text-[10px] font-bold rounded-full">3</span>
           </div>
           <span class="text-[10px] mt-0.5 text-gray-500 group-hover:text-primary-500 dark:text-gray-400">Cart</span>
         </button>

@@ -89,8 +89,8 @@ export function ProductInfo(): string {
         ${renderPriceTiers(p.priceTiers)}
 
         <!-- Sample Price -->
-        <div id="pd-sample-price">
-          <div class="pd-sample-left">
+        <div id="pd-sample-price" class="flex items-center justify-between px-4 py-2.5 rounded-lg mb-5" style="background: var(--color-surface-raised, #f5f5f5);">
+          <div class="flex items-center gap-2 text-sm" style="color: var(--color-text-body, #333333);">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
             <span>Numune fiyatı: <strong>$${p.samplePrice?.toFixed(2) ?? '30.00'}</strong></span>
           </div>
@@ -98,10 +98,10 @@ export function ProductInfo(): string {
         </div>
 
         <!-- Variations Header -->
-        <div id="pd-variations-section">
-          <div class="pd-section-header">
-            <h3>Varyantlar</h3>
-            <a href="#" class="pd-select-now">Seçim yap</a>
+        <div id="pd-variations-section" class="pb-4" style="border-bottom: 1px solid var(--color-border-light, #f0f0f0);">
+          <div class="flex justify-between items-center mb-4">
+            <h3 class="text-base font-bold m-0" style="color: var(--pd-title-color, #111827);">Varyantlar</h3>
+            <a href="#" class="text-sm font-medium no-underline hover:underline" style="color: var(--pd-breadcrumb-link-color, #cc9900);">Seçim yap</a>
           </div>
 
           <!-- Variant Groups -->
@@ -109,15 +109,15 @@ export function ProductInfo(): string {
         </div>
 
         <!-- Supplier Customization -->
-        <div class="pd-info-section">
-          <h3 class="pd-section-title">
+        <div class="py-5" style="border-bottom: 1px solid var(--color-border-light, #f0f0f0);">
+          <h3 class="text-sm font-bold mb-3 flex items-center gap-1.5 m-0" style="color: var(--pd-title-color, #111827);">
             Tedarikçi Özelleştirme
-            <span class="pd-verified-badge">
+            <span class="inline-flex items-center gap-[3px] text-xs font-semibold" style="color: #16a34a;">
               <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor" style="color: #16a34a;"><path fill-rule="evenodd" d="M16.403 12.652a3 3 0 000-5.304 3 3 0 00-3.75-3.751 3 3 0 00-5.305 0 3 3 0 00-3.751 3.75 3 3 0 000 5.305 3 3 0 003.75 3.751 3 3 0 005.305 0 3 3 0 003.751-3.75zm-2.546-4.46a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.06l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd"/></svg>
               Verified
             </span>
           </h3>
-          <ul class="pd-customization-list">
+          <ul class="list-disc pl-[18px] m-0 text-[13px] leading-[1.8]" style="color: var(--pd-title-color, #111827);">
             <li>Çizim bazlı özelleştirme</li>
             <li>Numune bazlı özelleştirme</li>
             <li>Tam özelleştirme (OEM/ODM)</li>
@@ -125,51 +125,49 @@ export function ProductInfo(): string {
         </div>
 
         <!-- Shipping -->
-        <div class="pd-info-section">
-          <h3 class="pd-section-title">Kargo</h3>
-          <div class="pd-shipping-card" id="pd-shipping-card">
-            <div class="pd-shipping-card-left">
-              <span class="pd-shipping-card-method" id="pd-ship-card-method">${p.shipping[0].method}</span>
-              <span class="pd-shipping-card-detail">Kargo: ${p.shipping[0].cost} · ${p.shipping[0].estimatedDays}</span>
+        <div class="py-5" style="border-bottom: 1px solid var(--color-border-light, #f0f0f0);">
+          <h3 class="text-sm font-bold mb-3 flex items-center gap-1.5 m-0" style="color: var(--pd-title-color, #111827);">Kargo</h3>
+          <div class="flex items-center justify-between gap-3 mt-3 px-3.5 py-3 rounded-lg border" id="pd-shipping-card" style="background: var(--pd-spec-header-bg, #f9fafb); border-color: var(--color-border-default, #e5e5e5);">
+            <div class="flex flex-col gap-0.5">
+              <span class="text-sm font-semibold" id="pd-ship-card-method" style="color: var(--pd-title-color, #111827);">${p.shipping[0].method}</span>
+              <span class="pd-shipping-card-detail text-xs" style="color: var(--pd-rating-text-color, #6b7280);">Kargo: ${p.shipping[0].cost} · ${p.shipping[0].estimatedDays}</span>
             </div>
-            <a href="javascript:void(0)" class="pd-shipping-card-change" id="pd-ship-card-change">Değiştir ›</a>
+            <a href="javascript:void(0)" class="text-[13px] font-medium no-underline whitespace-nowrap cursor-pointer" id="pd-ship-card-change" style="color: var(--pd-price-color, #cc9900);">Değiştir ›</a>
           </div>
         </div>
 
         <!-- Trade Assurance / Order Protection -->
         <div id="pd-trade-assurance">
-          <div class="pd-ta-header">
-            <h4>
+          <div class="flex items-center justify-between cursor-pointer mb-3.5">
+            <h4 class="text-sm font-bold m-0 flex items-center gap-1.5" style="color: var(--color-text-heading, #111827);">
               <svg viewBox="0 0 20 20" fill="currentColor" style="color:#16a34a; width:16px; height:16px;"><path fill-rule="evenodd" d="M10 1a.75.75 0 01.65.378l1.855 3.27 3.69.53a.75.75 0 01.416 1.279l-2.668 2.6.63 3.67a.75.75 0 01-1.088.79L10 11.347l-3.485 1.832a.75.75 0 01-1.088-.79l.63-3.67-2.668-2.6a.75.75 0 01.416-1.28l3.69-.53L9.35 1.379A.75.75 0 0110 1z" clip-rule="evenodd"/></svg>
               iSTOC Sipariş Koruma
             </h4>
-            <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd"/></svg>
+            <svg class="w-4 h-4 transition-transform" style="color: var(--color-text-placeholder, #999999);" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd"/></svg>
           </div>
 
-          <div class="pd-ta-item">
-            <svg class="pd-ta-item-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.403 12.652a3 3 0 000-5.304 3 3 0 00-3.75-3.751 3 3 0 00-5.305 0 3 3 0 00-3.751 3.75 3 3 0 000 5.305 3 3 0 003.75 3.751 3 3 0 005.305 0 3 3 0 003.751-3.75zm-2.546-4.46a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.06l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd"/></svg>
-            <div class="pd-ta-item-content">
-              <h5>Güvenli Ödeme</h5>
-              <p>Her ödeme yöntemiyle korunan ödemeler</p>
-              <div class="pd-ta-payment-icons">
-                <span class="pd-ta-payment-icon">VISA</span>
-                <span class="pd-ta-payment-icon">MC</span>
-                <span class="pd-ta-payment-icon">PayPal</span>
-                <span class="pd-ta-payment-icon">Apple Pay</span>
-                <span class="pd-ta-payment-icon">GPay</span>
+          <div class="flex items-start gap-2.5 mb-3.5">
+            <svg class="flex-shrink-0 w-5 h-5 mt-px" style="color: #16a34a;" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.403 12.652a3 3 0 000-5.304 3 3 0 00-3.75-3.751 3 3 0 00-5.305 0 3 3 0 00-3.751 3.75 3 3 0 000 5.305 3 3 0 003.75 3.751 3 3 0 005.305 0 3 3 0 003.751-3.75zm-2.546-4.46a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.06l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd"/></svg>
+            <div>
+              <h5 class="text-[13px] font-semibold m-0 mb-1" style="color: var(--color-text-heading, #111827);">Güvenli Ödeme</h5>
+              <p class="text-xs m-0 leading-normal" style="color: var(--color-text-muted, #666666);">Her ödeme yöntemiyle korunan ödemeler</p>
+              <div class="flex items-center gap-1.5 mt-1.5">
+                ${['VISA', 'MC', 'PayPal', 'Apple Pay', 'GPay'].map(icon => `
+                  <span class="h-5 px-1.5 rounded-[3px] border text-[10px] font-bold inline-flex items-center" style="border-color: var(--color-border-default, #e5e5e5); color: var(--color-text-body, #333333); background: var(--color-surface, #ffffff);">${icon}</span>
+                `).join('')}
               </div>
             </div>
           </div>
 
-          <div class="pd-ta-item">
-            <svg class="pd-ta-item-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.403 12.652a3 3 0 000-5.304 3 3 0 00-3.75-3.751 3 3 0 00-5.305 0 3 3 0 00-3.751 3.75 3 3 0 000 5.305 3 3 0 003.75 3.751 3 3 0 005.305 0 3 3 0 003.751-3.75zm-2.546-4.46a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.06l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd"/></svg>
-            <div class="pd-ta-item-content">
-              <h5>Para İade Koruması</h5>
-              <p>Ürün açıklamayla eşleşmezse para iadesi alın</p>
+          <div class="flex items-start gap-2.5">
+            <svg class="flex-shrink-0 w-5 h-5 mt-px" style="color: #16a34a;" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.403 12.652a3 3 0 000-5.304 3 3 0 00-3.75-3.751 3 3 0 00-5.305 0 3 3 0 00-3.751 3.75 3 3 0 000 5.305 3 3 0 003.75 3.751 3 3 0 005.305 0 3 3 0 003.751-3.75zm-2.546-4.46a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.06l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd"/></svg>
+            <div>
+              <h5 class="text-[13px] font-semibold m-0 mb-1" style="color: var(--color-text-heading, #111827);">Para İade Koruması</h5>
+              <p class="text-xs m-0 leading-normal" style="color: var(--color-text-muted, #666666);">Ürün açıklamayla eşleşmezse para iadesi alın</p>
             </div>
           </div>
 
-          <div class="pd-ta-badge">
+          <div class="inline-flex items-center gap-1 mt-3 px-2.5 py-1.5 rounded-md text-xs font-semibold" style="background: #f0fdf4; color: #16a34a;">
             <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 1a.75.75 0 01.65.378l1.855 3.27 3.69.53a.75.75 0 01.416 1.279l-2.668 2.6.63 3.67a.75.75 0 01-1.088.79L10 11.347l-3.485 1.832a.75.75 0 01-1.088-.79l.63-3.67-2.668-2.6a.75.75 0 01.416-1.28l3.69-.53L9.35 1.379A.75.75 0 0110 1z" clip-rule="evenodd"/></svg>
             Ticaret Güvencesi
           </div>

@@ -304,7 +304,7 @@ export function TailoredSelections(): string {
             </div>
             <a
               href="/collections"
-              class="th-tailored-link flex-shrink-0 text-[13px] font-semibold transition-colors duration-150 hover:underline"
+              class="flex-shrink-0 text-[13px] font-semibold transition-colors duration-150 hover:underline"
               style="color: var(--tailored-link-color, #111827);"
             >View more &gt;</a>
           </div>

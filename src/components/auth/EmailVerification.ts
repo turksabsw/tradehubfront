@@ -43,7 +43,7 @@ export function EmailVerification(email: string = ''): string {
   const maskedEmail = maskEmail(email);
 
   return `
-    <div id="email-verification" class="auth-page-content">
+    <div id="email-verification" class="w-full">
       <!-- Header -->
       <div class="mb-6 text-center lg:text-left">
         <h1 class="text-xl lg:text-2xl font-bold text-gray-900 dark:text-white mb-2">

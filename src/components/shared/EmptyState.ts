@@ -18,7 +18,7 @@ export function EmptyState({ icon, text, linkText, linkHref, linkColor = '#E67A0
   return `
     <div class="flex flex-col items-center justify-center py-8">
       <div class="w-12 h-12 mb-3">${icon}</div>
-      <p class="text-[14px] text-[#999] mb-1">${text}</p>
+      <p class="text-sm text-gray-400 dark:text-gray-500 mb-1">${text}</p>
       ${linkHtml}
     </div>
   `;

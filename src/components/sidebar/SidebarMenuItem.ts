@@ -38,7 +38,7 @@ export function renderSidebarMenuItem({ item, expanded }: SidebarMenuItemProps):
     return `
       <a
         href="${item.href}"
-        class="sidebar-item sidebar-item--collapsed group relative flex items-center justify-center w-10 h-10 mx-auto rounded-lg ${item.active ? 'bg-[#F0FFF0] text-[#00B96B] dark:bg-green-900/20 dark:text-green-400' : 'text-gray-500 dark:text-gray-400'} ${hoverClasses} transition-colors"
+        class="sidebar-item sidebar-item--collapsed group relative flex items-center justify-center w-10 h-10 mx-auto rounded-lg ${item.active ? 'bg-green-50 text-green-600 dark:bg-green-900/20 dark:text-green-400' : 'text-gray-500 dark:text-gray-400'} ${hoverClasses} transition-colors"
         data-sidebar-item="${item.id}"
         data-tooltip-target="tooltip-sidebar-${item.id}"
         data-tooltip-placement="right"
@@ -66,7 +66,7 @@ export function renderSidebarMenuItem({ item, expanded }: SidebarMenuItemProps):
       ${hasSubmenu ? 'aria-haspopup="true" aria-expanded="false"' : ''}
     >
       <span class="w-5 h-5 flex-shrink-0">${icon}</span>
-      <span class="flex-1 text-[14px] font-normal text-[#222] dark:text-gray-200 truncate">${item.label}</span>
+      <span class="flex-1 text-sm font-normal text-gray-900 dark:text-gray-200 truncate">${item.label}</span>
       ${item.badge ? `<span class="inline-flex items-center px-1.5 py-0.5 text-[10px] font-semibold leading-none text-white bg-red-500 rounded-full">${item.badge}</span>` : ''}
       ${hasSubmenu ? `<span class="w-4 h-4 flex-shrink-0 text-gray-400 dark:text-gray-500 transition-transform">${chevron}</span>` : ''}
     </a>

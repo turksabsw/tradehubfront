@@ -19,15 +19,15 @@ const TRADEHUB_AVATAR = `<svg class="w-full h-full" viewBox="0 0 40 40" fill="no
 
 function renderAvatar(conv: MessageConversation): string {
   const img = conv.avatar
-    ? `<img src="${conv.avatar}" alt="${conv.name}" class="msg-list__avatar-img" loading="lazy" />`
+    ? `<img src="${conv.avatar}" alt="${conv.name}" class="w-10 h-10 rounded-full object-cover" loading="lazy" />`
     : TRADEHUB_AVATAR;
 
   const badge = conv.unreadCount > 0
-    ? `<span class="msg-list__unread-badge">${conv.unreadCount}</span>`
+    ? `<span class="absolute -top-1 -right-1 min-w-[18px] h-[18px] flex items-center justify-center px-1 text-[11px] font-semibold text-[var(--color-surface)] bg-red-500 rounded-full border-2 border-[var(--color-surface)] leading-none">${conv.unreadCount}</span>`
     : '';
 
   return `
-    <div class="msg-list__avatar">
+    <div class="relative w-10 h-10 flex-shrink-0 rounded-full overflow-visible">
       ${img}
       ${badge}
     </div>
@@ -36,19 +36,19 @@ function renderAvatar(conv: MessageConversation): string {
 
 function renderConversation(conv: MessageConversation): string {
   const companyLine = conv.company
-    ? `<p class="msg-list__company">${conv.company}</p>`
+    ? `<p class="msg-list__company text-[13px] text-[var(--color-text-placeholder,#999999)] whitespace-nowrap overflow-hidden text-ellipsis mb-0.5">${conv.company}</p>`
     : '';
 
   return `
-    <a href="${conv.href}" class="msg-list__item" data-id="${conv.id}">
+    <a href="${conv.href}" class="msg-list__item flex items-start gap-3 px-5 py-3.5 no-underline border-b border-[var(--color-surface-raised,#f5f5f5)] cursor-pointer transition-[background] duration-150 hover:bg-[var(--color-surface-muted,#fafafa)]" data-id="${conv.id}">
       ${renderAvatar(conv)}
-      <div class="msg-list__content">
-        <div class="msg-list__row">
-          <span class="msg-list__name">${conv.name}</span>
-          <span class="msg-list__date">${conv.date}</span>
+      <div class="flex-1 min-w-0">
+        <div class="flex items-baseline justify-between gap-2 mb-0.5">
+          <span class="msg-list__name text-sm font-semibold text-[var(--color-text-heading,#111827)] whitespace-nowrap overflow-hidden text-ellipsis">${conv.name}</span>
+          <span class="text-xs text-[var(--color-text-placeholder,#999999)] whitespace-nowrap flex-shrink-0">${conv.date}</span>
         </div>
         ${companyLine}
-        <p class="msg-list__preview">${conv.preview}</p>
+        <p class="text-[13px] text-[var(--color-text-placeholder,#999999)] whitespace-nowrap overflow-hidden text-ellipsis">${conv.preview}</p>
       </div>
     </a>
   `;
@@ -58,11 +58,11 @@ export function MessageList(props: MessageListProps): string {
   const { conversations, title } = props;
 
   return `
-    <div class="msg-list">
+    <div class="w-[360px] max-lg:w-[300px] max-md:w-full max-md:max-h-[50vh] flex-shrink-0 border-r border-[var(--color-border-light,#f0f0f0)] max-md:border-r-0 flex flex-col bg-[var(--color-surface,#ffffff)]">
       <!-- Header -->
-      <div class="msg-list__header">
-        <h3 class="msg-list__title">${title}</h3>
-        <button class="msg-list__filter-btn" aria-label="Filtrele">
+      <div class="flex items-center justify-between px-5 pt-4 pb-3 border-b border-[var(--color-border-light,#f0f0f0)]">
+        <h3 class="text-base font-bold text-[var(--color-text-heading,#111827)]">${title}</h3>
+        <button class="flex items-center justify-center w-7 h-7 border-none bg-transparent text-[var(--color-text-placeholder,#999999)] cursor-pointer rounded hover:text-[var(--color-text-body,#333333)] transition-colors duration-150" aria-label="Filtrele">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/>
           </svg>
@@ -70,7 +70,7 @@ export function MessageList(props: MessageListProps): string {
       </div>
 
       <!-- Conversations -->
-      <div class="msg-list__conversations">
+      <div class="flex-1 overflow-y-auto">
         ${conversations.map(renderConversation).join('')}
       </div>
     </div>

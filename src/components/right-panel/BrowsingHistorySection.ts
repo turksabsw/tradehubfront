@@ -27,7 +27,7 @@ export function BrowsingHistorySection(products: BrowsingHistoryProduct[]): stri
         actionText: browsingHistoryConfig.actionText,
         actionHref: browsingHistoryConfig.actionHref,
       })}
-      <div class="browsing-history__scroll flex gap-3 overflow-x-auto">
+      <div class="flex gap-3 overflow-x-auto scrollbar-hide">
         ${cards}
       </div>
     `,

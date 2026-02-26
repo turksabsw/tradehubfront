@@ -41,15 +41,15 @@ interface SettingsItem {
 
 function renderSettingsItem(item: SettingsItem): string {
   const rightContent = item.rightIcon
-    ? `<span class="settings-item__right-icon">${item.rightIcon}</span>`
+    ? `<span class="flex items-center">${item.rightIcon}</span>`
     : item.rightText
-      ? `<span class="settings-item__right-text">${item.rightText}</span>`
+      ? `<span class="text-[13px]" style="color:var(--color-text-placeholder, #999999)">${item.rightText}</span>`
       : '';
 
   return `
-    <a href="${item.href}" class="settings-item">
-      <span class="settings-item__label">${item.label}</span>
-      <span class="settings-item__right">
+    <a href="${item.href}" class="flex items-center justify-between py-3 no-underline transition-colors rounded -mx-2 px-2 hover:bg-[var(--color-surface-muted,#fafafa)] group">
+      <span class="text-sm" style="color:var(--color-text-body, #333333); group-hover:color:var(--color-text-heading, #111827)">${item.label}</span>
+      <span class="flex items-center gap-2">
         ${rightContent}
         ${ICONS.chevron}
       </span>
@@ -67,13 +67,13 @@ interface SettingsCard {
 
 function renderSettingsCard(card: SettingsCard): string {
   return `
-    <div class="settings-card">
-      <div class="settings-card__header">
-        <span class="settings-card__icon">${card.icon}</span>
-        <h2 class="settings-card__title">${card.title}</h2>
+    <div class="bg-white rounded-lg p-6 max-sm:p-4">
+      <div class="flex items-center gap-2.5">
+        <span class="flex items-center justify-center" style="color:var(--color-text-body, #333333)">${card.icon}</span>
+        <h2 class="text-base font-bold m-0" style="color:var(--color-text-heading, #111827)">${card.title}</h2>
       </div>
-      <div class="settings-card__divider"></div>
-      <div class="settings-card__list">
+      <div class="h-px bg-gray-200 my-4"></div>
+      <div class="flex flex-col">
         ${card.items.map(renderSettingsItem).join('')}
       </div>
     </div>
@@ -84,33 +84,33 @@ function renderSettingsCard(card: SettingsCard): string {
 
 function renderProfileHeader(): string {
   return `
-    <div class="settings-profile">
-      <div class="settings-profile__left">
-        <div class="settings-profile__avatar-wrapper">
-          <div class="settings-profile__avatar">
-            <span class="settings-profile__initial">m</span>
+    <div class="flex items-center justify-between gap-6 bg-white rounded-lg py-6 px-8 max-md:flex-col max-md:items-start max-md:p-5 max-md:gap-4">
+      <div class="flex items-center gap-5 max-sm:flex-col max-sm:items-start">
+        <div class="relative flex-shrink-0">
+          <div class="w-[72px] h-[72px] rounded-full flex items-center justify-center border-3 border-primary-200" style="background:linear-gradient(135deg, var(--color-primary-400, #e6b212) 0%, var(--color-primary-500, #cc9900) 100%)">
+            <span class="text-[32px] font-bold text-white lowercase leading-none">m</span>
           </div>
-          <button class="settings-profile__camera" title="Fotoğraf değiştir">
+          <button class="absolute -bottom-0.5 -left-0.5 w-7 h-7 rounded-full bg-white border border-border-default flex items-center justify-center cursor-pointer transition-all hover:bg-surface-raised" style="color:var(--color-text-muted, #666666)" title="Fotoğraf değiştir">
             ${ICONS.camera}
           </button>
         </div>
-        <div class="settings-profile__info">
-          <h2 class="settings-profile__name">Metin K.</h2>
-          <div class="settings-profile__detail">
-            <span class="settings-profile__detail-label">E-posta</span>
-            <span class="settings-profile__detail-value">met***@gmail.com</span>
-            <button class="settings-profile__edit-btn" title="E-postayı düzenle">${ICONS.edit}</button>
+        <div class="flex flex-col gap-1">
+          <h2 class="text-lg font-bold mb-1 m-0" style="color:var(--color-text-heading, #111827)">Metin K.</h2>
+          <div class="flex items-center gap-2 text-[13px]">
+            <span style="color:var(--color-text-placeholder, #999999); min-width:110px; max-md:min-width:90px">E-posta</span>
+            <span class="font-mono" style="color:var(--color-text-body, #333333)">met***@gmail.com</span>
+            <button class="inline-flex items-center justify-center w-6 h-6 border-none bg-none rounded cursor-pointer transition-all hover:bg-surface-raised" style="color:var(--color-text-placeholder, #999999)" title="E-postayı düzenle">${ICONS.edit}</button>
           </div>
-          <div class="settings-profile__detail">
-            <span class="settings-profile__detail-label">Üyelik numarası</span>
-            <span class="settings-profile__detail-value">tr29243492599miuy</span>
-            <button class="settings-profile__copy-btn" title="Kopyala">${ICONS.copy}</button>
+          <div class="flex items-center gap-2 text-[13px]">
+            <span style="color:var(--color-text-placeholder, #999999); min-width:110px; max-md:min-width:90px">Üyelik numarası</span>
+            <span class="font-mono" style="color:var(--color-text-body, #333333)">tr29243492599miuy</span>
+            <button class="settings-profile__copy-btn inline-flex items-center justify-center w-6 h-6 border-none bg-none rounded cursor-pointer transition-all hover:bg-surface-raised" style="color:var(--color-text-placeholder, #999999)" title="Kopyala">${ICONS.copy}</button>
           </div>
         </div>
       </div>
-      <div class="settings-profile__actions">
-        <a href="#profilim" class="settings-profile__btn settings-profile__btn--primary">Profilimi düzenle</a>
-        <a href="/login.html" class="settings-profile__btn settings-profile__btn--secondary">Çıkış yap</a>
+      <div class="flex items-center gap-4 flex-shrink-0 max-md:w-full">
+        <a href="#profilim" class="inline-flex items-center justify-center px-6 h-10 rounded-full text-sm font-semibold no-underline transition-all whitespace-nowrap text-white max-md:flex-1 max-md:text-center" style="background:var(--color-text-heading)">Profilimi düzenle</a>
+        <a href="/login.html" class="inline-flex items-center justify-center px-6 h-10 rounded-full text-sm font-semibold no-underline transition-all whitespace-nowrap bg-none hover:underline max-md:flex-1 max-md:text-center" style="color:var(--color-text-body, #333333)">Çıkış yap</a>
       </div>
     </div>
   `;
@@ -154,7 +154,7 @@ const preferencesCard: SettingsCard = {
 
 function renderBackHeader(): string {
   return `
-    <a href="#" class="settings-back">
+    <a href="#" class="inline-flex items-center gap-1.5 text-[13px] text-blue-600 no-underline font-medium mb-4 transition-colors hover:text-blue-700">
       ${ICONS.back}
       <span>Hesap ayarlarına dön</span>
     </a>
@@ -166,12 +166,12 @@ function renderBackHeader(): string {
 function renderDefaultView(): string {
   return `
     ${renderProfileHeader()}
-    <div class="settings-grid">
-      <div class="settings-grid__left">
+    <div class="flex gap-5 items-start max-md:flex-col">
+      <div class="flex-1 min-w-0 flex flex-col gap-5">
         ${renderSettingsCard(accountInfoCard)}
         ${renderSettingsCard(preferencesCard)}
       </div>
-      <div class="settings-grid__right">
+      <div class="flex-1 min-w-0">
         ${renderSettingsCard(securityCard)}
       </div>
     </div>
@@ -209,7 +209,7 @@ const INIT_MAP: Record<string, () => void> = {
 // ── Main Layout ──────────────────────────────────────────────────
 
 export function SettingsLayout(): string {
-  return `<div class="settings-page" id="settings-root"></div>`;
+  return `<div class="flex flex-col gap-5 py-4" id="settings-root"></div>`;
 }
 
 // ── Init ─────────────────────────────────────────────────────────
@@ -234,12 +234,10 @@ export function initSettingsLayout(): void {
       const copyBtn = document.querySelector<HTMLButtonElement>('.settings-profile__copy-btn');
       if (copyBtn) {
         copyBtn.addEventListener('click', () => {
-          const value = copyBtn.previousElementSibling?.textContent?.trim();
-          if (value) {
-            navigator.clipboard.writeText(value);
+          navigator.clipboard.writeText('tr29243492599miuy').then(() => {
             copyBtn.title = 'Kopyalandı!';
             setTimeout(() => { copyBtn.title = 'Kopyala'; }, 2000);
-          }
+          });
         });
       }
     }
