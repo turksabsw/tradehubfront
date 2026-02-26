@@ -4934,7 +4934,7 @@ body.gallery-lightbox-open {
 }
 
 .cart-color-grid-item.active {
-    border-color: var(--color-primary-500, #ea580c);
+    border-color: var(--color-primary-500, #cc9900);
 }
 
 .cart-color-grid-item.disabled {
@@ -4943,7 +4943,7 @@ body.gallery-lightbox-open {
 }
 
 .cart-color-grid-item:hover:not(.disabled) {
-    border-color: var(--color-primary-400, #f97316);
+    border-color: var(--color-primary-400, #e6b212);
 }
 
 .cart-color-badge {
@@ -5081,7 +5081,7 @@ body.gallery-lightbox-open {
 .cart-current-price {
     font-size: 20px;
     font-weight: 700;
-    color: var(--pd-price-color, #ea580c);
+    color: var(--pd-price-color, #cc9900);
 }
 
 /* ── 9. Quantity stepper ──────────────────────────────── */
@@ -5173,7 +5173,7 @@ body.gallery-lightbox-open {
 }
 
 #cart-ship-change {
-    color: var(--pd-price-color, #ea580c);
+    color: var(--pd-price-color, #cc9900);
     font-size: 13px;
     font-weight: 500;
     text-decoration: none;
@@ -5310,7 +5310,7 @@ body.gallery-lightbox-open {
 .cart-ship-apply {
     width: 100%;
     height: 44px;
-    background: var(--pd-price-color, #ea580c);
+    background: var(--pd-price-color, #cc9900);
     color: #fff;
     font-size: 15px;
     font-weight: 600;
@@ -5363,7 +5363,7 @@ body.gallery-lightbox-open {
 .cart-subtotal-price {
     font-size: 16px;
     font-weight: 700;
-    color: var(--pd-price-color, #ea580c);
+    color: var(--pd-price-color, #cc9900);
 }
 
 .cart-subtotal-per {
@@ -5420,7 +5420,7 @@ body.gallery-lightbox-open {
 .cart-add-btn {
     width: 100%;
     height: 48px;
-    background: var(--pd-price-color, #ea580c);
+    background: var(--pd-price-color, #cc9900);
     color: #fff;
     font-size: 16px;
     font-weight: 600;
@@ -7705,11 +7705,11 @@ body.pdm-sheet-open {
     width: 72px;
     height: 72px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #fb923c 0%, #ea580c 100%);
+    background: linear-gradient(135deg, var(--color-primary-400, #e6b212) 0%, var(--color-primary-500, #cc9900) 100%);
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 3px solid #fed7aa;
+    border: 3px solid var(--color-primary-200, #fbe08a);
 }
 
 .settings-profile__initial {
@@ -8078,7 +8078,7 @@ body.pdm-sheet-open {
     display: inline-flex;
     align-items: center;
     gap: 3px;
-    color: #ea580c;
+    color: var(--color-primary-500, #cc9900);
     font-size: 12px;
     font-style: italic;
 }
@@ -8214,7 +8214,7 @@ body.pdm-sheet-open {
 }
 
 .acc-edit__btn--edit {
-    border: 1.5px solid #d97706;
+    border: 1.5px solid var(--color-primary-600, #b38600);
     background: #fff;
     color: #111827;
 }
@@ -8225,7 +8225,7 @@ body.pdm-sheet-open {
 }
 
 .acc-edit__btn--submit {
-    border: 1.5px solid #d97706;
+    border: 1.5px solid var(--color-primary-600, #b38600);
     background: #fff;
     color: #111827;
 }
@@ -8515,7 +8515,7 @@ body.pdm-sheet-open {
 
 .linked-acc__remove {
     font-size: 13px;
-    color: #ea580c;
+    color: var(--color-primary-500, #cc9900);
     text-decoration: none;
     font-weight: 500;
 }
@@ -8605,7 +8605,7 @@ body.pdm-sheet-open {
 
 .privacy__radio input[type="radio"] {
     margin: 0;
-    accent-color: #ea580c;
+    accent-color: var(--color-primary-500, #cc9900);
     flex-shrink: 0;
 }
 
@@ -8619,7 +8619,7 @@ body.pdm-sheet-open {
 
 .privacy__save-btn {
     padding: 10px 28px;
-    background: #ea580c;
+    background: var(--color-cta-primary, #cc9900);
     color: #fff;
     border: none;
     border-radius: 4px;
@@ -8630,7 +8630,7 @@ body.pdm-sheet-open {
 }
 
 .privacy__save-btn:hover {
-    background: #c2410c;
+    background: var(--color-cta-primary-hover, #b38600);
 }
 
 .privacy__save-btn:disabled {
@@ -8742,7 +8742,7 @@ body.pdm-sheet-open {
 
 .ad-pref__toggle input:checked + .ad-pref__toggle-slider,
 .email-pref__toggle input:checked + .email-pref__toggle-slider {
-    background: #ea580c;
+    background: var(--toggle-active-bg, #cc9900);
 }
 
 .ad-pref__toggle input:checked + .ad-pref__toggle-slider::before,
@@ -9018,7 +9018,7 @@ body.pdm-sheet-open {
 }
 
 .pw-stepper__num--active {
-    background: #ea580c;
+    background: var(--stepper-active-bg, #cc9900);
     color: #fff;
 }
 
@@ -9029,7 +9029,7 @@ body.pdm-sheet-open {
 }
 
 .pw-stepper__step--active .pw-stepper__label {
-    color: #ea580c;
+    color: var(--color-primary-500, #cc9900);
     font-weight: 600;
 }
 
@@ -9106,14 +9106,14 @@ body.pdm-sheet-open {
 }
 
 .pw-card__code-input:focus {
-    border-color: #ea580c;
+    border-color: var(--color-primary-500, #cc9900);
 }
 
 .pw-card__timer {
     padding: 6px 12px;
-    border: 1px solid #ea580c;
+    border: 1px solid var(--color-primary-500, #cc9900);
     border-radius: 4px;
-    color: #ea580c;
+    color: var(--color-primary-500, #cc9900);
     font-size: 13px;
     font-weight: 600;
     white-space: nowrap;
@@ -9161,12 +9161,12 @@ body.pdm-sheet-open {
 }
 
 .pw-card__btn--primary {
-    background: #ea580c;
+    background: var(--color-cta-primary, #cc9900);
     color: #fff;
 }
 
 .pw-card__btn--primary:hover {
-    background: #c2410c;
+    background: var(--color-cta-primary-hover, #b38600);
 }
 
 .pw-card__alt-link {
@@ -9210,7 +9210,7 @@ body.pdm-sheet-open {
 }
 
 .pw-card__form-input:focus {
-    border-color: #ea580c;
+    border-color: var(--color-primary-500, #cc9900);
 }
 
 .pw-card__error {
@@ -9418,7 +9418,7 @@ body.pdm-sheet-open {
     width: 100%;
     max-width: 320px;
     padding: 12px;
-    background: #f9a87c;
+    background: var(--color-cta-primary-light, #e6b212);
     color: #fff;
     border: none;
     border-radius: 8px;
@@ -9429,7 +9429,7 @@ body.pdm-sheet-open {
 }
 
 .email-change__submit-btn:hover {
-    background: #ea580c;
+    background: var(--color-cta-primary, #cc9900);
 }
 
 .email-change__success-icon {
@@ -9548,9 +9548,9 @@ body.pdm-sheet-open {
 
 .phone-change__timer {
     padding: 6px 12px;
-    border: 1px solid #ea580c;
+    border: 1px solid var(--color-primary-500, #cc9900);
     border-radius: 4px;
-    color: #ea580c;
+    color: var(--color-primary-500, #cc9900);
     font-size: 13px;
     font-weight: 600;
     white-space: nowrap;
@@ -9560,7 +9560,7 @@ body.pdm-sheet-open {
     width: 100%;
     max-width: 320px;
     padding: 12px;
-    background: #ea580c;
+    background: var(--color-cta-primary, #cc9900);
     color: #fff;
     border: none;
     border-radius: 8px;
@@ -9573,7 +9573,7 @@ body.pdm-sheet-open {
 }
 
 .phone-change__submit-btn:hover {
-    background: #c2410c;
+    background: var(--color-cta-primary-hover, #b38600);
 }
 
 .phone-change__success-icon {
