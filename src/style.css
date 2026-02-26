@@ -348,12 +348,12 @@
     --btn-outline-border-color: #cc9900;
 
     /* --- Auth Pages (Login, Register, Forgot Password) --- */
-    --auth-btn-bg: #FF6600;
-    --auth-btn-hover: #E65C00;
+    --auth-btn-bg: #cc9900;
+    --auth-btn-hover: #b38600;
     --auth-btn-text: #ffffff;
-    --auth-accent: #FF6600;
-    --auth-input-focus: #FF6600;
-    --auth-header-border: #FF6600;
+    --auth-accent: #cc9900;
+    --auth-input-focus: #cc9900;
+    --auth-header-border: #cc9900;
 
     /* --- Card --- */
     --card-bg: #ffffff;
@@ -368,8 +368,8 @@
     --card-desc-size: 12px;
     --card-moq-color: #6b7280;
     --card-moq-size: 11px;
-    --card-badge-bg: #FFF3E0;
-    --card-badge-text: #e65100;
+    --card-badge-bg: #fef9e7;
+    --card-badge-text: #cc9900;
     --card-badge-size: 10px;
     --card-badge-radius: 5px;
     --card-verified-color: #cc9900;
@@ -432,8 +432,8 @@
     --search-tab-color: #6b7280;
     --search-tab-active-color: #cc9900;
     --search-input-border-color: #cc9900;
-    --search-btn-gradient-start: #f5a623;
-    --search-btn-gradient-end: #e8740c;
+    --search-btn-gradient-start: #e6b212;
+    --search-btn-gradient-end: #b38600;
     --search-box-bg: #ffffff;
     --search-input-text: #111827;
     --search-image-link-color: #6b7280;
@@ -648,7 +648,7 @@
     --footer-text-color: #666666;
     --footer-heading-color: #222222;
     --footer-link-color: #666666;
-    --footer-link-hover-color: #FF6A00;
+    --footer-link-hover-color: #cc9900;
     --footer-border-color: #e5e7eb;
 
 
@@ -707,11 +707,11 @@
      SELLER STOREFRONT — STORE-SPECIFIC TOKENS
      ========================================================== */
 
-    --color-store-nav-bg: #e8540c;
+    --color-store-nav-bg: #b38600;
     --color-store-nav-text: #ffffff;
     --color-store-nav-active-overlay: rgba(0, 0, 0, 0.15);
-    --color-store-accent: #f97316;
-    --color-store-accent-hover: #ea580c;
+    --color-store-accent: #cc9900;
+    --color-store-accent-hover: #b38600;
     --z-fixed: 40;
 
     /* ==========================================================
