@@ -1258,7 +1258,7 @@
         font-size: 14px;
         font-weight: 400;
         line-height: 18px;
-        color: #000;
+        color: var(--color-text-primary);
         text-align: start;
         text-decoration: none;
         background: var(--product-card-bg, #ffffff);
@@ -1414,7 +1414,7 @@
         display: flow-root;
         overflow: hidden;
         height: 18px;
-        color: #000;
+        color: var(--color-text-primary);
         font-size: var(--product-moq-size, 14px);
         line-height: 18px;
     }
@@ -1736,7 +1736,7 @@
 }
 
 .gallery-thumb:hover:not(.active) {
-    border-color: #9ca3af;
+    border-color: var(--color-border-strong);
 }
 
 /* Main image area */
@@ -1835,7 +1835,7 @@
 
 .gallery-view-tab.active {
     background: var(--color-surface, #ffffff);
-    color: #111;
+    color: var(--color-text-primary);
     font-weight: 700;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
@@ -1883,7 +1883,7 @@ body.gallery-lightbox-open {
 .gallery-lightbox-action-btn {
     border: none;
     background: transparent;
-    color: #fff;
+    color: var(--color-text-inverse);
     opacity: 0.94;
     display: inline-flex;
     align-items: center;
@@ -1904,7 +1904,7 @@ body.gallery-lightbox-open {
     height: 44px;
     border: none;
     background: transparent;
-    color: #fff;
+    color: var(--color-text-inverse);
     opacity: 0.95;
     display: flex;
     align-items: center;
@@ -2001,7 +2001,7 @@ body.gallery-lightbox-open {
 }
 
 #gallery-lightbox-count {
-    color: #fff;
+    color: var(--color-text-inverse);
     font-size: 16px;
     font-weight: 500;
     letter-spacing: normal;
@@ -2384,7 +2384,7 @@ body.gallery-lightbox-open {
     font-size: 14px;
     font-weight: 700;
     flex-shrink: 0;
-    color: #fff;
+    color: var(--color-text-inverse);
 }
 
 /* Layout now in Tailwind: flex-1 min-w-0 */
@@ -2985,7 +2985,7 @@ body.gallery-lightbox-open {
 }
 
 .pd-card-tab.active {
-    color: #111;
+    color: var(--color-text-primary);
     font-weight: 700;
     background: var(--color-surface, #ffffff);
     border-top-color: var(--pd-tab-active-border, #cc9900);
@@ -3177,7 +3177,7 @@ body.gallery-lightbox-open {
     font-size: 15px;
     font-weight: 700;
     background: var(--pd-cta-primary-bg, #cc9900);
-    color: #fff;
+    color: var(--color-text-inverse);
     border: none;
     cursor: pointer;
     transition: background .15s;
@@ -3421,7 +3421,7 @@ body.gallery-lightbox-open {
     width: 100%;
     height: 44px;
     background: var(--pd-price-color, #cc9900);
-    color: #fff;
+    color: var(--color-text-inverse);
     font-size: 15px;
     font-weight: 600;
     border: none;
@@ -4672,7 +4672,7 @@ body.pdm-sheet-open {
     width: 100%;
     max-width: 100px;
     height: 3px;
-    background-color: #000;
+    background-color: var(--color-surface-inverse);
     border-radius: 2px;
 }
 
@@ -4689,7 +4689,7 @@ body.pdm-sheet-open {
     left: 8px;
     width: 6px;
     height: 11px;
-    border: solid #fff;
+    border: solid var(--color-text-inverse);
     border-width: 0 2px 2px 0;
     transform: rotate(45deg);
 }
@@ -4704,7 +4704,7 @@ body.pdm-sheet-open {
     left: 5px;
     width: 14px;
     height: 0;
-    border: solid #fff;
+    border: solid var(--color-text-inverse);
     border-width: 0 0 2px 0;
     transform: none;
 }
@@ -4899,7 +4899,7 @@ body.pdm-sheet-open {
     content: "";
     width: 5px;
     height: 9px;
-    border: solid #fff;
+    border: solid var(--color-text-inverse);
     border-width: 0 2px 2px 0;
     transform: rotate(45deg);
     margin-bottom: 2px;
@@ -5160,7 +5160,7 @@ body.pdm-sheet-open {
     left: 4px;
     width: 5px;
     height: 8px;
-    border: solid #fff;
+    border: solid var(--color-text-inverse);
     border-width: 0 2px 2px 0;
     transform: rotate(45deg);
 }
@@ -5361,14 +5361,14 @@ body.pdm-sheet-open {
     color: var(--color-text-body, #333); cursor: pointer;
     transition: all 0.15s; white-space: nowrap;
 }
-.ds-chip:hover { border-color: #9ca3af; background: var(--color-surface-muted, #fafafa); }
+.ds-chip:hover { border-color: var(--color-border-strong); background: var(--color-surface-muted, #fafafa); }
 .ds-chip--active {
     border-color: var(--color-cta-primary, #cc9900);
     color: var(--color-cta-primary, #cc9900);
     background: var(--color-primary-50, #fef9e7);
 }
 .ds-chip--orange {
-    background: var(--color-cta-primary, #cc9900); color: #fff;
+    background: var(--color-cta-primary, #cc9900); color: var(--color-text-inverse);
     border-color: var(--color-cta-primary, #cc9900);
 }
 .ds-chip--orange:hover {
@@ -5402,7 +5402,7 @@ body.pdm-sheet-open {
     font-size: 13px; color: var(--color-text-body, #333);
     cursor: pointer; position: relative; transition: border-color 0.15s;
 }
-.ds-category-tag:hover { border-color: #9ca3af; }
+.ds-category-tag:hover { border-color: var(--color-border-strong); }
 .ds-category-tag svg { color: var(--color-text-placeholder, #999); transition: transform 0.2s; }
 .ds-category-tag--hidden { display: none; }
 .ds-category-tag--active {
@@ -5539,7 +5539,7 @@ body.pdm-sheet-open {
     color: var(--color-text-body, #333); cursor: pointer; transition: all 0.15s;
 }
 .ds-modal__btn--primary {
-    background: var(--color-cta-primary, #cc9900); color: #fff;
+    background: var(--color-cta-primary, #cc9900); color: var(--color-text-inverse);
     border-color: var(--color-cta-primary, #cc9900);
 }
 .ds-modal__btn--primary:hover {
