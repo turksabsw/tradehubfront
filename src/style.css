@@ -3944,101 +3944,13 @@ body.gallery-lightbox-open {
     }
 }
 
-/* ── 2. Badges ──────────────────────────────────────── */
+/* ── 2. Badges — now in Tailwind (MobileLayout.ts) ── */
+
+/* ── 3. Price Tiers — now in Tailwind (MobileLayout.ts) ── */
+
+/* ── 4. Sample Price Row — layout now in Tailwind (MobileLayout.ts) ── */
 @media (width < 1024px) {
-    #pdm-badges {
-        display: flex;
-        gap: 8px;
-        padding: 12px 16px 0;
-        background: var(--color-surface, #ffffff);
-    }
-
-    .pdm-badge-dark {
-        display: inline-flex;
-        align-items: center;
-        font-size: 11px;
-        font-weight: 600;
-        padding: 4px 10px;
-        border-radius: 4px;
-        background: #222;
-        color: #fff;
-        line-height: 1.4;
-    }
-
-    .pdm-badge-orange {
-        display: inline-flex;
-        align-items: center;
-        font-size: 11px;
-        font-weight: 600;
-        padding: 4px 10px;
-        border-radius: 4px;
-        border: 1px solid var(--color-cta-primary, #cc9900);
-        color: var(--color-cta-primary, #cc9900);
-        background: transparent;
-        line-height: 1.4;
-    }
-}
-
-/* ── 3. Price Tiers ─────────────────────────────────── */
-@media (width < 1024px) {
-    #pdm-price-tiers {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 0;
-        background: var(--color-surface-raised, #f5f5f5);
-        border-radius: 8px;
-        margin: 12px 16px 0;
-        padding: 14px 0;
-    }
-
-    .pdm-tier-col {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 0 12px;
-        border-right: 1px solid var(--color-border-default, #e5e5e5);
-    }
-
-    .pdm-tier-col:last-child {
-        border-right: none;
-    }
-
-    .pdm-tier-price {
-        font-size: 18px;
-        font-weight: 700;
-        color: #111;
-        line-height: 1.3;
-    }
-
-    .pdm-tier-qty {
-        font-size: 11px;
-        color: var(--color-text-placeholder, #999999);
-        margin-top: 3px;
-        text-align: center;
-    }
-}
-
-/* ── 4. Sample Price Row ────────────────────────────── */
-@media (width < 1024px) {
-    #pdm-sample-row {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 10px 16px;
-        background: var(--color-surface, #ffffff);
-        font-size: 13px;
-        color: var(--color-text-body, #333333);
-    }
-
     .pdm-sample-btn {
-        padding: 6px 18px;
-        border: 1px solid #333;
-        border-radius: 20px;
-        font-size: 13px;
-        font-weight: 500;
-        background: var(--color-surface, #ffffff);
-        cursor: pointer;
-        color: var(--color-text-body, #333333);
         transition: background 0.15s;
     }
 
@@ -4047,102 +3959,18 @@ body.gallery-lightbox-open {
     }
 }
 
-/* ── 5. Title + Share Row ───────────────────────────── */
+/* ── 5. Title + Share Row — now in Tailwind (MobileLayout.ts) ── */
+
+/* ── 6. Reviews Summary Row — layout now in Tailwind (MobileLayout.ts) ── */
 @media (width < 1024px) {
-    #pdm-title-section {
-        display: flex;
-        flex-direction: column;
-        gap: 4px;
-        padding: 14px 16px 6px;
-        background: var(--color-surface, #ffffff);
-    }
-
-    #pdm-title-row {
-        display: flex;
-        align-items: flex-start;
-        justify-content: space-between;
-        gap: 12px;
-    }
-
-    #pdm-product-title {
-        font-size: 15px;
-        font-weight: 600;
-        line-height: 1.45;
-        color: var(--color-text-heading, #111827);
-        margin: 0;
-        flex: 1;
-        display: -webkit-box;
-        -webkit-line-clamp: 3;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-    }
-
-    .pdm-share-btn {
-        flex-shrink: 0;
-        width: 32px;
-        height: 32px;
-        border: none;
-        background: none;
-        cursor: pointer;
-        color: var(--color-text-muted, #666666);
-        padding: 4px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-}
-
-/* ── 6. Reviews Summary Row ─────────────────────────── */
-@media (width < 1024px) {
-    #pdm-reviews-row {
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        padding: 0 16px 12px;
-        background: var(--color-surface, #ffffff);
-        font-size: 13px;
-        color: var(--color-text-muted, #666666);
-        cursor: pointer;
-    }
-
-    #pdm-reviews-row .pdm-stars {
-        display: flex;
-        gap: 2px;
-        color: #f5a623;
-    }
-
     #pdm-reviews-row .pdm-stars svg {
         width: 14px;
         height: 14px;
     }
 }
 
-/* ── 7-8. Collapsible Sections (shared) ─────────────── */
+/* ── 7-8. Collapsible Sections — layout now in Tailwind, keep transitions/states ── */
 @media (width < 1024px) {
-    .pdm-section-divider {
-        height: 8px;
-        background: var(--color-surface-raised, #f5f5f5);
-    }
-
-    .pdm-collapsible-section {
-        background: var(--color-surface, #ffffff);
-    }
-
-    .pdm-collapsible-header {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 14px 16px;
-        border: none;
-        background: none;
-        font-size: 14px;
-        font-weight: 600;
-        color: var(--color-text-heading, #111827);
-        cursor: pointer;
-        text-align: left;
-    }
-
     .pdm-collapsible-header em {
         font-style: normal;
         font-weight: 400;
@@ -4162,30 +3990,11 @@ body.gallery-lightbox-open {
         transform: rotate(180deg);
     }
 
-    .pdm-collapsible-body {
-        padding: 0 16px 14px;
-    }
-
     .pdm-collapsible-body.pdm-hidden {
         display: none;
     }
 
-    /* Color variant thumbnails inside collapsible */
-    .pdm-color-thumbs {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-    }
-
     .pdm-color-thumb {
-        width: 56px;
-        height: 56px;
-        border-radius: 6px;
-        border: 2px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
-        overflow: hidden;
-        cursor: pointer;
-        padding: 0;
-        background: none;
         transition: border-color 0.15s;
     }
 
@@ -4198,27 +4007,7 @@ body.gallery-lightbox-open {
         cursor: not-allowed;
     }
 
-    .pdm-color-thumb img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
-    /* Size/Material pill buttons inside collapsible */
-    .pdm-variant-pills {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-    }
-
     .pdm-variant-pill {
-        padding: 7px 16px;
-        border: 1px solid var(--color-border-medium, #d1d5db);
-        border-radius: 16px;
-        font-size: 13px;
-        color: var(--color-text-body, #333333);
-        background: var(--color-surface, #ffffff);
-        cursor: pointer;
         transition: border-color 0.15s;
     }
 
@@ -4233,230 +4022,28 @@ body.gallery-lightbox-open {
     }
 }
 
-/* ── 9. Ship To Section (green tint) ────────────────── */
+/* ── 9. Ship To Section — layout now in Tailwind, keep bg override ── */
 @media (width < 1024px) {
     .pdm-shipping-section {
         background: #f0fdf4;
     }
-
-    #pdm-ship-preview {
-        padding: 0 16px 14px;
-        font-size: 13px;
-        color: var(--color-text-body, #333333);
-        line-height: 1.6;
-    }
-
-    #pdm-ship-preview .pdm-ship-method {
-        font-weight: 600;
-        color: var(--color-text-heading, #111827);
-    }
-
-    #pdm-ship-preview .pdm-ship-detail {
-        display: flex;
-        gap: 16px;
-        margin-top: 4px;
-    }
-
-    #pdm-ship-preview .pdm-ship-detail span {
-        color: var(--color-text-muted, #666666);
-    }
 }
 
-/* ── 10. Protections Section ────────────────────────── */
+/* ── 10. Protections Section — now in Tailwind (MobileLayout.ts) ── */
+
+/* ── 11. Key Attributes Preview — now in Tailwind (MobileLayout.ts) ── */
+
+/* ── 12. Customization Preview — now in Tailwind (MobileLayout.ts) ── */
+
+/* ── 13. Supplier Card — layout now in Tailwind, keep transitions/states ── */
 @media (width < 1024px) {
-    #pdm-protections-preview {
-        padding: 0 16px 14px;
-    }
-
-    .pdm-protection-item {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        padding: 6px 0;
-        font-size: 13px;
-        color: var(--color-text-body, #333333);
-    }
-
-    .pdm-protection-icon {
-        flex-shrink: 0;
-        width: 20px;
-        height: 20px;
-        color: var(--color-text-muted, #666666);
-    }
-
-    .pdm-protection-icon svg {
-        width: 20px;
-        height: 20px;
-    }
-
-    .pdm-trade-badge {
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        padding: 8px 0 0;
-        font-size: 13px;
-        font-weight: 600;
-        color: var(--color-cta-primary, #cc9900);
-    }
-
-    .pdm-trade-badge svg {
-        width: 16px;
-        height: 16px;
-    }
-}
-
-/* ── 11. Key Attributes Preview ─────────────────────── */
-@media (width < 1024px) {
-    #pdm-keyattrs-preview {
-        padding: 0 16px 14px;
-    }
-
-    .pdm-attrs-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 8px 16px;
-    }
-
-    .pdm-attr-item {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .pdm-attr-key {
-        font-size: 11px;
-        color: var(--color-text-placeholder, #999999);
-    }
-
-    .pdm-attr-val {
-        font-size: 13px;
-        color: var(--color-text-heading, #111827);
-        font-weight: 500;
-    }
-}
-
-/* ── 12. Customization Preview ──────────────────────── */
-@media (width < 1024px) {
-    #pdm-custom-preview {
-        padding: 0 16px 14px;
-    }
-
-    .pdm-custom-item {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        font-size: 13px;
-        color: var(--color-text-body, #333333);
-    }
-
-    .pdm-custom-item svg {
-        width: 16px;
-        height: 16px;
-        color: var(--color-text-muted, #666666);
-        flex-shrink: 0;
-    }
-}
-
-/* ── 13. Supplier Card ──────────────────────────────── */
-@media (width < 1024px) {
-    #pdm-supplier-card {
-        background: var(--color-surface, #ffffff);
-        padding: 16px;
-    }
-
-    .pdm-supplier-header {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        margin-bottom: 4px;
-    }
-
-    .pdm-supplier-logo {
-        width: 48px;
-        height: 48px;
-        border-radius: 8px;
-        background: #fef9e7;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
-        font-size: 18px;
-        font-weight: 700;
-        color: var(--color-primary-600, #b38600);
-    }
-
-    .pdm-supplier-name {
-        font-size: 14px;
-        font-weight: 700;
-        color: var(--color-text-heading, #111827);
-        line-height: 1.3;
-    }
-
-    .pdm-supplier-meta {
-        font-size: 12px;
-        color: var(--color-text-muted, #666666);
-        margin-top: 2px;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-    }
-
     .pdm-supplier-meta img {
         width: 16px;
         height: 12px;
         border-radius: 1px;
     }
 
-    .pdm-supplier-stats {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 0;
-        border: 1px solid var(--color-border-default, #e5e5e5);
-        border-radius: 8px;
-        margin: 12px 0;
-        overflow: hidden;
-    }
-
-    .pdm-supplier-stat {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 10px 4px;
-        border-right: 1px solid var(--color-border-default, #e5e5e5);
-        text-align: center;
-    }
-
-    .pdm-supplier-stat:last-child {
-        border-right: none;
-    }
-
-    .pdm-supplier-stat strong {
-        font-size: 14px;
-        font-weight: 700;
-        color: var(--color-text-heading, #111827);
-    }
-
-    .pdm-supplier-stat span {
-        font-size: 11px;
-        color: var(--color-text-placeholder, #999999);
-        margin-top: 2px;
-    }
-
-    .pdm-supplier-btns {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 8px;
-    }
-
     .pdm-supplier-btn {
-        padding: 10px 8px;
-        border: 1px solid var(--color-border-medium, #d1d5db);
-        border-radius: 22px;
-        background: var(--color-surface, #ffffff);
-        font-size: 13px;
-        font-weight: 500;
-        color: var(--color-text-heading, #111827);
-        cursor: pointer;
-        text-align: center;
         transition: background 0.15s;
     }
 
@@ -4690,51 +4277,13 @@ body.pdm-sheet-open {
     overflow-wrap: break-word;
 }
 
-/* ── 15. Updated Mobile Bottom Bar (3 buttons) ─────── */
+/* ── 15. Mobile Bottom Bar — layout now in Tailwind, keep transitions/states ── */
 @media (width < 1024px) {
-    #pd-mobile-bar {
-        display: grid;
-        grid-template-columns: 48px minmax(0, 1fr) minmax(0, 1fr);
-        gap: 8px;
-        padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        z-index: 100;
-        background: var(--color-surface, #ffffff);
-        border-top: 1px solid var(--color-border-default, #e5e5e5);
-        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.08);
-        overflow: hidden;
-    }
-
-    .pdm-bar-chat-btn {
-        width: 48px;
-        height: 44px;
-        border: 1px solid var(--color-border-medium, #d1d5db);
-        border-radius: 22px;
-        background: var(--color-surface, #ffffff);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        color: var(--color-text-body, #333333);
-        padding: 0;
-    }
-
     .pdm-bar-chat-btn:active {
         background: var(--color-surface-raised, #f5f5f5);
     }
 
     .pdm-bar-cart-btn {
-        height: 44px;
-        border: 1px solid #222;
-        border-radius: 22px;
-        background: var(--color-surface, #ffffff);
-        font-size: 14px;
-        font-weight: 600;
-        color: var(--color-text-heading, #111827);
-        cursor: pointer;
         transition: background 0.15s;
     }
 
@@ -4743,27 +4292,11 @@ body.pdm-sheet-open {
     }
 
     .pdm-bar-order-btn {
-        height: 44px;
-        border: none;
-        border-radius: 22px;
-        background: var(--color-cta-primary, #cc9900);
-        font-size: 14px;
-        font-weight: 700;
-        color: #fff;
-        cursor: pointer;
         transition: background 0.15s;
     }
 
     .pdm-bar-order-btn:active {
         background: var(--color-cta-primary-hover, #b38600);
-    }
-
-    .pdm-bar-cart-btn,
-    .pdm-bar-order-btn {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        min-width: 0;
     }
 }
 
