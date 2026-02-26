@@ -16,8 +16,8 @@ const TABS: InquiriesTab[] = [
 
 function renderEmptyState(): string {
   return `
-    <div class="inq-empty">
-      <div class="inq-empty__illustration">
+    <div class="flex flex-col items-center gap-4 text-center">
+      <div class="w-[140px] h-[120px]">
         <svg width="140" height="120" viewBox="0 0 140 120" fill="none">
           <!-- Folder -->
           <rect x="20" y="30" width="80" height="60" rx="4" fill="#FFECD2"/>
@@ -34,48 +34,48 @@ function renderEmptyState(): string {
           <rect x="111" y="80" width="5" height="12" rx="2" fill="#F7A84B" opacity="0.5"/>
         </svg>
       </div>
-      <p class="inq-empty__text">Henüz bir sorgu göndermediniz.</p>
+      <p class="text-sm text-[var(--color-text-muted,#666666)]">Henüz bir sorgu göndermediniz.</p>
     </div>
   `;
 }
 
 export function InquiriesLayout(): string {
   return `
-    <div class="inq-layout">
+    <div class="bg-[var(--color-surface,#ffffff)] rounded-lg min-h-[calc(100vh-80px)] flex flex-col">
       <!-- Tabs -->
-      <div class="inq-tabs">
+      <div class="flex border-b border-[var(--color-border-default,#e5e5e5)]">
         ${TABS.map((tab, i) => `
-          <button class="inq-tabs__tab ${i === 0 ? 'inq-tabs__tab--active' : ''}" data-tab="${tab.id}">
+          <button class="inq-tabs__tab px-6 py-3.5 text-[13px] font-normal text-[var(--color-text-muted,#666666)] bg-transparent border-none border-b-2 border-transparent cursor-pointer transition-[color,border-color] duration-150 whitespace-nowrap hover:text-[var(--color-text-heading,#111827)] ${i === 0 ? 'inq-tabs__tab--active !text-[var(--color-text-heading,#111827)] !font-semibold !border-b-[var(--color-text-heading)]' : ''}" data-tab="${tab.id}">
             ${tab.label}
           </button>
         `).join('')}
       </div>
 
       <!-- Action Bar -->
-      <div class="inq-actions">
-        <div class="inq-actions__left">
-          <div class="inq-actions__select">
+      <div class="flex items-center justify-between px-5 py-3 border-b border-[var(--color-border-light,#f0f0f0)] gap-4 flex-wrap max-md:flex-col max-md:items-start">
+        <div class="flex items-center gap-2">
+          <div class="inline-flex items-center gap-1 px-3 py-1.5 text-[13px] text-[var(--color-text-muted,#666666)] border border-[var(--color-border-medium,#d1d5db)] rounded cursor-pointer bg-[var(--color-surface,#ffffff)] transition-[border-color] duration-150 hover:border-[var(--color-text-placeholder)]">
             <span>Şuraya taşı:</span>
             <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
             </svg>
           </div>
-          <button class="inq-actions__delete-btn">Sil</button>
+          <button class="px-4 py-1.5 text-[13px] text-[var(--color-cta-primary,#cc9900)] border border-[var(--color-cta-primary,#cc9900)] rounded bg-transparent cursor-pointer transition-[background,color] duration-150 hover:bg-[var(--color-primary-50,#fef9e7)]">Sil</button>
         </div>
-        <div class="inq-actions__right">
-          <label class="inq-actions__checkbox">
-            <input type="checkbox" />
+        <div class="flex items-center gap-3">
+          <label class="inline-flex items-center gap-1.5 text-[13px] text-[var(--color-text-muted,#666666)] cursor-pointer">
+            <input type="checkbox" class="w-3.5 h-3.5 accent-[var(--color-cta-primary,#cc9900)]" />
             <span>yeni yanıt</span>
           </label>
-          <div class="inq-actions__dropdown">
+          <div class="inline-flex items-center gap-1 px-3.5 py-1.5 text-[13px] text-[var(--color-text-heading,#111827)] border border-[var(--color-border-medium,#d1d5db)] rounded-full cursor-pointer bg-[var(--color-surface,#ffffff)] transition-[border-color] duration-150 hover:border-[var(--color-text-placeholder)]">
             <span>Tüm Talepler</span>
             <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
             </svg>
           </div>
-          <div class="inq-actions__search">
-            <input type="text" placeholder="Ara" class="inq-actions__search-input" />
-            <button class="inq-actions__search-btn" aria-label="Ara">
+          <div class="inq-actions__search inline-flex items-center border border-[var(--color-border-medium,#d1d5db)] rounded overflow-hidden">
+            <input type="text" placeholder="Ara" class="inq-actions__search-input w-40 max-md:w-[120px] h-8 px-2.5 text-[13px] text-[var(--color-text-body,#333333)] border-none outline-none bg-[var(--color-surface,#ffffff)] placeholder:text-[var(--color-text-placeholder,#999999)] focus:shadow-[inset_0_0_0_1px_var(--color-cta-primary,#cc9900)]" />
+            <button class="flex items-center justify-center w-8 h-8 border-none border-l border-l-[var(--color-border-medium,#d1d5db)] bg-[var(--color-surface-muted,#fafafa)] text-[var(--color-text-muted,#666666)] cursor-pointer transition-[background,color] duration-150 hover:bg-[var(--color-border-light)] hover:text-[var(--color-text-heading,#111827)]" aria-label="Ara">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <circle cx="11" cy="11" r="8"/>
                 <path stroke-linecap="round" d="m21 21-4.35-4.35"/>
@@ -86,7 +86,7 @@ export function InquiriesLayout(): string {
       </div>
 
       <!-- Content -->
-      <div class="inq-content" id="inq-content">
+      <div class="flex-1 flex items-center justify-center min-h-[400px]" id="inq-content">
         ${renderEmptyState()}
       </div>
     </div>
@@ -98,8 +98,10 @@ export function initInquiriesLayout(): void {
   const tabs = document.querySelectorAll<HTMLButtonElement>('.inq-tabs__tab');
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
-      tabs.forEach(t => t.classList.remove('inq-tabs__tab--active'));
-      tab.classList.add('inq-tabs__tab--active');
+      tabs.forEach(t => {
+        t.classList.remove('inq-tabs__tab--active', '!text-[var(--color-text-heading,#111827)]', '!font-semibold', '!border-b-[var(--color-text-heading)]');
+      });
+      tab.classList.add('inq-tabs__tab--active', '!text-[var(--color-text-heading,#111827)]', '!font-semibold', '!border-b-[var(--color-text-heading)]');
     });
   });
 }
