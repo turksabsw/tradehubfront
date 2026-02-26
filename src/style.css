@@ -1508,7 +1508,7 @@
         height: 40px;
         margin: 0;
         padding: 0 24px;
-        color: #ffffff;
+        color: var(--color-surface);
         font-size: 15px;
         font-weight: 700;
         line-height: 20px;
@@ -2449,7 +2449,7 @@
 }
 
 .gallery-thumb.active {
-    border-color: #111827;
+    border-color: var(--color-text-heading);
 }
 
 .gallery-thumb:hover:not(.active) {
@@ -2561,7 +2561,7 @@
     display: inline-flex;
     gap: 2px;
     margin-top: 12px;
-    background: #f0f0f0;
+    background: var(--color-border-light);
     border-radius: 24px;
     padding: 3px;
 }
@@ -2733,7 +2733,7 @@ body.gallery-lightbox-open {
 }
 
 .gallery-lightbox-thumb.active {
-    border-color: #ffffff;
+    border-color: var(--color-surface);
 }
 
 #gallery-lightbox-stage {
@@ -5488,7 +5488,7 @@ body.gallery-lightbox-open {
         width: 36px;
         height: 4px;
         border-radius: 2px;
-        background: #d1d5db;
+        background: var(--color-border-medium);
         margin: 0 auto 8px;
     }
 
@@ -6020,7 +6020,7 @@ body.gallery-lightbox-open {
     }
 
     .pdm-color-thumb.active {
-        border-color: #111827;
+        border-color: var(--color-text-heading);
     }
 
     .pdm-color-thumb.pdm-disabled {
@@ -6053,7 +6053,7 @@ body.gallery-lightbox-open {
     }
 
     .pdm-variant-pill.active {
-        border-color: #111827;
+        border-color: var(--color-text-heading);
         font-weight: 600;
     }
 
@@ -7815,7 +7815,7 @@ body.pdm-sheet-open {
 }
 
 .settings-profile__btn--primary {
-    background: #111827;
+    background: var(--color-text-heading);
     color: #fff;
 }
 
@@ -8296,7 +8296,7 @@ body.pdm-sheet-open {
 
 .tax-info__tab--active {
     color: var(--color-text-heading, #111827);
-    border-bottom-color: #111827;
+    border-bottom-color: var(--color-text-heading);
 }
 
 .tax-info__tab:hover:not(.tax-info__tab--active) {
@@ -8369,7 +8369,7 @@ body.pdm-sheet-open {
 
 .tax-info__section-btn {
     padding: 10px 24px;
-    border: 1px solid #111827;
+    border: 1px solid var(--color-text-heading);
     border-radius: 20px;
     background: var(--color-surface, #ffffff);
     font-size: 13px;
@@ -8721,7 +8721,7 @@ body.pdm-sheet-open {
 .email-pref__toggle-slider {
     position: absolute;
     inset: 0;
-    background: #d1d5db;
+    background: var(--color-border-medium);
     border-radius: 13px;
     transition: background 0.2s;
 }
@@ -9337,7 +9337,7 @@ body.pdm-sheet-open {
 }
 
 .email-change__code-box:focus {
-    border-color: #111827;
+    border-color: var(--color-text-heading);
 }
 
 .email-change__resend {
@@ -9400,7 +9400,7 @@ body.pdm-sheet-open {
 }
 
 .email-change__form-input:focus {
-    border-color: #111827;
+    border-color: var(--color-text-heading);
 }
 
 .email-change__form-input--disabled {
@@ -9511,7 +9511,7 @@ body.pdm-sheet-open {
 }
 
 .phone-change__form-input:focus {
-    border-color: #111827;
+    border-color: var(--color-text-heading);
 }
 
 .phone-change__form-input--short {
@@ -9543,7 +9543,7 @@ body.pdm-sheet-open {
 }
 
 .phone-change__code-input:focus {
-    border-color: #111827;
+    border-color: var(--color-text-heading);
 }
 
 .phone-change__timer {
@@ -9913,7 +9913,7 @@ body.pdm-sheet-open {
     width: 80px;
     height: 80px;
     border-radius: 50%;
-    background: #d1d5db;
+    background: var(--color-border-medium);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -10008,7 +10008,7 @@ body.pdm-sheet-open {
 }
 
 .profile-header__detail-separator {
-    color: #d1d5db;
+    color: var(--color-border-medium);
 }
 
 .profile-header__verified {
@@ -10057,7 +10057,7 @@ body.pdm-sheet-open {
 }
 
 .profile-header__action-btn--primary {
-    background: #111827;
+    background: var(--color-text-heading);
     color: #fff;
 }
 
@@ -10590,7 +10590,7 @@ body.pdm-sheet-open {
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background: #d1d5db;
+    background: var(--color-border-medium);
     opacity: 1;
     transition: all 200ms;
 }
@@ -10599,7 +10599,7 @@ body.pdm-sheet-open {
     width: 16px;
     height: 8px;
     border-radius: 4px;
-    background: #333333;
+    background: var(--color-text-body);
 }
 
 
@@ -11280,7 +11280,7 @@ body.pdm-sheet-open {
 }
 
 .msg-inbox__cat--active {
-    background: #f0f0f0;
+    background: var(--color-border-light);
     color: var(--color-text-heading, #111827);
     font-weight: 600;
 }
@@ -11420,10 +11420,10 @@ body.pdm-sheet-open {
     padding: 0 4px;
     font-size: 11px;
     font-weight: 600;
-    color: #ffffff;
+    color: var(--color-surface);
     background: #EF4444;
     border-radius: 9px;
-    border: 2px solid #ffffff;
+    border: 2px solid var(--color-surface);
     line-height: 1;
 }
 
@@ -11515,7 +11515,7 @@ body.pdm-sheet-open {
 }
 
 .msg-content__cta:hover {
-    border-color: #999999;
+    border-color: var(--color-text-placeholder);
     background: var(--color-surface-muted, #fafafa);
 }
 
@@ -11526,7 +11526,7 @@ body.pdm-sheet-open {
     justify-content: space-between;
     padding: 10px 20px;
     background: linear-gradient(135deg, #3B82F6, #60A5FA);
-    color: #ffffff;
+    color: var(--color-surface);
 }
 
 .msg-feedback__text {
@@ -11541,7 +11541,7 @@ body.pdm-sheet-open {
     height: 24px;
     border: none;
     background: transparent;
-    color: #ffffff;
+    color: var(--color-surface);
     cursor: pointer;
     opacity: 0.8;
     transition: opacity 150ms;
@@ -11632,7 +11632,7 @@ body.pdm-sheet-open {
 .inq-tabs__tab--active {
     color: var(--color-text-heading, #111827);
     font-weight: 600;
-    border-bottom-color: #222222;
+    border-bottom-color: var(--color-text-heading);
 }
 
 /* --- Action Bar --- */
@@ -11667,7 +11667,7 @@ body.pdm-sheet-open {
 }
 
 .inq-actions__select:hover {
-    border-color: #999999;
+    border-color: var(--color-text-placeholder);
 }
 
 .inq-actions__delete-btn {
@@ -11721,7 +11721,7 @@ body.pdm-sheet-open {
 }
 
 .inq-actions__dropdown:hover {
-    border-color: #999999;
+    border-color: var(--color-text-placeholder);
 }
 
 .inq-actions__search {
@@ -11766,7 +11766,7 @@ body.pdm-sheet-open {
 }
 
 .inq-actions__search-btn:hover {
-    background: #f0f0f0;
+    background: var(--color-border-light);
     color: var(--color-text-heading, #111827);
 }
 
@@ -11936,7 +11936,7 @@ body.pdm-sheet-open {
 }
 
 .contacts-list__search-btn:hover {
-    background: #f0f0f0;
+    background: var(--color-border-light);
     color: var(--color-text-heading, #111827);
 }
 
@@ -11973,7 +11973,7 @@ body.pdm-sheet-open {
 .contacts-list__empty-icon {
     width: 40px;
     height: 40px;
-    color: #d1d5db;
+    color: var(--color-border-medium);
 }
 
 .contacts-list__empty-text {
@@ -12020,7 +12020,7 @@ body.pdm-sheet-open {
     width: 40px;
     height: 40px;
     border: none;
-    background: #f0f0f0;
+    background: var(--color-border-light);
     border-radius: 6px;
     color: var(--color-text-muted, #666666);
     cursor: pointer;
@@ -12106,7 +12106,7 @@ body.pdm-sheet-open {
 .orders-page__nav-link--active {
     font-weight: 600;
     color: var(--color-text-heading, #111827);
-    border-left-color: #222222;
+    border-left-color: var(--color-text-heading);
     text-decoration: underline;
     text-underline-offset: 3px;
 }
@@ -12146,7 +12146,7 @@ body.pdm-sheet-open {
 }
 
 .orders-page__upload-btn:hover {
-    border-color: #999999;
+    border-color: var(--color-text-placeholder);
     background: var(--color-surface-muted, #fafafa);
 }
 
@@ -12185,7 +12185,7 @@ body.pdm-sheet-open {
     padding: 10px 32px;
     font-size: 14px;
     color: var(--color-text-body, #333333);
-    border: 1px solid #333333;
+    border: 1px solid var(--color-text-body);
     border-radius: 24px;
     text-decoration: none;
     margin-top: 8px;
@@ -12193,8 +12193,8 @@ body.pdm-sheet-open {
 }
 
 .orders-page__empty-cta:hover {
-    background: #222222;
-    color: #ffffff;
+    background: var(--color-text-heading);
+    color: var(--color-surface);
 }
 
 /* --- Orders Sub-page Shared Components --- */
@@ -12227,7 +12227,7 @@ body.pdm-sheet-open {
 .os-tabs__tab--active {
     color: var(--color-text-heading, #111827);
     font-weight: 600;
-    border-bottom-color: #222222;
+    border-bottom-color: var(--color-text-heading);
 }
 
 .os-tabs__tab--active.os-tabs__tab--orange {
@@ -12318,7 +12318,7 @@ body.pdm-sheet-open {
 }
 
 .os-reviews-toolbar__btn:hover {
-    background: #f0f0f0;
+    background: var(--color-border-light);
     color: var(--color-text-heading, #111827);
 }
 
@@ -12346,7 +12346,7 @@ body.pdm-sheet-open {
 
 .os-pill--active {
     color: var(--color-text-heading, #111827);
-    border-color: #222222;
+    border-color: var(--color-text-heading);
     font-weight: 500;
 }
 
@@ -12942,7 +12942,7 @@ body.pdm-sheet-open {
 
     .orders-page__nav-link--active {
         border-left-color: transparent;
-        border-bottom-color: #222222;
+        border-bottom-color: var(--color-text-heading);
     }
 
     .os-faq__grid {
@@ -15970,7 +15970,7 @@ body.pdm-sheet-open {
 
 .ds-empty__icon {
     margin-bottom: 20px;
-    color: #d1d5db;
+    color: var(--color-border-medium);
 }
 
 .ds-empty__title {
@@ -16107,7 +16107,7 @@ body.pdm-sheet-open {
     width: 44px;
     height: 24px;
     border-radius: 12px;
-    background: #d1d5db;
+    background: var(--color-border-medium);
     position: relative;
     transition: background 0.2s;
 }
