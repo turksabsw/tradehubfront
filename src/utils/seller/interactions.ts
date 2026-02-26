@@ -357,4 +357,68 @@ export function initSellerStorefront(): void {
   initContactForm();
   initFloatingActions();
   initGalleryLightbox();
+  initCompanyProfileTabs();
+}
+
+// ═══════════════════════════════════════════════════════════
+// C14: Company Profile Tabs
+// ═══════════════════════════════════════════════════════════
+
+export function initCompanyProfileTabs(): void {
+  const mainTabs = document.querySelectorAll('.company-profile__main-tab');
+  const tabContents = document.querySelectorAll('.company-profile__tab-content');
+
+  // Main Tabs (Hesabım, Yorumlar, Ürünler)
+  mainTabs.forEach(tab => {
+    tab.addEventListener('click', (e) => {
+      e.preventDefault();
+      const targetId = (tab as HTMLButtonElement).dataset.target;
+      if (!targetId) return;
+
+      // Update Tab Visuals
+      mainTabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+
+      // Show Selected Content
+      tabContents.forEach(content => {
+        if (content.id === targetId) {
+          content.classList.remove('hidden');
+          // small delay for transition effect
+          setTimeout(() => content.classList.add('active'), 10);
+        } else {
+          content.classList.remove('active');
+          content.classList.add('hidden');
+        }
+      });
+    });
+  });
+
+  // Inner Links (e.g. from Overview -> Reviews)
+  const tabLinks = document.querySelectorAll('.company-profile__tab-link');
+  tabLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const targetId = (link as HTMLAnchorElement).dataset.target;
+      if (!targetId) return;
+
+      const correspondingTab = document.querySelector(`.company-profile__main-tab[data-target="${targetId}"]`) as HTMLButtonElement;
+      if (correspondingTab) {
+        correspondingTab.click(); // trigger the visual update
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    });
+  });
+
+  // Inner Products Category Quick Filters (Visual Only for now)
+  const prodCats = document.querySelectorAll('.company-profile__prod-cat');
+  prodCats.forEach(cat => {
+    cat.addEventListener('click', (e) => {
+      e.preventDefault();
+      prodCats.forEach(c => c.classList.remove('active', 'border-gray-900', 'text-gray-900'));
+      prodCats.forEach(c => c.classList.add('border-transparent', 'text-gray-500'));
+
+      cat.classList.remove('border-transparent', 'text-gray-500');
+      cat.classList.add('active', 'border-gray-900', 'text-gray-900');
+    });
+  });
 }

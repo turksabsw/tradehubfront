@@ -19,11 +19,41 @@ import { FooterLinks } from './components/footer'
 import { FloatingPanel, initFloatingPanel } from './components/floating'
 
 // Buyer Dashboard components
-import { BuyerDashboardLayout, initBuyerDashboardLayout } from './components/buyer-dashboard'
-import { renderSidebar } from './components/sidebar'
+import { BuyerDashboardLayout, initBuyerDashboardLayout, OtherServicesLayout, initOtherServicesLayout } from './components/buyer-dashboard'
+import { renderSidebar, initSidebar } from './components/sidebar'
 
 // Mock data
 import { mockBuyerDashboardData } from './data/mockBuyerDashboard'
+
+// ── Hash routing: dashboard vs other-services sub-pages ──
+type DashboardView = 'dashboard' | 'other-services';
+
+const OTHER_SERVICE_HASHES = ['payment-terms', 'product-inspection'];
+
+function getActiveView(): DashboardView {
+  const hash = window.location.hash.replace('#', '');
+  if (OTHER_SERVICE_HASHES.includes(hash)) return 'other-services';
+  return 'dashboard';
+}
+
+function renderMainContent(view: DashboardView): string {
+  if (view === 'other-services') {
+    return OtherServicesLayout();
+  }
+  return BuyerDashboardLayout({ data: mockBuyerDashboardData });
+}
+
+function getBreadcrumbItems(view: DashboardView): { label: string; href?: string }[] {
+  if (view === 'other-services') {
+    return [
+      { label: 'Hesabım', href: '/buyer-dashboard.html' },
+      { label: 'Diğer hizmetlerim' },
+    ];
+  }
+  return [{ label: 'Hesabım' }];
+}
+
+const activeView = getActiveView();
 
 const appEl = document.querySelector<HTMLDivElement>('#app')!;
 appEl.classList.add('relative');
@@ -44,13 +74,13 @@ appEl.innerHTML = `
       <!-- Content Column (main + footer) -->
       <div class="flex-1 min-w-0">
         <!-- Breadcrumb -->
-        <div class="pt-4">
-          ${Breadcrumb([{ label: 'Hesabım' }])}
+        <div class="pt-4" id="bd-breadcrumb">
+          ${Breadcrumb(getBreadcrumbItems(activeView))}
         </div>
 
         <!-- Main Content -->
-        <main>
-          ${BuyerDashboardLayout({ data: mockBuyerDashboardData })}
+        <main id="bd-main-content">
+          ${renderMainContent(activeView)}
         </main>
 
         <!-- Footer -->
@@ -70,6 +100,30 @@ initFlowbite();
 initHeaderCart();
 initFloatingPanel();
 initMobileDrawer();
+initSidebar();
 
-// Buyer Dashboard inits
-initBuyerDashboardLayout();
+// Init based on current view
+function initCurrentView(): void {
+  const view = getActiveView();
+  if (view === 'other-services') {
+    initOtherServicesLayout();
+  } else {
+    initBuyerDashboardLayout();
+  }
+}
+
+initCurrentView();
+
+// Handle hash changes to switch between views
+window.addEventListener('hashchange', () => {
+  const view = getActiveView();
+  const mainEl = document.getElementById('bd-main-content');
+  const breadcrumbEl = document.getElementById('bd-breadcrumb');
+  if (mainEl) {
+    mainEl.innerHTML = renderMainContent(view);
+  }
+  if (breadcrumbEl) {
+    breadcrumbEl.innerHTML = Breadcrumb(getBreadcrumbItems(view));
+  }
+  initCurrentView();
+});

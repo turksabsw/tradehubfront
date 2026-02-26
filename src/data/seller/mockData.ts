@@ -141,15 +141,15 @@ const categoryCards: CategoryCard[] = [
 
 // ─── C5: Hot Products ───────────────────────────────────
 const hotProducts: SimpleProduct[] = [
-  { id: 'hp-1', name: 'DIN Ray Tipi Ön Ödemeli Sayaç (CIU Modüllü)', image: '/assets/mock/prod-din-ray.jpg', link: '#' },
-  { id: 'hp-2', name: 'Tek Fazlı Ön Ödemeli Çift Kaynaklı Enerji Sayacı', image: '/assets/mock/prod-tek-faz.jpg', link: '#' },
-  { id: 'hp-3', name: 'Üç Fazlı Ön Ödemeli Enerji Sayacı', image: '/assets/mock/prod-uc-faz.jpg', link: '#' },
-  { id: 'hp-4', name: 'Ultrasonik Su Sayacı DN15-DN300', image: '/assets/mock/prod-ultrasonik.jpg', link: '#' },
-  { id: 'hp-5', name: 'Akıllı Ön Ödemeli Tokenli Elektrik Sayacı', image: '/assets/mock/prod-akilli-token.jpg', link: '#' },
-  { id: 'hp-6', name: 'Endüstriyel Doğalgaz Sayacı G4-G100', image: '/assets/mock/prod-dogalgaz.jpg', link: '#' },
-  { id: 'hp-7', name: 'LoRa Haberleşmeli Uzaktan Okuma Sayacı', image: '/assets/mock/prod-lora.jpg', link: '#' },
-  { id: 'hp-8', name: 'Çok Tarifeli Akıllı Elektrik Sayacı', image: '/assets/mock/prod-cok-tarifeli.jpg', link: '#' },
-  { id: 'hp-9', name: 'Kompakt Tip Isı Sayacı DN20-DN100', image: '/assets/mock/prod-isi-sayaci.jpg', link: '#' },
+  { id: 'hp-1', name: 'DIN Ray Tipi Ön Ödemeli Sayaç (CIU Modüllü)', image: 'https://images.unsplash.com/photo-1550989460-0adf9ea622e2?q=80&w=400&auto=format&fit=crop', link: '#' },
+  { id: 'hp-2', name: 'Tek Fazlı Ön Ödemeli Çift Kaynaklı Enerji Sayacı', image: 'https://images.unsplash.com/photo-1544928147-79a2dbc1f389?q=80&w=400&auto=format&fit=crop', link: '#' },
+  { id: 'hp-3', name: 'Üç Fazlı Ön Ödemeli Enerji Sayacı', image: 'https://images.unsplash.com/photo-1557800636-894a64c1696f?q=80&w=400&auto=format&fit=crop', link: '#' },
+  { id: 'hp-4', name: 'Ultrasonik Su Sayacı DN15-DN300', image: 'https://images.unsplash.com/photo-1627964434947-d5ab70b8c66e?q=80&w=400&auto=format&fit=crop', link: '#' },
+  { id: 'hp-5', name: 'Akıllı Ön Ödemeli Tokenli Elektrik Sayacı', image: 'https://images.unsplash.com/photo-1631541909061-71e34ddce158?q=80&w=400&auto=format&fit=crop', link: '#' },
+  { id: 'hp-6', name: 'Endüstriyel Doğalgaz Sayacı G4-G100', image: 'https://images.unsplash.com/photo-1582046426742-b06f8c792ea8?q=80&w=400&auto=format&fit=crop', link: '#' },
+  { id: 'hp-7', name: 'LoRa Haberleşmeli Uzaktan Okuma Sayacı', image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=400&auto=format&fit=crop', link: '#' },
+  { id: 'hp-8', name: 'Çok Tarifeli Akıllı Elektrik Sayacı', image: 'https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?q=80&w=400&auto=format&fit=crop', link: '#' },
+  { id: 'hp-9', name: 'Kompakt Tip Isı Sayacı DN20-DN100', image: 'https://images.unsplash.com/photo-1581092335878-2d9ff86ca2bf?q=80&w=400&auto=format&fit=crop', link: '#' },
 ];
 
 // ─── C6: Category Product Listings ──────────────────────
@@ -554,3 +554,40 @@ export const sellerData: SellerStorefrontData = {
   contactForm,
   floatingActions,
 };
+
+// ─── C14: Seller Performance Stats & Reviews ──────────────────────────────
+export const sellerStats: any = {
+  rating: 4.7,
+  reviewCount: 87,
+  responseTime: '3h',
+  onTimeDeliveryRate: '98.5%',
+  transactions: 154,
+  supplierServiceScore: 4.8,
+  onTimeShipmentScore: 4.6,
+  productQualityScore: 4.6
+};
+
+export const sellerReviews: any[] = [
+  {
+    id: 'rev-1',
+    reviewerName: 'J********l',
+    country: 'Angola',
+    countryFlag: '🇦🇴',
+    date: '25 Feb 2026 10:15',
+    comment: 'muito bom veio do mesmo jeito que pedi',
+    productName: 'USB portu düz ile özelleştirilebilir Logo 15.6 inç su geçirmez Oxford iş rahat okul dizüstü bilgisayar seyahat sırt çantası',
+    productImage: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=100&h=100&fit=crop',
+    productPrice: '$2.58-2.95 / Adet'
+  },
+  {
+    id: 'rev-2',
+    reviewerName: 'M********a',
+    country: 'Senegal',
+    countryFlag: '🇸🇳',
+    date: '12 Feb 2026 19:04',
+    comment: 'cool',
+    productName: 'Yeni tasarım moda serin sırt çantası lüks su geçirmez öğrenci okul çantası kaliteli iş dizüstü bilgisayar seyahat sırt çantası eğlence',
+    productImage: 'https://images.unsplash.com/photo-1547949003-9792a18a2601?w=100&h=100&fit=crop',
+    productPrice: '$8.69-9.99 / Adet'
+  }
+];

@@ -11,21 +11,12 @@ import 'swiper/swiper-bundle.css';
 import {
   StoreHeader,
   StoreNav,
-  HeroBanner,
-  CategoryGrid,
-  HotProducts,
-  CategoryProductListing,
-  CompanyInfoComponent,
-  Certificates,
-  WhyChooseUs,
-  CompanyIntroduction,
-  Gallery,
-  ContactForm,
-  FloatingActions,
 } from './components/seller';
 
+import { CompanyProfileComponent } from './components/seller/CompanyProfile';
+
 // Mock Data
-import { sellerData } from './data/seller/mockData';
+import { sellerData, sellerStats, sellerReviews } from './data/seller/mockData';
 
 // Interactions
 import { initSellerStorefront } from './utils/seller/interactions';
@@ -33,25 +24,22 @@ import { initSellerStorefront } from './utils/seller/interactions';
 // ─── Render ─────────────────────────────────────────────
 const appEl = document.querySelector<HTMLDivElement>('#app')!;
 
-const isPro = sellerData.seller.verificationBadgeType === 'pro';
-
 appEl.innerHTML = `
   <!-- SITE HEADER BURAYA GELİR -->
 
   <main class="seller-storefront" data-seller-slug="${sellerData.seller.slug}">
     ${StoreHeader(sellerData.seller)}
     ${StoreNav(sellerData.navData)}
-    ${HeroBanner(sellerData.heroBanner)}
-    ${sellerData.seller.hasCategoryGrid && sellerData.categoryCards ? CategoryGrid(sellerData.categoryCards) : ''}
-    ${HotProducts(sellerData.hotProducts)}
-    ${sellerData.seller.hasCategoryListing && sellerData.categoryListings ? CategoryProductListing(sellerData.categoryListings) : ''}
-    ${CompanyInfoComponent(sellerData.company, sellerData.seller)}
-    ${sellerData.certificates && sellerData.certificates.length ? Certificates(sellerData.certificates) : ''}
-    ${sellerData.advantages && sellerData.advantages.length ? WhyChooseUs(sellerData.advantages, sellerData.features, isPro) : ''}
-    ${sellerData.companyInfoCells && sellerData.companyInfoCells.length ? CompanyIntroduction(sellerData.seller, sellerData.companyInfoCells, sellerData.companyPhotos || []) : ''}
-    ${sellerData.galleryPhotos && sellerData.galleryPhotos.length ? Gallery(sellerData.galleryPhotos) : ''}
-    ${ContactForm(sellerData.contactForm)}
-    ${FloatingActions(sellerData.floatingActions)}
+
+    <!-- PROFILE VIEW -->
+    ${CompanyProfileComponent(
+  sellerData.seller,
+  sellerStats,
+  sellerReviews,
+  sellerData.hotProducts,
+  sellerData.categoryListings || []
+)}
+
   </main>
 
   <!-- SITE FOOTER BURAYA GELİR -->

@@ -232,3 +232,5 @@ export interface SellerStorefrontData {
   contactForm: ContactFormData;
   floatingActions: FloatingActionsData;
 }
+export interface SellerReview { id: string; reviewerName: string; country: string; countryFlag: string; date: string; comment: string; productName: string; productImage: string; productPrice: string; } 
+export interface SellerPerformanceStats { rating: number; reviewCount: number; responseTime: string; onTimeDeliveryRate: string; transactions: number; supplierServiceScore: number; onTimeShipmentScore: number; productQualityScore: number; }

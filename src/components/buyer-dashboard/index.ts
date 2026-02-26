@@ -17,5 +17,8 @@ export { OrdersContent } from './OrdersContent';
 export { UserInfoCard } from './UserInfoCard';
 export type { UserInfoCardProps } from './UserInfoCard';
 
+// Other Services
+export { OtherServicesLayout, initOtherServicesLayout } from './OtherServicesLayout';
+
 // Data
 export { ORDER_TABS, ORDER_FILTERS } from './ordersData';

@@ -132,21 +132,47 @@ function getActiveSection(): SectionId {
 function renderHeroBanner(): string {
   return `
     <div class="ds-hero">
-      <h1 class="ds-hero__title">Başlangıç damla nakliye bugün mağazanıza</h1>
-      <div class="ds-hero__platforms">
-        <span class="ds-hero__platform-badge">Amazon</span>
-        <span class="ds-hero__platform-badge">Shopify</span>
-        <span class="ds-hero__platform-badge">Wix</span>
-        <span class="ds-hero__platform-badge">WooCommerce</span>
+      <div class="ds-hero__content">
+        <h1 class="ds-hero__title">
+          Başlangıç <strong>damla nakliye</strong> bugün mağazanıza
+          <span class="ds-hero__platforms">
+            <span class="ds-hero__platform-badge" title="Amazon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M.045 18.02c.07-.116.36-.208.686-.296 1.35-.36 5.37-1.56 7.63-3.33.18-.14.19-.38.04-.54-.66-.71-1.76-1.52-2.58-1.94-.12-.06-.28-.06-.4 0-1.34.76-2.9 1.29-4.3 1.56-.24.05-.43.18-.48.37-.08.28-.18.96-.18 1.56 0 .42.02.72.04.88.02.16.12.3.28.36.16.04.32 0 .44-.12l-.14.01zm14.5-7.5c.34 0 .63.1.87.28.24.18.36.44.36.74 0 .3-.12.56-.36.74-.24.18-.53.28-.87.28-.34 0-.63-.1-.87-.28-.24-.18-.36-.44-.36-.74 0-.3.12-.56.36-.74.24-.18.53-.28.87-.28z"/><path d="M20.2 18.43c-.08-.12-.28-.16-.44-.08-1.56.82-3.28 1.24-5.16 1.24-2.44 0-4.64-.72-6.6-2.16-.14-.1-.32-.08-.42.06-.1.14-.08.34.06.44 2.12 1.56 4.48 2.34 7.08 2.34 1.96 0 3.84-.46 5.56-1.36.16-.1.24-.3.16-.48h-.24z"/></svg>
+            </span>
+            <span class="ds-hero__platform-badge" title="Shopify">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M15.34 3.8c-.01-.07-.07-.12-.12-.13-.05-.01-1.17-.04-1.17-.04s-.78-.77-.86-.85c-.08-.08-.24-.06-.3-.04 0 0-.16.05-.43.13-.26-.74-.7-1.42-1.49-1.42h-.07c-.22-.29-.5-.42-.73-.42-1.81 0-2.67 2.26-2.94 3.41-.7.22-1.2.37-1.26.39-.39.12-.4.13-.45.5C5.45 5.63 4.4 13.63 4.4 13.63l8.26 1.44 4.48-1.1S15.35 3.87 15.34 3.8z"/></svg>
+            </span>
+            <span class="ds-hero__platform-badge" title="Wix">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M4.94 6.87c-.2.33-.54.86-.54 1.76 0 .88.46 1.5.56 1.64l2.48 3.38c.06.08.04.2-.04.26-.46.32-.7.88-.7 1.52 0 .66.3 1.16.4 1.3.1.16.42.54.86.54.3 0 .54-.12.7-.24l3.04-2.16c.08-.06.2-.04.26.04l2.48 3.38c.1.14.3.34.66.34.38 0 .6-.22.68-.34.1-.14.4-.64.4-1.3 0-.64-.24-1.2-.7-1.52-.08-.06-.1-.18-.04-.26l2.48-3.38c.1-.14.56-.76.56-1.64 0-.9-.34-1.43-.54-1.76"/></svg>
+            </span>
+            <span class="ds-hero__platform-badge" title="WooCommerce">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M2.227 4C1 4 0 5.012 0 6.25v8.75c0 .834.478 1.563 1.172 1.926L4.96 20l.92-3.063H22c1.227 0 2-.98 2-2.187V6.25C24 5.012 23.227 4 22 4H2.227zm3.023 2.75c.73 0 1.27.41 1.59 1.219l1.23 3.438 1.22-3.438c.32-.81.86-1.219 1.59-1.219.99 0 1.5.73 1.5 2.156v3.344h-1.25V8.937c0-.57-.09-.968-.33-.968-.17 0-.36.21-.53.625L9 12.25H7.76l-1.26-3.656c-.17-.414-.36-.625-.53-.625-.24 0-.33.398-.33.969v3.312H4.39V8.906c0-1.425.55-2.156 1.5-2.156h-.64zm10.75 0c1.47 0 2.25 1.12 2.25 2.75s-.78 2.75-2.25 2.75-2.25-1.12-2.25-2.75.78-2.75 2.25-2.75z"/></svg>
+            </span>
+          </span>
+        </h1>
+        <div class="ds-hero__links">
+          <a href="#" class="ds-hero__link">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="currentColor" stroke-width="1.5"/><path d="M7 4v3.5M7 9.5h.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            Nasıl çalışır
+          </a>
+          <a href="#" class="ds-hero__link">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 4l5 3.5L12 4M2 4v6.5h10V4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Bize geribildirim bırakın
+          </a>
+          <a href="#" class="ds-hero__link">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v4M5 3l2 2 2-2M1 7h12M3 10h8M5 13h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            ABD Satış Vergisi Muafiyeti Programı
+          </a>
+        </div>
       </div>
-      <div class="ds-hero__search">
-        <input type="text" class="ds-hero__search-input" placeholder="İşletmeniz için mükemmel ürünleri keşfedin" />
-        <button class="ds-hero__search-btn">Arama</button>
-      </div>
-      <div class="ds-hero__links">
-        <a href="#" class="ds-hero__link">Nasıl çalışır</a>
-        <a href="#" class="ds-hero__link">Bize geribildirim bırakın</a>
-        <a href="#" class="ds-hero__link">ABD Satış Vergisi Muafiyeti Programı</a>
+      <div class="ds-hero__search-wrapper">
+        <div class="ds-hero__search">
+          <input type="text" class="ds-hero__search-input" placeholder="İşletmeniz için mükemmel ürünleri keşfedin" />
+          <button class="ds-hero__search-btn">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="5" stroke="currentColor" stroke-width="2"/><path d="M10.5 10.5L14.5 14.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            Arama
+          </button>
+        </div>
       </div>
     </div>
   `;
@@ -199,53 +225,39 @@ function renderDropdownFilters(): string {
   `;
 }
 
+function renderCategoryTag(tag: typeof categoryTags[number], hidden: boolean): string {
+  return `
+    <div class="ds-category-tag${hidden ? ' ds-category-tag--hidden' : ''}" data-cat-id="${tag.id}">
+      <span>${tag.label}</span>
+      ${
+        tag.subcategories
+          ? `<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5"/></svg>
+             <div class="ds-category-tag__dropdown">
+               ${tag.subcategories.map((s) => `<a href="#" class="ds-category-tag__dropdown-item">${s}</a>`).join('')}
+             </div>`
+          : ''
+      }
+    </div>`;
+}
+
 function renderCategoryFilters(): string {
-  const visible = categoryTags.slice(0, 6);
-  const hidden = categoryTags.slice(6);
-
-  const visibleTags = visible
-    .map(
-      (tag) => `
-      <div class="ds-category-tag" data-cat-id="${tag.id}">
-        <span>${tag.label}</span>
-        ${
-          tag.subcategories
-            ? `<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5"/></svg>
-               <div class="ds-category-tag__dropdown">
-                 ${tag.subcategories.map((s) => `<a href="#" class="ds-category-tag__dropdown-item">${s}</a>`).join('')}
-               </div>`
-            : ''
-        }
-      </div>`
-    )
-    .join('');
-
-  const hiddenTags = hidden
-    .map(
-      (tag) => `
-      <div class="ds-category-tag ds-category-tag--hidden" data-cat-id="${tag.id}">
-        <span>${tag.label}</span>
-        ${
-          tag.subcategories
-            ? `<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5"/></svg>
-               <div class="ds-category-tag__dropdown">
-                 ${tag.subcategories.map((s) => `<a href="#" class="ds-category-tag__dropdown-item">${s}</a>`).join('')}
-               </div>`
-            : ''
-        }
-      </div>`
-    )
-    .join('');
+  const VISIBLE_COUNT = 8;
+  const visible = categoryTags.slice(0, VISIBLE_COUNT);
+  const hidden = categoryTags.slice(VISIBLE_COUNT);
 
   return `
     <div class="ds-filters__row ds-category-row">
       <span class="ds-filters__label">Kategori:</span>
-      <div class="ds-filters__chips">
-        ${visibleTags}
-        ${hiddenTags}
-        <button class="ds-category-toggle" data-expanded="false">Tümünü görüntüle</button>
+      <div class="ds-filters__chips ds-category-chips">
+        ${visible.map((t) => renderCategoryTag(t, false)).join('')}
+        ${hidden.map((t) => renderCategoryTag(t, true)).join('')}
+        <button class="ds-category-toggle" data-expanded="false">
+          Tümünü görüntüle
+          <svg class="ds-category-toggle__icon" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </button>
       </div>
     </div>
+    <div class="ds-category-active-chips" id="ds-active-category-chips"></div>
   `;
 }
 
@@ -440,6 +452,7 @@ function initFindProducts(): void {
   initCollectionChips();
   initCountryChips();
   initCategoryToggle();
+  initCategorySelect();
   initToggleChips();
 }
 
@@ -469,11 +482,58 @@ function initCategoryToggle(): void {
 
   toggleBtn.addEventListener('click', () => {
     const expanded = toggleBtn.getAttribute('data-expanded') === 'true';
-    toggleBtn.setAttribute('data-expanded', String(!expanded));
-    toggleBtn.textContent = expanded ? 'Tümünü görüntüle' : 'Daha az görüntüle';
+    const newExpanded = !expanded;
+    toggleBtn.setAttribute('data-expanded', String(newExpanded));
+
+    // Update label and icon direction
+    const icon = toggleBtn.querySelector('.ds-category-toggle__icon');
+    if (icon) {
+      (icon as HTMLElement).style.transform = newExpanded ? 'rotate(180deg)' : '';
+    }
+    // Replace text content but keep the SVG
+    const textNode = toggleBtn.firstChild;
+    if (textNode && textNode.nodeType === Node.TEXT_NODE) {
+      textNode.textContent = newExpanded ? 'Daha az görüntüle ' : 'Tümünü görüntüle ';
+    }
 
     document.querySelectorAll('.ds-category-tag--hidden').forEach((tag) => {
       (tag as HTMLElement).style.display = expanded ? 'none' : '';
+    });
+  });
+}
+
+function initCategorySelect(): void {
+  const chipsContainer = document.getElementById('ds-active-category-chips');
+  if (!chipsContainer) return;
+
+  document.querySelectorAll<HTMLElement>('.ds-category-tag').forEach((tag) => {
+    tag.addEventListener('click', (e) => {
+      // Don't trigger if clicking a dropdown item
+      if ((e.target as HTMLElement).closest('.ds-category-tag__dropdown')) return;
+
+      const catId = tag.getAttribute('data-cat-id');
+      const label = tag.querySelector('span')?.textContent || '';
+      if (!catId) return;
+
+      const isActive = tag.classList.contains('ds-category-tag--active');
+
+      if (isActive) {
+        // Deselect
+        tag.classList.remove('ds-category-tag--active');
+        chipsContainer.querySelector(`[data-remove-cat="${catId}"]`)?.remove();
+      } else {
+        // Select
+        tag.classList.add('ds-category-tag--active');
+        const chip = document.createElement('button');
+        chip.className = 'ds-active-chip';
+        chip.setAttribute('data-remove-cat', catId);
+        chip.innerHTML = `✕ ${label}`;
+        chip.addEventListener('click', () => {
+          tag.classList.remove('ds-category-tag--active');
+          chip.remove();
+        });
+        chipsContainer.appendChild(chip);
+      }
     });
   });
 }

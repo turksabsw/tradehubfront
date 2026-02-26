@@ -83,6 +83,8 @@ export default defineConfig({
                 logistics: resolve(__dirname, 'logistics.html'),
                 payment: resolve(__dirname, 'payment.html'),
                 dropshipping: resolve(__dirname, 'dropshipping.html'),
+                settings: resolve(__dirname, 'settings.html'),
+                profile: resolve(__dirname, 'profile.html'),
             },
         },
     },

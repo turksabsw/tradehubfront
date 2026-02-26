@@ -5,7 +5,6 @@
  */
 
 import type { BuyerDashboardData } from '../../types/buyerDashboard';
-import { initSidebar } from '../sidebar';
 import { NewBuyerInfo, initNewBuyerInfo } from './NewBuyerInfo';
 import { OrdersSection, initOrdersSection } from './OrdersSection';
 import { initOperationSlider } from './OperationSlider';
@@ -56,7 +55,6 @@ export function BuyerDashboardLayout({ data, emailVerified = true }: BuyerDashbo
  * Initialize all BuyerDashboardLayout interactive behaviors.
  */
 export function initBuyerDashboardLayout(): void {
-  initSidebar();
   initNewBuyerInfo();
   initOperationSlider();
   initOrdersSection();
