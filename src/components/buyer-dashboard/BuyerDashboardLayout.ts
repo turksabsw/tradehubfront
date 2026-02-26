@@ -32,15 +32,15 @@ export function BuyerDashboardLayout({ data, emailVerified = true }: BuyerDashbo
     <div class="sc-buyer-dashboard bg-[#F5F5F5]">
       <div class="max-w-[1425px] mx-auto px-4 py-4">
         ${emailBanner}
-        <div class="flex gap-[14px] items-start">
+        <div class="flex gap-[14px] items-start max-md:flex-col max-md:items-stretch">
           <!-- Center Column -->
-          <div class="flex-1 min-w-0 flex flex-col gap-[14px]">
+          <div class="flex-1 min-w-0 flex flex-col gap-[14px] max-md:w-full">
             ${NewBuyerInfo({ user: data.user, stats: data.stats, notifications: data.notifications })}
             ${OrdersSection()}
           </div>
 
           <!-- Right Panel -->
-          <div class="w-[380px] flex-shrink-0 flex flex-col gap-[14px]">
+          <div class="w-[380px] max-lg:w-[300px] max-md:w-full flex-shrink-0 flex flex-col gap-[14px]">
             ${FavoritesSection()}
             ${BrowsingHistorySection(data.browsingHistory)}
             ${PromotionSection(data.promotions)}
