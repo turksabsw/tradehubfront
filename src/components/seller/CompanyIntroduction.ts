@@ -1,6 +1,7 @@
 /**
  * C10: Company Introduction Detail (Optional — PRO sellers)
  * Structured company info grid with verification badges, photo grid, CTAs
+ * BEM Block: company-intro
  */
 import type { CompanyInfoCell, CompanyPhoto, SellerProfile } from '../../types/seller/types';
 
@@ -24,40 +25,46 @@ export function CompanyIntroduction(
   if (!cells || !cells.length) return '';
 
   return `
-    <section id="company-introduction" class="py-12" aria-label="Şirket tanıtımı">
+    <section id="company-introduction" class="company-intro py-12" aria-label="Şirket tanıtımı">
       <div class="max-w-[var(--container-lg)] mx-auto px-4 lg:px-6 xl:px-8">
-        <div class="bg-white border border-[var(--card-border-color)] rounded-[var(--radius-lg)] shadow-md p-6 lg:p-8">
+        <div class="company-intro__card bg-white dark:bg-gray-800 border border-[var(--card-border-color)] rounded-[var(--radius-lg)] shadow-md dark:shadow-lg p-10 lg:p-6">
 
-          <!-- Header with badges -->
-          <div class="flex items-center gap-3 mb-6">
-            <h2 class="text-[22px] font-bold text-[#111827]">${seller.name}</h2>
-            <span class="inline-flex items-center gap-1 text-[13px] text-[#2563eb]">
+          <!-- Title -->
+          <h2 class="company-intro__title text-[24px] font-bold text-[#1e3a5f] dark:text-blue-300 uppercase text-center mb-6">
+            Company Introduction
+          </h2>
+
+          <!-- Verification Line -->
+          <div class="company-intro__verification flex items-center justify-center flex-wrap gap-3 mb-8">
+            <span class="text-[13px] text-[#6b7280] dark:text-gray-400">Verification Type:</span>
+            <span class="inline-flex items-center gap-1 bg-[#eff6ff] dark:bg-blue-900 text-[#1e40af] dark:text-blue-300 text-[13px] font-medium px-2.5 py-1 rounded-sm">
               <svg class="w-4 h-4" viewBox="0 0 16 16" fill="none">
-                <circle cx="8" cy="8" r="7" fill="#2563eb"/>
-                <path d="M5.5 8.5l2 2 4-4" stroke="#fff" stroke-width="1.5" fill="none"/>
+                <circle cx="8" cy="8" r="7" fill="currentColor" opacity="0.2"/>
+                <path d="M5.5 8.5l2 2 4-4" stroke="currentColor" stroke-width="1.5" fill="none"/>
               </svg>
               ${seller.verificationType}
             </span>
+            <span class="text-[13px] text-[#374151] dark:text-gray-300">Supplier Assessment</span>
             ${seller.verificationBadgeType === 'pro' ? `
               <span class="inline-flex items-center bg-[var(--store-accent)] text-white text-[11px] font-semibold px-2 py-0.5 rounded-sm uppercase">PRO</span>
             ` : ''}
           </div>
 
           <!-- 3×2 Info Grid -->
-          <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 mb-8">
+          <div class="company-intro__grid grid grid-cols-3 lg:grid-cols-2 md:grid-cols-1 gap-6 mb-8">
             ${cells.map(cell => `
-              <div class="flex items-start gap-3">
-                <div class="w-10 h-10 rounded-full bg-[#fff7ed] flex items-center justify-center flex-shrink-0">
-                  <svg class="w-5 h-5 text-[var(--store-accent)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div class="company-intro__cell flex items-start gap-3">
+                <div class="w-10 h-10 rounded-full bg-[#f3f4f6] dark:bg-gray-700 flex items-center justify-center flex-shrink-0">
+                  <svg class="w-5 h-5 text-[#f97316]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     ${getInfoIconSvg(cell.icon)}
                   </svg>
                 </div>
                 <div class="flex flex-col">
-                  <span class="text-[12px] text-[var(--store-accent)] font-medium uppercase">${cell.label}</span>
-                  <span class="text-[14px] text-[#111827] font-medium mt-0.5">${cell.value}</span>
+                  <span class="text-[13px] text-[#f97316] font-medium uppercase">${cell.label}</span>
+                  <span class="text-[14px] text-[#374151] dark:text-gray-300 font-medium mt-0.5">${cell.value}</span>
                   ${cell.verified ? `
-                    <span class="flex items-center gap-1 text-[11px] text-[#16a34a] mt-0.5">
-                      <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <span class="flex items-center gap-1 text-[11px] text-[#f97316] mt-0.5">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                       </svg>
                       Doğrulandı
@@ -70,18 +77,18 @@ export function CompanyIntroduction(
 
           <!-- Photo Grid -->
           ${photos && photos.length ? `
-            <div class="grid grid-cols-2 xl:grid-cols-4 gap-3 mb-6">
+            <div class="company-intro__photos grid grid-cols-4 lg:grid-cols-2 gap-3 mb-8">
               ${photos.map(photo => `
                 <div class="relative rounded-[var(--radius-md)] overflow-hidden aspect-[4/3]">
                   <img src="${photo.image}" alt="${photo.caption}" class="w-full h-full object-cover" loading="lazy" />
                   ${photo.hasVideo ? `
-                    <div class="absolute inset-0 flex items-center justify-center">
+                    <button class="absolute inset-0 flex items-center justify-center" aria-label="Video oynat">
                       <div class="w-14 h-14 bg-black/50 hover:bg-black/70 rounded-full flex items-center justify-center transition-colors cursor-pointer">
                         <svg class="w-6 h-6 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
                           <path d="M8 5v14l11-7z"/>
                         </svg>
                       </div>
-                    </div>
+                    </button>
                   ` : ''}
                   <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/50 to-transparent py-2 px-3">
                     <span class="text-white text-[11px] font-medium">${photo.caption}</span>
@@ -92,18 +99,18 @@ export function CompanyIntroduction(
           ` : ''}
 
           <!-- CTA Buttons -->
-          <div class="flex flex-wrap items-center gap-3">
-            <button class="bg-[#f97316] hover:bg-[#ea580c] text-white font-semibold text-[14px] rounded-[var(--radius-button)] px-6 py-2.5 transition-colors cursor-pointer flex items-center gap-2"
+          <div class="company-intro__cta flex flex-wrap items-center justify-center gap-4">
+            <button class="bg-[#f97316] hover:bg-[#ea580c] text-white font-semibold text-[14px] rounded-[var(--radius-button)] px-6 py-2.5 transition-colors cursor-pointer flex items-center gap-2 focus:ring-2 focus:ring-[#f97316] focus:ring-offset-2"
                     onclick="document.getElementById('contact-form')?.scrollIntoView({behavior:'smooth'})">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
               </svg>
               Contact Supplier
             </button>
-            <button class="bg-transparent border border-[#d1d5db] hover:bg-[#f9fafb] text-[#374151] font-medium text-[14px] rounded-[var(--radius-button)] px-6 py-2.5 transition-colors cursor-pointer">
+            <button class="bg-transparent border border-[#d1d5db] dark:border-gray-600 hover:bg-[#f9fafb] text-[#374151] dark:text-gray-300 font-medium text-[14px] rounded-[var(--radius-button)] px-6 py-2.5 transition-colors cursor-pointer focus:ring-2 focus:ring-[#f97316] focus:ring-offset-2">
               Start Order
             </button>
-            <a href="#company-info" class="text-[#f97316] font-medium text-[14px] hover:underline flex items-center gap-1">
+            <a href="#company-info" class="text-[#f97316] font-medium text-[14px] hover:underline flex items-center gap-1 focus:ring-2 focus:ring-[#f97316] focus:ring-offset-2 rounded">
               Learn more
               <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>

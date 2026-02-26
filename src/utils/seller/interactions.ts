@@ -79,6 +79,35 @@ function initCompanyCarousel(): Swiper | null {
 }
 
 // ═══════════════════════════════════════════════════════════
+// Store Header Interactions (C1) — Spec 4.6.1
+// ═══════════════════════════════════════════════════════════
+
+/**
+ * Store Header — Follow button toggle, share action
+ */
+export function initStoreHeaderInteractions(): void {
+  const followBtn = document.querySelector('.store-header__follow-btn') as HTMLButtonElement;
+  if (followBtn) {
+    followBtn.addEventListener('click', () => {
+      const isFollowing = followBtn.classList.toggle('store-header__follow-btn--active');
+      followBtn.textContent = isFollowing ? 'Takip Ediliyor' : 'Takip Et';
+      followBtn.setAttribute('aria-pressed', String(isFollowing));
+    });
+  }
+
+  const shareBtn = document.querySelector('.store-header__share-btn') as HTMLButtonElement;
+  if (shareBtn) {
+    shareBtn.addEventListener('click', () => {
+      if (navigator.share) {
+        navigator.share({ title: document.title, url: window.location.href });
+      } else {
+        navigator.clipboard.writeText(window.location.href);
+      }
+    });
+  }
+}
+
+// ═══════════════════════════════════════════════════════════
 // Store Nav Interactions (C2)
 // ═══════════════════════════════════════════════════════════
 
@@ -288,8 +317,7 @@ export function initFloatingActions(): void {
   });
 
   chatBtn?.addEventListener('click', () => {
-    // Placeholder: chat widget opens
-    console.log('Chat widget placeholder — integration pending');
+    document.dispatchEvent(new CustomEvent('store:open-chat'));
   });
 }
 
@@ -306,8 +334,8 @@ export function initGalleryLightbox(): void {
     item.addEventListener('click', () => {
       const img = item.querySelector('img') as HTMLImageElement;
       if (!img) return;
-      // Placeholder: lightbox modal opens
-      console.log('Lightbox placeholder:', img.src);
+      // Placeholder: lightbox modal — integration pending
+      document.dispatchEvent(new CustomEvent('store:lightbox-open', { detail: { src: img.src, alt: img.alt } }));
     });
   });
 }
@@ -321,6 +349,7 @@ export function initGalleryLightbox(): void {
  */
 export function initSellerStorefront(): void {
   initAllSwipers();
+  initStoreHeaderInteractions();
   initStoreNavDropdowns();
   initStickyNav();
   initSearchInput();

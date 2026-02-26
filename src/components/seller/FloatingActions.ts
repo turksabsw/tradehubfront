@@ -1,30 +1,37 @@
 /**
  * C13: Floating Action Buttons
  * Fixed right-side Contact Supplier + Chat Now buttons
- * Mobile bottom bar transformation via CSS
+ * Mobile bottom bar transformation via CSS (see seller-storefront.css)
  */
 import type { FloatingActionsData } from '../../types/seller/types';
 
+/**
+ * Renders floating action buttons (Contact Supplier + Chat Now)
+ * Desktop: fixed right-0 top-[40%], vertical stack, w-[56px] h-[80px]
+ * Tablet (480-768px): w-[44px] h-[60px], icon-only (CSS handles span hide)
+ * Mobile (<480px): bottom bar, horizontal, full-width, h-[48px] (CSS handles transform)
+ */
 export function FloatingActions(data: FloatingActionsData): string {
-  const topPosition = data.topPosition || '40%';
-
   return `
     <div id="floating-actions"
-         class="floating-actions fixed right-0 z-[var(--z-fixed)] flex flex-col"
-         style="top: ${topPosition}"
-         aria-label="Hızlı erişim butonları">
+         class="floating-actions fixed right-0 top-[40%] z-[var(--z-fixed)] flex flex-col"
+         aria-label="Hızlı erişim butonları"
+         role="group">
       ${data.buttons.map((btn, index) => {
         const isFirst = index === 0;
         const isLast = index === data.buttons.length - 1;
-        const roundedClasses = isFirst && isLast
-          ? 'rounded-tl-[var(--radius-md)] rounded-bl-[var(--radius-md)]'
-          : isFirst
-            ? 'rounded-tl-[var(--radius-md)]'
-            : isLast
-              ? 'rounded-bl-[var(--radius-md)]'
-              : '';
 
-        // Split label for 2-line display on desktop
+        // Spec: Contact (first) gets rounded-tl + rounded-bl, Chat (last only) gets rounded-bl only
+        let roundedClasses = '';
+        if (isFirst && isLast) {
+          roundedClasses = 'rounded-tl-[var(--radius-md)] rounded-bl-[var(--radius-md)]';
+        } else if (isFirst) {
+          roundedClasses = 'rounded-tl-[var(--radius-md)]';
+        } else if (isLast) {
+          roundedClasses = 'rounded-bl-[var(--radius-md)]';
+        }
+
+        // Split label for 2-line display on desktop (hidden on tablet via CSS, inline on mobile via CSS)
         const labelParts = btn.label.split(' ');
         const labelHtml = labelParts.length > 1
           ? `${labelParts[0]}<br/>${labelParts.slice(1).join(' ')}`
@@ -41,4 +48,24 @@ export function FloatingActions(data: FloatingActionsData): string {
       }).join('')}
     </div>
   `;
+}
+
+/**
+ * Floating Button Click Handlers (C13)
+ * Contact Supplier → C12'ye scroll, Chat Now → chat widget (placeholder)
+ */
+export function initFloatingActions(): void {
+  const contactBtn = document.querySelector('.floating-actions__btn--contact');
+  const chatBtn = document.querySelector('.floating-actions__btn--chat');
+
+  // Contact Supplier — C12 Contact Form'a smooth scroll
+  contactBtn?.addEventListener('click', () => {
+    document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' });
+  });
+
+  // Chat Now — placeholder
+  chatBtn?.addEventListener('click', () => {
+    // Placeholder: canlı sohbet widget'ı açılır
+    // Gerçek implementasyonda chat SDK entegrasyonu
+  });
 }

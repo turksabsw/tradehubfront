@@ -1,18 +1,19 @@
 /**
  * C3: Hero Banner Carousel
  * Full-width Swiper.js carousel with text overlays and dot pagination
+ * BEM Block: store-hero
  */
 import type { HeroBannerData, HeroSlide } from '../../types/seller/types';
 
 function renderSlide(slide: HeroSlide): string {
   const hasText = !!slide.title;
+  const imgClasses = 'w-full h-[450px] xl:h-[500px] lg:h-[400px] md:h-[300px] sm:h-[200px] object-cover';
+
   if (!hasText) {
     return `
-      <div class="swiper-slide" data-slide-id="${slide.id}">
-        <div class="relative w-full h-[350px] md:h-[400px] xl:h-[450px] 2xl:h-[500px]">
-          <img src="${slide.image}" alt="" class="w-full h-full object-cover" loading="lazy"
-               onerror="this.parentElement.style.background='linear-gradient(135deg,#1e3a5f,#2563eb)'" />
-        </div>
+      <div class="swiper-slide store-hero__slide relative" data-slide-id="${slide.id}">
+        <img src="${slide.image}" alt="Banner" class="${imgClasses}" loading="lazy"
+             onerror="this.parentElement.style.background='linear-gradient(135deg,#1e3a5f,#2563eb)'" />
       </div>
     `;
   }
@@ -21,12 +22,12 @@ function renderSlide(slide: HeroSlide): string {
   const titleColor = isWhite ? 'text-white' : 'text-[var(--color-text-primary)]';
   const subtitleColor = isWhite ? 'text-white/80' : 'text-[var(--color-text-secondary)]';
 
-  // Position classes
-  let positionClasses = 'items-start text-left pl-8 lg:pl-12 xl:pl-16';
+  // Position classes based on textPosition
+  let alignClasses = 'items-start';
   if (slide.textPosition === 'center') {
-    positionClasses = 'items-center text-center px-8';
+    alignClasses = 'items-center text-center';
   } else if (slide.textPosition === 'right') {
-    positionClasses = 'items-end text-right pr-8 lg:pr-12 xl:pr-16';
+    alignClasses = 'items-end text-right';
   }
 
   // Handle multi-line titles (newline separated)
@@ -35,28 +36,26 @@ function renderSlide(slide: HeroSlide): string {
   ).join('');
 
   const subtitleHtml = slide.subtitle
-    ? `<p class="mt-2 text-[14px] md:text-[16px] xl:text-[18px] ${subtitleColor} max-w-[500px] whitespace-pre-line">${slide.subtitle}</p>`
+    ? `<p class="store-hero__subtitle text-[18px] md:text-[14px] sm:text-[13px] ${subtitleColor} mt-3 drop-shadow-md max-w-[600px] whitespace-pre-line">${slide.subtitle}</p>`
     : '';
 
   const ctaHtml = slide.ctaText
-    ? `<a href="${slide.ctaLink || '#'}" class="inline-block mt-4 bg-[var(--store-accent)] hover:bg-[var(--store-accent-hover)] text-white font-semibold text-[14px] rounded-[var(--radius-button)] px-6 py-2.5 shadow-[var(--shadow-md)] transition-colors">
+    ? `<a href="${slide.ctaLink || '#'}" class="store-hero__cta inline-block mt-6 px-8 py-3 bg-[var(--store-accent)] text-white font-semibold text-[var(--btn-font-size)] rounded-[var(--radius-button)] hover:bg-[var(--store-accent-hover)] transition-colors shadow-[var(--shadow-md)]">
         ${slide.ctaText}
       </a>`
     : '';
 
   return `
-    <div class="swiper-slide" data-slide-id="${slide.id}">
-      <div class="relative w-full h-[350px] md:h-[400px] xl:h-[450px] 2xl:h-[500px]">
-        <img src="${slide.image}" alt="" class="w-full h-full object-cover" loading="lazy"
-             onerror="this.parentElement.style.background='linear-gradient(135deg,#1e3a5f,#2563eb)'" />
-        <!-- Text Overlay -->
-        <div class="absolute inset-0 flex flex-col justify-center ${positionClasses}">
-          <h2 class="text-[28px] md:text-[36px] xl:text-[42px] 2xl:text-[48px] font-black ${titleColor} leading-tight uppercase tracking-tight">
-            ${titleHtml}
-          </h2>
-          ${subtitleHtml}
-          ${ctaHtml}
-        </div>
+    <div class="swiper-slide store-hero__slide relative" data-slide-id="${slide.id}">
+      <img src="${slide.image}" alt="${slide.title || 'Banner'}" class="${imgClasses}" loading="lazy"
+           onerror="this.parentElement.style.background='linear-gradient(135deg,#1e3a5f,#2563eb)'" />
+      <!-- Text Overlay -->
+      <div class="store-hero__overlay absolute inset-0 flex flex-col justify-center px-16 xl:px-12 lg:px-10 md:px-6 sm:px-4 ${alignClasses}">
+        <h2 class="store-hero__title text-[48px] xl:text-[42px] lg:text-[32px] md:text-[24px] sm:text-[20px] font-black ${titleColor} leading-tight drop-shadow-lg">
+          ${titleHtml}
+        </h2>
+        ${subtitleHtml}
+        ${ctaHtml}
       </div>
     </div>
   `;
@@ -66,13 +65,13 @@ export function HeroBanner(data: HeroBannerData): string {
   if (!data.slides.length) return '';
 
   return `
-    <section id="hero-banner" class="store-hero" aria-label="Mağaza hero banner">
-      <div class="store-hero__swiper swiper">
+    <section id="store-hero" class="store-hero" aria-label="Mağaza hero banner">
+      <div class="store-hero__swiper swiper w-full">
         <div class="swiper-wrapper">
           ${data.slides.map(slide => renderSlide(slide)).join('')}
         </div>
         ${data.showPagination !== false ? `
-          <div class="store-hero__pagination absolute bottom-4 left-1/2 -translate-x-1/2 z-10 flex items-center gap-2"></div>
+          <div class="store-hero__pagination swiper-pagination absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10"></div>
         ` : ''}
       </div>
     </section>

@@ -12,23 +12,25 @@ export function StoreNav(data: StoreNavData): string {
           <button class="store-nav__item store-nav__item--dropdown flex items-center gap-1 px-5 py-3 text-[var(--store-nav-text)] text-[14px] font-normal cursor-pointer bg-transparent border-none transition-colors hover:bg-[rgba(255,255,255,0.1)]"
                   aria-expanded="false" aria-haspopup="true">
             ${item.label}
-            <svg class="w-3 h-3 text-white/70 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+            <svg class="w-3 h-3 text-white/70 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
             </svg>
           </button>
-          <div class="store-nav__dropdown store-nav__dropdown--products hidden absolute top-full left-0 bg-white shadow-[var(--shadow-md)] rounded-b-[var(--radius-md)] min-w-[280px] max-h-[400px] overflow-y-auto z-[var(--z-dropdown)]">
+          <div class="store-nav__dropdown store-nav__dropdown--products hidden absolute top-full left-0 bg-white shadow-[var(--shadow-md)] rounded-b-[var(--radius-md)] min-w-[280px] max-h-[400px] overflow-y-auto z-[var(--z-dropdown)]"
+               role="menu"
+               aria-label="Ürün kategorileri">
             <div class="store-nav__dropdown-header bg-[#f3f4f6] px-4 py-1.5 text-[13px] font-bold text-[#374151]">
-              Tüm Kategoriler
+              Products
             </div>
-            <a href="#" class="store-nav__dropdown-link block px-4 py-2 text-[13px] text-[var(--store-accent)] font-medium hover:bg-[#f3f4f6] transition-colors">
-              Tümünü gör &rarr;
+            <a href="#" class="store-nav__dropdown-link block px-4 py-2 text-[13px] text-[var(--store-accent)] font-medium hover:bg-[#f3f4f6] transition-colors" role="menuitem">
+              See all categories
             </a>
             ${data.productCategories.map(cat => `
-              <a href="#" class="store-nav__dropdown-item flex items-center justify-between px-4 py-2 text-[13px] text-[#374151] hover:bg-[#f3f4f6] transition-colors">
+              <a href="#" class="store-nav__dropdown-item flex items-center justify-between px-4 py-2 text-[13px] text-[#374151] hover:bg-[#f3f4f6] transition-colors" role="menuitem">
                 ${cat.name}
                 ${cat.hasSubcategories ? `
-                  <svg class="w-3 h-3 text-[var(--color-text-muted)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                  <svg class="w-3 h-3 text-[var(--color-text-muted)]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
                   </svg>
                 ` : ''}
               </a>
@@ -44,13 +46,15 @@ export function StoreNav(data: StoreNavData): string {
           <button class="store-nav__item store-nav__item--dropdown flex items-center gap-1 px-5 py-3 text-[var(--store-nav-text)] text-[14px] font-normal cursor-pointer bg-transparent border-none transition-colors hover:bg-[rgba(255,255,255,0.1)]"
                   aria-expanded="false" aria-haspopup="true">
             ${item.label}
-            <svg class="w-3 h-3 text-white/70 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+            <svg class="w-3 h-3 text-white/70 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
             </svg>
           </button>
-          <div class="store-nav__dropdown store-nav__dropdown--company hidden absolute top-full left-0 bg-white shadow-[var(--shadow-md)] rounded-b-[var(--radius-md)] min-w-[200px] z-[var(--z-dropdown)]">
+          <div class="store-nav__dropdown store-nav__dropdown--company hidden absolute top-full left-0 bg-white shadow-[var(--shadow-md)] rounded-b-[var(--radius-md)] min-w-[200px] z-[var(--z-dropdown)]"
+               role="menu"
+               aria-label="Şirket profili menüsü">
             ${data.companyProfileLinks.map(link => `
-              <a href="${link.href}" class="store-nav__dropdown-item block px-4 py-2 text-[13px] text-[#374151] hover:bg-[#f3f4f6] transition-colors">
+              <a href="${link.href}" class="store-nav__dropdown-item block px-4 py-2 text-[13px] text-[#374151] hover:bg-[#f3f4f6] transition-colors" role="menuitem">
                 ${link.label}
               </a>
             `).join('')}
@@ -63,7 +67,8 @@ export function StoreNav(data: StoreNavData): string {
     return `
       <li>
         <a href="${item.href}"
-           class="store-nav__item ${item.isActive ? 'store-nav__item--active block px-6 py-3 text-[var(--store-nav-text)] text-[14px] font-semibold bg-[var(--store-nav-active-overlay)]' : 'block px-5 py-3 text-[var(--store-nav-text)] text-[14px] font-normal transition-colors hover:bg-[rgba(255,255,255,0.1)]'}">
+           class="store-nav__item ${item.isActive ? 'store-nav__item--active block px-6 py-3 text-[var(--store-nav-text)] text-[14px] font-semibold bg-[var(--store-nav-active-overlay)] transition-colors' : 'block px-5 py-3 text-[var(--store-nav-text)] text-[14px] font-normal transition-colors hover:bg-[rgba(255,255,255,0.1)]'}"
+           ${item.isActive ? 'aria-current="page"' : ''}>
           ${item.label}
         </a>
       </li>
@@ -75,42 +80,44 @@ export function StoreNav(data: StoreNavData): string {
     if (item.dropdownType === 'products') {
       return `
         <li>
-          <button class="store-nav__mobile-dropdown-trigger w-full flex items-center justify-between px-4 py-3 text-[15px] text-white font-normal bg-transparent border-none cursor-pointer hover:bg-[rgba(255,255,255,0.1)]"
-                  data-dropdown="mobile-products">
+          <button class="store-nav__item store-nav__item--dropdown w-full flex items-center justify-between px-6 py-3 text-white text-[15px] font-normal bg-transparent border-none cursor-pointer"
+                  aria-expanded="false" aria-haspopup="true">
             ${item.label}
-            <svg class="w-4 h-4 text-white/70 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+            <svg class="w-4 h-4 text-white/70 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
             </svg>
           </button>
-          <ul id="mobile-products" class="hidden bg-[rgba(0,0,0,0.15)] pl-4">
+          <div class="store-nav__dropdown store-nav__dropdown--products hidden bg-white/10">
+            <a href="#" class="block px-10 py-2 text-[14px] text-white/80 hover:text-white hover:bg-white/5 transition-colors">See all categories</a>
             ${data.productCategories.map(cat => `
-              <li><a href="#" class="block px-4 py-2 text-[14px] text-white/80 hover:text-white transition-colors">${cat.name}</a></li>
+              <a href="#" class="block px-10 py-2 text-[14px] text-white/80 hover:text-white hover:bg-white/5 transition-colors">${cat.name}</a>
             `).join('')}
-          </ul>
+          </div>
         </li>
       `;
     }
     if (item.dropdownType === 'company') {
       return `
         <li>
-          <button class="store-nav__mobile-dropdown-trigger w-full flex items-center justify-between px-4 py-3 text-[15px] text-white font-normal bg-transparent border-none cursor-pointer hover:bg-[rgba(255,255,255,0.1)]"
-                  data-dropdown="mobile-company">
+          <button class="store-nav__item store-nav__item--dropdown w-full flex items-center justify-between px-6 py-3 text-white text-[15px] font-normal bg-transparent border-none cursor-pointer"
+                  aria-expanded="false" aria-haspopup="true">
             ${item.label}
-            <svg class="w-4 h-4 text-white/70 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+            <svg class="w-4 h-4 text-white/70 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
             </svg>
           </button>
-          <ul id="mobile-company" class="hidden bg-[rgba(0,0,0,0.15)] pl-4">
+          <div class="store-nav__dropdown store-nav__dropdown--company hidden bg-white/10">
             ${data.companyProfileLinks.map(link => `
-              <li><a href="${link.href}" class="block px-4 py-2 text-[14px] text-white/80 hover:text-white transition-colors">${link.label}</a></li>
+              <a href="${link.href}" class="block px-10 py-2 text-[14px] text-white/80 hover:text-white hover:bg-white/5 transition-colors">${link.label}</a>
             `).join('')}
-          </ul>
+          </div>
         </li>
       `;
     }
     return `
       <li>
-        <a href="${item.href}" class="block px-4 py-3 text-[15px] ${item.isActive ? 'text-white font-semibold bg-[var(--store-nav-active-overlay)]' : 'text-white font-normal hover:bg-[rgba(255,255,255,0.1)]'} transition-colors">
+        <a href="${item.href}" class="store-nav__item ${item.isActive ? 'store-nav__item--active block px-6 py-3 text-white text-[15px] font-semibold bg-[var(--store-nav-active-overlay)]' : 'block px-6 py-3 text-white text-[15px] font-normal hover:bg-white/5'} transition-colors"
+           ${item.isActive ? 'aria-current="page"' : ''}>
           ${item.label}
         </a>
       </li>
@@ -118,7 +125,7 @@ export function StoreNav(data: StoreNavData): string {
   }).join('');
 
   return `
-    <nav id="store-nav" class="store-nav bg-[var(--store-nav-bg)]" aria-label="Mağaza navigasyonu">
+    <nav id="store-nav" class="store-nav sticky top-0 z-[var(--z-sticky)] bg-[var(--store-nav-bg)] transition-shadow duration-200" aria-label="Mağaza navigasyonu">
       <div class="store-nav__container max-w-[var(--container-lg)] mx-auto px-4 lg:px-6 xl:px-8 flex items-center justify-between">
 
         <!-- Hamburger (mobile/tablet) -->
@@ -137,26 +144,28 @@ export function StoreNav(data: StoreNavData): string {
         <!-- Desktop Search -->
         <div class="store-nav__search relative hidden xl:block">
           <input type="text"
-                 class="store-nav__search-input w-[200px] h-[32px] pl-3 pr-8 text-[13px] text-[#374151] bg-white rounded-[var(--radius-sm)] border-none outline-none placeholder:text-[#9ca3af]"
-                 placeholder="${data.searchPlaceholder}" />
-          <button class="store-nav__search-btn absolute right-1 top-1/2 -translate-y-1/2 bg-transparent border-none cursor-pointer p-1" aria-label="Ara">
-            <svg class="w-4 h-4 text-[#6b7280]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-            </svg>
-          </button>
+                 class="store-nav__search-input bg-white rounded-[var(--radius-sm)] px-3 py-1.5 pr-9 text-[13px] text-[#374151] placeholder-[var(--color-text-muted)] w-[200px] border-none outline-none focus:ring-2 focus:ring-white/30"
+                 placeholder="${data.searchPlaceholder}"
+                 aria-label="Mağaza içi arama" />
+          <svg class="store-nav__search-icon absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--color-text-muted)] cursor-pointer hover:text-[var(--color-text-secondary)] transition-colors"
+               fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="8"/>
+            <path stroke-linecap="round" d="M21 21l-4.35-4.35"/>
+          </svg>
         </div>
       </div>
 
       <!-- Mobile Panel -->
-      <div id="store-nav-mobile-menu" class="store-nav__mobile-menu xl:hidden bg-[var(--store-nav-bg)]">
+      <div id="store-nav-mobile-menu" class="store-nav__mobile-menu hidden xl:hidden bg-[var(--store-nav-bg)] border-t border-white/10">
         <!-- Mobile Search -->
         <div class="store-nav__mobile-search px-4 py-3">
           <input type="text"
-                 class="w-full h-[36px] pl-3 pr-8 text-[14px] text-[#374151] bg-white rounded-[var(--radius-sm)] border-none outline-none placeholder:text-[#9ca3af]"
-                 placeholder="${data.searchPlaceholder}" />
+                 class="store-nav__search-input w-full bg-white rounded-[var(--radius-sm)] px-3 py-2 text-[14px] text-[#374151] placeholder-[var(--color-text-muted)] border-none outline-none"
+                 placeholder="${data.searchPlaceholder}"
+                 aria-label="Mağaza içi arama" />
         </div>
         <!-- Mobile Menu Items -->
-        <ul class="store-nav__mobile-list list-none m-0 p-0 pb-3">
+        <ul class="store-nav__mobile-list list-none m-0 p-0">
           ${mobileMenuItems}
         </ul>
       </div>

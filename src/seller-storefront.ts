@@ -47,13 +47,12 @@ appEl.innerHTML = `
     ${sellerData.seller.hasCategoryListing && sellerData.categoryListings ? CategoryProductListing(sellerData.categoryListings) : ''}
     ${CompanyInfoComponent(sellerData.company, sellerData.seller)}
     ${sellerData.certificates && sellerData.certificates.length ? Certificates(sellerData.certificates) : ''}
-    ${WhyChooseUs(sellerData.advantages, sellerData.features, isPro)}
+    ${sellerData.advantages && sellerData.advantages.length ? WhyChooseUs(sellerData.advantages, sellerData.features, isPro) : ''}
     ${sellerData.companyInfoCells && sellerData.companyInfoCells.length ? CompanyIntroduction(sellerData.seller, sellerData.companyInfoCells, sellerData.companyPhotos || []) : ''}
     ${sellerData.galleryPhotos && sellerData.galleryPhotos.length ? Gallery(sellerData.galleryPhotos) : ''}
     ${ContactForm(sellerData.contactForm)}
+    ${FloatingActions(sellerData.floatingActions)}
   </main>
-
-  ${FloatingActions(sellerData.floatingActions)}
 
   <!-- SITE FOOTER BURAYA GELİR -->
 `;

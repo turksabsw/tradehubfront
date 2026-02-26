@@ -9,7 +9,7 @@ function renderVariantA(data: CompanyInfoData, seller: SellerProfile): string {
   return `
     <section id="company-info" class="company-info company-info__variant-a py-12" aria-label="Şirket bilgileri">
       <div class="max-w-[var(--container-lg)] mx-auto px-4 lg:px-6 xl:px-8">
-        <h2 class="text-[36px] md:text-[42px] xl:text-[48px] 2xl:text-[54px] font-black text-[#1e3a5f] uppercase text-center tracking-tight mb-8">
+        <h2 class="text-[36px] md:text-[42px] xl:text-[48px] 2xl:text-[54px] font-black text-[#1e3a5f] dark:text-blue-300 uppercase text-center tracking-tight mb-8">
           COMPANY
         </h2>
 
@@ -27,7 +27,7 @@ function renderVariantA(data: CompanyInfoData, seller: SellerProfile): string {
           <div class="company-info__hero-image relative rounded-bl-[var(--radius-md)] overflow-hidden">
             <img src="${data.heroImage}" alt="${data.heroTitle}" class="w-full h-[300px] lg:h-[400px] object-cover" loading="lazy"
                  onerror="this.parentElement.style.background='linear-gradient(135deg,#1e3a5f,#2563eb)'" />
-            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col justify-end p-6">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 dark:from-black/70 to-transparent flex flex-col justify-end p-6">
               <h3 class="text-white text-[28px] font-bold">${data.heroTitle}</h3>
               <p class="text-white/80 text-[14px] mt-1">${data.heroSubtitle}</p>
             </div>
@@ -36,8 +36,8 @@ function renderVariantA(data: CompanyInfoData, seller: SellerProfile): string {
           <!-- Description -->
           <div class="company-info__description flex flex-col gap-4 py-4">
             <img src="${seller.logo}" alt="${seller.name}" class="w-[120px] object-contain" onerror="this.style.display='none'" />
-            <p class="text-[14px] text-[#4b5563] leading-[1.7]">${data.description}</p>
-            ${data.descriptionExtended ? `<p class="text-[14px] text-[#4b5563] leading-[1.7]">${data.descriptionExtended}</p>` : ''}
+            <p class="text-[14px] text-[#4b5563] dark:text-gray-300 leading-[1.7]">${data.description}</p>
+            ${data.descriptionExtended ? `<p class="text-[14px] text-[#4b5563] dark:text-gray-300 leading-[1.7]">${data.descriptionExtended}</p>` : ''}
           </div>
         </div>
 
@@ -62,9 +62,9 @@ function renderVariantA(data: CompanyInfoData, seller: SellerProfile): string {
 
 function renderVariantB(data: CompanyInfoData, seller: SellerProfile): string {
   return `
-    <section id="company-info" class="company-info company-info__variant-b py-12 bg-[#f5f0e8]" aria-label="Şirket bilgileri">
+    <section id="company-info" class="company-info company-info__variant-b py-12 bg-[#f5f0e8] dark:bg-gray-800" aria-label="Şirket bilgileri">
       <div class="max-w-[var(--container-lg)] mx-auto px-4 lg:px-6 xl:px-8">
-        <h2 class="company-info__title-b text-[28px] font-normal text-[#8b5e3c] mb-6 italic">
+        <h2 class="company-info__title-b text-[28px] font-normal text-[#8b5e3c] dark:text-[#d4a76a] mb-6 italic">
           ${seller.name}
         </h2>
 
@@ -72,7 +72,7 @@ function renderVariantB(data: CompanyInfoData, seller: SellerProfile): string {
         <div class="grid grid-cols-1 lg:grid-cols-[40%_60%] gap-8">
           <!-- Scrollable Text Panel -->
           <div class="company-info__text-panel">
-            <div class="company-info__scrollable-text max-h-[300px] overflow-y-auto pr-4 text-[14px] text-[#4b5563] leading-[1.7]">
+            <div class="company-info__scrollable-text max-h-[300px] overflow-y-auto pr-4 text-[14px] text-[#4b5563] dark:text-gray-300 leading-[1.7]">
               <p>${data.description}</p>
               ${data.descriptionExtended ? `<p class="mt-4">${data.descriptionExtended}</p>` : ''}
             </div>
@@ -95,12 +95,12 @@ function renderVariantB(data: CompanyInfoData, seller: SellerProfile): string {
               </div>
             </div>
             <!-- Navigation Arrows -->
-            <button class="company-info__prev absolute left-2 top-1/2 -translate-y-1/2 bg-[#e5e5e5] hover:bg-[#d1d5db] w-8 h-12 rounded-sm flex items-center justify-center z-10 transition-colors border-none cursor-pointer" aria-label="Önceki">
+            <button class="company-info__prev absolute left-2 top-1/2 -translate-y-1/2 bg-[#e5e5e5] hover:bg-[#d1d5db] dark:bg-gray-700 dark:hover:bg-gray-600 w-8 h-12 rounded-sm flex items-center justify-center z-10 transition-colors border-none cursor-pointer" aria-label="Önceki">
               <svg class="w-4 h-4 text-[#6b7280]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
               </svg>
             </button>
-            <button class="company-info__next absolute right-2 top-1/2 -translate-y-1/2 bg-[#e5e5e5] hover:bg-[#d1d5db] w-8 h-12 rounded-sm flex items-center justify-center z-10 transition-colors border-none cursor-pointer" aria-label="Sonraki">
+            <button class="company-info__next absolute right-2 top-1/2 -translate-y-1/2 bg-[#e5e5e5] hover:bg-[#d1d5db] dark:bg-gray-700 dark:hover:bg-gray-600 w-8 h-12 rounded-sm flex items-center justify-center z-10 transition-colors border-none cursor-pointer" aria-label="Sonraki">
               <svg class="w-4 h-4 text-[#6b7280]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
               </svg>
@@ -114,7 +114,7 @@ function renderVariantB(data: CompanyInfoData, seller: SellerProfile): string {
             ${data.locations.map(loc => `
               <div class="relative rounded-[var(--radius-md)] overflow-hidden aspect-[4/3] group cursor-pointer">
                 <img src="${loc.image}" alt="${loc.name}" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" loading="lazy" />
-                <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/60 to-transparent py-3 px-4">
+                <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/70 dark:from-black/80 to-transparent py-3 px-4">
                   <span class="text-white text-[13px] font-medium">${loc.name}</span>
                 </div>
               </div>
