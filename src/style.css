@@ -815,7 +815,7 @@
     --color-text-disabled: #d4d4d4;
     --color-text-inverse: #fafafa;
 
-    --color-border-default: #e5e5e5;
+    --color-border-default: var(--color-border-default, #e5e5e5);
     --color-border-strong: #a3a3a3;
 
     --color-primary-500: #cc9900;
@@ -2146,7 +2146,7 @@
         align-items: flex-start;
         padding: 12px;
         gap: 16px;
-        border: 1px solid #e8e8e8;
+        border: 1px solid var(--color-border-default, #e5e5e5);
         border-radius: 8px;
     }
 
@@ -2413,7 +2413,7 @@
     align-items: center;
     justify-content: center;
     background: #fff;
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     border-radius: 6px;
     cursor: pointer;
     color: var(--color-text-placeholder, #999999);
@@ -2423,7 +2423,7 @@
 
 .pd-thumb-arrow:hover {
     color: var(--color-text-body, #333333);
-    border-color: #d1d5db;
+    border-color: var(--color-border-medium, #d1d5db);
 }
 
 /* Scrollable thumbnail container */
@@ -2443,7 +2443,7 @@
     border-radius: 6px;
     overflow: hidden;
     flex-shrink: 0;
-    border: 2px solid #e5e7eb;
+    border: 2px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     cursor: pointer;
     transition: border-color .15s;
 }
@@ -3231,7 +3231,7 @@ body.gallery-lightbox-open {
 }
 
 .rv-filter-pill:hover:not(.active) {
-    border-color: #d1d5db;
+    border-color: var(--color-border-medium, #d1d5db);
 }
 
 /* Sort dropdown trigger */
@@ -3434,7 +3434,7 @@ body.gallery-lightbox-open {
 }
 
 .rv-helpful-btn:hover {
-    border-color: #d1d5db;
+    border-color: var(--color-border-medium, #d1d5db);
     color: var(--pd-title-color, #111827);
 }
 
@@ -3461,7 +3461,7 @@ body.gallery-lightbox-open {
 }
 
 .rv-show-all-btn:hover {
-    border-color: #d1d5db;
+    border-color: var(--color-border-medium, #d1d5db);
     background: var(--pd-spec-header-bg, #f9fafb);
 }
 
@@ -3505,7 +3505,7 @@ body.gallery-lightbox-open {
 }
 
 .rv-rating-dropdown-trigger:hover {
-    border-color: #d1d5db;
+    border-color: var(--color-border-medium, #d1d5db);
 }
 
 .rv-rating-dropdown-trigger.active {
@@ -3581,7 +3581,7 @@ body.gallery-lightbox-open {
 }
 
 .rv-sort-dropdown-trigger:hover {
-    border-color: #d1d5db;
+    border-color: var(--color-border-medium, #d1d5db);
 }
 
 .rv-sort-dropdown-panel {
@@ -3634,7 +3634,7 @@ body.gallery-lightbox-open {
 }
 
 .rv-mention-tag:hover {
-    border-color: #d1d5db;
+    border-color: var(--color-border-medium, #d1d5db);
 }
 
 .rv-mention-tag.active {
@@ -3706,7 +3706,7 @@ body.gallery-lightbox-open {
     justify-content: space-between;
     align-items: center;
     padding: 20px 24px;
-    border-bottom: 1px solid #e5e7eb;
+    border-bottom: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     flex-shrink: 0;
 }
 
@@ -3803,7 +3803,7 @@ body.gallery-lightbox-open {
 .rv-login-btn {
     width: 100%;
     height: 48px;
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     border-radius: 8px;
     display: flex;
     align-items: center;
@@ -4149,7 +4149,7 @@ body.gallery-lightbox-open {
     background: #fff;
     display: flex;
     flex-direction: column;
-    border: 1px solid #e5e5e5;
+    border: 1px solid var(--color-border-default, #e5e5e5);
     border-radius: 8px;
     overflow: hidden;
 }
@@ -4168,7 +4168,7 @@ body.gallery-lightbox-open {
     margin: -20px -20px 0;
     padding: 0;
     background: #f5f5f5;
-    border-bottom: 1px solid #e5e5e5;
+    border-bottom: 1px solid var(--color-border-default, #e5e5e5);
 }
 
 .pd-card-tab {
@@ -4187,7 +4187,7 @@ body.gallery-lightbox-open {
 }
 
 .pd-card-tab:not(:first-child) {
-    border-left: 1px solid #e5e5e5;
+    border-left: 1px solid var(--color-border-default, #e5e5e5);
 }
 
 .pd-card-tab.active {
@@ -4292,7 +4292,7 @@ body.gallery-lightbox-open {
 /* Variations Section */
 #pd-variations-section {
     padding-bottom: 16px;
-    border-bottom: 1px solid #f0f0f0;
+    border-bottom: 1px solid var(--color-border-light, #f0f0f0);
 }
 
 .pd-section-header {
@@ -4346,7 +4346,7 @@ body.gallery-lightbox-open {
     width: 64px;
     height: 64px;
     padding: 0;
-    border: 2px solid #e5e7eb;
+    border: 2px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     border-radius: 6px;
     overflow: hidden;
     cursor: pointer;
@@ -4380,7 +4380,7 @@ body.gallery-lightbox-open {
     border-radius: 16px;
     font-size: 13px;
     font-weight: 500;
-    border: 1px solid #d9d9d9;
+    border: 1px solid var(--color-border-medium, #d1d5db);
     background: #fff;
     color: var(--pd-title-color, #111827);
     cursor: pointer;
@@ -4399,7 +4399,7 @@ body.gallery-lightbox-open {
 /* Info sections (customization, shipping) */
 .pd-info-section {
     padding: 20px 0;
-    border-bottom: 1px solid #f0f0f0;
+    border-bottom: 1px solid var(--color-border-light, #f0f0f0);
 }
 
 .pd-info-section:last-of-type {
@@ -4477,7 +4477,7 @@ body.gallery-lightbox-open {
     margin-top: 12px;
     padding: 12px 14px;
     background: var(--pd-spec-header-bg, #f9fafb);
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     border-radius: 8px;
 }
 
@@ -4514,8 +4514,8 @@ body.gallery-lightbox-open {
     display: flex;
     gap: 8px;
     padding: 16px 20px;
-    border-top: 1px solid #e5e5e5;
-    border-bottom: 1px solid #e5e5e5;
+    border-top: 1px solid var(--color-border-default, #e5e5e5);
+    border-bottom: 1px solid var(--color-border-default, #e5e5e5);
     background: #fff;
 }
 
@@ -4555,7 +4555,7 @@ body.gallery-lightbox-open {
     font-weight: 700;
     background: #fff;
     color: var(--pd-title-color, #111827);
-    border: 1px solid #d9d9d9;
+    border: 1px solid var(--color-border-medium, #d1d5db);
     cursor: pointer;
     transition: border-color .15s;
 }
@@ -4567,7 +4567,7 @@ body.gallery-lightbox-open {
 /* Trade Assurance / Order Protection */
 #pd-trade-assurance {
     padding: 20px 0 0;
-    border-top: 1px solid #f0f0f0;
+    border-top: 1px solid var(--color-border-light, #f0f0f0);
     margin-top: 20px;
     order: 1;
 }
@@ -4645,7 +4645,7 @@ body.gallery-lightbox-open {
     height: 20px;
     padding: 2px 6px;
     border-radius: 3px;
-    border: 1px solid #e5e5e5;
+    border: 1px solid var(--color-border-default, #e5e5e5);
     font-size: 10px;
     font-weight: 700;
     color: var(--color-text-body, #333333);
@@ -4807,7 +4807,7 @@ body.gallery-lightbox-open {
     justify-content: space-between;
     align-items: center;
     padding: 20px 24px;
-    border-bottom: 1px solid #e5e7eb;
+    border-bottom: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     flex-shrink: 0;
 }
 
@@ -4851,7 +4851,7 @@ body.gallery-lightbox-open {
     gap: 24px;
     padding-bottom: 16px;
     margin-bottom: 20px;
-    border-bottom: 1px solid #e5e7eb;
+    border-bottom: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
 }
 
 .cart-tier-item {
@@ -4910,7 +4910,7 @@ body.gallery-lightbox-open {
     position: relative;
     width: 64px;
     height: 64px;
-    border: 2px solid #e5e7eb;
+    border: 2px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     border-radius: 10px;
     overflow: visible;
     cursor: pointer;
@@ -4981,7 +4981,7 @@ body.gallery-lightbox-open {
     align-items: center;
     gap: 12px;
     padding: 10px 0;
-    border-bottom: 1px solid #f3f4f6;
+    border-bottom: 1px solid var(--color-border-light, #f0f0f0);
 }
 
 .cart-size-row:last-child {
@@ -4997,7 +4997,7 @@ body.gallery-lightbox-open {
     display: inline-flex;
     align-items: center;
     padding: 6px 14px;
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     border-radius: 6px;
     font-size: 13px;
     font-weight: 500;
@@ -5028,7 +5028,7 @@ body.gallery-lightbox-open {
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     background: #fff;
     font-size: 15px;
     color: var(--pd-title-color, #111827);
@@ -5057,8 +5057,8 @@ body.gallery-lightbox-open {
     width: 36px;
     height: 30px;
     text-align: center;
-    border-top: 1px solid #e5e7eb;
-    border-bottom: 1px solid #e5e7eb;
+    border-top: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
+    border-bottom: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     border-left: none;
     border-right: none;
     font-size: 13px;
@@ -5099,7 +5099,7 @@ body.gallery-lightbox-open {
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     background: #fff;
     font-size: 18px;
     color: var(--pd-title-color, #111827);
@@ -5128,8 +5128,8 @@ body.gallery-lightbox-open {
     width: 60px;
     height: 36px;
     text-align: center;
-    border-top: 1px solid #e5e7eb;
-    border-bottom: 1px solid #e5e7eb;
+    border-top: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
+    border-bottom: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     border-left: none;
     border-right: none;
     font-size: 14px;
@@ -5150,7 +5150,7 @@ body.gallery-lightbox-open {
 /* ── 10. Shipping card ────────────────────────────────── */
 
 .cart-shipping-card {
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     border-radius: 8px;
     padding: 16px;
     margin-bottom: 20px;
@@ -5259,14 +5259,14 @@ body.gallery-lightbox-open {
     align-items: center;
     gap: 12px;
     padding: 14px 16px;
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     border-radius: 10px;
     cursor: pointer;
     transition: border-color 0.15s ease;
 }
 
 .cart-ship-option:hover {
-    border-color: #d1d5db;
+    border-color: var(--color-border-medium, #d1d5db);
 }
 
 .cart-ship-option.active {
@@ -5328,7 +5328,7 @@ body.gallery-lightbox-open {
 
 .cart-drawer-footer {
     padding: 16px 24px;
-    border-top: 1px solid #e5e7eb;
+    border-top: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     flex-shrink: 0;
     background: #fff;
 }
@@ -5389,7 +5389,7 @@ body.gallery-lightbox-open {
     align-items: center;
     gap: 6px;
     padding-bottom: 12px;
-    border-bottom: 1px solid #e5e7eb;
+    border-bottom: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     margin-bottom: 12px;
     cursor: pointer;
     user-select: none;
@@ -5410,7 +5410,7 @@ body.gallery-lightbox-open {
 .cart-breakdown-total {
     padding-top: 10px;
     margin-top: 4px;
-    border-top: 1px solid #e5e7eb;
+    border-top: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     font-size: 14px;
     color: var(--pd-title-color, #111827);
 }
@@ -5738,7 +5738,7 @@ body.gallery-lightbox-open {
         align-items: center;
         gap: 0;
         background: #fff;
-        border-bottom: 1px solid #e5e7eb;
+        border-bottom: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
         position: sticky;
         top: 0;
         z-index: 30;
@@ -5826,7 +5826,7 @@ body.gallery-lightbox-open {
         flex-direction: column;
         align-items: center;
         padding: 0 12px;
-        border-right: 1px solid #e5e5e5;
+        border-right: 1px solid var(--color-border-default, #e5e5e5);
     }
 
     .pdm-tier-col:last-child {
@@ -6011,7 +6011,7 @@ body.gallery-lightbox-open {
         width: 56px;
         height: 56px;
         border-radius: 6px;
-        border: 2px solid #e5e7eb;
+        border: 2px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
         overflow: hidden;
         cursor: pointer;
         padding: 0;
@@ -6043,7 +6043,7 @@ body.gallery-lightbox-open {
 
     .pdm-variant-pill {
         padding: 7px 16px;
-        border: 1px solid #d9d9d9;
+        border: 1px solid var(--color-border-medium, #d1d5db);
         border-radius: 16px;
         font-size: 13px;
         color: var(--color-text-body, #333333);
@@ -6240,7 +6240,7 @@ body.gallery-lightbox-open {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 0;
-        border: 1px solid #e5e5e5;
+        border: 1px solid var(--color-border-default, #e5e5e5);
         border-radius: 8px;
         margin: 12px 0;
         overflow: hidden;
@@ -6251,7 +6251,7 @@ body.gallery-lightbox-open {
         flex-direction: column;
         align-items: center;
         padding: 10px 4px;
-        border-right: 1px solid #e5e5e5;
+        border-right: 1px solid var(--color-border-default, #e5e5e5);
         text-align: center;
     }
 
@@ -6279,7 +6279,7 @@ body.gallery-lightbox-open {
 
     .pdm-supplier-btn {
         padding: 10px 8px;
-        border: 1px solid #d9d9d9;
+        border: 1px solid var(--color-border-medium, #d1d5db);
         border-radius: 22px;
         background: #fff;
         font-size: 13px;
@@ -6379,7 +6379,7 @@ body.pdm-sheet-open {
     align-items: center;
     justify-content: space-between;
     padding: 12px 0;
-    border-bottom: 1px solid #f0f0f0;
+    border-bottom: 1px solid var(--color-border-light, #f0f0f0);
     font-size: 14px;
     color: var(--color-text-body, #333333);
 }
@@ -6394,7 +6394,7 @@ body.pdm-sheet-open {
 
 .pdm-shipping-method-card {
     padding: 14px;
-    border: 1px solid #e5e5e5;
+    border: 1px solid var(--color-border-default, #e5e5e5);
     border-radius: 8px;
     margin-top: 12px;
     cursor: pointer;
@@ -6452,7 +6452,7 @@ body.pdm-sheet-open {
 
 .pdm-payment-icon {
     padding: 4px 8px;
-    border: 1px solid #e5e5e5;
+    border: 1px solid var(--color-border-default, #e5e5e5);
     border-radius: 4px;
     font-size: 11px;
     font-weight: 600;
@@ -6468,7 +6468,7 @@ body.pdm-sheet-open {
 }
 
 .pdm-attrs-table tr {
-    border-bottom: 1px solid #f0f0f0;
+    border-bottom: 1px solid var(--color-border-light, #f0f0f0);
 }
 
 .pdm-attrs-table tr:last-child {
@@ -6507,7 +6507,7 @@ body.pdm-sheet-open {
     font-weight: 500;
     padding: 8px 4px 8px 0;
     text-align: left;
-    border-bottom: 1px solid #e5e5e5;
+    border-bottom: 1px solid var(--color-border-default, #e5e5e5);
     word-break: break-word;
 }
 
@@ -6515,7 +6515,7 @@ body.pdm-sheet-open {
     font-size: 14px;
     color: var(--color-text-heading, #111827);
     padding: 12px 4px 12px 0;
-    border-bottom: 1px solid #f0f0f0;
+    border-bottom: 1px solid var(--color-border-light, #f0f0f0);
     word-break: break-word;
     overflow-wrap: break-word;
 }
@@ -6533,7 +6533,7 @@ body.pdm-sheet-open {
         right: 0;
         z-index: 100;
         background: #fff;
-        border-top: 1px solid #e5e5e5;
+        border-top: 1px solid var(--color-border-default, #e5e5e5);
         box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.08);
         overflow: hidden;
     }
@@ -6541,7 +6541,7 @@ body.pdm-sheet-open {
     .pdm-bar-chat-btn {
         width: 48px;
         height: 44px;
-        border: 1px solid #d9d9d9;
+        border: 1px solid var(--color-border-medium, #d1d5db);
         border-radius: 22px;
         background: #fff;
         display: flex;
@@ -6991,7 +6991,7 @@ body.pdm-sheet-open {
     gap: 14px;
     width: 100%;
     padding: 16px 18px;
-    border: 1.5px solid #e5e7eb;
+    border: 1.5px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     border-radius: 12px;
     background: #fff;
     cursor: pointer;
@@ -7006,13 +7006,13 @@ body.pdm-sheet-open {
     flex-shrink: 0;
     width: 20px;
     height: 20px;
-    border: 2px solid #d1d5db;
+    border: 2px solid var(--color-border-medium, #d1d5db);
     border-radius: 50%;
     transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .auth-account-type-card:hover {
-    border-color: #d1d5db;
+    border-color: var(--color-border-medium, #d1d5db);
     background-color: #f9fafb;
 }
 
@@ -7093,12 +7093,12 @@ body.pdm-sheet-open {
     }
 
     .auth-account-type-card.selected {
-        border-color: #e5e7eb;
+        border-color: var(--color-border-default, var(--color-border-default, #e5e5e5));
         box-shadow: 0 0 0 1px #e5e7eb;
     }
 
     .auth-account-type-card.selected::before {
-        border-color: #e5e7eb;
+        border-color: var(--color-border-default, var(--color-border-default, #e5e5e5));
         box-shadow: inset 0 0 0 5px #e5e7eb;
     }
 
@@ -7139,12 +7139,12 @@ body.pdm-sheet-open {
 }
 
 .dark .auth-account-type-card.selected {
-    border-color: #e5e7eb;
+    border-color: var(--color-border-default, var(--color-border-default, #e5e5e5));
     box-shadow: 0 0 0 1px #e5e7eb;
 }
 
 .dark .auth-account-type-card.selected::before {
-    border-color: #e5e7eb;
+    border-color: var(--color-border-default, var(--color-border-default, #e5e5e5));
     box-shadow: inset 0 0 0 5px #e5e7eb;
 }
 
@@ -7584,7 +7584,7 @@ body.pdm-sheet-open {
     margin: 0 auto;
     text-align: left;
     background: #fff;
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     border-radius: 8px;
     padding: 32px;
 }
@@ -7728,7 +7728,7 @@ body.pdm-sheet-open {
     height: 28px;
     border-radius: 50%;
     background: #fff;
-    border: 1.5px solid #e5e7eb;
+    border: 1.5px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     display: flex;
     align-items: center;
     justify-content: center;
@@ -8100,7 +8100,7 @@ body.pdm-sheet-open {
 
 .acc-edit__input {
     padding: 6px 10px;
-    border: 1px solid #d1d5db;
+    border: 1px solid var(--color-border-medium, #d1d5db);
     border-radius: 4px;
     font-size: 14px;
     color: var(--color-text-heading, #111827);
@@ -8130,7 +8130,7 @@ body.pdm-sheet-open {
 
 .acc-edit__select {
     padding: 6px 10px;
-    border: 1px solid #d1d5db;
+    border: 1px solid var(--color-border-medium, #d1d5db);
     border-radius: 4px;
     font-size: 14px;
     color: var(--color-text-heading, #111827);
@@ -8277,7 +8277,7 @@ body.pdm-sheet-open {
 .tax-info__tabs {
     display: flex;
     gap: 0;
-    border-bottom: 2px solid #e5e7eb;
+    border-bottom: 2px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     margin-bottom: 20px;
 }
 
@@ -8344,7 +8344,7 @@ body.pdm-sheet-open {
     justify-content: space-between;
     gap: 24px;
     padding: 24px;
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     border-radius: 8px;
 }
 
@@ -8407,7 +8407,7 @@ body.pdm-sheet-open {
 
 .tax-info__faq-card {
     padding: 20px;
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     border-radius: 8px;
 }
 
@@ -8463,7 +8463,7 @@ body.pdm-sheet-open {
 }
 
 .linked-acc__list {
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     border-radius: 8px;
     overflow: hidden;
 }
@@ -8473,7 +8473,7 @@ body.pdm-sheet-open {
     align-items: center;
     justify-content: space-between;
     padding: 16px 24px;
-    border-bottom: 1px solid #e5e7eb;
+    border-bottom: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
 }
 
 .linked-acc__row:last-child {
@@ -8579,7 +8579,7 @@ body.pdm-sheet-open {
     width: 16px;
     height: 16px;
     border-radius: 50%;
-    border: 1px solid #d1d5db;
+    border: 1px solid var(--color-border-medium, #d1d5db);
     font-size: 10px;
     color: var(--color-text-placeholder, #999999);
     cursor: help;
@@ -8672,7 +8672,7 @@ body.pdm-sheet-open {
     justify-content: space-between;
     gap: 24px;
     padding: 24px 0;
-    border-bottom: 1px solid #f3f4f6;
+    border-bottom: 1px solid var(--color-border-light, #f0f0f0);
 }
 
 .ad-pref__item:last-child {
@@ -8761,7 +8761,7 @@ body.pdm-sheet-open {
     align-items: center;
     justify-content: center;
     padding: 12px 80px;
-    border: 1px solid #d1d5db;
+    border: 1px solid var(--color-border-medium, #d1d5db);
     border-radius: 24px;
     font-size: 14px;
     color: var(--color-text-heading, #111827);
@@ -8832,7 +8832,7 @@ body.pdm-sheet-open {
     gap: 24px;
     padding: 20px 24px;
     background: #f9fafb;
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     border-bottom: none;
 }
 
@@ -8859,7 +8859,7 @@ body.pdm-sheet-open {
 }
 
 .email-pref__items {
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     border-top: none;
 }
 
@@ -8868,7 +8868,7 @@ body.pdm-sheet-open {
     align-items: flex-start;
     gap: 12px;
     padding: 16px 24px;
-    border-bottom: 1px solid #f3f4f6;
+    border-bottom: 1px solid var(--color-border-light, #f0f0f0);
 }
 
 .email-pref__item:last-child {
@@ -8897,7 +8897,7 @@ body.pdm-sheet-open {
 .email-pref__checkmark {
     width: 18px;
     height: 18px;
-    border: 2px solid #d1d5db;
+    border: 2px solid var(--color-border-medium, #d1d5db);
     border-radius: 4px;
     background: #fff;
     transition: all 0.15s;
@@ -9098,7 +9098,7 @@ body.pdm-sheet-open {
 
 .pw-card__code-input {
     padding: 8px 12px;
-    border: 1px solid #d1d5db;
+    border: 1px solid var(--color-border-medium, #d1d5db);
     border-radius: 6px;
     font-size: 14px;
     width: 160px;
@@ -9203,7 +9203,7 @@ body.pdm-sheet-open {
     width: 100%;
     max-width: 360px;
     padding: 10px 14px;
-    border: 1px solid #d1d5db;
+    border: 1px solid var(--color-border-medium, #d1d5db);
     border-radius: 6px;
     font-size: 14px;
     outline: none;
@@ -9326,7 +9326,7 @@ body.pdm-sheet-open {
 .email-change__code-box {
     width: 48px;
     height: 56px;
-    border: 1.5px solid #d1d5db;
+    border: 1.5px solid var(--color-border-medium, #d1d5db);
     border-radius: 8px;
     text-align: center;
     font-size: 20px;
@@ -9346,7 +9346,7 @@ body.pdm-sheet-open {
     max-width: 300px;
     margin: 0 auto 16px;
     padding: 10px;
-    border: 1px solid #d1d5db;
+    border: 1px solid var(--color-border-medium, #d1d5db);
     border-radius: 24px;
     background: none;
     font-size: 13px;
@@ -9392,7 +9392,7 @@ body.pdm-sheet-open {
     width: 100%;
     max-width: 320px;
     padding: 12px 14px;
-    border: 1.5px solid #d1d5db;
+    border: 1.5px solid var(--color-border-medium, #d1d5db);
     border-radius: 8px;
     font-size: 14px;
     color: var(--color-text-heading, #111827);
@@ -9503,7 +9503,7 @@ body.pdm-sheet-open {
     width: 100%;
     max-width: 320px;
     padding: 10px 14px;
-    border: 1.5px solid #d1d5db;
+    border: 1.5px solid var(--color-border-medium, #d1d5db);
     border-radius: 8px;
     font-size: 14px;
     color: var(--color-text-heading, #111827);
@@ -9534,7 +9534,7 @@ body.pdm-sheet-open {
 
 .phone-change__code-input {
     padding: 10px 14px;
-    border: 1.5px solid #d1d5db;
+    border: 1.5px solid var(--color-border-medium, #d1d5db);
     border-radius: 8px;
     font-size: 14px;
     width: 180px;
@@ -9609,7 +9609,7 @@ body.pdm-sheet-open {
 
 .del-acc__card {
     background: #fff;
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     border-radius: 12px;
     padding: 32px;
 }
@@ -9700,7 +9700,7 @@ body.pdm-sheet-open {
 .del-acc__reason-select {
     width: 100%;
     padding: 10px 12px;
-    border: 1px solid #d1d5db;
+    border: 1px solid var(--color-border-medium, #d1d5db);
     border-radius: 8px;
     font-size: 14px;
     color: var(--color-text-heading, #111827);
@@ -9719,7 +9719,7 @@ body.pdm-sheet-open {
     width: 100%;
     margin-top: 10px;
     padding: 10px 12px;
-    border: 1px solid #d1d5db;
+    border: 1px solid var(--color-border-medium, #d1d5db);
     border-radius: 8px;
     font-size: 14px;
     color: var(--color-text-heading, #111827);
@@ -9746,7 +9746,7 @@ body.pdm-sheet-open {
 .del-acc__code-input {
     flex: 1;
     padding: 10px 12px;
-    border: 1px solid #d1d5db;
+    border: 1px solid var(--color-border-medium, #d1d5db);
     border-radius: 8px;
     font-size: 16px;
     text-align: center;
@@ -9839,7 +9839,7 @@ body.pdm-sheet-open {
 .del-acc__btn--secondary {
     background: transparent;
     color: var(--color-text-muted, #666666);
-    border: 1px solid #d1d5db;
+    border: 1px solid var(--color-border-medium, #d1d5db);
 }
 
 .del-acc__btn--secondary:hover {
@@ -10453,7 +10453,7 @@ body.pdm-sheet-open {
 .user-info-card__stats {
     display: flex;
     align-items: stretch;
-    border-top: 1px solid #f0f0f0;
+    border-top: 1px solid var(--color-border-light, #f0f0f0);
     padding-top: 16px;
 }
 
@@ -11202,7 +11202,7 @@ body.pdm-sheet-open {
 .msg-inbox {
     width: 240px;
     flex-shrink: 0;
-    border-right: 1px solid #f0f0f0;
+    border-right: 1px solid var(--color-border-light, #f0f0f0);
     display: flex;
     flex-direction: column;
     background: #ffffff;
@@ -11229,7 +11229,7 @@ body.pdm-sheet-open {
     width: 100%;
     height: 36px;
     padding: 0 12px 0 36px;
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     border-radius: 18px;
     font-size: 13px;
     color: var(--color-text-body, #333333);
@@ -11298,7 +11298,7 @@ body.pdm-sheet-open {
     align-items: center;
     gap: 8px;
     padding: 12px 16px;
-    border-top: 1px solid #f0f0f0;
+    border-top: 1px solid var(--color-border-light, #f0f0f0);
 }
 
 .msg-inbox__toolbar-btn {
@@ -11330,7 +11330,7 @@ body.pdm-sheet-open {
 .msg-list {
     width: 360px;
     flex-shrink: 0;
-    border-right: 1px solid #f0f0f0;
+    border-right: 1px solid var(--color-border-light, #f0f0f0);
     display: flex;
     flex-direction: column;
     background: #ffffff;
@@ -11341,7 +11341,7 @@ body.pdm-sheet-open {
     align-items: center;
     justify-content: space-between;
     padding: 16px 20px 12px;
-    border-bottom: 1px solid #f0f0f0;
+    border-bottom: 1px solid var(--color-border-light, #f0f0f0);
 }
 
 .msg-list__title {
@@ -11506,7 +11506,7 @@ body.pdm-sheet-open {
 .msg-content__cta {
     display: inline-block;
     padding: 8px 24px;
-    border: 1px solid #d1d5db;
+    border: 1px solid var(--color-border-medium, #d1d5db);
     border-radius: 20px;
     font-size: 14px;
     color: var(--color-text-body, #333333);
@@ -11570,7 +11570,7 @@ body.pdm-sheet-open {
     .msg-inbox {
         width: 100%;
         border-right: none;
-        border-bottom: 1px solid #f0f0f0;
+        border-bottom: 1px solid var(--color-border-light, #f0f0f0);
     }
 
     .msg-inbox__cats {
@@ -11609,7 +11609,7 @@ body.pdm-sheet-open {
 .inq-tabs {
     display: flex;
     gap: 0;
-    border-bottom: 1px solid #e5e7eb;
+    border-bottom: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
 }
 
 .inq-tabs__tab {
@@ -11641,7 +11641,7 @@ body.pdm-sheet-open {
     align-items: center;
     justify-content: space-between;
     padding: 12px 20px;
-    border-bottom: 1px solid #f0f0f0;
+    border-bottom: 1px solid var(--color-border-light, #f0f0f0);
     gap: 16px;
     flex-wrap: wrap;
 }
@@ -11659,7 +11659,7 @@ body.pdm-sheet-open {
     padding: 6px 12px;
     font-size: 13px;
     color: var(--color-text-muted, #666666);
-    border: 1px solid #d1d5db;
+    border: 1px solid var(--color-border-medium, #d1d5db);
     border-radius: 4px;
     cursor: pointer;
     background: #ffffff;
@@ -11713,7 +11713,7 @@ body.pdm-sheet-open {
     padding: 6px 14px;
     font-size: 13px;
     color: var(--color-text-heading, #111827);
-    border: 1px solid #d1d5db;
+    border: 1px solid var(--color-border-medium, #d1d5db);
     border-radius: 20px;
     cursor: pointer;
     background: #ffffff;
@@ -11727,7 +11727,7 @@ body.pdm-sheet-open {
 .inq-actions__search {
     display: inline-flex;
     align-items: center;
-    border: 1px solid #d1d5db;
+    border: 1px solid var(--color-border-medium, #d1d5db);
     border-radius: 4px;
     overflow: hidden;
 }
@@ -11758,7 +11758,7 @@ body.pdm-sheet-open {
     width: 32px;
     height: 32px;
     border: none;
-    border-left: 1px solid #d1d5db;
+    border-left: 1px solid var(--color-border-medium, #d1d5db);
     background: #fafafa;
     color: var(--color-text-muted, #666666);
     cursor: pointer;
@@ -11828,7 +11828,7 @@ body.pdm-sheet-open {
     gap: 8px;
     padding: 10px 20px;
     background: #ffffff;
-    border-bottom: 1px solid #f0f0f0;
+    border-bottom: 1px solid var(--color-border-light, #f0f0f0);
     border-radius: 8px 8px 0 0;
 }
 
@@ -11866,7 +11866,7 @@ body.pdm-sheet-open {
 .contacts-list {
     width: 300px;
     flex-shrink: 0;
-    border-right: 1px solid #f0f0f0;
+    border-right: 1px solid var(--color-border-light, #f0f0f0);
     display: flex;
     flex-direction: column;
     padding: 16px;
@@ -11897,7 +11897,7 @@ body.pdm-sheet-open {
 .contacts-list__search {
     display: flex;
     align-items: center;
-    border: 1px solid #d1d5db;
+    border: 1px solid var(--color-border-medium, #d1d5db);
     border-radius: 4px;
     margin-bottom: 12px;
     overflow: hidden;
@@ -11929,7 +11929,7 @@ body.pdm-sheet-open {
     width: 32px;
     height: 32px;
     border: none;
-    border-left: 1px solid #d1d5db;
+    border-left: 1px solid var(--color-border-medium, #d1d5db);
     background: #fafafa;
     color: var(--color-text-muted, #666666);
     cursor: pointer;
@@ -12041,7 +12041,7 @@ body.pdm-sheet-open {
     .contacts-list {
         width: 100%;
         border-right: none;
-        border-bottom: 1px solid #f0f0f0;
+        border-bottom: 1px solid var(--color-border-light, #f0f0f0);
     }
 
     .contacts-detail {
@@ -12071,7 +12071,7 @@ body.pdm-sheet-open {
 .orders-page__nav {
     width: 240px;
     flex-shrink: 0;
-    border-right: 1px solid #f0f0f0;
+    border-right: 1px solid var(--color-border-light, #f0f0f0);
     padding: 24px 0;
 }
 
@@ -12124,7 +12124,7 @@ body.pdm-sheet-open {
     align-items: center;
     justify-content: space-between;
     padding: 24px 28px 20px;
-    border-bottom: 1px solid #f0f0f0;
+    border-bottom: 1px solid var(--color-border-light, #f0f0f0);
 }
 
 .orders-page__title {
@@ -12138,7 +12138,7 @@ body.pdm-sheet-open {
     font-size: 14px;
     color: var(--color-text-body, #333333);
     background: #ffffff;
-    border: 1px solid #d1d5db;
+    border: 1px solid var(--color-border-medium, #d1d5db);
     border-radius: 20px;
     cursor: pointer;
     transition: border-color 150ms, background 150ms;
@@ -12203,7 +12203,7 @@ body.pdm-sheet-open {
 .os-tabs {
     display: flex;
     gap: 0;
-    border-bottom: 1px solid #e5e7eb;
+    border-bottom: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     padding: 0 28px;
 }
 
@@ -12285,7 +12285,7 @@ body.pdm-sheet-open {
 
 .os-reviews-toolbar__search {
     display: flex;
-    border: 1px solid #d1d5db;
+    border: 1px solid var(--color-border-medium, #d1d5db);
     border-radius: 4px;
     overflow: hidden;
 }
@@ -12311,7 +12311,7 @@ body.pdm-sheet-open {
     width: 32px;
     height: 32px;
     border: none;
-    border-left: 1px solid #d1d5db;
+    border-left: 1px solid var(--color-border-medium, #d1d5db);
     background: #fafafa;
     color: var(--color-text-muted, #666666);
     cursor: pointer;
@@ -12334,7 +12334,7 @@ body.pdm-sheet-open {
     font-size: 13px;
     color: var(--color-text-muted, #666666);
     background: #ffffff;
-    border: 1px solid #d1d5db;
+    border: 1px solid var(--color-border-medium, #d1d5db);
     border-radius: 20px;
     cursor: pointer;
     transition: all 150ms;
@@ -12354,7 +12354,7 @@ body.pdm-sheet-open {
 .os-credit-card {
     margin: 20px 28px;
     padding: 20px 24px;
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     border-radius: 8px;
 }
 
@@ -12397,7 +12397,7 @@ body.pdm-sheet-open {
 .os-table {
     width: 100%;
     border-collapse: collapse;
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     border-radius: 6px;
     overflow: hidden;
 }
@@ -12408,7 +12408,7 @@ body.pdm-sheet-open {
     font-weight: 600;
     color: var(--color-text-body, #333333);
     background: #fafafa;
-    border-bottom: 1px solid #e5e7eb;
+    border-bottom: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     text-align: left;
     white-space: nowrap;
 }
@@ -12417,7 +12417,7 @@ body.pdm-sheet-open {
     padding: 12px 16px;
     font-size: 13px;
     color: var(--color-text-muted, #666666);
-    border-bottom: 1px solid #f0f0f0;
+    border-bottom: 1px solid var(--color-border-light, #f0f0f0);
 }
 
 .os-table__empty {
@@ -12451,7 +12451,7 @@ body.pdm-sheet-open {
     justify-content: center;
     width: 32px;
     height: 32px;
-    border: 1px solid #d1d5db;
+    border: 1px solid var(--color-border-medium, #d1d5db);
     border-radius: 50%;
     background: #fff;
     color: var(--color-text-muted, #666666);
@@ -12471,7 +12471,7 @@ body.pdm-sheet-open {
     height: 32px;
     font-size: 13px;
     color: var(--color-text-muted, #666666);
-    border: 1px solid #d1d5db;
+    border: 1px solid var(--color-border-medium, #d1d5db);
     border-radius: 50%;
 }
 
@@ -12488,7 +12488,7 @@ body.pdm-sheet-open {
     justify-content: space-between;
     gap: 24px;
     padding: 20px 28px;
-    border-bottom: 1px solid #f0f0f0;
+    border-bottom: 1px solid var(--color-border-light, #f0f0f0);
 }
 
 .os-info-card__text {
@@ -12514,7 +12514,7 @@ body.pdm-sheet-open {
     font-size: 13px;
     color: var(--color-text-body, #333333);
     background: #fff;
-    border: 1px solid #d1d5db;
+    border: 1px solid var(--color-border-medium, #d1d5db);
     border-radius: 20px;
     cursor: pointer;
     white-space: nowrap;
@@ -12575,7 +12575,7 @@ body.pdm-sheet-open {
     align-items: center;
     justify-content: space-between;
     padding: 20px 24px 16px;
-    border-bottom: 1px solid #f0f0f0;
+    border-bottom: 1px solid var(--color-border-light, #f0f0f0);
 }
 
 .os-modal__title {
@@ -12624,7 +12624,7 @@ body.pdm-sheet-open {
     width: 100%;
     padding: 10px 12px;
     font-size: 14px;
-    border: 1px solid #d1d5db;
+    border: 1px solid var(--color-border-medium, #d1d5db);
     border-radius: 6px;
     outline: none;
     color: var(--color-text-heading, #111827);
@@ -12650,7 +12650,7 @@ body.pdm-sheet-open {
     width: 100%;
     padding: 10px 36px 10px 12px;
     font-size: 14px;
-    border: 1px solid #d1d5db;
+    border: 1px solid var(--color-border-medium, #d1d5db);
     border-radius: 6px;
     outline: none;
     color: var(--color-text-heading, #111827);
@@ -12696,7 +12696,7 @@ body.pdm-sheet-open {
 .os-modal__radio-custom {
     width: 18px;
     height: 18px;
-    border: 2px solid #d1d5db;
+    border: 2px solid var(--color-border-medium, #d1d5db);
     border-radius: 50%;
     flex-shrink: 0;
     position: relative;
@@ -12737,7 +12737,7 @@ body.pdm-sheet-open {
 .os-modal__checkbox-custom {
     width: 16px;
     height: 16px;
-    border: 2px solid #d1d5db;
+    border: 2px solid var(--color-border-medium, #d1d5db);
     border-radius: 3px;
     flex-shrink: 0;
     margin-top: 2px;
@@ -12813,7 +12813,7 @@ body.pdm-sheet-open {
     display: flex;
     justify-content: flex-end;
     gap: 12px;
-    border-top: 1px solid #f0f0f0;
+    border-top: 1px solid var(--color-border-light, #f0f0f0);
 }
 
 .os-modal__footer--split {
@@ -12842,7 +12842,7 @@ body.pdm-sheet-open {
 .os-modal__btn--cancel {
     background: #fff;
     color: var(--color-text-body, #333333);
-    border: 1px solid #d1d5db;
+    border: 1px solid var(--color-border-medium, #d1d5db);
 }
 
 .os-modal__btn--cancel:hover {
@@ -12863,7 +12863,7 @@ body.pdm-sheet-open {
 
 .os-faq__card {
     padding: 20px;
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     border-radius: 8px;
 }
 
@@ -12881,7 +12881,7 @@ body.pdm-sheet-open {
 }
 
 .os-faq__accordion {
-    border-bottom: 1px solid #e5e7eb;
+    border-bottom: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     padding: 14px 0;
 }
 
@@ -12922,7 +12922,7 @@ body.pdm-sheet-open {
     .orders-page__nav {
         width: 100%;
         border-right: none;
-        border-bottom: 1px solid #f0f0f0;
+        border-bottom: 1px solid var(--color-border-light, #f0f0f0);
         padding: 16px 0;
     }
 
@@ -12986,7 +12986,7 @@ body.pdm-sheet-open {
     display: flex;
     gap: 0;
     padding: 0 28px;
-    border-bottom: 1px solid #e5e7eb;
+    border-bottom: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     margin-top: 16px;
 }
 
@@ -13032,7 +13032,7 @@ body.pdm-sheet-open {
     width: 240px;
     flex-shrink: 0;
     padding: 20px 24px;
-    border-right: 1px solid #f0f0f0;
+    border-right: 1px solid var(--color-border-light, #f0f0f0);
 }
 
 .fav-products__list-title {
@@ -13208,7 +13208,7 @@ body.pdm-sheet-open {
     width: 100%;
     padding: 12px 50px 12px 14px;
     font-size: 14px;
-    border: 1px solid #d1d5db;
+    border: 1px solid var(--color-border-medium, #d1d5db);
     border-radius: 20px;
     outline: none;
     color: var(--color-text-heading, #111827);
@@ -13252,7 +13252,7 @@ body.pdm-sheet-open {
 .fav-modal__btn--cancel {
     background: #fff;
     color: var(--color-text-body, #333333);
-    border: 1px solid #d1d5db;
+    border: 1px solid var(--color-border-medium, #d1d5db);
 }
 
 .fav-modal__btn--cancel:hover {
@@ -13262,7 +13262,7 @@ body.pdm-sheet-open {
 .fav-modal__btn--save {
     background: #fff;
     color: var(--color-text-placeholder, #999999);
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
 }
 
 .fav-modal__btn--save:not(:disabled) {
@@ -13300,7 +13300,7 @@ body.pdm-sheet-open {
     aspect-ratio: 1;
     border-radius: 8px;
     overflow: hidden;
-    border: 1px solid #f0f0f0;
+    border: 1px solid var(--color-border-light, #f0f0f0);
     margin-bottom: 10px;
 }
 
@@ -13347,7 +13347,7 @@ body.pdm-sheet-open {
     .fav-products__sidebar {
         width: 100%;
         border-right: none;
-        border-bottom: 1px solid #f0f0f0;
+        border-bottom: 1px solid var(--color-border-light, #f0f0f0);
     }
 
     .bh-grid {
@@ -13391,7 +13391,7 @@ body.pdm-sheet-open {
     font-size: 14px;
     color: var(--color-text-body, #333333);
     background: #fff;
-    border: 1px solid #d1d5db;
+    border: 1px solid var(--color-border-medium, #d1d5db);
     border-radius: 20px;
     cursor: pointer;
     transition: border-color 150ms;
@@ -13404,7 +13404,7 @@ body.pdm-sheet-open {
 /* ─── Current Plan Card ─── */
 .sub-plan-card {
     margin: 0 28px;
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     border-radius: 10px;
     overflow: hidden;
 }
@@ -13428,7 +13428,7 @@ body.pdm-sheet-open {
     gap: 12px;
     font-size: 14px;
     color: var(--color-text-muted, #666666);
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     border-radius: 8px;
     padding: 10px 16px;
 }
@@ -13489,7 +13489,7 @@ body.pdm-sheet-open {
     font-weight: 600;
     color: var(--color-text-muted, #666666);
     padding: 12px 16px;
-    border-bottom: 1px solid #e5e7eb;
+    border-bottom: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     background: #fafafa;
 }
 
@@ -13497,7 +13497,7 @@ body.pdm-sheet-open {
     font-size: 14px;
     color: var(--color-text-body, #333333);
     padding: 12px 16px;
-    border-bottom: 1px solid #f0f0f0;
+    border-bottom: 1px solid var(--color-border-light, #f0f0f0);
 }
 
 .sub-invoice-table__empty {
@@ -13556,7 +13556,7 @@ body.pdm-sheet-open {
     font-size: 14px;
     color: var(--color-text-muted, #666666);
     background: #fff;
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     cursor: pointer;
     transition: all 150ms;
 }
@@ -13574,7 +13574,7 @@ body.pdm-sheet-open {
     background: #f5f5f5;
     color: var(--color-text-heading, #111827);
     font-weight: 600;
-    border-color: #d1d5db;
+    border-color: var(--color-border-medium, #d1d5db);
 }
 
 .sub-billing-toggle__save {
@@ -13592,7 +13592,7 @@ body.pdm-sheet-open {
 }
 
 .sub-pricing__card {
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     border-radius: 10px;
     padding: 28px 24px;
     display: flex;
@@ -13699,7 +13699,7 @@ body.pdm-sheet-open {
     display: flex;
     flex-direction: column;
     gap: 12px;
-    border-top: 1px solid #f0f0f0;
+    border-top: 1px solid var(--color-border-light, #f0f0f0);
     padding-top: 20px;
 }
 
@@ -13723,7 +13723,7 @@ body.pdm-sheet-open {
 /* ─── FAQ Section ─── */
 .sub-faq {
     padding: 0 28px 28px;
-    border-top: 1px solid #f0f0f0;
+    border-top: 1px solid var(--color-border-light, #f0f0f0);
     margin-top: 8px;
 }
 
@@ -13754,7 +13754,7 @@ body.pdm-sheet-open {
 }
 
 .sub-faq__item {
-    border-bottom: 1px solid #f0f0f0;
+    border-bottom: 1px solid var(--color-border-light, #f0f0f0);
     padding: 16px 0;
 }
 
@@ -13862,7 +13862,7 @@ body.pdm-sheet-open {
     display: flex;
     gap: 0;
     padding: 0 28px;
-    border-bottom: 1px solid #e5e7eb;
+    border-bottom: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     margin-top: 16px;
     overflow-x: auto;
 }
@@ -13906,7 +13906,7 @@ body.pdm-sheet-open {
 .log-search__input-wrap {
     flex: 1;
     display: flex;
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     border-radius: 6px;
     overflow: hidden;
 }
@@ -13933,7 +13933,7 @@ body.pdm-sheet-open {
     color: var(--color-text-body, #333333);
     background: #fff;
     border: none;
-    border-left: 1px solid #e5e7eb;
+    border-left: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     cursor: pointer;
     white-space: nowrap;
     transition: background 150ms;
@@ -13979,7 +13979,7 @@ body.pdm-sheet-open {
     width: 100%;
     padding: 10px 36px 10px 14px;
     font-size: 14px;
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     border-radius: 6px;
     outline: none;
     color: var(--color-text-heading, #111827);
@@ -14000,7 +14000,7 @@ body.pdm-sheet-open {
     width: 100%;
     padding: 10px 12px 10px 110px;
     font-size: 14px;
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     border-radius: 6px;
     outline: none;
     color: var(--color-text-heading, #111827);
@@ -14031,7 +14031,7 @@ body.pdm-sheet-open {
     font-weight: 600;
     color: var(--color-text-muted, #666666);
     padding: 12px 12px;
-    border-bottom: 1px solid #e5e7eb;
+    border-bottom: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     background: #fafafa;
 }
 
@@ -14039,7 +14039,7 @@ body.pdm-sheet-open {
     font-size: 14px;
     color: var(--color-text-body, #333333);
     padding: 12px;
-    border-bottom: 1px solid #f0f0f0;
+    border-bottom: 1px solid var(--color-border-light, #f0f0f0);
 }
 
 .log-table__empty {
@@ -14065,7 +14065,7 @@ body.pdm-sheet-open {
 
 .log-review-search__wrap {
     display: flex;
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     border-radius: 6px;
     overflow: hidden;
     max-width: 500px;
@@ -14089,7 +14089,7 @@ body.pdm-sheet-open {
     color: var(--color-text-body, #333333);
     background: #fff;
     border: none;
-    border-left: 1px solid #e5e7eb;
+    border-left: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     cursor: pointer;
     white-space: nowrap;
     transition: background 150ms;
@@ -14133,7 +14133,7 @@ body.pdm-sheet-open {
 .pay-nav {
     width: 220px;
     flex-shrink: 0;
-    border-right: 1px solid #f0f0f0;
+    border-right: 1px solid var(--color-border-light, #f0f0f0);
     padding: 24px 0;
     position: sticky;
     top: 0;
@@ -14234,7 +14234,7 @@ body.pdm-sheet-open {
     font-size: 13px;
     color: var(--color-text-body, #333333);
     background: #fff;
-    border: 1px solid #d1d5db;
+    border: 1px solid var(--color-border-medium, #d1d5db);
     border-radius: 20px;
     cursor: pointer;
     transition: border-color 150ms, background 150ms;
@@ -14253,7 +14253,7 @@ body.pdm-sheet-open {
     width: 32px;
     height: 32px;
     background: none;
-    border: 1px solid #d1d5db;
+    border: 1px solid var(--color-border-medium, #d1d5db);
     border-radius: 50%;
     cursor: pointer;
     transition: border-color 150ms, background 150ms;
@@ -14282,7 +14282,7 @@ body.pdm-sheet-open {
     align-items: center;
     gap: 12px;
     padding: 20px 24px;
-    border: 2px dashed #d1d5db;
+    border: 2px dashed var(--color-border-medium, #d1d5db);
     border-radius: 8px;
     cursor: pointer;
     transition: border-color 200ms, background 200ms;
@@ -14316,7 +14316,7 @@ body.pdm-sheet-open {
 .pay-tabs {
     display: flex;
     gap: 0;
-    border-bottom: 1px solid #e5e7eb;
+    border-bottom: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     margin-bottom: 0;
     overflow-x: auto;
 }
@@ -14381,7 +14381,7 @@ body.pdm-sheet-open {
     font-size: 12px;
     color: var(--color-text-muted, #666666);
     background: #f3f4f6;
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     border-radius: 16px;
     cursor: pointer;
     transition: all 150ms;
@@ -14434,7 +14434,7 @@ body.pdm-sheet-open {
 .pay-filter__input {
     padding: 8px 12px;
     font-size: 13px;
-    border: 1px solid #d1d5db;
+    border: 1px solid var(--color-border-medium, #d1d5db);
     border-radius: 6px;
     outline: none;
     color: var(--color-text-heading, #111827);
@@ -14457,7 +14457,7 @@ body.pdm-sheet-open {
 .pay-filter__select {
     padding: 8px 12px;
     font-size: 13px;
-    border: 1px solid #d1d5db;
+    border: 1px solid var(--color-border-medium, #d1d5db);
     border-radius: 6px;
     outline: none;
     color: var(--color-text-heading, #111827);
@@ -14525,7 +14525,7 @@ body.pdm-sheet-open {
 .pay-tt-filters__search {
     display: flex;
     align-items: stretch;
-    border: 1px solid #d1d5db;
+    border: 1px solid var(--color-border-medium, #d1d5db);
     border-radius: 6px;
     overflow: hidden;
 }
@@ -14543,7 +14543,7 @@ body.pdm-sheet-open {
     padding: 0 10px;
     background: none;
     border: none;
-    border-left: 1px solid #e5e7eb;
+    border-left: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     cursor: pointer;
     transition: background 150ms;
 }
@@ -14581,14 +14581,14 @@ body.pdm-sheet-open {
     font-weight: 600;
     color: var(--color-text-muted, #666666);
     background: #f9fafb;
-    border-bottom: 1px solid #e5e7eb;
+    border-bottom: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     white-space: nowrap;
 }
 
 .pay-table td {
     padding: 14px 16px;
     color: var(--color-text-body, #333333);
-    border-bottom: 1px solid #f0f0f0;
+    border-bottom: 1px solid var(--color-border-light, #f0f0f0);
 }
 
 .pay-table__empty-text {
@@ -14673,7 +14673,7 @@ body.pdm-sheet-open {
     align-items: center;
     justify-content: space-between;
     padding: 20px 24px 16px;
-    border-bottom: 1px solid #f0f0f0;
+    border-bottom: 1px solid var(--color-border-light, #f0f0f0);
 }
 
 .pay-modal__title {
@@ -14709,7 +14709,7 @@ body.pdm-sheet-open {
     justify-content: flex-end;
     gap: 10px;
     padding: 16px 24px 20px;
-    border-top: 1px solid #f0f0f0;
+    border-top: 1px solid var(--color-border-light, #f0f0f0);
 }
 
 .pay-modal__footer--split {
@@ -14721,7 +14721,7 @@ body.pdm-sheet-open {
     font-size: 14px;
     font-weight: 500;
     border-radius: 8px;
-    border: 1px solid #d1d5db;
+    border: 1px solid var(--color-border-medium, #d1d5db);
     background: #fff;
     color: var(--color-text-body, #333333);
     cursor: pointer;
@@ -14763,7 +14763,7 @@ body.pdm-sheet-open {
     width: 100%;
     padding: 10px 14px;
     font-size: 14px;
-    border: 1px solid #d1d5db;
+    border: 1px solid var(--color-border-medium, #d1d5db);
     border-radius: 8px;
     outline: none;
     color: var(--color-text-heading, #111827);
@@ -14796,7 +14796,7 @@ body.pdm-sheet-open {
 .pay-form__select {
     padding: 10px 14px;
     font-size: 14px;
-    border: 1px solid #d1d5db;
+    border: 1px solid var(--color-border-medium, #d1d5db);
     border-radius: 8px;
     outline: none;
     color: var(--color-text-heading, #111827);
@@ -14846,7 +14846,7 @@ body.pdm-sheet-open {
     min-width: 44px;
     height: 28px;
     padding: 0 6px;
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     border-radius: 4px;
     font-size: 10px;
     font-weight: 700;
@@ -14924,7 +14924,7 @@ body.pdm-sheet-open {
     margin-top: 8px;
     padding: 14px 18px;
     background: #fff;
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     border-radius: 8px;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
     font-size: 13px;
@@ -14977,7 +14977,7 @@ body.pdm-sheet-open {
     gap: 32px;
     align-items: flex-start;
     padding: 24px;
-    border: 2px dashed #d1d5db;
+    border: 2px dashed var(--color-border-medium, #d1d5db);
     border-radius: 8px;
     background: #fafafa;
 }
@@ -15041,7 +15041,7 @@ body.pdm-sheet-open {
         position: static;
         max-height: none;
         border-right: none;
-        border-bottom: 1px solid #f0f0f0;
+        border-bottom: 1px solid var(--color-border-light, #f0f0f0);
         padding: 16px 0;
         display: flex;
         flex-wrap: wrap;
@@ -15227,7 +15227,7 @@ body.pdm-sheet-open {
 .ds-page__nav {
     display: flex;
     gap: 0;
-    border-bottom: 1px solid #e5e7eb;
+    border-bottom: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     background: #fff;
 }
 
@@ -15416,7 +15416,7 @@ body.pdm-sheet-open {
 
 .ds-filters {
     padding: 16px 20px;
-    border-bottom: 1px solid #f3f4f6;
+    border-bottom: 1px solid var(--color-border-light, #f0f0f0);
 }
 
 .ds-filters__row {
@@ -15424,7 +15424,7 @@ body.pdm-sheet-open {
     align-items: flex-start;
     gap: 12px;
     padding: 8px 0;
-    border-bottom: 1px solid #f3f4f6;
+    border-bottom: 1px solid var(--color-border-light, #f0f0f0);
 }
 
 .ds-filters__row:last-child {
@@ -15454,7 +15454,7 @@ body.pdm-sheet-open {
     align-items: center;
     gap: 6px;
     padding: 6px 14px;
-    border: 1px solid #d1d5db;
+    border: 1px solid var(--color-border-medium, #d1d5db);
     border-radius: 16px;
     background: #fff;
     font-size: 13px;
@@ -15506,7 +15506,7 @@ body.pdm-sheet-open {
 
 .ds-select {
     padding: 6px 28px 6px 12px;
-    border: 1px solid #d1d5db;
+    border: 1px solid var(--color-border-medium, #d1d5db);
     border-radius: 6px;
     background: #fff url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%236B7280' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 10px center;
     font-size: 13px;
@@ -15532,7 +15532,7 @@ body.pdm-sheet-open {
     align-items: center;
     gap: 4px;
     padding: 5px 12px;
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     border-radius: 4px;
     font-size: 13px;
     color: var(--color-text-body, #333333);
@@ -15561,7 +15561,7 @@ body.pdm-sheet-open {
     left: 0;
     min-width: 180px;
     background: #fff;
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     z-index: 50;
@@ -15657,7 +15657,7 @@ body.pdm-sheet-open {
     align-items: center;
     justify-content: space-between;
     padding: 12px 20px;
-    border-bottom: 1px solid #f3f4f6;
+    border-bottom: 1px solid var(--color-border-light, #f0f0f0);
 }
 
 .ds-products-bar__label {
@@ -15667,7 +15667,7 @@ body.pdm-sheet-open {
 
 .ds-products-bar__sort {
     padding: 6px 28px 6px 12px;
-    border: 1px solid #d1d5db;
+    border: 1px solid var(--color-border-medium, #d1d5db);
     border-radius: 6px;
     background: #fff url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%236B7280' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 10px center;
     font-size: 13px;
@@ -15739,7 +15739,7 @@ body.pdm-sheet-open {
     height: 42px;
     background: rgba(255, 255, 255, 0.92);
     color: #1f2937;
-    border: 1px solid #d1d5db;
+    border: 1px solid var(--color-border-medium, #d1d5db);
     border-radius: 4px;
     font-size: 14px;
     font-weight: 500;
@@ -15865,7 +15865,7 @@ body.pdm-sheet-open {
     align-items: center;
     justify-content: space-between;
     padding: 20px 24px;
-    border-bottom: 1px solid #e5e7eb;
+    border-bottom: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
 }
 
 .ds-orders__title {
@@ -15891,13 +15891,13 @@ body.pdm-sheet-open {
     font-weight: 500;
     background: #f3f4f6;
     color: var(--color-text-muted, #666666);
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     cursor: pointer;
     transition: all 0.15s;
 }
 
 .ds-orders__badge:hover {
-    border-color: #d1d5db;
+    border-color: var(--color-border-medium, #d1d5db);
 }
 
 .ds-orders__badge--on {
@@ -15911,7 +15911,7 @@ body.pdm-sheet-open {
 .ds-orders__tabs {
     display: flex;
     gap: 0;
-    border-bottom: 1px solid #e5e7eb;
+    border-bottom: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     overflow-x: auto;
     scrollbar-width: none;
     -ms-overflow-style: none;
@@ -16038,7 +16038,7 @@ body.pdm-sheet-open {
     align-items: center;
     justify-content: space-between;
     padding: 20px 24px;
-    border-bottom: 1px solid #e5e7eb;
+    border-bottom: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
 }
 
 .ds-modal__title {
@@ -16152,7 +16152,7 @@ body.pdm-sheet-open {
 
 .ds-modal__footer {
     padding: 16px 24px;
-    border-top: 1px solid #e5e7eb;
+    border-top: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
     display: flex;
     justify-content: flex-end;
 }
@@ -16162,7 +16162,7 @@ body.pdm-sheet-open {
     border-radius: 6px;
     font-size: 14px;
     font-weight: 500;
-    border: 1px solid #d1d5db;
+    border: 1px solid var(--color-border-medium, #d1d5db);
     background: #fff;
     color: var(--color-text-body, #333333);
     cursor: pointer;
