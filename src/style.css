@@ -1512,7 +1512,7 @@
         font-size: 15px;
         font-weight: 700;
         line-height: 20px;
-        background: #ff6600;
+        background: var(--search-btn-bg, #cc9900);
         border: 0;
         border-radius: 20px;
         cursor: pointer;
@@ -1520,11 +1520,11 @@
     }
 
     .topbar-search-submit:hover {
-        background: #f15f00;
+        background: var(--search-btn-hover, #b38600);
     }
 
     .topbar-search-submit:focus-visible {
-        outline: 2px solid #ff6600;
+        outline: 2px solid var(--search-btn-bg, #cc9900);
         outline-offset: 2px;
     }
 
@@ -4194,7 +4194,7 @@ body.gallery-lightbox-open {
     color: #111;
     font-weight: 700;
     background: #ffffff;
-    border-top-color: #e85d04;
+    border-top-color: var(--pd-tab-active-border, #cc9900);
 }
 
 /* Ready to Ship badge */
@@ -4499,7 +4499,7 @@ body.gallery-lightbox-open {
 }
 
 .pd-shipping-card-change {
-    color: var(--pd-price-color, #ea580c);
+    color: var(--pd-price-color, #cc9900);
     font-size: 13px;
     font-weight: 500;
     text-decoration: none;
@@ -4536,7 +4536,7 @@ body.gallery-lightbox-open {
     border-radius: 24px;
     font-size: 15px;
     font-weight: 700;
-    background: var(--pd-cta-primary-bg, #e85d04);
+    background: var(--pd-cta-primary-bg, #cc9900);
     color: #fff;
     border: none;
     cursor: pointer;
@@ -4544,7 +4544,7 @@ body.gallery-lightbox-open {
 }
 
 .pd-cta-primary:hover {
-    background: var(--pd-cta-primary-hover, #d45303);
+    background: var(--pd-cta-primary-hover, #b38600);
 }
 
 .pd-cta-outline {
@@ -5761,9 +5761,9 @@ body.gallery-lightbox-open {
     }
 
     .pdm-section-tab-active {
-        color: #ea580c;
+        color: var(--pd-tab-active-color, #cc9900);
         font-weight: 600;
-        border-bottom-color: #ea580c;
+        border-bottom-color: var(--pd-tab-active-border, #cc9900);
     }
 }
 
@@ -5802,8 +5802,8 @@ body.gallery-lightbox-open {
         font-weight: 600;
         padding: 4px 10px;
         border-radius: 4px;
-        border: 1px solid #e85d04;
-        color: #e85d04;
+        border: 1px solid var(--color-cta-primary, #cc9900);
+        color: var(--color-cta-primary, #cc9900);
         background: transparent;
         line-height: 1.4;
     }
@@ -6126,7 +6126,7 @@ body.gallery-lightbox-open {
         padding: 8px 0 0;
         font-size: 13px;
         font-weight: 600;
-        color: #e85d04;
+        color: var(--color-cta-primary, #cc9900);
     }
 
     .pdm-trade-badge svg {
@@ -6211,7 +6211,7 @@ body.gallery-lightbox-open {
         flex-shrink: 0;
         font-size: 18px;
         font-weight: 700;
-        color: #d97706;
+        color: var(--color-primary-600, #b38600);
     }
 
     .pdm-supplier-name {
@@ -6402,7 +6402,7 @@ body.pdm-sheet-open {
 }
 
 .pdm-shipping-method-card.active {
-    border-color: #e85d04;
+    border-color: var(--color-cta-primary, #cc9900);
 }
 
 .pdm-shipping-method-name {
@@ -6576,7 +6576,7 @@ body.pdm-sheet-open {
         height: 44px;
         border: none;
         border-radius: 22px;
-        background: #e85d04;
+        background: var(--color-cta-primary, #cc9900);
         font-size: 14px;
         font-weight: 700;
         color: #fff;
@@ -6585,7 +6585,7 @@ body.pdm-sheet-open {
     }
 
     .pdm-bar-order-btn:active {
-        background: #d45303;
+        background: var(--color-cta-primary-hover, #b38600);
     }
 
     .pdm-bar-cart-btn,
