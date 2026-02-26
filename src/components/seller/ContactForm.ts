@@ -47,7 +47,7 @@ export function ContactForm(data: ContactFormData): string {
 
           <!-- Send Button -->
           <div class="flex justify-center mb-4">
-            <button class="contact-form__send bg-[#f97316] hover:bg-[#ea580c] text-white font-semibold text-[14px] rounded-[var(--radius-button)] px-8 py-2 xs:w-full xs:py-3 transition-colors cursor-pointer">
+            <button class="contact-form__send bg-[#f97316] hover:bg-[#ea580c] active:scale-[0.97] text-white font-semibold text-[14px] rounded-[var(--radius-button)] px-8 py-2 xs:w-full xs:py-3 transition-[background-color,transform] duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-[var(--color-store-accent)] focus-visible:ring-offset-2 outline-none">
               Send
             </button>
           </div>

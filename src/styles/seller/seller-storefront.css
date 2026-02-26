@@ -1,17 +1,15 @@
 /**
- * Seller Storefront — Custom BEM CSS
- * Component-specific styles that cannot be achieved with Tailwind utilities alone.
+ * Seller Storefront — Residual CSS
+ * Only styles that cannot be achieved with Tailwind utilities alone.
+ * Layout, spacing, colors, and responsive styles are in component Tailwind classes.
  * Imported by src/seller-storefront.ts
  */
 
 /* ═══════════════════════════════════════════════════════════
-   C2: Store Nav — Sticky Shadow
+   C2: Store Nav — Scrolled State (JS-toggled)
    ═══════════════════════════════════════════════════════════ */
 
 .store-nav {
-  position: sticky;
-  top: 0;
-  z-index: var(--z-sticky, 20);
   transition: box-shadow 0.2s ease;
 }
 
@@ -22,12 +20,10 @@
 
 .store-nav--scrolled .store-nav__item {
   color: #374151 !important;
-  /* dark slate gray */
 }
 
 .store-nav--scrolled .store-nav__item svg {
   color: #6b7280 !important;
-  /* gray-500 */
 }
 
 .store-nav--scrolled .store-nav__hamburger {
@@ -42,8 +38,20 @@
   background-color: #f9fafb !important;
 }
 
+/* Mobile Nav Panel — max-height animation */
+.store-nav__mobile-menu {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.store-nav__mobile-menu--open {
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
 /* ═══════════════════════════════════════════════════════════
-   C3: Hero Banner — Dot Pagination
+   C3: Hero Banner — Swiper Dot Pagination
    ═══════════════════════════════════════════════════════════ */
 
 .store-hero__dot {
@@ -96,39 +104,8 @@
 }
 
 /* ═══════════════════════════════════════════════════════════
-   C8: Certificates — Navigation Arrows & Dots
+   C8: Certificates — Swiper Integration
    ═══════════════════════════════════════════════════════════ */
-
-.certificates__prev,
-.certificates__next {
-  width: 32px;
-  height: 48px;
-  background: #e5e5e5;
-  border-radius: var(--radius-sm, 4px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 10;
-  transition: background-color 0.2s ease;
-  border: none;
-  cursor: pointer;
-}
-
-.certificates__prev {
-  left: -16px;
-}
-
-.certificates__next {
-  right: -16px;
-}
-
-.certificates__prev:hover,
-.certificates__next:hover {
-  background: #d1d5db;
-}
 
 /* Swiper disabled state */
 .certificates__prev.swiper-button-disabled,
@@ -138,14 +115,7 @@
   pointer-events: none;
 }
 
-/* Certificates Dot Pagination */
-.certificates__dots {
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-  margin-top: 24px;
-}
-
+/* Swiper pagination bullets */
 .certificates__dots .swiper-pagination-bullet {
   width: 8px;
   height: 8px;
@@ -160,10 +130,76 @@
 }
 
 /* ═══════════════════════════════════════════════════════════
-   C13: Floating Actions — Responsive Bottom Bar
+   C1: Store Header — Animation & State
    ═══════════════════════════════════════════════════════════ */
 
-/* Tablet — smaller buttons, icon only */
+.store-header__chevron--rotated {
+  transform: rotate(180deg);
+}
+
+.store-header__badge--pro {
+  animation: badge-pulse 2s ease-in-out infinite;
+}
+
+@keyframes badge-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.85;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   C4: Category Grid — Parent-child hover
+   ═══════════════════════════════════════════════════════════ */
+
+.category-grid__card:hover {
+  transform: scale(1.03);
+}
+
+.category-grid__card:hover img {
+  transform: scale(1.05);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   C5: Hot Products — Parent-child hover
+   ═══════════════════════════════════════════════════════════ */
+
+.hot-products__card:hover .hot-products__image-wrapper img {
+  transform: scale(1.05);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   C6: Category Listing — Parent-child hover
+   ═══════════════════════════════════════════════════════════ */
+
+.category-listing__banner:hover img {
+  transform: scale(1.02);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   C9: Why Choose Us — Hover lift
+   ═══════════════════════════════════════════════════════════ */
+
+.why-choose__icon-card:hover {
+  transform: translateY(-4px);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   C12: Contact Form — Active press
+   ═══════════════════════════════════════════════════════════ */
+
+.contact-form__send:active {
+  transform: scale(0.97);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   C13: Floating Actions — Responsive Bottom Bar
+   Custom breakpoints (480px) require CSS media queries
+   ═══════════════════════════════════════════════════════════ */
+
 @media (max-width: 768px) and (min-width: 481px) {
   .floating-actions__btn {
     width: 44px;
@@ -175,7 +211,6 @@
   }
 }
 
-/* Mobile — bottom bar transformation */
 @media (max-width: 480px) {
   .floating-actions {
     position: fixed;
@@ -200,433 +235,13 @@
     font-size: 13px;
   }
 
-  /* Add bottom padding to body so content not hidden behind bar */
   body {
     padding-bottom: 48px;
   }
 }
 
 /* ═══════════════════════════════════════════════════════════
-   C6: Category Product Listing — Video Play Button
-   ═══════════════════════════════════════════════════════════ */
-
-.product-card__video-play {
-  position: absolute;
-  bottom: 8px;
-  left: 8px;
-  width: 28px;
-  height: 28px;
-  background: rgba(0, 0, 0, 0.5);
-  border-radius: 9999px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background-color 0.2s ease;
-  cursor: pointer;
-}
-
-.product-card__video-play:hover {
-  background: rgba(0, 0, 0, 0.7);
-}
-
-/* ═══════════════════════════════════════════════════════════
-   Badge System (C6)
-   ═══════════════════════════════════════════════════════════ */
-
-.badge--main-product {
-  background: #fef3c7;
-  color: #92400e;
-  font-size: 11px;
-  font-weight: 600;
-  padding: 2px 6px;
-  border-radius: 4px;
-}
-
-.badge--certified {
-  background: #dbeafe;
-  color: #1e40af;
-  font-size: 11px;
-  font-weight: 600;
-  padding: 2px 6px;
-  border-radius: 4px;
-}
-
-/* ═══════════════════════════════════════════════════════════
-   Mobile Nav Panel (C2)
-   ═══════════════════════════════════════════════════════════ */
-
-.store-nav__mobile-menu {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.3s ease;
-}
-
-.store-nav__mobile-menu--open {
-  max-height: 80vh;
-  overflow-y: auto;
-}
-
-/* ═══════════════════════════════════════════════════════════
-   C1: Store Header
-   ═══════════════════════════════════════════════════════════ */
-
-.store-header {
-  transition: opacity var(--duration-default, 200ms) ease;
-}
-
-.store-header__logo {
-  transition: transform 0.2s ease;
-}
-
-.store-header__logo:hover {
-  transform: scale(1.05);
-}
-
-.store-header__chevron {
-  transition: transform 0.3s ease;
-}
-
-.store-header__chevron--rotated {
-  transform: rotate(180deg);
-}
-
-.store-header__contact-btn,
-.store-header__chat-btn {
-  transition: background-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.store-header__contact-btn:hover,
-.store-header__chat-btn:hover {
-  box-shadow: var(--shadow-md, 0 4px 6px rgba(0, 0, 0, 0.07));
-}
-
-.store-header__badge--pro {
-  animation: badge-pulse 2s ease-in-out infinite;
-}
-
-@keyframes badge-pulse {
-
-  0%,
-  100% {
-    opacity: 1;
-  }
-
-  50% {
-    opacity: 0.85;
-  }
-}
-
-/* Dark mode overrides — C1 */
-:where(.dark, .dark *) .store-header {
-  background-color: #1f2937;
-}
-
-:where(.dark, .dark *) .store-header__contact-btn {
-  background-color: #374151;
-  color: #f9fafb;
-}
-
-/* ═══════════════════════════════════════════════════════════
-   C4: Category Grid
-   ═══════════════════════════════════════════════════════════ */
-
-.category-grid__card {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.category-grid__card:hover {
-  transform: scale(1.03);
-  box-shadow: var(--shadow-md, 0 4px 6px rgba(0, 0, 0, 0.07));
-}
-
-.category-grid__card:focus-visible {
-  outline: 2px solid var(--color-store-accent, #cc9900);
-  outline-offset: 2px;
-}
-
-.category-grid__card img {
-  transition: transform 0.3s ease;
-}
-
-.category-grid__card:hover img {
-  transform: scale(1.05);
-}
-
-.category-grid__card--pastel {
-  /* Pastel variant base — colors set via Tailwind */
-}
-
-/* Dark mode overrides — C4 */
-:where(.dark, .dark *) .category-grid__card {
-  background-color: #1f2937;
-  border-color: #374151;
-}
-
-/* ═══════════════════════════════════════════════════════════
-   C5: Hot Products
-   ═══════════════════════════════════════════════════════════ */
-
-.hot-products__card {
-  transition: box-shadow 0.3s ease;
-}
-
-.hot-products__card:hover {
-  box-shadow: var(--shadow-md, 0 4px 6px rgba(0, 0, 0, 0.07));
-}
-
-.hot-products__buy-btn {
-  transition: background-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.hot-products__buy-btn:hover {
-  background-color: var(--color-store-accent-hover, #b38600);
-  box-shadow: var(--shadow-md, 0 4px 6px rgba(0, 0, 0, 0.07));
-}
-
-.hot-products__buy-btn:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 2px var(--color-store-accent, #cc9900), 0 0 0 4px #ffffff;
-}
-
-.hot-products__image-wrapper {
-  overflow: hidden;
-}
-
-.hot-products__image-wrapper img {
-  transition: transform 0.3s ease;
-}
-
-.hot-products__card:hover .hot-products__image-wrapper img {
-  transform: scale(1.05);
-}
-
-/* Dark mode overrides — C5 */
-:where(.dark, .dark *) .hot-products__card {
-  background-color: #1f2937;
-  border-color: #374151;
-}
-
-/* ═══════════════════════════════════════════════════════════
-   C6: Category Product Listing
-   ═══════════════════════════════════════════════════════════ */
-
-.category-listing__card {
-  transition: box-shadow 0.3s ease;
-}
-
-.category-listing__card:hover {
-  box-shadow: var(--shadow-lg, 0 10px 15px rgba(0, 0, 0, 0.1));
-}
-
-.category-listing__play-btn {
-  transition: background-color 0.2s ease;
-}
-
-.category-listing__play-btn:hover {
-  background-color: rgba(0, 0, 0, 0.7);
-}
-
-.category-listing__play-btn:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px rgba(0, 0, 0, 0.5);
-}
-
-.category-listing__banner img {
-  transition: transform 0.3s ease;
-}
-
-.category-listing__banner:hover img {
-  transform: scale(1.02);
-}
-
-/* Dark mode overrides — C6 */
-:where(.dark, .dark *) .category-listing__card {
-  background-color: #1f2937;
-  border-color: #374151;
-}
-
-/* ═══════════════════════════════════════════════════════════
-   C9: Why Choose Us
-   ═══════════════════════════════════════════════════════════ */
-
-.why-choose__icon-card {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.why-choose__icon-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-md, 0 4px 6px rgba(0, 0, 0, 0.07));
-}
-
-.why-choose__feature-bar {
-  transition: background-color 0.2s ease;
-}
-
-.why-choose__feature-bar:hover {
-  background-color: #6b5535;
-}
-
-/* Dark mode overrides — C9 */
-:where(.dark, .dark *) .why-choose__icon-card {
-  background-color: #1f2937;
-  border-color: #374151;
-}
-
-/* ═══════════════════════════════════════════════════════════
-   C10: Company Introduction
-   ═══════════════════════════════════════════════════════════ */
-
-.company-intro__cell {
-  transition: box-shadow 0.3s ease;
-}
-
-.company-intro__cell:hover {
-  box-shadow: var(--shadow-md, 0 4px 6px rgba(0, 0, 0, 0.07));
-}
-
-.company-intro__grid {
-  /* Grid layout handled by Tailwind; custom gap overrides here if needed */
-}
-
-/* Dark mode overrides — C10 */
-:where(.dark, .dark *) .company-intro {
-  background-color: #111827;
-}
-
-:where(.dark, .dark *) .company-intro__cell {
-  background-color: #1f2937;
-  border-color: #374151;
-}
-
-/* ═══════════════════════════════════════════════════════════
-   C11: Gallery
-   ═══════════════════════════════════════════════════════════ */
-
-.gallery__item {
-  overflow: hidden;
-  transition: box-shadow 0.3s ease;
-}
-
-.gallery__item:hover {
-  box-shadow: var(--shadow-md, 0 4px 6px rgba(0, 0, 0, 0.07));
-}
-
-.gallery__item img {
-  transition: transform 0.3s ease;
-}
-
-.gallery__item:hover img {
-  transform: scale(1.05);
-}
-
-.gallery__overlay {
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.gallery__item:hover .gallery__overlay {
-  opacity: 1;
-}
-
-/* Dark mode overrides — C11 */
-:where(.dark, .dark *) .gallery {
-  background-color: #111827;
-}
-
-/* ═══════════════════════════════════════════════════════════
-   C12: Contact Form
-   ═══════════════════════════════════════════════════════════ */
-
-.contact-form__textarea {
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.contact-form__textarea:focus {
-  border-color: var(--color-border-focus, #cc9900);
-  box-shadow: 0 0 0 3px rgba(204, 153, 0, 0.15);
-}
-
-.contact-form__send {
-  transition: background-color 0.2s ease, transform 0.1s ease;
-}
-
-.contact-form__send:hover {
-  background-color: var(--color-store-accent-hover, #b38600);
-}
-
-.contact-form__send:active {
-  transform: scale(0.97);
-}
-
-.contact-form__send:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 2px var(--color-store-accent, #cc9900), 0 0 0 4px #ffffff;
-}
-
-/* Dark mode overrides — C12 */
-:where(.dark, .dark *) .contact-form {
-  background-color: #1f2937;
-}
-
-:where(.dark, .dark *) .contact-form__textarea {
-  background-color: #374151;
-  border-color: #4b5563;
-  color: #f9fafb;
-}
-
-/* ═══════════════════════════════════════════════════════════
-   Dark Mode Overrides — Store Nav (C2)
-   ═══════════════════════════════════════════════════════════ */
-
-:where(.dark, .dark *) .store-nav {
-  background-color: #991b1b;
-}
-
-/* ═══════════════════════════════════════════════════════════
-   Dark Mode Overrides — Hero Banner (C3)
-   ═══════════════════════════════════════════════════════════ */
-
-:where(.dark, .dark *) .store-hero__dot {
-  background: rgba(255, 255, 255, 0.35);
-}
-
-:where(.dark, .dark *) .store-hero__dot--active {
-  background: var(--color-store-accent, #cc9900);
-}
-
-/* ═══════════════════════════════════════════════════════════
-   Dark Mode Overrides — Company Info (C7)
-   ═══════════════════════════════════════════════════════════ */
-
-:where(.dark, .dark *) .company-info {
-  background-color: #111827;
-}
-
-/* ═══════════════════════════════════════════════════════════
-   Dark Mode Overrides — Certificates (C8)
-   ═══════════════════════════════════════════════════════════ */
-
-:where(.dark, .dark *) .certificates__prev,
-:where(.dark, .dark *) .certificates__next {
-  background: #374151;
-}
-
-:where(.dark, .dark *) .certificates__prev:hover,
-:where(.dark, .dark *) .certificates__next:hover {
-  background: #4b5563;
-}
-
-/* ═══════════════════════════════════════════════════════════
-   Dark Mode Overrides — Floating Actions (C13)
-   ═══════════════════════════════════════════════════════════ */
-
-:where(.dark, .dark *) .floating-actions__btn {
-  background-color: #374151;
-  color: #f9fafb;
-}
-
-/* ═══════════════════════════════════════════════════════════
-   C14: Company Profile Tabs
+   C14: Company Profile — Tab System (JS-toggled)
    ═══════════════════════════════════════════════════════════ */
 
 .company-profile__main-tab {
@@ -636,7 +251,6 @@
 
 .company-profile__main-tab.active {
   color: #111827;
-  /* gray-900 */
   border-bottom-color: #111827;
 }
 
@@ -663,4 +277,31 @@
 .company-profile__inquiry-btn:focus-visible {
   outline: 2px solid var(--color-store-accent, #cc9900);
   outline-offset: 2px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Dark Mode Overrides
+   Styles using :where(.dark) that affect JS-toggled states
+   ═══════════════════════════════════════════════════════════ */
+
+:where(.dark, .dark *) .store-nav {
+  background-color: #991b1b;
+}
+
+:where(.dark, .dark *) .store-hero__dot {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+:where(.dark, .dark *) .store-hero__dot--active {
+  background: var(--color-store-accent, #cc9900);
+}
+
+:where(.dark, .dark *) .certificates__prev,
+:where(.dark, .dark *) .certificates__next {
+  background: #374151;
+}
+
+:where(.dark, .dark *) .certificates__prev:hover,
+:where(.dark, .dark *) .certificates__next:hover {
+  background: #4b5563;
 }

@@ -53,7 +53,7 @@ export function CompanyIntroduction(
           <!-- 3×2 Info Grid -->
           <div class="company-intro__grid grid grid-cols-3 lg:grid-cols-2 md:grid-cols-1 gap-6 mb-8">
             ${cells.map(cell => `
-              <div class="company-intro__cell flex items-start gap-3">
+              <div class="company-intro__cell flex items-start gap-3 hover:shadow-md transition-shadow duration-300">
                 <div class="w-10 h-10 rounded-full bg-[#f3f4f6] dark:bg-gray-700 flex items-center justify-center flex-shrink-0">
                   <svg class="w-5 h-5 text-[#f97316]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     ${getInfoIconSvg(cell.icon)}

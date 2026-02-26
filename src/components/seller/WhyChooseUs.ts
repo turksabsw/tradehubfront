@@ -29,7 +29,7 @@ function renderVariantA(advantages: Advantage[]): string {
         </h2>
         <div class="why-choose__grid grid grid-cols-5 xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-1 gap-6">
           ${advantages.map(adv => `
-            <div class="why-choose__icon-card flex flex-col items-center text-center p-4">
+            <div class="why-choose__icon-card flex flex-col items-center text-center p-4 hover:shadow-md hover:-translate-y-1 transition-[transform,box-shadow] duration-300">
               <div class="why-choose__icon w-[120px] h-[120px] rounded-full border-[3px] border-[#f97316] flex items-center justify-center mb-4">
                 <svg class="w-12 h-12 text-[#f97316]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   ${getIconSvg(adv.icon)}

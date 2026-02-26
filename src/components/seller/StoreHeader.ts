@@ -46,14 +46,14 @@ export function StoreHeader(seller: SellerProfile): string {
   ` : '';
 
   return `
-    <section id="store-header" class="store-header bg-white dark:bg-gray-800 border-b border-[var(--color-border-default)] dark:border-gray-700" aria-label="Mağaza profil başlığı">
+    <section id="store-header" class="store-header bg-white dark:bg-gray-800 border-b border-[var(--color-border-default)] dark:border-gray-700 transition-opacity duration-200" aria-label="Mağaza profil başlığı">
       <div class="store-header__container max-w-[var(--container-lg)] mx-auto px-4 py-4 lg:px-6 lg:py-5 xl:px-8 xl:py-5 flex flex-col lg:flex-row lg:justify-between lg:items-start gap-4">
 
         <!-- Left: Logo + Info -->
         <div class="store-header__info flex items-start gap-3 lg:gap-5">
           <!-- Logo -->
           <img
-            class="store-header__logo w-[80px] max-h-[48px] lg:max-h-[52px] xl:w-[100px] xl:max-h-[60px] object-contain flex-shrink-0 hover:opacity-80 transition-opacity"
+            class="store-header__logo w-[80px] max-h-[48px] lg:max-h-[52px] xl:w-[100px] xl:max-h-[60px] object-contain flex-shrink-0 hover:scale-105 transition-transform duration-200"
             src="${seller.logo}"
             alt="${seller.name}"
             onerror="this.style.display='none'"
@@ -112,11 +112,11 @@ export function StoreHeader(seller: SellerProfile): string {
 
         <!-- Right: CTA Buttons -->
         <div class="store-header__actions flex flex-col w-full gap-2 mt-3 lg:flex-row lg:w-auto lg:gap-3 lg:mt-0 flex-shrink-0">
-          <button class="store-header__contact-btn w-full lg:w-auto bg-[var(--store-accent)] hover:bg-[var(--store-accent-hover)] active:bg-[#c2410c] focus:ring-2 focus:ring-[#f97316] focus:ring-offset-2 text-white font-semibold text-[14px] rounded-[var(--radius-button)] px-6 py-2.5 shadow-[var(--shadow-sm)] transition-colors cursor-pointer"
+          <button class="store-header__contact-btn w-full lg:w-auto bg-[var(--store-accent)] hover:bg-[var(--store-accent-hover)] active:bg-[#c2410c] focus:ring-2 focus:ring-[#f97316] focus:ring-offset-2 text-white font-semibold text-[14px] rounded-[var(--radius-button)] px-6 py-2.5 shadow-[var(--shadow-sm)] hover:shadow-md transition-[background-color,box-shadow] duration-200 cursor-pointer"
                   onclick="document.getElementById('contact-form')?.scrollIntoView({behavior:'smooth'})">
             Contact supplier
           </button>
-          <button class="store-header__chat-btn w-full lg:w-auto bg-transparent border border-[var(--color-border-strong)] dark:border-gray-600 hover:bg-[var(--color-surface-muted)] hover:border-[var(--color-text-muted)] active:bg-[#f3f4f6] focus:ring-2 focus:ring-[#d1d5db] focus:ring-offset-2 text-[#374151] dark:text-gray-300 font-medium text-[14px] rounded-[var(--radius-button)] px-6 py-2.5 transition-colors cursor-pointer">
+          <button class="store-header__chat-btn w-full lg:w-auto bg-transparent border border-[var(--color-border-strong)] dark:border-gray-600 hover:bg-[var(--color-surface-muted)] hover:border-[var(--color-text-muted)] active:bg-[#f3f4f6] focus:ring-2 focus:ring-[#d1d5db] focus:ring-offset-2 text-[#374151] dark:text-gray-300 font-medium text-[14px] rounded-[var(--radius-button)] px-6 py-2.5 hover:shadow-md transition-[background-color,box-shadow] duration-200 cursor-pointer">
             Chat now
           </button>
         </div>
