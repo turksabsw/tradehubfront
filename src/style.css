@@ -296,11 +296,7 @@
 
     --shadow-xl: 0 8px 16px -4px rgba(0, 0, 0, 0.06), 0 24px 48px -8px rgba(0, 0, 0, 0.12);
 
-    /* --- Semantic Shadow --- */
-    --shadow-card: var(--shadow-sm);
-    --shadow-dropdown: var(--shadow-md);
-    --shadow-modal: var(--shadow-xl);
-    --shadow-toast: var(--shadow-lg);
+    /* --- Semantic Shadow — moved to @theme inline below --- */
 
 
     /* ==========================================================
@@ -316,8 +312,7 @@
     --ease-in: ease-in;
     --ease-out: ease-out;
 
-    --animate-fade-in: fade-in var(--duration-default) var(--ease-default);
-    --animate-fade-out: fade-out var(--duration-default) var(--ease-default);
+    /* --- animate tokens — moved to @theme inline below --- */
 
 
     /* ==========================================================
@@ -648,11 +643,7 @@
      9b. SEMANTIC CTA & NORMALIZATION TOKENS
      ========================================================== */
 
-    /* --- CTA Semantic --- */
-    --color-cta-primary: var(--color-primary-500);
-    --color-cta-primary-hover: var(--color-primary-600);
-    --color-cta-primary-light: var(--color-primary-400);
-    --color-cta-primary-tint: var(--color-primary-50);
+    /* --- CTA Semantic — moved to @theme inline below --- */
 
     /* --- Text Normalizasyon --- */
     --color-text-heading: #111827;
@@ -724,6 +715,28 @@
     --font-size-hero-lg: 2rem;
     /* 32px */
 
+}
+
+/* ============================================================
+   @theme inline — tokens that reference var()
+   ============================================================ */
+@theme inline {
+
+    /* --- Semantic Shadow --- */
+    --shadow-card: var(--shadow-sm);
+    --shadow-dropdown: var(--shadow-md);
+    --shadow-modal: var(--shadow-xl);
+    --shadow-toast: var(--shadow-lg);
+
+    /* --- Animation --- */
+    --animate-fade-in: fade-in var(--duration-default) var(--ease-default);
+    --animate-fade-out: fade-out var(--duration-default) var(--ease-default);
+
+    /* --- CTA Semantic --- */
+    --color-cta-primary: var(--color-primary-500);
+    --color-cta-primary-hover: var(--color-primary-600);
+    --color-cta-primary-light: var(--color-primary-400);
+    --color-cta-primary-tint: var(--color-primary-50);
 }
 
 
