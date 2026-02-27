@@ -368,57 +368,57 @@
      ========================================================== */
 
     /* --- Button --- */
-    --btn-bg: #cc9900;
-    --btn-text: #ffffff;
+    --btn-bg: var(--color-primary-500);
+    --btn-text: var(--color-surface);
     --btn-border-width: 0px;
-    --btn-border-color: #cc9900;
+    --btn-border-color: var(--color-primary-500);
     --btn-font-size: 0.875rem;
     --btn-font-weight: 600;
     --btn-shadow: none;
 
     /* --- Button Outline Variant --- */
-    --btn-outline-bg: #ffffff;
-    --btn-outline-text: #cc9900;
+    --btn-outline-bg: var(--color-surface);
+    --btn-outline-text: var(--color-primary-500);
     --btn-outline-border-width: 2px;
-    --btn-outline-border-color: #cc9900;
+    --btn-outline-border-color: var(--color-primary-500);
 
     /* --- Auth Pages (Login, Register, Forgot Password) --- */
-    --auth-btn-bg: #cc9900;
-    --auth-btn-hover: #b38600;
-    --auth-btn-text: #ffffff;
-    --auth-accent: #cc9900;
-    --auth-input-focus: #cc9900;
-    --auth-header-border: #cc9900;
+    --auth-btn-bg: var(--color-primary-500);
+    --auth-btn-hover: var(--color-primary-600);
+    --auth-btn-text: var(--color-surface);
+    --auth-accent: var(--color-primary-500);
+    --auth-input-focus: var(--color-primary-500);
+    --auth-header-border: var(--color-primary-500);
 
     /* --- Card --- */
-    --card-bg: #ffffff;
+    --card-bg: var(--color-surface);
     --card-border-width: 0px;
-    --card-border-color: #e5e5e5;
+    --card-border-color: var(--color-border-default);
     --card-title-size: 0.6875rem;
     --card-title-weight: 600;
-    --card-price-color: #111827;
+    --card-price-color: var(--color-text-heading);
     --card-price-size: 16px;
     --card-price-weight: 700;
     --card-desc-color: #6b7280;
     --card-desc-size: 12px;
     --card-moq-color: #6b7280;
     --card-moq-size: 11px;
-    --card-badge-bg: #fef9e7;
-    --card-badge-text: #cc9900;
+    --card-badge-bg: var(--color-primary-50);
+    --card-badge-text: var(--color-primary-500);
     --card-badge-size: 10px;
     --card-badge-radius: 5px;
-    --card-verified-color: #cc9900;
+    --card-verified-color: var(--color-primary-500);
     --card-verified-size: 9px;
     --card-supplier-color: #9ca3af;
     --card-supplier-size: 9px;
 
     /* --- Input / Search --- */
-    --input-bg: #ffffff;
+    --input-bg: var(--color-surface);
     --input-border-width: 1px;
-    --input-border-color: #e5e5e5;
-    --input-text-color: #0a0a0a;
+    --input-border-color: var(--color-border-default);
+    --input-text-color: var(--color-text-primary);
     --input-font-size: 0.875rem;
-    --input-focus-border-color: #cc9900;
+    --input-focus-border-color: var(--color-primary-500);
 
     /* --- Badge --- */
     --badge-font-size: 0.75rem;
@@ -430,7 +430,7 @@
     --nav-font-size: 0.8125rem;
     --nav-font-weight: 300;
     --nav-text-color: #000000;
-    --nav-hover-color: #b38600;
+    --nav-hover-color: var(--color-primary-600);
 
 
     /* ==========================================================
@@ -438,17 +438,17 @@
      ========================================================== */
 
     /* --- Header / TopBar --- */
-    --header-bg: #ffffff;
-    --header-scroll-bg: #ffffff;
-    --header-scroll-border: #e5e5e5;
+    --header-bg: var(--color-surface);
+    --header-scroll-bg: var(--color-surface);
+    --header-scroll-border: var(--color-border-default);
     --header-height: 64px;
     --header-border-color: transparent;
     --header-text-color: #374151;
     --header-icon-color: #374151;
-    --header-icon-hover-color: #cc9900;
+    --header-icon-hover-color: var(--color-primary-500);
 
     /* --- SubHeader --- */
-    --subheader-bg: #ffffff;
+    --subheader-bg: var(--color-surface);
     --subheader-text-color: #000000;
     --subheader-hover-color: #a3a3a3;
     --subheader-hover-bg: rgba(255, 255, 255, 0.8);
@@ -465,14 +465,14 @@
     /* --- Search Area --- */
     --search-bg: transparent;
     --search-tab-color: #6b7280;
-    --search-tab-active-color: #cc9900;
-    --search-input-border-color: #cc9900;
-    --search-btn-gradient-start: #e6b212;
-    --search-btn-gradient-end: #b38600;
-    --search-box-bg: #ffffff;
-    --search-input-text: #111827;
+    --search-tab-active-color: var(--color-primary-500);
+    --search-input-border-color: var(--color-primary-500);
+    --search-btn-gradient-start: var(--color-primary-400);
+    --search-btn-gradient-end: var(--color-primary-600);
+    --search-box-bg: var(--color-surface);
+    --search-input-text: var(--color-text-heading);
     --search-image-link-color: #6b7280;
-    --search-dropdown-bg: #ffffff;
+    --search-dropdown-bg: var(--color-surface);
     --search-dropdown-border: #fcd34d;
     --search-dropdown-text: #374151;
     --search-dropdown-muted: #9ca3af;
@@ -482,22 +482,22 @@
     --search-chip-hover-bg: #f3f4f6;
     --search-chip-accent: #fbbf24;
     --search-welcome-bg: #f8f8f8;
-    --search-welcome-text: #111827;
+    --search-welcome-text: var(--color-text-heading);
 
     /* --- MegaMenu --- */
-    --mega-bg: #ffffff;
+    --mega-bg: var(--color-surface);
     --mega-sidebar-bg: #f9fafb;
-    --mega-sidebar-hover-bg: #ffffff;
-    --mega-sidebar-active-bg: #ffffff;
+    --mega-sidebar-hover-bg: var(--color-surface);
+    --mega-sidebar-active-bg: var(--color-surface);
     --mega-border-color: #e5e7eb;
-    --mega-text-color: #0a0a0a;
-    --mega-heading-color: #0a0a0a;
+    --mega-text-color: var(--color-text-primary);
+    --mega-heading-color: var(--color-text-primary);
     --mega-body-text: #6b7280;
     --mega-link-color: #000000;
-    --mega-link-hover-color: #b38600;
+    --mega-link-hover-color: var(--color-primary-600);
     --mega-icon-color: #6b7280;
     --mega-icon-bg: #f3f4f6;
-    --mega-accent-color: #b38600;
+    --mega-accent-color: var(--color-primary-600);
     --mega-accent-bg: #fcd34d;
     --mega-card-hover-border: #fcd34d;
     --mega-sidebar-active-border: #e1b533;
@@ -505,50 +505,50 @@
     --mega-font-weight: 400;
 
     /* --- Hero --- */
-    --hero-bg: #ffffff;
-    --hero-card-bg: #ffffff;
-    --hero-card-border-color: #e5e5e5;
+    --hero-bg: var(--color-surface);
+    --hero-card-bg: var(--color-surface);
+    --hero-card-border-color: var(--color-border-default);
     --hero-card-radius: 16px;
-    --hero-title-color: #111827;
+    --hero-title-color: var(--color-text-heading);
 
     /* --- Manufacturers Hero Section --- */
-    --mfr-hero-card-bg: #ffffff;
+    --mfr-hero-card-bg: var(--color-surface);
     --mfr-hero-card-shadow: 0 0 12px rgba(0, 0, 0, 0.05);
     --mfr-hero-card-radius: 6px;
-    --mfr-sidebar-bg: #ffffff;
-    --mfr-sidebar-heading-color: #111827;
+    --mfr-sidebar-bg: var(--color-surface);
+    --mfr-sidebar-heading-color: var(--color-text-heading);
     --mfr-sidebar-text-color: #374151;
     --mfr-sidebar-icon-color: #6b7280;
     --mfr-sidebar-chevron-color: #d1d5db;
     --mfr-sidebar-hover-bg: #f9fafb;
     --mfr-flyout-bg: #f4f4f4;
-    --mfr-flyout-heading-color: #111827;
+    --mfr-flyout-heading-color: var(--color-text-heading);
     --mfr-flyout-link-color: #767676;
     --mfr-sample-heading-color: #222222;
-    --mfr-sample-label-color: #666666;
+    --mfr-sample-label-color: var(--color-text-muted);
     --mfr-sample-img-bg: #f5f5f5;
     --mfr-ranking-heading-color: #222222;
-    --mfr-ranking-label-color: #666666;
+    --mfr-ranking-label-color: var(--color-text-muted);
     --mfr-profile-text-color: #222222;
-    --mfr-profile-label-color: #666666;
+    --mfr-profile-label-color: var(--color-text-muted);
     --mfr-profile-avatar-bg: #dddddd;
     --mfr-profile-btn-bg: var(--color-primary-500, #cc9900);
     --mfr-profile-btn-hover: var(--color-primary-700, #8a6800);
-    --mfr-profile-btn-text: #ffffff;
+    --mfr-profile-btn-text: var(--color-surface);
     --mfr-profile-rfq-border: #222222;
     --mfr-profile-rfq-text: #222222;
 
     /* --- Category Popup --- */
-    --catpopup-bg: #ffffff;
+    --catpopup-bg: var(--color-surface);
     --catpopup-border: #e5e7eb;
-    --catpopup-heading: #111827;
+    --catpopup-heading: var(--color-text-heading);
     --catpopup-text: #4b5563;
-    --catpopup-link: #cc9900;
-    --catpopup-link-hover: #b38600;
+    --catpopup-link: var(--color-primary-500);
+    --catpopup-link-hover: var(--color-primary-600);
     --catpopup-sidebar-bg: #f9fafb;
     --catpopup-sidebar-hover-bg: #f3f4f6;
-    --catpopup-sidebar-active-bg: #ffffff;
-    --catpopup-sidebar-active-border: #cc9900;
+    --catpopup-sidebar-active-bg: var(--color-surface);
+    --catpopup-sidebar-active-border: var(--color-primary-500);
     --catpopup-sidebar-font-size: 0.6875rem;
     --catpopup-sidebar-font-weight: 400;
     --catpopup-sidebar-padding-x: 0.125rem;
@@ -559,43 +559,43 @@
 
     /* --- Top Deals Section --- */
     --topdeals-bg: #F8F8F8;
-    --topdeals-title-color: #111827;
+    --topdeals-title-color: var(--color-text-heading);
     --topdeals-subtitle-color: #6b7280;
-    --topdeals-link-color: #111827;
-    --topdeals-card-bg: #ffffff;
-    --topdeals-card-border: #e5e5e5;
+    --topdeals-link-color: var(--color-text-heading);
+    --topdeals-card-bg: var(--color-surface);
+    --topdeals-card-border: var(--color-border-default);
     --topdeals-price-color: #dc2626;
     --topdeals-original-price-color: #9ca3af;
     --topdeals-moq-color: #222222;
     --topdeals-badge-bg: #DE0505;
     --topdeals-price-bg: #FFEDED;
-    --topdeals-badge-text: #ffffff;
+    --topdeals-badge-text: var(--color-surface);
 
     /* --- Top Ranking Section --- */
     --topranking-bg: #F5F5F5;
-    --topranking-title-color: #111827;
+    --topranking-title-color: var(--color-text-heading);
     --topranking-subtitle-color: #6b7280;
-    --topranking-link-color: #111827;
-    --topranking-card-bg: #ffffff;
+    --topranking-link-color: var(--color-text-heading);
+    --topranking-card-bg: var(--color-surface);
     --topranking-card-border: #e5e7eb;
-    --topranking-badge-bg: #111827;
-    --topranking-badge-text: #ffffff;
-    --topranking-name-color: #111827;
+    --topranking-badge-bg: var(--color-text-heading);
+    --topranking-badge-text: var(--color-surface);
+    --topranking-name-color: var(--color-text-heading);
     --topranking-label-color: #6b7280;
 
     /* --- Tailored Selections Section --- */
     --tailored-bg: #F5F5F5;
-    --tailored-title-color: #111827;
-    --tailored-link-color: #111827;
-    --tailored-card-bg: #ffffff;
-    --tailored-card-border: #e5e5e5;
-    --tailored-collection-title-color: #111827;
+    --tailored-title-color: var(--color-text-heading);
+    --tailored-link-color: var(--color-text-heading);
+    --tailored-card-bg: var(--color-surface);
+    --tailored-card-border: var(--color-border-default);
+    --tailored-collection-title-color: var(--color-text-heading);
     --tailored-views-color: #6b7280;
-    --tailored-price-color: #111827;
+    --tailored-price-color: var(--color-text-heading);
 
     /* --- Product Grid Section --- */
     --product-bg: #f4f4f4;
-    --product-card-bg: #ffffff;
+    --product-card-bg: var(--color-surface);
     --product-card-border: #e5e7eb;
     --product-card-radius: 8px;
     --product-card-padding: 12px;
@@ -604,14 +604,14 @@
     --product-card-hover-shadow: none;
     --product-grid-gap: 8px;
     --product-font-family: Alibaba_B2B_Sans, Inter, "SF Pro Text", Roboto, "Helvetica Neue", Helvetica, Tahoma, Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
-    --product-image-bg: #ffffff;
+    --product-image-bg: var(--color-surface);
     --product-image-radius: 8px;
     --product-image-padding: 0px;
     --product-image-size: 209px;
     --product-image-hover-scale: 1.06;
     --product-image-ratio: 1 / 1;
     --product-lens-size: 36px;
-    --product-lens-bg: #ffffff;
+    --product-lens-bg: var(--color-surface);
     --product-lens-color: #4b5563;
     --product-lens-shadow: 0 2px 6px 2px rgba(0, 0, 0, 0.12);
     --product-title-color: #222222;
@@ -619,7 +619,7 @@
     --product-title-weight: 400;
     --product-title-line-height: 1.2857;
     --product-title-letter-spacing: 0em;
-    --product-price-color: #0a0a0a;
+    --product-price-color: var(--color-text-primary);
     --product-price-size: 20px;
     --product-price-weight: 700;
     --product-price-line-height: 26px;
@@ -644,46 +644,46 @@
     --product-card-min-height: 384px;
 
     /* --- Product Detail Page --- */
-    --pd-bg: #ffffff;
+    --pd-bg: var(--color-surface);
     --pd-breadcrumb-color: #6b7280;
-    --pd-breadcrumb-link-color: #cc9900;
-    --pd-title-color: #111827;
+    --pd-breadcrumb-link-color: var(--color-primary-500);
+    --pd-title-color: var(--color-text-heading);
     --pd-title-size: 1.5rem;
     --pd-rating-star-color: #f59e0b;
     --pd-rating-text-color: #6b7280;
-    --pd-price-color: #111827;
+    --pd-price-color: var(--color-text-heading);
     --pd-price-size: 1.75rem;
     --pd-price-tier-bg: #f9fafb;
-    --pd-price-tier-active-bg: #fef9e7;
-    --pd-price-tier-active-border: #cc9900;
-    --pd-variant-border: #e5e5e5;
-    --pd-variant-active-border: #cc9900;
-    --pd-variant-active-bg: #fef9e7;
-    --pd-qty-input-border: #e5e5e5;
+    --pd-price-tier-active-bg: var(--color-primary-50);
+    --pd-price-tier-active-border: var(--color-primary-500);
+    --pd-variant-border: var(--color-border-default);
+    --pd-variant-active-border: var(--color-primary-500);
+    --pd-variant-active-bg: var(--color-primary-50);
+    --pd-qty-input-border: var(--color-border-default);
     --pd-shipping-icon-color: #6b7280;
     --pd-trade-assurance-bg: #f0fdf4;
     --pd-trade-assurance-text: #15803d;
     --pd-tab-color: #6b7280;
-    --pd-tab-active-color: #cc9900;
-    --pd-tab-active-border: #cc9900;
+    --pd-tab-active-color: var(--color-primary-500);
+    --pd-tab-active-border: var(--color-primary-500);
     --pd-spec-header-bg: #f9fafb;
-    --pd-spec-border: #e5e5e5;
+    --pd-spec-border: var(--color-border-default);
     --pd-spec-key-color: #6b7280;
-    --pd-spec-value-color: #111827;
+    --pd-spec-value-color: var(--color-text-heading);
     --pd-review-star-color: #f59e0b;
-    --pd-review-bar-bg: #e5e5e5;
+    --pd-review-bar-bg: var(--color-border-default);
     --pd-review-bar-fill: #f59e0b;
-    --pd-supplier-card-bg: #ffffff;
-    --pd-supplier-verified-color: #cc9900;
-    --pd-faq-border: #e5e5e5;
+    --pd-supplier-card-bg: var(--color-surface);
+    --pd-supplier-verified-color: var(--color-primary-500);
+    --pd-faq-border: var(--color-border-default);
     --pd-related-bg: #f8f8f8;
 
     /* --- Footer --- */
-    --footer-bg: #ffffff;
-    --footer-text-color: #666666;
-    --footer-heading-color: #222222;
-    --footer-link-color: #666666;
-    --footer-link-hover-color: #cc9900;
+    --footer-bg: var(--color-surface);
+    --footer-text-color: var(--color-text-muted);
+    --footer-heading-color: var(--color-text-body);
+    --footer-link-color: var(--color-text-muted);
+    --footer-link-hover-color: var(--color-primary-500);
     --footer-border-color: #e5e7eb;
 
 
@@ -720,11 +720,11 @@
      SELLER STOREFRONT — STORE-SPECIFIC TOKENS
      ========================================================== */
 
-    --color-store-nav-bg: #b38600;
-    --color-store-nav-text: #ffffff;
+    --color-store-nav-bg: var(--color-primary-600);
+    --color-store-nav-text: var(--color-surface);
     --color-store-nav-active-overlay: rgba(0, 0, 0, 0.15);
-    --color-store-accent: #cc9900;
-    --color-store-accent-hover: #b38600;
+    --color-store-accent: var(--color-primary-500);
+    --color-store-accent-hover: var(--color-primary-600);
 
     /* ==========================================================
      RFQ PAGE — SPECIFIC TOKENS
@@ -736,7 +736,7 @@
 
     /* --- Colors --- */
     --color-product-name: #222222;
-    --color-cta-text: #111827;
+    --color-cta-text: var(--color-text-heading);
 
     /* --- Font Sizes --- */
     --font-size-caption: 0.8125rem;
