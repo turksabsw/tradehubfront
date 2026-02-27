@@ -105,13 +105,13 @@ const CHECK_ICON = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none">
 function renderMainView(): string {
   return `
     <!-- Header -->
-    <div class="flex items-center justify-between px-7 pt-6 pb-5">
+    <div class="flex items-center justify-between px-7 max-sm:px-3 pt-6 pb-5 max-sm:flex-col max-sm:items-start max-sm:gap-3">
       <h1 class="text-[20px] font-bold text-gray-900">AI Modu</h1>
       <button class="px-5 py-2 text-[14px] text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer hover:border-gray-400 transition-colors" id="sub-manage-btn">Planı yönet</button>
     </div>
 
     <!-- Current Plan Card -->
-    <div class="mx-7 border border-border-default rounded-[10px] overflow-hidden">
+    <div class="mx-7 max-sm:mx-3 border border-border-default rounded-[10px] overflow-hidden">
       <div class="flex items-center justify-between px-6 pt-6 pb-5 max-md:flex-col max-md:items-start max-md:gap-3">
         <span class="text-[22px] font-bold text-gray-900">Free</span>
         <div class="flex items-center gap-3 text-[14px] text-gray-500 border border-border-default rounded-lg px-4 py-2.5">
@@ -126,8 +126,8 @@ function renderMainView(): string {
     </div>
 
     <!-- Invoice History -->
-    <h2 class="text-[18px] font-bold text-gray-900 px-7 pt-7 pb-4">Fatura geçmişi</h2>
-    <div class="px-7 pb-7">
+    <h2 class="text-[18px] font-bold text-gray-900 px-7 max-sm:px-3 pt-7 pb-4">Fatura geçmişi</h2>
+    <div class="px-7 max-sm:px-3 pb-7">
       <table class="w-full border-collapse">
         <thead>
           <tr>
@@ -207,7 +207,7 @@ function renderPricingView(): string {
 
   return `
     <!-- Back + Title -->
-    <div class="px-7 pt-6 pb-2">
+    <div class="px-7 max-sm:px-3 pt-6 pb-2">
       <button class="bg-transparent border-none cursor-pointer p-1 mb-3 flex items-center rounded hover:bg-gray-100 transition-colors" id="sub-back-btn" aria-label="Geri">
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M13 4l-6 6 6 6" stroke="#222" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
@@ -221,12 +221,12 @@ function renderPricingView(): string {
     </div>
 
     <!-- Pricing Cards -->
-    <div class="grid grid-cols-3 max-md:grid-cols-1 gap-5 px-7 pb-8" id="sub-pricing-grid">
+    <div class="grid grid-cols-3 max-md:grid-cols-1 gap-5 px-7 max-sm:px-3 pb-8" id="sub-pricing-grid">
       ${cards}
     </div>
 
     <!-- FAQ -->
-    <div class="px-7 pb-7 border-t border-gray-100 mt-2">
+    <div class="px-7 max-sm:px-3 pb-7 border-t border-gray-100 mt-2">
       <div class="flex items-center justify-between py-6 pb-4">
         <h2 class="text-[16px] font-bold text-gray-900">Sık sorulan sorular</h2>
         <a href="#" class="flex items-center gap-1.5 text-[13px] text-gray-500 no-underline hover:text-gray-900 transition-colors">

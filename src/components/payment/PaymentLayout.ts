@@ -113,7 +113,7 @@ function renderPaymentManagement(): string {
             <input type="text" class="flex-1 py-2.5 px-3.5 text-sm border border-border-strong rounded-lg outline-none text-text-primary transition-[border-color] duration-150 focus:border-[#999]" placeholder="Ad *" />
             <input type="text" class="flex-1 py-2.5 px-3.5 text-sm border border-border-strong rounded-lg outline-none text-text-primary transition-[border-color] duration-150 focus:border-[#999]" placeholder="Soyad *" />
           </div>
-          <div class="flex gap-3 mb-4 items-center">
+          <div class="flex gap-3 mb-4 items-center flex-wrap">
             <select class="py-2.5 px-3.5 text-sm border border-border-strong rounded-lg outline-none text-text-primary bg-surface cursor-pointer min-w-[80px]"><option>Ay *</option>${Array.from({length:12},(_,i)=>`<option>${String(i+1).padStart(2,'0')}</option>`).join('')}</select>
             <span class="text-base text-text-tertiary px-0.5">/</span>
             <select class="py-2.5 px-3.5 text-sm border border-border-strong rounded-lg outline-none text-text-primary bg-surface cursor-pointer min-w-[90px]"><option>Yıl *</option>${Array.from({length:10},(_,i)=>`<option>${2025+i}</option>`).join('')}</select>
@@ -432,7 +432,7 @@ export function PaymentLayout(): string {
         <h2 class="text-base font-bold text-text-primary px-5 pb-4 max-md:w-full max-md:px-4 max-md:pb-2">Ödeme</h2>
         ${renderNav(activeId)}
       </aside>
-      <div class="pay-content flex-1 min-w-0 py-6 px-7 max-md:p-4" id="pay-content">
+      <div class="pay-content flex-1 min-w-0 py-6 px-7 max-md:p-4 max-sm:p-3" id="pay-content">
         ${renderFn()}
       </div>
     </div>

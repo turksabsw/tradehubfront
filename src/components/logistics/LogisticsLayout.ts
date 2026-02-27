@@ -53,7 +53,7 @@ function renderOrders(): string {
   return `
     ${INFO_BANNER_ORDERS}
 
-    <div class="px-7 pt-6">
+    <div class="px-7 max-sm:px-3 pt-6">
       <h1 class="text-[22px] font-bold text-gray-900">Lojistik siparişlerini yönet</h1>
     </div>
 
@@ -62,7 +62,7 @@ function renderOrders(): string {
     </div>
 
     <!-- Search + Filters -->
-    <div class="px-7 py-5">
+    <div class="px-7 max-sm:px-3 py-5">
       <div class="flex items-center gap-4 mb-4">
         <div class="flex-1 flex border border-border-default rounded-md overflow-hidden">
           <input type="text" class="flex-1 px-3.5 py-2.5 text-[14px] border-none outline-none text-gray-900 placeholder:text-gray-400" placeholder="Sipariş numarasına göre ara" />
@@ -99,7 +99,7 @@ function renderOrders(): string {
     </div>
 
     <!-- Data Table -->
-    <div class="px-7 pb-7">
+    <div class="px-7 max-sm:px-3 pb-7">
       <table class="w-full border-collapse">
         <thead>
           <tr>
@@ -131,7 +131,7 @@ function renderReviews(): string {
   return `
     ${INFO_BANNER_REVIEWS}
 
-    <div class="px-7 pt-6 flex items-baseline gap-3 flex-wrap max-md:flex-col max-md:gap-1">
+    <div class="px-7 max-sm:px-3 pt-6 flex items-baseline gap-3 flex-wrap max-md:flex-col max-md:gap-1">
       <h1 class="text-[22px] font-bold text-gray-900">Değerlendirmelerim</h1>
       <p class="text-[14px] text-gray-400 m-0">Siparişiniz tamamlandıktan sonraki 90 gün içinde deneyiminizi puanlayın ve siparişinizle ilgili bir yorum bırakın</p>
     </div>
@@ -142,7 +142,7 @@ function renderReviews(): string {
     </div>
 
     <!-- Search -->
-    <div class="px-7 py-5">
+    <div class="px-7 max-sm:px-3 py-5">
       <div class="flex border border-border-default rounded-md overflow-hidden max-w-[500px]">
         <input type="text" class="flex-1 px-3.5 py-2.5 text-[14px] border-none outline-none text-gray-900" placeholder="" />
         <button class="flex items-center gap-1.5 px-5 py-2.5 text-[14px] text-gray-700 bg-white border-none border-l border-l-border-default cursor-pointer whitespace-nowrap hover:bg-gray-100 transition-colors">${SEARCH_ICON} Arama</button>
@@ -150,7 +150,7 @@ function renderReviews(): string {
     </div>
 
     <!-- Data Table -->
-    <div class="px-7 pb-7">
+    <div class="px-7 max-sm:px-3 pb-7">
       <table class="w-full border-collapse">
         <thead>
           <tr>

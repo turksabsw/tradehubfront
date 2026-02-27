@@ -101,11 +101,11 @@ function renderEmptyState(): string {
 
 function renderFavorites(): string {
   return `
-    <div class="px-7 pt-6">
+    <div class="px-7 pt-6 max-sm:px-3 max-sm:pt-4">
       <h1 class="text-xl font-bold text-text-primary">Sık kullanılanlar</h1>
     </div>
 
-    <div class="fav-tabs flex px-7 border-b border-border-default mt-4" data-tabgroup="fav">
+    <div class="fav-tabs flex px-7 max-sm:px-3 border-b border-border-default mt-4" data-tabgroup="fav">
       <button class="fav-tabs__tab fav-tabs__tab--active py-3 px-5 text-sm font-medium text-text-secondary bg-transparent border-none border-b-3 border-transparent cursor-pointer transition-[color,border-color] duration-150 -mb-px hover:text-text-primary" data-tab="fav-products">Ürünler</button>
       <button class="fav-tabs__tab py-3 px-5 text-sm font-medium text-text-secondary bg-transparent border-none border-b-3 border-transparent cursor-pointer transition-[color,border-color] duration-150 -mb-px hover:text-text-primary" data-tab="fav-suppliers">Tedarikçiler</button>
     </div>
@@ -176,11 +176,11 @@ function renderBrowsingHistory(): string {
   `).join('');
 
   return `
-    <div class="px-7 pt-6">
+    <div class="px-7 pt-6 max-sm:px-3 max-sm:pt-4">
       <h1 class="text-xl font-bold text-text-primary">Göz atma geçmişinizden esinlendik</h1>
       <p class="text-sm text-text-tertiary mt-1">Son üç aya ait göz atma geçmişiniz</p>
     </div>
-    <div class="grid grid-cols-5 gap-4 px-7 py-5 pb-7 max-md:grid-cols-2 max-md:p-4 max-lg:min-[769px]:grid-cols-3">
+    <div class="grid grid-cols-5 gap-4 px-7 py-5 pb-7 max-md:grid-cols-2 max-md:p-4 max-sm:grid-cols-2 max-sm:gap-3 max-sm:p-3 max-lg:min-[769px]:grid-cols-3">
       ${productCards}
     </div>
   `;

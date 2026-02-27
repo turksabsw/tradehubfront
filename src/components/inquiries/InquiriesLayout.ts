@@ -43,9 +43,9 @@ export function InquiriesLayout(): string {
   return `
     <div class="bg-(--color-surface,#ffffff) rounded-lg min-h-[calc(100vh-80px)] flex flex-col">
       <!-- Tabs -->
-      <div class="flex border-b border-(--color-border-default,#e5e5e5)">
+      <div class="flex border-b border-(--color-border-default,#e5e5e5) overflow-x-auto">
         ${TABS.map((tab, i) => `
-          <button class="inq-tabs__tab px-6 py-3.5 text-[13px] font-normal text-(--color-text-muted,#666666) bg-transparent border-none border-b-2 border-transparent cursor-pointer transition-[color,border-color] duration-150 whitespace-nowrap hover:text-(--color-text-heading,#111827) ${i === 0 ? 'inq-tabs__tab--active !text-(--color-text-heading,#111827) !font-semibold !border-b-(--color-text-heading)' : ''}" data-tab="${tab.id}">
+          <button class="inq-tabs__tab px-6 max-sm:px-3 py-3.5 text-[13px] font-normal text-(--color-text-muted,#666666) bg-transparent border-none border-b-2 border-transparent cursor-pointer transition-[color,border-color] duration-150 whitespace-nowrap hover:text-(--color-text-heading,#111827) ${i === 0 ? 'inq-tabs__tab--active !text-(--color-text-heading,#111827) !font-semibold !border-b-(--color-text-heading)' : ''}" data-tab="${tab.id}">
             ${tab.label}
           </button>
         `).join('')}
@@ -74,7 +74,7 @@ export function InquiriesLayout(): string {
             </svg>
           </div>
           <div class="inq-actions__search inline-flex items-center border border-(--color-border-medium,#d1d5db) rounded overflow-hidden">
-            <input type="text" placeholder="Ara" class="inq-actions__search-input w-40 max-md:w-[120px] h-8 px-2.5 text-[13px] text-(--color-text-body,#333333) border-none outline-none bg-(--color-surface,#ffffff) placeholder:text-(--color-text-placeholder,#999999) focus:shadow-[inset_0_0_0_1px_var(--color-cta-primary,#cc9900)]" />
+            <input type="text" placeholder="Ara" class="inq-actions__search-input w-40 max-md:w-[120px] max-sm:w-[80px] h-8 px-2.5 text-[13px] text-(--color-text-body,#333333) border-none outline-none bg-(--color-surface,#ffffff) placeholder:text-(--color-text-placeholder,#999999) focus:shadow-[inset_0_0_0_1px_var(--color-cta-primary,#cc9900)]" />
             <button class="flex items-center justify-center w-8 h-8 border-none border-l border-l-(--color-border-medium,#d1d5db) bg-(--color-surface-muted,#fafafa) text-(--color-text-muted,#666666) cursor-pointer transition-[background,color] duration-150 hover:bg-(--color-border-light) hover:text-(--color-text-heading,#111827)" aria-label="Ara">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <circle cx="11" cy="11" r="8"/>
