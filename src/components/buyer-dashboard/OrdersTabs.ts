@@ -66,8 +66,8 @@ export function OrdersTabs({ tabs, filters, activeTabId, selectedFilterId, dropd
   const dropdownVisibility = dropdownOpen ? 'orders__dropdown--open' : '';
 
   return `
-    <div class="orders__tabs-wrapper relative px-5">
-      <div class="orders__tabs flex gap-2 flex-wrap max-md:px-3 max-md:snap-x max-md:snap-mandatory" role="tablist" aria-label="Sipariş filtreleri">
+    <div class="orders__tabs-wrapper relative px-5 max-sm:px-3">
+      <div class="orders__tabs flex gap-2 flex-wrap max-sm:flex-nowrap max-sm:overflow-x-auto max-sm:scrollbar-none max-md:px-3 max-md:snap-x max-md:snap-mandatory" role="tablist" aria-label="Sipariş filtreleri">
         ${tabsHtml}
       </div>
       <div class="orders__dropdown ${dropdownVisibility}" role="menu" aria-label="Sipariş durumu filtresi">

@@ -19,7 +19,7 @@ export interface BuyerDashboardLayoutProps {
 
 export function BuyerDashboardLayout({ data, emailVerified = true }: BuyerDashboardLayoutProps): string {
   const emailBanner = !emailVerified
-    ? `<div class="sc-email-verification-banner w-full bg-[#FFF3E0] border border-[#FFE0B2] rounded-lg px-4 py-3 flex items-center gap-3 text-sm text-[#E65100] mb-4">
+    ? `<div class="sc-email-verification-banner w-full bg-[#FFF3E0] border border-[#FFE0B2] rounded-lg px-4 py-3 flex items-center gap-3 text-sm text-[#E65100] mb-4 max-sm:flex-col max-sm:gap-2 max-sm:text-xs max-sm:px-3">
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" class="flex-shrink-0">
           <path d="M10 2a8 8 0 100 16 8 8 0 000-16zm0 11a1 1 0 110-2 1 1 0 010 2zm1-4H9V6h2v3z" fill="#E65100"/>
         </svg>
@@ -30,7 +30,7 @@ export function BuyerDashboardLayout({ data, emailVerified = true }: BuyerDashbo
 
   return `
     <div class="sc-buyer-dashboard bg-[#F5F5F5]">
-      <div class="max-w-[1425px] mx-auto px-[clamp(0.5rem,0.4rem+0.4vw,1rem)] py-4">
+      <div class="max-w-[1425px] mx-auto px-[clamp(0.25rem,0.2rem+0.4vw,1rem)] py-4 max-sm:py-3">
         ${emailBanner}
         <div class="flex gap-[clamp(0.5rem,0.4rem+0.4vw,0.875rem)] items-start max-lg:flex-col max-lg:items-stretch">
           <!-- Center Column -->

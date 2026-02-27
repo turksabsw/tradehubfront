@@ -65,16 +65,16 @@ appEl.innerHTML = `
 
   <!-- Page body: Sidebar spans entire page including footer -->
   <div class="bg-[#F5F5F5] min-h-screen">
-    <div class="max-w-[1425px] mx-auto px-[clamp(0.75rem,0.5rem+1vw,1.5rem)] flex gap-[14px]">
+    <div class="max-w-[1425px] mx-auto px-[clamp(0.5rem,0.3rem+1vw,1.5rem)] flex gap-[14px] max-lg:flex-col">
       <!-- Sidebar Column (hidden on mobile, visible lg+) -->
       <div class="w-[260px] flex-shrink-0 pt-4 hidden lg:block">
         ${renderSidebar()}
       </div>
 
       <!-- Content Column (main + footer) -->
-      <div class="flex-1 min-w-0">
+      <div class="flex-1 min-w-0 overflow-hidden">
         <!-- Breadcrumb -->
-        <div class="pt-4" id="bd-breadcrumb">
+        <div class="pt-4 max-sm:pt-3" id="bd-breadcrumb">
           ${Breadcrumb(getBreadcrumbItems(activeView))}
         </div>
 

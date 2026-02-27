@@ -17,7 +17,7 @@ function renderStatItem(stat: UserStat, index: number, total: number): string {
     : '';
 
   return `
-    <a href="${stat.href}" class="flex-1 flex flex-col items-center gap-1 no-underline transition-opacity hover:opacity-80" aria-label="${stat.label}: ${stat.count}">
+    <a href="${stat.href}" class="flex-1 min-w-0 flex flex-col items-center gap-1 no-underline transition-opacity hover:opacity-80" aria-label="${stat.label}: ${stat.count}">
       <span class="text-[clamp(1rem,0.9rem+0.4vw,1.25rem)] font-bold leading-none" style="color:var(--color-text-body, #333333)">${stat.count}</span>
       <span class="text-[clamp(0.625rem,0.6rem+0.1vw,0.75rem)] text-center leading-[1.3] line-clamp-2" style="color:var(--color-text-muted, #666666)">${stat.label}</span>
     </a>
@@ -40,8 +40,8 @@ export function UserInfoCard(props: UserInfoCardProps): string {
       </div>
 
       <!-- User Profile Row -->
-      <div class="flex items-center gap-3 mb-4">
-        <div class="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 overflow-hidden" style="background:var(--color-surface-raised, #f5f5f5)" aria-hidden="true">
+      <div class="flex items-center gap-3 mb-4 max-sm:gap-2.5 max-sm:mb-3">
+        <div class="w-12 h-12 max-sm:w-10 max-sm:h-10 rounded-full flex items-center justify-center flex-shrink-0 overflow-hidden" style="background:var(--color-surface-raised, #f5f5f5)" aria-hidden="true">
           ${user.avatar
             ? `<img src="${user.avatar}" alt="${user.username}" class="w-full h-full object-cover rounded-full" />`
             : `<svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 24 24">
