@@ -1829,7 +1829,8 @@
     left: 10px;
 }
 
-@media (min-width: 1280px) {
+/* gallery-prev 2xl offset — uses Tailwind @screen directive */
+@screen 2xl {
     #gallery-prev {
         left: 88px;
     }
