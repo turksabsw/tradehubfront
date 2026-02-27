@@ -96,7 +96,7 @@ export function MobileCategoryBar(): string {
       </div>
 
       <!-- Row 2: Product Items -->
-      <div id="mcb-products" class="flex overflow-x-auto scrollbar-hide gap-3 px-3 py-2.5">
+      <div id="mcb-products" class="flex overflow-x-auto scrollbar-hide gap-2 sm:gap-3 px-2 sm:px-3 py-2.5">
         ${firstCat.products.slice(0, 10).map(p => renderMobileProduct(p)).join('')}
       </div>
     </div>
@@ -107,9 +107,9 @@ export function MobileCategoryBar(): string {
 
 function renderMobileProduct(product: { name: string; href: string }): string {
   return `
-    <a href="${product.href}" class="mcb-product flex-shrink-0 flex flex-col items-center gap-1 w-[60px]">
-      <div class="w-[60px] h-[60px] rounded-md bg-gray-100 dark:bg-gray-700 flex items-center justify-center">
-        <svg class="w-6 h-6 text-gray-300 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <a href="${product.href}" class="mcb-product flex-shrink-0 flex flex-col items-center gap-1 w-[52px] sm:w-[60px]">
+      <div class="w-[52px] h-[52px] sm:w-[60px] sm:h-[60px] rounded-md bg-gray-100 dark:bg-gray-700 flex items-center justify-center">
+        <svg class="w-5 h-5 sm:w-6 sm:h-6 text-gray-300 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909M18 3.75H6A2.25 2.25 0 0 0 3.75 6v12A2.25 2.25 0 0 0 6 20.25h12A2.25 2.25 0 0 0 20.25 18V6A2.25 2.25 0 0 0 18 3.75Z"/>
         </svg>
       </div>
