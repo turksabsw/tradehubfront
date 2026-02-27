@@ -251,12 +251,12 @@ function renderProductListingCard(card: ProductListingCard): string {
   return `
     <div class="fy26-product-card-wrapper flex flex-col justify-between w-full rounded-xl overflow-hidden bg-white pb-2 border-0">
       <!-- Image area -->
-      <div class="relative mb-2">
+      <div class="searchx-img-area relative mb-2">
         ${renderImageSlider(card)}
       </div>
 
       <!-- Content area -->
-      <div class="flex-1 flex flex-col">
+      <div class="fy26-product-card-content flex-1 flex flex-col">
         <!-- Title area -->
         <div class="px-1">
           <h2 class="searchx-product-e-title text-sm font-normal leading-[18px] h-[54px] text-[#333] overflow-hidden text-ellipsis line-clamp-3 m-0">
@@ -282,7 +282,7 @@ function renderProductListingCard(card: ProductListingCard): string {
       </div>
 
       <!-- Action buttons -->
-      <div class="flex gap-2 px-1 items-center">
+      <div class="action-area-layout flex gap-2 px-1 items-center">
         <button type="button" class="searchx-product-e-abutton flex items-center justify-center h-9 px-2 sm:px-[15px] border border-[#222] rounded-full text-xs sm:text-sm font-medium text-gray-900 bg-transparent cursor-pointer whitespace-nowrap transition-colors hover:bg-gray-100 min-w-0"
                 data-add-to-cart="${card.id}">
           Sepete ekle
@@ -507,10 +507,54 @@ export function rerenderProductGrid(products: ProductListingCard[]): void {
 export { renderProductListingCard, renderNoResults };
 
 /**
- * Toggle grid between 'grid' and 'list' view modes via CSS class.
+ * Toggle grid between 'grid' and 'list' view modes using Tailwind classes.
  */
 export function setGridViewMode(mode: ViewMode): void {
   const grid = document.querySelector<HTMLElement>('.product-grid');
   if (!grid) return;
-  grid.classList.toggle('product-grid--list', mode === 'list');
+
+  const isList = mode === 'list';
+
+  // Grid container
+  grid.classList.toggle('!grid-cols-1', isList);
+  grid.classList.toggle('!gap-3', isList);
+
+  // Card wrappers
+  grid.querySelectorAll<HTMLElement>('.fy26-product-card-wrapper').forEach(card => {
+    card.classList.toggle('!flex-row', isList);
+    card.classList.toggle('!items-start', isList);
+    card.classList.toggle('!p-3', isList);
+    card.classList.toggle('!gap-4', isList);
+    card.classList.toggle('!border', isList);
+    card.classList.toggle('!border-gray-200', isList);
+    card.classList.toggle('!rounded-lg', isList);
+  });
+
+  // Image areas
+  grid.querySelectorAll<HTMLElement>('.searchx-img-area').forEach(img => {
+    img.classList.toggle('!w-[200px]', isList);
+    img.classList.toggle('xl:!w-[240px]', isList);
+    img.classList.toggle('!shrink-0', isList);
+    img.classList.toggle('!mb-0', isList);
+  });
+
+  // Content areas
+  grid.querySelectorAll<HTMLElement>('.fy26-product-card-content').forEach(content => {
+    content.classList.toggle('!flex-1', isList);
+    content.classList.toggle('!min-w-0', isList);
+  });
+
+  // Title
+  grid.querySelectorAll<HTMLElement>('.searchx-product-e-title').forEach(title => {
+    title.classList.toggle('!h-auto', isList);
+    title.classList.toggle('!line-clamp-2', isList);
+    title.classList.toggle('!text-base', isList);
+    title.classList.toggle('!leading-[22px]', isList);
+  });
+
+  // Action buttons area
+  grid.querySelectorAll<HTMLElement>('.action-area-layout').forEach(action => {
+    action.classList.toggle('!p-0', isList);
+    action.classList.toggle('!mt-2', isList);
+  });
 }

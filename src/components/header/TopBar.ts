@@ -1113,13 +1113,13 @@ export function TopBar(props?: TopBarProps): string {
 
           <!-- Right Side: Selectors + Icons + Cart + Auth -->
           <div class="ml-auto flex items-center gap-1 sm:gap-2 lg:gap-4 shrink-0">
-            <!-- Country Selector (hidden on mobile) -->
-            <div class="hidden lg:block">
+            <!-- Country Selector (xl+ only) -->
+            <div class="hidden xl:block">
               ${renderCountrySelector()}
             </div>
 
-            <!-- Language/Currency Selector (hidden on mobile) -->
-            <div class="hidden lg:block">
+            <!-- Language/Currency Selector (xl+ only) -->
+            <div class="hidden xl:block">
               ${renderLanguageCurrencySelector()}
             </div>
 

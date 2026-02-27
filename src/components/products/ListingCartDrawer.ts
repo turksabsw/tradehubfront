@@ -102,9 +102,9 @@ function renderPreviewImage(color: ListingColorVariant): string {
   const v = productVisuals[color.imageKind];
   return `
     <div style="width:100%;height:100%;background:${v.background};display:flex;align-items:center;justify-content:center;position:relative;">
-      <div style="position:absolute;inset:0;background:${color.hex};opacity:0.12;"></div>
+      <div style="position:absolute;inset:0;background:${color.hex};opacity:0.10;"></div>
       <div style="position:relative;z-index:1;display:flex;align-items:center;justify-content:center;width:100%;height:100%;">
-        ${renderPlaceholderSvg(color.imageKind, 120)}
+        ${renderPlaceholderSvg(color.imageKind, 200)}
       </div>
     </div>`;
 }
@@ -119,28 +119,28 @@ function formatTierLabel(tier: ListingPriceTier): string {
 export function ListingCartDrawer(): string {
   return `
     <div class="cart-drawer-overlay fixed inset-0 bg-black/50 z-40 opacity-0 pointer-events-none transition-opacity duration-300" id="listing-cart-overlay">
-      <!-- Large Image Preview Panel (left of drawer) -->
+      <!-- Large Image Preview Panel (left of drawer) — Alibaba style -->
       <div id="listing-preview-panel" class="listing-preview-panel hidden lg:block">
-        <div class="listing-preview-inner relative w-[600px] max-w-[45vw] bg-white rounded-xl overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.15)] pointer-events-auto">
-          <button type="button" id="listing-preview-prev" class="listing-preview-arrow left absolute top-1/2 -translate-y-1/2 left-3 w-10 h-10 bg-white rounded-full border-none shadow-[0_2px_8px_rgba(0,0,0,0.15)] text-2xl cursor-pointer z-2 flex items-center justify-center text-[#333] transition-[background] duration-150 hover:bg-gray-100">&lsaquo;</button>
-          <div id="listing-preview-image" class="listing-preview-image w-full aspect-square"></div>
-          <button type="button" id="listing-preview-next" class="listing-preview-arrow right absolute top-1/2 -translate-y-1/2 right-3 w-10 h-10 bg-white rounded-full border-none shadow-[0_2px_8px_rgba(0,0,0,0.15)] text-2xl cursor-pointer z-2 flex items-center justify-center text-[#333] transition-[background] duration-150 hover:bg-gray-100">&rsaquo;</button>
-          <div id="listing-preview-label" class="listing-preview-label absolute bottom-0 left-0 right-0 px-4 py-3 bg-gradient-to-t from-black/50 to-transparent text-white text-sm">color : —</div>
+        <div class="listing-preview-inner relative w-full max-w-[650px] h-[80vh] overflow-hidden pointer-events-auto rounded-lg">
+          <button type="button" id="listing-preview-prev" class="listing-preview-arrow left absolute top-1/2 -translate-y-1/2 left-4 w-11 h-11 bg-white/90 rounded-full border-none shadow-[0_2px_8px_rgba(0,0,0,0.15)] text-2xl cursor-pointer z-2 flex items-center justify-center text-[#333] transition-[background] duration-150 hover:bg-white">&lsaquo;</button>
+          <div id="listing-preview-image" class="listing-preview-image w-full h-full"></div>
+          <button type="button" id="listing-preview-next" class="listing-preview-arrow right absolute top-1/2 -translate-y-1/2 right-4 w-11 h-11 bg-white/90 rounded-full border-none shadow-[0_2px_8px_rgba(0,0,0,0.15)] text-2xl cursor-pointer z-2 flex items-center justify-center text-[#333] transition-[background] duration-150 hover:bg-white">&rsaquo;</button>
+          <div id="listing-preview-label" class="listing-preview-label absolute bottom-0 left-0 right-0 px-5 py-3.5 bg-gradient-to-t from-black/60 to-transparent text-white text-sm font-medium">color : —</div>
         </div>
       </div>
 
-      <!-- Cart Drawer (right panel) -->
-      <div class="cart-drawer listing-cart-drawer fixed top-0 right-0 h-full w-full sm:w-[480px] lg:w-[600px] max-w-full bg-white z-50 shadow-[-4px_0_24px_rgba(0,0,0,0.15)] flex flex-col translate-x-full transition-transform duration-300" id="listing-cart-drawer">
-        <div class="cart-drawer-header flex justify-between items-center px-6 py-5 border-b border-gray-200 shrink-0">
-          <h3 class="text-lg font-semibold text-gray-900">Sepete Ekle</h3>
-          <button type="button" class="cart-drawer-close w-8 h-8 flex items-center justify-center border-none bg-transparent rounded-full text-gray-500 cursor-pointer transition-[background,color] duration-150 hover:bg-gray-50 hover:text-gray-900" id="listing-cart-close">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <!-- Cart Drawer (right panel) — Alibaba style -->
+      <div class="cart-drawer listing-cart-drawer fixed top-0 right-0 h-full w-full sm:w-[480px] lg:w-[600px] max-w-full bg-white z-50 shadow-lg flex flex-col translate-x-full transition-[translate] duration-300 ease-out rounded-l-2xl" id="listing-cart-drawer">
+        <div class="flex justify-between items-center px-6 py-4 shrink-0">
+          <h3 class="text-lg font-semibold text-[#09090B] leading-7">Varyasyon ve miktar seçin</h3>
+          <button type="button" class="w-8 h-8 flex items-center justify-center border-none bg-transparent rounded-full text-gray-400 cursor-pointer transition-colors duration-150 hover:bg-gray-50 hover:text-gray-900" id="listing-cart-close">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M18 6 6 18M6 6l12 12"/>
             </svg>
           </button>
         </div>
-        <div class="cart-drawer-body overflow-y-auto flex-1 px-6 py-5" id="listing-cart-body"></div>
-        <div class="cart-drawer-footer px-6 py-4 border-t border-gray-200 shrink-0 bg-white" id="listing-cart-footer"></div>
+        <div class="overflow-y-auto flex-1 px-6" id="listing-cart-body"></div>
+        <div class="px-6 py-4 border-t border-gray-100 shrink-0 bg-white rounded-bl-2xl" id="listing-cart-footer"></div>
       </div>
     </div>
   `;
@@ -284,34 +284,41 @@ export function initListingCartDrawer(products: ProductListingCard[]): void {
     const perPiece = totalQty > 0 ? (subtotal / totalQty).toFixed(2) : '0.00';
 
     const breakdownHtml = state.footerExpanded ? `
-      <div class="cart-footer-expanded">
-        <div class="cart-breakdown-header" id="listing-footer-toggle">
-          Price
-          <svg class="cart-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 15-6-6-6 6"/></svg>
+      <div class="mb-4">
+        <div class="flex items-center justify-center gap-1.5 pb-3 border-b border-gray-200 mb-3 cursor-pointer select-none" id="listing-footer-toggle">
+          <span class="text-sm font-semibold text-gray-900">Fiyat</span>
+          <svg class="text-gray-400 shrink-0" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 15-6-6-6 6"/></svg>
         </div>
-        <div class="cart-breakdown-row">
-          <span>Item subtotal (${variations} varyasyon ${totalQty} urun)</span>
-          <span style="font-weight:600;color:#111827;">$${subtotal.toFixed(2)}</span>
+        <div class="flex justify-between items-center py-1.5 text-[13px] text-gray-500">
+          <span>Ürün toplamı (${variations} varyasyon ${totalQty} ürün)</span>
+          <span class="font-semibold text-gray-900">$${subtotal.toFixed(2)}</span>
         </div>
-        <div class="cart-breakdown-row cart-breakdown-total" style="font-weight:700;">
-          <span>Subtotal</span>
-          <span style="color:#111827;">$${subtotal.toFixed(2)} ($${perPiece}/adet)</span>
+        <div class="flex justify-between items-center py-1.5 text-[13px] text-gray-500">
+          <span>Kargo toplamı</span>
+          <span class="text-gray-500 italic">Görüşülecek</span>
+        </div>
+        <div class="flex justify-between items-center pt-2.5 mt-1.5 border-t border-gray-200">
+          <span class="text-sm font-bold text-gray-900">Ara Toplam</span>
+          <div class="flex items-center gap-1.5">
+            <span class="text-base font-bold text-[#ea580c]">$${subtotal.toFixed(2)}</span>
+            <span class="text-xs text-gray-400">($${perPiece}/adet)</span>
+          </div>
         </div>
       </div>
     ` : `
-      <div class="cart-footer-collapsed" id="listing-footer-toggle">
-        <span class="cart-subtotal-label">Price</span>
-        <div class="cart-subtotal-right">
-          <span class="cart-subtotal-price">$${subtotal.toFixed(2)}</span>
-          <span class="cart-subtotal-per">($${perPiece}/adet)</span>
-          <svg class="cart-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+      <div class="flex justify-between items-center mb-4 cursor-pointer select-none" id="listing-footer-toggle">
+        <span class="text-sm font-bold text-gray-900">Ara Toplam</span>
+        <div class="flex items-center gap-1.5">
+          <span class="text-base font-bold text-[#ea580c]">$${subtotal.toFixed(2)}</span>
+          <span class="text-xs text-gray-400">($${perPiece}/adet)</span>
+          <svg class="text-gray-400 shrink-0 ml-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
         </div>
       </div>
     `;
 
     footer.innerHTML = `
       ${breakdownHtml}
-      <button type="button" class="cart-add-btn" id="listing-cart-confirm">Sepete Ekle</button>
+      <button type="button" class="w-full h-12 bg-[#ea580c] hover:bg-[#c2410c] text-white text-base font-semibold border-none rounded-full cursor-pointer transition-all duration-150 active:scale-[0.98] shadow-[0_2px_8px_rgba(234,88,12,0.3)]" id="listing-cart-confirm">Sepete Ekle</button>
     `;
   }
 
@@ -328,43 +335,52 @@ export function initListingCartDrawer(products: ProductListingCard[]): void {
 
     const activePrice = state.priceTiers[0]?.price ?? 0;
 
-    // Build price tiers HTML
+    // Build price tiers HTML — Alibaba style
     const tiersHtml = `
-      <div class="cart-tier-row flex gap-6 pb-4 mb-5 border-b border-gray-200">
+      <div class="flex gap-8 pb-4 mb-5 border-b border-gray-100">
         ${state.priceTiers.map((tier, i) => `
           <div class="cart-tier-item flex flex-col cursor-pointer${i === 0 ? ' active' : ''}" data-tier-index="${i}">
-            <span class="cart-tier-qty text-xs text-gray-500 mb-1">${formatTierLabel(tier)}</span>
+            <span class="text-xs text-gray-400 mb-1.5 whitespace-nowrap">${formatTierLabel(tier)}</span>
             <span class="cart-tier-price text-[22px] font-bold text-gray-900 transition-colors duration-150">$${tier.price.toFixed(2)}</span>
           </div>
         `).join('')}
       </div>
     `;
 
-    // Build color rows HTML
+    // Build color rows HTML — Alibaba style with larger thumbnails
     const colorRowsHtml = state.colors.map(color => `
-      <div class="cart-color-row cart-size-row flex items-center gap-3 py-2.5 border-b border-gray-100 last:border-b-0" data-color-id="${color.id}">
-        <div class="cart-color-row-thumb transition-[border-color] duration-150" style="border:1px solid #e5e7eb;border-radius:8px;overflow:hidden;cursor:pointer;flex-shrink:0;" data-thumb-color="${color.id}">
-          ${renderColorThumbnail(color, 56)}
+      <div class="cart-color-row flex items-center gap-4 py-3 border-b border-gray-50 last:border-b-0" data-color-id="${color.id}">
+        <div class="cart-color-row-thumb shrink-0 rounded-lg overflow-hidden cursor-pointer transition-[border-color] duration-150" style="border:2px solid #e5e7eb;border-radius:10px;" data-thumb-color="${color.id}">
+          ${renderColorThumbnail(color, 64)}
         </div>
         <div class="flex-1 min-w-0">
-          <div class="text-[13px] font-medium text-gray-900 whitespace-nowrap overflow-hidden text-ellipsis">${color.label}</div>
+          <div class="text-sm font-medium text-gray-900">${color.label}</div>
         </div>
-        <span class="cart-color-row-price cart-size-row-price text-sm font-semibold text-gray-900 whitespace-nowrap ml-auto">$${activePrice.toFixed(2)}</span>
-        <div class="cart-size-row-qty flex items-center shrink-0">
-          <button type="button" class="cart-size-row-btn w-[30px] h-[30px] flex items-center justify-center border border-gray-200 bg-white text-[15px] text-gray-900 cursor-pointer transition-[background] duration-150" data-qty-action="minus" data-qty-color="${color.id}">&minus;</button>
-          <input type="number" class="cart-size-row-input w-9 h-[30px] text-center border-y border-gray-200 border-x-0 text-[13px] font-semibold text-gray-900 bg-transparent outline-none appearance-textfield" data-qty-input="${color.id}" value="0" min="0">
-          <button type="button" class="cart-size-row-btn w-[30px] h-[30px] flex items-center justify-center border border-gray-200 bg-white text-[15px] text-gray-900 cursor-pointer transition-[background] duration-150" data-qty-action="plus" data-qty-color="${color.id}">+</button>
+        <span class="cart-color-row-price text-sm font-semibold text-gray-900 whitespace-nowrap">$${activePrice.toFixed(2)}</span>
+        <div class="flex items-center shrink-0">
+          <button type="button" class="w-8 h-8 flex items-center justify-center border border-gray-200 bg-white text-base text-gray-500 cursor-pointer rounded-l-full hover:bg-gray-50 transition-colors" data-qty-action="minus" data-qty-color="${color.id}">&minus;</button>
+          <input type="number" class="w-10 h-8 text-center border-y border-gray-200 border-x-0 text-sm font-semibold text-gray-900 bg-transparent outline-none [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none" data-qty-input="${color.id}" value="0" min="0">
+          <button type="button" class="w-8 h-8 flex items-center justify-center border border-gray-200 bg-white text-base text-gray-500 cursor-pointer rounded-r-full hover:bg-gray-50 transition-colors" data-qty-action="plus" data-qty-color="${color.id}">+</button>
         </div>
       </div>
     `).join('');
 
     body!.innerHTML = `
-      <h4 style="font-size:15px;font-weight:600;color:#111827;line-height:1.4;margin-bottom:16px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;">${product.name}</h4>
+      <h4 class="text-sm font-semibold text-gray-900 leading-snug mb-4" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">${product.name}</h4>
       ${tiersHtml}
-      <div class="cart-variant-section mb-5">
-        <div class="cart-variant-label text-sm font-semibold text-gray-900 mb-2">Renk</div>
-        <div class="cart-size-rows flex flex-col">
+      <div class="mb-6">
+        <div class="text-sm font-bold text-gray-900 mb-3">Renk</div>
+        <div class="flex flex-col">
           ${colorRowsHtml}
+        </div>
+      </div>
+      <div class="border border-gray-200 rounded-xl p-4">
+        <div class="flex items-center justify-between mb-1.5">
+          <span class="text-sm font-bold text-gray-900">Shipping</span>
+          <a href="javascript:void(0)" class="text-[#ea580c] text-[13px] font-medium no-underline cursor-pointer hover:underline">Change ›</a>
+        </div>
+        <div class="text-[13px] text-gray-500 leading-relaxed">
+          Shipping fee and delivery date to be negotiated. Chat with supplier now for more details.
         </div>
       </div>
     `;

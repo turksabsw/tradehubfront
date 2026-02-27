@@ -12,13 +12,13 @@ import { megaCategories, getCategoryIcon } from '../header';
 function renderProductItem(product: { name: string; href: string; badge?: boolean }): string {
   return `
     <a href="${product.href}" class="flex flex-col items-center gap-2 group/product">
-      <div class="relative w-20 h-20 rounded-full flex items-center justify-center overflow-hidden group-hover/product:ring-2 transition-all" style="background-color:var(--catpopup-product-bg);--tw-ring-color:var(--catpopup-sidebar-active-border)">
-        <svg class="w-8 h-8" style="color:var(--catpopup-icon)" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div class="relative w-20 h-20 lg:w-24 lg:h-24 xl:w-28 xl:h-28 rounded-full flex items-center justify-center overflow-hidden group-hover/product:ring-2 transition-all" style="background-color:var(--catpopup-product-bg);--tw-ring-color:var(--catpopup-sidebar-active-border)">
+        <svg class="w-8 h-8 lg:w-10 lg:h-10" style="color:var(--catpopup-icon)" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909M18 3.75H6A2.25 2.25 0 0 0 3.75 6v12A2.25 2.25 0 0 0 6 20.25h12A2.25 2.25 0 0 0 20.25 18V6A2.25 2.25 0 0 0 18 3.75Z"/>
         </svg>
         ${product.badge ? '<span class="absolute top-0 right-0 w-3 h-3 bg-red-500 rounded-full border-2 border-white"></span>' : ''}
       </div>
-      <span class="text-xs text-center leading-tight transition-colors duration-150" style="color:var(--catpopup-text) max-w-20">${product.name}</span>
+      <span class="text-xs lg:text-sm text-center leading-tight transition-colors duration-150 max-w-[80px] lg:max-w-[100px] xl:max-w-[120px]" style="color:var(--catpopup-text)">${product.name}</span>
     </a>
   `;
 }
@@ -32,7 +32,7 @@ function renderCategoryPopup(): string {
 
     <!-- Category Popup Panel -->
     <div id="cat-popup-panel" class="fixed inset-0 z-(--z-modal) flex items-end lg:items-start justify-center lg:pt-20 opacity-0 pointer-events-none transition-opacity duration-200">
-      <div id="cat-popup-sheet" class="rounded-t-md lg:rounded-md shadow-2xl border w-full lg:max-w-5xl max-h-[85vh] lg:max-h-[80vh] flex flex-col overflow-hidden transition-transform duration-200 will-change-transform" style="background-color:var(--catpopup-bg);border-color:var(--catpopup-border)">
+      <div id="cat-popup-sheet" class="rounded-t-md lg:rounded-md shadow-2xl border w-full lg:max-w-7xl max-h-[85vh] lg:max-h-[80vh] flex flex-col overflow-hidden transition-transform duration-200 will-change-transform" style="background-color:var(--catpopup-bg);border-color:var(--catpopup-border)">
 
         <!-- Drag handle (mobile) -->
         <div id="cat-popup-drag-handle" class="lg:hidden flex justify-center pt-3 pb-1 cursor-grab active:cursor-grabbing flex-shrink-0">
@@ -78,16 +78,16 @@ function renderCategoryPopup(): string {
           <div class="flex-1 overflow-y-auto px-4 lg:px-6 py-5" id="cat-popup-content">
             ${megaCategories.map(cat => `
               <div class="cat-popup-section hidden" data-popup-section="${cat.id}">
-                <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 gap-y-5 gap-x-4">
+                <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 gap-y-5 gap-x-4 lg:gap-y-8 lg:gap-x-6">
                   ${cat.products.map(product => renderProductItem(product)).join('')}
                   <!-- View all item -->
                   <a href="products.html?category=${cat.id}" class="flex flex-col items-center gap-2 group/product">
-                    <div class="w-20 h-20 rounded-full border-2 border-dashed flex items-center justify-center transition-all" style="background-color:var(--catpopup-sidebar-bg);border-color:var(--catpopup-border)">
-                      <svg class="w-7 h-7" style="color:var(--catpopup-icon)" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="w-20 h-20 lg:w-24 lg:h-24 xl:w-28 xl:h-28 rounded-full border-2 border-dashed flex items-center justify-center transition-all" style="background-color:var(--catpopup-sidebar-bg);border-color:var(--catpopup-border)">
+                      <svg class="w-7 h-7 lg:w-9 lg:h-9" style="color:var(--catpopup-icon)" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.75 6A2.25 2.25 0 0 1 6 3.75h2.25A2.25 2.25 0 0 1 10.5 6v2.25a2.25 2.25 0 0 1-2.25 2.25H6a2.25 2.25 0 0 1-2.25-2.25V6ZM3.75 15.75A2.25 2.25 0 0 1 6 13.5h2.25a2.25 2.25 0 0 1 2.25 2.25V18a2.25 2.25 0 0 1-2.25 2.25H6A2.25 2.25 0 0 1 3.75 18v-2.25ZM13.5 6a2.25 2.25 0 0 1 2.25-2.25H18A2.25 2.25 0 0 1 20.25 6v2.25A2.25 2.25 0 0 1 18 10.5h-2.25a2.25 2.25 0 0 1-2.25-2.25V6ZM13.5 15.75a2.25 2.25 0 0 1 2.25-2.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-2.25a2.25 2.25 0 0 1-2.25-2.25v-2.25Z"/>
                       </svg>
                     </div>
-                    <span class="text-xs text-center leading-tight transition-colors duration-150" style="color:var(--catpopup-text)">View all</span>
+                    <span class="text-xs lg:text-sm text-center leading-tight transition-colors duration-150" style="color:var(--catpopup-text)">View all</span>
                   </a>
                 </div>
               </div>

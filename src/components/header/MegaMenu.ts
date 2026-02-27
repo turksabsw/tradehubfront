@@ -258,13 +258,13 @@ export function getCategoryIcon(iconName: string): string {
 function renderProductItem(product: { name: string; href: string; badge?: boolean }): string {
   return `
     <a href="${product.href}" class="flex flex-col items-center gap-1.5 sm:gap-2 group/product min-h-[44px]">
-      <div class="relative w-14 h-14 sm:w-20 sm:h-20 rounded-full flex items-center justify-center overflow-hidden group-hover/product:ring-2 transition-all" style="background:var(--card-bg);--tw-ring-color:var(--nav-hover-color)">
-        <svg class="w-6 h-6 sm:w-8 sm:h-8 text-gray-300 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div class="relative w-14 h-14 sm:w-20 sm:h-20 lg:w-24 lg:h-24 xl:w-28 xl:h-28 rounded-full flex items-center justify-center overflow-hidden group-hover/product:ring-2 transition-all" style="background:var(--card-bg);--tw-ring-color:var(--nav-hover-color)">
+        <svg class="w-6 h-6 sm:w-8 sm:h-8 lg:w-10 lg:h-10 text-gray-300 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909M18 3.75H6A2.25 2.25 0 0 0 3.75 6v12A2.25 2.25 0 0 0 6 20.25h12A2.25 2.25 0 0 0 20.25 18V6A2.25 2.25 0 0 0 18 3.75Z"/>
         </svg>
         ${product.badge ? `<span class="absolute top-0 right-0 w-3 h-3 bg-red-500 rounded-full border-2 border-white"></span>` : ''}
       </div>
-      <span class="th-nav-link text-center leading-tight transition-colors max-w-16 sm:max-w-20" style="font-size:var(--mega-font-size)">${product.name}</span>
+      <span class="th-nav-link text-center leading-tight transition-colors max-w-16 sm:max-w-20 lg:max-w-24 xl:max-w-28 lg:text-sm" style="font-size:var(--mega-font-size)">${product.name}</span>
     </a>
   `;
 }
@@ -276,9 +276,9 @@ function renderProductItem(product: { name: string; href: string; badge?: boolea
 function renderCategoriesView(): string {
   return `
     <div data-mega-view="categories" class="hidden">
-      <div class="flex flex-col lg:flex-row lg:min-h-[480px]">
+      <div class="flex flex-col lg:flex-row">
         <!-- Sidebar -->
-        <div class="w-full lg:w-64 lg:flex-shrink-0 border-b lg:border-b-0 lg:border-r dark:border-gray-700 overflow-y-auto overflow-x-hidden dark:bg-gray-900" style="max-height:min(280px, 40vh);background-color:var(--mega-sidebar-bg);border-color:var(--mega-border-color);-webkit-overflow-scrolling:touch" id="mega-sidebar">
+        <div class="w-full lg:w-72 xl:w-80 lg:flex-shrink-0 border-b lg:border-b-0 lg:border-r dark:border-gray-700 overflow-y-auto overflow-x-hidden dark:bg-gray-900" style="background-color:var(--mega-sidebar-bg);border-color:var(--mega-border-color);-webkit-overflow-scrolling:touch" id="mega-sidebar">
           <ul class="py-1">
             ${megaCategories.map((cat, index) => `
               <li>
@@ -288,7 +288,7 @@ function renderCategoriesView(): string {
                   data-category="${cat.id}"
                 >
                   <span class="flex-shrink-0 text-gray-400">${getCategoryIcon(cat.icon)}</span>
-                  <span class="flex-1 truncate">${cat.name}</span>
+                  <span class="flex-1">${cat.name}</span>
                   <svg class="w-4 h-4 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 5 7 7-7 7"/></svg>
                 </a>
               </li>
@@ -296,16 +296,16 @@ function renderCategoriesView(): string {
           </ul>
         </div>
         <!-- Content: all categories visible, scrollable -->
-        <div class="flex-1 overflow-y-auto px-3 sm:px-4 lg:px-6 py-3 sm:py-4" style="max-height:min(520px, 60vh);-webkit-overflow-scrolling:touch" id="mega-content">
+        <div class="flex-1 overflow-y-auto px-3 sm:px-4 lg:px-8 py-3 sm:py-4 lg:py-6" style="max-height:min(520px, 60vh);-webkit-overflow-scrolling:touch" id="mega-content">
           ${megaCategories.map(cat => `
             <div class="mega-cat-section mb-8" id="mega-section-${cat.id}">
-              <div class="flex items-center justify-between mb-5">
-                <h3 class="text-base font-bold dark:text-white" style="color:var(--mega-text-color)">${cat.name}</h3>
+              <div class="flex items-center justify-between mb-5 lg:mb-6">
+                <h3 class="text-base lg:text-lg font-bold dark:text-white" style="color:var(--mega-text-color)">${cat.name}</h3>
                 <a href="products.html?category=${cat.id}" class="th-nav-link hover:underline dark:text-primary-400 dark:hover:text-primary-300" style="color:var(--nav-hover-color)">
                   Browse all &rarr;
                 </a>
               </div>
-              <div class="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 gap-y-4 gap-x-2 sm:gap-y-5 sm:gap-x-4">
+              <div class="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-y-4 gap-x-2 sm:gap-y-5 sm:gap-x-4 lg:gap-y-8 lg:gap-x-6">
                 ${cat.products.map(product => renderProductItem(product)).join('')}
               </div>
             </div>

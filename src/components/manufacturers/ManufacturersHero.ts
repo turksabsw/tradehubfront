@@ -269,9 +269,9 @@ const SOURCE_CATEGORIES: SourceCategory[] = [
 export function ManufacturersHero(): string {
   return `
     <!-- Top Bar for Manufacturers specific promos (optional, like "Accio AI | Quotation") -->
-    <div class="hidden lg:flex items-center justify-between mb-4 px-2">
-      <h2 class="text-xl font-bold text-gray-900 dark:text-white">Welcome to iSTOC.com</h2>
-      <div class="flex items-center gap-6 text-sm font-medium text-gray-700 dark:text-gray-300">
+    <div class="hidden xl:flex items-center justify-between mb-4 px-2">
+      <h2 class="text-xl font-bold text-gray-900 dark:text-white whitespace-nowrap">Welcome to iSTOC.com</h2>
+      <div class="flex items-center gap-3 xl:gap-6 text-sm font-medium text-gray-700 dark:text-gray-300 whitespace-nowrap">
         <a href="#" class="flex items-center gap-1.5 hover:text-primary-600 transition-colors">
           <span class="text-lg font-black">▲</span> Accio AI
         </a>
