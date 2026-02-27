@@ -14,8 +14,8 @@ function documentIconSvg(): string {
 
 export function OrdersContent(): string {
   return `
-    <div class="orders__content mx-5 mb-5 mt-3 rounded-(--radius-card) bg-(--color-orders-empty-bg) min-h-[180px] flex items-center justify-center" role="tabpanel" aria-label="Sipariş içeriği">
-      <div class="flex flex-col items-center gap-3 py-8 px-5">
+    <div class="orders__content mx-[clamp(0.75rem,0.5rem+1vw,1.25rem)] mb-[clamp(0.75rem,0.5rem+1vw,1.25rem)] mt-3 rounded-(--radius-card) bg-(--color-orders-empty-bg) min-h-[140px] sm:min-h-[180px] flex items-center justify-center" role="tabpanel" aria-label="Sipariş içeriği">
+      <div class="flex flex-col items-center gap-3 py-6 sm:py-8 px-3 sm:px-5">
         <div class="text-(--color-orders-empty-icon)" aria-hidden="true">
           ${documentIconSvg()}
         </div>

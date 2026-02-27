@@ -18,8 +18,8 @@ function renderStatItem(stat: UserStat, index: number, total: number): string {
 
   return `
     <a href="${stat.href}" class="flex-1 flex flex-col items-center gap-1 no-underline transition-opacity hover:opacity-80" aria-label="${stat.label}: ${stat.count}">
-      <span class="text-xl font-bold leading-none" style="color:var(--color-text-body, #333333)">${stat.count}</span>
-      <span class="text-xs text-center leading-[1.3]" style="color:var(--color-text-muted, #666666)">${stat.label}</span>
+      <span class="text-[clamp(1rem,0.9rem+0.4vw,1.25rem)] font-bold leading-none" style="color:var(--color-text-body, #333333)">${stat.count}</span>
+      <span class="text-[clamp(0.625rem,0.6rem+0.1vw,0.75rem)] text-center leading-[1.3] line-clamp-2" style="color:var(--color-text-muted, #666666)">${stat.label}</span>
     </a>
     ${divider}
   `;
@@ -29,13 +29,14 @@ export function UserInfoCard(props: UserInfoCardProps): string {
   const { user, stats } = props;
 
   return `
-    <div class="relative p-5 max-md:p-3.5">
+    <div class="relative p-[clamp(0.75rem,0.5rem+1vw,1.25rem)]">
       <!-- 24H Online Support Badge -->
-      <div class="absolute top-3 right-3 inline-flex items-center gap-1 text-xs font-medium text-blue-600 bg-blue-50 rounded-xl px-2.5 py-1" aria-label="24 saat çevrimiçi destek">
-        <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <div class="absolute top-3 right-3 inline-flex items-center gap-1 text-[clamp(0.625rem,0.6rem+0.1vw,0.75rem)] font-medium text-blue-600 bg-blue-50 rounded-xl px-2 py-1 max-sm:px-1.5" aria-label="24 saat çevrimiçi destek">
+        <svg class="w-4 h-4 flex-shrink-0 max-sm:w-3 max-sm:h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
         </svg>
-        <span>24H Çevrimiçi destek</span>
+        <span class="max-xs:hidden">24H Çevrimiçi destek</span>
+        <span class="hidden max-xs:inline">24H</span>
       </div>
 
       <!-- User Profile Row -->

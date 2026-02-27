@@ -19,7 +19,7 @@ export function OrdersSection(): string {
 
   return `
     <div class="orders bg-(--color-surface,#ffffff) rounded-(--radius-card) overflow-hidden" data-orders-section>
-      <div class="flex items-center justify-between px-5 pt-4 pb-3">
+      <div class="flex items-center justify-between px-[clamp(0.75rem,0.5rem+1vw,1.25rem)] pt-4 pb-3">
         <h2 class="text-base font-bold text-(--color-text-body,#333333) m-0">Siparişler</h2>
         <a href="#" class="orders__view-all text-[13px] text-(--color-text-placeholder,#999999) no-underline inline-flex items-center gap-0.5 transition-colors hover:text-primary-500" aria-label="Tüm siparişleri görüntüle">
           Tümünü görüntüle
