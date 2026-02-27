@@ -1600,11 +1600,6 @@
     transition: transform 200ms ease-out;
 }
 
-@media (width >=1280px) {
-    .recommendation-swiper .swiper-slide {
-        width: 240px !important;
-    }
-}
 
 .hero-side-slider.hero-side-peek-prev .swiper-slide-active,
 .hero-side-slider.hero-side-peek-prev .swiper-slide-prev {
@@ -1658,55 +1653,14 @@
    PRODUCT DETAIL PAGE LAYOUT
    ============================================================ */
 
-/* Mobile: stacked layout */
-#pd-hero-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    padding-top: 12px;
-}
-
-#pd-hero-left {
-    width: 100%;
-    min-width: 0;
-}
-
-#pd-hero-gallery {
-    width: 100%;
-}
-
-#pd-hero-info {
-    width: 100%;
-}
-
-/* Desktop: 2-column layout — left (gallery + related) | right (sticky info card) */
+/* Sticky mode: activated by JS after scrolling past card */
 @media (width >=1024px) {
-    #pd-hero-grid {
-        display: grid;
-        grid-template-columns: 1fr 380px;
-        gap: 24px;
-        align-items: start;
-    }
-
-    #pd-hero-info {
-        display: flex;
-        flex-direction: column;
-    }
-
-    /* Sticky mode: activated by JS after scrolling past card */
     #pd-hero-info.pd-sticky {
         position: sticky;
         top: 130px;
         max-height: calc(100vh - 150px);
         display: flex;
         flex-direction: column;
-    }
-}
-
-@media (width >=1280px) {
-    #pd-hero-grid {
-        grid-template-columns: 1fr 407px;
-        gap: 28px;
     }
 }
 

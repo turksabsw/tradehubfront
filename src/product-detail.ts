@@ -72,17 +72,17 @@ appEl.innerHTML = `
     <div id="pd-desktop-layout">
       <section style="background: var(--pd-bg, #ffffff);">
         <div class="container-boxed">
-          <div id="pd-hero-grid">
-            <div id="pd-hero-left">
+          <div id="pd-hero-grid" class="flex flex-col gap-5 pt-3 lg:grid lg:grid-cols-[1fr_380px] lg:gap-6 lg:items-start xl:grid-cols-[1fr_407px] xl:gap-7">
+            <div id="pd-hero-left" class="w-full min-w-0">
               ${Breadcrumb(pdCrumbs)}
               ${ProductTitleBar()}
-              <div id="pd-hero-gallery">
+              <div id="pd-hero-gallery" class="w-full">
                 ${ProductImageGallery()}
               </div>
               ${RelatedProducts()}
               ${ProductTabs()}
             </div>
-            <div id="pd-hero-info">
+            <div id="pd-hero-info" class="w-full lg:flex lg:flex-col">
               ${ProductInfo()}
             </div>
           </div>

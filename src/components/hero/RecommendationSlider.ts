@@ -218,7 +218,7 @@ function renderCard(card: RecommendationCard): string {
   const cardAriaLabel = card.subtitle ? `${card.title} - ${card.subtitle}` : card.title;
 
   return `
-    <div class="swiper-slide recommendation-slide h-full">
+    <div class="swiper-slide recommendation-slide h-full xl:!w-[240px]">
       <a
         href="${card.href}"
         aria-label="${cardAriaLabel}"
