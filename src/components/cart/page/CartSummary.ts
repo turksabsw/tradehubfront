@@ -80,8 +80,8 @@ export function CartSummary(
   assuranceItems: AssuranceItem[] = defaultAssuranceItems
 ): string {
   return `
-    <div class="sc-shopping-cart-summary-container w-full lg:w-[425px] p-5 lg:p-8 bg-white border border-[#e5e5e5] rounded-lg overflow-y-auto lg:sticky lg:top-[71px] max-h-[822px]">
-      <div class="block text-lg lg:text-xl font-bold leading-7 text-[#222] mb-4 lg:mb-5">Sipariş özeti (<span class="sc-summary-selected-count">${data.selectedCount}</span> Ürün)</div>
+    <div class="sc-shopping-cart-summary-container w-full lg:w-[425px] p-4 sm:p-5 lg:p-8 bg-white border border-[#e5e5e5] rounded-lg overflow-y-auto lg:sticky lg:top-[71px] max-h-[822px]">
+      <div class="block text-base sm:text-lg lg:text-xl font-bold leading-7 text-[#222] mb-3 sm:mb-4 lg:mb-5">Sipariş özeti (<span class="sc-summary-selected-count">${data.selectedCount}</span> Ürün)</div>
 
       ${renderThumbnailGrid(data.items)}
 
@@ -105,8 +105,8 @@ export function CartSummary(
         </div>
       </div>
 
-      <div class="flex justify-between items-center text-lg font-bold leading-6 text-[#222] pt-4 border-t border-[#e5e5e5] mt-2">
-        <span>Ara toplam (vergi hariç)</span>
+      <div class="flex justify-between items-center text-base sm:text-lg font-bold leading-6 text-[#222] pt-4 border-t border-[#e5e5e5] mt-2">
+        <span class="min-w-0 truncate mr-2">Ara toplam (vergi hariç)</span>
         <span class="sc-summary-subtotal">${PriceDisplay({ amount: data.subtotal, currency: data.currency, bold: true })}</span>
       </div>
 

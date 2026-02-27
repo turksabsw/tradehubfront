@@ -11,7 +11,7 @@ export function Certificates(certificates: Certificate[]): string {
 
   return `
     <section id="certificates" class="certificates py-12" aria-label="Sertifikalar">
-      <div class="max-w-[var(--container-lg)] mx-auto px-8">
+      <div class="max-w-(--container-lg) mx-auto px-8">
         <h2 class="certificates__title text-[28px] font-bold text-[#1e3a5f] dark:text-blue-300 uppercase text-center mb-8">
           Sertifikalar
         </h2>
@@ -22,7 +22,7 @@ export function Certificates(certificates: Certificate[]): string {
             <div class="swiper-wrapper">
               ${certificates.map(cert => `
                 <div class="swiper-slide">
-                  <div class="certificates__card bg-white dark:bg-gray-800 border border-[var(--card-border-color)] dark:border-gray-700 shadow-sm rounded-[var(--radius-md)] p-2 flex items-center justify-center">
+                  <div class="certificates__card bg-white dark:bg-gray-800 border border-(--card-border-color) dark:border-gray-700 shadow-sm rounded-(--radius-md) p-2 flex items-center justify-center">
                     <img src="${cert.image}" alt="${cert.name}"
                          class="w-full aspect-[3/4] object-contain"
                          loading="lazy"

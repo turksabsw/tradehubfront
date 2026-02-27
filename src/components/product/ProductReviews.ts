@@ -95,15 +95,15 @@ export function renderReviewCard(review: ProductReview, showProductThumb = false
     : '';
 
   return `
-    <div class="rv-card">
-      <div class="flex items-start gap-3 mb-2.5">
-        <div class="rv-avatar" style="background: ${avatarColor(review.author)};">
+    <div class="rv-card max-[374px]:px-3 max-[374px]:py-3">
+      <div class="flex items-start gap-3 mb-2.5 max-[374px]:gap-2 max-[374px]:mb-2">
+        <div class="rv-avatar max-[374px]:w-8 max-[374px]:h-8 max-[374px]:text-xs" style="background: ${avatarColor(review.author)};">
           ${review.author.charAt(0)}
         </div>
         <div class="flex-1 min-w-0">
-          <div class="flex items-center gap-2 flex-wrap">
-            <span class="rv-card-name">${anonymizeName(review.author)}</span>
-            <span class="rv-card-country">${countryFlag(review.country)} ${review.countryName || review.country}</span>
+          <div class="flex items-center gap-2 flex-wrap max-[374px]:gap-1">
+            <span class="rv-card-name max-[374px]:text-[13px]">${anonymizeName(review.author)}</span>
+            <span class="rv-card-country max-[374px]:text-[11px]">${countryFlag(review.country)} ${review.countryName || review.country}</span>
             ${badges.join('')}
           </div>
           <div class="flex items-center gap-2 mt-1">
@@ -112,7 +112,7 @@ export function renderReviewCard(review: ProductReview, showProductThumb = false
           </div>
         </div>
       </div>
-      <div class="rv-card-comment">${review.comment}</div>
+      <div class="rv-card-comment max-[374px]:text-[13px] max-[374px]:leading-[1.5]">${review.comment}</div>
       ${supplierReplyHtml}
       ${productThumbHtml}
       <button type="button" class="rv-hidden-reviews-link">Gizli yorumları göster</button>
@@ -135,7 +135,7 @@ function ratingDropdownHtml(idPrefix: string): string {
         Puan
         <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
       </button>
-      <div class="rv-rating-dropdown-panel">
+      <div class="rv-rating-dropdown-panel max-sm:!min-w-[160px]">
         <button type="button" class="rv-rating-dropdown-item active" data-rv-rating="all">Tüm Puanlar</button>
         <button type="button" class="rv-rating-dropdown-item" data-rv-rating="5">${renderStars(5, true)} 5 Yıldız</button>
         <button type="button" class="rv-rating-dropdown-item" data-rv-rating="4">${renderStars(4, true)} 4 Yıldız</button>
@@ -148,12 +148,12 @@ function ratingDropdownHtml(idPrefix: string): string {
 
 function sortDropdownHtml(idPrefix: string): string {
   return `
-    <div class="rv-sort-dropdown" id="${idPrefix}-sort-dropdown">
-      <button type="button" class="rv-sort-dropdown-trigger">
+    <div class="rv-sort-dropdown max-sm:!ml-0 max-sm:!w-full" id="${idPrefix}-sort-dropdown">
+      <button type="button" class="rv-sort-dropdown-trigger max-sm:!w-full max-sm:!justify-between">
         Sırala: En alakalı
         <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
       </button>
-      <div class="rv-sort-dropdown-panel">
+      <div class="rv-sort-dropdown-panel max-sm:!left-0 max-sm:!right-0">
         <button type="button" class="rv-sort-dropdown-item active" data-rv-sort="relevant">En alakalı</button>
         <button type="button" class="rv-sort-dropdown-item" data-rv-sort="newest">En yeni</button>
       </div>
@@ -176,11 +176,11 @@ export function ProductReviews(): string {
   const photoReviewCount = p.reviews.filter(r => r.images && r.images.length > 0).length;
 
   return `
-    <div class="py-6">
+    <div class="py-6 max-[374px]:py-4">
       <!-- Sub-tabs -->
-      <div class="rv-sub-tabs flex border-b-2 border-border-default mb-6">
-        <button type="button" class="rv-sub-tab active" data-rv-panel="rv-product-panel">Ürün Yorumları (${p.reviewCount})</button>
-        <button type="button" class="rv-sub-tab" data-rv-panel="rv-store-panel">Mağaza Yorumları (${p.storeReviewCount})</button>
+      <div class="rv-sub-tabs flex border-b-2 border-border-default mb-6 max-[374px]:mb-4">
+        <button type="button" class="rv-sub-tab max-[374px]:text-[13px] max-[374px]:px-2 max-[374px]:py-2 active" data-rv-panel="rv-product-panel">Ürün Yorumları (${p.reviewCount})</button>
+        <button type="button" class="rv-sub-tab max-[374px]:text-[13px] max-[374px]:px-2 max-[374px]:py-2" data-rv-panel="rv-store-panel">Mağaza Yorumları (${p.storeReviewCount})</button>
       </div>
 
       <!-- Product Reviews Panel -->
@@ -207,8 +207,8 @@ export function ProductReviews(): string {
       <!-- Store Reviews Panel (hidden) -->
       <div id="rv-store-panel" class="hidden">
         <!-- Rating Summary -->
-        <div class="rv-rating-summary flex gap-8 pb-6 mb-5">
-          <div class="flex flex-col items-center justify-center min-w-[140px]">
+        <div class="rv-rating-summary flex gap-8 pb-6 mb-5 max-sm:flex-col max-sm:gap-5 max-[374px]:gap-3 max-[374px]:pb-4 max-[374px]:mb-3">
+          <div class="flex flex-col items-center justify-center min-w-[140px] max-[374px]:min-w-0">
             <span class="rv-rating-number">${p.rating}</span>
             <div class="flex items-center gap-0.5 mt-1">${renderStars(p.rating)}</div>
             <span class="rv-rating-label">${satisfactionLabel(p.rating)}</span>
@@ -217,7 +217,7 @@ export function ProductReviews(): string {
           <div class="flex-1 flex flex-col gap-2.5 justify-center">
             ${p.reviewCategoryRatings.map(cat => `
               <div class="flex items-center gap-2.5">
-                <span class="rv-category-label">${cat.label}</span>
+                <span class="rv-category-label max-sm:!min-w-[100px]">${cat.label}</span>
                 <div class="rv-category-bar-track">
                   <div class="rv-category-bar-fill" style="width: ${(cat.score / 5) * 100}%;"></div>
                 </div>

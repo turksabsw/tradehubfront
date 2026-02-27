@@ -23,9 +23,9 @@ export function ReviewsModal(): string {
 
   return `
     <div id="rv-reviews-modal" class="rv-modal-overlay rv-modal-hidden">
-      <div class="rv-modal">
+      <div class="rv-modal max-sm:!w-full max-sm:!h-full max-sm:!max-h-[100vh] max-sm:!rounded-none">
         <!-- Fixed Header -->
-        <div class="rv-modal-header flex justify-between items-center px-6 py-5 shrink-0">
+        <div class="rv-modal-header flex justify-between items-center px-6 py-5 shrink-0 max-sm:!p-4">
           <span class="rv-modal-title">${p.storeReviewCount} Mağaza Yorumları</span>
           <button type="button" class="rv-modal-close" id="rv-modal-close">
             <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -35,7 +35,7 @@ export function ReviewsModal(): string {
         </div>
 
         <!-- Scrollable Body -->
-        <div class="rv-modal-body overflow-y-auto px-6 pb-6 flex-1">
+        <div class="rv-modal-body overflow-y-auto px-6 pb-6 flex-1 max-sm:!px-4 max-sm:!pb-4">
           <!-- Filter Row -->
           <div class="rv-filter-row flex items-center gap-2 flex-wrap mb-4">
             <button type="button" class="rv-filter-pill active" data-rv-modal-filter="all">Tümü</button>
@@ -47,7 +47,7 @@ export function ReviewsModal(): string {
                 Puan
                 <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
               </button>
-              <div class="rv-rating-dropdown-panel">
+              <div class="rv-rating-dropdown-panel max-sm:!min-w-[160px]">
                 <button type="button" class="rv-rating-dropdown-item active" data-rv-modal-rating="all">Tüm Puanlar</button>
                 <button type="button" class="rv-rating-dropdown-item" data-rv-modal-rating="5">${renderStars(5, true)} 5 Yıldız</button>
                 <button type="button" class="rv-rating-dropdown-item" data-rv-modal-rating="4">${renderStars(4, true)} 4 Yıldız</button>
@@ -58,12 +58,12 @@ export function ReviewsModal(): string {
             </div>
 
             <!-- Sort Dropdown -->
-            <div class="rv-sort-dropdown" id="rv-modal-sort-dropdown">
-              <button type="button" class="rv-sort-dropdown-trigger">
+            <div class="rv-sort-dropdown max-sm:!ml-0 max-sm:!w-full" id="rv-modal-sort-dropdown">
+              <button type="button" class="rv-sort-dropdown-trigger max-sm:!w-full max-sm:!justify-between">
                 Sırala: En alakalı
                 <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
               </button>
-              <div class="rv-sort-dropdown-panel">
+              <div class="rv-sort-dropdown-panel max-sm:!left-0 max-sm:!right-0">
                 <button type="button" class="rv-sort-dropdown-item active" data-rv-modal-sort="relevant">En alakalı</button>
                 <button type="button" class="rv-sort-dropdown-item" data-rv-modal-sort="newest">En yeni</button>
               </div>

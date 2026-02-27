@@ -26,8 +26,8 @@ export function CompanyIntroduction(
 
   return `
     <section id="company-introduction" class="company-intro py-12" aria-label="Şirket tanıtımı">
-      <div class="max-w-[var(--container-lg)] mx-auto px-4 lg:px-6 xl:px-8">
-        <div class="company-intro__card bg-white dark:bg-gray-800 border border-[var(--card-border-color)] rounded-[var(--radius-lg)] shadow-md dark:shadow-lg p-10 lg:p-6">
+      <div class="max-w-(--container-lg) mx-auto px-[clamp(0.75rem,0.5rem+1vw,1.5rem)] lg:px-6 xl:px-8">
+        <div class="company-intro__card bg-white dark:bg-gray-800 border border-(--card-border-color) rounded-(--radius-lg) shadow-md dark:shadow-lg p-4 sm:p-6 lg:p-10">
 
           <!-- Title -->
           <h2 class="company-intro__title text-[24px] font-bold text-[#1e3a5f] dark:text-blue-300 uppercase text-center mb-6">
@@ -46,12 +46,12 @@ export function CompanyIntroduction(
             </span>
             <span class="text-[13px] text-[#374151] dark:text-gray-300">Supplier Assessment</span>
             ${seller.verificationBadgeType === 'pro' ? `
-              <span class="inline-flex items-center bg-[var(--store-accent)] text-white text-[11px] font-semibold px-2 py-0.5 rounded-sm uppercase">PRO</span>
+              <span class="inline-flex items-center bg-(--store-accent) text-white text-[11px] font-semibold px-2 py-0.5 rounded-sm uppercase">PRO</span>
             ` : ''}
           </div>
 
           <!-- 3×2 Info Grid -->
-          <div class="company-intro__grid grid grid-cols-3 lg:grid-cols-2 md:grid-cols-1 gap-6 mb-8">
+          <div class="company-intro__grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mb-8">
             ${cells.map(cell => `
               <div class="company-intro__cell flex items-start gap-3 hover:shadow-md transition-shadow duration-300">
                 <div class="w-10 h-10 rounded-full bg-[#f3f4f6] dark:bg-gray-700 flex items-center justify-center flex-shrink-0">
@@ -77,9 +77,9 @@ export function CompanyIntroduction(
 
           <!-- Photo Grid -->
           ${photos && photos.length ? `
-            <div class="company-intro__photos grid grid-cols-4 lg:grid-cols-2 gap-3 mb-8">
+            <div class="company-intro__photos grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-8">
               ${photos.map(photo => `
-                <div class="relative rounded-[var(--radius-md)] overflow-hidden aspect-[4/3]">
+                <div class="relative rounded-(--radius-md) overflow-hidden aspect-[4/3]">
                   <img src="${photo.image}" alt="${photo.caption}" class="w-full h-full object-cover" loading="lazy" />
                   ${photo.hasVideo ? `
                     <button class="absolute inset-0 flex items-center justify-center" aria-label="Video oynat">
@@ -100,14 +100,14 @@ export function CompanyIntroduction(
 
           <!-- CTA Buttons -->
           <div class="company-intro__cta flex flex-wrap items-center justify-center gap-4">
-            <button class="bg-[#f97316] hover:bg-[#ea580c] text-white font-semibold text-[14px] rounded-[var(--radius-button)] px-6 py-2.5 transition-colors cursor-pointer flex items-center gap-2 focus:ring-2 focus:ring-[#f97316] focus:ring-offset-2"
+            <button class="bg-[#f97316] hover:bg-[#ea580c] text-white font-semibold text-[14px] rounded-(--radius-button) px-6 py-2.5 transition-colors cursor-pointer flex items-center gap-2 focus:ring-2 focus:ring-[#f97316] focus:ring-offset-2"
                     onclick="document.getElementById('contact-form')?.scrollIntoView({behavior:'smooth'})">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
               </svg>
               Contact Supplier
             </button>
-            <button class="bg-transparent border border-[#d1d5db] dark:border-gray-600 hover:bg-[#f9fafb] text-[#374151] dark:text-gray-300 font-medium text-[14px] rounded-[var(--radius-button)] px-6 py-2.5 transition-colors cursor-pointer focus:ring-2 focus:ring-[#f97316] focus:ring-offset-2">
+            <button class="bg-transparent border border-[#d1d5db] dark:border-gray-600 hover:bg-[#f9fafb] text-[#374151] dark:text-gray-300 font-medium text-[14px] rounded-(--radius-button) px-6 py-2.5 transition-colors cursor-pointer focus:ring-2 focus:ring-[#f97316] focus:ring-offset-2">
               Start Order
             </button>
             <a href="#company-info" class="text-[#f97316] font-medium text-[14px] hover:underline flex items-center gap-1 focus:ring-2 focus:ring-[#f97316] focus:ring-offset-2 rounded">

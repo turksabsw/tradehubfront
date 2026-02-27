@@ -10,11 +10,11 @@ export function CompanyProfile(): string {
   const s = mockProduct.supplier;
 
   return `
-    <div class="py-6">
+    <div class="py-6 max-[374px]:py-4">
       <!-- 1. Hero Banner -->
-      <div class="flex items-center justify-between gap-5 mb-6 p-6 rounded-lg border max-sm:flex-col max-sm:items-start" style="background: linear-gradient(135deg, var(--pd-spec-header-bg, #f9fafb) 0%, #fff 100%); border-color: var(--pd-spec-border, #e5e5e5);">
+      <div class="flex items-center justify-between gap-5 mb-6 p-6 rounded-lg border max-sm:flex-col max-sm:items-start max-[374px]:p-3.5 max-[374px]:gap-3 max-[374px]:mb-4" style="background: linear-gradient(135deg, var(--pd-spec-header-bg, #f9fafb) 0%, #fff 100%); border-color: var(--pd-spec-border, #e5e5e5);">
         <div>
-          <div class="flex items-center gap-2 text-xl font-bold" style="color: var(--pd-title-color, #111827);">
+          <div class="flex items-center gap-2 text-xl font-bold max-[374px]:text-base max-[374px]:gap-1.5" style="color: var(--pd-title-color, #111827);">
             ${s.name}
             ${s.verified ? `
               <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor" style="color: var(--pd-supplier-verified-color, #cc9900);">
@@ -24,26 +24,26 @@ export function CompanyProfile(): string {
           </div>
           <p class="text-[13px] mt-1" style="color: var(--pd-rating-text-color, #6b7280);">Verified Multispecialty Supplier &middot; ${s.yearsInBusiness} yıl &middot; \u{1F1F9}\u{1F1F7} TR</p>
         </div>
-        <button type="button" class="px-6 py-2.5 rounded-[20px] border text-sm font-semibold whitespace-nowrap cursor-pointer transition-colors hover:bg-[var(--pd-spec-header-bg,#f9fafb)]" style="border-color: var(--pd-title-color, #111827); background: var(--color-surface, #ffffff); color: var(--pd-title-color, #111827);">İletişime Geç</button>
+        <button type="button" class="px-6 py-2.5 rounded-[20px] border text-sm font-semibold whitespace-nowrap cursor-pointer transition-colors hover:bg-(--pd-spec-header-bg,#f9fafb) max-[374px]:px-4 max-[374px]:py-2 max-[374px]:text-[13px] max-[374px]:w-full max-[374px]:text-center" style="border-color: var(--pd-title-color, #111827); background: var(--color-surface, #ffffff); color: var(--pd-title-color, #111827);">İletişime Geç</button>
       </div>
 
       <!-- 2. Stat Counters -->
-      <div class="grid grid-cols-3 gap-4 mb-6 max-sm:grid-cols-1">
-        <div class="flex flex-col items-center text-center p-4 rounded-lg border" style="border-color: var(--pd-spec-border, #e5e5e5); background: var(--color-surface, #ffffff);">
+      <div class="grid grid-cols-3 gap-4 mb-6 max-sm:grid-cols-1 max-[374px]:gap-2 max-[374px]:mb-4">
+        <div class="flex flex-col items-center text-center p-4 rounded-lg border max-[374px]:p-3 max-[374px]:flex-row max-[374px]:gap-2 max-[374px]:text-left" style="border-color: var(--pd-spec-border, #e5e5e5); background: var(--color-surface, #ffffff);">
           <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="color: var(--pd-rating-text-color, #6b7280); margin-bottom: 6px;">
             <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
           </svg>
           <span class="text-xl font-extrabold" style="color: var(--pd-title-color, #111827);">${s.responseTime}</span>
           <span class="text-xs mt-1" style="color: var(--pd-rating-text-color, #6b7280);">Yanıt Süresi</span>
         </div>
-        <div class="flex flex-col items-center text-center p-4 rounded-lg border" style="border-color: var(--pd-spec-border, #e5e5e5); background: var(--color-surface, #ffffff);">
+        <div class="flex flex-col items-center text-center p-4 rounded-lg border max-[374px]:p-3 max-[374px]:flex-row max-[374px]:gap-2 max-[374px]:text-left" style="border-color: var(--pd-spec-border, #e5e5e5); background: var(--color-surface, #ffffff);">
           <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="color: var(--pd-rating-text-color, #6b7280); margin-bottom: 6px;">
             <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
           </svg>
           <span class="text-xl font-extrabold" style="color: var(--pd-title-color, #111827);">${s.responseRate}</span>
           <span class="text-xs mt-1" style="color: var(--pd-rating-text-color, #6b7280);">Yanıt Oranı</span>
         </div>
-        <div class="flex flex-col items-center text-center p-4 rounded-lg border" style="border-color: var(--pd-spec-border, #e5e5e5); background: var(--color-surface, #ffffff);">
+        <div class="flex flex-col items-center text-center p-4 rounded-lg border max-[374px]:p-3 max-[374px]:flex-row max-[374px]:gap-2 max-[374px]:text-left" style="border-color: var(--pd-spec-border, #e5e5e5); background: var(--color-surface, #ffffff);">
           <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="color: var(--pd-rating-text-color, #6b7280); margin-bottom: 6px;">
             <rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>
           </svg>
@@ -76,7 +76,7 @@ export function CompanyProfile(): string {
       <!-- 4. Factory Capabilities -->
       <div style="margin-bottom: 24px;">
         <h3 class="pd-section-heading">Fabrika Kapasitesi</h3>
-        <div class="grid grid-cols-4 gap-3 mb-6 max-sm:grid-cols-2">
+        <div class="grid grid-cols-4 gap-3 mb-6 max-sm:grid-cols-2 max-[374px]:gap-2">
           ${[
             { label: 'Üretim Hattı', stroke: '#4a5e9a', icon: '<rect x="3" y="8" width="18" height="12" rx="1"/><path d="M7 8V6a2 2 0 012-2h6a2 2 0 012 2v2"/><path d="M12 12v4"/>' },
             { label: 'Kalite Kontrol', stroke: '#2d8a5e', icon: '<path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>' },
@@ -96,9 +96,9 @@ export function CompanyProfile(): string {
       <!-- 5. Certifications -->
       <div style="margin-bottom: 24px;">
         <h3 class="pd-section-heading">Sertifikalar</h3>
-        <div class="flex flex-wrap gap-3">
+        <div class="flex flex-wrap gap-3 max-[374px]:gap-2">
           ${s.certifications.map(cert => `
-            <div class="flex items-center gap-2 px-4 py-3 rounded-md" style="border: 1px solid var(--pd-spec-border, #e5e5e5);">
+            <div class="flex items-center gap-2 px-4 py-3 rounded-md max-[374px]:px-3 max-[374px]:py-2 max-[374px]:w-full" style="border: 1px solid var(--pd-spec-border, #e5e5e5);">
               <svg class="h-5 w-5" style="color: var(--pd-trade-assurance-text, #15803d);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
               </svg>

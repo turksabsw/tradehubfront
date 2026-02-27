@@ -10,7 +10,7 @@
 export function LoginModal(): string {
   return `
     <div id="rv-login-modal" class="rv-login-overlay rv-modal-hidden fixed inset-0 bg-black/50 z-[60] flex items-center justify-center">
-      <div class="rv-login-modal max-w-[420px] w-[95%] p-0 rounded-2xl bg-surface shadow-modal overflow-hidden relative">
+      <div class="rv-login-modal max-w-[420px] w-[95%] p-0 rounded-2xl bg-surface shadow-modal overflow-hidden relative max-sm:!w-full max-sm:!max-w-full max-sm:!rounded-none max-sm:!min-h-screen">
         <!-- Close Button -->
         <button type="button" class="rv-login-close absolute top-3 right-3 w-8 h-8 flex items-center justify-center rounded-full border-none bg-transparent cursor-pointer text-secondary-400 hover:bg-black/5 hover:text-secondary-900 transition-colors z-[1]" id="rv-login-close">
           <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">

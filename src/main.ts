@@ -37,7 +37,7 @@ const appEl = document.querySelector<HTMLDivElement>('#app')!;
 appEl.classList.add('relative');
 appEl.innerHTML = `
   <!-- Sticky Header (global, stays sticky across full page) -->
-  <div id="sticky-header" class="sticky top-0 z-[var(--z-header)]" style="background-color:var(--header-scroll-bg);border-bottom:1px solid var(--header-scroll-border)">
+  <div id="sticky-header" class="sticky top-0 z-(--z-header)" style="background-color:var(--header-scroll-bg);border-bottom:1px solid var(--header-scroll-border)">
     ${TopBar()}
     ${SubHeader()}
   </div>
@@ -56,11 +56,11 @@ appEl.innerHTML = `
     <!-- Hero: Categories + Recommendation Slider + Right Banner Slider -->
     <section class="pt-1 pb-2 lg:py-6" aria-label="Browse categories and recommendations">
       <div class="container-boxed">
-        <div class="flex flex-col lg:flex-row gap-4 items-stretch">
+        <div class="flex flex-col lg:flex-row gap-(--space-card-gap) items-stretch">
           <div class="hidden lg:block lg:w-[300px] lg:flex-shrink-0">
             ${CategoryBrowse()}
           </div>
-          <div class="h-[260px] lg:h-[300px] flex-1 min-w-0">
+          <div class="h-[200px] sm:h-[260px] lg:h-[300px] flex-1 min-w-0">
             ${RecommendationSlider()}
           </div>
           <div class="hidden h-[300px] lg:block lg:w-[340px] lg:flex-shrink-0">

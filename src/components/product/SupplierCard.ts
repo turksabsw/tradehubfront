@@ -15,12 +15,12 @@ function verifiedBadge(): string {
 
 function statRow(icon: string, label: string, value: string): string {
   return `
-    <div class="flex items-center gap-2">
-      <svg class="h-4 w-4 flex-shrink-0" style="color: var(--pd-shipping-icon-color, #6b7280);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <div class="flex items-center gap-2 min-w-0">
+      <svg class="h-4 w-4 shrink-0" style="color: var(--pd-shipping-icon-color, #6b7280);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         ${icon}
       </svg>
-      <span class="text-xs" style="color: var(--pd-rating-text-color, #6b7280);">${label}</span>
-      <span class="text-xs font-semibold ml-auto" style="color: var(--pd-title-color, #111827);">${value}</span>
+      <span class="text-xs truncate" style="color: var(--pd-rating-text-color, #6b7280);">${label}</span>
+      <span class="text-xs font-semibold ml-auto shrink-0" style="color: var(--pd-title-color, #111827);">${value}</span>
     </div>
   `;
 }
@@ -29,10 +29,10 @@ export function SupplierCard(): string {
   const s = mockProduct.supplier;
 
   return `
-    <div class="th-card flex flex-col gap-4" style="background: var(--pd-supplier-card-bg, #ffffff);">
+    <div class="th-card flex flex-col gap-4 min-w-0 overflow-hidden" style="background: var(--pd-supplier-card-bg, #ffffff);">
       <!-- Company Name -->
-      <div class="flex items-start gap-2">
-        <div class="h-10 w-10 rounded-md flex items-center justify-center flex-shrink-0" style="background: var(--pd-price-tier-active-bg, #fef9e7);">
+      <div class="flex items-start gap-2 min-w-0">
+        <div class="h-10 w-10 rounded-md flex items-center justify-center shrink-0" style="background: var(--pd-price-tier-active-bg, #fef9e7);">
           <svg class="h-5 w-5" style="color: var(--pd-supplier-verified-color, #cc9900);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
           </svg>

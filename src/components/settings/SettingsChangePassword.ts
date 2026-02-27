@@ -29,16 +29,16 @@ function renderStepper(activeStep: number): string {
   ];
 
   return `
-    <div class="flex items-center justify-center mb-8">
+    <div class="flex items-center justify-center mb-8 max-sm:mb-5">
       ${steps.map((s, i) => {
         const isActive = s.num === activeStep;
         const isDone = s.num < activeStep;
         const icon = isDone ? ICONS.checkActive : s.isLast ? ICONS.check : `<span class="flex items-center justify-center w-7 h-7 rounded-full text-[13px] font-semibold ${isActive ? 'text-white' : ''}" style="background:${isActive ? 'var(--stepper-active-bg, #cc9900)' : '#e5e7eb'}; color:${isActive ? '#fff' : 'var(--color-text-muted, #666666)'}">${s.num}</span>`;
-        const line = i < steps.length - 1 ? `<div class="w-[120px] h-0.5 -mx-2 mb-6 max-md:w-[60px]" style="background:${isDone ? '#22c55e' : '#e5e7eb'}"></div>` : '';
+        const line = i < steps.length - 1 ? `<div class="w-[120px] h-0.5 -mx-2 mb-6 max-md:w-[60px] max-sm:w-[30px]" style="background:${isDone ? '#22c55e' : '#e5e7eb'}"></div>` : '';
         return `
-          <div class="flex flex-col items-center gap-2 min-w-[100px]">
+          <div class="flex flex-col items-center gap-2 min-w-[100px] max-sm:min-w-[70px]">
             ${icon}
-            <span class="text-xs whitespace-nowrap" style="color:${isDone ? '#22c55e' : isActive ? 'var(--color-primary-500, #cc9900)' : 'var(--color-text-placeholder, #999999)'}; font-weight:${isActive || isDone ? '600' : '400'}">${s.label}</span>
+            <span class="text-xs whitespace-nowrap max-sm:text-[10px]" style="color:${isDone ? '#22c55e' : isActive ? 'var(--color-primary-500, #cc9900)' : 'var(--color-text-placeholder, #999999)'}; font-weight:${isActive || isDone ? '600' : '400'}">${s.label}</span>
           </div>
           ${line}
         `;
@@ -69,8 +69,8 @@ function renderStep1(email: string): string {
         </div>
         <p class="text-xs text-green-500 mt-2 mb-3 pl-[132px] max-md:pl-0">E-postanıza yeni bir doğrulama kodu gönderildi ve 30 dakika geçerli olacak. Lütfen bu kodu başkalarıyla paylaşmayın.</p>
         <p class="text-[13px] mb-5 pl-[132px] max-md:pl-0" style="color:var(--color-text-body, #333333)">Doğrulama kodu gelmedi mi? <a href="#" class="text-blue-600 no-underline hover:underline" id="pw-resend">Buraya tıklayın.</a></p>
-        <div class="flex items-center gap-4 pl-[132px] max-md:pl-0">
-          <button class="py-2.5 px-9 rounded text-sm font-semibold border-none cursor-pointer transition-all text-white" style="background:var(--color-cta-primary, #cc9900)" type="button" id="pw-verify-submit">Gönder</button>
+        <div class="flex items-center gap-4 max-sm:flex-col max-sm:items-start pl-[132px] max-md:pl-0">
+          <button class="py-2.5 px-9 rounded text-sm font-semibold border-none cursor-pointer transition-all text-white max-sm:w-full" style="background:var(--color-cta-primary, #cc9900)" type="button" id="pw-verify-submit">Gönder</button>
           <a href="#" class="text-[13px] text-green-500 no-underline font-medium hover:underline">Farklı bir doğrulama yöntemi deneyin</a>
         </div>
       </div>
@@ -120,7 +120,7 @@ function renderStep3(): string {
 export function SettingsChangePassword(): string {
   const email = readEmail();
   return `
-    <div class="bg-white rounded-lg p-8 max-md:p-5">
+    <div class="bg-white rounded-lg p-8 max-md:p-5 max-sm:p-3">
       <h2 class="text-xl font-bold mb-7 m-0" style="color:var(--color-text-heading, #111827)">Kimlik doğrulama</h2>
       <div id="pw-steps-root">
         ${renderStep1(email)}

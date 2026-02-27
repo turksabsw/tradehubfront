@@ -24,11 +24,11 @@ function renderPhoneForm(): string {
         <p class="text-sm text-center mb-6 m-0" style="color:var(--color-text-muted, #666666)">Yeni telefon numaranızı girin. Doğrulama için SMS göndereceğiz.</p>
         <div class="mb-4">
           <label class="block text-[13px] font-medium mb-1.5" style="color:var(--color-text-muted, #666666)">Ülke Kodu</label>
-          <input type="text" class="w-full max-w-[120px] py-2.5 px-3.5 border-[1.5px] border-gray-300 rounded-lg text-sm outline-none focus:border-[var(--color-text-heading)]" style="color:var(--color-text-heading, #111827)" id="phone-country" value="+90" placeholder="+90" />
+          <input type="text" class="w-full max-w-[120px] py-2.5 px-3.5 border-[1.5px] border-gray-300 rounded-lg text-sm outline-none focus:border-(--color-text-heading)" style="color:var(--color-text-heading, #111827)" id="phone-country" value="+90" placeholder="+90" />
         </div>
         <div class="mb-4">
           <label class="block text-[13px] font-medium mb-1.5" style="color:var(--color-text-muted, #666666)">Telefon Numarası</label>
-          <input type="tel" class="w-full max-w-[320px] py-2.5 px-3.5 border-[1.5px] border-gray-300 rounded-lg text-sm outline-none focus:border-[var(--color-text-heading)]" style="color:var(--color-text-heading, #111827)" id="phone-number" placeholder="5XX XXX XX XX" />
+          <input type="tel" class="w-full max-w-[320px] py-2.5 px-3.5 border-[1.5px] border-gray-300 rounded-lg text-sm outline-none focus:border-(--color-text-heading)" style="color:var(--color-text-heading, #111827)" id="phone-number" placeholder="5XX XXX XX XX" />
         </div>
         <p class="text-[13px] text-red-500 mb-3" id="phone-error" style="display:none"></p>
         <button class="block w-full max-w-[320px] mx-auto py-3 border-none rounded-lg text-sm font-semibold cursor-pointer transition-colors text-white" style="background:var(--color-cta-primary, #cc9900)" type="button" id="phone-send-code">Doğrulama kodu gönder</button>
@@ -44,7 +44,7 @@ function renderVerifyStep(): string {
         <h2 class="text-xl font-bold mb-3 m-0 text-center" style="color:var(--color-text-heading, #111827)">Doğrulama kodunu girin</h2>
         <p class="text-sm text-center mb-6 m-0" style="color:var(--color-text-muted, #666666)">Telefon numaranıza gönderilen 6 haneli kodu girin.</p>
         <div class="flex items-center justify-center gap-3 mb-5">
-          <input type="text" class="py-2.5 px-3.5 border-[1.5px] border-gray-300 rounded-lg text-sm w-[180px] text-center outline-none focus:border-[var(--color-text-heading)]" id="phone-verify-code" maxlength="6" placeholder="6 haneli kod" />
+          <input type="text" class="py-2.5 px-3.5 border-[1.5px] border-gray-300 rounded-lg text-sm w-[180px] text-center outline-none focus:border-(--color-text-heading)" id="phone-verify-code" maxlength="6" placeholder="6 haneli kod" />
           <span class="py-1.5 px-3 border border-primary-500 rounded text-[13px] font-semibold whitespace-nowrap" style="color:var(--color-primary-500, #cc9900)" id="phone-timer">60 s</span>
         </div>
         <p class="text-[13px] text-red-500 mb-3" id="phone-verify-error" style="display:none"></p>

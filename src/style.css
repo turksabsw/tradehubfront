@@ -296,11 +296,7 @@
 
     --shadow-xl: 0 8px 16px -4px rgba(0, 0, 0, 0.06), 0 24px 48px -8px rgba(0, 0, 0, 0.12);
 
-    /* --- Semantic Shadow --- */
-    --shadow-card: var(--shadow-sm);
-    --shadow-dropdown: var(--shadow-md);
-    --shadow-modal: var(--shadow-xl);
-    --shadow-toast: var(--shadow-lg);
+    /* --- Semantic Shadow — moved to @theme inline below --- */
 
 
     /* ==========================================================
@@ -316,66 +312,113 @@
     --ease-in: ease-in;
     --ease-out: ease-out;
 
-    --animate-fade-in: fade-in var(--duration-default) var(--ease-default);
-    --animate-fade-out: fade-out var(--duration-default) var(--ease-default);
+    /* --- animate tokens — moved to @theme inline below --- */
 
+
+
+
+    /* ==========================================================
+     10. Z-INDEX
+     ========================================================== */
+
+    --z-behind: -1;
+    --z-base: 0;
+    --z-raised: 1;
+    --z-dropdown: 10;
+    --z-sticky: 20;
+    --z-header: 30;
+    --z-sidebar: 35;
+    --z-backdrop: 40;
+    --z-modal: 50;
+    --z-popover: 60;
+    --z-toast: 70;
+    --z-tooltip: 80;
+    --z-spotlight: 90;
+    --z-max: 100;
+    --z-fixed: 40;
+
+}
+
+/* ============================================================
+   :root — COMPONENT TOKENS
+   ============================================================ */
+:root {
+    /* ==========================================================
+     FLUID TYPOGRAPHY TOKENS (320px → 1280px)
+     ========================================================== */
+    --text-page-title:    clamp(1.125rem, 1rem + 0.5vw, 1.5rem);       /* 18px → 24px */
+    --text-product-title: clamp(0.8125rem, 0.75rem + 0.25vw, 0.9375rem); /* 13px → 15px */
+    --text-product-price: clamp(0.9375rem, 0.875rem + 0.25vw, 1.25rem);  /* 15px → 20px */
+    --text-product-meta:  clamp(0.6875rem, 0.65rem + 0.15vw, 0.8125rem); /* 11px → 13px */
+    --text-badge:         clamp(0.625rem, 0.6rem + 0.1vw, 0.75rem);      /* 10px → 12px */
+    --text-breadcrumb:    clamp(0.6875rem, 0.65rem + 0.15vw, 0.8125rem); /* 11px → 13px */
+    --text-filter:        clamp(0.75rem, 0.7rem + 0.2vw, 0.875rem);      /* 12px → 14px */
+    --text-body:          clamp(0.8125rem, 0.78rem + 0.15vw, 0.9375rem); /* 13px → 15px */
+
+    /* ==========================================================
+     FLUID SPACING TOKENS (320px → 1280px)
+     ========================================================== */
+    --space-page-x:       clamp(0.75rem, 0.5rem + 1vw, 1.5rem);         /* 12px → 24px */
+    --space-card-padding: clamp(0.5rem, 0.4rem + 0.4vw, 1rem);          /* 8px → 16px */
+    --space-card-gap:     clamp(0.5rem, 0.4rem + 0.4vw, 1rem);          /* 8px → 16px */
+    --space-section-gap:  clamp(1rem, 0.8rem + 0.8vw, 2rem);            /* 16px → 32px */
 
     /* ==========================================================
      8. COMPONENT TOKENS
      ========================================================== */
 
     /* --- Button --- */
-    --btn-bg: #cc9900;
-    --btn-text: #ffffff;
+    --btn-bg: var(--color-primary-500);
+    --btn-text: var(--color-surface);
     --btn-border-width: 0px;
-    --btn-border-color: #cc9900;
+    --btn-border-color: var(--color-primary-500);
     --btn-font-size: 0.875rem;
     --btn-font-weight: 600;
     --btn-shadow: none;
 
     /* --- Button Outline Variant --- */
-    --btn-outline-bg: #ffffff;
-    --btn-outline-text: #cc9900;
+    --btn-outline-bg: var(--color-surface);
+    --btn-outline-text: var(--color-primary-500);
     --btn-outline-border-width: 2px;
-    --btn-outline-border-color: #cc9900;
+    --btn-outline-border-color: var(--color-primary-500);
 
     /* --- Auth Pages (Login, Register, Forgot Password) --- */
-    --auth-btn-bg: #cc9900;
-    --auth-btn-hover: #b38600;
-    --auth-btn-text: #ffffff;
-    --auth-accent: #cc9900;
-    --auth-input-focus: #cc9900;
-    --auth-header-border: #cc9900;
+    --auth-btn-bg: var(--color-primary-500);
+    --auth-btn-hover: var(--color-primary-600);
+    --auth-btn-text: var(--color-surface);
+    --auth-accent: var(--color-primary-500);
+    --auth-input-focus: var(--color-primary-500);
+    --auth-header-border: var(--color-primary-500);
 
     /* --- Card --- */
-    --card-bg: #ffffff;
+    --card-bg: var(--color-surface);
     --card-border-width: 0px;
-    --card-border-color: #e5e5e5;
+    --card-border-color: var(--color-border-default);
     --card-title-size: 0.6875rem;
     --card-title-weight: 600;
-    --card-price-color: #111827;
+    --card-price-color: var(--color-text-heading);
     --card-price-size: 16px;
     --card-price-weight: 700;
     --card-desc-color: #6b7280;
     --card-desc-size: 12px;
     --card-moq-color: #6b7280;
     --card-moq-size: 11px;
-    --card-badge-bg: #fef9e7;
-    --card-badge-text: #cc9900;
+    --card-badge-bg: var(--color-primary-50);
+    --card-badge-text: var(--color-primary-500);
     --card-badge-size: 10px;
     --card-badge-radius: 5px;
-    --card-verified-color: #cc9900;
+    --card-verified-color: var(--color-primary-500);
     --card-verified-size: 9px;
     --card-supplier-color: #9ca3af;
     --card-supplier-size: 9px;
 
     /* --- Input / Search --- */
-    --input-bg: #ffffff;
+    --input-bg: var(--color-surface);
     --input-border-width: 1px;
-    --input-border-color: #e5e5e5;
-    --input-text-color: #0a0a0a;
+    --input-border-color: var(--color-border-default);
+    --input-text-color: var(--color-text-primary);
     --input-font-size: 0.875rem;
-    --input-focus-border-color: #cc9900;
+    --input-focus-border-color: var(--color-primary-500);
 
     /* --- Badge --- */
     --badge-font-size: 0.75rem;
@@ -387,7 +430,7 @@
     --nav-font-size: 0.8125rem;
     --nav-font-weight: 300;
     --nav-text-color: #000000;
-    --nav-hover-color: #b38600;
+    --nav-hover-color: var(--color-primary-600);
 
 
     /* ==========================================================
@@ -395,17 +438,17 @@
      ========================================================== */
 
     /* --- Header / TopBar --- */
-    --header-bg: #ffffff;
-    --header-scroll-bg: #ffffff;
-    --header-scroll-border: #e5e5e5;
+    --header-bg: var(--color-surface);
+    --header-scroll-bg: var(--color-surface);
+    --header-scroll-border: var(--color-border-default);
     --header-height: 64px;
     --header-border-color: transparent;
     --header-text-color: #374151;
     --header-icon-color: #374151;
-    --header-icon-hover-color: #cc9900;
+    --header-icon-hover-color: var(--color-primary-500);
 
     /* --- SubHeader --- */
-    --subheader-bg: #ffffff;
+    --subheader-bg: var(--color-surface);
     --subheader-text-color: #000000;
     --subheader-hover-color: #a3a3a3;
     --subheader-hover-bg: rgba(255, 255, 255, 0.8);
@@ -422,14 +465,14 @@
     /* --- Search Area --- */
     --search-bg: transparent;
     --search-tab-color: #6b7280;
-    --search-tab-active-color: #cc9900;
-    --search-input-border-color: #cc9900;
-    --search-btn-gradient-start: #e6b212;
-    --search-btn-gradient-end: #b38600;
-    --search-box-bg: #ffffff;
-    --search-input-text: #111827;
+    --search-tab-active-color: var(--color-primary-500);
+    --search-input-border-color: var(--color-primary-500);
+    --search-btn-gradient-start: var(--color-primary-400);
+    --search-btn-gradient-end: var(--color-primary-600);
+    --search-box-bg: var(--color-surface);
+    --search-input-text: var(--color-text-heading);
     --search-image-link-color: #6b7280;
-    --search-dropdown-bg: #ffffff;
+    --search-dropdown-bg: var(--color-surface);
     --search-dropdown-border: #fcd34d;
     --search-dropdown-text: #374151;
     --search-dropdown-muted: #9ca3af;
@@ -439,22 +482,22 @@
     --search-chip-hover-bg: #f3f4f6;
     --search-chip-accent: #fbbf24;
     --search-welcome-bg: #f8f8f8;
-    --search-welcome-text: #111827;
+    --search-welcome-text: var(--color-text-heading);
 
     /* --- MegaMenu --- */
-    --mega-bg: #ffffff;
+    --mega-bg: var(--color-surface);
     --mega-sidebar-bg: #f9fafb;
-    --mega-sidebar-hover-bg: #ffffff;
-    --mega-sidebar-active-bg: #ffffff;
+    --mega-sidebar-hover-bg: var(--color-surface);
+    --mega-sidebar-active-bg: var(--color-surface);
     --mega-border-color: #e5e7eb;
-    --mega-text-color: #0a0a0a;
-    --mega-heading-color: #0a0a0a;
+    --mega-text-color: var(--color-text-primary);
+    --mega-heading-color: var(--color-text-primary);
     --mega-body-text: #6b7280;
     --mega-link-color: #000000;
-    --mega-link-hover-color: #b38600;
+    --mega-link-hover-color: var(--color-primary-600);
     --mega-icon-color: #6b7280;
     --mega-icon-bg: #f3f4f6;
-    --mega-accent-color: #b38600;
+    --mega-accent-color: var(--color-primary-600);
     --mega-accent-bg: #fcd34d;
     --mega-card-hover-border: #fcd34d;
     --mega-sidebar-active-border: #e1b533;
@@ -462,50 +505,50 @@
     --mega-font-weight: 400;
 
     /* --- Hero --- */
-    --hero-bg: #ffffff;
-    --hero-card-bg: #ffffff;
-    --hero-card-border-color: #e5e5e5;
+    --hero-bg: var(--color-surface);
+    --hero-card-bg: var(--color-surface);
+    --hero-card-border-color: var(--color-border-default);
     --hero-card-radius: 16px;
-    --hero-title-color: #111827;
+    --hero-title-color: var(--color-text-heading);
 
     /* --- Manufacturers Hero Section --- */
-    --mfr-hero-card-bg: #ffffff;
+    --mfr-hero-card-bg: var(--color-surface);
     --mfr-hero-card-shadow: 0 0 12px rgba(0, 0, 0, 0.05);
     --mfr-hero-card-radius: 6px;
-    --mfr-sidebar-bg: #ffffff;
-    --mfr-sidebar-heading-color: #111827;
+    --mfr-sidebar-bg: var(--color-surface);
+    --mfr-sidebar-heading-color: var(--color-text-heading);
     --mfr-sidebar-text-color: #374151;
     --mfr-sidebar-icon-color: #6b7280;
     --mfr-sidebar-chevron-color: #d1d5db;
     --mfr-sidebar-hover-bg: #f9fafb;
     --mfr-flyout-bg: #f4f4f4;
-    --mfr-flyout-heading-color: #111827;
+    --mfr-flyout-heading-color: var(--color-text-heading);
     --mfr-flyout-link-color: #767676;
     --mfr-sample-heading-color: #222222;
-    --mfr-sample-label-color: #666666;
+    --mfr-sample-label-color: var(--color-text-muted);
     --mfr-sample-img-bg: #f5f5f5;
     --mfr-ranking-heading-color: #222222;
-    --mfr-ranking-label-color: #666666;
+    --mfr-ranking-label-color: var(--color-text-muted);
     --mfr-profile-text-color: #222222;
-    --mfr-profile-label-color: #666666;
+    --mfr-profile-label-color: var(--color-text-muted);
     --mfr-profile-avatar-bg: #dddddd;
     --mfr-profile-btn-bg: var(--color-primary-500, #cc9900);
     --mfr-profile-btn-hover: var(--color-primary-700, #8a6800);
-    --mfr-profile-btn-text: #ffffff;
+    --mfr-profile-btn-text: var(--color-surface);
     --mfr-profile-rfq-border: #222222;
     --mfr-profile-rfq-text: #222222;
 
     /* --- Category Popup --- */
-    --catpopup-bg: #ffffff;
+    --catpopup-bg: var(--color-surface);
     --catpopup-border: #e5e7eb;
-    --catpopup-heading: #111827;
+    --catpopup-heading: var(--color-text-heading);
     --catpopup-text: #4b5563;
-    --catpopup-link: #cc9900;
-    --catpopup-link-hover: #b38600;
+    --catpopup-link: var(--color-primary-500);
+    --catpopup-link-hover: var(--color-primary-600);
     --catpopup-sidebar-bg: #f9fafb;
     --catpopup-sidebar-hover-bg: #f3f4f6;
-    --catpopup-sidebar-active-bg: #ffffff;
-    --catpopup-sidebar-active-border: #cc9900;
+    --catpopup-sidebar-active-bg: var(--color-surface);
+    --catpopup-sidebar-active-border: var(--color-primary-500);
     --catpopup-sidebar-font-size: 0.6875rem;
     --catpopup-sidebar-font-weight: 400;
     --catpopup-sidebar-padding-x: 0.125rem;
@@ -516,43 +559,43 @@
 
     /* --- Top Deals Section --- */
     --topdeals-bg: #F8F8F8;
-    --topdeals-title-color: #111827;
+    --topdeals-title-color: var(--color-text-heading);
     --topdeals-subtitle-color: #6b7280;
-    --topdeals-link-color: #111827;
-    --topdeals-card-bg: #ffffff;
-    --topdeals-card-border: #e5e5e5;
+    --topdeals-link-color: var(--color-text-heading);
+    --topdeals-card-bg: var(--color-surface);
+    --topdeals-card-border: var(--color-border-default);
     --topdeals-price-color: #dc2626;
     --topdeals-original-price-color: #9ca3af;
     --topdeals-moq-color: #222222;
     --topdeals-badge-bg: #DE0505;
     --topdeals-price-bg: #FFEDED;
-    --topdeals-badge-text: #ffffff;
+    --topdeals-badge-text: var(--color-surface);
 
     /* --- Top Ranking Section --- */
     --topranking-bg: #F5F5F5;
-    --topranking-title-color: #111827;
+    --topranking-title-color: var(--color-text-heading);
     --topranking-subtitle-color: #6b7280;
-    --topranking-link-color: #111827;
-    --topranking-card-bg: #ffffff;
+    --topranking-link-color: var(--color-text-heading);
+    --topranking-card-bg: var(--color-surface);
     --topranking-card-border: #e5e7eb;
-    --topranking-badge-bg: #111827;
-    --topranking-badge-text: #ffffff;
-    --topranking-name-color: #111827;
+    --topranking-badge-bg: var(--color-text-heading);
+    --topranking-badge-text: var(--color-surface);
+    --topranking-name-color: var(--color-text-heading);
     --topranking-label-color: #6b7280;
 
     /* --- Tailored Selections Section --- */
     --tailored-bg: #F5F5F5;
-    --tailored-title-color: #111827;
-    --tailored-link-color: #111827;
-    --tailored-card-bg: #ffffff;
-    --tailored-card-border: #e5e5e5;
-    --tailored-collection-title-color: #111827;
+    --tailored-title-color: var(--color-text-heading);
+    --tailored-link-color: var(--color-text-heading);
+    --tailored-card-bg: var(--color-surface);
+    --tailored-card-border: var(--color-border-default);
+    --tailored-collection-title-color: var(--color-text-heading);
     --tailored-views-color: #6b7280;
-    --tailored-price-color: #111827;
+    --tailored-price-color: var(--color-text-heading);
 
     /* --- Product Grid Section --- */
     --product-bg: #f4f4f4;
-    --product-card-bg: #ffffff;
+    --product-card-bg: var(--color-surface);
     --product-card-border: #e5e7eb;
     --product-card-radius: 8px;
     --product-card-padding: 12px;
@@ -561,14 +604,14 @@
     --product-card-hover-shadow: none;
     --product-grid-gap: 8px;
     --product-font-family: Alibaba_B2B_Sans, Inter, "SF Pro Text", Roboto, "Helvetica Neue", Helvetica, Tahoma, Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
-    --product-image-bg: #ffffff;
+    --product-image-bg: var(--color-surface);
     --product-image-radius: 8px;
     --product-image-padding: 0px;
     --product-image-size: 209px;
     --product-image-hover-scale: 1.06;
     --product-image-ratio: 1 / 1;
     --product-lens-size: 36px;
-    --product-lens-bg: #ffffff;
+    --product-lens-bg: var(--color-surface);
     --product-lens-color: #4b5563;
     --product-lens-shadow: 0 2px 6px 2px rgba(0, 0, 0, 0.12);
     --product-title-color: #222222;
@@ -576,7 +619,7 @@
     --product-title-weight: 400;
     --product-title-line-height: 1.2857;
     --product-title-letter-spacing: 0em;
-    --product-price-color: #0a0a0a;
+    --product-price-color: var(--color-text-primary);
     --product-price-size: 20px;
     --product-price-weight: 700;
     --product-price-line-height: 26px;
@@ -601,46 +644,46 @@
     --product-card-min-height: 384px;
 
     /* --- Product Detail Page --- */
-    --pd-bg: #ffffff;
+    --pd-bg: var(--color-surface);
     --pd-breadcrumb-color: #6b7280;
-    --pd-breadcrumb-link-color: #cc9900;
-    --pd-title-color: #111827;
+    --pd-breadcrumb-link-color: var(--color-primary-500);
+    --pd-title-color: var(--color-text-heading);
     --pd-title-size: 1.5rem;
     --pd-rating-star-color: #f59e0b;
     --pd-rating-text-color: #6b7280;
-    --pd-price-color: #111827;
+    --pd-price-color: var(--color-text-heading);
     --pd-price-size: 1.75rem;
     --pd-price-tier-bg: #f9fafb;
-    --pd-price-tier-active-bg: #fef9e7;
-    --pd-price-tier-active-border: #cc9900;
-    --pd-variant-border: #e5e5e5;
-    --pd-variant-active-border: #cc9900;
-    --pd-variant-active-bg: #fef9e7;
-    --pd-qty-input-border: #e5e5e5;
+    --pd-price-tier-active-bg: var(--color-primary-50);
+    --pd-price-tier-active-border: var(--color-primary-500);
+    --pd-variant-border: var(--color-border-default);
+    --pd-variant-active-border: var(--color-primary-500);
+    --pd-variant-active-bg: var(--color-primary-50);
+    --pd-qty-input-border: var(--color-border-default);
     --pd-shipping-icon-color: #6b7280;
     --pd-trade-assurance-bg: #f0fdf4;
     --pd-trade-assurance-text: #15803d;
     --pd-tab-color: #6b7280;
-    --pd-tab-active-color: #cc9900;
-    --pd-tab-active-border: #cc9900;
+    --pd-tab-active-color: var(--color-primary-500);
+    --pd-tab-active-border: var(--color-primary-500);
     --pd-spec-header-bg: #f9fafb;
-    --pd-spec-border: #e5e5e5;
+    --pd-spec-border: var(--color-border-default);
     --pd-spec-key-color: #6b7280;
-    --pd-spec-value-color: #111827;
+    --pd-spec-value-color: var(--color-text-heading);
     --pd-review-star-color: #f59e0b;
-    --pd-review-bar-bg: #e5e5e5;
+    --pd-review-bar-bg: var(--color-border-default);
     --pd-review-bar-fill: #f59e0b;
-    --pd-supplier-card-bg: #ffffff;
-    --pd-supplier-verified-color: #cc9900;
-    --pd-faq-border: #e5e5e5;
+    --pd-supplier-card-bg: var(--color-surface);
+    --pd-supplier-verified-color: var(--color-primary-500);
+    --pd-faq-border: var(--color-border-default);
     --pd-related-bg: #f8f8f8;
 
     /* --- Footer --- */
-    --footer-bg: #ffffff;
-    --footer-text-color: #666666;
-    --footer-heading-color: #222222;
-    --footer-link-color: #666666;
-    --footer-link-hover-color: #cc9900;
+    --footer-bg: var(--color-surface);
+    --footer-text-color: var(--color-text-muted);
+    --footer-heading-color: var(--color-text-body);
+    --footer-link-color: var(--color-text-muted);
+    --footer-link-hover-color: var(--color-primary-500);
     --footer-border-color: #e5e7eb;
 
 
@@ -648,11 +691,7 @@
      9b. SEMANTIC CTA & NORMALIZATION TOKENS
      ========================================================== */
 
-    /* --- CTA Semantic --- */
-    --color-cta-primary: var(--color-primary-500);
-    --color-cta-primary-hover: var(--color-primary-600);
-    --color-cta-primary-light: var(--color-primary-400);
-    --color-cta-primary-tint: var(--color-primary-50);
+    /* --- CTA Semantic — moved to @theme inline below --- */
 
     /* --- Text Normalizasyon --- */
     --color-text-heading: #111827;
@@ -676,35 +715,16 @@
     --stepper-active-bg: var(--color-cta-primary);
 
 
-    /* ==========================================================
-     10. Z-INDEX
-     ========================================================== */
-
-    --z-behind: -1;
-    --z-base: 0;
-    --z-raised: 1;
-    --z-dropdown: 10;
-    --z-sticky: 20;
-    --z-header: 30;
-    --z-sidebar: 35;
-    --z-backdrop: 40;
-    --z-modal: 50;
-    --z-popover: 60;
-    --z-toast: 70;
-    --z-tooltip: 80;
-    --z-spotlight: 90;
-    --z-max: 100;
 
     /* ==========================================================
      SELLER STOREFRONT — STORE-SPECIFIC TOKENS
      ========================================================== */
 
-    --color-store-nav-bg: #b38600;
-    --color-store-nav-text: #ffffff;
+    --color-store-nav-bg: var(--color-primary-600);
+    --color-store-nav-text: var(--color-surface);
     --color-store-nav-active-overlay: rgba(0, 0, 0, 0.15);
-    --color-store-accent: #cc9900;
-    --color-store-accent-hover: #b38600;
-    --z-fixed: 40;
+    --color-store-accent: var(--color-primary-500);
+    --color-store-accent-hover: var(--color-primary-600);
 
     /* ==========================================================
      RFQ PAGE — SPECIFIC TOKENS
@@ -716,7 +736,7 @@
 
     /* --- Colors --- */
     --color-product-name: #222222;
-    --color-cta-text: #111827;
+    --color-cta-text: var(--color-text-heading);
 
     /* --- Font Sizes --- */
     --font-size-caption: 0.8125rem;
@@ -726,6 +746,29 @@
 
 }
 
+/* ============================================================
+   @theme inline — tokens that reference var()
+   ============================================================ */
+@theme inline {
+
+    /* --- Semantic Shadow --- */
+    --shadow-card: var(--shadow-sm);
+    --shadow-dropdown: var(--shadow-md);
+    --shadow-modal: var(--shadow-xl);
+    --shadow-toast: var(--shadow-lg);
+
+    /* --- Animation --- */
+    --animate-fade-in: fade-in var(--duration-default) var(--ease-default);
+    --animate-fade-out: fade-out var(--duration-default) var(--ease-default);
+    --animate-slide-up: slide-up var(--duration-default) var(--ease-default);
+
+    /* --- CTA Semantic --- */
+    --color-cta-primary: var(--color-primary-500);
+    --color-cta-primary-hover: var(--color-primary-600);
+    --color-cta-primary-light: var(--color-primary-400);
+    --color-cta-primary-tint: var(--color-primary-50);
+}
+
 
 /* ============================================================
    HEADER GRADIENT (warm pastel – shown by default, removed on scroll)
@@ -733,10 +776,8 @@
 
 .header-gradient {
     background-image: none;
-}
 
-@media (min-width: 960px) {
-    .header-gradient {
+    @variant xl {
         background-image: linear-gradient(135deg, var(--header-gradient-1) 0%, var(--header-gradient-2) 25%, var(--header-gradient-3) 50%, var(--header-gradient-4) 75%, var(--header-gradient-5) 100%);
         background-size: 300% 300%;
         animation: searchGradientShift 12s ease infinite;
@@ -786,6 +827,36 @@
 
     to {
         opacity: 0;
+    }
+}
+
+@keyframes slide-up {
+    from {
+        opacity: 0;
+        transform: translateY(1rem);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-slide-up {
+    opacity: 0;
+    animation: slide-up 0.5s ease-out forwards;
+}
+
+/* --- Reduced Motion: disable all animations --- */
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
     }
 }
 
@@ -1200,10 +1271,9 @@
         padding-inline: var(--spacing-page-x);
     }
 
-    @media (width >=1280px) {
-
-        .container-boxed,
-        .container-wide {
+    .container-boxed,
+    .container-wide {
+        @variant 2xl {
             padding-inline: var(--spacing-page-x-lg);
         }
     }
@@ -1535,11 +1605,6 @@
     transition: transform 200ms ease-out;
 }
 
-@media (width >=1280px) {
-    .recommendation-swiper .swiper-slide {
-        width: 240px !important;
-    }
-}
 
 .hero-side-slider.hero-side-peek-prev .swiper-slide-active,
 .hero-side-slider.hero-side-peek-prev .swiper-slide-prev {
@@ -1593,55 +1658,14 @@
    PRODUCT DETAIL PAGE LAYOUT
    ============================================================ */
 
-/* Mobile: stacked layout */
-#pd-hero-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    padding-top: 12px;
-}
-
-#pd-hero-left {
-    width: 100%;
-    min-width: 0;
-}
-
-#pd-hero-gallery {
-    width: 100%;
-}
-
-#pd-hero-info {
-    width: 100%;
-}
-
-/* Desktop: 2-column layout — left (gallery + related) | right (sticky info card) */
-@media (width >=1024px) {
-    #pd-hero-grid {
-        display: grid;
-        grid-template-columns: 1fr 380px;
-        gap: 24px;
-        align-items: start;
-    }
-
-    #pd-hero-info {
-        display: flex;
-        flex-direction: column;
-    }
-
-    /* Sticky mode: activated by JS after scrolling past card */
+/* Sticky mode: activated by JS after scrolling past card */
+@variant xl {
     #pd-hero-info.pd-sticky {
         position: sticky;
         top: 130px;
         max-height: calc(100vh - 150px);
         display: flex;
         flex-direction: column;
-    }
-}
-
-@media (width >=1280px) {
-    #pd-hero-grid {
-        grid-template-columns: 1fr 407px;
-        gap: 28px;
     }
 }
 
@@ -1802,7 +1826,14 @@
 }
 
 #gallery-prev {
-    left: 88px;
+    left: 10px;
+}
+
+/* gallery-prev 2xl offset — uses Tailwind @screen directive */
+@screen 2xl {
+    #gallery-prev {
+        left: 88px;
+    }
 }
 
 #gallery-next {
@@ -2057,84 +2088,7 @@ body.gallery-lightbox-open {
     background: rgba(17, 24, 39, 0.06);
 }
 
-@media (width <=960px) {
-    #gallery-lightbox {
-        padding: 72px 12px 12px;
-    }
-
-    #gallery-lightbox-toolbar {
-        height: 58px;
-        padding: 0 10px;
-    }
-
-    #gallery-lightbox-actions {
-        gap: 8px;
-    }
-
-    .gallery-lightbox-action-btn {
-        font-size: 15px;
-        gap: 5px;
-    }
-
-    .gallery-lightbox-action-btn span {
-        display: none;
-    }
-
-    #gallery-lightbox-close {
-        width: 34px;
-        height: 34px;
-    }
-
-    #gallery-lightbox-close svg {
-        width: 22px;
-        height: 22px;
-    }
-
-    #gallery-lightbox-inner {
-        height: min(86vh, 760px);
-        grid-template-columns: 1fr;
-        grid-template-rows: minmax(0, 1fr) 82px;
-        gap: 12px;
-    }
-
-    #gallery-lightbox-sidebar {
-        order: 2;
-        width: 100%;
-        height: auto;
-        min-height: 0;
-    }
-
-    #gallery-lightbox-thumb-list {
-        width: 100%;
-        flex-direction: row;
-        overflow-x: auto;
-        overflow-y: hidden;
-        padding: 0 2px;
-    }
-
-    .gallery-lightbox-thumb {
-        width: 68px;
-        height: 68px;
-    }
-
-    .gallery-lightbox-scroll {
-        display: none;
-    }
-
-    #gallery-lightbox-count {
-        font-size: 14px;
-    }
-
-    #gallery-lightbox-vertical-nav {
-        width: 40px;
-        right: 10px;
-    }
-
-    .gallery-lightbox-nav-btn {
-        width: 40px;
-        height: 40px;
-    }
-}
+/* Gallery lightbox <=960px — migrated to Tailwind in ProductImageGallery.ts */
 
 /* Attributes card — replaces gallery when "Ozellikler" tab is active
    Lives inside #product-gallery flex container, same position as #gallery-main-image */
@@ -2542,17 +2496,7 @@ body.gallery-lightbox-open {
     background: var(--pd-spec-header-bg, #f9fafb);
 }
 
-/* Responsive: stack rating summary on mobile */
-@media (max-width: 639px) {
-    .rv-rating-summary {
-        flex-direction: column;
-        gap: 20px;
-    }
-
-    .rv-category-label {
-        min-width: 100px;
-    }
-}
+/* Responsive: rating summary mobile — migrated to Tailwind in ProductReviews.ts */
 
 /* ============================================================
    PHASE E — Review Filtering, Sorting, Modals
@@ -2875,58 +2819,7 @@ body.gallery-lightbox-open {
     text-decoration: underline;
 }
 
-/* ── 9. Responsive — Phase E ─────────────────────────── */
-
-@media (max-width: 639px) {
-    .rv-modal {
-        width: 100%;
-        height: 100%;
-        max-height: 100vh;
-        border-radius: 0;
-    }
-
-    .rv-login-modal {
-        width: 100%;
-        max-width: 100%;
-        border-radius: 0;
-        min-height: 100vh;
-    }
-
-    .rv-filter-row {
-        flex-wrap: wrap;
-    }
-
-    .rv-sort-dropdown {
-        margin-left: 0;
-        width: 100%;
-    }
-
-    .rv-sort-dropdown-trigger {
-        width: 100%;
-        justify-content: space-between;
-    }
-
-    .rv-sort-dropdown-panel {
-        left: 0;
-        right: 0;
-    }
-
-    .rv-rating-dropdown-panel {
-        min-width: 160px;
-    }
-
-    .rv-modal-header {
-        padding: 16px;
-    }
-
-    .rv-modal-body {
-        padding: 0 16px 16px;
-    }
-
-    .rv-login-content {
-        padding: 0 20px 24px;
-    }
-}
+/* ── 9. Responsive — Phase E — migrated to Tailwind in ProductReviews.ts, ReviewsModal.ts, LoginModal.ts ── */
 
 /* ============================================================
    SUPPLIER TAB — "Know Your Supplier" redesign
@@ -3291,6 +3184,8 @@ body.gallery-lightbox-open {
 }
 
 /* ── 10b. Shipping selection modal ────────────────────── */
+/* Responsive rules migrated to Tailwind in CartDrawer.ts ShippingModal() */
+/* Base styles kept: overlay, transitions, CSS custom properties */
 
 .cart-ship-modal-overlay {
     position: fixed;
@@ -3440,387 +3335,152 @@ body.gallery-lightbox-open {
     display: none !important;
 }
 
-/* ── 12. Responsive — bottom sheet on mobile ────────────── */
+/* -- 12. Cart drawer -- mobile bottom sheet -- */
+/* Layout now via max-xl: Tailwind classes in CartDrawer.ts */
 
-@media (width < 1024px) {
-
-    /* Hide preview panel on mobile */
-    .listing-preview-panel {
-        display: none !important;
-    }
-
-    /* Listing drawer reverts to full-width on mobile */
-    .listing-cart-drawer {
-        width: 100%;
-    }
-
-    /* Convert slide-in drawer to bottom sheet */
-    .cart-drawer-overlay {
-        z-index: 200;
-        display: flex;
-        align-items: flex-end;
-        justify-content: center;
-    }
-
-    .cart-drawer {
-        position: relative;
-        top: auto;
-        right: auto;
-        height: auto;
-        width: 100%;
-        max-height: 90vh;
-        border-radius: 16px 16px 0 0;
-        box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.15);
-        transform: translateY(100%);
-        transition: transform 0.3s cubic-bezier(0.32, 0.72, 0, 1);
-    }
-
-    .cart-drawer.open {
-        transform: translateY(0);
-    }
-
-    /* Drag handle pseudo-element */
-    .cart-drawer-header::before {
-        content: '';
-        display: block;
-        width: 36px;
-        height: 4px;
-        border-radius: 2px;
-        background: var(--color-border-medium);
-        margin: 0 auto 8px;
-    }
-
-    .cart-drawer-header {
-        padding: 12px 16px;
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .cart-drawer-header h3 {
-        font-size: 16px;
-        text-align: center;
-    }
-
-    .cart-drawer-close {
-        position: absolute;
-        top: 12px;
-        right: 12px;
-        z-index: 1;
-    }
-
-    .cart-drawer-body {
-        padding: 16px;
-        -webkit-overflow-scrolling: touch;
-        max-height: calc(90vh - 160px);
-    }
-
-    .cart-tier-price {
-        font-size: 18px;
-    }
-
-    .cart-tier-qty {
-        font-size: 11px;
-    }
-
-    /* Footer safe area */
-    .cart-drawer-footer {
-        padding: 12px 16px;
-        padding-bottom: calc(12px + env(safe-area-inset-bottom));
-    }
-
-    .cart-add-btn {
-        height: 44px;
-        font-size: 15px;
-        border-radius: 22px;
-    }
-
-    .cart-subtotal-price {
-        font-size: 15px;
-    }
-
-    .cart-subtotal-per {
-        font-size: 11px;
-    }
-
-    .cart-breakdown-row {
-        font-size: 12px;
-    }
+/* Hide preview panel on mobile, full-width listing drawer */
+.listing-preview-panel {
+    @apply max-xl:!hidden;
+}
+.listing-cart-drawer {
+    @apply max-xl:w-full;
+}
+/* Drag handle pseudo-element -- shown on mobile via max-xl:block in CartDrawer.ts */
+.cart-drawer-header::before {
+    content: '';
+    width: 36px;
+    height: 4px;
+    border-radius: 2px;
+    background: var(--color-border-medium);
+    margin: 0 auto 8px;
 }
 
 
 /* ============================================================
-   MOBILE PRODUCT DETAIL — Alibaba-Style Layout
-   Only active below 1024px. All selectors use #pdm- prefix.
+   MOBILE PRODUCT DETAIL -- Alibaba-Style Layout
+   Layout via Tailwind classes in MobileLayout.ts.
+   Only transitions, states, pseudo-elements remain in CSS.
    ============================================================ */
 
-/* ── Layout Toggle ──────────────────────────────────── */
+/* -- Layout Toggle -- via Tailwind @apply -- */
 #pd-mobile-layout {
+    @apply hidden max-xl:block max-xl:pb-20;
+}
+
+#pd-desktop-layout {
+    @apply max-xl:!hidden;
+}
+
+/* -- Gallery -- scrollbar hiding & placeholder gradient -- */
+#pdm-gallery-track::-webkit-scrollbar {
     display: none;
 }
 
-@media (width < 1024px) {
-    #pd-desktop-layout {
-        display: none !important;
-    }
-
-    #pd-mobile-layout {
-        display: block;
-        padding-bottom: 80px;
-    }
+.pdm-gallery-placeholder {
+    background: linear-gradient(180deg, #f8f9fa 0%, #e9ecef 100%);
 }
 
-/* ── 1. Mobile Gallery — scroll-snap carousel ─────── */
-@media (width < 1024px) {
-    #pdm-gallery-wrap {
-        position: relative;
-        width: 100%;
-        aspect-ratio: 1 / 1;
-        overflow: hidden;
-        background: var(--color-surface-raised, #f5f5f5);
-    }
-
-    #pdm-gallery-track {
-        display: flex;
-        width: 100%;
-        height: 100%;
-        overflow-x: auto;
-        overflow-y: hidden;
-        scroll-snap-type: x mandatory;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: none;
-    }
-
-    #pdm-gallery-track::-webkit-scrollbar {
-        display: none;
-    }
-
-    .pdm-gallery-slide {
-        flex: 0 0 100%;
-        width: 100%;
-        height: 100%;
-        scroll-snap-align: start;
-        scroll-snap-stop: always;
-    }
-
-    .pdm-gallery-slide img {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-        user-select: none;
-        -webkit-user-drag: none;
-    }
-
-    .pdm-gallery-placeholder {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: linear-gradient(180deg, #f8f9fa 0%, #e9ecef 100%);
-    }
-
-    /* Counter pill — Alibaba style (white bg) */
-    #pdm-gallery-counter {
-        position: absolute;
-        bottom: 14px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: var(--color-surface, #ffffff);
-        color: var(--color-text-body, #333333);
-        font-size: 12px;
-        font-weight: 500;
-        padding: 4px 14px;
-        border-radius: 14px;
-        pointer-events: none;
-        z-index: 5;
-        letter-spacing: 0.3px;
-        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
-        white-space: nowrap;
-    }
-
-    /* Action buttons — top right */
-    #pdm-gallery-actions {
-        position: absolute;
-        top: 12px;
-        right: 12px;
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-        z-index: 6;
-    }
-
-    .pdm-gallery-action-btn {
-        width: 36px;
-        height: 36px;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.85);
-        border: none;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: var(--color-text-muted, #666666);
-        cursor: pointer;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
-        transition: background 0.15s;
-    }
-
-    .pdm-gallery-action-btn:active {
-        background: rgba(255, 255, 255, 1);
-    }
+.pdm-gallery-action-btn {
+    transition: background 0.15s;
 }
 
-/* ── 1b. Sticky Section Tabs ──────────────────────────── */
-@media (width < 1024px) {
-    #pdm-section-tabs {
-        display: flex;
-        align-items: center;
-        gap: 0;
-        background: var(--color-surface, #ffffff);
-        border-bottom: 1px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
-        position: sticky;
-        top: 0;
-        z-index: 30;
-        padding: 0;
-    }
-
-    .pdm-section-tab {
-        flex: 1;
-        padding: 12px 0;
-        font-size: 14px;
-        font-weight: 400;
-        color: var(--color-text-muted, #666666);
-        background: none;
-        border: none;
-        border-bottom: 2px solid transparent;
-        cursor: pointer;
-        text-align: center;
-        white-space: nowrap;
-        transition: color 0.2s, border-color 0.2s;
-    }
-
-    .pdm-section-tab-active {
-        color: var(--pd-tab-active-color, #cc9900);
-        font-weight: 600;
-        border-bottom-color: var(--pd-tab-active-border, #cc9900);
-    }
+.pdm-gallery-action-btn:active {
+    background: rgba(255, 255, 255, 1);
 }
 
-@media (width < 375px) {
-    .pdm-section-tab {
-        font-size: 13px;
-        padding: 10px 0;
-    }
+/* -- Section tabs -- transitions & active state -- */
+.pdm-section-tab {
+    transition: color 0.2s, border-color 0.2s;
 }
 
-/* ── 2. Badges — now in Tailwind (MobileLayout.ts) ── */
-
-/* ── 3. Price Tiers — now in Tailwind (MobileLayout.ts) ── */
-
-/* ── 4. Sample Price Row — layout now in Tailwind (MobileLayout.ts) ── */
-@media (width < 1024px) {
-    .pdm-sample-btn {
-        transition: background 0.15s;
-    }
-
-    .pdm-sample-btn:active {
-        background: var(--color-surface-raised, #f5f5f5);
-    }
+.pdm-section-tab-active {
+    color: var(--pd-tab-active-color, #cc9900);
+    font-weight: 600;
+    border-bottom-color: var(--pd-tab-active-border, #cc9900);
 }
 
-/* ── 5. Title + Share Row — now in Tailwind (MobileLayout.ts) ── */
-
-/* ── 6. Reviews Summary Row — layout now in Tailwind (MobileLayout.ts) ── */
-@media (width < 1024px) {
-    #pdm-reviews-row .pdm-stars svg {
-        width: 14px;
-        height: 14px;
-    }
+/* -- Sample btn -- transition & active -- */
+.pdm-sample-btn {
+    transition: background 0.15s;
 }
 
-/* ── 7-8. Collapsible Sections — layout now in Tailwind, keep transitions/states ── */
-@media (width < 1024px) {
-    .pdm-collapsible-header em {
-        font-style: normal;
-        font-weight: 400;
-        color: var(--color-text-placeholder, #999999);
-        margin-left: 4px;
-    }
-
-    .pdm-chevron {
-        flex-shrink: 0;
-        width: 18px;
-        height: 18px;
-        color: var(--color-text-placeholder, #999999);
-        transition: transform 0.2s ease;
-    }
-
-    .pdm-collapsible-open .pdm-chevron {
-        transform: rotate(180deg);
-    }
-
-    .pdm-collapsible-body.pdm-hidden {
-        display: none;
-    }
-
-    .pdm-color-thumb {
-        transition: border-color 0.15s;
-    }
-
-    .pdm-color-thumb.active {
-        border-color: var(--color-text-heading);
-    }
-
-    .pdm-color-thumb.pdm-disabled {
-        opacity: 0.4;
-        cursor: not-allowed;
-    }
-
-    .pdm-variant-pill {
-        transition: border-color 0.15s;
-    }
-
-    .pdm-variant-pill.active {
-        border-color: var(--color-text-heading);
-        font-weight: 600;
-    }
-
-    .pdm-variant-pill.pdm-disabled {
-        opacity: 0.4;
-        cursor: not-allowed;
-    }
+.pdm-sample-btn:active {
+    background: var(--color-surface-raised, #f5f5f5);
 }
 
-/* ── 9. Ship To Section — layout now in Tailwind, keep bg override ── */
-@media (width < 1024px) {
-    .pdm-shipping-section {
-        background: #f0fdf4;
-    }
+/* -- Reviews star SVG -- */
+#pdm-reviews-row .pdm-stars svg {
+    width: 14px;
+    height: 14px;
 }
 
-/* ── 10. Protections Section — now in Tailwind (MobileLayout.ts) ── */
-
-/* ── 11. Key Attributes Preview — now in Tailwind (MobileLayout.ts) ── */
-
-/* ── 12. Customization Preview — now in Tailwind (MobileLayout.ts) ── */
-
-/* ── 13. Supplier Card — layout now in Tailwind, keep transitions/states ── */
-@media (width < 1024px) {
-    .pdm-supplier-meta img {
-        width: 16px;
-        height: 12px;
-        border-radius: 1px;
-    }
-
-    .pdm-supplier-btn {
-        transition: background 0.15s;
-    }
-
-    .pdm-supplier-btn:active {
-        background: var(--color-surface-raised, #f5f5f5);
-    }
+/* -- Collapsible sections -- transitions & states -- */
+.pdm-collapsible-header em {
+    font-style: normal;
+    font-weight: 400;
+    color: var(--color-text-placeholder, #999999);
+    margin-left: 4px;
 }
 
-/* ── 14. Bottom Sheet Modal (shared base) ───────────── */
+.pdm-chevron {
+    transition: transform 0.2s ease;
+}
+
+.pdm-collapsible-open .pdm-chevron {
+    transform: rotate(180deg);
+}
+
+.pdm-collapsible-body.pdm-hidden {
+    display: none;
+}
+
+.pdm-color-thumb {
+    transition: border-color 0.15s;
+}
+
+.pdm-color-thumb.active {
+    border-color: var(--color-text-heading);
+}
+
+.pdm-color-thumb.pdm-disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.pdm-variant-pill {
+    transition: border-color 0.15s;
+}
+
+.pdm-variant-pill.active {
+    border-color: var(--color-text-heading);
+    font-weight: 600;
+}
+
+.pdm-variant-pill.pdm-disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+/* -- Shipping section background -- */
+.pdm-shipping-section {
+    background: #f0fdf4;
+}
+
+/* -- Supplier card -- transitions & states -- */
+.pdm-supplier-meta img {
+    width: 16px;
+    height: 12px;
+    border-radius: 1px;
+}
+
+.pdm-supplier-btn {
+    transition: background 0.15s;
+}
+
+.pdm-supplier-btn:active {
+    background: var(--color-surface-raised, #f5f5f5);
+}
+
 .pdm-bottom-sheet {
     position: fixed;
     inset: 0;
@@ -4045,401 +3705,85 @@ body.pdm-sheet-open {
     overflow-wrap: break-word;
 }
 
-/* ── 15. Mobile Bottom Bar — layout now in Tailwind, keep transitions/states ── */
-@media (width < 1024px) {
-    .pdm-bar-chat-btn:active {
-        background: var(--color-surface-raised, #f5f5f5);
-    }
-
-    .pdm-bar-cart-btn {
-        transition: background 0.15s;
-    }
-
-    .pdm-bar-cart-btn:active {
-        background: var(--color-surface-raised, #f5f5f5);
-    }
-
-    .pdm-bar-order-btn {
-        transition: background 0.15s;
-    }
-
-    .pdm-bar-order-btn:active {
-        background: var(--color-cta-primary-hover, #b38600);
-    }
+/* -- Bottom bar -- transitions & active states -- */
+.pdm-bar-chat-btn:active {
+    background: var(--color-surface-raised, #f5f5f5);
 }
 
-/* ── 16. Extra-small device overrides (320px) ──────── */
-@media (width < 375px) {
-    #pd-mobile-layout {
-        padding-bottom: 70px;
-    }
+.pdm-bar-cart-btn {
+    transition: background 0.15s;
+}
 
-    #pdm-badges {
-        padding: 10px 12px 0;
-    }
+.pdm-bar-cart-btn:active {
+    background: var(--color-surface-raised, #f5f5f5);
+}
 
-    #pdm-price-tiers {
-        margin: 10px 12px 0;
-    }
+.pdm-bar-order-btn {
+    transition: background 0.15s;
+}
 
-    .pdm-tier-price {
-        font-size: 15px;
-    }
+.pdm-bar-order-btn:active {
+    background: var(--color-cta-primary-hover, #b38600);
+}
 
-    .pdm-tier-qty {
-        font-size: 10px;
-    }
-
-    #pdm-sample-row {
-        padding: 8px 12px;
-        font-size: 12px;
-    }
-
-    .pdm-sample-btn {
-        padding: 5px 14px;
-        font-size: 12px;
-    }
-
-    #pdm-title-section {
-        padding: 12px 12px 6px;
-    }
-
-    #pdm-product-title {
-        font-size: 14px;
-    }
-
-    .pdm-collapsible-header {
-        padding: 12px;
-        font-size: 13px;
-    }
-
-    .pdm-collapsible-body {
-        padding: 0 12px 12px;
-    }
-
-    #pdm-supplier-card {
-        margin: 0 12px 16px;
-        padding: 14px 12px;
-    }
-
-    #pd-mobile-bar {
-        grid-template-columns: 36px minmax(0, 1fr) minmax(0, 1fr);
-        gap: 4px;
-        padding: 8px 8px calc(8px + env(safe-area-inset-bottom));
-        max-width: 100vw;
-        box-sizing: border-box;
-    }
-
-    .pdm-bar-chat-btn {
-        width: 36px;
-        height: 36px;
-        border-radius: 18px;
-    }
-
-    .pdm-bar-chat-btn svg {
-        width: 18px;
-        height: 18px;
-    }
-
-    .pdm-bar-cart-btn,
-    .pdm-bar-order-btn {
-        height: 36px;
-        font-size: 11px;
-        border-radius: 18px;
-        padding: 0 8px;
-    }
-
-    .pdm-sheet-header {
-        padding: 4px 10px 10px;
-        font-size: 14px;
-    }
-
-    .pdm-sheet-body {
-        padding: 0 10px 16px;
-    }
-
-    .pdm-attrs-table td {
-        font-size: 12px;
-        padding: 10px 0;
-    }
-
-    .pdm-attrs-table td:first-child {
-        width: 35%;
-        padding-right: 8px;
-    }
-
-    .pdm-custom-table thead th {
-        font-size: 11px;
-    }
-
-    .pdm-custom-table tbody td {
-        font-size: 12px;
-        padding: 10px 4px 10px 0;
-    }
-
-    .pdm-prot-section h4 {
-        font-size: 13px;
-    }
-
-    .pdm-prot-section p {
-        font-size: 12px;
-    }
-
-    .pdm-payment-icon {
-        font-size: 10px;
-        padding: 3px 6px;
-    }
-
-    #pdm-reviews-row {
-        font-size: 12px;
-    }
-
-
-    footer {
-        overflow-x: hidden;
-    }
+/* -- 375px overrides for elements not in modifiable TS files -- */
+/* Bottom bar 375px */
+#pd-mobile-bar {
+    @apply max-[374px]:grid-cols-[36px_minmax(0,1fr)_minmax(0,1fr)] max-[374px]:gap-1 max-[374px]:px-2 max-[374px]:py-2 max-[374px]:pb-[calc(8px+env(safe-area-inset-bottom))] max-[374px]:max-w-[100vw] max-[374px]:box-border;
+}
+.pdm-bar-chat-btn {
+    @apply max-[374px]:w-9 max-[374px]:h-9 max-[374px]:rounded-[18px];
+}
+.pdm-bar-chat-btn svg {
+    @apply max-[374px]:w-[18px] max-[374px]:h-[18px];
+}
+.pdm-bar-cart-btn,
+.pdm-bar-order-btn {
+    @apply max-[374px]:h-9 max-[374px]:text-[11px] max-[374px]:rounded-[18px] max-[374px]:px-2;
+}
+/* Sheet 375px */
+.pdm-sheet-header {
+    @apply max-[374px]:px-2.5 max-[374px]:py-1 max-[374px]:pb-2.5 max-[374px]:text-sm;
+}
+.pdm-sheet-body {
+    @apply max-[374px]:px-2.5 max-[374px]:pb-4;
+}
+/* Attrs table 375px */
+.pdm-attrs-table td {
+    @apply max-[374px]:text-xs max-[374px]:py-2.5;
+}
+.pdm-attrs-table td:first-child {
+    @apply max-[374px]:w-[35%] max-[374px]:pr-2;
+}
+/* Custom table 375px */
+.pdm-custom-table thead th {
+    @apply max-[374px]:text-[11px];
+}
+.pdm-custom-table tbody td {
+    @apply max-[374px]:text-xs max-[374px]:py-2.5 max-[374px]:px-1 max-[374px]:pl-0;
+}
+/* Protections 375px */
+.pdm-prot-section h4 {
+    @apply max-[374px]:text-[13px];
+}
+.pdm-prot-section p {
+    @apply max-[374px]:text-xs;
+}
+.pdm-payment-icon {
+    @apply max-[374px]:text-[10px] max-[374px]:px-1.5 max-[374px]:py-[3px];
+}
+/* Footer overflow 375px */
+footer {
+    @apply max-[374px]:overflow-x-hidden;
 }
 
 /* Floating panel responsive hiding now handled via Tailwind classes (hidden lg:flex) */
 
-/* ── 17. Shipping Modal — Mobile bottom sheet ──────── */
-@media (width < 1024px) {
-    .cart-ship-modal-overlay {
-        align-items: flex-end;
-        z-index: 200;
-    }
-
-    .cart-ship-modal-content {
-        width: 100%;
-        max-width: 100vw;
-        box-sizing: border-box;
-        border-radius: 16px 16px 0 0;
-        padding: 0;
-        max-height: 85vh;
-        display: flex;
-        flex-direction: column;
-        overflow: hidden;
-        transform: translateY(100%);
-        transition: transform 0.3s cubic-bezier(0.32, 0.72, 0, 1);
-    }
-
-    .cart-ship-modal-overlay.open .cart-ship-modal-content {
-        transform: translateY(0);
-    }
-
-    .cart-ship-modal-header {
-        padding: 16px 16px 0;
-        margin-bottom: 4px;
-        flex-shrink: 0;
-    }
-
-    .cart-ship-modal-header h4 {
-        font-size: 16px;
-    }
-
-    .cart-ship-modal-subtitle {
-        padding: 0 16px;
-        margin-bottom: 12px;
-        flex-shrink: 0;
-    }
-
-    .cart-ship-options {
-        padding: 0 16px;
-        margin-bottom: 0;
-        gap: 8px;
-        flex: 1;
-        overflow-y: auto;
-        -webkit-overflow-scrolling: touch;
-    }
-
-    .cart-ship-option {
-        padding: 12px 14px;
-        gap: 10px;
-    }
-
-    .cart-ship-option.active {
-        padding: 11px 13px;
-    }
-
-    .cart-ship-apply {
-        margin: 12px 16px 16px;
-        width: calc(100% - 32px);
-        height: 44px;
-        border-radius: 22px;
-        flex-shrink: 0;
-    }
+/* -- Shipping modal -- transition state -- */
+.cart-ship-modal-overlay.open .cart-ship-modal-content {
+    transform: translateY(0);
 }
 
-@media (width < 375px) {
-    .cart-ship-modal-header {
-        padding: 14px 12px 0;
-    }
-
-    .cart-ship-modal-header h4 {
-        font-size: 15px;
-    }
-
-    .cart-ship-modal-subtitle {
-        padding: 0 12px;
-        font-size: 12px;
-    }
-
-    .cart-ship-options {
-        padding: 0 12px;
-        gap: 6px;
-    }
-
-    .cart-ship-option {
-        padding: 10px 12px;
-        gap: 8px;
-        border-radius: 8px;
-    }
-
-    .cart-ship-option.active {
-        padding: 9px 11px;
-    }
-
-    .cart-ship-option-name {
-        font-size: 13px;
-    }
-
-    .cart-ship-option-days {
-        font-size: 11px;
-    }
-
-    .cart-ship-option-cost {
-        font-size: 13px;
-    }
-
-    .cart-ship-apply {
-        margin: 10px 12px 12px;
-        width: calc(100% - 24px);
-        height: 40px;
-        font-size: 14px;
-    }
-}
-
-/* ── Cart Drawer — 320px override ────────────────────── */
-@media (width < 375px) {
-    .cart-drawer {
-        max-height: 92vh;
-        border-radius: 12px 12px 0 0;
-    }
-
-    .cart-drawer-header {
-        padding: 10px 12px 8px;
-    }
-
-    .cart-drawer-header::before {
-        width: 32px;
-        height: 3px;
-        margin-bottom: 6px;
-    }
-
-    .cart-drawer-header h3 {
-        font-size: 14px;
-    }
-
-    .cart-drawer-close {
-        top: 8px;
-        right: 8px;
-        width: 28px;
-        height: 28px;
-    }
-
-    .cart-drawer-body {
-        padding: 12px;
-        max-height: calc(92vh - 140px);
-    }
-
-    .cart-tier-row {
-        gap: 8px;
-        padding-bottom: 10px;
-        margin-bottom: 12px;
-    }
-
-    .cart-tier-price {
-        font-size: 16px;
-    }
-
-    .cart-tier-qty {
-        font-size: 10px;
-    }
-
-    .cart-variant-section {
-        margin-bottom: 12px;
-    }
-
-    .cart-variant-label {
-        font-size: 12px;
-        margin-bottom: 6px;
-    }
-
-    .cart-color-grid {
-        gap: 6px;
-    }
-
-    .cart-color-grid-item {
-        width: 40px;
-        height: 40px;
-    }
-
-    .cart-size-row {
-        padding: 6px 0;
-    }
-
-    .cart-size-row-pill {
-        font-size: 12px;
-    }
-
-    .cart-size-row-price {
-        font-size: 12px;
-    }
-
-    .cart-size-row-btn {
-        width: 24px;
-        height: 24px;
-        font-size: 12px;
-    }
-
-    .cart-size-row-input {
-        width: 32px;
-        height: 24px;
-        font-size: 12px;
-    }
-
-    .cart-drawer-footer {
-        padding: 10px 12px;
-        padding-bottom: calc(10px + env(safe-area-inset-bottom));
-    }
-
-    .cart-add-btn {
-        height: 40px;
-        font-size: 14px;
-        border-radius: 20px;
-    }
-
-    .cart-subtotal-price {
-        font-size: 14px;
-    }
-
-    .cart-subtotal-per {
-        font-size: 10px;
-    }
-
-    .cart-breakdown-row {
-        font-size: 11px;
-        padding: 4px 0;
-    }
-
-    .cart-footer-collapsed {
-        margin-bottom: 8px;
-    }
-
-    .cart-footer-expanded {
-        margin-bottom: 8px;
-    }
-}
 
 /* ═══════════════════════════════════════════════════════
    Account Type Selector (Register Page)
@@ -5033,20 +4377,7 @@ body.pdm-sheet-open {
     font-weight: 600;
 }
 
-/* --- Responsive: Orders mobile scroll --- */
-@media (max-width: 768px) {
-    .orders__tabs {
-        padding-left: 12px;
-        padding-right: 12px;
-        -webkit-overflow-scrolling: touch;
-        scroll-snap-type: x mandatory;
-    }
-
-    .orders__tab {
-        scroll-snap-align: start;
-        flex-shrink: 0;
-    }
-}
+/* Responsive: Orders mobile scroll — migrated to Tailwind in OrdersTabs.ts */
 
 /* ==========================================================
    Hero Section
@@ -5297,7 +4628,7 @@ body.pdm-sheet-open {
     text-overflow: unset !important; word-break: break-word; line-height: 1.4;
 }
 
-@media (max-width: 768px) { .ds-sidebar-col { display: none; } }
+/* Responsive: ds-sidebar-col — migrated to Tailwind in dropshipping.ts */
 
 /* ── Page Navigation ───────────────────────────────────────────── */
 
@@ -5317,11 +4648,7 @@ body.pdm-sheet-open {
     border-bottom-color: var(--color-cta-primary, #cc9900);
 }
 
-@media (max-width: 768px) {
-    .ds-page__nav { overflow-x: auto; }
-    .ds-page__nav-link { padding: 12px 16px; font-size: 13px; }
-}
-@media (max-width: 360px) { .ds-page__nav-link { padding: 10px 12px; font-size: 12px; } }
+/* Responsive: ds-page__nav — migrated to Tailwind in DropshippingLayout.ts */
 
 /* ── Sticky Header Shadow ──────────────────────────────────────── */
 
@@ -5342,15 +4669,7 @@ body.pdm-sheet-open {
 }
 .ds-filters__chips { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
 
-@media (max-width: 768px) {
-    .ds-filters { padding: 12px; }
-    .ds-filters__row { flex-direction: column; gap: 6px; }
-    .ds-filters__label { width: auto; padding-top: 0; }
-}
-@media (max-width: 480px) {
-    .ds-filters { padding: 8px; }
-    .ds-filters__chips { gap: 6px; }
-}
+/* Responsive: ds-filters — migrated to Tailwind in DropshippingLayout.ts */
 
 /* ── Chips (stateful) ──────────────────────────────────────────── */
 
@@ -5379,7 +4698,7 @@ body.pdm-sheet-open {
 .ds-chip--toggle { border-style: dashed; }
 .ds-chip--toggle.ds-chip--active { border-style: solid; }
 
-@media (max-width: 480px) { .ds-chip { padding: 4px 10px; font-size: 12px; } }
+/* Responsive: ds-chip — migrated to Tailwind in DropshippingLayout.ts */
 
 /* ── Select ────────────────────────────────────────────────────── */
 
@@ -5447,10 +4766,7 @@ body.pdm-sheet-open {
 }
 .ds-active-chip:hover { background: var(--color-primary-200, #fbe08a); }
 
-@media (max-width: 768px) {
-    .ds-category-row .ds-filters__chips { padding-right: 0; }
-    .ds-category-toggle { position: static; }
-}
+/* Responsive: ds-category — migrated to Tailwind in DropshippingLayout.ts */
 
 /* ── Product Grid ──────────────────────────────────────────────── */
 
@@ -5463,21 +4779,7 @@ body.pdm-sheet-open {
 .ds-card__img:hover .ds-card__img-overlay { opacity: 1; pointer-events: auto; }
 .ds-card:hover .ds-card__title { color: var(--color-cta-primary, #cc9900); }
 
-@media (max-width: 1200px) {
-    .ds-product-grid { grid-template-columns: repeat(4, 1fr); column-gap: 20px; row-gap: 28px; padding: 20px; }
-}
-@media (max-width: 900px) {
-    .ds-product-grid { grid-template-columns: repeat(3, 1fr); column-gap: 16px; row-gap: 24px; padding: 16px; }
-}
-@media (max-width: 768px) {
-    .ds-product-grid { grid-template-columns: repeat(2, 1fr); column-gap: 12px; row-gap: 20px; padding: 12px; }
-}
-@media (max-width: 480px) {
-    .ds-product-grid { column-gap: 8px; row-gap: 16px; padding: 8px; }
-}
-@media (max-width: 360px) {
-    .ds-product-grid { column-gap: 6px; row-gap: 12px; padding: 6px; }
-}
+/* Responsive: ds-product-grid — migrated to Tailwind in DropshippingLayout.ts */
 
 /* ── Orders (stateful tabs) ────────────────────────────────────── */
 
@@ -5509,10 +4811,7 @@ body.pdm-sheet-open {
 .ds-orders__tab-content { display: none; }
 .ds-orders__tab-content--active { display: block; }
 
-@media (max-width: 480px) {
-    .ds-orders__tabs { padding: 0 8px; }
-    .ds-orders__tab { padding: 10px 12px; font-size: 12px; }
-}
+/* Responsive: ds-orders__tabs — migrated to Tailwind in DropshippingLayout.ts */
 
 /* ── Modal (stateful show/hide) ────────────────────────────────── */
 
@@ -5547,7 +4846,7 @@ body.pdm-sheet-open {
     border-color: var(--color-cta-primary-hover, #b38600);
 }
 
-@media (max-width: 480px) { .ds-modal__dialog { margin: 12px; max-width: calc(100vw - 24px); } }
+/* Responsive: ds-modal__dialog — migrated to Tailwind in DropshippingLayout.ts */
 
 /* ── Toggle Switch (stateful) ──────────────────────────────────── */
 

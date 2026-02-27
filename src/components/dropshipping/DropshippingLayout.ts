@@ -182,13 +182,13 @@ function renderCollectionFilters(): string {
   const chips = collectionChips
     .map(
       (c) =>
-        `<button class="ds-chip${c.active ? ' ds-chip--active ds-chip--orange' : ''}" data-chip-id="${c.id}">${c.label}</button>`
+        `<button class="ds-chip max-[480px]:py-1 max-[480px]:px-2.5 max-[480px]:text-xs${c.active ? ' ds-chip--active ds-chip--orange' : ''}" data-chip-id="${c.id}">${c.label}</button>`
     )
     .join('');
   return `
-    <div class="ds-filters__row">
-      <span class="ds-filters__label">Koleksiyon:</span>
-      <div class="ds-filters__chips">${chips}</div>
+    <div class="ds-filters__row max-md:flex-col max-md:gap-1.5">
+      <span class="ds-filters__label max-md:w-auto max-md:pt-0">Koleksiyon:</span>
+      <div class="ds-filters__chips max-[480px]:gap-1.5">${chips}</div>
     </div>
   `;
 }
@@ -197,29 +197,29 @@ function renderCountryFilters(): string {
   const chips = countryChips
     .map(
       (c) =>
-        `<button class="ds-chip ds-chip--country" data-country="${c.code}">
+        `<button class="ds-chip ds-chip--country max-[480px]:py-1 max-[480px]:px-2.5 max-[480px]:text-xs" data-country="${c.code}">
           <img src="https://flagcdn.com/16x12/${c.code.toLowerCase()}.png" alt="${c.label}" width="16" height="12" />
           ${c.label}
         </button>`
     )
     .join('');
   return `
-    <div class="ds-filters__row">
-      <span class="ds-filters__label">Gelen nakliye:</span>
-      <div class="ds-filters__chips">${chips}</div>
+    <div class="ds-filters__row max-md:flex-col max-md:gap-1.5">
+      <span class="ds-filters__label max-md:w-auto max-md:pt-0">Gelen nakliye:</span>
+      <div class="ds-filters__chips max-[480px]:gap-1.5">${chips}</div>
     </div>
   `;
 }
 
 function renderDropdownFilters(): string {
   return `
-    <div class="ds-filters__row">
-      <span class="ds-filters__label">Diğer filtre:</span>
-      <div class="ds-filters__chips">
+    <div class="ds-filters__row max-md:flex-col max-md:gap-1.5">
+      <span class="ds-filters__label max-md:w-auto max-md:pt-0">Diğer filtre:</span>
+      <div class="ds-filters__chips max-[480px]:gap-1.5">
         <select class="ds-select"><option>Tedarikçi ülkesi</option></select>
         <select class="ds-select"><option>Depo</option></select>
         <select class="ds-select"><option>Lojistik</option></select>
-        <button class="ds-chip ds-chip--toggle" data-toggle="free-shipping">Ücretsiz kargo</button>
+        <button class="ds-chip ds-chip--toggle max-[480px]:py-1 max-[480px]:px-2.5 max-[480px]:text-xs" data-toggle="free-shipping">Ücretsiz kargo</button>
       </div>
     </div>
   `;
@@ -246,12 +246,12 @@ function renderCategoryFilters(): string {
   const hidden = categoryTags.slice(VISIBLE_COUNT);
 
   return `
-    <div class="ds-filters__row ds-category-row">
-      <span class="ds-filters__label">Kategori:</span>
-      <div class="ds-filters__chips ds-category-chips">
+    <div class="ds-filters__row ds-category-row max-md:flex-col max-md:gap-1.5">
+      <span class="ds-filters__label max-md:w-auto max-md:pt-0">Kategori:</span>
+      <div class="ds-filters__chips max-[480px]:gap-1.5 ds-category-chips max-md:!pr-0">
         ${visible.map((t) => renderCategoryTag(t, false)).join('')}
         ${hidden.map((t) => renderCategoryTag(t, true)).join('')}
-        <button class="ds-category-toggle" data-expanded="false">
+        <button class="ds-category-toggle max-md:static" data-expanded="false">
           Tümünü görüntüle
           <svg class="ds-category-toggle__icon" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
         </button>
@@ -272,7 +272,7 @@ function renderProductGrid(): string {
         <option>Satışlara Göre - Yüksekten Düşüğe</option>
       </select>
     </div>
-    <div class="ds-product-grid">
+    <div class="ds-product-grid max-[1200px]:grid-cols-4 max-[1200px]:gap-x-5 max-[1200px]:gap-y-7 max-[1200px]:p-5 max-[900px]:grid-cols-3 max-[900px]:gap-x-4 max-[900px]:gap-y-6 max-[900px]:p-4 max-md:grid-cols-2 max-md:gap-x-3 max-md:gap-y-5 max-md:p-3 max-[480px]:gap-x-2 max-[480px]:gap-y-4 max-[480px]:p-2 max-[360px]:gap-x-1.5 max-[360px]:gap-y-3 max-[360px]:p-1.5">
       ${cards}
     </div>
   `;
@@ -282,7 +282,7 @@ function renderFindProducts(): string {
   return `
     <div>
       ${renderHeroBanner()}
-      <div class="ds-filters">
+      <div class="ds-filters max-md:!p-3 max-[480px]:!p-2">
         ${renderCollectionFilters()}
         ${renderCountryFilters()}
         ${renderDropdownFilters()}
@@ -299,12 +299,12 @@ function renderOrderTabs(): string {
   const tabs = orderTabs
     .map(
       (tab, i) =>
-        `<button class="ds-orders__tab${i === 0 ? ' ds-orders__tab--active' : ''}" data-tab="${tab.id}">
+        `<button class="ds-orders__tab max-[480px]:py-2.5 max-[480px]:px-3 max-[480px]:text-xs${i === 0 ? ' ds-orders__tab--active' : ''}" data-tab="${tab.id}">
           ${tab.label}${tab.count !== undefined ? ` <span class="text-secondary-300 font-normal">(${tab.count})</span>` : ''}
         </button>`
     )
     .join('');
-  return `<div class="ds-orders__tabs">${tabs}</div>`;
+  return `<div class="ds-orders__tabs max-[480px]:px-2">${tabs}</div>`;
 }
 
 function renderEmptyState(): string {
@@ -331,7 +331,7 @@ function renderAutoApprovalModal(): string {
   return `
     <div class="ds-modal" id="ds-auto-approval-modal">
       <div class="ds-modal__overlay"></div>
-      <div class="ds-modal__dialog">
+      <div class="ds-modal__dialog max-[480px]:m-3 max-[480px]:max-w-[calc(100vw-24px)]">
         <div class="flex items-center justify-between py-5 px-6 border-b border-border-default">
           <h3 class="text-base font-semibold text-gray-800 m-0">Otomatik onay</h3>
           <button class="ds-modal__close" data-close-modal>&times;</button>
@@ -397,12 +397,12 @@ export function DropshippingLayout(): string {
 
   const navLinks = NAV_ITEMS.map(
     (item) =>
-      `<a href="#${item.id}" class="ds-page__nav-link${item.id === activeId ? ' ds-page__nav-link--active' : ''}" data-section="${item.id}">${item.label}</a>`
+      `<a href="#${item.id}" class="ds-page__nav-link max-md:py-3 max-md:px-4 max-md:text-[13px] max-[360px]:py-2.5 max-[360px]:px-3 max-[360px]:text-xs${item.id === activeId ? ' ds-page__nav-link--active' : ''}" data-section="${item.id}">${item.label}</a>`
   ).join('');
 
   return `
     <div class="bg-white rounded-lg overflow-hidden">
-      <div class="ds-page__nav">${navLinks}</div>
+      <div class="ds-page__nav max-md:overflow-x-auto">${navLinks}</div>
       <div id="ds-content">
         ${renderFn()}
       </div>

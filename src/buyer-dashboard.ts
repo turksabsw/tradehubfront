@@ -59,22 +59,22 @@ const appEl = document.querySelector<HTMLDivElement>('#app')!;
 appEl.classList.add('relative');
 appEl.innerHTML = `
   <!-- Simplified Dashboard Header (TopBar only, no search/mega menu) -->
-  <div id="sticky-header" class="sticky top-0 z-[var(--z-header)]" style="background-color:var(--header-scroll-bg)">
+  <div id="sticky-header" class="sticky top-0 z-(--z-header)" style="background-color:var(--header-scroll-bg)">
     ${TopBar({ compact: true })}
   </div>
 
   <!-- Page body: Sidebar spans entire page including footer -->
   <div class="bg-[#F5F5F5] min-h-screen">
-    <div class="max-w-[1425px] mx-auto px-4 flex gap-[14px]">
-      <!-- Sidebar Column (spans main + footer) -->
-      <div class="w-[260px] flex-shrink-0 pt-4">
+    <div class="max-w-[1425px] mx-auto px-[clamp(0.5rem,0.3rem+1vw,1.5rem)] flex gap-[14px] max-lg:flex-col">
+      <!-- Sidebar Column (hidden on mobile, visible lg+) -->
+      <div class="w-[260px] flex-shrink-0 pt-4 hidden lg:block">
         ${renderSidebar()}
       </div>
 
       <!-- Content Column (main + footer) -->
-      <div class="flex-1 min-w-0">
+      <div class="flex-1 min-w-0 overflow-hidden">
         <!-- Breadcrumb -->
-        <div class="pt-4" id="bd-breadcrumb">
+        <div class="pt-4 max-sm:pt-3" id="bd-breadcrumb">
           ${Breadcrumb(getBreadcrumbItems(activeView))}
         </div>
 

@@ -24,7 +24,7 @@ appEl.classList.add('relative');
 
 appEl.innerHTML = `
   <!-- Sticky Header (global, stays sticky across full page) -->
-  <div id="sticky-header" class="sticky top-0 z-[var(--z-header)] transition-colors duration-200" style="background-color:var(--header-scroll-bg);border-bottom:1px solid var(--header-scroll-border)">
+  <div id="sticky-header" class="sticky top-0 z-(--z-header) transition-colors duration-200" style="background-color:var(--header-scroll-bg);border-bottom:1px solid var(--header-scroll-border)">
     ${TopBar()}
     ${SubHeader()}
   </div>

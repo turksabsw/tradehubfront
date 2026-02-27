@@ -168,7 +168,7 @@ export function AuthLayout(content: string, options: AuthLayoutOptions = {}): st
             </div>
 
             <!-- Single content area (mobile: white card, desktop: transparent) -->
-            <div class="bg-white dark:bg-gray-900 mx-4 mb-8 px-6 py-8 rounded-md shadow-lg lg:bg-transparent lg:dark:bg-transparent lg:mx-0 lg:mb-0 lg:px-8 lg:py-0 lg:rounded-none lg:shadow-none">
+            <div class="bg-white dark:bg-gray-900 mx-2 sm:mx-4 mb-8 px-4 sm:px-6 py-6 sm:py-8 rounded-md shadow-lg lg:bg-transparent lg:dark:bg-transparent lg:mx-0 lg:mb-0 lg:px-8 lg:py-0 lg:rounded-none lg:shadow-none">
               <div class="w-full max-w-md mx-auto">
                 ${content}
               </div>

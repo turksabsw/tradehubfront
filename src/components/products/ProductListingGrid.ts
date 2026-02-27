@@ -283,13 +283,13 @@ function renderProductListingCard(card: ProductListingCard): string {
 
       <!-- Action buttons -->
       <div class="flex gap-2 px-1 items-center">
-        <button type="button" class="searchx-product-e-abutton flex items-center justify-center h-9 px-[15px] border border-[#222] rounded-full text-sm font-medium text-gray-900 bg-transparent cursor-pointer whitespace-nowrap transition-colors hover:bg-gray-100"
+        <button type="button" class="searchx-product-e-abutton flex items-center justify-center h-9 px-2 sm:px-[15px] border border-[#222] rounded-full text-xs sm:text-sm font-medium text-gray-900 bg-transparent cursor-pointer whitespace-nowrap transition-colors hover:bg-gray-100 min-w-0"
                 data-add-to-cart="${card.id}">
           Sepete ekle
         </button>
-        <button type="button" class="searchx-product-e-abutton flex items-center justify-center h-9 px-[15px] border border-[#222] rounded-full text-sm font-medium text-gray-900 bg-transparent cursor-pointer whitespace-nowrap transition-colors hover:bg-gray-100"
+        <button type="button" class="searchx-product-e-abutton flex items-center justify-center h-9 px-2 sm:px-[15px] border border-[#222] rounded-full text-xs sm:text-sm font-medium text-gray-900 bg-transparent cursor-pointer whitespace-nowrap transition-colors hover:bg-gray-100 min-w-0"
                 onclick="event.preventDefault(); event.stopPropagation();">
-          Hemen sohbet et
+          Sohbet et
         </button>
       </div>
     </div>
@@ -459,7 +459,7 @@ export function ProductListingGrid(products: ProductListingCard[] = mockProductL
     return `
       <section aria-label="Ürün Listesi" class="flex-1">
         <div
-          class="grid grid-cols-2 md:grid-cols-4 product-grid"
+          class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 product-grid"
           style="gap: var(--product-grid-gap, 12px);"
           role="list"
           aria-label="Ürün listesi"
@@ -473,7 +473,7 @@ export function ProductListingGrid(products: ProductListingCard[] = mockProductL
   return `
     <section aria-label="Ürün Listesi" class="flex-1">
       <div
-        class="grid grid-cols-2 md:grid-cols-4 product-grid"
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 product-grid"
         style="gap: var(--product-grid-gap, 12px);"
         role="list"
         aria-label="Ürün listesi"

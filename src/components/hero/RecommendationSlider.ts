@@ -218,7 +218,7 @@ function renderCard(card: RecommendationCard): string {
   const cardAriaLabel = card.subtitle ? `${card.title} - ${card.subtitle}` : card.title;
 
   return `
-    <div class="swiper-slide recommendation-slide h-full">
+    <div class="swiper-slide recommendation-slide h-full xl:!w-[240px]">
       <a
         href="${card.href}"
         aria-label="${cardAriaLabel}"
@@ -227,8 +227,8 @@ function renderCard(card: RecommendationCard): string {
         style="background-color:var(--hero-card-bg);border-color:var(--hero-card-border-color);border-radius:var(--hero-card-radius)"
       >
         <div class="mb-2">
-          <h3 class="text-[16px] font-bold leading-tight dark:text-white" style="color:var(--hero-title-color)">${card.title}</h3>
-          ${card.subtitle ? `<p class="mt-0.5 truncate text-[12px] font-semibold leading-tight text-gray-700 dark:text-gray-300">${card.subtitle}</p>` : ''}
+          <h3 class="text-[14px] sm:text-[16px] font-bold leading-tight truncate dark:text-white" style="color:var(--hero-title-color)">${card.title}</h3>
+          ${card.subtitle ? `<p class="mt-0.5 truncate text-[11px] sm:text-[12px] font-semibold leading-tight text-gray-700 dark:text-gray-300">${card.subtitle}</p>` : ''}
         </div>
         <div class="min-h-0 flex-1">
           ${renderPlaceholderVisual(card.imageKind)}
@@ -240,7 +240,7 @@ function renderCard(card: RecommendationCard): string {
 
 export function RecommendationSlider(): string {
   return `
-    <div class="group/recommendation relative recommendation-slider-wrapper h-[260px] lg:h-[300px] px-4 lg:px-0">
+    <div class="group/recommendation relative recommendation-slider-wrapper h-[200px] sm:h-[260px] lg:h-[300px] px-2 sm:px-4 lg:px-0">
       <div class="swiper recommendation-swiper h-full" aria-label="Frequently searched product slider">
         <div class="swiper-wrapper h-full">
           ${recommendationCards.map(card => renderCard(card)).join('')}

@@ -55,8 +55,8 @@ const getBaseUrl = (): string => {
 function renderLogo(): string {
   const baseUrl = getBaseUrl();
   return `
-    <a href="${baseUrl}" class="flex items-center hover:opacity-80 transition-opacity" aria-label="iSTOC Home">
-      <img src="${baseUrl}images/istoc-logo.png" alt="iSTOC" class="h-8 lg:h-9" />
+    <a href="${baseUrl}" class="flex items-center hover:opacity-80 transition-opacity cursor-pointer shrink-0" aria-label="iSTOC Home">
+      <img src="${baseUrl}images/istoc-logo.png" alt="iSTOC" class="h-7 sm:h-8 lg:h-9 shrink-0" />
     </a>
   `;
 }
@@ -83,7 +83,7 @@ function renderUserButton(): string {
         id="user-dropdown-btn"
         data-dropdown-toggle="user-dropdown-menu"
         data-dropdown-placement="bottom-end"
-        class="th-header-icon inline-flex items-center justify-center w-7 h-7 rounded-full hover:bg-gray-200 transition-colors"
+        class="th-header-icon inline-flex items-center justify-center w-7 h-7 rounded-full hover:bg-gray-200 transition-colors cursor-pointer shrink-0"
         aria-label="Hesabım"
       >
         <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
@@ -130,7 +130,7 @@ function renderCompactStickySearch(): string {
         aria-hidden="true"
         aria-expanded="false"
         aria-controls="topbar-compact-dropdown"
-        class="absolute left-0 right-0 top-[8px] z-[var(--z-popover)] w-full rounded-full border border-gray-300 bg-white shadow-sm transition-all duration-200 dark:border-gray-600 dark:bg-gray-800"
+        class="absolute left-0 right-0 top-[8px] z-(--z-popover) w-full rounded-full border border-gray-300 bg-white shadow-sm transition-all duration-200 dark:border-gray-600 dark:bg-gray-800"
       >
         <div id="topbar-compact-primary-row" class="flex items-center gap-2 px-3 py-1.5">
           <div class="relative min-w-0 flex-1">
@@ -181,7 +181,7 @@ function renderCompactStickySearch(): string {
       <div
         id="topbar-compact-dropdown"
         aria-hidden="true"
-        class="hidden absolute left-0 right-0 z-[var(--z-modal)] rounded-md border border-gray-200 bg-white px-5 py-4 shadow-xl dark:border-gray-700 dark:bg-gray-800"
+        class="hidden absolute left-0 right-0 z-(--z-modal) rounded-md border border-gray-200 bg-white px-5 py-4 shadow-xl dark:border-gray-700 dark:bg-gray-800"
       >
         <div class="flex items-center justify-between gap-4">
           <h3 class="text-lg font-bold text-gray-900 dark:text-white">Recommended for you</h3>
@@ -235,7 +235,7 @@ function renderCountrySelector(): string {
     <button
       data-popover-target="popover-deliver-to"
       data-popover-placement="bottom"
-      class="th-header-icon flex flex-col items-center px-2 py-1 dark:text-gray-300 dark:hover:text-primary-400 transition-colors"
+      class="th-header-icon flex flex-col items-center px-2 py-1 dark:text-gray-300 dark:hover:text-primary-400 transition-colors cursor-pointer shrink-0"
       type="button"
       aria-label="Select delivery country"
     >
@@ -299,14 +299,14 @@ function renderLanguageCurrencySelector(): string {
     <button
       data-popover-target="popover-language-currency"
       data-popover-placement="bottom"
-      class="th-header-icon flex items-center gap-1.5 px-2 py-1.5 text-sm dark:text-gray-300 dark:hover:text-primary-400 transition-colors"
+      class="th-header-icon flex items-center gap-1.5 px-2 py-1.5 text-sm dark:text-gray-300 dark:hover:text-primary-400 transition-colors cursor-pointer shrink-0"
       type="button"
       aria-label="Select language and currency"
     >
       <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0 1 12 16.5a17.92 17.92 0 0 1-8.716-4.247m0 0A8.959 8.959 0 0 1 3 12c0-1.177.227-2.302.637-3.332" />
       </svg>
-      <span class="font-medium">English-USD</span>
+      <span class="font-medium truncate">English-USD</span>
     </button>
 
     <!-- Language & Currency Popover -->
@@ -355,7 +355,7 @@ function renderMessagesButton(): string {
     <button
       data-popover-target="popover-messages"
       data-popover-placement="bottom"
-      class="th-header-icon flex items-center justify-center p-2 rounded-full hover:bg-gray-100 dark:text-gray-300 dark:hover:text-primary-400 dark:hover:bg-gray-800 transition-colors relative"
+      class="th-header-icon flex items-center justify-center p-2 rounded-full hover:bg-gray-100 dark:text-gray-300 dark:hover:text-primary-400 dark:hover:bg-gray-800 transition-colors cursor-pointer shrink-0 relative"
       type="button"
       aria-label="Messages"
     >
@@ -427,7 +427,7 @@ function renderOrdersButton(): string {
     <button
       data-popover-target="popover-orders"
       data-popover-placement="bottom"
-      class="th-header-icon hidden lg:flex items-center justify-center p-2 rounded-full hover:bg-gray-100 dark:text-gray-300 dark:hover:text-primary-400 dark:hover:bg-gray-800 transition-colors"
+      class="th-header-icon hidden lg:flex items-center justify-center p-2 rounded-full hover:bg-gray-100 dark:text-gray-300 dark:hover:text-primary-400 dark:hover:bg-gray-800 transition-colors cursor-pointer shrink-0"
       type="button"
       aria-label="Orders"
       title="Orders"
@@ -513,7 +513,7 @@ function renderCartButton(itemCount: number = 0): string {
       id="header-cart-btn"
       data-popover-target="popover-cart"
       data-popover-placement="bottom"
-      class="th-header-icon relative flex items-center justify-center p-2 rounded-full hover:bg-gray-100 dark:text-gray-300 dark:hover:text-primary-400 dark:hover:bg-gray-800 transition-colors"
+      class="th-header-icon relative flex items-center justify-center p-1.5 sm:p-2 rounded-full hover:bg-gray-100 dark:text-gray-300 dark:hover:text-primary-400 dark:hover:bg-gray-800 transition-colors cursor-pointer shrink-0"
       type="button"
       aria-label="Shopping cart${showBadge ? `, ${itemCount} items` : ''}"
     >
@@ -601,7 +601,7 @@ function renderMobileDrawer(): string {
     <!-- Mobile Menu Drawer -->
     <div
       id="mobile-menu-drawer"
-      class="fixed top-0 left-0 z-[var(--z-backdrop)] h-screen overflow-hidden transition-transform -translate-x-full bg-white w-80 dark:bg-gray-800"
+      class="fixed top-0 left-0 z-(--z-backdrop) h-screen overflow-hidden transition-transform -translate-x-full bg-white w-[min(80vw,20rem)] sm:w-80 dark:bg-gray-800"
       tabindex="-1"
       aria-labelledby="drawer-label"
     >
@@ -962,7 +962,7 @@ export function MobileSearchTabs(activeTab: 'products' | 'manufacturers' | 'coun
   const inactiveClass = "topbar-search-tab relative py-2 text-[13px] font-normal text-gray-400 dark:text-gray-500 whitespace-nowrap after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-transparent after:rounded-full";
 
   return `
-    <div class="lg:hidden flex items-center gap-6 px-4 border-b border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-900 overflow-x-auto no-scrollbar scroll-smooth">
+    <div class="lg:hidden flex items-center gap-3 sm:gap-6 px-2 sm:px-4 border-b border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-900 overflow-x-auto no-scrollbar scroll-smooth">
       <a href="/" class="${activeTab === 'products' ? activeClass : inactiveClass}" data-search-tab="products">Ürünler</a>
       <a href="/manufacturers.html" class="${activeTab === 'manufacturers' ? activeClass : inactiveClass}" data-search-tab="manufacturers">Tedarikçiler</a>
       <a href="#" class="${activeTab === 'country' ? activeClass : inactiveClass}" data-search-tab="country">Ülkeye göre tedarikler</a>
@@ -994,14 +994,14 @@ export function TopBar(props?: TopBarProps): string {
     return `
       <div class="relative z-30" style="background:#F5F5F5">
         <div class="container-boxed">
-          <div class="flex items-center h-10 gap-4">
+          <div class="flex items-center h-10 gap-2 sm:gap-4">
             <!-- Logo (smaller, white for gradient bg) -->
             <div class="flex-shrink-0">
               ${renderCompactLogo()}
             </div>
 
             <!-- "Hesabım" label like Alibaba's "Alibabam" -->
-            <span class="text-[#666] text-[13px] font-normal border-l border-gray-300 pl-3">Hesabım</span>
+            <span class="text-[#666] text-[13px] font-normal border-l border-gray-300 pl-2 sm:pl-3 truncate">Hesabım</span>
 
             <!-- Spacer -->
             <div class="flex-1"></div>
@@ -1069,26 +1069,26 @@ export function TopBar(props?: TopBarProps): string {
     <div class="relative z-30 dark:bg-gray-900" style="background-color:var(--header-bg);border-bottom:1px solid var(--header-border-color)">
       <div class="container-boxed">
         <!-- Row 1: Logo + Search (mobile) + Icons -->
-        <div class="flex items-center h-16 gap-2 lg:gap-0">
+        <div class="flex items-center h-14 sm:h-16 gap-1 sm:gap-2 lg:gap-0">
           <!-- Logo -->
           <div class="flex-shrink-0">
             ${renderLogo()}
           </div>
 
           <!-- Mobile Inline Search (between logo and icons) -->
-          <div class="flex-1 min-w-0 mx-2 lg:hidden">
+          <div class="flex-1 min-w-0 mx-1 sm:mx-2 lg:hidden">
             <form id="mobile-search-form" action="/search" method="GET" role="search">
               <input type="hidden" id="mobile-search-type" name="searchType" value="products" />
               <div class="flex">
                 <input
                   type="text"
                   name="mobile-search"
-                  class="w-full h-10 px-3 text-sm text-gray-900 bg-white border-2 border-primary-400 border-r-0 rounded-l-md focus:ring-1 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-primary-600 dark:placeholder-gray-400 dark:text-white"
+                  class="w-full h-9 sm:h-10 px-2 sm:px-3 text-xs sm:text-sm text-gray-900 bg-white border-2 border-primary-400 border-r-0 rounded-l-md focus:ring-1 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-primary-600 dark:placeholder-gray-400 dark:text-white"
                   placeholder="Search products..."
                   autocomplete="off"
                   aria-label="Search products"
                 />
-                <a href="/image-search" class="flex items-center justify-center h-10 px-2.5 bg-white border-2 border-primary-400 border-l-0 border-r-0 text-gray-400 hover:text-primary-600 transition-colors dark:bg-gray-700 dark:border-primary-600" aria-label="Image search">
+                <a href="/image-search" class="flex items-center justify-center h-9 sm:h-10 px-1.5 sm:px-2.5 bg-white border-2 border-primary-400 border-l-0 border-r-0 text-gray-400 hover:text-primary-600 transition-colors cursor-pointer shrink-0 dark:bg-gray-700 dark:border-primary-600" aria-label="Image search">
                   <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z"/>
                     <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0Z"/>
@@ -1096,7 +1096,7 @@ export function TopBar(props?: TopBarProps): string {
                 </a>
                 <button
                   type="submit"
-                  class="flex items-center justify-center h-10 px-4 text-white rounded-r-md transition-colors"
+                  class="flex items-center justify-center h-9 sm:h-10 px-3 sm:px-4 text-white rounded-r-md transition-colors cursor-pointer shrink-0"
                   style="background: linear-gradient(135deg, var(--search-btn-gradient-start) 0%, var(--search-btn-gradient-end) 100%);"
                   aria-label="Search"
                 >
@@ -1112,7 +1112,7 @@ export function TopBar(props?: TopBarProps): string {
           ${renderCompactStickySearch()}
 
           <!-- Right Side: Selectors + Icons + Cart + Auth -->
-          <div class="ml-auto flex items-center gap-2 lg:gap-4 flex-shrink-0">
+          <div class="ml-auto flex items-center gap-1 sm:gap-2 lg:gap-4 shrink-0">
             <!-- Country Selector (hidden on mobile) -->
             <div class="hidden lg:block">
               ${renderCountrySelector()}
@@ -1145,7 +1145,7 @@ export function TopBar(props?: TopBarProps): string {
             <button
               data-drawer-target="mobile-menu-drawer"
               data-drawer-toggle="mobile-menu-drawer"
-              class="th-header-icon inline-flex items-center p-2 rounded-md lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+              class="th-header-icon inline-flex items-center p-1.5 sm:p-2 rounded-md lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 cursor-pointer shrink-0 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
               type="button"
               aria-controls="mobile-menu-drawer"
               aria-label="Open main menu"

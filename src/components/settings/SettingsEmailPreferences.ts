@@ -107,7 +107,7 @@ function saveEmailPrefs(): void {
 
 function renderEmailItem(item: EmailItem): string {
   return `
-    <div class="email-pref__item flex items-start gap-3 py-4 px-6 border-b border-[var(--color-border-light,#f0f0f0)] last:border-b-0 max-md:px-4 max-md:py-3">
+    <div class="email-pref__item flex items-start gap-3 py-4 px-6 border-b border-(--color-border-light,#f0f0f0) last:border-b-0 max-md:px-4 max-md:py-3">
       <label class="email-pref__checkbox relative inline-flex items-center justify-center w-5 h-5 flex-shrink-0 mt-0.5 cursor-pointer">
         <input type="checkbox" data-email-check="${item.id}" ${item.checked ? 'checked' : ''} class="opacity-0 w-0 h-0 absolute" />
         <span class="email-pref__checkmark w-[18px] h-[18px] border-2 border-gray-300 rounded bg-white transition-all flex items-center justify-center"></span>

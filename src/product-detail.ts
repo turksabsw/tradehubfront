@@ -59,7 +59,7 @@ const appEl = document.querySelector<HTMLDivElement>('#app')!;
 appEl.classList.add('relative');
 appEl.innerHTML = `
   <!-- Sticky Header -->
-  <div id="sticky-header" class="sticky top-0 z-[var(--z-header)]" style="background-color:var(--header-scroll-bg);border-bottom:1px solid var(--header-scroll-border)">
+  <div id="sticky-header" class="sticky top-0 z-(--z-header)" style="background-color:var(--header-scroll-bg);border-bottom:1px solid var(--header-scroll-border)">
     ${TopBar()}
     ${SubHeader()}
   </div>
@@ -72,17 +72,17 @@ appEl.innerHTML = `
     <div id="pd-desktop-layout">
       <section style="background: var(--pd-bg, #ffffff);">
         <div class="container-boxed">
-          <div id="pd-hero-grid">
-            <div id="pd-hero-left">
+          <div id="pd-hero-grid" class="flex flex-col gap-5 pt-3 xl:grid xl:grid-cols-[1fr_340px] xl:gap-5 xl:items-start 2xl:grid-cols-[1fr_380px] 2xl:gap-6 3xl:grid-cols-[1fr_407px] 3xl:gap-7">
+            <div id="pd-hero-left" class="w-full min-w-0">
               ${Breadcrumb(pdCrumbs)}
               ${ProductTitleBar()}
-              <div id="pd-hero-gallery">
+              <div id="pd-hero-gallery" class="w-full">
                 ${ProductImageGallery()}
               </div>
               ${RelatedProducts()}
               ${ProductTabs()}
             </div>
-            <div id="pd-hero-info">
+            <div id="pd-hero-info" class="w-full xl:flex xl:flex-col">
               ${ProductInfo()}
             </div>
           </div>

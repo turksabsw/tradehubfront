@@ -18,9 +18,9 @@ export interface OperationSliderProps {
 function renderSlide(slide: NotificationSlide): string {
   return `
     <div class="swiper-slide">
-      <div class="flex items-center justify-between px-5 py-3 min-h-[44px] gap-4 max-md:px-3">
-        <span class="text-sm font-normal text-[var(--color-text-heading,#111827)] whitespace-nowrap overflow-hidden text-ellipsis min-w-0">${slide.title}</span>
-        <a href="${slide.linkHref}" class="text-sm text-[var(--color-text-heading,#111827)] no-underline inline-flex items-center whitespace-nowrap shrink-0 transition-colors duration-150 hover:text-[var(--color-cta-primary,#cc9900)]">
+      <div class="flex items-center justify-between px-[clamp(0.75rem,0.5rem+1vw,1.25rem)] py-3 min-h-[44px] gap-2 sm:gap-4">
+        <span class="text-[clamp(0.75rem,0.7rem+0.2vw,0.875rem)] font-normal text-(--color-text-heading,#111827) whitespace-nowrap overflow-hidden text-ellipsis min-w-0">${slide.title}</span>
+        <a href="${slide.linkHref}" class="text-[clamp(0.75rem,0.7rem+0.2vw,0.875rem)] text-(--color-text-heading,#111827) no-underline inline-flex items-center whitespace-nowrap shrink-0 transition-colors duration-150 hover:text-(--color-cta-primary,#cc9900)">
           ${slide.linkText}
           <svg class="w-3 h-3 ml-1 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
@@ -37,7 +37,7 @@ export function OperationSlider(props: OperationSliderProps): string {
 
   return `
     <div class="operation-slider relative overflow-hidden group/opslider" aria-label="Bildirimler">
-      <div class="swiper operation-slider__swiper overflow-hidden bg-[var(--color-surface-raised,#f5f5f5)]">
+      <div class="swiper operation-slider__swiper overflow-hidden bg-(--color-surface-raised,#f5f5f5)">
         <div class="swiper-wrapper">
           ${notifications.map(renderSlide).join('')}
         </div>

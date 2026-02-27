@@ -81,7 +81,7 @@ function renderViewMode(data: AccountData): string {
   const fullName = `${data.firstName} ${data.lastName}`.trim();
 
   return `
-    <div class="bg-white rounded-lg p-8 max-md:p-5" id="acc-edit-view">
+    <div class="bg-white rounded-lg p-8 max-md:p-5 max-sm:p-3" id="acc-edit-view">
       <div class="flex items-center justify-between">
         <h2 class="text-lg font-semibold m-0" style="color:var(--color-text-heading, #111827)">Hesap Bilgilerinizi Düzenleyin</h2>
         <a href="#" class="text-[13px] text-blue-600 no-underline font-medium hover:underline">Hesabı Kapat</a>
@@ -166,11 +166,11 @@ function renderEditMode(data: AccountData): string {
 
   const rowCls = "flex items-baseline py-2.5 min-h-[38px] max-md:flex-col max-md:gap-1";
   const labelCls = "w-[220px] flex-shrink-0 text-sm font-bold text-right pr-4 max-md:w-auto max-md:text-left max-md:pr-0";
-  const fieldCls = "flex-1 flex items-center gap-2 text-sm";
-  const inputCls = "py-1.5 px-2.5 border border-gray-300 rounded text-sm outline-none transition-colors focus:border-blue-600";
+  const fieldCls = "flex-1 flex items-center gap-2 text-sm max-sm:flex-wrap";
+  const inputCls = "py-1.5 px-2.5 border border-gray-300 rounded text-sm outline-none transition-colors focus:border-blue-600 max-sm:w-full";
 
   return `
-    <div class="bg-white rounded-lg p-8 max-md:p-5" id="acc-edit-form" style="display:none">
+    <div class="bg-white rounded-lg p-8 max-md:p-5 max-sm:p-3" id="acc-edit-form" style="display:none">
       <div class="flex items-center justify-between">
         <h2 class="text-lg font-semibold m-0" style="color:var(--color-text-heading, #111827)">Hesap Bilgilerinizi Düzenleyin</h2>
         <a href="#" class="text-[13px] text-blue-600 no-underline font-medium hover:underline">Hesabı Kapat</a>
@@ -181,8 +181,8 @@ function renderEditMode(data: AccountData): string {
         <div class="${rowCls}">
           <div class="${labelCls}" style="color:var(--color-text-heading, #111827)"><span class="text-red-600 mr-0.5">*</span> Ad - Soyad:</div>
           <div class="${fieldCls}" style="color:var(--color-text-body, #333333)">
-            <input type="text" class="${inputCls} w-[140px]" data-field="firstName" value="${data.firstName}" placeholder="Ad" />
-            <input type="text" class="${inputCls} w-[140px]" data-field="lastName" value="${data.lastName}" placeholder="Soyad" />
+            <input type="text" class="${inputCls} w-[140px] max-sm:w-full" data-field="firstName" value="${data.firstName}" placeholder="Ad" />
+            <input type="text" class="${inputCls} w-[140px] max-sm:w-full" data-field="lastName" value="${data.lastName}" placeholder="Soyad" />
           </div>
         </div>
         <div class="${rowCls}">

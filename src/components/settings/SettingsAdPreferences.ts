@@ -45,7 +45,7 @@ function savePreferences(prefs: Record<string, boolean>): void {
 
 function renderToggle(pref: AdPreference): string {
   return `
-    <div class="flex items-start justify-between gap-6 py-6 border-b border-[var(--color-border-light,#f0f0f0)] last:border-b-0">
+    <div class="flex items-start justify-between gap-6 py-6 border-b border-(--color-border-light,#f0f0f0) last:border-b-0">
       <div class="flex-1 min-w-0">
         <h3 class="text-[15px] font-bold mb-2 m-0" style="color:var(--color-text-heading, #111827)">${pref.title}</h3>
         <p class="text-[13px] leading-relaxed m-0" style="color:var(--color-text-placeholder, #999999)">${pref.description}</p>

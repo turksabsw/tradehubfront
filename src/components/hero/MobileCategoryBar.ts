@@ -12,10 +12,10 @@ import { megaCategories } from '../header';
 function renderBottomSheet(): string {
   return `
     <!-- Bottom Sheet Overlay -->
-    <div id="mcb-sheet-overlay" class="fixed inset-0 z-[var(--z-backdrop)] bg-black/50 opacity-0 pointer-events-none transition-opacity duration-300 lg:hidden"></div>
+    <div id="mcb-sheet-overlay" class="fixed inset-0 z-(--z-backdrop) bg-black/50 opacity-0 pointer-events-none transition-opacity duration-300 lg:hidden"></div>
 
     <!-- Bottom Sheet Panel -->
-    <div id="mcb-sheet-panel" class="fixed inset-x-0 bottom-0 z-[var(--z-modal)] transition-transform duration-300 ease-out lg:hidden" style="transform: translateY(100%)">
+    <div id="mcb-sheet-panel" class="fixed inset-x-0 bottom-0 z-(--z-modal) transition-transform duration-300 ease-out lg:hidden" style="transform: translateY(100%)">
       <div class="bg-white dark:bg-gray-800 rounded-t-md max-h-[85vh] flex flex-col shadow-2xl">
         <!-- Drag Handle + Title (swipe-to-dismiss target) -->
         <div id="mcb-sheet-drag-handle" class="flex-shrink-0">
@@ -96,7 +96,7 @@ export function MobileCategoryBar(): string {
       </div>
 
       <!-- Row 2: Product Items -->
-      <div id="mcb-products" class="flex overflow-x-auto scrollbar-hide gap-3 px-3 py-2.5">
+      <div id="mcb-products" class="flex overflow-x-auto scrollbar-hide gap-2 sm:gap-3 px-2 sm:px-3 py-2.5">
         ${firstCat.products.slice(0, 10).map(p => renderMobileProduct(p)).join('')}
       </div>
     </div>
@@ -107,9 +107,9 @@ export function MobileCategoryBar(): string {
 
 function renderMobileProduct(product: { name: string; href: string }): string {
   return `
-    <a href="${product.href}" class="mcb-product flex-shrink-0 flex flex-col items-center gap-1 w-[60px]">
-      <div class="w-[60px] h-[60px] rounded-md bg-gray-100 dark:bg-gray-700 flex items-center justify-center">
-        <svg class="w-6 h-6 text-gray-300 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <a href="${product.href}" class="mcb-product flex-shrink-0 flex flex-col items-center gap-1 w-[52px] sm:w-[60px]">
+      <div class="w-[52px] h-[52px] sm:w-[60px] sm:h-[60px] rounded-md bg-gray-100 dark:bg-gray-700 flex items-center justify-center">
+        <svg class="w-5 h-5 sm:w-6 sm:h-6 text-gray-300 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909M18 3.75H6A2.25 2.25 0 0 0 3.75 6v12A2.25 2.25 0 0 0 6 20.25h12A2.25 2.25 0 0 0 20.25 18V6A2.25 2.25 0 0 0 18 3.75Z"/>
         </svg>
       </div>
