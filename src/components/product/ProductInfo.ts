@@ -18,7 +18,7 @@ function renderPriceTiers(tiers: PriceTier[]): string {
         return `
           <div class="pd-price-tier ${i === 0 ? 'active' : ''}" data-tier-index="${i}">
             <span class="pd-price-tier-qty">${qtyLabel}</span>
-            <span class="pd-price-tier-price">$${tier.price.toFixed(2)}</span>
+            <span class="pd-price-tier-price shrink-0">$${tier.price.toFixed(2)}</span>
           </div>
         `;
       }).join('')}
@@ -89,12 +89,12 @@ export function ProductInfo(): string {
         ${renderPriceTiers(p.priceTiers)}
 
         <!-- Sample Price -->
-        <div id="pd-sample-price" class="flex items-center justify-between px-4 py-2.5 rounded-lg mb-5" style="background: var(--color-surface-raised, #f5f5f5);">
-          <div class="flex items-center gap-2 text-sm" style="color: var(--color-text-body, #333333);">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
-            <span>Numune fiyatı: <strong>$${p.samplePrice?.toFixed(2) ?? '30.00'}</strong></span>
+        <div id="pd-sample-price" class="flex items-center justify-between gap-2 px-4 py-2.5 rounded-lg mb-5" style="background: var(--color-surface-raised, #f5f5f5);">
+          <div class="flex items-center gap-2 text-sm min-w-0" style="color: var(--color-text-body, #333333);">
+            <svg class="shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
+            <span class="truncate">Numune fiyatı: <strong class="shrink-0">$${p.samplePrice?.toFixed(2) ?? '30.00'}</strong></span>
           </div>
-          <button type="button" class="pd-sample-btn">Numune Al</button>
+          <button type="button" class="pd-sample-btn shrink-0 cursor-pointer">Numune Al</button>
         </div>
 
         <!-- Variations Header -->
@@ -127,10 +127,10 @@ export function ProductInfo(): string {
         <!-- Shipping -->
         <div class="py-5" style="border-bottom: 1px solid var(--color-border-light, #f0f0f0);">
           <h3 class="text-sm font-bold mb-3 flex items-center gap-1.5 m-0" style="color: var(--pd-title-color, #111827);">Kargo</h3>
-          <div class="flex items-center justify-between gap-3 mt-3 px-3.5 py-3 rounded-lg border" id="pd-shipping-card" style="background: var(--pd-spec-header-bg, #f9fafb); border-color: var(--color-border-default, #e5e5e5);">
-            <div class="flex flex-col gap-0.5">
-              <span class="text-sm font-semibold" id="pd-ship-card-method" style="color: var(--pd-title-color, #111827);">${p.shipping[0].method}</span>
-              <span class="pd-shipping-card-detail text-xs" style="color: var(--pd-rating-text-color, #6b7280);">Kargo: ${p.shipping[0].cost} · ${p.shipping[0].estimatedDays}</span>
+          <div class="flex items-center justify-between gap-3 mt-3 px-3.5 py-3 rounded-lg border min-w-0" id="pd-shipping-card" style="background: var(--pd-spec-header-bg, #f9fafb); border-color: var(--color-border-default, #e5e5e5);">
+            <div class="flex flex-col gap-0.5 min-w-0">
+              <span class="text-sm font-semibold truncate" id="pd-ship-card-method" style="color: var(--pd-title-color, #111827);">${p.shipping[0].method}</span>
+              <span class="pd-shipping-card-detail text-xs truncate" style="color: var(--pd-rating-text-color, #6b7280);">Kargo: ${p.shipping[0].cost} · ${p.shipping[0].estimatedDays}</span>
             </div>
             <a href="javascript:void(0)" class="text-[13px] font-medium no-underline whitespace-nowrap cursor-pointer" id="pd-ship-card-change" style="color: var(--pd-price-color, #cc9900);">Değiştir ›</a>
           </div>
@@ -151,9 +151,9 @@ export function ProductInfo(): string {
             <div>
               <h5 class="text-[13px] font-semibold m-0 mb-1" style="color: var(--color-text-heading, #111827);">Güvenli Ödeme</h5>
               <p class="text-xs m-0 leading-normal" style="color: var(--color-text-muted, #666666);">Her ödeme yöntemiyle korunan ödemeler</p>
-              <div class="flex items-center gap-1.5 mt-1.5">
+              <div class="flex items-center gap-1.5 mt-1.5 flex-wrap">
                 ${['VISA', 'MC', 'PayPal', 'Apple Pay', 'GPay'].map(icon => `
-                  <span class="h-5 px-1.5 rounded-[3px] border text-[10px] font-bold inline-flex items-center" style="border-color: var(--color-border-default, #e5e5e5); color: var(--color-text-body, #333333); background: var(--color-surface, #ffffff);">${icon}</span>
+                  <span class="h-5 px-1.5 rounded-[3px] border text-[10px] font-bold inline-flex items-center shrink-0" style="border-color: var(--color-border-default, #e5e5e5); color: var(--color-text-body, #333333); background: var(--color-surface, #ffffff);">${icon}</span>
                 `).join('')}
               </div>
             </div>

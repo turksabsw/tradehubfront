@@ -109,8 +109,8 @@ export function ProductImageGallery(): string {
   return `
     <div id="product-gallery">
 
-      <!-- LEFT: Vertical Thumbnail Strip -->
-      <div id="pd-thumb-strip" class="flex flex-col items-center flex-shrink-0 w-[68px]">
+      <!-- LEFT: Vertical Thumbnail Strip (hidden on narrow desktop, shown on wider) -->
+      <div id="pd-thumb-strip" class="hidden 2xl:flex flex-col items-center shrink-0 w-[68px]">
 
         ${needsScroll ? `
         <button type="button" id="thumb-scroll-up" class="pd-thumb-arrow flex items-center justify-center w-[56px] h-[28px] rounded-md border cursor-pointer flex-shrink-0 transition-colors" style="background: var(--color-surface, #ffffff); border-color: var(--color-border-default, #e5e5e5); color: var(--color-text-placeholder, #999999);" aria-label="Yukarı kaydır">

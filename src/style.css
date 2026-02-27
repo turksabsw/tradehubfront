@@ -1826,7 +1826,13 @@
 }
 
 #gallery-prev {
-    left: 88px;
+    left: 10px;
+}
+
+@media (min-width: 1280px) {
+    #gallery-prev {
+        left: 88px;
+    }
 }
 
 #gallery-next {
