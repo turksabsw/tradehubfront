@@ -344,6 +344,26 @@
    ============================================================ */
 :root {
     /* ==========================================================
+     FLUID TYPOGRAPHY TOKENS (320px → 1280px)
+     ========================================================== */
+    --text-page-title:    clamp(1.125rem, 1rem + 0.5vw, 1.5rem);       /* 18px → 24px */
+    --text-product-title: clamp(0.8125rem, 0.75rem + 0.25vw, 0.9375rem); /* 13px → 15px */
+    --text-product-price: clamp(0.9375rem, 0.875rem + 0.25vw, 1.25rem);  /* 15px → 20px */
+    --text-product-meta:  clamp(0.6875rem, 0.65rem + 0.15vw, 0.8125rem); /* 11px → 13px */
+    --text-badge:         clamp(0.625rem, 0.6rem + 0.1vw, 0.75rem);      /* 10px → 12px */
+    --text-breadcrumb:    clamp(0.6875rem, 0.65rem + 0.15vw, 0.8125rem); /* 11px → 13px */
+    --text-filter:        clamp(0.75rem, 0.7rem + 0.2vw, 0.875rem);      /* 12px → 14px */
+    --text-body:          clamp(0.8125rem, 0.78rem + 0.15vw, 0.9375rem); /* 13px → 15px */
+
+    /* ==========================================================
+     FLUID SPACING TOKENS (320px → 1280px)
+     ========================================================== */
+    --space-page-x:       clamp(0.75rem, 0.5rem + 1vw, 1.5rem);         /* 12px → 24px */
+    --space-card-padding: clamp(0.5rem, 0.4rem + 0.4vw, 1rem);          /* 8px → 16px */
+    --space-card-gap:     clamp(0.5rem, 0.4rem + 0.4vw, 1rem);          /* 8px → 16px */
+    --space-section-gap:  clamp(1rem, 0.8rem + 0.8vw, 2rem);            /* 16px → 32px */
+
+    /* ==========================================================
      8. COMPONENT TOKENS
      ========================================================== */
 
