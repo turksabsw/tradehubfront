@@ -5606,7 +5606,9 @@ body.pdm-sheet-open {
     color: var(--color-primary-500);
     background: var(--color-surface);
 }
-.checkout-float-field--error .checkout-float-field__input {
+.checkout-float-field--error .checkout-float-field__input,
+.checkout-float-field--error .checkout-dropdown__trigger,
+.checkout-float-field--error #phone-wrapper {
     border-color: var(--color-error-500);
 }
 .checkout-float-field--error .checkout-float-field__label {

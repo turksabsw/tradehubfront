@@ -382,6 +382,13 @@ export function initShippingAddressForm(): void {
       field?.classList.remove('checkout-float-field--error');
     });
   });
+
+  // Phone input error clearing (separate since it lacks checkout-float-field__input class)
+  if (phoneInput && phoneField) {
+    phoneInput.addEventListener('input', () => {
+      phoneField.classList.remove('checkout-float-field--error');
+    });
+  }
 }
 
 /** Update the city dropdown when state changes */
