@@ -226,7 +226,7 @@ function renderDealSlide(card: TopDealCard): string {
     <div class="swiper-slide">
       <a
         href="${card.href}"
-        class="group/deal relative flex flex-col"
+        class="group/deal relative flex flex-col min-w-0"
         aria-label="${card.name}"
       >
         ${card.badge ? `
@@ -242,23 +242,23 @@ function renderDealSlide(card: TopDealCard): string {
         </div>
 
         <!-- Price row -->
-        <div class="flex items-center gap-1.5">
+        <div class="flex items-center gap-1.5 min-w-0">
           <span
-            class="inline-flex items-center gap-0.5 rounded-sm"
+            class="inline-flex items-center gap-0.5 rounded-sm shrink-0"
             style="background: var(--topdeals-price-bg, #FFEDED); padding: 2px 12px 2px 4px;"
           >
             ${lightningBoltIcon()}
             <span
-              class="text-[15px] font-bold leading-none"
-              style="color: var(--topdeals-price-color, #dc2626);"
+              class="text-(length:--text-product-price) font-bold leading-none"
+              style="color: var(--topdeals-price-color, #dc2626); font-size: var(--text-product-price, 15px);"
             >${card.price}</span>
           </span>
         </div>
 
         <!-- MOQ -->
         <p
-          class="mt-1.5 text-[14px] font-medium leading-none"
-          style="color: var(--topdeals-moq-color, #222222);"
+          class="mt-1.5 font-medium leading-none truncate"
+          style="color: var(--topdeals-moq-color, #222222); font-size: var(--text-product-meta, 14px);"
         >MOQ: ${card.moq}</p>
       </a>
     </div>
@@ -309,7 +309,7 @@ export function TopDeals(): string {
   return `
     <section class="py-4 lg:py-6" aria-label="Top Deals" style="margin-top: 28px;">
       <div class="container-boxed">
-        <div class="rounded-md" style="background-color: var(--topdeals-bg, #F8F8F8); padding: 20px 16px;">
+        <div class="rounded-md" style="background-color: var(--topdeals-bg, #F8F8F8); padding: var(--space-card-padding, 16px);">
         <!-- Section header -->
         <div class="mb-4 flex items-end justify-between gap-4">
           <div>

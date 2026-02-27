@@ -185,8 +185,8 @@ function renderRankingCard(card: TopRankingCard): string {
   return `
     <a
       href="${card.href}"
-      class="group/rank relative flex-shrink-0 flex flex-col w-[188px] h-[262px] rounded-md border transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-300"
-      style="background: var(--topranking-card-bg, #ffffff); border-color: var(--topranking-card-border, #e5e7eb); padding: 12px 12px 16px;"
+      class="group/rank relative flex-shrink-0 flex flex-col w-[156px] sm:w-[188px] h-[230px] sm:h-[262px] rounded-md border transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-300 cursor-pointer"
+      style="background: var(--topranking-card-bg, #ffffff); border-color: var(--topranking-card-border, #e5e7eb); padding: var(--space-card-padding, 12px);"
       aria-label="${card.name}"
     >
       <!-- Image area with badge -->
@@ -206,15 +206,15 @@ function renderRankingCard(card: TopRankingCard): string {
       </div>
 
       <!-- Info area -->
-      <div class="flex flex-col" style="margin-top: 28px;">
+      <div class="flex flex-col min-w-0" style="margin-top: 28px;">
         <p
-          class="truncate text-[16px] font-semibold leading-tight"
-          style="color: var(--topranking-name-color, #222222);"
+          class="truncate font-semibold leading-tight"
+          style="color: var(--topranking-name-color, #222222); font-size: var(--text-product-title, 16px);"
           title="${card.name}"
         >${card.name}</p>
         <p
-          class="truncate text-[14px] leading-none"
-          style="color: var(--topranking-label-color, #666666); margin-top: 2px;"
+          class="truncate leading-none"
+          style="color: var(--topranking-label-color, #666666); margin-top: 2px; font-size: var(--text-product-meta, 14px);"
         >${card.label}</p>
       </div>
     </a>
@@ -231,7 +231,7 @@ export function TopRanking(): string {
     <section class="py-4 lg:py-6" aria-label="Top Ranking" style="margin-top: 28px;">
       <div class="container-boxed">
         <div class="relative overflow-hidden rounded-md" style="background-color: var(--topranking-bg, #F5F5F5);">
-          <div style="padding: 24px 20px 20px;">
+          <div style="padding: var(--space-card-padding, 20px);">
             <!-- Section header -->
             <div class="mb-4 flex items-end justify-between gap-4">
               <div>
