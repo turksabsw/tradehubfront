@@ -776,10 +776,8 @@
 
 .header-gradient {
     background-image: none;
-}
 
-@media (min-width: 960px) {
-    .header-gradient {
+    @media (width >= 960px) {
         background-image: linear-gradient(135deg, var(--header-gradient-1) 0%, var(--header-gradient-2) 25%, var(--header-gradient-3) 50%, var(--header-gradient-4) 75%, var(--header-gradient-5) 100%);
         background-size: 300% 300%;
         animation: searchGradientShift 12s ease infinite;
@@ -1268,10 +1266,9 @@
         padding-inline: var(--spacing-page-x);
     }
 
-    @media (width >=1280px) {
-
-        .container-boxed,
-        .container-wide {
+    .container-boxed,
+    .container-wide {
+        @media (width >=1280px) {
             padding-inline: var(--spacing-page-x-lg);
         }
     }
