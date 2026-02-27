@@ -33,7 +33,7 @@ export function ProductItem({ product }: ProductItemProps): string {
     onChange: `product-select-${product.id}`,
   });
 
-  const titleLink = `<a class="block text-[#222] no-underline text-sm leading-5 overflow-hidden text-ellipsis whitespace-nowrap hover:text-[#cc9900] hover:underline" href="${escapeHtml(product.href)}">${escapeHtml(product.title)}</a>`;
+  const titleLink = `<a class="block text-[#222] no-underline text-xs sm:text-sm leading-5 overflow-hidden text-ellipsis whitespace-nowrap hover:text-[#cc9900] hover:underline" href="${escapeHtml(product.href)}">${escapeHtml(product.title)}</a>`;
 
   const actionBtnCls = 'inline-flex items-center justify-center w-7 h-7 border-none bg-transparent cursor-pointer text-[#999] text-base rounded transition-colors duration-150 hover:text-[#ff4747] hover:bg-[#fff0f0]';
 
@@ -57,10 +57,10 @@ export function ProductItem({ product }: ProductItemProps): string {
 
   return `
     <div class="sc-c-spu-container-new py-4 border-b border-[#f0f0f0] last:border-b-0" data-product-id="${escapeHtml(product.id)}">
-      <div class="flex items-start gap-3 mb-2">
+      <div class="flex items-start gap-2 sm:gap-3 mb-2">
         <div class="flex-shrink-0 pt-0.5">${checkbox}</div>
         <div class="flex-1 min-w-0">${titleLink}</div>
-        <div class="flex items-center gap-2 flex-shrink-0">
+        <div class="flex items-center gap-1 sm:gap-2 flex-shrink-0">
           ${favoriteBtn}
           ${deleteBtn}
         </div>

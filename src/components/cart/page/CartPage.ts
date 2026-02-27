@@ -39,13 +39,13 @@ export function CartPage({ suppliers, summary, assuranceItems }: CartPageProps):
   const supplierCards = suppliers.map((supplier) => SupplierCard({ supplier })).join('');
 
   return `
-    <div class="sc-cart-page max-w-[1640px] mx-auto px-4 py-6">
-      <div class="flex flex-col lg:flex-row gap-5 items-start w-full">
+    <div class="sc-cart-page max-w-[1640px] mx-auto px-(--space-page-x) py-3 sm:py-6">
+      <div class="flex flex-col lg:flex-row gap-3 sm:gap-5 items-start w-full">
         <!-- Left Column -->
-        <div class="w-full lg:flex-1 lg:min-w-0 flex flex-col gap-4">
+        <div class="w-full lg:flex-1 lg:min-w-0 flex flex-col gap-3 sm:gap-4">
           ${CartHeader()}
           ${BatchSelectBar({ totalCount: totalItems, selectedCount })}
-          <div class="sc-cart-supplier-list flex flex-col gap-4">
+          <div class="sc-cart-supplier-list flex flex-col gap-3 sm:gap-4">
             ${supplierCards}
           </div>
         </div>

@@ -38,12 +38,12 @@ export function SupplierCard({ supplier }: SupplierCardProps): string {
 
   return `
     <div class="sc-c-supplier-container block border border-[#e5e5e5] rounded-lg bg-white overflow-hidden" data-supplier-id="${escapeHtml(supplier.id)}">
-      <div class="sc-c-supplier-header flex items-center gap-3 px-5 py-4 border-b border-[#e5e5e5] bg-white">
+      <div class="sc-c-supplier-header flex items-center gap-2 sm:gap-3 px-3 sm:px-5 py-3 sm:py-4 border-b border-[#e5e5e5] bg-white">
         <div class="flex-shrink-0">${checkbox}</div>
-        <div class="text-sm font-semibold text-[#222] leading-5 flex-1 min-w-0">${nameLink}</div>
+        <div class="text-sm font-semibold text-[#222] leading-5 flex-1 min-w-0 truncate">${nameLink}</div>
         <div class="flex-shrink-0"></div>
       </div>
-      <div class="px-5">
+      <div class="px-3 sm:px-5">
         ${productItems}
       </div>
     </div>
