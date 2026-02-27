@@ -10,11 +10,11 @@
  */
 export function FooterGroup(): string {
   return `
-    <section class="dark:bg-gray-800 border-t dark:border-gray-700 py-6" style="background-color:var(--footer-bg);border-color:var(--footer-border-color)" aria-label="Payment methods and security">
-      <div class="container-boxed">
+    <section class="dark:bg-gray-800 border-t dark:border-gray-700 py-4 sm:py-6" style="background-color:var(--footer-bg);border-color:var(--footer-border-color)" aria-label="Payment methods and security">
+      <div class="container-boxed px-3 sm:px-4">
         <div class="flex items-center justify-center">
           <!-- Payment Methods (Turkey) -->
-          <div class="flex flex-wrap items-center justify-center gap-2.5">
+          <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-2.5">
             <!-- Visa -->
             <span class="inline-flex items-center px-3 py-1.5 rounded-md bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 font-bold italic text-sm text-blue-800 dark:text-blue-400">VISA</span>
             <!-- Mastercard -->

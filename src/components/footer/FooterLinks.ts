@@ -158,7 +158,7 @@ function renderColumn(column: FooterColumn): string {
           <li>
             <a
               href="${link.href}"
-              class="th-footer-link text-[13px] leading-relaxed transition-colors duration-200"
+              class="th-footer-link text-[13px] leading-relaxed transition-colors duration-200 block truncate"
             >${link.label}</a>
           </li>
         `).join('')}
@@ -182,7 +182,7 @@ function renderLastColumn(column: FooterColumn): string {
           <li>
             <a
               href="${link.href}"
-              class="th-footer-link text-[13px] leading-relaxed transition-colors duration-200"
+              class="th-footer-link text-[13px] leading-relaxed transition-colors duration-200 block truncate"
             >${link.label}</a>
           </li>
         `).join('')}
@@ -218,8 +218,8 @@ export function FooterLinks(): string {
       style="background-color: var(--footer-bg); border-color: var(--footer-border-color); min-height: 437px;"
       aria-label="Footer navigation"
     >
-      <div class="container-boxed py-10 md:py-14">
-        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-8 md:gap-6">
+      <div class="container-boxed py-6 sm:py-10 md:py-14 px-3 sm:px-4">
+        <div class="grid grid-cols-1 min-[360px]:grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 md:gap-6">
           ${regularColumns.map(col => renderColumn(col)).join('')}
           ${renderLastColumn(lastColumn)}
         </div>
