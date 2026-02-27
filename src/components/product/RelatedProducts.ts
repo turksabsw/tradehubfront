@@ -103,10 +103,10 @@ function renderRelatedSlide(card: RelatedProduct): string {
         <div class="aspect-square w-full flex-shrink-0">
           ${renderPlaceholder(card.imageKind)}
         </div>
-        <div class="flex flex-1 flex-col p-3">
-          <h4 class="text-xs font-medium leading-tight line-clamp-2" style="color: var(--product-title-color, #111827); height: 2.4em;">${card.name}</h4>
-          <p class="mt-2 text-sm font-bold" style="color: var(--product-price-color, #111827);">${card.price}</p>
-          <p class="mt-1 text-xs" style="color: var(--product-moq-color, #6b7280);">MOQ: ${card.moq}</p>
+        <div class="flex flex-1 flex-col p-3 max-[374px]:p-2">
+          <h4 class="text-xs font-medium leading-tight line-clamp-2 max-[374px]:text-[11px]" style="color: var(--product-title-color, #111827); height: 2.4em;">${card.name}</h4>
+          <p class="mt-2 text-sm font-bold max-[374px]:text-[13px] max-[374px]:mt-1.5" style="color: var(--product-price-color, #111827);">${card.price}</p>
+          <p class="mt-1 text-xs max-[374px]:text-[11px]" style="color: var(--product-moq-color, #6b7280);">MOQ: ${card.moq}</p>
           <div class="mt-auto pt-2">
             ${card.verified ? `
               <div class="flex items-center gap-1 text-xs font-medium" style="color: var(--product-verified-color, #cc9900);">
@@ -124,10 +124,10 @@ function renderRelatedSlide(card: RelatedProduct): string {
 
 export function RelatedProducts(): string {
   return `
-    <section class="related-products-section" style="background: var(--pd-related-bg, #f8f8f8);">
-        <div class="flex items-center justify-between mb-4">
-          <h2 class="text-lg font-bold" style="color: var(--pd-title-color, #111827);">Benzer Ürünler</h2>
-          <a href="#" class="text-sm font-medium hover:underline" style="color: var(--pd-breadcrumb-link-color, #cc9900);">Tümünü Gör →</a>
+    <section class="related-products-section max-[374px]:px-3 max-[374px]:py-4" style="background: var(--pd-related-bg, #f8f8f8);">
+        <div class="flex items-center justify-between mb-4 max-[374px]:mb-3">
+          <h2 class="text-lg font-bold max-[374px]:text-base" style="color: var(--pd-title-color, #111827);">Benzer Ürünler</h2>
+          <a href="#" class="text-sm font-medium hover:underline max-[374px]:text-xs" style="color: var(--pd-breadcrumb-link-color, #cc9900);">Tümünü Gör →</a>
         </div>
 
         <div class="group/related-slider relative">
@@ -171,7 +171,8 @@ export function initRelatedProducts(): void {
       prevEl: '.related-prev',
     },
     breakpoints: {
-      0: { slidesPerView: 2.3, spaceBetween: 10 },
+      0: { slidesPerView: 1.4, spaceBetween: 8 },
+      375: { slidesPerView: 2.3, spaceBetween: 10 },
       480: { slidesPerView: 3.3, spaceBetween: 10 },
       640: { slidesPerView: 4, spaceBetween: 12 },
       768: { slidesPerView: 4, spaceBetween: 12 },
