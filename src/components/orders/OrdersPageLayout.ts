@@ -35,11 +35,11 @@ const EMPTY_RECEIPT_ICON = `
 
 function renderAllOrders(): string {
   return `
-    <div class="flex items-center justify-between px-7 pt-6 pb-5 border-b border-(--color-border-light,#f0f0f0)">
-      <h1 class="text-[22px] font-bold text-(--color-text-heading,#111827)">Siparişlerim</h1>
-      <button class="orders-page__upload-btn px-5 py-2 text-sm text-(--color-text-body,#333) bg-(--color-surface,#fff) border border-(--color-border-medium,#d1d5db) rounded-[20px] cursor-pointer whitespace-nowrap transition-colors hover:border-(--color-text-placeholder) hover:bg-(--color-surface-muted,#fafafa)">Havale dekontu yükle</button>
+    <div class="flex items-center justify-between px-7 max-sm:px-3 pt-6 pb-5 border-b border-(--color-border-light,#f0f0f0)">
+      <h1 class="text-[22px] max-sm:text-lg font-bold text-(--color-text-heading,#111827)">Siparişlerim</h1>
+      <button class="orders-page__upload-btn px-5 max-sm:px-3 py-2 text-sm max-sm:text-xs text-(--color-text-body,#333) bg-(--color-surface,#fff) border border-(--color-border-medium,#d1d5db) rounded-[20px] cursor-pointer whitespace-nowrap transition-colors hover:border-(--color-text-placeholder) hover:bg-(--color-surface-muted,#fafafa)">Havale dekontu yükle</button>
     </div>
-    <div class="flex-1 flex flex-col items-center justify-center gap-3 px-10 py-[60px] text-center">
+    <div class="flex-1 flex flex-col items-center justify-center gap-3 px-10 max-sm:px-4 py-[60px] text-center">
       <div class="w-[120px] h-[100px] mb-2">
         <svg width="120" height="100" viewBox="0 0 120 100" fill="none">
           <rect x="25" y="10" width="60" height="75" rx="6" fill="#F3F4F6" stroke="#D1D5DB" stroke-width="1.5"/>
@@ -63,10 +63,10 @@ function renderAllOrders(): string {
 
 function renderRefunds(): string {
   return `
-    <div class="flex items-center justify-between px-7 pt-6 pb-5 border-b border-(--color-border-light,#f0f0f0)">
+    <div class="flex items-center justify-between px-7 max-sm:px-3 pt-6 pb-5 border-b border-(--color-border-light,#f0f0f0)">
       <h1 class="text-[22px] font-bold text-(--color-text-heading,#111827)">Satış sonrası işlemler ve para iadeleri</h1>
     </div>
-    <div class="os-tabs flex border-b border-(--color-border-default,#e5e5e5) px-7" data-tabgroup="refunds">
+    <div class="os-tabs flex border-b overflow-x-auto no-scrollbar border-(--color-border-default,#e5e5e5) px-7 max-sm:px-3" data-tabgroup="refunds">
       <button class="os-tabs__tab os-tabs__tab--active py-3 px-4 text-sm bg-transparent border-none border-b-2 border-b-transparent cursor-pointer whitespace-nowrap transition-colors" data-tab="refund-returns">Para İadeleri</button>
       <button class="os-tabs__tab py-3 px-4 text-sm bg-transparent border-none border-b-2 border-b-transparent cursor-pointer whitespace-nowrap transition-colors text-(--color-text-muted,#666)" data-tab="refund-tax">Vergi iadeleri</button>
       <button class="os-tabs__tab py-3 px-4 text-sm bg-transparent border-none border-b-2 border-b-transparent cursor-pointer whitespace-nowrap transition-colors text-(--color-text-muted,#666)" data-tab="refund-after">Satış sonrası hizmetler</button>
@@ -74,7 +74,7 @@ function renderRefunds(): string {
 
     <!-- Tab: Para İadeleri (empty) -->
     <div class="os-tab-content os-tab-content--active" data-content="refund-returns">
-      <div class="flex flex-col items-center justify-center gap-3 px-10 py-20 text-center">
+      <div class="flex flex-col items-center justify-center gap-3 px-10 max-sm:px-4 py-20 text-center">
         ${EMPTY_RECEIPT_ICON}
         <p class="text-sm text-(--color-text-muted,#666)">Şu anda satış sonrası servis talebi yok</p>
       </div>
@@ -82,8 +82,8 @@ function renderRefunds(): string {
 
     <!-- Tab: Vergi iadeleri (table) -->
     <div class="os-tab-content" data-content="refund-tax">
-      <div class="px-7">
-        <table class="os-table w-full border-collapse border border-(--color-border-default,#e5e5e5) rounded-md overflow-hidden">
+      <div class="px-7 max-sm:px-3">
+        <div class="overflow-x-auto"><table class="os-table w-full border-collapse border border-(--color-border-default,#e5e5e5) rounded-md overflow-hidden">
           <thead>
             <tr>
               <th class="px-4 py-3 text-[13px] font-semibold text-(--color-text-body,#333) bg-(--color-surface-muted,#fafafa) border-b border-(--color-border-default,#e5e5e5) text-left whitespace-nowrap">Sipariş numarası</th>
@@ -102,13 +102,13 @@ function renderRefunds(): string {
               </td>
             </tr>
           </tbody>
-        </table>
+        </table></div>
       </div>
     </div>
 
     <!-- Tab: Satış sonrası hizmetler (empty) -->
     <div class="os-tab-content" data-content="refund-after">
-      <div class="flex flex-col items-center justify-center gap-3 px-10 py-20 text-center">
+      <div class="flex flex-col items-center justify-center gap-3 px-10 max-sm:px-4 py-20 text-center">
         ${EMPTY_RECEIPT_ICON}
         <p class="text-sm text-(--color-text-muted,#666)">Şu anda satış sonrası servis talebi yok</p>
       </div>
@@ -118,7 +118,7 @@ function renderRefunds(): string {
 
 function renderReviews(): string {
   return `
-    <div class="flex items-center justify-between px-7 pt-6 pb-5 border-b border-(--color-border-light,#f0f0f0)">
+    <div class="flex items-center justify-between px-7 max-sm:px-3 pt-6 pb-5 border-b border-(--color-border-light,#f0f0f0)">
       <h1 class="text-[22px] font-bold text-(--color-text-heading,#111827)">Değerlendirmelerim</h1>
       <div class="flex items-center gap-1">
         <span class="text-[13px] text-(--color-text-muted,#666)">Puanlama Kuralları</span>
@@ -127,14 +127,14 @@ function renderReviews(): string {
         </svg>
       </div>
     </div>
-    <div class="os-tabs flex border-b border-(--color-border-default,#e5e5e5) px-7" data-tabgroup="reviews">
+    <div class="os-tabs flex border-b overflow-x-auto no-scrollbar border-(--color-border-default,#e5e5e5) px-7 max-sm:px-3" data-tabgroup="reviews">
       <button class="os-tabs__tab os-tabs__tab--active os-tabs__tab--orange py-3 px-4 text-sm bg-transparent border-none border-b-2 border-b-transparent cursor-pointer whitespace-nowrap transition-colors" data-tab="review-pending">Bekleyen değerlendirmeler (0)</button>
       <button class="os-tabs__tab py-3 px-4 text-sm bg-transparent border-none border-b-2 border-b-transparent cursor-pointer whitespace-nowrap transition-colors text-(--color-text-muted,#666)" data-tab="review-done">Değerlendirilenler (0)</button>
     </div>
 
-    <div class="flex justify-end px-7 py-3">
+    <div class="flex justify-end px-7 max-sm:px-3 py-3">
       <div class="flex border border-(--color-border-medium,#d1d5db) rounded overflow-hidden">
-        <input type="text" placeholder="Sipariş numarası, E-posta, Hesap" class="os-reviews-toolbar__input w-[240px] h-8 px-2.5 text-[13px] border-none outline-none text-(--color-text-body,#333)" />
+        <input type="text" placeholder="Sipariş numarası, E-posta, Hesap" class="os-reviews-toolbar__input w-[240px] max-sm:w-[160px] h-8 px-2.5 text-[13px] border-none outline-none text-(--color-text-body,#333)" />
         <button class="flex items-center justify-center w-8 h-8 border-none border-l border-l-(--color-border-medium,#d1d5db) bg-(--color-surface-muted,#fafafa) text-(--color-text-muted,#666) cursor-pointer hover:bg-(--color-border-light) hover:text-(--color-text-heading,#111827)" aria-label="Ara">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <circle cx="11" cy="11" r="8"/><path stroke-linecap="round" d="m21 21-4.35-4.35"/>
@@ -144,7 +144,7 @@ function renderReviews(): string {
     </div>
 
     <div class="os-tab-content os-tab-content--active" data-content="review-pending">
-      <div class="flex flex-col items-center justify-center gap-3 px-10 py-20 text-center">
+      <div class="flex flex-col items-center justify-center gap-3 px-10 max-sm:px-4 py-20 text-center">
         <svg width="100" height="80" viewBox="0 0 100 80" fill="none">
           <rect x="10" y="10" width="50" height="55" rx="4" fill="#FFECD2" stroke="#F7A84B" stroke-width="1"/>
           <rect x="15" y="18" width="40" height="4" rx="2" fill="#F7A84B" opacity="0.3"/>
@@ -157,7 +157,7 @@ function renderReviews(): string {
     </div>
 
     <div class="os-tab-content" data-content="review-done">
-      <div class="flex flex-col items-center justify-center gap-3 px-10 py-20 text-center">
+      <div class="flex flex-col items-center justify-center gap-3 px-10 max-sm:px-4 py-20 text-center">
         ${EMPTY_RECEIPT_ICON}
         <p class="text-sm text-(--color-text-muted,#666)">Değerlendirme bulunamadı</p>
       </div>
@@ -167,22 +167,22 @@ function renderReviews(): string {
 
 function renderCoupons(): string {
   return `
-    <div class="flex items-center justify-between px-7 pt-6 pb-5 border-b border-(--color-border-light,#f0f0f0)">
+    <div class="flex items-center justify-between px-7 max-sm:px-3 pt-6 pb-5 border-b border-(--color-border-light,#f0f0f0)">
       <h1 class="text-[22px] font-bold text-(--color-text-heading,#111827)">Kupon ve krediler</h1>
     </div>
-    <div class="os-tabs flex border-b border-(--color-border-default,#e5e5e5) px-7" data-tabgroup="coupons">
+    <div class="os-tabs flex border-b overflow-x-auto no-scrollbar border-(--color-border-default,#e5e5e5) px-7 max-sm:px-3" data-tabgroup="coupons">
       <button class="os-tabs__tab os-tabs__tab--active py-3 px-4 text-sm bg-transparent border-none border-b-2 border-b-transparent cursor-pointer whitespace-nowrap transition-colors" data-tab="coupons-list">Kuponlar</button>
       <button class="os-tabs__tab py-3 px-4 text-sm bg-transparent border-none border-b-2 border-b-transparent cursor-pointer whitespace-nowrap transition-colors text-(--color-text-muted,#666)" data-tab="coupons-credit">Kredi</button>
     </div>
 
     <!-- Tab: Kuponlar -->
     <div class="os-tab-content os-tab-content--active" data-content="coupons-list">
-      <div class="os-pill-filters flex gap-2 px-7 py-4">
+      <div class="os-pill-filters flex gap-2 px-7 max-sm:px-3 py-4">
         <button class="os-pill os-pill--active px-4 py-1.5 text-[13px] bg-(--color-surface,#fff) border border-(--color-border-medium,#d1d5db) rounded-[20px] cursor-pointer transition-all">Mevcut</button>
         <button class="os-pill px-4 py-1.5 text-[13px] text-(--color-text-muted,#666) bg-(--color-surface,#fff) border border-(--color-border-medium,#d1d5db) rounded-[20px] cursor-pointer transition-all">Kullanıldı</button>
         <button class="os-pill px-4 py-1.5 text-[13px] text-(--color-text-muted,#666) bg-(--color-surface,#fff) border border-(--color-border-medium,#d1d5db) rounded-[20px] cursor-pointer transition-all">Süresi doldu</button>
       </div>
-      <div class="flex flex-col items-center justify-center gap-3 px-10 py-[60px] text-center">
+      <div class="flex flex-col items-center justify-center gap-3 px-10 max-sm:px-4 py-[60px] text-center">
         <p class="text-sm text-(--color-text-muted,#666)">Kupon Yok</p>
       </div>
     </div>
@@ -195,9 +195,9 @@ function renderCoupons(): string {
         <p class="text-[13px] text-(--color-text-muted,#666)">1 kredi 1 USD'ye eşittir <a href="#terms" class="text-[#2563EB] underline">Hükümler ve koşullar</a></p>
       </div>
 
-      <h3 class="text-base font-bold text-(--color-text-heading,#111827) px-7 pt-5 pb-3">Geçmiş</h3>
-      <div class="px-7">
-        <table class="os-table w-full border-collapse border border-(--color-border-default,#e5e5e5) rounded-md overflow-hidden">
+      <h3 class="text-base font-bold text-(--color-text-heading,#111827) px-7 max-sm:px-3 pt-5 pb-3">Geçmiş</h3>
+      <div class="px-7 max-sm:px-3">
+        <div class="overflow-x-auto"><table class="os-table w-full border-collapse border border-(--color-border-default,#e5e5e5) rounded-md overflow-hidden">
           <thead>
             <tr>
               <th class="px-4 py-3 text-[13px] font-semibold text-(--color-text-body,#333) bg-(--color-surface-muted,#fafafa) border-b border-(--color-border-default,#e5e5e5) text-left whitespace-nowrap">İşlem</th>
@@ -211,10 +211,10 @@ function renderCoupons(): string {
               <td colspan="4" class="text-center py-10 px-4 text-[13px] text-(--color-text-placeholder,#999)">Henüz bir kayıt yok.</td>
             </tr>
           </tbody>
-        </table>
+        </table></div>
       </div>
 
-      <div class="flex items-center justify-end gap-2 px-7 py-4">
+      <div class="flex items-center justify-end gap-2 px-7 max-sm:px-3 py-4">
         <button class="flex items-center justify-center w-8 h-8 border border-(--color-border-medium,#d1d5db) rounded-full bg-(--color-surface,#fff) text-(--color-text-muted,#666) cursor-pointer disabled:opacity-40 disabled:cursor-default" disabled>
           <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M15 19l-7-7 7-7"/></svg>
         </button>
@@ -229,17 +229,17 @@ function renderCoupons(): string {
 
 function renderTaxInfo(): string {
   return `
-    <div class="flex items-center justify-between px-7 pt-6 pb-5 border-b border-(--color-border-light,#f0f0f0)">
+    <div class="flex items-center justify-between px-7 max-sm:px-3 pt-6 pb-5 border-b border-(--color-border-light,#f0f0f0)">
       <h1 class="text-[22px] font-bold text-(--color-text-heading,#111827)">Vergi bilgileri</h1>
     </div>
-    <div class="os-tabs flex border-b border-(--color-border-default,#e5e5e5) px-7" data-tabgroup="tax">
+    <div class="os-tabs flex border-b overflow-x-auto no-scrollbar border-(--color-border-default,#e5e5e5) px-7 max-sm:px-3" data-tabgroup="tax">
       <button class="os-tabs__tab os-tabs__tab--active py-3 px-4 text-sm bg-transparent border-none border-b-2 border-b-transparent cursor-pointer whitespace-nowrap transition-colors" data-tab="tax-info-tab">Vergi Bilgileri</button>
       <button class="os-tabs__tab py-3 px-4 text-sm bg-transparent border-none border-b-2 border-b-transparent cursor-pointer whitespace-nowrap transition-colors text-(--color-text-muted,#666)" data-tab="tax-customs">Gümrük muayenesi bilgileri</button>
     </div>
 
     <!-- Tab: Vergi Bilgileri -->
     <div class="os-tab-content os-tab-content--active" data-content="tax-info-tab">
-      <div class="flex items-center justify-between gap-6 px-7 py-5 border-b border-(--color-border-light,#f0f0f0) max-md:flex-col max-md:items-start">
+      <div class="flex items-center justify-between gap-6 px-7 max-sm:px-3 py-5 border-b border-(--color-border-light,#f0f0f0) max-md:flex-col max-md:items-start">
         <div class="flex-1 min-w-0">
           <h4 class="text-sm font-semibold text-(--color-text-heading,#111827) mb-1.5">KDV muafiyeti için</h4>
           <p class="text-[13px] text-(--color-text-muted,#666) leading-normal">Yeniden satış veya üretim için ürün satın alıyorsanız doğrulanması için vergi bilgilerinizi gönderin ve TradeHub.com'da vergiden muaf siparişler verin.</p>
@@ -247,7 +247,7 @@ function renderTaxInfo(): string {
         <button class="os-info-card__btn px-5 py-2 text-[13px] text-(--color-text-body,#333) bg-(--color-surface,#fff) border border-(--color-border-medium,#d1d5db) rounded-[20px] cursor-pointer whitespace-nowrap shrink-0 transition-colors hover:border-[#999]" data-modal="pst-modal">Vergi muafiyeti ekleyin veya değiştirin</button>
       </div>
 
-      <div class="flex items-center justify-between gap-6 px-7 py-5 border-b border-(--color-border-light,#f0f0f0) max-md:flex-col max-md:items-start">
+      <div class="flex items-center justify-between gap-6 px-7 max-sm:px-3 py-5 border-b border-(--color-border-light,#f0f0f0) max-md:flex-col max-md:items-start">
         <div class="flex-1 min-w-0">
           <h4 class="text-sm font-semibold text-(--color-text-heading,#111827) mb-1.5">AB/Norveç/Birleşik Krallık/İsviçre veya Avustralya/Yeni Zelanda/Singapur/Şili vergi bilgisi gönderimi</h4>
           <p class="text-[13px] text-(--color-text-muted,#666) leading-normal">Ticari satın alımlarda, doğrulanması için vergi bilgilerinizi göndererek TradeHub.com'da vergiden muaf siparişler verebilirsiniz.</p>
@@ -255,9 +255,9 @@ function renderTaxInfo(): string {
         <button class="os-info-card__btn px-5 py-2 text-[13px] text-(--color-text-body,#333) bg-(--color-surface,#fff) border border-(--color-border-medium,#d1d5db) rounded-[20px] cursor-pointer whitespace-nowrap shrink-0 transition-colors hover:border-[#999]" data-modal="vat-modal">Vergi bilgilerinizi ekleyin</button>
       </div>
 
-      <h3 class="text-base font-bold text-(--color-text-heading,#111827) px-7 pt-5 pb-3">Sıkça Sorulan Sorular</h3>
+      <h3 class="text-base font-bold text-(--color-text-heading,#111827) px-7 max-sm:px-3 pt-5 pb-3">Sıkça Sorulan Sorular</h3>
 
-      <div class="px-7 pb-7">
+      <div class="px-7 max-sm:px-3 pb-7">
         <div class="grid grid-cols-3 gap-4 mb-5 max-md:grid-cols-1">
           <div class="p-5 border border-(--color-border-default,#e5e5e5) rounded-lg">
             <h5 class="text-sm font-semibold text-(--color-text-heading,#111827) mb-2">Vergi bilgilerim yoksa ne yapmalıyım?</h5>
@@ -286,7 +286,7 @@ function renderTaxInfo(): string {
 
     <!-- Tab: Gümrük muayenesi bilgileri -->
     <div class="os-tab-content" data-content="tax-customs">
-      <div class="flex items-center justify-between gap-6 px-7 py-5 border-b border-(--color-border-light,#f0f0f0) max-md:flex-col max-md:items-start">
+      <div class="flex items-center justify-between gap-6 px-7 max-sm:px-3 py-5 border-b border-(--color-border-light,#f0f0f0) max-md:flex-col max-md:items-start">
         <div class="flex-1 min-w-0">
           <h4 class="text-sm font-semibold text-(--color-text-heading,#111827) mb-1.5">Gümrük işlemleri (tüm bölgeleri kapsar)</h4>
           <p class="text-[13px] text-(--color-text-muted,#666) leading-normal">Vergi bilgileriniz gümrük yetkilileri tarafından talep edilmektedir. Bu, bir İşveren Kimlik Numarası veya Sosyal Güvenlik Numarası olabilir.</p>
@@ -459,7 +459,7 @@ function renderNav(activeId: string): string {
     const activeClasses = isActive
       ? 'orders-page__nav-link--active font-semibold text-(--color-text-heading,#111827) border-l-(--color-text-heading) underline underline-offset-[3px]'
       : 'text-(--color-text-body,#333)';
-    return `<a href="#${item.id}" class="orders-page__nav-link block py-2.5 px-5 text-sm no-underline border-l-[3px] border-l-transparent transition-colors leading-[1.4] hover:bg-(--color-surface-muted,#fafafa) hover:text-(--color-text-heading,#111827) ${activeClasses}" data-nav="${item.id}">${item.label}</a>`;
+    return `<a href="#${item.id}" class="orders-page__nav-link block py-2.5 px-5 text-sm no-underline border-l-[3px] border-l-transparent transition-colors leading-[1.4] hover:bg-(--color-surface-muted,#fafafa) hover:text-(--color-text-heading,#111827) max-md:whitespace-nowrap max-md:border-l-0 max-md:px-3 max-md:py-2 max-md:text-[13px] max-md:rounded-full max-md:border max-md:border-(--color-border-medium,#d1d5db) max-md:shrink-0 ${activeClasses}" data-nav="${item.id}">${item.label}</a>`;
   }).join('');
 }
 
@@ -468,10 +468,10 @@ export function OrdersPageLayout(): string {
   const renderFn = SECTIONS[activeId] ?? renderAllOrders;
 
   return `
-    <div class="orders-page flex bg-(--color-surface,#fff) rounded-lg min-h-[calc(100vh-80px)] overflow-hidden max-md:flex-col">
-      <aside class="orders-page__nav w-[240px] shrink-0 border-r border-(--color-border-light,#f0f0f0) py-6 max-md:w-full max-md:border-r-0 max-md:border-b max-md:border-b-(--color-border-light,#f0f0f0) max-md:py-4">
-        <h2 class="text-base font-bold text-(--color-text-heading,#111827) px-5 pb-4">Siparişlerim</h2>
-        <nav class="orders-page__nav-links flex flex-col max-md:flex-row max-md:overflow-x-auto max-md:px-4 max-md:gap-1">
+    <div class="orders-page flex bg-(--color-surface,#fff) rounded-lg min-h-[calc(100vh-80px)] overflow-hidden max-md:flex-col max-md:rounded-none max-md:min-h-0">
+      <aside class="orders-page__nav w-[240px] shrink-0 border-r border-(--color-border-light,#f0f0f0) py-6 max-md:w-full max-md:border-r-0 max-md:border-b max-md:border-b-(--color-border-light,#f0f0f0) max-md:py-3">
+        <h2 class="text-base font-bold text-(--color-text-heading,#111827) px-5 pb-4 max-md:pb-2 max-md:px-4 max-md:text-sm">Siparişlerim</h2>
+        <nav class="orders-page__nav-links flex flex-col max-md:flex-row max-md:overflow-x-auto max-md:px-3 max-md:gap-1 max-md:no-scrollbar">
           ${renderNav(activeId)}
         </nav>
       </aside>
