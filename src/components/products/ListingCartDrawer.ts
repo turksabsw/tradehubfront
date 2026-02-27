@@ -120,7 +120,7 @@ export function ListingCartDrawer(): string {
   return `
     <div class="cart-drawer-overlay fixed inset-0 bg-black/50 z-40 opacity-0 pointer-events-none transition-opacity duration-300" id="listing-cart-overlay">
       <!-- Large Image Preview Panel (left of drawer) -->
-      <div id="listing-preview-panel" class="listing-preview-panel hidden">
+      <div id="listing-preview-panel" class="listing-preview-panel hidden lg:block">
         <div class="listing-preview-inner relative w-[600px] max-w-[45vw] bg-white rounded-xl overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.15)] pointer-events-auto">
           <button type="button" id="listing-preview-prev" class="listing-preview-arrow left absolute top-1/2 -translate-y-1/2 left-3 w-10 h-10 bg-white rounded-full border-none shadow-[0_2px_8px_rgba(0,0,0,0.15)] text-2xl cursor-pointer z-2 flex items-center justify-center text-[#333] transition-[background] duration-150 hover:bg-gray-100">&lsaquo;</button>
           <div id="listing-preview-image" class="listing-preview-image w-full aspect-square"></div>
@@ -130,7 +130,7 @@ export function ListingCartDrawer(): string {
       </div>
 
       <!-- Cart Drawer (right panel) -->
-      <div class="cart-drawer listing-cart-drawer fixed top-0 right-0 h-full w-[600px] max-w-full bg-white z-50 shadow-[-4px_0_24px_rgba(0,0,0,0.15)] flex flex-col translate-x-full transition-transform duration-300" id="listing-cart-drawer">
+      <div class="cart-drawer listing-cart-drawer fixed top-0 right-0 h-full w-full sm:w-[480px] lg:w-[600px] max-w-full bg-white z-50 shadow-[-4px_0_24px_rgba(0,0,0,0.15)] flex flex-col translate-x-full transition-transform duration-300" id="listing-cart-drawer">
         <div class="cart-drawer-header flex justify-between items-center px-6 py-5 border-b border-gray-200 shrink-0">
           <h3 class="text-lg font-semibold text-gray-900">Sepete Ekle</h3>
           <button type="button" class="cart-drawer-close w-8 h-8 flex items-center justify-center border-none bg-transparent rounded-full text-gray-500 cursor-pointer transition-[background,color] duration-150 hover:bg-gray-50 hover:text-gray-900" id="listing-cart-close">

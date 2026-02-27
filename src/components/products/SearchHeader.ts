@@ -74,8 +74,8 @@ function renderSortingDropdown(options: SortOption[], selectedValue: string): st
         aria-haspopup="listbox"
         aria-expanded="false"
       >
-        <span>Sort by:</span>
-        <span id="search-header-sort-label" class="font-semibold">${selectedOption.label}</span>
+        <span class="hidden sm:inline">Sort by:</span>
+        <span id="search-header-sort-label" class="font-semibold truncate max-w-[100px] sm:max-w-none">${selectedOption.label}</span>
         <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
         </svg>
@@ -193,7 +193,7 @@ export function SearchHeader(
       <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between mb-4">
         <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
           <!-- Search results count -->
-          <h1 class="text-lg sm:text-xl font-bold text-gray-900 dark:text-white">
+          <h1 class="text-base sm:text-xl font-bold text-gray-900 dark:text-white min-w-0 break-words">
             <span id="search-header-count">${formatNumber(totalProducts)}</span>
             <span class="font-normal text-gray-600 dark:text-gray-400">
               products for
