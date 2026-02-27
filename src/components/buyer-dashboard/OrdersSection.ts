@@ -18,7 +18,7 @@ export function OrdersSection(): string {
   };
 
   return `
-    <div class="orders bg-[var(--color-surface,#ffffff)] rounded-[var(--radius-card)] overflow-hidden" data-orders-section>
+    <div class="orders bg-(--color-surface,#ffffff) rounded-[var(--radius-card)] overflow-hidden" data-orders-section>
       <div class="flex items-center justify-between px-5 pt-4 pb-3">
         <h2 class="text-base font-bold text-[var(--color-text-body,#333333)] m-0">Siparişler</h2>
         <a href="#" class="orders__view-all text-[13px] text-[var(--color-text-placeholder,#999999)] no-underline inline-flex items-center gap-0.5 transition-colors hover:text-primary-500" aria-label="Tüm siparişleri görüntüle">

@@ -37,7 +37,7 @@ function renderAllOrders(): string {
   return `
     <div class="flex items-center justify-between px-7 pt-6 pb-5 border-b border-[var(--color-border-light,#f0f0f0)]">
       <h1 class="text-[22px] font-bold text-[var(--color-text-heading,#111827)]">Siparişlerim</h1>
-      <button class="orders-page__upload-btn px-5 py-2 text-sm text-[var(--color-text-body,#333)] bg-[var(--color-surface,#fff)] border border-[var(--color-border-medium,#d1d5db)] rounded-[20px] cursor-pointer whitespace-nowrap transition-colors hover:border-[var(--color-text-placeholder)] hover:bg-[var(--color-surface-muted,#fafafa)]">Havale dekontu yükle</button>
+      <button class="orders-page__upload-btn px-5 py-2 text-sm text-[var(--color-text-body,#333)] bg-(--color-surface,#fff) border border-[var(--color-border-medium,#d1d5db)] rounded-[20px] cursor-pointer whitespace-nowrap transition-colors hover:border-[var(--color-text-placeholder)] hover:bg-(--color-surface-muted,#fafafa)">Havale dekontu yükle</button>
     </div>
     <div class="flex-1 flex flex-col items-center justify-center gap-3 px-10 py-[60px] text-center">
       <div class="w-[120px] h-[100px] mb-2">
@@ -56,7 +56,7 @@ function renderAllOrders(): string {
       </div>
       <h3 class="text-base font-bold text-[var(--color-text-heading,#111827)]">Henüz siparişiniz bulunmamaktadır</h3>
       <p class="text-sm text-[var(--color-text-muted,#666)] max-w-[400px]">Tedarik etmeye başlamak için ana sayfaya gidin veya aşağıya tıklayın</p>
-      <a href="/" class="inline-block px-8 py-2.5 text-sm text-[var(--color-text-body,#333)] border border-[var(--color-text-body)] rounded-[24px] no-underline mt-2 transition-colors hover:bg-[var(--color-text-heading)] hover:text-[var(--color-surface)]">Tedarik etmeye başla</a>
+      <a href="/" class="inline-block px-8 py-2.5 text-sm text-[var(--color-text-body,#333)] border border-[var(--color-text-body)] rounded-[24px] no-underline mt-2 transition-colors hover:bg-(--color-text-heading) hover:text-[var(--color-surface)]">Tedarik etmeye başla</a>
     </div>
   `;
 }
@@ -86,12 +86,12 @@ function renderRefunds(): string {
         <table class="os-table w-full border-collapse border border-[var(--color-border-default,#e5e5e5)] rounded-md overflow-hidden">
           <thead>
             <tr>
-              <th class="px-4 py-3 text-[13px] font-semibold text-[var(--color-text-body,#333)] bg-[var(--color-surface-muted,#fafafa)] border-b border-[var(--color-border-default,#e5e5e5)] text-left whitespace-nowrap">Sipariş numarası</th>
-              <th class="px-4 py-3 text-[13px] font-semibold text-[var(--color-text-body,#333)] bg-[var(--color-surface-muted,#fafafa)] border-b border-[var(--color-border-default,#e5e5e5)] text-left whitespace-nowrap">Vaka numarası</th>
-              <th class="px-4 py-3 text-[13px] font-semibold text-[var(--color-text-body,#333)] bg-[var(--color-surface-muted,#fafafa)] border-b border-[var(--color-border-default,#e5e5e5)] text-left whitespace-nowrap">Başvuru Tarihi</th>
-              <th class="px-4 py-3 text-[13px] font-semibold text-[var(--color-text-body,#333)] bg-[var(--color-surface-muted,#fafafa)] border-b border-[var(--color-border-default,#e5e5e5)] text-left whitespace-nowrap">Para iadesi tutarı</th>
-              <th class="px-4 py-3 text-[13px] font-semibold text-[var(--color-text-body,#333)] bg-[var(--color-surface-muted,#fafafa)] border-b border-[var(--color-border-default,#e5e5e5)] text-left whitespace-nowrap">Durum</th>
-              <th class="px-4 py-3 text-[13px] font-semibold text-[var(--color-text-body,#333)] bg-[var(--color-surface-muted,#fafafa)] border-b border-[var(--color-border-default,#e5e5e5)] text-left whitespace-nowrap">Banka iade durumu</th>
+              <th class="px-4 py-3 text-[13px] font-semibold text-[var(--color-text-body,#333)] bg-(--color-surface-muted,#fafafa) border-b border-[var(--color-border-default,#e5e5e5)] text-left whitespace-nowrap">Sipariş numarası</th>
+              <th class="px-4 py-3 text-[13px] font-semibold text-[var(--color-text-body,#333)] bg-(--color-surface-muted,#fafafa) border-b border-[var(--color-border-default,#e5e5e5)] text-left whitespace-nowrap">Vaka numarası</th>
+              <th class="px-4 py-3 text-[13px] font-semibold text-[var(--color-text-body,#333)] bg-(--color-surface-muted,#fafafa) border-b border-[var(--color-border-default,#e5e5e5)] text-left whitespace-nowrap">Başvuru Tarihi</th>
+              <th class="px-4 py-3 text-[13px] font-semibold text-[var(--color-text-body,#333)] bg-(--color-surface-muted,#fafafa) border-b border-[var(--color-border-default,#e5e5e5)] text-left whitespace-nowrap">Para iadesi tutarı</th>
+              <th class="px-4 py-3 text-[13px] font-semibold text-[var(--color-text-body,#333)] bg-(--color-surface-muted,#fafafa) border-b border-[var(--color-border-default,#e5e5e5)] text-left whitespace-nowrap">Durum</th>
+              <th class="px-4 py-3 text-[13px] font-semibold text-[var(--color-text-body,#333)] bg-(--color-surface-muted,#fafafa) border-b border-[var(--color-border-default,#e5e5e5)] text-left whitespace-nowrap">Banka iade durumu</th>
             </tr>
           </thead>
           <tbody>
@@ -135,7 +135,7 @@ function renderReviews(): string {
     <div class="flex justify-end px-7 py-3">
       <div class="flex border border-[var(--color-border-medium,#d1d5db)] rounded overflow-hidden">
         <input type="text" placeholder="Sipariş numarası, E-posta, Hesap" class="os-reviews-toolbar__input w-[240px] h-8 px-2.5 text-[13px] border-none outline-none text-[var(--color-text-body,#333)]" />
-        <button class="flex items-center justify-center w-8 h-8 border-none border-l border-l-[var(--color-border-medium,#d1d5db)] bg-[var(--color-surface-muted,#fafafa)] text-[var(--color-text-muted,#666)] cursor-pointer hover:bg-[var(--color-border-light)] hover:text-[var(--color-text-heading,#111827)]" aria-label="Ara">
+        <button class="flex items-center justify-center w-8 h-8 border-none border-l border-l-[var(--color-border-medium,#d1d5db)] bg-(--color-surface-muted,#fafafa) text-[var(--color-text-muted,#666)] cursor-pointer hover:bg-(--color-border-light) hover:text-[var(--color-text-heading,#111827)]" aria-label="Ara">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <circle cx="11" cy="11" r="8"/><path stroke-linecap="round" d="m21 21-4.35-4.35"/>
           </svg>
@@ -178,9 +178,9 @@ function renderCoupons(): string {
     <!-- Tab: Kuponlar -->
     <div class="os-tab-content os-tab-content--active" data-content="coupons-list">
       <div class="os-pill-filters flex gap-2 px-7 py-4">
-        <button class="os-pill os-pill--active px-4 py-1.5 text-[13px] bg-[var(--color-surface,#fff)] border border-[var(--color-border-medium,#d1d5db)] rounded-[20px] cursor-pointer transition-all">Mevcut</button>
-        <button class="os-pill px-4 py-1.5 text-[13px] text-[var(--color-text-muted,#666)] bg-[var(--color-surface,#fff)] border border-[var(--color-border-medium,#d1d5db)] rounded-[20px] cursor-pointer transition-all">Kullanıldı</button>
-        <button class="os-pill px-4 py-1.5 text-[13px] text-[var(--color-text-muted,#666)] bg-[var(--color-surface,#fff)] border border-[var(--color-border-medium,#d1d5db)] rounded-[20px] cursor-pointer transition-all">Süresi doldu</button>
+        <button class="os-pill os-pill--active px-4 py-1.5 text-[13px] bg-(--color-surface,#fff) border border-[var(--color-border-medium,#d1d5db)] rounded-[20px] cursor-pointer transition-all">Mevcut</button>
+        <button class="os-pill px-4 py-1.5 text-[13px] text-[var(--color-text-muted,#666)] bg-(--color-surface,#fff) border border-[var(--color-border-medium,#d1d5db)] rounded-[20px] cursor-pointer transition-all">Kullanıldı</button>
+        <button class="os-pill px-4 py-1.5 text-[13px] text-[var(--color-text-muted,#666)] bg-(--color-surface,#fff) border border-[var(--color-border-medium,#d1d5db)] rounded-[20px] cursor-pointer transition-all">Süresi doldu</button>
       </div>
       <div class="flex flex-col items-center justify-center gap-3 px-10 py-[60px] text-center">
         <p class="text-sm text-[var(--color-text-muted,#666)]">Kupon Yok</p>
@@ -200,10 +200,10 @@ function renderCoupons(): string {
         <table class="os-table w-full border-collapse border border-[var(--color-border-default,#e5e5e5)] rounded-md overflow-hidden">
           <thead>
             <tr>
-              <th class="px-4 py-3 text-[13px] font-semibold text-[var(--color-text-body,#333)] bg-[var(--color-surface-muted,#fafafa)] border-b border-[var(--color-border-default,#e5e5e5)] text-left whitespace-nowrap">İşlem</th>
-              <th class="px-4 py-3 text-[13px] font-semibold text-[var(--color-text-body,#333)] bg-[var(--color-surface-muted,#fafafa)] border-b border-[var(--color-border-default,#e5e5e5)] text-left whitespace-nowrap">Ayrıntılar</th>
-              <th class="px-4 py-3 text-[13px] font-semibold text-[var(--color-text-body,#333)] bg-[var(--color-surface-muted,#fafafa)] border-b border-[var(--color-border-default,#e5e5e5)] text-left whitespace-nowrap">Tarih (UTC-8)</th>
-              <th class="px-4 py-3 text-[13px] font-semibold text-[var(--color-text-body,#333)] bg-[var(--color-surface-muted,#fafafa)] border-b border-[var(--color-border-default,#e5e5e5)] text-left whitespace-nowrap">Tutar</th>
+              <th class="px-4 py-3 text-[13px] font-semibold text-[var(--color-text-body,#333)] bg-(--color-surface-muted,#fafafa) border-b border-[var(--color-border-default,#e5e5e5)] text-left whitespace-nowrap">İşlem</th>
+              <th class="px-4 py-3 text-[13px] font-semibold text-[var(--color-text-body,#333)] bg-(--color-surface-muted,#fafafa) border-b border-[var(--color-border-default,#e5e5e5)] text-left whitespace-nowrap">Ayrıntılar</th>
+              <th class="px-4 py-3 text-[13px] font-semibold text-[var(--color-text-body,#333)] bg-(--color-surface-muted,#fafafa) border-b border-[var(--color-border-default,#e5e5e5)] text-left whitespace-nowrap">Tarih (UTC-8)</th>
+              <th class="px-4 py-3 text-[13px] font-semibold text-[var(--color-text-body,#333)] bg-(--color-surface-muted,#fafafa) border-b border-[var(--color-border-default,#e5e5e5)] text-left whitespace-nowrap">Tutar</th>
             </tr>
           </thead>
           <tbody>
@@ -215,11 +215,11 @@ function renderCoupons(): string {
       </div>
 
       <div class="flex items-center justify-end gap-2 px-7 py-4">
-        <button class="flex items-center justify-center w-8 h-8 border border-[var(--color-border-medium,#d1d5db)] rounded-full bg-[var(--color-surface,#fff)] text-[var(--color-text-muted,#666)] cursor-pointer disabled:opacity-40 disabled:cursor-default" disabled>
+        <button class="flex items-center justify-center w-8 h-8 border border-[var(--color-border-medium,#d1d5db)] rounded-full bg-(--color-surface,#fff) text-[var(--color-text-muted,#666)] cursor-pointer disabled:opacity-40 disabled:cursor-default" disabled>
           <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M15 19l-7-7 7-7"/></svg>
         </button>
         <span class="flex items-center justify-center w-8 h-8 text-[13px] text-[var(--color-text-heading,#111827)] border border-[#222] rounded-full font-semibold">1</span>
-        <button class="flex items-center justify-center w-8 h-8 border border-[var(--color-border-medium,#d1d5db)] rounded-full bg-[var(--color-surface,#fff)] text-[var(--color-text-muted,#666)] cursor-pointer disabled:opacity-40 disabled:cursor-default" disabled>
+        <button class="flex items-center justify-center w-8 h-8 border border-[var(--color-border-medium,#d1d5db)] rounded-full bg-(--color-surface,#fff) text-[var(--color-text-muted,#666)] cursor-pointer disabled:opacity-40 disabled:cursor-default" disabled>
           <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M9 5l7 7-7 7"/></svg>
         </button>
       </div>
@@ -244,7 +244,7 @@ function renderTaxInfo(): string {
           <h4 class="text-sm font-semibold text-[var(--color-text-heading,#111827)] mb-1.5">KDV muafiyeti için</h4>
           <p class="text-[13px] text-[var(--color-text-muted,#666)] leading-normal">Yeniden satış veya üretim için ürün satın alıyorsanız doğrulanması için vergi bilgilerinizi gönderin ve TradeHub.com'da vergiden muaf siparişler verin.</p>
         </div>
-        <button class="os-info-card__btn px-5 py-2 text-[13px] text-[var(--color-text-body,#333)] bg-[var(--color-surface,#fff)] border border-[var(--color-border-medium,#d1d5db)] rounded-[20px] cursor-pointer whitespace-nowrap shrink-0 transition-colors hover:border-[#999]" data-modal="pst-modal">Vergi muafiyeti ekleyin veya değiştirin</button>
+        <button class="os-info-card__btn px-5 py-2 text-[13px] text-[var(--color-text-body,#333)] bg-(--color-surface,#fff) border border-[var(--color-border-medium,#d1d5db)] rounded-[20px] cursor-pointer whitespace-nowrap shrink-0 transition-colors hover:border-[#999]" data-modal="pst-modal">Vergi muafiyeti ekleyin veya değiştirin</button>
       </div>
 
       <div class="flex items-center justify-between gap-6 px-7 py-5 border-b border-[var(--color-border-light,#f0f0f0)] max-md:flex-col max-md:items-start">
@@ -252,7 +252,7 @@ function renderTaxInfo(): string {
           <h4 class="text-sm font-semibold text-[var(--color-text-heading,#111827)] mb-1.5">AB/Norveç/Birleşik Krallık/İsviçre veya Avustralya/Yeni Zelanda/Singapur/Şili vergi bilgisi gönderimi</h4>
           <p class="text-[13px] text-[var(--color-text-muted,#666)] leading-normal">Ticari satın alımlarda, doğrulanması için vergi bilgilerinizi göndererek TradeHub.com'da vergiden muaf siparişler verebilirsiniz.</p>
         </div>
-        <button class="os-info-card__btn px-5 py-2 text-[13px] text-[var(--color-text-body,#333)] bg-[var(--color-surface,#fff)] border border-[var(--color-border-medium,#d1d5db)] rounded-[20px] cursor-pointer whitespace-nowrap shrink-0 transition-colors hover:border-[#999]" data-modal="vat-modal">Vergi bilgilerinizi ekleyin</button>
+        <button class="os-info-card__btn px-5 py-2 text-[13px] text-[var(--color-text-body,#333)] bg-(--color-surface,#fff) border border-[var(--color-border-medium,#d1d5db)] rounded-[20px] cursor-pointer whitespace-nowrap shrink-0 transition-colors hover:border-[#999]" data-modal="vat-modal">Vergi bilgilerinizi ekleyin</button>
       </div>
 
       <h3 class="text-base font-bold text-[var(--color-text-heading,#111827)] px-7 pt-5 pb-3">Sıkça Sorulan Sorular</h3>
@@ -291,17 +291,17 @@ function renderTaxInfo(): string {
           <h4 class="text-sm font-semibold text-[var(--color-text-heading,#111827)] mb-1.5">Gümrük işlemleri (tüm bölgeleri kapsar)</h4>
           <p class="text-[13px] text-[var(--color-text-muted,#666)] leading-normal">Vergi bilgileriniz gümrük yetkilileri tarafından talep edilmektedir. Bu, bir İşveren Kimlik Numarası veya Sosyal Güvenlik Numarası olabilir.</p>
         </div>
-        <button class="os-info-card__btn px-5 py-2 text-[13px] text-[var(--color-text-body,#333)] bg-[var(--color-surface,#fff)] border border-[var(--color-border-medium,#d1d5db)] rounded-[20px] cursor-pointer whitespace-nowrap shrink-0 transition-colors hover:border-[#999]" data-modal="customs-modal">Gümrük muayenesi bilgileri ekleyin</button>
+        <button class="os-info-card__btn px-5 py-2 text-[13px] text-[var(--color-text-body,#333)] bg-(--color-surface,#fff) border border-[var(--color-border-medium,#d1d5db)] rounded-[20px] cursor-pointer whitespace-nowrap shrink-0 transition-colors hover:border-[#999]" data-modal="customs-modal">Gümrük muayenesi bilgileri ekleyin</button>
       </div>
     </div>
 
     <!-- ═══ MODAL: PST bilgileri ═══ -->
     <div class="os-modal hidden fixed inset-0 z-[9999] items-center justify-center" id="pst-modal">
       <div class="os-modal__overlay absolute inset-0 bg-black/45"></div>
-      <div class="os-modal__dialog relative bg-[var(--color-surface,#fff)] rounded-xl w-[480px] max-w-[calc(100vw-32px)] max-h-[calc(100vh-64px)] overflow-y-auto shadow-[0_20px_60px_rgba(0,0,0,0.2)]" style="animation: osModalIn 200ms ease-out">
+      <div class="os-modal__dialog relative bg-(--color-surface,#fff) rounded-xl w-[480px] max-w-[calc(100vw-32px)] max-h-[calc(100vh-64px)] overflow-y-auto shadow-[0_20px_60px_rgba(0,0,0,0.2)]" style="animation: osModalIn 200ms ease-out">
         <div class="flex items-center justify-between px-6 pt-5 pb-4 border-b border-[var(--color-border-light,#f0f0f0)]">
           <h3 class="text-base font-semibold text-[var(--color-text-heading,#111827)]">PST bilgileri</h3>
-          <button class="os-modal__close bg-transparent border-none cursor-pointer p-1 rounded flex items-center justify-center transition-colors hover:bg-[var(--color-surface-raised,#f5f5f5)]" aria-label="Kapat">
+          <button class="os-modal__close bg-transparent border-none cursor-pointer p-1 rounded flex items-center justify-center transition-colors hover:bg-(--color-surface-raised,#f5f5f5)" aria-label="Kapat">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M12 4L4 12M4 4l8 8" stroke="#666" stroke-width="1.5" stroke-linecap="round"/></svg>
           </button>
         </div>
@@ -327,7 +327,7 @@ function renderTaxInfo(): string {
           </div>
         </div>
         <div class="px-6 pt-4 pb-5 flex justify-end gap-3 border-t border-[var(--color-border-light,#f0f0f0)]">
-          <button class="os-modal__btn os-modal__btn--primary px-6 py-2.5 text-sm font-medium rounded-[20px] cursor-pointer border-none transition-all bg-[var(--color-cta-primary,#cc9900)] text-white hover:bg-[#EA580C]">Doğrula</button>
+          <button class="os-modal__btn os-modal__btn--primary px-6 py-2.5 text-sm font-medium rounded-[20px] cursor-pointer border-none transition-all bg-(--color-cta-primary,#cc9900) text-white hover:bg-[#EA580C]">Doğrula</button>
         </div>
       </div>
     </div>
@@ -335,10 +335,10 @@ function renderTaxInfo(): string {
     <!-- ═══ MODAL: KDV/GST Numarası Ekleyin ═══ -->
     <div class="os-modal hidden fixed inset-0 z-[9999] items-center justify-center" id="vat-modal">
       <div class="os-modal__overlay absolute inset-0 bg-black/45"></div>
-      <div class="os-modal__dialog relative bg-[var(--color-surface,#fff)] rounded-xl w-[480px] max-w-[calc(100vw-32px)] max-h-[calc(100vh-64px)] overflow-y-auto shadow-[0_20px_60px_rgba(0,0,0,0.2)]" style="animation: osModalIn 200ms ease-out">
+      <div class="os-modal__dialog relative bg-(--color-surface,#fff) rounded-xl w-[480px] max-w-[calc(100vw-32px)] max-h-[calc(100vh-64px)] overflow-y-auto shadow-[0_20px_60px_rgba(0,0,0,0.2)]" style="animation: osModalIn 200ms ease-out">
         <div class="flex items-center justify-between px-6 pt-5 pb-4 border-b border-[var(--color-border-light,#f0f0f0)]">
           <h3 class="text-base font-semibold text-[var(--color-text-heading,#111827)]">KDV/GST Numarası Ekleyin</h3>
-          <button class="os-modal__close bg-transparent border-none cursor-pointer p-1 rounded flex items-center justify-center transition-colors hover:bg-[var(--color-surface-raised,#f5f5f5)]" aria-label="Kapat">
+          <button class="os-modal__close bg-transparent border-none cursor-pointer p-1 rounded flex items-center justify-center transition-colors hover:bg-(--color-surface-raised,#f5f5f5)" aria-label="Kapat">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M12 4L4 12M4 4l8 8" stroke="#666" stroke-width="1.5" stroke-linecap="round"/></svg>
           </button>
         </div>
@@ -346,7 +346,7 @@ function renderTaxInfo(): string {
           <div class="mb-5">
             <label class="block text-[13px] font-semibold text-[var(--color-text-body,#333)] mb-2">Ülke/bölge <span class="text-[#e53935]">*</span></label>
             <div class="relative">
-              <select class="os-modal__select w-full py-2.5 pl-3 pr-9 text-sm border border-[var(--color-border-medium,#d1d5db)] rounded-md outline-none text-[var(--color-text-heading,#111827)] bg-[var(--color-surface,#fff)] appearance-none cursor-pointer transition-colors focus:border-[var(--color-cta-primary,#cc9900)] focus:shadow-[0_0_0_2px_rgba(249,115,22,0.1)]">
+              <select class="os-modal__select w-full py-2.5 pl-3 pr-9 text-sm border border-[var(--color-border-medium,#d1d5db)] rounded-md outline-none text-[var(--color-text-heading,#111827)] bg-(--color-surface,#fff) appearance-none cursor-pointer transition-colors focus:border-[var(--color-cta-primary,#cc9900)] focus:shadow-[0_0_0_2px_rgba(249,115,22,0.1)]">
                 <option value="">Ülke/bölge seçin</option>
                 <option value="TR">Türkiye</option>
                 <option value="DE">Almanya</option>
@@ -375,7 +375,7 @@ function renderTaxInfo(): string {
           </div>
         </div>
         <div class="px-6 pt-4 pb-5 flex justify-end gap-3 border-t border-[var(--color-border-light,#f0f0f0)]">
-          <button class="os-modal__btn os-modal__btn--primary px-6 py-2.5 text-sm font-medium rounded-[20px] cursor-pointer border-none transition-all bg-[var(--color-cta-primary,#cc9900)] text-white hover:bg-[#EA580C]">Doğrula</button>
+          <button class="os-modal__btn os-modal__btn--primary px-6 py-2.5 text-sm font-medium rounded-[20px] cursor-pointer border-none transition-all bg-(--color-cta-primary,#cc9900) text-white hover:bg-[#EA580C]">Doğrula</button>
         </div>
       </div>
     </div>
@@ -383,10 +383,10 @@ function renderTaxInfo(): string {
     <!-- ═══ MODAL: Gümrük muayenesi bilgileri ═══ -->
     <div class="os-modal hidden fixed inset-0 z-[9999] items-center justify-center" id="customs-modal">
       <div class="os-modal__overlay absolute inset-0 bg-black/45"></div>
-      <div class="os-modal__dialog relative bg-[var(--color-surface,#fff)] rounded-xl w-[480px] max-w-[calc(100vw-32px)] max-h-[calc(100vh-64px)] overflow-y-auto shadow-[0_20px_60px_rgba(0,0,0,0.2)]" style="animation: osModalIn 200ms ease-out">
+      <div class="os-modal__dialog relative bg-(--color-surface,#fff) rounded-xl w-[480px] max-w-[calc(100vw-32px)] max-h-[calc(100vh-64px)] overflow-y-auto shadow-[0_20px_60px_rgba(0,0,0,0.2)]" style="animation: osModalIn 200ms ease-out">
         <div class="flex items-center justify-between px-6 pt-5 pb-4 border-b border-[var(--color-border-light,#f0f0f0)]">
           <h3 class="text-base font-semibold text-[var(--color-text-heading,#111827)]">Gümrük muayenesi bilgileri</h3>
-          <button class="os-modal__close bg-transparent border-none cursor-pointer p-1 rounded flex items-center justify-center transition-colors hover:bg-[var(--color-surface-raised,#f5f5f5)]" aria-label="Kapat">
+          <button class="os-modal__close bg-transparent border-none cursor-pointer p-1 rounded flex items-center justify-center transition-colors hover:bg-(--color-surface-raised,#f5f5f5)" aria-label="Kapat">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M12 4L4 12M4 4l8 8" stroke="#666" stroke-width="1.5" stroke-linecap="round"/></svg>
           </button>
         </div>
@@ -426,8 +426,8 @@ function renderTaxInfo(): string {
           </label>
         </div>
         <div class="px-6 pt-4 pb-5 flex justify-end gap-3 border-t border-[var(--color-border-light,#f0f0f0)]">
-          <button class="os-modal__btn os-modal__btn--cancel px-6 py-2.5 text-sm font-medium rounded-[20px] cursor-pointer transition-all bg-[var(--color-surface,#fff)] text-[var(--color-text-body,#333)] border border-[var(--color-border-medium,#d1d5db)] hover:border-[#999]">İptal et</button>
-          <button class="os-modal__btn os-modal__btn--primary px-6 py-2.5 text-sm font-medium rounded-[20px] cursor-pointer border-none transition-all bg-[var(--color-cta-primary,#cc9900)] text-white hover:bg-[#EA580C]">Kaydet</button>
+          <button class="os-modal__btn os-modal__btn--cancel px-6 py-2.5 text-sm font-medium rounded-[20px] cursor-pointer transition-all bg-(--color-surface,#fff) text-[var(--color-text-body,#333)] border border-[var(--color-border-medium,#d1d5db)] hover:border-[#999]">İptal et</button>
+          <button class="os-modal__btn os-modal__btn--primary px-6 py-2.5 text-sm font-medium rounded-[20px] cursor-pointer border-none transition-all bg-(--color-cta-primary,#cc9900) text-white hover:bg-[#EA580C]">Kaydet</button>
         </div>
       </div>
     </div>
@@ -459,7 +459,7 @@ function renderNav(activeId: string): string {
     const activeClasses = isActive
       ? 'orders-page__nav-link--active font-semibold text-[var(--color-text-heading,#111827)] border-l-[var(--color-text-heading)] underline underline-offset-[3px]'
       : 'text-[var(--color-text-body,#333)]';
-    return `<a href="#${item.id}" class="orders-page__nav-link block py-2.5 px-5 text-sm no-underline border-l-[3px] border-l-transparent transition-colors leading-[1.4] hover:bg-[var(--color-surface-muted,#fafafa)] hover:text-[var(--color-text-heading,#111827)] ${activeClasses}" data-nav="${item.id}">${item.label}</a>`;
+    return `<a href="#${item.id}" class="orders-page__nav-link block py-2.5 px-5 text-sm no-underline border-l-[3px] border-l-transparent transition-colors leading-[1.4] hover:bg-(--color-surface-muted,#fafafa) hover:text-[var(--color-text-heading,#111827)] ${activeClasses}" data-nav="${item.id}">${item.label}</a>`;
   }).join('');
 }
 
@@ -468,7 +468,7 @@ export function OrdersPageLayout(): string {
   const renderFn = SECTIONS[activeId] ?? renderAllOrders;
 
   return `
-    <div class="orders-page flex bg-[var(--color-surface,#fff)] rounded-lg min-h-[calc(100vh-80px)] overflow-hidden max-md:flex-col">
+    <div class="orders-page flex bg-(--color-surface,#fff) rounded-lg min-h-[calc(100vh-80px)] overflow-hidden max-md:flex-col">
       <aside class="orders-page__nav w-[240px] shrink-0 border-r border-[var(--color-border-light,#f0f0f0)] py-6 max-md:w-full max-md:border-r-0 max-md:border-b max-md:border-b-[var(--color-border-light,#f0f0f0)] max-md:py-4">
         <h2 class="text-base font-bold text-[var(--color-text-heading,#111827)] px-5 pb-4">Siparişlerim</h2>
         <nav class="orders-page__nav-links flex flex-col max-md:flex-row max-md:overflow-x-auto max-md:px-4 max-md:gap-1">

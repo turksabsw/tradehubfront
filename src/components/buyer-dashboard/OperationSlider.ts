@@ -37,7 +37,7 @@ export function OperationSlider(props: OperationSliderProps): string {
 
   return `
     <div class="operation-slider relative overflow-hidden group/opslider" aria-label="Bildirimler">
-      <div class="swiper operation-slider__swiper overflow-hidden bg-[var(--color-surface-raised,#f5f5f5)]">
+      <div class="swiper operation-slider__swiper overflow-hidden bg-(--color-surface-raised,#f5f5f5)">
         <div class="swiper-wrapper">
           ${notifications.map(renderSlide).join('')}
         </div>
