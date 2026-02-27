@@ -40,7 +40,7 @@ export function InboxPanel(props: InboxPanelProps): string {
   const { categories, activeCategoryId } = props;
 
   return `
-    <aside class="w-[240px] max-lg:w-[200px] max-md:w-full flex-shrink-0 border-r border-(--color-border-light,#f0f0f0) max-md:border-r-0 max-md:border-b flex flex-col bg-(--color-surface,#ffffff)">
+    <aside class="w-[240px] max-lg:w-[200px] max-md:w-full flex-shrink-0 border-r border-(--color-border-light,#f0f0f0) max-md:border-r-0 max-md:border-b flex flex-col bg-(--color-surface,#ffffff) max-sm:px-0">
       <!-- Search -->
       <div class="relative px-4 pt-4 pb-3">
         <svg class="absolute left-7 top-1/2 -translate-y-1/2 mt-0.5 w-4 h-4 text-(--color-text-placeholder,#999999) pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">

@@ -40,7 +40,7 @@ function renderConversation(conv: MessageConversation): string {
     : '';
 
   return `
-    <a href="${conv.href}" class="msg-list__item flex items-start gap-3 px-5 py-3.5 no-underline border-b border-(--color-surface-raised,#f5f5f5) cursor-pointer transition-[background] duration-150 hover:bg-(--color-surface-muted,#fafafa)" data-id="${conv.id}">
+    <a href="${conv.href}" class="msg-list__item flex items-start gap-3 px-5 py-3.5 max-sm:px-3 max-sm:py-3 no-underline border-b border-(--color-surface-raised,#f5f5f5) cursor-pointer transition-[background] duration-150 hover:bg-(--color-surface-muted,#fafafa)" data-id="${conv.id}">
       ${renderAvatar(conv)}
       <div class="flex-1 min-w-0">
         <div class="flex items-baseline justify-between gap-2 mb-0.5">
@@ -58,9 +58,9 @@ export function MessageList(props: MessageListProps): string {
   const { conversations, title } = props;
 
   return `
-    <div class="w-[360px] max-lg:w-[300px] max-md:w-full max-md:max-h-[50vh] flex-shrink-0 border-r border-(--color-border-light,#f0f0f0) max-md:border-r-0 flex flex-col bg-(--color-surface,#ffffff)">
+    <div class="w-[360px] max-lg:w-[300px] max-md:w-full max-md:max-h-none max-md:flex-1 flex-shrink-0 border-r border-(--color-border-light,#f0f0f0) max-md:border-r-0 flex flex-col bg-(--color-surface,#ffffff)">
       <!-- Header -->
-      <div class="flex items-center justify-between px-5 pt-4 pb-3 border-b border-(--color-border-light,#f0f0f0)">
+      <div class="flex items-center justify-between px-5 pt-4 pb-3 max-sm:px-3 border-b border-(--color-border-light,#f0f0f0)">
         <h3 class="text-base font-bold text-(--color-text-heading,#111827)">${title}</h3>
         <button class="flex items-center justify-center w-7 h-7 border-none bg-transparent text-(--color-text-placeholder,#999999) cursor-pointer rounded hover:text-(--color-text-body,#333333) transition-colors duration-150" aria-label="Filtrele">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
