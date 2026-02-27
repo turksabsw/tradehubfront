@@ -2076,84 +2076,7 @@ body.gallery-lightbox-open {
     background: rgba(17, 24, 39, 0.06);
 }
 
-@media (width <=960px) {
-    #gallery-lightbox {
-        padding: 72px 12px 12px;
-    }
-
-    #gallery-lightbox-toolbar {
-        height: 58px;
-        padding: 0 10px;
-    }
-
-    #gallery-lightbox-actions {
-        gap: 8px;
-    }
-
-    .gallery-lightbox-action-btn {
-        font-size: 15px;
-        gap: 5px;
-    }
-
-    .gallery-lightbox-action-btn span {
-        display: none;
-    }
-
-    #gallery-lightbox-close {
-        width: 34px;
-        height: 34px;
-    }
-
-    #gallery-lightbox-close svg {
-        width: 22px;
-        height: 22px;
-    }
-
-    #gallery-lightbox-inner {
-        height: min(86vh, 760px);
-        grid-template-columns: 1fr;
-        grid-template-rows: minmax(0, 1fr) 82px;
-        gap: 12px;
-    }
-
-    #gallery-lightbox-sidebar {
-        order: 2;
-        width: 100%;
-        height: auto;
-        min-height: 0;
-    }
-
-    #gallery-lightbox-thumb-list {
-        width: 100%;
-        flex-direction: row;
-        overflow-x: auto;
-        overflow-y: hidden;
-        padding: 0 2px;
-    }
-
-    .gallery-lightbox-thumb {
-        width: 68px;
-        height: 68px;
-    }
-
-    .gallery-lightbox-scroll {
-        display: none;
-    }
-
-    #gallery-lightbox-count {
-        font-size: 14px;
-    }
-
-    #gallery-lightbox-vertical-nav {
-        width: 40px;
-        right: 10px;
-    }
-
-    .gallery-lightbox-nav-btn {
-        width: 40px;
-        height: 40px;
-    }
-}
+/* Gallery lightbox <=960px — migrated to Tailwind in ProductImageGallery.ts */
 
 /* Attributes card — replaces gallery when "Ozellikler" tab is active
    Lives inside #product-gallery flex container, same position as #gallery-main-image */
@@ -2561,17 +2484,7 @@ body.gallery-lightbox-open {
     background: var(--pd-spec-header-bg, #f9fafb);
 }
 
-/* Responsive: stack rating summary on mobile */
-@media (max-width: 639px) {
-    .rv-rating-summary {
-        flex-direction: column;
-        gap: 20px;
-    }
-
-    .rv-category-label {
-        min-width: 100px;
-    }
-}
+/* Responsive: rating summary mobile — migrated to Tailwind in ProductReviews.ts */
 
 /* ============================================================
    PHASE E — Review Filtering, Sorting, Modals
@@ -2894,58 +2807,7 @@ body.gallery-lightbox-open {
     text-decoration: underline;
 }
 
-/* ── 9. Responsive — Phase E ─────────────────────────── */
-
-@media (max-width: 639px) {
-    .rv-modal {
-        width: 100%;
-        height: 100%;
-        max-height: 100vh;
-        border-radius: 0;
-    }
-
-    .rv-login-modal {
-        width: 100%;
-        max-width: 100%;
-        border-radius: 0;
-        min-height: 100vh;
-    }
-
-    .rv-filter-row {
-        flex-wrap: wrap;
-    }
-
-    .rv-sort-dropdown {
-        margin-left: 0;
-        width: 100%;
-    }
-
-    .rv-sort-dropdown-trigger {
-        width: 100%;
-        justify-content: space-between;
-    }
-
-    .rv-sort-dropdown-panel {
-        left: 0;
-        right: 0;
-    }
-
-    .rv-rating-dropdown-panel {
-        min-width: 160px;
-    }
-
-    .rv-modal-header {
-        padding: 16px;
-    }
-
-    .rv-modal-body {
-        padding: 0 16px 16px;
-    }
-
-    .rv-login-content {
-        padding: 0 20px 24px;
-    }
-}
+/* ── 9. Responsive — Phase E — migrated to Tailwind in ProductReviews.ts, ReviewsModal.ts, LoginModal.ts ── */
 
 /* ============================================================
    SUPPLIER TAB — "Know Your Supplier" redesign

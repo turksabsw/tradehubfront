@@ -135,7 +135,7 @@ function ratingDropdownHtml(idPrefix: string): string {
         Puan
         <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
       </button>
-      <div class="rv-rating-dropdown-panel">
+      <div class="rv-rating-dropdown-panel max-sm:!min-w-[160px]">
         <button type="button" class="rv-rating-dropdown-item active" data-rv-rating="all">Tüm Puanlar</button>
         <button type="button" class="rv-rating-dropdown-item" data-rv-rating="5">${renderStars(5, true)} 5 Yıldız</button>
         <button type="button" class="rv-rating-dropdown-item" data-rv-rating="4">${renderStars(4, true)} 4 Yıldız</button>
@@ -148,12 +148,12 @@ function ratingDropdownHtml(idPrefix: string): string {
 
 function sortDropdownHtml(idPrefix: string): string {
   return `
-    <div class="rv-sort-dropdown" id="${idPrefix}-sort-dropdown">
-      <button type="button" class="rv-sort-dropdown-trigger">
+    <div class="rv-sort-dropdown max-sm:!ml-0 max-sm:!w-full" id="${idPrefix}-sort-dropdown">
+      <button type="button" class="rv-sort-dropdown-trigger max-sm:!w-full max-sm:!justify-between">
         Sırala: En alakalı
         <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
       </button>
-      <div class="rv-sort-dropdown-panel">
+      <div class="rv-sort-dropdown-panel max-sm:!left-0 max-sm:!right-0">
         <button type="button" class="rv-sort-dropdown-item active" data-rv-sort="relevant">En alakalı</button>
         <button type="button" class="rv-sort-dropdown-item" data-rv-sort="newest">En yeni</button>
       </div>
@@ -207,7 +207,7 @@ export function ProductReviews(): string {
       <!-- Store Reviews Panel (hidden) -->
       <div id="rv-store-panel" class="hidden">
         <!-- Rating Summary -->
-        <div class="rv-rating-summary flex gap-8 pb-6 mb-5">
+        <div class="rv-rating-summary flex gap-8 pb-6 mb-5 max-sm:flex-col max-sm:gap-5">
           <div class="flex flex-col items-center justify-center min-w-[140px]">
             <span class="rv-rating-number">${p.rating}</span>
             <div class="flex items-center gap-0.5 mt-1">${renderStars(p.rating)}</div>
@@ -217,7 +217,7 @@ export function ProductReviews(): string {
           <div class="flex-1 flex flex-col gap-2.5 justify-center">
             ${p.reviewCategoryRatings.map(cat => `
               <div class="flex items-center gap-2.5">
-                <span class="rv-category-label">${cat.label}</span>
+                <span class="rv-category-label max-sm:!min-w-[100px]">${cat.label}</span>
                 <div class="rv-category-bar-track">
                   <div class="rv-category-bar-fill" style="width: ${(cat.score / 5) * 100}%;"></div>
                 </div>

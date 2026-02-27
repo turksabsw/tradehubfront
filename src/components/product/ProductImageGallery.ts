@@ -100,7 +100,7 @@ export function ProductImageGallery(): string {
   const lightboxThumbsHtml = images.map((img, i) => `
     <button
       type="button"
-      class="gallery-lightbox-thumb${i === 0 ? ' active' : ''}"
+      class="gallery-lightbox-thumb max-[960px]:!w-[68px] max-[960px]:!h-[68px]${i === 0 ? ' active' : ''}"
       data-index="${i}"
       aria-label="${img.alt}"
     >${renderGalleryMedia(img.src, img.alt, defaultVisual, 'thumb')}</button>
@@ -165,46 +165,46 @@ export function ProductImageGallery(): string {
       <button type="button" class="gallery-view-tab">Özellikler</button>
     </div>
 
-    <div id="gallery-lightbox" class="hidden" aria-hidden="true">
-      <div id="gallery-lightbox-toolbar">
-        <div id="gallery-lightbox-actions">
-          <button type="button" class="gallery-lightbox-action-btn" aria-label="Favorilere ekle">
+    <div id="gallery-lightbox" class="hidden max-[960px]:!p-[72px_12px_12px]" aria-hidden="true">
+      <div id="gallery-lightbox-toolbar" class="max-[960px]:!h-[58px] max-[960px]:!px-2.5">
+        <div id="gallery-lightbox-actions" class="max-[960px]:!gap-2">
+          <button type="button" class="gallery-lightbox-action-btn max-[960px]:!text-[15px] max-[960px]:!gap-[5px]" aria-label="Favorilere ekle">
             <svg width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
             </svg>
-            <span>Favorite</span>
+            <span class="max-[960px]:hidden">Favorite</span>
           </button>
-          <button type="button" class="gallery-lightbox-action-btn" aria-label="Benzerini bul">
+          <button type="button" class="gallery-lightbox-action-btn max-[960px]:!text-[15px] max-[960px]:!gap-[5px]" aria-label="Benzerini bul">
             <svg width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M3 7.5A2.5 2.5 0 0 1 5.5 5h2A2.5 2.5 0 0 1 10 7.5v2A2.5 2.5 0 0 1 7.5 12h-2A2.5 2.5 0 0 1 3 9.5v-2zm11 0A2.5 2.5 0 0 1 16.5 5h2A2.5 2.5 0 0 1 21 7.5v2a2.5 2.5 0 0 1-2.5 2.5h-2A2.5 2.5 0 0 1 14 9.5v-2zm-11 9A2.5 2.5 0 0 1 5.5 14h2A2.5 2.5 0 0 1 10 16.5v2A2.5 2.5 0 0 1 7.5 21h-2A2.5 2.5 0 0 1 3 18.5v-2zm13.5-2.5a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9zm0 2.5v2l1.6 1"/>
             </svg>
-            <span>Find similar</span>
+            <span class="max-[960px]:hidden">Find similar</span>
           </button>
         </div>
 
-        <div id="gallery-lightbox-count">1/${images.length}</div>
+        <div id="gallery-lightbox-count" class="max-[960px]:!text-sm">1/${images.length}</div>
 
-        <button type="button" id="gallery-lightbox-close" aria-label="Galeriyi kapat">
-          <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.1" viewBox="0 0 24 24">
+        <button type="button" id="gallery-lightbox-close" class="max-[960px]:!w-[34px] max-[960px]:!h-[34px]" aria-label="Galeriyi kapat">
+          <svg class="max-[960px]:!w-[22px] max-[960px]:!h-[22px]" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.1" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6l-12 12"/>
           </svg>
         </button>
       </div>
 
-      <div id="gallery-lightbox-inner" role="dialog" aria-modal="true" aria-label="Ürün görsel galerisi">
-        <div id="gallery-lightbox-sidebar">
+      <div id="gallery-lightbox-inner" class="max-[960px]:!h-[min(86vh,760px)] max-[960px]:!grid-cols-1 max-[960px]:!grid-rows-[minmax(0,1fr)_82px] max-[960px]:!gap-3" role="dialog" aria-modal="true" aria-label="Ürün görsel galerisi">
+        <div id="gallery-lightbox-sidebar" class="max-[960px]:!order-2 max-[960px]:!w-full max-[960px]:!h-auto max-[960px]:!min-h-0">
           ${needsLightboxThumbScroll ? `
-          <button type="button" id="gallery-lightbox-thumb-up" class="gallery-lightbox-scroll" aria-label="Yukarı kaydır">
+          <button type="button" id="gallery-lightbox-thumb-up" class="gallery-lightbox-scroll max-[960px]:!hidden" aria-label="Yukarı kaydır">
             <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/></svg>
           </button>
           ` : ''}
 
-          <div id="gallery-lightbox-thumb-list">
+          <div id="gallery-lightbox-thumb-list" class="max-[960px]:!w-full max-[960px]:!flex-row max-[960px]:!overflow-x-auto max-[960px]:!overflow-y-hidden max-[960px]:!px-0.5">
             ${lightboxThumbsHtml}
           </div>
 
           ${needsLightboxThumbScroll ? `
-          <button type="button" id="gallery-lightbox-thumb-down" class="gallery-lightbox-scroll" aria-label="Aşağı kaydır">
+          <button type="button" id="gallery-lightbox-thumb-down" class="gallery-lightbox-scroll max-[960px]:!hidden" aria-label="Aşağı kaydır">
             <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
           </button>
           ` : ''}
@@ -215,11 +215,11 @@ export function ProductImageGallery(): string {
             ${renderGalleryMedia(firstImage?.src, firstImage?.alt ?? 'Ürün görseli', defaultVisual, 'large')}
           </div>
 
-          <div id="gallery-lightbox-vertical-nav" aria-label="Görsel gezinme">
-            <button type="button" id="gallery-lightbox-prev" class="gallery-lightbox-nav-btn" aria-label="Önceki görsel">
+          <div id="gallery-lightbox-vertical-nav" class="max-[960px]:!w-10 max-[960px]:!right-2.5" aria-label="Görsel gezinme">
+            <button type="button" id="gallery-lightbox-prev" class="gallery-lightbox-nav-btn max-[960px]:!w-10 max-[960px]:!h-10" aria-label="Önceki görsel">
               <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7-7-7 7"/></svg>
             </button>
-            <button type="button" id="gallery-lightbox-next" class="gallery-lightbox-nav-btn" aria-label="Sonraki görsel">
+            <button type="button" id="gallery-lightbox-next" class="gallery-lightbox-nav-btn max-[960px]:!w-10 max-[960px]:!h-10" aria-label="Sonraki görsel">
               <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 10l7 7 7-7"/></svg>
             </button>
           </div>
