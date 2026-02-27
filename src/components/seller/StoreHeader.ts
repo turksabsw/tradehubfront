@@ -47,10 +47,10 @@ export function StoreHeader(seller: SellerProfile): string {
 
   return `
     <section id="store-header" class="store-header bg-white dark:bg-gray-800 border-b border-(--color-border-default) dark:border-gray-700 transition-opacity duration-200" aria-label="Mağaza profil başlığı">
-      <div class="store-header__container max-w-(--container-lg) mx-auto px-4 py-4 lg:px-6 lg:py-5 xl:px-8 xl:py-5 flex flex-col lg:flex-row lg:justify-between lg:items-start gap-4">
+      <div class="store-header__container max-w-(--container-lg) mx-auto px-[clamp(0.75rem,0.5rem+1vw,1.5rem)] py-4 lg:px-6 lg:py-5 xl:px-8 xl:py-5 flex flex-col lg:flex-row lg:justify-between lg:items-start gap-4 overflow-hidden">
 
         <!-- Left: Logo + Info -->
-        <div class="store-header__info flex items-start gap-3 lg:gap-5">
+        <div class="store-header__info flex items-start gap-3 lg:gap-5 min-w-0">
           <!-- Logo -->
           <img
             class="store-header__logo w-[80px] max-h-[48px] lg:max-h-[52px] xl:w-[100px] xl:max-h-[60px] object-contain flex-shrink-0 hover:scale-105 transition-transform duration-200"
@@ -59,7 +59,7 @@ export function StoreHeader(seller: SellerProfile): string {
             onerror="this.style.display='none'"
           />
 
-          <div class="store-header__details flex flex-col gap-1">
+          <div class="store-header__details flex flex-col gap-1 min-w-0">
             <!-- Company Name + Chevron -->
             <div class="store-header__name-row flex items-center gap-2">
               <h1 class="store-header__name text-[18px] lg:text-[20px] xl:text-[22px] font-bold text-(--color-text-primary) dark:text-gray-50 leading-tight">
@@ -85,7 +85,7 @@ export function StoreHeader(seller: SellerProfile): string {
             </div>
 
             <!-- Main Categories -->
-            <p class="store-header__categories text-[13px] text-(--color-text-tertiary) dark:text-gray-400">
+            <p class="store-header__categories text-[13px] text-(--color-text-tertiary) dark:text-gray-400 break-words">
               Main categories: ${seller.mainCategories.join(', ')}
             </p>
 

@@ -14,7 +14,7 @@ export function CategoryGrid(cards: CategoryCard[]): string {
 
   return `
     <section id="category-grid" class="category-grid py-12" aria-label="Ürün kategorileri">
-      <div class="max-w-(--container-lg) mx-auto px-4 lg:px-6 xl:px-8">
+      <div class="max-w-(--container-lg) mx-auto px-[clamp(0.75rem,0.5rem+1vw,1.5rem)] lg:px-6 xl:px-8">
         <!-- Top Row: 3 columns -->
         <div class="category-grid__row-top grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 mb-4">
           ${topRow.map(card => `
@@ -34,7 +34,7 @@ export function CategoryGrid(cards: CategoryCard[]): string {
 
         <!-- Bottom Row: 4 columns -->
         ${bottomRow.length ? `
-          <div class="category-grid__row-bottom grid grid-cols-2 md:grid-cols-2 xl:grid-cols-4 gap-4">
+          <div class="category-grid__row-bottom grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
             ${bottomRow.map(card => `
               <a href="${card.link || '#'}"
                  class="category-grid__card relative rounded-(--radius-lg) overflow-hidden min-h-[160px] group cursor-pointer hover:shadow-md dark:hover:shadow-lg transition-all duration-300 focus-visible:ring-2 focus-visible:ring-(--store-accent)"

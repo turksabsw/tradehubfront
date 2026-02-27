@@ -10,11 +10,11 @@ export function HotProducts(products: SimpleProduct[]): string {
 
   return `
     <section id="hot-products" class="hot-products py-12" aria-label="Popüler ürünler">
-      <div class="max-w-(--container-lg) mx-auto px-4 lg:px-6 xl:px-8">
-        <h2 class="hot-products__title text-[36px] md:text-[48px] xl:text-[54px] font-black text-[#f97316] uppercase text-center tracking-tight mb-10">
+      <div class="max-w-(--container-lg) mx-auto px-[clamp(0.75rem,0.5rem+1vw,1.5rem)] lg:px-6 xl:px-8">
+        <h2 class="hot-products__title text-[clamp(1.5rem,1.2rem+1.5vw,3.375rem)] font-black text-[#f97316] uppercase text-center tracking-tight mb-6 md:mb-10">
           HOT PRODUCTS
         </h2>
-        <div class="hot-products__grid grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+        <div class="hot-products__grid grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-[clamp(0.75rem,0.5rem+0.5vw,1.25rem)]">
           ${products.map(product => `
             <div class="hot-products__card bg-white dark:bg-gray-800 border border-(--card-border-color) dark:border-gray-700 rounded-(--radius-card) p-6 flex flex-col items-center text-center hover:shadow-md dark:hover:shadow-lg transition-shadow duration-300">
               <div class="hot-products__image-wrapper w-full h-[200px] flex items-center justify-center mb-4 overflow-hidden">

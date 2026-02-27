@@ -73,10 +73,10 @@ function renderCategory(category: ProductCategory): string {
       <!-- Banner -->
       <div class="category-listing__banner relative w-full overflow-hidden">
         <img src="${category.bannerImage}" alt="${category.name}"
-             class="w-full h-[350px] xl:h-[300px] md:h-[200px] sm:h-[160px] object-cover" loading="lazy"
+             class="w-full h-[160px] sm:h-[160px] md:h-[200px] xl:h-[300px] object-cover" loading="lazy"
              onerror="this.parentElement.style.background='linear-gradient(135deg,#1e3a5f,#f97316)'" />
         <div class="absolute inset-0 flex items-center justify-center bg-black/10 dark:bg-black/20">
-          <h3 class="text-[46px] xl:text-[40px] md:text-[28px] sm:text-[22px] font-black text-white uppercase tracking-tight drop-shadow-xl"
+          <h3 class="text-[20px] sm:text-[22px] md:text-[28px] xl:text-[40px] font-black text-white uppercase tracking-tight drop-shadow-xl"
               style="text-shadow: 0 2px 12px rgba(0,0,0,0.4);">
             ${category.name}
           </h3>
@@ -84,7 +84,7 @@ function renderCategory(category: ProductCategory): string {
       </div>
 
       <!-- Product Grid (Shared Border System) -->
-      <div class="category-listing__grid grid grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-1 border-t border-l border-(--card-border-color) dark:border-gray-700">
+      <div class="category-listing__grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 border-t border-l border-(--card-border-color) dark:border-gray-700">
         ${category.products.map(p => renderProductCard(p)).join('')}
       </div>
     </section>
@@ -96,7 +96,7 @@ export function CategoryProductListing(categories: ProductCategory[]): string {
 
   return `
     <div id="category-listings" aria-label="Kategori ürün listeleri">
-      <div class="max-w-(--container-lg) mx-auto px-4 lg:px-6 xl:px-8">
+      <div class="max-w-(--container-lg) mx-auto px-[clamp(0.75rem,0.5rem+1vw,1.5rem)] lg:px-6 xl:px-8">
         ${categories.map(cat => renderCategory(cat)).join('')}
       </div>
     </div>

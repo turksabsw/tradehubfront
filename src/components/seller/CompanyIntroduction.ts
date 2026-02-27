@@ -26,8 +26,8 @@ export function CompanyIntroduction(
 
   return `
     <section id="company-introduction" class="company-intro py-12" aria-label="Şirket tanıtımı">
-      <div class="max-w-(--container-lg) mx-auto px-4 lg:px-6 xl:px-8">
-        <div class="company-intro__card bg-white dark:bg-gray-800 border border-(--card-border-color) rounded-(--radius-lg) shadow-md dark:shadow-lg p-10 lg:p-6">
+      <div class="max-w-(--container-lg) mx-auto px-[clamp(0.75rem,0.5rem+1vw,1.5rem)] lg:px-6 xl:px-8">
+        <div class="company-intro__card bg-white dark:bg-gray-800 border border-(--card-border-color) rounded-(--radius-lg) shadow-md dark:shadow-lg p-4 sm:p-6 lg:p-10">
 
           <!-- Title -->
           <h2 class="company-intro__title text-[24px] font-bold text-[#1e3a5f] dark:text-blue-300 uppercase text-center mb-6">
@@ -51,7 +51,7 @@ export function CompanyIntroduction(
           </div>
 
           <!-- 3×2 Info Grid -->
-          <div class="company-intro__grid grid grid-cols-3 lg:grid-cols-2 md:grid-cols-1 gap-6 mb-8">
+          <div class="company-intro__grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mb-8">
             ${cells.map(cell => `
               <div class="company-intro__cell flex items-start gap-3 hover:shadow-md transition-shadow duration-300">
                 <div class="w-10 h-10 rounded-full bg-[#f3f4f6] dark:bg-gray-700 flex items-center justify-center flex-shrink-0">
@@ -77,7 +77,7 @@ export function CompanyIntroduction(
 
           <!-- Photo Grid -->
           ${photos && photos.length ? `
-            <div class="company-intro__photos grid grid-cols-4 lg:grid-cols-2 gap-3 mb-8">
+            <div class="company-intro__photos grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-8">
               ${photos.map(photo => `
                 <div class="relative rounded-(--radius-md) overflow-hidden aspect-[4/3]">
                   <img src="${photo.image}" alt="${photo.caption}" class="w-full h-full object-cover" loading="lazy" />

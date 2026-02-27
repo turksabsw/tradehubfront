@@ -126,7 +126,7 @@ export function StoreNav(data: StoreNavData): string {
 
   return `
     <nav id="store-nav" class="store-nav sticky top-0 z-(--z-sticky) bg-(--store-nav-bg) transition-shadow duration-200" aria-label="Mağaza navigasyonu">
-      <div class="store-nav__container max-w-(--container-lg) mx-auto px-4 lg:px-6 xl:px-8 flex items-center justify-between">
+      <div class="store-nav__container max-w-(--container-lg) mx-auto px-[clamp(0.75rem,0.5rem+1vw,1.5rem)] lg:px-6 xl:px-8 flex items-center justify-between">
 
         <!-- Hamburger (mobile/tablet) -->
         <button class="store-nav__hamburger xl:hidden text-white p-2 bg-transparent border-none cursor-pointer"

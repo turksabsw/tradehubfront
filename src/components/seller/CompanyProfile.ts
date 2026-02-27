@@ -28,7 +28,7 @@ export interface SellerPerformanceStats {
 // ─── Contact Sidebar Component ─────────────────────────────────
 function ContactSidebar(seller: SellerProfile): string {
   return `
-    <div class="company-profile__sidebar sticky top-[100px] bg-white rounded-(--radius-md) border border-gray-200 p-6">
+    <div class="company-profile__sidebar sticky top-[100px] bg-white rounded-(--radius-md) border border-gray-200 p-4 sm:p-6">
       <h3 class="text-[18px] font-bold text-gray-900 mb-4">Tedarikçiye Ulaşın</h3>
       
       <div class="flex items-center gap-3 mb-6">
@@ -109,7 +109,7 @@ function OverviewTab(stats: SellerPerformanceStats, mainProducts: SimpleProduct[
       <section class="bg-white rounded-(--radius-md) border border-gray-200 p-6">
         <h3 class="text-[18px] font-bold text-gray-900 mb-6 uppercase">ANA ÜRÜNLER</h3>
         
-        <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
           ${mainProducts.map(product => `
             <div class="p-2 border border-gray-100 rounded-lg hover:border-gray-200 transition-colors">
                ${ProductCard({
@@ -222,7 +222,7 @@ function ProductsTab(categories: ProductCategory[]): string {
         </div>
 
         <!-- Dynamic Product Grid -->
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           ${allProducts.map(product => `
             <div class="p-3 border border-gray-100 rounded-[calc(var(--radius-md)+4px)] hover:shadow-md transition-shadow bg-white">
                 <div class="mb-3">
@@ -261,10 +261,10 @@ export function CompanyProfileComponent(
 ): string {
   return `
     <section class="company-profile bg-[#f9fafb] py-8 min-h-screen" aria-label="Satıcı Profili">
-      <div class="max-w-(--container-xl) mx-auto px-4 lg:px-6 xl:px-8">
+      <div class="max-w-(--container-xl) mx-auto px-[clamp(0.75rem,0.5rem+1vw,1.5rem)] lg:px-6 xl:px-8">
         
         <!-- Main Navigation Tabs -->
-        <div class="bg-white rounded-t-(--radius-md) border-b border-gray-200 px-6 py-0 flex items-center gap-8 mb-6 overflow-x-auto no-scrollbar">
+        <div class="bg-white rounded-t-(--radius-md) border-b border-gray-200 px-3 sm:px-6 py-0 flex items-center gap-4 sm:gap-8 mb-6 overflow-x-auto no-scrollbar">
           <button class="company-profile__main-tab active py-4 text-[15px] font-bold text-gray-900 border-b-2 border-gray-900 whitespace-nowrap" data-target="tab-overview">Hesabım</button>
           <button class="company-profile__main-tab py-4 text-[15px] font-medium text-gray-500 hover:text-gray-900 border-b-2 border-transparent transition-colors whitespace-nowrap" data-target="tab-reviews">Yorumlar</button>
           <button class="company-profile__main-tab py-4 text-[15px] font-medium text-gray-500 hover:text-gray-900 border-b-2 border-transparent transition-colors whitespace-nowrap" data-target="tab-video" disabled>Video İpuçları</button>

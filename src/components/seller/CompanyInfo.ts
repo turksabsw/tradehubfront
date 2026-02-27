@@ -8,8 +8,8 @@ import type { CompanyInfo as CompanyInfoData, SellerProfile } from '../../types/
 function renderVariantA(data: CompanyInfoData, seller: SellerProfile): string {
   return `
     <section id="company-info" class="company-info company-info__variant-a py-12" aria-label="Şirket bilgileri">
-      <div class="max-w-(--container-lg) mx-auto px-4 lg:px-6 xl:px-8">
-        <h2 class="text-[36px] md:text-[42px] xl:text-[48px] 2xl:text-[54px] font-black text-[#1e3a5f] dark:text-blue-300 uppercase text-center tracking-tight mb-8">
+      <div class="max-w-(--container-lg) mx-auto px-[clamp(0.75rem,0.5rem+1vw,1.5rem)] lg:px-6 xl:px-8">
+        <h2 class="text-[clamp(1.5rem,1.2rem+1.5vw,3.375rem)] font-black text-[#1e3a5f] dark:text-blue-300 uppercase text-center tracking-tight mb-6 md:mb-8">
           COMPANY
         </h2>
 
@@ -22,10 +22,10 @@ function renderVariantA(data: CompanyInfoData, seller: SellerProfile): string {
         </div>
 
         <!-- Content Grid: 55% / 45% -->
-        <div class="company-info__content grid grid-cols-1 lg:grid-cols-[55%_45%] gap-6 mt-0">
+        <div class="company-info__content grid grid-cols-1 lg:grid-cols-[55%_45%] gap-4 lg:gap-6 mt-0">
           <!-- Hero Image -->
           <div class="company-info__hero-image relative rounded-bl-(--radius-md) overflow-hidden">
-            <img src="${data.heroImage}" alt="${data.heroTitle}" class="w-full h-[300px] lg:h-[400px] object-cover" loading="lazy"
+            <img src="${data.heroImage}" alt="${data.heroTitle}" class="w-full h-[200px] sm:h-[250px] lg:h-[400px] object-cover" loading="lazy"
                  onerror="this.parentElement.style.background='linear-gradient(135deg,#1e3a5f,#2563eb)'" />
             <div class="absolute inset-0 bg-gradient-to-t from-black/60 dark:from-black/70 to-transparent flex flex-col justify-end p-6">
               <h3 class="text-white text-[28px] font-bold">${data.heroTitle}</h3>
@@ -63,7 +63,7 @@ function renderVariantA(data: CompanyInfoData, seller: SellerProfile): string {
 function renderVariantB(data: CompanyInfoData, seller: SellerProfile): string {
   return `
     <section id="company-info" class="company-info company-info__variant-b py-12 bg-[#f5f0e8] dark:bg-gray-800" aria-label="Şirket bilgileri">
-      <div class="max-w-(--container-lg) mx-auto px-4 lg:px-6 xl:px-8">
+      <div class="max-w-(--container-lg) mx-auto px-[clamp(0.75rem,0.5rem+1vw,1.5rem)] lg:px-6 xl:px-8">
         <h2 class="company-info__title-b text-[28px] font-normal text-[#8b5e3c] dark:text-[#d4a76a] mb-6 italic">
           ${seller.name}
         </h2>
