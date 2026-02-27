@@ -159,7 +159,8 @@ function renderProductCard(card: ProductCard, index: number): string {
 
   return `
     <a
-      class="hFR19"
+      class="hFR19 animate-fade-slide-up"
+      style="animation-delay: ${index * 60}ms;"
       href="${card.href}"
       target="_blank"
       data-spm="card-${index}"
@@ -235,7 +236,7 @@ export function ProductGrid(): string {
       style="background-color: var(--product-bg, #f4f4f4); padding-top: 28px; padding-bottom: 28px;"
     >
       <div class="container-wide">
-        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 product-grid home-product-grid" style="gap: var(--product-grid-gap, 8px);" role="list" aria-label="Product listings">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 product-grid home-product-grid" style="gap: var(--product-grid-gap, 8px);" role="list" aria-label="Product listings">
           ${productCardSeed.map((card, index) => renderProductCard(card, index)).join('')}
         </div>
       </div>
