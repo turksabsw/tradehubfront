@@ -31,7 +31,7 @@ function renderAIIcon(): string {
  */
 function renderSearchTabs(): string {
   return `
-    <div class="hidden md:flex justify-center items-center mb-6">
+    <div class="flex justify-center items-center mb-3 sm:mb-6 overflow-x-auto">
       <ul class="flex items-center gap-0" role="tablist">
         ${searchTabs.map((tab, index) => `
           ${index > 0 ? '<li class="text-gray-300 dark:text-gray-600 text-lg select-none px-1" aria-hidden="true">|</li>' : ''}
@@ -43,7 +43,7 @@ function renderSearchTabs(): string {
               role="tab"
               aria-controls="search-panel-${tab.id}"
               aria-selected="${tab.isActive ? 'true' : 'false'}"
-              class="search-tab-btn th-search-tab inline-flex items-center gap-1.5 px-5 py-2.5 text-lg font-semibold border-b-[3px] transition-colors ${tab.isActive
+              class="search-tab-btn th-search-tab inline-flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-5 py-2 sm:py-2.5 text-xs sm:text-lg font-semibold border-b-[3px] whitespace-nowrap transition-colors ${tab.isActive
       ? 'th-search-tab--active dark:text-primary-400 dark:border-primary-400'
       : 'border-transparent dark:text-gray-400 dark:hover:text-gray-300'
     }"
@@ -64,17 +64,17 @@ function renderSearchTabs(): string {
  */
 function renderDesktopSearchBar(): string {
   return `
-    <div class="hidden md:block max-w-3xl mx-auto" id="search-wrapper">
+    <div class="max-w-3xl mx-auto px-1 sm:px-0" id="search-wrapper">
       <form id="search-form" action="/search" method="GET" role="search">
         <div class="relative">
           <!-- Search Box -->
-          <div id="search-box" class="flex flex-col px-4 py-3" style="background-color:var(--search-box-bg);border: 2px solid var(--search-input-border-color);border-radius: var(--radius-input)">
+          <div id="search-box" class="flex flex-col px-2.5 sm:px-4 py-2.5 sm:py-3" style="background-color:var(--search-box-bg);border: 2px solid var(--search-input-border-color);border-radius: var(--radius-input)">
             <!-- Row 1: Text Input -->
             <input
               type="text"
               id="search-input"
               name="search"
-              class="w-full py-3 px-2 text-base bg-transparent border-0 focus:ring-0 focus:outline-none"
+              class="w-full py-2 sm:py-3 px-1 sm:px-2 text-sm sm:text-base bg-transparent border-0 focus:ring-0 focus:outline-none"
               style="color:var(--search-input-text)"
               placeholder="Tekstil ve Konfeksiyon"
               autocomplete="off"
@@ -88,14 +88,14 @@ function renderDesktopSearchBar(): string {
                   <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z"/>
                   <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0ZM18.75 10.5h.008v.008h-.008V10.5Z"/>
                 </svg>
-                <span>Image Search</span>
+                <span class="hidden sm:inline">Image Search</span>
               </a>
 
               <!-- Search Button -->
               <button
                 type="submit"
                 id="search-submit-button"
-                class="flex items-center justify-center gap-2 px-7 py-2.5 text-sm font-semibold text-white rounded-full transition-all hover:shadow-lg"
+                class="flex items-center justify-center gap-1.5 sm:gap-2 px-4 sm:px-7 py-2 sm:py-2.5 text-xs sm:text-sm font-semibold text-white rounded-full transition-all hover:shadow-lg"
                 style="background: linear-gradient(135deg, var(--search-btn-gradient-start) 0%, var(--search-btn-gradient-end) 100%);"
                 aria-label="Search"
               >
@@ -106,7 +106,7 @@ function renderDesktopSearchBar(): string {
           </div>
 
           <!-- Search Dropdown (shown on input focus) -->
-          <div id="search-dropdown" class="hidden absolute left-0 right-0 z-10 rounded-md px-5 py-3 shadow-lg mt-2" style="background-color:var(--search-dropdown-bg);border:1px solid var(--search-dropdown-border)">
+          <div id="search-dropdown" class="hidden absolute left-0 right-0 z-10 rounded-md px-3 sm:px-5 py-2.5 sm:py-3 shadow-lg mt-2" style="background-color:var(--search-dropdown-bg);border:1px solid var(--search-dropdown-border)">
             <!-- Deep Search Row -->
             <div class="flex items-center justify-between mb-2.5">
               <div class="flex items-center gap-2 text-sm" style="color:var(--search-dropdown-text)">
@@ -144,7 +144,7 @@ function renderDesktopSearchBar(): string {
  */
 function renderWelcomeRow(): string {
   return `
-    <div class="hidden md:flex items-center justify-between mt-2 mb-4 sm:mb-7 py-3 overflow-x-auto" style="background-color:var(--search-welcome-bg); border-bottom:1.5px solid var(--search-welcome-bg); min-height:56px;">
+    <div class="hidden md:flex items-center justify-between mt-2 mb-4 sm:mb-7 py-2 sm:py-3 overflow-x-auto" style="background-color:var(--search-welcome-bg); border-bottom:1.5px solid var(--search-welcome-bg); min-height:48px;">
       <div class="container-boxed flex items-center justify-between w-full gap-4">
         <!-- Welcome Text -->
         <h2 class="hidden sm:block text-lg font-bold whitespace-nowrap" style="color:var(--search-welcome-text)">
@@ -203,7 +203,7 @@ function renderWelcomeRow(): string {
  */
 export function SearchArea(): string {
   return `
-    <section id="hero-search-area" class="relative pt-3 md:pt-5 pb-0 dark:bg-gray-900" style="background-color:var(--search-bg)" aria-label="Search area">
+    <section id="hero-search-area" class="relative pt-2 sm:pt-3 md:pt-5 pb-0 dark:bg-gray-900" style="background-color:var(--search-bg)" aria-label="Search area">
       <div class="container-boxed">
         <!-- Desktop Search Tabs (above search bar) -->
         ${renderSearchTabs()}

@@ -16,7 +16,7 @@ function renderCategoriesTrigger(): string {
   return `
     <button
       id="mega-menu-trigger"
-      class="mega-trigger subheader-link th-subheader-link relative flex items-center gap-2 px-3 py-2.5 rounded-md dark:text-primary-400 dark:hover:text-primary-300 dark:hover:bg-gray-800/60 transition-all"
+      class="mega-trigger subheader-link th-subheader-link relative flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-2 sm:py-2.5 rounded-md text-sm sm:text-base dark:text-primary-400 dark:hover:text-primary-300 dark:hover:bg-gray-800/60 transition-all"
       style="color:var(--subheader-active-color)"
       type="button"
       aria-expanded="false"
@@ -98,11 +98,11 @@ function renderUtilityLinks(): string {
  */
 export function SubHeader(): string {
   return `
-    <nav class="hidden lg:block dark:bg-gray-900 dark:border-gray-700" style="background-color:var(--subheader-bg);border-bottom:1px solid var(--subheader-border-color)" aria-label="Secondary navigation">
-      <div class="container-boxed">
-        <div class="flex items-center justify-between">
+    <nav class="hidden md:block dark:bg-gray-900 dark:border-gray-700" style="background-color:var(--subheader-bg);border-bottom:1px solid var(--subheader-border-color)" aria-label="Secondary navigation">
+      <div class="container-boxed px-3 sm:px-4 lg:px-6">
+        <div class="flex items-center justify-between min-w-0">
           <!-- Left Side: Categories Trigger + Navigation Links -->
-          <div class="flex items-center gap-1 lg:gap-2">
+          <div class="flex items-center gap-0.5 sm:gap-1 lg:gap-2 min-w-0">
             ${renderCategoriesTrigger()}
             ${renderNavigationLinks()}
           </div>
