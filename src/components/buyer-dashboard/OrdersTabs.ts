@@ -34,7 +34,7 @@ export function OrdersTabs({ tabs, filters, activeTabId, selectedFilterId, dropd
 
     return `
       <button
-        class="orders__tab ${activeClass} inline-flex items-center gap-1 px-3.5 py-1.5 rounded-[var(--radius-tab)] border-none text-[13px] font-medium cursor-pointer whitespace-nowrap transition-all"
+        class="orders__tab ${activeClass} inline-flex items-center gap-1 px-3.5 py-1.5 rounded-[var(--radius-tab)] border-none text-[13px] font-medium cursor-pointer whitespace-nowrap transition-all max-md:snap-start max-md:shrink-0"
         data-orders-tab="${tab.id}"
         ${dropdownAttr}
         role="tab"
@@ -67,7 +67,7 @@ export function OrdersTabs({ tabs, filters, activeTabId, selectedFilterId, dropd
 
   return `
     <div class="orders__tabs-wrapper relative px-5">
-      <div class="orders__tabs flex gap-2 flex-wrap" role="tablist" aria-label="Sipariş filtreleri">
+      <div class="orders__tabs flex gap-2 flex-wrap max-md:px-3 max-md:snap-x max-md:snap-mandatory" role="tablist" aria-label="Sipariş filtreleri">
         ${tabsHtml}
       </div>
       <div class="orders__dropdown ${dropdownVisibility}" role="menu" aria-label="Sipariş durumu filtresi">

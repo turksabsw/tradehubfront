@@ -4365,20 +4365,7 @@ footer {
     font-weight: 600;
 }
 
-/* --- Responsive: Orders mobile scroll --- */
-@media (max-width: 768px) {
-    .orders__tabs {
-        padding-left: 12px;
-        padding-right: 12px;
-        -webkit-overflow-scrolling: touch;
-        scroll-snap-type: x mandatory;
-    }
-
-    .orders__tab {
-        scroll-snap-align: start;
-        flex-shrink: 0;
-    }
-}
+/* Responsive: Orders mobile scroll — migrated to Tailwind in OrdersTabs.ts */
 
 /* ==========================================================
    Hero Section
@@ -4629,7 +4616,7 @@ footer {
     text-overflow: unset !important; word-break: break-word; line-height: 1.4;
 }
 
-@media (max-width: 768px) { .ds-sidebar-col { display: none; } }
+/* Responsive: ds-sidebar-col — migrated to Tailwind in dropshipping.ts */
 
 /* ── Page Navigation ───────────────────────────────────────────── */
 
@@ -4649,11 +4636,7 @@ footer {
     border-bottom-color: var(--color-cta-primary, #cc9900);
 }
 
-@media (max-width: 768px) {
-    .ds-page__nav { overflow-x: auto; }
-    .ds-page__nav-link { padding: 12px 16px; font-size: 13px; }
-}
-@media (max-width: 360px) { .ds-page__nav-link { padding: 10px 12px; font-size: 12px; } }
+/* Responsive: ds-page__nav — migrated to Tailwind in DropshippingLayout.ts */
 
 /* ── Sticky Header Shadow ──────────────────────────────────────── */
 
@@ -4674,15 +4657,7 @@ footer {
 }
 .ds-filters__chips { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
 
-@media (max-width: 768px) {
-    .ds-filters { padding: 12px; }
-    .ds-filters__row { flex-direction: column; gap: 6px; }
-    .ds-filters__label { width: auto; padding-top: 0; }
-}
-@media (max-width: 480px) {
-    .ds-filters { padding: 8px; }
-    .ds-filters__chips { gap: 6px; }
-}
+/* Responsive: ds-filters — migrated to Tailwind in DropshippingLayout.ts */
 
 /* ── Chips (stateful) ──────────────────────────────────────────── */
 
@@ -4711,7 +4686,7 @@ footer {
 .ds-chip--toggle { border-style: dashed; }
 .ds-chip--toggle.ds-chip--active { border-style: solid; }
 
-@media (max-width: 480px) { .ds-chip { padding: 4px 10px; font-size: 12px; } }
+/* Responsive: ds-chip — migrated to Tailwind in DropshippingLayout.ts */
 
 /* ── Select ────────────────────────────────────────────────────── */
 
@@ -4779,10 +4754,7 @@ footer {
 }
 .ds-active-chip:hover { background: var(--color-primary-200, #fbe08a); }
 
-@media (max-width: 768px) {
-    .ds-category-row .ds-filters__chips { padding-right: 0; }
-    .ds-category-toggle { position: static; }
-}
+/* Responsive: ds-category — migrated to Tailwind in DropshippingLayout.ts */
 
 /* ── Product Grid ──────────────────────────────────────────────── */
 
@@ -4795,21 +4767,7 @@ footer {
 .ds-card__img:hover .ds-card__img-overlay { opacity: 1; pointer-events: auto; }
 .ds-card:hover .ds-card__title { color: var(--color-cta-primary, #cc9900); }
 
-@media (max-width: 1200px) {
-    .ds-product-grid { grid-template-columns: repeat(4, 1fr); column-gap: 20px; row-gap: 28px; padding: 20px; }
-}
-@media (max-width: 900px) {
-    .ds-product-grid { grid-template-columns: repeat(3, 1fr); column-gap: 16px; row-gap: 24px; padding: 16px; }
-}
-@media (max-width: 768px) {
-    .ds-product-grid { grid-template-columns: repeat(2, 1fr); column-gap: 12px; row-gap: 20px; padding: 12px; }
-}
-@media (max-width: 480px) {
-    .ds-product-grid { column-gap: 8px; row-gap: 16px; padding: 8px; }
-}
-@media (max-width: 360px) {
-    .ds-product-grid { column-gap: 6px; row-gap: 12px; padding: 6px; }
-}
+/* Responsive: ds-product-grid — migrated to Tailwind in DropshippingLayout.ts */
 
 /* ── Orders (stateful tabs) ────────────────────────────────────── */
 
@@ -4841,10 +4799,7 @@ footer {
 .ds-orders__tab-content { display: none; }
 .ds-orders__tab-content--active { display: block; }
 
-@media (max-width: 480px) {
-    .ds-orders__tabs { padding: 0 8px; }
-    .ds-orders__tab { padding: 10px 12px; font-size: 12px; }
-}
+/* Responsive: ds-orders__tabs — migrated to Tailwind in DropshippingLayout.ts */
 
 /* ── Modal (stateful show/hide) ────────────────────────────────── */
 
@@ -4879,7 +4834,7 @@ footer {
     border-color: var(--color-cta-primary-hover, #b38600);
 }
 
-@media (max-width: 480px) { .ds-modal__dialog { margin: 12px; max-width: calc(100vw - 24px); } }
+/* Responsive: ds-modal__dialog — migrated to Tailwind in DropshippingLayout.ts */
 
 /* ── Toggle Switch (stateful) ──────────────────────────────────── */
 
