@@ -19,7 +19,7 @@ import { FooterLinks } from './components/footer'
 import { FloatingPanel, initFloatingPanel } from './components/floating'
 
 // Checkout components
-import { CheckoutHeader, CheckoutLayout } from './components/checkout'
+import { CheckoutHeader, CheckoutLayout, ShippingAddressForm, initShippingAddressForm } from './components/checkout'
 
 const appEl = document.querySelector<HTMLDivElement>('#app')!;
 appEl.classList.add('relative');
@@ -40,6 +40,7 @@ appEl.innerHTML = `
     ${CheckoutLayout({
       leftContent: `
         ${CheckoutHeader()}
+        ${ShippingAddressForm()}
         <!-- Form sections will be added in subsequent subtasks -->
         <div id="checkout-form-area"></div>
       `,
@@ -66,3 +67,4 @@ initStickyHeaderSearch();
 initFloatingPanel();
 initMobileDrawer();
 initHeaderCart();
+initShippingAddressForm();
