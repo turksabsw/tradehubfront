@@ -76,12 +76,12 @@ export function CartDrawer(): string {
   const perPiece = grandTotal / p.moq;
 
   return `
-    <div class="cart-drawer-overlay fixed inset-0 bg-black/50 z-[var(--z-backdrop,40)] opacity-0 pointer-events-none transition-opacity duration-300" id="cart-drawer-overlay">
-      <div class="cart-drawer fixed top-0 right-0 h-full w-[420px] max-w-full bg-surface z-[var(--z-modal,50)] shadow-[-4px_0_24px_rgba(0,0,0,0.15)] flex flex-col translate-x-full transition-transform duration-300" id="cart-drawer">
+    <div class="cart-drawer-overlay fixed inset-0 bg-black/50 z-[var(--z-backdrop,40)] opacity-0 pointer-events-none transition-opacity duration-300 max-xl:flex max-xl:items-end max-xl:justify-center max-xl:z-[200]" id="cart-drawer-overlay">
+      <div class="cart-drawer fixed top-0 right-0 h-full w-[420px] max-w-full bg-surface z-[var(--z-modal,50)] shadow-[-4px_0_24px_rgba(0,0,0,0.15)] flex flex-col translate-x-full transition-transform duration-300 max-xl:relative max-xl:top-auto max-xl:right-auto max-xl:h-auto max-xl:w-full max-xl:max-h-[90vh] max-xl:rounded-t-2xl max-xl:shadow-[0_-4px_24px_rgba(0,0,0,0.15)] max-xl:translate-x-0 max-xl:translate-y-full max-[374px]:max-h-[92vh] max-[374px]:rounded-t-xl" id="cart-drawer">
         <!-- Header -->
-        <div class="cart-drawer-header flex justify-between items-center px-6 py-5 border-b border-border-default shrink-0">
-          <h3 class="text-lg font-semibold text-secondary-900">Varyasyon ve miktar seçin</h3>
-          <button type="button" class="cart-drawer-close w-8 h-8 flex items-center justify-center border-none bg-transparent rounded-full text-secondary-400 cursor-pointer transition-colors hover:bg-surface-raised hover:text-secondary-900" id="cart-drawer-close">
+        <div class="cart-drawer-header flex justify-between items-center px-6 py-5 border-b border-border-default shrink-0 max-xl:px-4 max-xl:py-3 max-xl:flex-col max-xl:items-stretch max-xl:before:block max-[374px]:px-3 max-[374px]:py-2.5 max-[374px]:pt-2.5 max-[374px]:before:w-8 max-[374px]:before:h-[3px] max-[374px]:before:mb-1.5">
+          <h3 class="text-lg font-semibold text-secondary-900 max-xl:text-base max-xl:text-center max-[374px]:text-sm">Varyasyon ve miktar seçin</h3>
+          <button type="button" class="cart-drawer-close w-8 h-8 flex items-center justify-center border-none bg-transparent rounded-full text-secondary-400 cursor-pointer transition-colors hover:bg-surface-raised hover:text-secondary-900 max-xl:absolute max-xl:top-3 max-xl:right-3 max-xl:z-[1] max-[374px]:top-2 max-[374px]:right-2 max-[374px]:w-7 max-[374px]:h-7" id="cart-drawer-close">
             <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
             </svg>
@@ -89,17 +89,17 @@ export function CartDrawer(): string {
         </div>
 
         <!-- Body -->
-        <div class="cart-drawer-body overflow-y-auto flex-1 px-6 py-5">
+        <div class="cart-drawer-body overflow-y-auto flex-1 px-6 py-5 max-xl:p-4 max-xl:[-webkit-overflow-scrolling:touch] max-xl:max-h-[calc(90vh-160px)] max-[374px]:p-3 max-[374px]:max-h-[calc(92vh-140px)]">
           <!-- Price Tiers -->
-          <div class="cart-tier-row flex gap-6 pb-4 mb-5 border-b border-border-default">
+          <div class="cart-tier-row flex gap-6 pb-4 mb-5 border-b border-border-default max-[374px]:gap-2 max-[374px]:pb-2.5 max-[374px]:mb-3">
             ${p.priceTiers.map((tier, i) => {
               const qtyLabel = tier.maxQty
                 ? `${tier.minQty} - ${tier.maxQty} ${p.unit}`
                 : `\u2265 ${tier.minQty} ${p.unit}`;
               return `
                 <div class="cart-tier-item flex flex-col cursor-pointer ${i === 0 ? 'active' : ''}" data-tier-index="${i}">
-                  <span class="cart-tier-qty text-xs text-secondary-400 mb-1">${qtyLabel}</span>
-                  <span class="cart-tier-price text-[22px] font-bold text-secondary-900 transition-colors">${'$'}${tier.price.toFixed(2)}</span>
+                  <span class="cart-tier-qty text-xs text-secondary-400 mb-1 max-xl:text-[11px] max-[374px]:text-[10px]">${qtyLabel}</span>
+                  <span class="cart-tier-price text-[22px] font-bold text-secondary-900 transition-colors max-xl:text-lg max-[374px]:text-base">${'$'}${tier.price.toFixed(2)}</span>
                 </div>`;
             }).join('')}
           </div>
@@ -130,28 +130,28 @@ export function CartDrawer(): string {
         </div>
 
         <!-- Footer -->
-        <div class="cart-drawer-footer px-6 py-4 border-t border-border-default shrink-0 bg-surface">
+        <div class="cart-drawer-footer px-6 py-4 border-t border-border-default shrink-0 bg-surface max-xl:px-4 max-xl:py-3 max-xl:pb-[calc(12px+env(safe-area-inset-bottom))] max-[374px]:px-3 max-[374px]:py-2.5 max-[374px]:pb-[calc(10px+env(safe-area-inset-bottom))]">
           <!-- Collapsed view (default) -->
-          <div class="cart-footer-collapsed flex justify-between items-center mb-3 cursor-pointer select-none" id="cart-footer-collapsed">
+          <div class="cart-footer-collapsed flex justify-between items-center mb-3 max-[374px]:mb-2 cursor-pointer select-none" id="cart-footer-collapsed">
             <span class="cart-subtotal-label text-sm font-medium text-secondary-900"><strong>Ara Toplam</strong></span>
             <div class="cart-subtotal-right flex items-center gap-1">
-              <span class="cart-subtotal-price text-base font-bold text-primary-500" id="cart-subtotal">${'$'}${grandTotal.toFixed(2)}</span>
-              <span class="cart-subtotal-per text-xs text-secondary-400" id="cart-per-piece">($${perPiece.toFixed(2)}/adet)</span>
+              <span class="cart-subtotal-price text-base font-bold text-primary-500 max-xl:text-[15px] max-[374px]:text-sm" id="cart-subtotal">${'$'}${grandTotal.toFixed(2)}</span>
+              <span class="cart-subtotal-per text-xs text-secondary-400 max-xl:text-[11px] max-[374px]:text-[10px]" id="cart-per-piece">($${perPiece.toFixed(2)}/adet)</span>
               <svg class="cart-chevron text-secondary-400 shrink-0 ml-1" width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M14.77 12.79a.75.75 0 01-1.06-.02L10 8.832 6.29 12.77a.75.75 0 11-1.08-1.04l4.25-4.5a.75.75 0 011.08 0l4.25 4.5a.75.75 0 01-.02 1.06z" clip-rule="evenodd"/></svg>
             </div>
           </div>
 
           <!-- Expanded view (hidden by default) -->
-          <div class="cart-footer-expanded cart-footer-hidden mb-3" id="cart-footer-expanded">
+          <div class="cart-footer-expanded cart-footer-hidden mb-3 max-[374px]:mb-2" id="cart-footer-expanded">
             <div class="cart-breakdown-header flex justify-center items-center gap-1.5 pb-3 border-b border-border-default mb-3 cursor-pointer select-none text-sm font-semibold text-secondary-900" id="cart-breakdown-toggle">
               <span>Fiyat</span>
               <svg class="cart-chevron text-secondary-400 shrink-0 ml-1" width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
             </div>
-            <div class="cart-breakdown-row flex justify-between items-center py-1.5 text-[13px] text-secondary-400">
+            <div class="cart-breakdown-row flex justify-between items-center py-1.5 text-[13px] text-secondary-400 max-xl:text-xs max-[374px]:text-[11px] max-[374px]:py-1">
               <span>Ürün toplamı (<span id="cart-variation-info">1 varyasyon ${p.moq} adet</span>)</span>
               <span id="cart-item-subtotal">${'$'}${itemTotal.toFixed(2)}</span>
             </div>
-            <div class="cart-breakdown-row flex justify-between items-center py-1.5 text-[13px] text-secondary-400">
+            <div class="cart-breakdown-row flex justify-between items-center py-1.5 text-[13px] text-secondary-400 max-xl:text-xs max-[374px]:text-[11px] max-[374px]:py-1">
               <span>Kargo toplamı</span>
               <span id="cart-shipping-total">${p.shipping[0].cost}</span>
             </div>
@@ -164,7 +164,7 @@ export function CartDrawer(): string {
             </div>
           </div>
 
-          <button type="button" class="cart-add-btn w-full h-12 bg-primary-500 text-white text-base font-semibold border-none rounded-3xl cursor-pointer transition-[filter,transform] hover:brightness-[0.92] active:scale-[0.98]" id="cart-add-btn">Sepete Ekle</button>
+          <button type="button" class="cart-add-btn w-full h-12 bg-primary-500 text-white text-base font-semibold border-none rounded-3xl cursor-pointer transition-[filter,transform] hover:brightness-[0.92] active:scale-[0.98] max-xl:h-11 max-xl:text-[15px] max-xl:rounded-[22px] max-[374px]:h-10 max-[374px]:text-sm max-[374px]:rounded-[20px]" id="cart-add-btn">Sepete Ekle</button>
         </div>
       </div>
     </div>
@@ -636,32 +636,32 @@ export function initCartDrawer(): void {
 export function ShippingModal(): string {
   const p = mockProduct;
   return `
-    <div class="cart-ship-modal-overlay" id="cart-ship-modal">
-      <div class="cart-ship-modal-content">
-        <div class="cart-ship-modal-header">
-          <h4>Kargo servisi seçin</h4>
+    <div class="cart-ship-modal-overlay max-xl:items-end max-xl:z-[200]" id="cart-ship-modal">
+      <div class="cart-ship-modal-content max-xl:w-full max-xl:max-w-[100vw] max-xl:box-border max-xl:rounded-t-2xl max-xl:p-0 max-xl:max-h-[85vh] max-xl:flex max-xl:flex-col max-xl:overflow-hidden max-xl:translate-y-full max-xl:transition-transform max-xl:duration-300 max-[374px]:rounded-t-xl">
+        <div class="cart-ship-modal-header max-xl:px-4 max-xl:pt-4 max-xl:mb-1 max-xl:shrink-0 max-[374px]:px-3 max-[374px]:pt-3.5">
+          <h4 class="max-xl:text-base max-[374px]:text-[15px]">Kargo servisi seçin</h4>
           <button type="button" class="cart-ship-modal-close" id="cart-ship-modal-close">
             <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
             </svg>
           </button>
         </div>
-        <p class="cart-ship-modal-subtitle">Gönderim: <strong>Türkiye</strong> · Miktar: <span id="cart-ship-qty">${p.moq} ${p.unit}</span></p>
-        <div class="cart-ship-options">
+        <p class="cart-ship-modal-subtitle max-xl:px-4 max-xl:mb-3 max-xl:shrink-0 max-[374px]:px-3 max-[374px]:text-xs">Gönderim: <strong>Türkiye</strong> · Miktar: <span id="cart-ship-qty">${p.moq} ${p.unit}</span></p>
+        <div class="cart-ship-options max-xl:px-4 max-xl:mb-0 max-xl:gap-2 max-xl:flex-1 max-xl:overflow-y-auto max-xl:[-webkit-overflow-scrolling:touch] max-[374px]:px-3 max-[374px]:gap-1.5">
           ${p.shipping.map((s, i) => `
-            <label class="cart-ship-option ${i === 0 ? 'active' : ''}" data-ship-index="${i}">
+            <label class="cart-ship-option max-xl:px-3 max-xl:py-3 max-xl:gap-2.5 max-[374px]:px-3 max-[374px]:py-2.5 max-[374px]:gap-2 max-[374px]:rounded-lg ${i === 0 ? 'active max-xl:px-[11px] max-xl:py-[11px] max-[374px]:px-[9px] max-[374px]:py-[9px]' : ''}" data-ship-index="${i}">
               <input type="radio" name="cart-shipping" value="${i}" ${i === 0 ? 'checked' : ''}>
               <div class="cart-ship-option-info">
-                <span class="cart-ship-option-name">${s.method}</span>
-                <span class="cart-ship-option-days">${s.estimatedDays}</span>
+                <span class="cart-ship-option-name max-[374px]:text-[13px]">${s.method}</span>
+                <span class="cart-ship-option-days max-[374px]:text-[11px]">${s.estimatedDays}</span>
               </div>
               <div class="cart-ship-option-cost">
-                <span>${s.cost}</span>
+                <span class="max-[374px]:text-[13px]">${s.cost}</span>
               </div>
             </label>
           `).join('')}
         </div>
-        <button type="button" class="cart-ship-apply" id="cart-ship-apply">Uygula</button>
+        <button type="button" class="cart-ship-apply max-xl:mx-4 max-xl:my-3 max-xl:mb-4 max-xl:w-[calc(100%-32px)] max-xl:h-11 max-xl:rounded-[22px] max-xl:shrink-0 max-[374px]:mx-3 max-[374px]:my-2.5 max-[374px]:mb-3 max-[374px]:w-[calc(100%-24px)] max-[374px]:h-10 max-[374px]:text-sm" id="cart-ship-apply">Uygula</button>
       </div>
     </div>
   `;

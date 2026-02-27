@@ -40,12 +40,12 @@ function collapsibleSection(cfg: CollapsibleConfig): string {
   return `
     <div class="pdm-section-divider h-2 bg-surface-raised"></div>
     <div class="pdm-collapsible-section bg-surface${cfg.sectionClass ? ' ' + cfg.sectionClass : ''}" id="${cfg.id}">
-      <button type="button" class="pdm-collapsible-header w-full flex items-center justify-between px-4 py-3.5 border-none bg-none text-sm font-semibold text-text-heading cursor-pointer text-left" ${headerAttr}>
+      <button type="button" class="pdm-collapsible-header w-full flex items-center justify-between px-4 py-3.5 max-[374px]:px-3 max-[374px]:py-3 border-none bg-none text-sm max-[374px]:text-[13px] font-semibold text-text-heading cursor-pointer text-left" ${headerAttr}>
         <span>${cfg.title}</span>
         ${chevronSvg}
       </button>
       ${cfg.previewHtml ?? ''}
-      ${cfg.bodyHtml ? `<div class="pdm-collapsible-body pdm-hidden px-4 pb-3.5" id="${cfg.id}-body">${cfg.bodyHtml}</div>` : ''}
+      ${cfg.bodyHtml ? `<div class="pdm-collapsible-body pdm-hidden px-4 pb-3.5 max-[374px]:px-3 max-[374px]:pb-3" id="${cfg.id}-body">${cfg.bodyHtml}</div>` : ''}
     </div>
   `;
 }
@@ -113,13 +113,13 @@ export function MobileProductLayout(): string {
   // ── Sections 1-5: Gallery, Badges, Price, Sample, Title ──
 
   const gallerySection = `
-    <div id="pdm-gallery-wrap">
-      <div id="pdm-gallery-track">
+    <div id="pdm-gallery-wrap" class="relative w-full aspect-square overflow-hidden bg-surface-raised">
+      <div id="pdm-gallery-track" class="flex w-full h-full overflow-x-auto overflow-y-hidden [scroll-snap-type:x_mandatory] [-webkit-overflow-scrolling:touch] [scrollbar-width:none]">
         ${p.images.map((img, i) => `
-          <div class="pdm-gallery-slide" data-slide-index="${i}">
+          <div class="pdm-gallery-slide shrink-0 basis-full w-full h-full [scroll-snap-align:start] [scroll-snap-stop:always]" data-slide-index="${i}">
             ${img.src
-              ? `<img src="${img.src}" alt="${img.alt}" draggable="false" loading="${i === 0 ? 'eager' : 'lazy'}">`
-              : `<div class="pdm-gallery-placeholder">
+              ? `<img class="w-full h-full object-contain select-none" src="${img.src}" alt="${img.alt}" draggable="false" loading="${i === 0 ? 'eager' : 'lazy'}">`
+              : `<div class="pdm-gallery-placeholder w-full h-full flex items-center justify-center">
                   <svg width="64" height="64" fill="none" stroke="#9ca3af" stroke-width="1.4" viewBox="0 0 24 24">
                     <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/>
                   </svg>
@@ -129,32 +129,32 @@ export function MobileProductLayout(): string {
         `).join('')}
       </div>
       <!-- Action buttons -->
-      <div id="pdm-gallery-actions">
-        <button type="button" class="pdm-gallery-action-btn" aria-label="Favorilere ekle">
+      <div id="pdm-gallery-actions" class="absolute top-3 right-3 flex flex-col gap-2 z-[6]">
+        <button type="button" class="pdm-gallery-action-btn w-9 h-9 rounded-full bg-white/85 border-none flex items-center justify-center text-text-muted cursor-pointer shadow-[0_1px_3px_rgba(0,0,0,0.12)]" aria-label="Favorilere ekle">
           <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
         </button>
-        <button type="button" class="pdm-gallery-action-btn" aria-label="Görsel ile ara">
+        <button type="button" class="pdm-gallery-action-btn w-9 h-9 rounded-full bg-white/85 border-none flex items-center justify-center text-text-muted cursor-pointer shadow-[0_1px_3px_rgba(0,0,0,0.12)]" aria-label="Görsel ile ara">
           <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9a2 2 0 012-2h2l1-2h8l1 2h2a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><circle cx="12" cy="13" r="3"/></svg>
         </button>
       </div>
       <!-- Counter pill -->
-      <div id="pdm-gallery-counter">Fotoğraflar <span id="pdm-counter-current">1</span>/${p.images.length}</div>
+      <div id="pdm-gallery-counter" class="absolute bottom-3.5 left-1/2 -translate-x-1/2 bg-surface text-text-body text-xs font-medium py-1 px-3.5 rounded-[14px] pointer-events-none z-5 tracking-wide whitespace-nowrap shadow-[0_1px_4px_rgba(0,0,0,0.15)]">Fotoğraflar <span id="pdm-counter-current">1</span>/${p.images.length}</div>
     </div>
   `;
 
   const badgesSection = `
-    <div id="pdm-badges" class="flex gap-2 pt-3 px-4 bg-surface">
+    <div id="pdm-badges" class="flex gap-2 pt-3 px-4 max-[374px]:pt-2.5 max-[374px]:px-3 bg-surface">
       <span class="pdm-badge-dark inline-flex items-center text-[11px] font-semibold px-2.5 py-1 rounded bg-[#222] text-white leading-[1.4]">Sevkiyata Hazır</span>
       <span class="pdm-badge-orange inline-flex items-center text-[11px] font-semibold px-2.5 py-1 rounded border border-cta-primary text-cta-primary bg-transparent leading-[1.4]">Özelleştirilebilir</span>
     </div>
   `;
 
   const priceTiersSection = `
-    <div id="pdm-price-tiers" class="grid grid-cols-3 bg-surface-raised rounded-lg mx-4 mt-3 py-3.5">
+    <div id="pdm-price-tiers" class="grid grid-cols-3 bg-surface-raised rounded-lg mx-4 mt-3 py-3.5 max-[374px]:mx-3 max-[374px]:mt-2.5">
       ${p.priceTiers.map(tier => `
         <div class="pdm-tier-col flex flex-col items-center px-3 border-r border-border-default last:border-r-0">
-          <span class="pdm-tier-price text-lg font-bold text-[#111] leading-[1.3]">$${tier.price.toFixed(2)}</span>
-          <span class="pdm-tier-qty text-[11px] text-text-placeholder mt-[3px] text-center">${tier.maxQty !== null
+          <span class="pdm-tier-price text-lg max-[374px]:text-[15px] font-bold text-[#111] leading-[1.3]">$${tier.price.toFixed(2)}</span>
+          <span class="pdm-tier-qty text-[11px] max-[374px]:text-[10px] text-text-placeholder mt-[3px] text-center">${tier.maxQty !== null
             ? `${tier.minQty} - ${tier.maxQty} ${p.unit}`
             : `>= ${tier.minQty} ${p.unit}`}</span>
         </div>
@@ -163,21 +163,21 @@ export function MobileProductLayout(): string {
   `;
 
   const sampleSection = `
-    <div id="pdm-sample-row" class="flex items-center justify-between px-4 py-2.5 bg-surface text-[13px] text-text-body">
+    <div id="pdm-sample-row" class="flex items-center justify-between px-4 py-2.5 max-[374px]:px-3 max-[374px]:py-2 bg-surface text-[13px] max-[374px]:text-xs text-text-body">
       <span>Numune fiyatı: <strong>$${p.samplePrice?.toFixed(2) ?? '30.00'}</strong></span>
-      <button type="button" class="pdm-sample-btn px-[18px] py-1.5 border border-[#333] rounded-[20px] text-[13px] font-medium bg-surface cursor-pointer text-text-body">Numune Al</button>
+      <button type="button" class="pdm-sample-btn px-[18px] py-1.5 max-[374px]:px-3.5 max-[374px]:py-[5px] border border-[#333] rounded-[20px] text-[13px] max-[374px]:text-xs font-medium bg-surface cursor-pointer text-text-body">Numune Al</button>
     </div>
   `;
 
   const titleSection = `
-    <div id="pdm-title-section" class="flex flex-col gap-1 pt-3.5 px-4 pb-1.5 bg-surface">
+    <div id="pdm-title-section" class="flex flex-col gap-1 pt-3.5 px-4 pb-1.5 max-[374px]:pt-3 max-[374px]:px-3 max-[374px]:pb-1.5 bg-surface">
       <div id="pdm-title-row" class="flex items-start justify-between gap-3">
-        <h1 id="pdm-product-title" class="text-[15px] font-semibold leading-[1.45] text-text-heading m-0 flex-1 line-clamp-3">${p.title}</h1>
+        <h1 id="pdm-product-title" class="text-[15px] max-[374px]:text-sm font-semibold leading-[1.45] text-text-heading m-0 flex-1 line-clamp-3">${p.title}</h1>
         <button type="button" class="pdm-share-btn shrink-0 w-8 h-8 border-none bg-none cursor-pointer text-text-muted p-1 flex items-center justify-center" aria-label="Paylaş">
           <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
         </button>
       </div>
-      <div id="pdm-reviews-row" class="flex items-center gap-1.5 px-4 pb-3 text-[13px] text-text-muted cursor-pointer">
+      <div id="pdm-reviews-row" class="flex items-center gap-1.5 px-4 pb-3 text-[13px] max-[374px]:text-xs text-text-muted cursor-pointer">
         <span class="pdm-stars flex gap-0.5 text-[#f5a623]">${renderStars(p.rating)}</span>
         <span>${p.reviewCount} yorum</span>
       </div>
@@ -271,7 +271,7 @@ export function MobileProductLayout(): string {
   const si = p.supplier;
   const supplierSection = `
     <div class="pdm-section-divider h-2 bg-surface-raised"></div>
-    <div id="pdm-supplier-card" class="bg-surface p-4">
+    <div id="pdm-supplier-card" class="bg-surface p-4 max-[374px]:mx-3 max-[374px]:mb-4 max-[374px]:py-3.5 max-[374px]:px-3">
       <div class="pdm-supplier-header flex items-center gap-3 mb-1">
         <div class="pdm-supplier-logo w-12 h-12 rounded-lg bg-[#fef9e7] flex items-center justify-center shrink-0 text-lg font-bold text-primary-600">${si.name.charAt(0)}${si.name.split(' ')[1]?.charAt(0) || ''}</div>
         <div>
@@ -338,17 +338,17 @@ export function MobileProductLayout(): string {
   // ── Sticky section tabs ──
 
   const sectionTabs = `
-    <div id="pdm-section-tabs">
-      <button type="button" class="pdm-section-tab pdm-section-tab-active" data-pdm-tab="pdm-sec-overview">Genel Bakış</button>
-      <button type="button" class="pdm-section-tab" data-pdm-tab="pdm-sec-details">Detaylar</button>
-      <button type="button" class="pdm-section-tab" data-pdm-tab="pdm-sec-supplier">Öneriler</button>
+    <div id="pdm-section-tabs" class="flex items-center gap-0 bg-surface border-b border-border-default sticky top-0 z-30 p-0">
+      <button type="button" class="pdm-section-tab pdm-section-tab-active flex-1 py-3 max-[374px]:py-2.5 text-sm max-[374px]:text-[13px] font-normal text-text-muted bg-transparent border-none border-b-2 border-b-transparent cursor-pointer text-center whitespace-nowrap" data-pdm-tab="pdm-sec-overview">Genel Bakış</button>
+      <button type="button" class="pdm-section-tab flex-1 py-3 max-[374px]:py-2.5 text-sm max-[374px]:text-[13px] font-normal text-text-muted bg-transparent border-none border-b-2 border-b-transparent cursor-pointer text-center whitespace-nowrap" data-pdm-tab="pdm-sec-details">Detaylar</button>
+      <button type="button" class="pdm-section-tab flex-1 py-3 max-[374px]:py-2.5 text-sm max-[374px]:text-[13px] font-normal text-text-muted bg-transparent border-none border-b-2 border-b-transparent cursor-pointer text-center whitespace-nowrap" data-pdm-tab="pdm-sec-supplier">Öneriler</button>
     </div>
   `;
 
   // ── Assemble ──
 
   return `
-    <div id="pdm-mobile-layout">
+    <div id="pdm-mobile-layout" class="max-[374px]:pb-[70px]">
       ${gallerySection}
 
       ${sectionTabs}
