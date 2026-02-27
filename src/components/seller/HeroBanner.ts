@@ -40,7 +40,7 @@ function renderSlide(slide: HeroSlide): string {
     : '';
 
   const ctaHtml = slide.ctaText
-    ? `<a href="${slide.ctaLink || '#'}" class="store-hero__cta inline-block mt-6 px-8 py-3 bg-[var(--store-accent)] text-white font-semibold text-[var(--btn-font-size)] rounded-[var(--radius-button)] hover:bg-[var(--store-accent-hover)] transition-colors shadow-[var(--shadow-md)]">
+    ? `<a href="${slide.ctaLink || '#'}" class="store-hero__cta inline-block mt-6 px-8 py-3 bg-(--store-accent) text-white font-semibold text-[var(--btn-font-size)] rounded-[var(--radius-button)] hover:bg-(--store-accent-hover) transition-colors shadow-[var(--shadow-md)]">
         ${slide.ctaText}
       </a>`
     : '';

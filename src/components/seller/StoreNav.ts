@@ -67,7 +67,7 @@ export function StoreNav(data: StoreNavData): string {
     return `
       <li>
         <a href="${item.href}"
-           class="store-nav__item ${item.isActive ? 'store-nav__item--active block px-6 py-3 text-[var(--store-nav-text)] text-[14px] font-semibold bg-[var(--store-nav-active-overlay)] transition-colors' : 'block px-5 py-3 text-[var(--store-nav-text)] text-[14px] font-normal transition-colors hover:bg-[rgba(255,255,255,0.1)]'}"
+           class="store-nav__item ${item.isActive ? 'store-nav__item--active block px-6 py-3 text-[var(--store-nav-text)] text-[14px] font-semibold bg-(--store-nav-active-overlay) transition-colors' : 'block px-5 py-3 text-[var(--store-nav-text)] text-[14px] font-normal transition-colors hover:bg-[rgba(255,255,255,0.1)]'}"
            ${item.isActive ? 'aria-current="page"' : ''}>
           ${item.label}
         </a>
@@ -116,7 +116,7 @@ export function StoreNav(data: StoreNavData): string {
     }
     return `
       <li>
-        <a href="${item.href}" class="store-nav__item ${item.isActive ? 'store-nav__item--active block px-6 py-3 text-white text-[15px] font-semibold bg-[var(--store-nav-active-overlay)]' : 'block px-6 py-3 text-white text-[15px] font-normal hover:bg-white/5'} transition-colors"
+        <a href="${item.href}" class="store-nav__item ${item.isActive ? 'store-nav__item--active block px-6 py-3 text-white text-[15px] font-semibold bg-(--store-nav-active-overlay)' : 'block px-6 py-3 text-white text-[15px] font-normal hover:bg-white/5'} transition-colors"
            ${item.isActive ? 'aria-current="page"' : ''}>
           ${item.label}
         </a>
@@ -125,7 +125,7 @@ export function StoreNav(data: StoreNavData): string {
   }).join('');
 
   return `
-    <nav id="store-nav" class="store-nav sticky top-0 z-[var(--z-sticky)] bg-[var(--store-nav-bg)] transition-shadow duration-200" aria-label="Mağaza navigasyonu">
+    <nav id="store-nav" class="store-nav sticky top-0 z-[var(--z-sticky)] bg-(--store-nav-bg) transition-shadow duration-200" aria-label="Mağaza navigasyonu">
       <div class="store-nav__container max-w-[var(--container-lg)] mx-auto px-4 lg:px-6 xl:px-8 flex items-center justify-between">
 
         <!-- Hamburger (mobile/tablet) -->
@@ -156,7 +156,7 @@ export function StoreNav(data: StoreNavData): string {
       </div>
 
       <!-- Mobile Panel -->
-      <div id="store-nav-mobile-menu" class="store-nav__mobile-menu hidden xl:hidden bg-[var(--store-nav-bg)] border-t border-white/10">
+      <div id="store-nav-mobile-menu" class="store-nav__mobile-menu hidden xl:hidden bg-(--store-nav-bg) border-t border-white/10">
         <!-- Mobile Search -->
         <div class="store-nav__mobile-search px-4 py-3">
           <input type="text"

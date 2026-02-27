@@ -46,7 +46,7 @@ export function CompanyIntroduction(
             </span>
             <span class="text-[13px] text-[#374151] dark:text-gray-300">Supplier Assessment</span>
             ${seller.verificationBadgeType === 'pro' ? `
-              <span class="inline-flex items-center bg-[var(--store-accent)] text-white text-[11px] font-semibold px-2 py-0.5 rounded-sm uppercase">PRO</span>
+              <span class="inline-flex items-center bg-(--store-accent) text-white text-[11px] font-semibold px-2 py-0.5 rounded-sm uppercase">PRO</span>
             ` : ''}
           </div>
 

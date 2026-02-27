@@ -8,7 +8,7 @@ export function ContactsLayout(): string {
   return `
     <div class="flex flex-col min-h-[calc(100vh-80px)]">
       <!-- Info Banner -->
-      <div class="flex items-center gap-2 px-5 py-2.5 bg-[var(--color-surface,#ffffff)] border-b border-[var(--color-border-light,#f0f0f0)] rounded-t-lg" id="contacts-banner">
+      <div class="flex items-center gap-2 px-5 py-2.5 bg-(--color-surface,#ffffff) border-b border-[var(--color-border-light,#f0f0f0)] rounded-t-lg" id="contacts-banner">
         <svg class="w-4 h-4 shrink-0" fill="none" stroke="#2563EB" stroke-width="1.5" viewBox="0 0 24 24">
           <circle cx="12" cy="12" r="10"/>
           <path stroke-linecap="round" d="M12 16v-4m0-4h.01"/>
@@ -20,7 +20,7 @@ export function ContactsLayout(): string {
       </div>
 
       <!-- Panels -->
-      <div class="flex flex-1 bg-[var(--color-surface,#ffffff)] rounded-b-lg overflow-hidden max-md:flex-col">
+      <div class="flex flex-1 bg-(--color-surface,#ffffff) rounded-b-lg overflow-hidden max-md:flex-col">
         <!-- Left: Contact List -->
         <aside class="w-[300px] max-md:w-full shrink-0 border-r max-md:border-r-0 max-md:border-b border-[var(--color-border-light,#f0f0f0)] flex flex-col p-4">
           <!-- Header -->
@@ -35,8 +35,8 @@ export function ContactsLayout(): string {
 
           <!-- Search -->
           <div class="flex items-center border border-[var(--color-border-medium,#d1d5db)] rounded mb-3 overflow-hidden">
-            <input type="text" class="contacts-list__search-input flex-1 h-8 px-2.5 text-[13px] text-[var(--color-text-body,#333333)] border-none outline-none bg-[var(--color-surface,#ffffff)] placeholder:text-[var(--color-text-placeholder,#999999)] focus:shadow-[inset_0_0_0_1px_var(--color-cta-primary,#cc9900)]" placeholder="Tedarikçi kişilerinizi arayın" />
-            <button class="flex items-center justify-center w-8 h-8 border-none border-l border-l-[var(--color-border-medium,#d1d5db)] bg-[var(--color-surface-muted,#fafafa)] text-[var(--color-text-muted,#666666)] cursor-pointer hover:bg-[var(--color-border-light)] hover:text-[var(--color-text-heading,#111827)]" aria-label="Ara">
+            <input type="text" class="contacts-list__search-input flex-1 h-8 px-2.5 text-[13px] text-[var(--color-text-body,#333333)] border-none outline-none bg-(--color-surface,#ffffff) placeholder:text-[var(--color-text-placeholder,#999999)] focus:shadow-[inset_0_0_0_1px_var(--color-cta-primary,#cc9900)]" placeholder="Tedarikçi kişilerinizi arayın" />
+            <button class="flex items-center justify-center w-8 h-8 border-none border-l border-l-[var(--color-border-medium,#d1d5db)] bg-(--color-surface-muted,#fafafa) text-[var(--color-text-muted,#666666)] cursor-pointer hover:bg-(--color-border-light) hover:text-[var(--color-text-heading,#111827)]" aria-label="Ara">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <circle cx="11" cy="11" r="8"/>
                 <path stroke-linecap="round" d="m21 21-4.35-4.35"/>
@@ -65,7 +65,7 @@ export function ContactsLayout(): string {
         </aside>
 
         <!-- Right: Contact Detail -->
-        <div class="flex-1 flex items-center justify-center relative bg-[var(--color-surface-muted,#fafafa)] min-h-[500px] max-md:min-h-[300px]">
+        <div class="flex-1 flex items-center justify-center relative bg-(--color-surface-muted,#fafafa) min-h-[500px] max-md:min-h-[300px]">
           <div class="flex items-center gap-6 max-md:flex-col max-md:text-center">
             <!-- Illustration: person at server/file cabinet -->
             <div class="w-[180px] h-[140px] shrink-0">
@@ -98,7 +98,7 @@ export function ContactsLayout(): string {
           </div>
 
           <!-- Top-right compose button -->
-          <button class="absolute top-4 right-4 flex items-center justify-center w-10 h-10 border-none bg-[var(--color-border-light)] rounded-md text-[var(--color-text-muted,#666666)] cursor-pointer transition-[background,color] duration-150 hover:bg-[#e5e7eb] hover:text-[var(--color-text-heading,#111827)]" aria-label="Yeni mesaj">
+          <button class="absolute top-4 right-4 flex items-center justify-center w-10 h-10 border-none bg-(--color-border-light) rounded-md text-[var(--color-text-muted,#666666)] cursor-pointer transition-[background,color] duration-150 hover:bg-[#e5e7eb] hover:text-[var(--color-text-heading,#111827)]" aria-label="Yeni mesaj">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
             </svg>

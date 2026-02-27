@@ -17,7 +17,7 @@ export function StoreHeader(seller: SellerProfile): string {
   `;
 
   const proBadge = seller.verificationBadgeType === 'pro' ? `
-    <span class="store-header__badge--pro inline-flex items-center gap-1 bg-[var(--store-accent)] text-white text-[11px] font-semibold px-2 py-0.5 rounded-sm uppercase tracking-wide">
+    <span class="store-header__badge--pro inline-flex items-center gap-1 bg-(--store-accent) text-white text-[11px] font-semibold px-2 py-0.5 rounded-sm uppercase tracking-wide">
       PRO
     </span>
   ` : '';
@@ -33,7 +33,7 @@ export function StoreHeader(seller: SellerProfile): string {
   ` : '';
 
   const deliveryBadge = seller.deliveryBadge ? `
-    <a class="store-header__delivery-badge inline-flex items-center border border-[var(--color-border-strong)] dark:border-gray-600 rounded-sm px-2.5 py-1 text-[12px] text-[#374151] dark:text-gray-300 underline hover:bg-[var(--color-surface-muted)] focus:ring-1 focus:ring-[#d1d5db] transition-colors cursor-pointer max-w-[260px] lg:max-w-none truncate" href="#">
+    <a class="store-header__delivery-badge inline-flex items-center border border-[var(--color-border-strong)] dark:border-gray-600 rounded-sm px-2.5 py-1 text-[12px] text-[#374151] dark:text-gray-300 underline hover:bg-(--color-surface-muted) focus:ring-1 focus:ring-[#d1d5db] transition-colors cursor-pointer max-w-[260px] lg:max-w-none truncate" href="#">
       ${seller.deliveryBadge}
     </a>
   ` : '';
@@ -112,11 +112,11 @@ export function StoreHeader(seller: SellerProfile): string {
 
         <!-- Right: CTA Buttons -->
         <div class="store-header__actions flex flex-col w-full gap-2 mt-3 lg:flex-row lg:w-auto lg:gap-3 lg:mt-0 flex-shrink-0">
-          <button class="store-header__contact-btn w-full lg:w-auto bg-[var(--store-accent)] hover:bg-[var(--store-accent-hover)] active:bg-[#c2410c] focus:ring-2 focus:ring-[#f97316] focus:ring-offset-2 text-white font-semibold text-[14px] rounded-[var(--radius-button)] px-6 py-2.5 shadow-[var(--shadow-sm)] hover:shadow-md transition-[background-color,box-shadow] duration-200 cursor-pointer"
+          <button class="store-header__contact-btn w-full lg:w-auto bg-(--store-accent) hover:bg-(--store-accent-hover) active:bg-[#c2410c] focus:ring-2 focus:ring-[#f97316] focus:ring-offset-2 text-white font-semibold text-[14px] rounded-[var(--radius-button)] px-6 py-2.5 shadow-[var(--shadow-sm)] hover:shadow-md transition-[background-color,box-shadow] duration-200 cursor-pointer"
                   onclick="document.getElementById('contact-form')?.scrollIntoView({behavior:'smooth'})">
             Contact supplier
           </button>
-          <button class="store-header__chat-btn w-full lg:w-auto bg-transparent border border-[var(--color-border-strong)] dark:border-gray-600 hover:bg-[var(--color-surface-muted)] hover:border-[var(--color-text-muted)] active:bg-[#f3f4f6] focus:ring-2 focus:ring-[#d1d5db] focus:ring-offset-2 text-[#374151] dark:text-gray-300 font-medium text-[14px] rounded-[var(--radius-button)] px-6 py-2.5 hover:shadow-md transition-[background-color,box-shadow] duration-200 cursor-pointer">
+          <button class="store-header__chat-btn w-full lg:w-auto bg-transparent border border-[var(--color-border-strong)] dark:border-gray-600 hover:bg-(--color-surface-muted) hover:border-[var(--color-text-muted)] active:bg-[#f3f4f6] focus:ring-2 focus:ring-[#d1d5db] focus:ring-offset-2 text-[#374151] dark:text-gray-300 font-medium text-[14px] rounded-[var(--radius-button)] px-6 py-2.5 hover:shadow-md transition-[background-color,box-shadow] duration-200 cursor-pointer">
             Chat now
           </button>
         </div>
