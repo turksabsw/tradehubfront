@@ -40,7 +40,7 @@ function renderConversation(conv: MessageConversation): string {
     : '';
 
   return `
-    <a href="${conv.href}" class="msg-list__item flex items-start gap-3 px-5 py-3.5 no-underline border-b border-[var(--color-surface-raised,#f5f5f5)] cursor-pointer transition-[background] duration-150 hover:bg-[var(--color-surface-muted,#fafafa)]" data-id="${conv.id}">
+    <a href="${conv.href}" class="msg-list__item flex items-start gap-3 px-5 py-3.5 no-underline border-b border-[var(--color-surface-raised,#f5f5f5)] cursor-pointer transition-[background] duration-150 hover:bg-(--color-surface-muted,#fafafa)" data-id="${conv.id}">
       ${renderAvatar(conv)}
       <div class="flex-1 min-w-0">
         <div class="flex items-baseline justify-between gap-2 mb-0.5">
@@ -58,7 +58,7 @@ export function MessageList(props: MessageListProps): string {
   const { conversations, title } = props;
 
   return `
-    <div class="w-[360px] max-lg:w-[300px] max-md:w-full max-md:max-h-[50vh] flex-shrink-0 border-r border-[var(--color-border-light,#f0f0f0)] max-md:border-r-0 flex flex-col bg-[var(--color-surface,#ffffff)]">
+    <div class="w-[360px] max-lg:w-[300px] max-md:w-full max-md:max-h-[50vh] flex-shrink-0 border-r border-[var(--color-border-light,#f0f0f0)] max-md:border-r-0 flex flex-col bg-(--color-surface,#ffffff)">
       <!-- Header -->
       <div class="flex items-center justify-between px-5 pt-4 pb-3 border-b border-[var(--color-border-light,#f0f0f0)]">
         <h3 class="text-base font-bold text-[var(--color-text-heading,#111827)]">${title}</h3>

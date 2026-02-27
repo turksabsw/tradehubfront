@@ -17,7 +17,7 @@ export function MessagesLayout(props: MessagesLayoutProps): string {
   const { data } = props;
 
   return `
-    <div class="flex flex-col h-[calc(100vh-48px)] bg-[var(--color-surface,#ffffff)] rounded-lg overflow-hidden">
+    <div class="flex flex-col h-[calc(100vh-48px)] bg-(--color-surface,#ffffff) rounded-lg overflow-hidden">
       <!-- 3-panel grid -->
       <div class="flex flex-1 min-h-0 max-md:flex-col">
         ${InboxPanel({ categories: data.categories, activeCategoryId: 'all' })}

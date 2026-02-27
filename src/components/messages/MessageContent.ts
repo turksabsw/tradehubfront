@@ -5,7 +5,7 @@
 
 export function MessageContent(): string {
   return `
-    <div class="flex-1 flex items-center justify-center bg-[var(--color-surface,#ffffff)] min-w-0 max-md:hidden">
+    <div class="flex-1 flex items-center justify-center bg-(--color-surface,#ffffff) min-w-0 max-md:hidden">
       <div class="flex flex-col items-center gap-5 p-10 text-center">
         <!-- Illustration: laptop + shield + chat bubble -->
         <div class="w-[160px] h-[120px]">
@@ -33,7 +33,7 @@ export function MessageContent(): string {
           keyifli bir alışveriş deneyimi yaşayın
         </p>
 
-        <a href="/help" class="inline-block px-6 py-2 border border-[var(--color-border-medium,#d1d5db)] rounded-full text-sm text-[var(--color-text-body,#333333)] no-underline transition-[border-color,background] duration-150 hover:border-[var(--color-text-placeholder)] hover:bg-[var(--color-surface-muted,#fafafa)]">Daha fazla bilgi</a>
+        <a href="/help" class="inline-block px-6 py-2 border border-[var(--color-border-medium,#d1d5db)] rounded-full text-sm text-[var(--color-text-body,#333333)] no-underline transition-[border-color,background] duration-150 hover:border-[var(--color-text-placeholder)] hover:bg-(--color-surface-muted,#fafafa)">Daha fazla bilgi</a>
       </div>
     </div>
   `;
