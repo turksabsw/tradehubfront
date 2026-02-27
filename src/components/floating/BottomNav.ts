@@ -10,12 +10,12 @@
  */
 export function BottomNav(): string {
   return `
-    <div id="bottom-nav" class="fixed bottom-0 left-0 z-30 w-full h-16 bg-white border-t border-gray-200 dark:bg-gray-800 dark:border-gray-700 md:hidden">
-      <div class="grid h-full grid-cols-5 mx-auto">
+    <div id="bottom-nav" class="fixed bottom-0 left-0 z-30 w-full h-14 xs:h-16 bg-white border-t border-gray-200 dark:bg-gray-800 dark:border-gray-700 md:hidden safe-area-bottom">
+      <div class="grid h-full grid-cols-5 mx-auto max-w-lg">
         <!-- Home -->
         <button type="button" id="bottom-nav-home" class="inline-flex flex-col items-center justify-center px-1 group" aria-label="Home">
           <div class="relative">
-            <svg class="w-6 h-6 text-gray-500 group-hover:text-primary-500 dark:text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <svg class="w-5 h-5 xs:w-6 xs:h-6 text-gray-500 group-hover:text-primary-500 dark:text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m4 12 8-8 8 8M6 10.5V19a1 1 0 0 0 1 1h3v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h3a1 1 0 0 0 1-1v-8.5"/>
             </svg>
           </div>
@@ -25,7 +25,7 @@ export function BottomNav(): string {
         <!-- Categories -->
         <button type="button" id="bottom-nav-categories" class="inline-flex flex-col items-center justify-center px-1 group" aria-label="Categories">
           <div class="relative">
-            <svg class="w-6 h-6 text-gray-500 group-hover:text-primary-500 dark:text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <svg class="w-5 h-5 xs:w-6 xs:h-6 text-gray-500 group-hover:text-primary-500 dark:text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h8m-8 4h14M3 13h8m-8 4h14"/>
             </svg>
           </div>
@@ -35,7 +35,7 @@ export function BottomNav(): string {
         <!-- Messages -->
         <button type="button" id="bottom-nav-messages" class="inline-flex flex-col items-center justify-center px-1 group" aria-label="Messages, 1 new">
           <div class="relative">
-            <svg class="w-6 h-6 text-gray-500 group-hover:text-primary-500 dark:text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <svg class="w-5 h-5 xs:w-6 xs:h-6 text-gray-500 group-hover:text-primary-500 dark:text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17h6l3 3v-3h2V9a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h3Z"/>
             </svg>
             <span class="th-badge absolute -top-1.5 -right-2 flex items-center justify-center min-w-4 h-4 px-0.5 bg-error-500 text-white text-[10px] font-bold rounded-full">1</span>
@@ -46,7 +46,7 @@ export function BottomNav(): string {
         <!-- Cart -->
         <button type="button" id="bottom-nav-cart" class="inline-flex flex-col items-center justify-center px-1 group" aria-label="Cart, 3 items">
           <div class="relative">
-            <svg class="w-6 h-6 text-gray-500 group-hover:text-primary-500 dark:text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <svg class="w-5 h-5 xs:w-6 xs:h-6 text-gray-500 group-hover:text-primary-500 dark:text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7H7.312"/>
             </svg>
             <span class="th-badge absolute -top-1.5 -right-2 flex items-center justify-center min-w-4 h-4 px-0.5 bg-error-500 text-white text-[10px] font-bold rounded-full">3</span>
@@ -57,7 +57,7 @@ export function BottomNav(): string {
         <!-- Account -->
         <button type="button" id="bottom-nav-account" class="inline-flex flex-col items-center justify-center px-1 group" aria-label="Account">
           <div class="relative">
-            <svg class="w-6 h-6 text-gray-500 group-hover:text-primary-500 dark:text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <svg class="w-5 h-5 xs:w-6 xs:h-6 text-gray-500 group-hover:text-primary-500 dark:text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0 0a8.949 8.949 0 0 0 4.951-1.488A3.987 3.987 0 0 0 13 16h-2a3.987 3.987 0 0 0-3.951 3.512A8.948 8.948 0 0 0 12 21Zm3-11a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
             </svg>
           </div>

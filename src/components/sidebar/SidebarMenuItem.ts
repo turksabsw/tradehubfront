@@ -38,7 +38,7 @@ export function renderSidebarMenuItem({ item, expanded }: SidebarMenuItemProps):
     return `
       <a
         href="${item.href}"
-        class="sidebar-item sidebar-item--collapsed group relative flex items-center justify-center w-10 h-10 mx-auto rounded-lg ${item.active ? 'bg-green-50 text-green-600 dark:bg-green-900/20 dark:text-green-400' : 'text-gray-500 dark:text-gray-400'} ${hoverClasses} transition-colors"
+        class="sidebar-item sidebar-item--collapsed group relative flex items-center justify-center w-11 h-11 xs:w-10 xs:h-10 mx-auto rounded-lg ${item.active ? 'bg-green-50 text-green-600 dark:bg-green-900/20 dark:text-green-400' : 'text-gray-500 dark:text-gray-400'} ${hoverClasses} transition-colors"
         data-sidebar-item="${item.id}"
         data-tooltip-target="tooltip-sidebar-${item.id}"
         data-tooltip-placement="right"
@@ -59,7 +59,7 @@ export function renderSidebarMenuItem({ item, expanded }: SidebarMenuItemProps):
   return `
     <a
       href="${item.href}"
-      class="sidebar-item sidebar-item--expanded group flex items-center gap-3 px-4 h-10 rounded-lg mx-2 ${activeClasses} ${hoverClasses} transition-all cursor-pointer"
+      class="sidebar-item sidebar-item--expanded group flex items-center gap-2 xs:gap-3 px-3 xs:px-4 h-11 xs:h-10 rounded-lg mx-1 xs:mx-2 ${activeClasses} ${hoverClasses} transition-all cursor-pointer"
       data-sidebar-item="${item.id}"
       role="menuitem"
       aria-label="${item.label}"
