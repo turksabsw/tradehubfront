@@ -5,7 +5,8 @@
  */
 
 import type { Country, Province } from '../../types/checkout';
-import { countries, turkishProvinces, districtsByProvince, pageContent } from '../../data/mockCheckout';
+import { countries, turkishProvinces, districtsByProvince, pageContent, geolocationMockAddress } from '../../data/mockCheckout';
+import { AddressAutocomplete } from './AddressAutocomplete';
 
 export interface ShippingAddressFormProps {
   countries?: Country[];
@@ -145,8 +146,11 @@ export function ShippingAddressForm(props: ShippingAddressFormProps = {}): strin
           <!-- State / City / Postal Code — 3-column row -->
           <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
             <!-- State/Province -->
-            ${dropdownField('state-dropdown', 'state', pageContent.stateLabel, '')}
-            <div class="hidden" id="state-items">${provinceItems}</div>
+            <div class="relative">
+              ${dropdownField('state-dropdown', 'state', pageContent.stateLabel, '')}
+              <div class="hidden" id="state-items">${provinceItems}</div>
+              ${AddressAutocomplete()}
+            </div>
 
             <!-- City -->
             ${dropdownField('city-dropdown', 'city', pageContent.cityLabel, '')}
@@ -389,6 +393,53 @@ export function initShippingAddressForm(): void {
       phoneField.classList.remove('checkout-float-field--error');
     });
   }
+
+  // ── Geolocation (C7) ──
+  const locationBtn = document.getElementById('use-location-btn');
+  locationBtn?.addEventListener('click', () => {
+    if (!navigator.geolocation) return;
+
+    navigator.geolocation.getCurrentPosition(
+      () => {
+        // On success: fill form with mock address data
+        const setInput = (id: string, value: string) => {
+          const input = document.getElementById(id) as HTMLInputElement | null;
+          if (input) {
+            input.value = value;
+            const field = input.closest('.checkout-float-field');
+            field?.classList.add('checkout-float-field--active');
+            field?.classList.remove('checkout-float-field--error');
+          }
+        };
+
+        setInput('street-address', geolocationMockAddress.street);
+        setInput('postal-code', geolocationMockAddress.postalCode);
+
+        // Set state dropdown
+        const stateDD = document.querySelector('[data-dropdown="state-dropdown"]');
+        const stateDisplay = stateDD?.querySelector('[data-display]');
+        if (stateDisplay) {
+          stateDisplay.textContent = geolocationMockAddress.state;
+          stateDD?.classList.add('checkout-float-field--active');
+          stateDD?.classList.remove('checkout-float-field--error');
+        }
+
+        // Update city dropdown and set city
+        updateCityDropdown(geolocationMockAddress.state);
+        const cityDD = document.querySelector('[data-dropdown="city-dropdown"]');
+        const cityDisplay = cityDD?.querySelector('[data-display]');
+        if (cityDisplay) {
+          cityDisplay.textContent = geolocationMockAddress.city;
+          cityDD?.classList.add('checkout-float-field--active');
+          cityDD?.classList.remove('checkout-float-field--error');
+        }
+      },
+      () => {
+        // Silent fail on geolocation denial
+        console.warn('Geolocation permission denied');
+      }
+    );
+  });
 }
 
 /** Update the city dropdown when state changes */

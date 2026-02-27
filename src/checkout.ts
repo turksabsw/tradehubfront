@@ -19,7 +19,7 @@ import { FooterLinks } from './components/footer'
 import { FloatingPanel, initFloatingPanel } from './components/floating'
 
 // Checkout components
-import { CheckoutHeader, CheckoutLayout, ShippingAddressForm, initShippingAddressForm, OrderSummary, PaymentMethodSection, ItemsDeliverySection, initAccordionSections, OrderProtectionModal, initOrderProtectionModal } from './components/checkout'
+import { CheckoutHeader, CheckoutLayout, ShippingAddressForm, initShippingAddressForm, OrderSummary, PaymentMethodSection, ItemsDeliverySection, initAccordionSections, OrderProtectionModal, initOrderProtectionModal, initAddressAutocomplete } from './components/checkout'
 import { orderSummary, protectionSummaryItems, tradeAssuranceText, modalSections, paymentIcons, infoBoxBullets } from './data/mockCheckout'
 
 const appEl = document.querySelector<HTMLDivElement>('#app')!;
@@ -71,5 +71,6 @@ initFloatingPanel();
 initMobileDrawer();
 initHeaderCart();
 initShippingAddressForm();
+initAddressAutocomplete();
 initAccordionSections();
 initOrderProtectionModal();

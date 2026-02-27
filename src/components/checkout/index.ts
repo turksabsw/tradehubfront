@@ -16,3 +16,4 @@ export { ItemsDeliverySection } from './ItemsDeliverySection';
 export type { ItemsDeliverySectionProps } from './ItemsDeliverySection';
 export { OrderProtectionModal, initOrderProtectionModal } from './OrderProtectionModal';
 export type { OrderProtectionModalProps } from './OrderProtectionModal';
+export { AddressAutocomplete, initAddressAutocomplete } from './AddressAutocomplete';
