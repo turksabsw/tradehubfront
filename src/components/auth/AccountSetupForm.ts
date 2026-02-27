@@ -148,8 +148,8 @@ export function AccountSetupForm(defaultCountry: string = 'TR'): string {
           </div>
         </div>
 
-        <!-- Name Fields (side by side) -->
-        <div class="grid grid-cols-2 gap-4">
+        <!-- Name Fields (stacked on small screens, side by side on sm+) -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <!-- First Name -->
           <div class="auth-form-field relative">
             <label for="first-name-input" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">

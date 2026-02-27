@@ -68,8 +68,8 @@ function ForgotPasswordHeader(): string {
 /** Wrap step content in a centered card */
 function ForgotPasswordCard(content: string): string {
   return `
-    <div class="min-h-[calc(100vh-58px)] bg-gray-100 flex items-start justify-center pt-12 pb-12 px-4">
-      <div class="w-full max-w-xl bg-white rounded-xl shadow-sm p-8 sm:p-12">
+    <div class="min-h-[calc(100vh-58px)] bg-gray-100 flex items-start justify-center pt-8 sm:pt-12 pb-12 px-2 sm:px-4">
+      <div class="w-full max-w-xl bg-white rounded-xl shadow-sm p-5 sm:p-8 md:p-12">
         ${content}
       </div>
     </div>
@@ -125,7 +125,7 @@ function StepVerifyCode(): string {
       maxlength="1"
       id="fp-otp-${i}"
       data-fp-otp-index="${i}"
-      class="w-12 h-14 sm:w-14 sm:h-16 text-center text-xl sm:text-2xl font-bold
+      class="w-10 h-12 sm:w-12 sm:h-14 md:w-14 md:h-16 text-center text-lg sm:text-xl md:text-2xl font-bold
              rounded-lg border-2 border-gray-200
              bg-white text-gray-900
              auth-otp-focus
@@ -143,7 +143,7 @@ function StepVerifyCode(): string {
       <p id="fp-masked-email" class="text-sm font-bold text-gray-900 text-center mb-8"></p>
 
       <!-- OTP Inputs -->
-      <div id="fp-otp-container" class="flex justify-center gap-2 sm:gap-3 mb-6">
+      <div id="fp-otp-container" class="flex justify-center gap-1.5 sm:gap-2 md:gap-3 mb-6">
         ${otpInputs}
       </div>
 
