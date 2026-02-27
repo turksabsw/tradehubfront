@@ -26,9 +26,9 @@ export function MessagesLayout(props: MessagesLayoutProps): string {
       </div>
 
       <!-- Feedback Banner -->
-      <div class="flex items-center justify-between px-5 py-2.5 bg-gradient-to-br from-blue-500 to-blue-400 text-[var(--color-surface)]" id="msg-feedback">
+      <div class="flex items-center justify-between px-5 py-2.5 bg-gradient-to-br from-blue-500 to-blue-400 text-(--color-surface)" id="msg-feedback">
         <span class="text-[13px]">İletişim deneyiminizi bizimle paylaşın.</span>
-        <button class="flex items-center justify-center w-6 h-6 border-none bg-transparent text-[var(--color-surface)] cursor-pointer opacity-80 hover:opacity-100 transition-opacity" aria-label="Kapat" id="msg-feedback-close">
+        <button class="flex items-center justify-center w-6 h-6 border-none bg-transparent text-(--color-surface) cursor-pointer opacity-80 hover:opacity-100 transition-opacity" aria-label="Kapat" id="msg-feedback-close">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
           </svg>

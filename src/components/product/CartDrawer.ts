@@ -76,8 +76,8 @@ export function CartDrawer(): string {
   const perPiece = grandTotal / p.moq;
 
   return `
-    <div class="cart-drawer-overlay fixed inset-0 bg-black/50 z-[var(--z-backdrop,40)] opacity-0 pointer-events-none transition-opacity duration-300 max-xl:flex max-xl:items-end max-xl:justify-center max-xl:z-[200]" id="cart-drawer-overlay">
-      <div class="cart-drawer fixed top-0 right-0 h-full w-[420px] max-w-full bg-surface z-[var(--z-modal,50)] shadow-[-4px_0_24px_rgba(0,0,0,0.15)] flex flex-col translate-x-full transition-transform duration-300 max-xl:relative max-xl:top-auto max-xl:right-auto max-xl:h-auto max-xl:w-full max-xl:max-h-[90vh] max-xl:rounded-t-2xl max-xl:shadow-[0_-4px_24px_rgba(0,0,0,0.15)] max-xl:translate-x-0 max-xl:translate-y-full max-[374px]:max-h-[92vh] max-[374px]:rounded-t-xl" id="cart-drawer">
+    <div class="cart-drawer-overlay fixed inset-0 bg-black/50 z-(--z-backdrop,40) opacity-0 pointer-events-none transition-opacity duration-300 max-xl:flex max-xl:items-end max-xl:justify-center max-xl:z-[200]" id="cart-drawer-overlay">
+      <div class="cart-drawer fixed top-0 right-0 h-full w-[420px] max-w-full bg-surface z-(--z-modal,50) shadow-[-4px_0_24px_rgba(0,0,0,0.15)] flex flex-col translate-x-full transition-transform duration-300 max-xl:relative max-xl:top-auto max-xl:right-auto max-xl:h-auto max-xl:w-full max-xl:max-h-[90vh] max-xl:rounded-t-2xl max-xl:shadow-[0_-4px_24px_rgba(0,0,0,0.15)] max-xl:translate-x-0 max-xl:translate-y-full max-[374px]:max-h-[92vh] max-[374px]:rounded-t-xl" id="cart-drawer">
         <!-- Header -->
         <div class="cart-drawer-header flex justify-between items-center px-6 py-5 border-b border-border-default shrink-0 max-xl:px-4 max-xl:py-3 max-xl:flex-col max-xl:items-stretch max-xl:before:block max-[374px]:px-3 max-[374px]:py-2.5 max-[374px]:pt-2.5 max-[374px]:before:w-8 max-[374px]:before:h-[3px] max-[374px]:before:mb-1.5">
           <h3 class="text-lg font-semibold text-secondary-900 max-xl:text-base max-xl:text-center max-[374px]:text-sm">Varyasyon ve miktar seçin</h3>

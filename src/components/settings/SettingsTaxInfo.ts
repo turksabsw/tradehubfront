@@ -62,7 +62,7 @@ function renderTaxSection(section: TaxSection): string {
         <h3 class="text-[15px] font-bold mb-2 m-0" style="color:var(--color-text-heading, #111827)">${section.title}</h3>
         <p class="text-[13px] leading-normal m-0" style="color:var(--color-text-muted, #666666)">${section.description}</p>
       </div>
-      <button class="py-2.5 px-6 border border-[var(--color-text-heading)] rounded-[20px] bg-white text-[13px] font-medium whitespace-nowrap cursor-pointer transition-all flex-shrink-0 hover:bg-surface-raised" style="color:var(--color-text-heading, #111827)" type="button">${section.buttonLabel}</button>
+      <button class="py-2.5 px-6 border border-(--color-text-heading) rounded-[20px] bg-white text-[13px] font-medium whitespace-nowrap cursor-pointer transition-all flex-shrink-0 hover:bg-surface-raised" style="color:var(--color-text-heading, #111827)" type="button">${section.buttonLabel}</button>
     </div>
   `;
 }

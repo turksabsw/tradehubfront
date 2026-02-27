@@ -28,7 +28,7 @@ export interface SellerPerformanceStats {
 // ─── Contact Sidebar Component ─────────────────────────────────
 function ContactSidebar(seller: SellerProfile): string {
   return `
-    <div class="company-profile__sidebar sticky top-[100px] bg-white rounded-[var(--radius-md)] border border-gray-200 p-6">
+    <div class="company-profile__sidebar sticky top-[100px] bg-white rounded-(--radius-md) border border-gray-200 p-6">
       <h3 class="text-[18px] font-bold text-gray-900 mb-4">Tedarikçiye Ulaşın</h3>
       
       <div class="flex items-center gap-3 mb-6">
@@ -58,7 +58,7 @@ function OverviewTab(stats: SellerPerformanceStats, mainProducts: SimpleProduct[
     <div class="company-profile__tab-content active transition-opacity duration-300" id="tab-overview">
       
       <!-- Performance Section -->
-      <section class="bg-white rounded-[var(--radius-md)] border border-gray-200 p-6 mb-6">
+      <section class="bg-white rounded-(--radius-md) border border-gray-200 p-6 mb-6">
         <h3 class="text-[18px] font-bold text-gray-900 mb-6">Performans</h3>
         
         <div class="grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-8">
@@ -106,7 +106,7 @@ function OverviewTab(stats: SellerPerformanceStats, mainProducts: SimpleProduct[
       </section>
 
       <!-- Main Products Section -->
-      <section class="bg-white rounded-[var(--radius-md)] border border-gray-200 p-6">
+      <section class="bg-white rounded-(--radius-md) border border-gray-200 p-6">
         <h3 class="text-[18px] font-bold text-gray-900 mb-6 uppercase">ANA ÜRÜNLER</h3>
         
         <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
@@ -133,7 +133,7 @@ function OverviewTab(stats: SellerPerformanceStats, mainProducts: SimpleProduct[
 function ReviewsTab(stats: SellerPerformanceStats, reviews: SellerReview[]): string {
   return `
     <div class="company-profile__tab-content hidden transition-opacity duration-300" id="tab-reviews">
-      <section class="bg-white rounded-[var(--radius-md)] border border-gray-200 p-6">
+      <section class="bg-white rounded-(--radius-md) border border-gray-200 p-6">
         <h3 class="text-[18px] font-bold text-gray-900 mb-8">Şirket Değerlendirmeleri (${stats.reviewCount})</h3>
         
         <!-- Score Breakdown -->
@@ -211,7 +211,7 @@ function ProductsTab(categories: ProductCategory[]): string {
 
   return `
     <div class="company-profile__tab-content hidden transition-opacity duration-300" id="tab-products">
-      <section class="bg-white rounded-[var(--radius-md)] border border-gray-200 p-6">
+      <section class="bg-white rounded-(--radius-md) border border-gray-200 p-6">
         
         <!-- Category Filter Bar -->
         <div class="flex items-center border-b border-gray-200 mb-6 overflow-x-auto no-scrollbar pb-1">
@@ -261,10 +261,10 @@ export function CompanyProfileComponent(
 ): string {
   return `
     <section class="company-profile bg-[#f9fafb] py-8 min-h-screen" aria-label="Satıcı Profili">
-      <div class="max-w-[var(--container-xl)] mx-auto px-4 lg:px-6 xl:px-8">
+      <div class="max-w-(--container-xl) mx-auto px-4 lg:px-6 xl:px-8">
         
         <!-- Main Navigation Tabs -->
-        <div class="bg-white rounded-t-[var(--radius-md)] border-b border-gray-200 px-6 py-0 flex items-center gap-8 mb-6 overflow-x-auto no-scrollbar">
+        <div class="bg-white rounded-t-(--radius-md) border-b border-gray-200 px-6 py-0 flex items-center gap-8 mb-6 overflow-x-auto no-scrollbar">
           <button class="company-profile__main-tab active py-4 text-[15px] font-bold text-gray-900 border-b-2 border-gray-900 whitespace-nowrap" data-target="tab-overview">Hesabım</button>
           <button class="company-profile__main-tab py-4 text-[15px] font-medium text-gray-500 hover:text-gray-900 border-b-2 border-transparent transition-colors whitespace-nowrap" data-target="tab-reviews">Yorumlar</button>
           <button class="company-profile__main-tab py-4 text-[15px] font-medium text-gray-500 hover:text-gray-900 border-b-2 border-transparent transition-colors whitespace-nowrap" data-target="tab-video" disabled>Video İpuçları</button>

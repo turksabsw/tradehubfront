@@ -24,7 +24,7 @@ function formatSoldCount(count: number): string {
 
 function renderProductCard(product: DetailedProduct): string {
   return `
-    <div class="category-listing__card bg-white dark:bg-gray-800 border-r border-b border-[var(--card-border-color)] dark:border-gray-700 p-4 lg:p-3 flex flex-col hover:shadow-lg dark:hover:shadow-xl transition-shadow duration-300 relative group">
+    <div class="category-listing__card bg-white dark:bg-gray-800 border-r border-b border-(--card-border-color) dark:border-gray-700 p-4 lg:p-3 flex flex-col hover:shadow-lg dark:hover:shadow-xl transition-shadow duration-300 relative group">
       <!-- Image -->
       <div class="category-listing__image relative w-full h-[200px] lg:h-[180px] md:h-[160px] flex items-center justify-center mb-3">
         <img src="${product.image}" alt="${product.name}" class="max-h-full max-w-full object-contain group-hover:scale-[1.02] transition-transform" loading="lazy"
@@ -84,7 +84,7 @@ function renderCategory(category: ProductCategory): string {
       </div>
 
       <!-- Product Grid (Shared Border System) -->
-      <div class="category-listing__grid grid grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-1 border-t border-l border-[var(--card-border-color)] dark:border-gray-700">
+      <div class="category-listing__grid grid grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-1 border-t border-l border-(--card-border-color) dark:border-gray-700">
         ${category.products.map(p => renderProductCard(p)).join('')}
       </div>
     </section>
@@ -96,7 +96,7 @@ export function CategoryProductListing(categories: ProductCategory[]): string {
 
   return `
     <div id="category-listings" aria-label="Kategori ürün listeleri">
-      <div class="max-w-[var(--container-lg)] mx-auto px-4 lg:px-6 xl:px-8">
+      <div class="max-w-(--container-lg) mx-auto px-4 lg:px-6 xl:px-8">
         ${categories.map(cat => renderCategory(cat)).join('')}
       </div>
     </div>

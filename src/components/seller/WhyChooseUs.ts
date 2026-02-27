@@ -23,7 +23,7 @@ function getIconSvg(iconName: string): string {
 function renderVariantA(advantages: Advantage[]): string {
   return `
     <section id="why-choose" class="why-choose why-choose__variant-a py-16" aria-label="Neden bizi tercih etmelisiniz">
-      <div class="max-w-[var(--container-lg)] mx-auto px-4 lg:px-6 xl:px-8">
+      <div class="max-w-(--container-lg) mx-auto px-4 lg:px-6 xl:px-8">
         <h2 class="why-choose__title text-[54px] xl:text-[48px] md:text-[36px] font-black text-[#f97316] uppercase text-center tracking-tight mb-12">
           Why Choose Us
         </h2>
@@ -48,10 +48,10 @@ function renderVariantA(advantages: Advantage[]): string {
 function renderVariantB(features: Feature[]): string {
   return `
     <section id="why-choose" class="why-choose why-choose__variant-b py-12" aria-label="Neden bizi tercih etmelisiniz">
-      <div class="max-w-[var(--container-lg)] mx-auto px-4 lg:px-6 xl:px-8">
+      <div class="max-w-(--container-lg) mx-auto px-4 lg:px-6 xl:px-8">
         <div class="why-choose__bars grid grid-cols-3 lg:grid-cols-1 gap-4">
           ${features.map(feat => `
-            <div class="why-choose__feature-bar flex items-center gap-4 bg-[#7c6340] dark:bg-[#5a4a2a] rounded-[var(--radius-lg)] px-8 py-5 hover:bg-[#6b5535] dark:hover:bg-[#4a3d22] transition-colors cursor-pointer">
+            <div class="why-choose__feature-bar flex items-center gap-4 bg-[#7c6340] dark:bg-[#5a4a2a] rounded-(--radius-lg) px-8 py-5 hover:bg-[#6b5535] dark:hover:bg-[#4a3d22] transition-colors cursor-pointer">
               <svg class="w-10 h-10 text-white flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 ${getIconSvg(feat.icon)}
               </svg>

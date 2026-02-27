@@ -19,7 +19,7 @@ export function ThemeEditorPanel(): string {
     <button
       type="button"
       id="theme-editor-trigger"
-      class="fixed top-1/2 right-0 -translate-y-1/2 z-[var(--z-sidebar)] flex items-center justify-center w-10 h-24 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-l-md shadow-lg border border-r-0 border-gray-200 dark:border-gray-600 transition-all duration-200 hover:w-12 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-primary-400 focus:ring-offset-2"
+      class="fixed top-1/2 right-0 -translate-y-1/2 z-(--z-sidebar) flex items-center justify-center w-10 h-24 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-l-md shadow-lg border border-r-0 border-gray-200 dark:border-gray-600 transition-all duration-200 hover:w-12 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-primary-400 focus:ring-offset-2"
       aria-label="Open theme editor"
       data-tooltip-target="tooltip-theme-editor"
       data-tooltip-placement="left"
@@ -224,7 +224,7 @@ function openThemeEditorDrawer(): void {
   // Create drawer
   const drawer = document.createElement('div');
   drawer.id = 'theme-editor-drawer';
-  drawer.className = 'fixed top-0 right-0 z-[var(--z-toast)] h-full w-full md:max-w-[400px] bg-white dark:bg-gray-800 shadow-2xl flex flex-col transition-transform duration-300 translate-x-full';
+  drawer.className = 'fixed top-0 right-0 z-(--z-toast) h-full w-full md:max-w-[400px] bg-white dark:bg-gray-800 shadow-2xl flex flex-col transition-transform duration-300 translate-x-full';
   drawer.setAttribute('role', 'dialog');
   drawer.setAttribute('aria-modal', 'true'); // Modal on mobile
   drawer.setAttribute('aria-label', 'Theme Editor');

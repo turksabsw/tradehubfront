@@ -47,8 +47,8 @@ function renderProductCard(product: Product): string {
       </div>
       <div class="p-3">
         <p class="text-xs text-[#767676]" style="font-family: Alibaba_B2B_Sans, Inter, sans-serif;">${product.supplierCount} tedarikçi sağlıyor</p>
-        <h3 class="line-clamp-2 text-sm text-[var(--color-text-heading,#111827)] my-1 mb-3" style="font-family: Alibaba_B2B_Sans, Inter, sans-serif;">${product.name}</h3>
-        <a href="#" class="inline-block text-sm text-[var(--color-text-heading,#111827)] underline transition-colors duration-200 hover:text-primary-600 mb-3" style="font-family: Alibaba_B2B_Sans, Inter, sans-serif;">${product.ctaText}</a>
+        <h3 class="line-clamp-2 text-sm text-(--color-text-heading,#111827) my-1 mb-3" style="font-family: Alibaba_B2B_Sans, Inter, sans-serif;">${product.name}</h3>
+        <a href="#" class="inline-block text-sm text-(--color-text-heading,#111827) underline transition-colors duration-200 hover:text-primary-600 mb-3" style="font-family: Alibaba_B2B_Sans, Inter, sans-serif;">${product.ctaText}</a>
       </div>
     </div>
   `;
@@ -58,7 +58,7 @@ const appEl = document.querySelector<HTMLDivElement>('#app')!;
 appEl.classList.add('relative');
 appEl.innerHTML = `
   <!-- Sticky Header (global) -->
-  <div id="sticky-header" class="sticky top-0 z-[var(--z-header)]" style="background-color:var(--header-scroll-bg);border-bottom:1px solid var(--header-scroll-border)">
+  <div id="sticky-header" class="sticky top-0 z-(--z-header)" style="background-color:var(--header-scroll-bg);border-bottom:1px solid var(--header-scroll-border)">
     ${TopBar()}
     ${SubHeader()}
   </div>
@@ -84,7 +84,7 @@ appEl.innerHTML = `
           <!-- Left Column: Text Content -->
           <div class="flex-1 text-center xl:text-left">
             <span class="inline-block bg-primary-500 text-white text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide">RFQ</span>
-            <h1 class="text-[length:var(--font-size-hero-lg)] font-bold text-[var(--color-text-inverse)] mt-4 mb-2 leading-tight">
+            <h1 class="text-[length:var(--font-size-hero-lg)] font-bold text-(--color-text-inverse) mt-4 mb-2 leading-tight">
               Fiyat Teklifi Talebi Oluşturun
             </h1>
             <p class="text-white/80">
@@ -156,7 +156,7 @@ appEl.innerHTML = `
                   <input
                     type="checkbox"
                     id="rfq-ai-toggle"
-                    class="w-4 h-4 text-[var(--color-primary-600)] bg-white border-gray-300 rounded focus:ring-[var(--color-primary-600)] focus:ring-2"
+                    class="w-4 h-4 text-(--color-primary-600) bg-white border-gray-300 rounded focus:ring-(--color-primary-600) focus:ring-2"
                     checked
                   />
                   <div class="flex items-center text-sm text-[#666666]">
@@ -168,7 +168,7 @@ appEl.innerHTML = `
               </div>
 
               <!-- Submit CTA (Dynamic Color) -->
-              <button type="submit" class="px-8 py-2.5 text-base font-bold text-white bg-[var(--color-primary-600)] hover:bg-[var(--color-primary-700)] rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--color-primary-600)]">
+              <button type="submit" class="px-8 py-2.5 text-base font-bold text-white bg-(--color-primary-600) hover:bg-(--color-primary-700) rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-(--color-primary-600)">
                 RFQ detaylarını yaz
               </button>
             </div>
@@ -178,9 +178,9 @@ appEl.innerHTML = `
     </section>
 
     <!-- Section 3: Selected Products -->
-    <section id="rfq-selected-products" class="py-8 bg-[var(--color-surface-muted)]" aria-label="Seçili ürünler">
+    <section id="rfq-selected-products" class="py-8 bg-(--color-surface-muted)" aria-label="Seçili ürünler">
       <div class="container-boxed">
-        <h2 class="text-xl font-bold text-[var(--color-text-primary)] mb-6">Seçili Ürünler</h2>
+        <h2 class="text-xl font-bold text-(--color-text-primary) mb-6">Seçili Ürünler</h2>
         <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
           ${selectedProducts.map(p => renderProductCard(p)).join('')}
         </div>
@@ -188,9 +188,9 @@ appEl.innerHTML = `
     </section>
 
     <!-- Section 4: Custom Products -->
-    <section id="rfq-custom-products" class="py-8 bg-[var(--color-surface)]" aria-label="Özel ürünler">
+    <section id="rfq-custom-products" class="py-8 bg-(--color-surface)" aria-label="Özel ürünler">
       <div class="container-boxed">
-        <h2 class="text-xl font-bold text-[var(--color-text-primary)] mb-6">Özel Ürünler</h2>
+        <h2 class="text-xl font-bold text-(--color-text-primary) mb-6">Özel Ürünler</h2>
         <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
           ${customProducts.map(p => renderProductCard(p)).join('')}
         </div>
@@ -200,7 +200,7 @@ appEl.innerHTML = `
     <!-- Section 5: Testimonials -->
     <section id="rfq-testimonials" class="rfq-testimonial py-16 bg-gradient-to-br from-[#1f1f1f] to-[#0a0a0a]" aria-label="Müşteri yorumları">
       <div class="container-boxed max-w-3xl mx-auto text-center">
-        <h2 class="text-xl font-bold text-[var(--color-text-inverted)] mb-8">Müşterilerimiz Ne Diyor?</h2>
+        <h2 class="text-xl font-bold text-(--color-text-inverted) mb-8">Müşterilerimiz Ne Diyor?</h2>
         <div class="swiper">
           <div class="swiper-wrapper">
             ${testimonials.map(t => `

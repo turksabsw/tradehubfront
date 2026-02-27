@@ -47,7 +47,7 @@ function renderSettingsItem(item: SettingsItem): string {
       : '';
 
   return `
-    <a href="${item.href}" class="flex items-center justify-between py-3 no-underline transition-colors rounded -mx-2 px-2 hover:bg-[var(--color-surface-muted,#fafafa)] group">
+    <a href="${item.href}" class="flex items-center justify-between py-3 no-underline transition-colors rounded -mx-2 px-2 hover:bg-(--color-surface-muted,#fafafa) group">
       <span class="text-sm" style="color:var(--color-text-body, #333333); group-hover:color:var(--color-text-heading, #111827)">${item.label}</span>
       <span class="flex items-center gap-2">
         ${rightContent}

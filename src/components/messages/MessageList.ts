@@ -23,7 +23,7 @@ function renderAvatar(conv: MessageConversation): string {
     : TRADEHUB_AVATAR;
 
   const badge = conv.unreadCount > 0
-    ? `<span class="absolute -top-1 -right-1 min-w-[18px] h-[18px] flex items-center justify-center px-1 text-[11px] font-semibold text-[var(--color-surface)] bg-red-500 rounded-full border-2 border-[var(--color-surface)] leading-none">${conv.unreadCount}</span>`
+    ? `<span class="absolute -top-1 -right-1 min-w-[18px] h-[18px] flex items-center justify-center px-1 text-[11px] font-semibold text-(--color-surface) bg-red-500 rounded-full border-2 border-(--color-surface) leading-none">${conv.unreadCount}</span>`
     : '';
 
   return `
@@ -36,19 +36,19 @@ function renderAvatar(conv: MessageConversation): string {
 
 function renderConversation(conv: MessageConversation): string {
   const companyLine = conv.company
-    ? `<p class="msg-list__company text-[13px] text-[var(--color-text-placeholder,#999999)] whitespace-nowrap overflow-hidden text-ellipsis mb-0.5">${conv.company}</p>`
+    ? `<p class="msg-list__company text-[13px] text-(--color-text-placeholder,#999999) whitespace-nowrap overflow-hidden text-ellipsis mb-0.5">${conv.company}</p>`
     : '';
 
   return `
-    <a href="${conv.href}" class="msg-list__item flex items-start gap-3 px-5 py-3.5 no-underline border-b border-[var(--color-surface-raised,#f5f5f5)] cursor-pointer transition-[background] duration-150 hover:bg-(--color-surface-muted,#fafafa)" data-id="${conv.id}">
+    <a href="${conv.href}" class="msg-list__item flex items-start gap-3 px-5 py-3.5 no-underline border-b border-(--color-surface-raised,#f5f5f5) cursor-pointer transition-[background] duration-150 hover:bg-(--color-surface-muted,#fafafa)" data-id="${conv.id}">
       ${renderAvatar(conv)}
       <div class="flex-1 min-w-0">
         <div class="flex items-baseline justify-between gap-2 mb-0.5">
-          <span class="msg-list__name text-sm font-semibold text-[var(--color-text-heading,#111827)] whitespace-nowrap overflow-hidden text-ellipsis">${conv.name}</span>
-          <span class="text-xs text-[var(--color-text-placeholder,#999999)] whitespace-nowrap flex-shrink-0">${conv.date}</span>
+          <span class="msg-list__name text-sm font-semibold text-(--color-text-heading,#111827) whitespace-nowrap overflow-hidden text-ellipsis">${conv.name}</span>
+          <span class="text-xs text-(--color-text-placeholder,#999999) whitespace-nowrap flex-shrink-0">${conv.date}</span>
         </div>
         ${companyLine}
-        <p class="text-[13px] text-[var(--color-text-placeholder,#999999)] whitespace-nowrap overflow-hidden text-ellipsis">${conv.preview}</p>
+        <p class="text-[13px] text-(--color-text-placeholder,#999999) whitespace-nowrap overflow-hidden text-ellipsis">${conv.preview}</p>
       </div>
     </a>
   `;
@@ -58,11 +58,11 @@ export function MessageList(props: MessageListProps): string {
   const { conversations, title } = props;
 
   return `
-    <div class="w-[360px] max-lg:w-[300px] max-md:w-full max-md:max-h-[50vh] flex-shrink-0 border-r border-[var(--color-border-light,#f0f0f0)] max-md:border-r-0 flex flex-col bg-(--color-surface,#ffffff)">
+    <div class="w-[360px] max-lg:w-[300px] max-md:w-full max-md:max-h-[50vh] flex-shrink-0 border-r border-(--color-border-light,#f0f0f0) max-md:border-r-0 flex flex-col bg-(--color-surface,#ffffff)">
       <!-- Header -->
-      <div class="flex items-center justify-between px-5 pt-4 pb-3 border-b border-[var(--color-border-light,#f0f0f0)]">
-        <h3 class="text-base font-bold text-[var(--color-text-heading,#111827)]">${title}</h3>
-        <button class="flex items-center justify-center w-7 h-7 border-none bg-transparent text-[var(--color-text-placeholder,#999999)] cursor-pointer rounded hover:text-[var(--color-text-body,#333333)] transition-colors duration-150" aria-label="Filtrele">
+      <div class="flex items-center justify-between px-5 pt-4 pb-3 border-b border-(--color-border-light,#f0f0f0)">
+        <h3 class="text-base font-bold text-(--color-text-heading,#111827)">${title}</h3>
+        <button class="flex items-center justify-center w-7 h-7 border-none bg-transparent text-(--color-text-placeholder,#999999) cursor-pointer rounded hover:text-(--color-text-body,#333333) transition-colors duration-150" aria-label="Filtrele">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/>
           </svg>

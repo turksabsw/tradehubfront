@@ -26,8 +26,8 @@ export function CompanyIntroduction(
 
   return `
     <section id="company-introduction" class="company-intro py-12" aria-label="Şirket tanıtımı">
-      <div class="max-w-[var(--container-lg)] mx-auto px-4 lg:px-6 xl:px-8">
-        <div class="company-intro__card bg-white dark:bg-gray-800 border border-[var(--card-border-color)] rounded-[var(--radius-lg)] shadow-md dark:shadow-lg p-10 lg:p-6">
+      <div class="max-w-(--container-lg) mx-auto px-4 lg:px-6 xl:px-8">
+        <div class="company-intro__card bg-white dark:bg-gray-800 border border-(--card-border-color) rounded-(--radius-lg) shadow-md dark:shadow-lg p-10 lg:p-6">
 
           <!-- Title -->
           <h2 class="company-intro__title text-[24px] font-bold text-[#1e3a5f] dark:text-blue-300 uppercase text-center mb-6">
@@ -79,7 +79,7 @@ export function CompanyIntroduction(
           ${photos && photos.length ? `
             <div class="company-intro__photos grid grid-cols-4 lg:grid-cols-2 gap-3 mb-8">
               ${photos.map(photo => `
-                <div class="relative rounded-[var(--radius-md)] overflow-hidden aspect-[4/3]">
+                <div class="relative rounded-(--radius-md) overflow-hidden aspect-[4/3]">
                   <img src="${photo.image}" alt="${photo.caption}" class="w-full h-full object-cover" loading="lazy" />
                   ${photo.hasVideo ? `
                     <button class="absolute inset-0 flex items-center justify-center" aria-label="Video oynat">
@@ -100,14 +100,14 @@ export function CompanyIntroduction(
 
           <!-- CTA Buttons -->
           <div class="company-intro__cta flex flex-wrap items-center justify-center gap-4">
-            <button class="bg-[#f97316] hover:bg-[#ea580c] text-white font-semibold text-[14px] rounded-[var(--radius-button)] px-6 py-2.5 transition-colors cursor-pointer flex items-center gap-2 focus:ring-2 focus:ring-[#f97316] focus:ring-offset-2"
+            <button class="bg-[#f97316] hover:bg-[#ea580c] text-white font-semibold text-[14px] rounded-(--radius-button) px-6 py-2.5 transition-colors cursor-pointer flex items-center gap-2 focus:ring-2 focus:ring-[#f97316] focus:ring-offset-2"
                     onclick="document.getElementById('contact-form')?.scrollIntoView({behavior:'smooth'})">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
               </svg>
               Contact Supplier
             </button>
-            <button class="bg-transparent border border-[#d1d5db] dark:border-gray-600 hover:bg-[#f9fafb] text-[#374151] dark:text-gray-300 font-medium text-[14px] rounded-[var(--radius-button)] px-6 py-2.5 transition-colors cursor-pointer focus:ring-2 focus:ring-[#f97316] focus:ring-offset-2">
+            <button class="bg-transparent border border-[#d1d5db] dark:border-gray-600 hover:bg-[#f9fafb] text-[#374151] dark:text-gray-300 font-medium text-[14px] rounded-(--radius-button) px-6 py-2.5 transition-colors cursor-pointer focus:ring-2 focus:ring-[#f97316] focus:ring-offset-2">
               Start Order
             </button>
             <a href="#company-info" class="text-[#f97316] font-medium text-[14px] hover:underline flex items-center gap-1 focus:ring-2 focus:ring-[#f97316] focus:ring-offset-2 rounded">

@@ -12,7 +12,7 @@ export function ContactForm(data: ContactFormData): string {
   return `
     <section id="contact-form" class="contact-form py-12" aria-label="İletişim formu">
       <div class="max-w-[800px] sm:max-w-full mx-auto px-8 sm:px-6 xs:px-4">
-        <div class="contact-form__card bg-white dark:bg-gray-800 border border-[var(--card-border-color)] dark:border-gray-700 rounded-[var(--radius-lg)] shadow-md dark:shadow-lg p-8 sm:p-6 xs:p-4">
+        <div class="contact-form__card bg-white dark:bg-gray-800 border border-(--card-border-color) dark:border-gray-700 rounded-(--radius-lg) shadow-md dark:shadow-lg p-8 sm:p-6 xs:p-4">
 
           <!-- Title -->
           <h2 class="contact-form__title text-[18px] font-bold text-[#111827] dark:text-gray-50 text-center mb-6">
@@ -34,7 +34,7 @@ export function ContactForm(data: ContactFormData): string {
             <div class="relative">
               <textarea
                 id="contact-textarea"
-                class="contact-form__textarea w-full border border-[var(--input-border-color)] dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 rounded-[var(--radius-input)] p-3 text-[14px] text-[#374151] min-h-[120px] sm:min-h-[100px] xs:min-h-[80px] resize-y focus:border-[var(--input-focus-border-color)] focus:outline-none focus:ring-2 focus:ring-[#cc9900]/20 transition-colors"
+                class="contact-form__textarea w-full border border-(--input-border-color) dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 rounded-(--radius-input) p-3 text-[14px] text-[#374151] min-h-[120px] sm:min-h-[100px] xs:min-h-[80px] resize-y focus:border-(--input-focus-border-color) focus:outline-none focus:ring-2 focus:ring-[#cc9900]/20 transition-colors"
                 placeholder="${placeholder}"
                 maxlength="${maxLength}"
                 aria-required="true"
@@ -47,7 +47,7 @@ export function ContactForm(data: ContactFormData): string {
 
           <!-- Send Button -->
           <div class="flex justify-center mb-4">
-            <button class="contact-form__send bg-[#f97316] hover:bg-[#ea580c] active:scale-[0.97] text-white font-semibold text-[14px] rounded-[var(--radius-button)] px-8 py-2 xs:w-full xs:py-3 transition-[background-color,transform] duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-[var(--color-store-accent)] focus-visible:ring-offset-2 outline-none">
+            <button class="contact-form__send bg-[#f97316] hover:bg-[#ea580c] active:scale-[0.97] text-white font-semibold text-[14px] rounded-(--radius-button) px-8 py-2 xs:w-full xs:py-3 transition-[background-color,transform] duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-(--color-store-accent) focus-visible:ring-offset-2 outline-none">
               Send
             </button>
           </div>

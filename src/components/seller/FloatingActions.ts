@@ -14,7 +14,7 @@ import type { FloatingActionsData } from '../../types/seller/types';
 export function FloatingActions(data: FloatingActionsData): string {
   return `
     <div id="floating-actions"
-         class="floating-actions fixed right-0 top-[40%] z-[var(--z-fixed)] flex flex-col"
+         class="floating-actions fixed right-0 top-[40%] z-(--z-fixed) flex flex-col"
          aria-label="Hızlı erişim butonları"
          role="group">
       ${data.buttons.map((btn, index) => {
@@ -24,11 +24,11 @@ export function FloatingActions(data: FloatingActionsData): string {
         // Spec: Contact (first) gets rounded-tl + rounded-bl, Chat (last only) gets rounded-bl only
         let roundedClasses = '';
         if (isFirst && isLast) {
-          roundedClasses = 'rounded-tl-[var(--radius-md)] rounded-bl-[var(--radius-md)]';
+          roundedClasses = 'rounded-tl-(--radius-md) rounded-bl-(--radius-md)';
         } else if (isFirst) {
-          roundedClasses = 'rounded-tl-[var(--radius-md)]';
+          roundedClasses = 'rounded-tl-(--radius-md)';
         } else if (isLast) {
-          roundedClasses = 'rounded-bl-[var(--radius-md)]';
+          roundedClasses = 'rounded-bl-(--radius-md)';
         }
 
         // Split label for 2-line display on desktop (hidden on tablet via CSS, inline on mobile via CSS)

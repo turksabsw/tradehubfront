@@ -24,7 +24,7 @@ export function CompanyProfile(): string {
           </div>
           <p class="text-[13px] mt-1" style="color: var(--pd-rating-text-color, #6b7280);">Verified Multispecialty Supplier &middot; ${s.yearsInBusiness} yıl &middot; \u{1F1F9}\u{1F1F7} TR</p>
         </div>
-        <button type="button" class="px-6 py-2.5 rounded-[20px] border text-sm font-semibold whitespace-nowrap cursor-pointer transition-colors hover:bg-[var(--pd-spec-header-bg,#f9fafb)]" style="border-color: var(--pd-title-color, #111827); background: var(--color-surface, #ffffff); color: var(--pd-title-color, #111827);">İletişime Geç</button>
+        <button type="button" class="px-6 py-2.5 rounded-[20px] border text-sm font-semibold whitespace-nowrap cursor-pointer transition-colors hover:bg-(--pd-spec-header-bg,#f9fafb)" style="border-color: var(--pd-title-color, #111827); background: var(--color-surface, #ffffff); color: var(--pd-title-color, #111827);">İletişime Geç</button>
       </div>
 
       <!-- 2. Stat Counters -->

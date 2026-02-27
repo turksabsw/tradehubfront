@@ -12,10 +12,10 @@ import { megaCategories } from '../header';
 function renderBottomSheet(): string {
   return `
     <!-- Bottom Sheet Overlay -->
-    <div id="mcb-sheet-overlay" class="fixed inset-0 z-[var(--z-backdrop)] bg-black/50 opacity-0 pointer-events-none transition-opacity duration-300 lg:hidden"></div>
+    <div id="mcb-sheet-overlay" class="fixed inset-0 z-(--z-backdrop) bg-black/50 opacity-0 pointer-events-none transition-opacity duration-300 lg:hidden"></div>
 
     <!-- Bottom Sheet Panel -->
-    <div id="mcb-sheet-panel" class="fixed inset-x-0 bottom-0 z-[var(--z-modal)] transition-transform duration-300 ease-out lg:hidden" style="transform: translateY(100%)">
+    <div id="mcb-sheet-panel" class="fixed inset-x-0 bottom-0 z-(--z-modal) transition-transform duration-300 ease-out lg:hidden" style="transform: translateY(100%)">
       <div class="bg-white dark:bg-gray-800 rounded-t-md max-h-[85vh] flex flex-col shadow-2xl">
         <!-- Drag Handle + Title (swipe-to-dismiss target) -->
         <div id="mcb-sheet-drag-handle" class="flex-shrink-0">

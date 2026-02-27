@@ -19,8 +19,8 @@ function renderSlide(slide: HeroSlide): string {
   }
 
   const isWhite = slide.textColor === 'white';
-  const titleColor = isWhite ? 'text-white' : 'text-[var(--color-text-primary)]';
-  const subtitleColor = isWhite ? 'text-white/80' : 'text-[var(--color-text-secondary)]';
+  const titleColor = isWhite ? 'text-white' : 'text-(--color-text-primary)';
+  const subtitleColor = isWhite ? 'text-white/80' : 'text-(--color-text-secondary)';
 
   // Position classes based on textPosition
   let alignClasses = 'items-start';
@@ -40,7 +40,7 @@ function renderSlide(slide: HeroSlide): string {
     : '';
 
   const ctaHtml = slide.ctaText
-    ? `<a href="${slide.ctaLink || '#'}" class="store-hero__cta inline-block mt-6 px-8 py-3 bg-(--store-accent) text-white font-semibold text-[var(--btn-font-size)] rounded-[var(--radius-button)] hover:bg-(--store-accent-hover) transition-colors shadow-[var(--shadow-md)]">
+    ? `<a href="${slide.ctaLink || '#'}" class="store-hero__cta inline-block mt-6 px-8 py-3 bg-(--store-accent) text-white font-semibold text-(--btn-font-size) rounded-(--radius-button) hover:bg-(--store-accent-hover) transition-colors shadow-(--shadow-md)">
         ${slide.ctaText}
       </a>`
     : '';

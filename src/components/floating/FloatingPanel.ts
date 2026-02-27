@@ -178,13 +178,13 @@ function openChatDrawer(): void {
   // Create backdrop
   const backdrop = document.createElement('div');
   backdrop.id = 'chat-drawer-backdrop';
-  backdrop.className = 'fixed inset-0 z-[var(--z-popover)] bg-black/50 transition-opacity duration-300 opacity-0';
+  backdrop.className = 'fixed inset-0 z-(--z-popover) bg-black/50 transition-opacity duration-300 opacity-0';
   backdrop.setAttribute('aria-hidden', 'true');
 
   // Create drawer
   const drawer = document.createElement('div');
   drawer.id = 'chat-drawer';
-  drawer.className = 'fixed top-0 right-0 z-[var(--z-toast)] h-full w-full max-w-sm bg-white dark:bg-gray-800 shadow-2xl flex flex-col transition-transform duration-300 translate-x-full';
+  drawer.className = 'fixed top-0 right-0 z-(--z-toast) h-full w-full max-w-sm bg-white dark:bg-gray-800 shadow-2xl flex flex-col transition-transform duration-300 translate-x-full';
   drawer.setAttribute('role', 'dialog');
   drawer.setAttribute('aria-modal', 'true');
   drawer.setAttribute('aria-label', 'Chat Support');
@@ -273,13 +273,13 @@ function openLensModal(): void {
   // Create backdrop
   const backdrop = document.createElement('div');
   backdrop.id = 'lens-modal-backdrop';
-  backdrop.className = 'fixed inset-0 z-[var(--z-popover)] bg-black/50 flex items-center justify-center transition-opacity duration-300 opacity-0';
+  backdrop.className = 'fixed inset-0 z-(--z-popover) bg-black/50 flex items-center justify-center transition-opacity duration-300 opacity-0';
   backdrop.setAttribute('aria-hidden', 'true');
 
   // Create modal
   const modal = document.createElement('div');
   modal.id = 'lens-modal';
-  modal.className = 'relative z-[var(--z-toast)] w-full max-w-md mx-4 bg-white dark:bg-gray-800 rounded-md shadow-2xl transition-all duration-300 scale-95 opacity-0';
+  modal.className = 'relative z-(--z-toast) w-full max-w-md mx-4 bg-white dark:bg-gray-800 rounded-md shadow-2xl transition-all duration-300 scale-95 opacity-0';
   modal.setAttribute('role', 'dialog');
   modal.setAttribute('aria-modal', 'true');
   modal.setAttribute('aria-label', 'Search by Image');

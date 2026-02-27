@@ -18,10 +18,10 @@ export function OrdersSection(): string {
   };
 
   return `
-    <div class="orders bg-(--color-surface,#ffffff) rounded-[var(--radius-card)] overflow-hidden" data-orders-section>
+    <div class="orders bg-(--color-surface,#ffffff) rounded-(--radius-card) overflow-hidden" data-orders-section>
       <div class="flex items-center justify-between px-5 pt-4 pb-3">
-        <h2 class="text-base font-bold text-[var(--color-text-body,#333333)] m-0">Siparişler</h2>
-        <a href="#" class="orders__view-all text-[13px] text-[var(--color-text-placeholder,#999999)] no-underline inline-flex items-center gap-0.5 transition-colors hover:text-primary-500" aria-label="Tüm siparişleri görüntüle">
+        <h2 class="text-base font-bold text-(--color-text-body,#333333) m-0">Siparişler</h2>
+        <a href="#" class="orders__view-all text-[13px] text-(--color-text-placeholder,#999999) no-underline inline-flex items-center gap-0.5 transition-colors hover:text-primary-500" aria-label="Tüm siparişleri görüntüle">
           Tümünü görüntüle
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <path d="M4.5 2.5L8 6L4.5 9.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>

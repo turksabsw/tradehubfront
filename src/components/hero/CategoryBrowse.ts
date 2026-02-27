@@ -28,10 +28,10 @@ function renderProductItem(product: { name: string; href: string; badge?: boolea
 function renderCategoryPopup(): string {
   return `
     <!-- Category Popup Overlay -->
-    <div id="cat-popup-overlay" class="fixed inset-0 z-[var(--z-backdrop)] bg-black/50 opacity-0 pointer-events-none transition-opacity duration-200"></div>
+    <div id="cat-popup-overlay" class="fixed inset-0 z-(--z-backdrop) bg-black/50 opacity-0 pointer-events-none transition-opacity duration-200"></div>
 
     <!-- Category Popup Panel -->
-    <div id="cat-popup-panel" class="fixed inset-0 z-[var(--z-modal)] flex items-end lg:items-start justify-center lg:pt-20 opacity-0 pointer-events-none transition-opacity duration-200">
+    <div id="cat-popup-panel" class="fixed inset-0 z-(--z-modal) flex items-end lg:items-start justify-center lg:pt-20 opacity-0 pointer-events-none transition-opacity duration-200">
       <div id="cat-popup-sheet" class="rounded-t-md lg:rounded-md shadow-2xl border w-full lg:max-w-5xl max-h-[85vh] lg:max-h-[80vh] flex flex-col overflow-hidden transition-transform duration-200 will-change-transform" style="background-color:var(--catpopup-bg);border-color:var(--catpopup-border)">
 
         <!-- Drag handle (mobile) -->
@@ -43,7 +43,7 @@ function renderCategoryPopup(): string {
         <div id="cat-popup-header" class="flex items-center justify-between px-4 lg:px-6 py-3 lg:py-4 border-b flex-shrink-0 select-none" style="border-color:var(--catpopup-border)">
           <h2 id="cat-popup-title" class="text-lg font-bold" style="color:var(--catpopup-heading)">Categories</h2>
           <div class="flex items-center gap-4">
-            <a href="/featured" class="text-sm hidden lg:inline transition-colors duration-150 hover:text-[var(--catpopup-link-hover)]" style="color:var(--catpopup-link)">Browse featured selections</a>
+            <a href="/featured" class="text-sm hidden lg:inline transition-colors duration-150 hover:text-(--catpopup-link-hover)" style="color:var(--catpopup-link)">Browse featured selections</a>
             <button id="cat-popup-close" class="p-1.5 transition-colors" style="color:var(--catpopup-close-color)" aria-label="Close">
               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 18 6M6 6l12 12"/>
@@ -61,7 +61,7 @@ function renderCategoryPopup(): string {
                 <li class="flex-shrink-0 lg:flex-shrink">
                   <button
                     type="button"
-                    class="cat-popup-btn th-catpopup-sidebar-item flex items-center gap-2 lg:gap-3 w-full px-3 lg:px-4 py-2 lg:py-2.5 text-sm text-left border-l-2 border-l-transparent transition-colors duration-150 whitespace-nowrap lg:whitespace-normal hover:bg-[var(--catpopup-sidebar-active-bg)] hover:text-[var(--catpopup-heading)] ${index === 0 ? 'th-catpopup-sidebar-item--active' : ''}"
+                    class="cat-popup-btn th-catpopup-sidebar-item flex items-center gap-2 lg:gap-3 w-full px-3 lg:px-4 py-2 lg:py-2.5 text-sm text-left border-l-2 border-l-transparent transition-colors duration-150 whitespace-nowrap lg:whitespace-normal hover:bg-(--catpopup-sidebar-active-bg) hover:text-(--catpopup-heading) ${index === 0 ? 'th-catpopup-sidebar-item--active' : ''}"
                     style="color:var(--catpopup-text)"
                     data-category="${cat.id}"
                   >
@@ -110,7 +110,7 @@ export function CategoryBrowse(): string {
               <li>
                 <button
                   type="button"
-                  class="category-browse-item flex items-center gap-3.5 w-full transition-colors duration-150 group text-left hover:bg-[var(--catpopup-sidebar-hover-bg)] hover:text-[var(--catpopup-heading)] dark:text-gray-300 dark:hover:bg-gray-700/60 dark:hover:text-white"
+                  class="category-browse-item flex items-center gap-3.5 w-full transition-colors duration-150 group text-left hover:bg-(--catpopup-sidebar-hover-bg) hover:text-(--catpopup-heading) dark:text-gray-300 dark:hover:bg-gray-700/60 dark:hover:text-white"
                   style="color:var(--catpopup-text);font-size:var(--catpopup-sidebar-font-size);font-weight:var(--catpopup-sidebar-font-weight);padding:var(--catpopup-sidebar-padding-y) var(--catpopup-sidebar-padding-x)"
                   data-category-id="${cat.id}"
                 >

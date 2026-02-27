@@ -130,7 +130,7 @@ function renderCompactStickySearch(): string {
         aria-hidden="true"
         aria-expanded="false"
         aria-controls="topbar-compact-dropdown"
-        class="absolute left-0 right-0 top-[8px] z-[var(--z-popover)] w-full rounded-full border border-gray-300 bg-white shadow-sm transition-all duration-200 dark:border-gray-600 dark:bg-gray-800"
+        class="absolute left-0 right-0 top-[8px] z-(--z-popover) w-full rounded-full border border-gray-300 bg-white shadow-sm transition-all duration-200 dark:border-gray-600 dark:bg-gray-800"
       >
         <div id="topbar-compact-primary-row" class="flex items-center gap-2 px-3 py-1.5">
           <div class="relative min-w-0 flex-1">
@@ -181,7 +181,7 @@ function renderCompactStickySearch(): string {
       <div
         id="topbar-compact-dropdown"
         aria-hidden="true"
-        class="hidden absolute left-0 right-0 z-[var(--z-modal)] rounded-md border border-gray-200 bg-white px-5 py-4 shadow-xl dark:border-gray-700 dark:bg-gray-800"
+        class="hidden absolute left-0 right-0 z-(--z-modal) rounded-md border border-gray-200 bg-white px-5 py-4 shadow-xl dark:border-gray-700 dark:bg-gray-800"
       >
         <div class="flex items-center justify-between gap-4">
           <h3 class="text-lg font-bold text-gray-900 dark:text-white">Recommended for you</h3>
@@ -601,7 +601,7 @@ function renderMobileDrawer(): string {
     <!-- Mobile Menu Drawer -->
     <div
       id="mobile-menu-drawer"
-      class="fixed top-0 left-0 z-[var(--z-backdrop)] h-screen overflow-hidden transition-transform -translate-x-full bg-white w-80 dark:bg-gray-800"
+      class="fixed top-0 left-0 z-(--z-backdrop) h-screen overflow-hidden transition-transform -translate-x-full bg-white w-80 dark:bg-gray-800"
       tabindex="-1"
       aria-labelledby="drawer-label"
     >
