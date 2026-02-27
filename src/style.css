@@ -760,6 +760,7 @@
     /* --- Animation --- */
     --animate-fade-in: fade-in var(--duration-default) var(--ease-default);
     --animate-fade-out: fade-out var(--duration-default) var(--ease-default);
+    --animate-slide-up: slide-up var(--duration-default) var(--ease-default);
 
     /* --- CTA Semantic --- */
     --color-cta-primary: var(--color-primary-500);
@@ -828,6 +829,31 @@
 
     to {
         opacity: 0;
+    }
+}
+
+@keyframes slide-up {
+    from {
+        opacity: 0;
+        transform: translateY(1rem);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- Reduced Motion: disable all animations --- */
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
     }
 }
 
