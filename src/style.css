@@ -5562,3 +5562,167 @@ body.pdm-sheet-open {
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
 }
 .ds-toggle--on .ds-toggle__thumb { transform: translateX(20px); }
+
+/* ============================================================
+   CHECKOUT PAGE — Float-label, Dropdown, Accordion, Modal
+   ============================================================ */
+
+/* ── Float-label Field ─────────────────────────────────────── */
+.checkout-float-field {
+    position: relative;
+    margin-bottom: 16px;
+}
+.checkout-float-field__label {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: var(--font-size-base);
+    color: var(--color-text-muted);
+    pointer-events: none;
+    transition: all var(--duration-default) var(--ease-default);
+    background: transparent;
+    padding: 0 4px;
+}
+.checkout-float-field__input {
+    width: 100%;
+    padding: 18px 12px 6px;
+    font-size: var(--font-size-base);
+    color: var(--color-text-primary);
+    border: 1px solid var(--color-border-medium);
+    border-radius: var(--radius-input);
+    background: var(--color-surface);
+    outline: none;
+    transition: border-color var(--duration-default) var(--ease-default);
+}
+.checkout-float-field__input:focus {
+    border-color: var(--color-primary-500);
+}
+.checkout-float-field--active .checkout-float-field__label,
+.checkout-float-field__input:focus ~ .checkout-float-field__label {
+    top: 6px;
+    transform: translateY(0);
+    font-size: var(--font-size-xs);
+    color: var(--color-primary-500);
+    background: var(--color-surface);
+}
+.checkout-float-field--error .checkout-float-field__input {
+    border-color: var(--color-error-500);
+}
+.checkout-float-field--error .checkout-float-field__label {
+    color: var(--color-error-500);
+}
+.checkout-float-field__error {
+    font-size: var(--font-size-xs);
+    color: var(--color-error-500);
+    margin-top: 4px;
+    display: none;
+}
+.checkout-float-field--error .checkout-float-field__error {
+    display: block;
+}
+
+/* ── Dropdown ──────────────────────────────────────────────── */
+.checkout-dropdown {
+    position: relative;
+}
+.checkout-dropdown__trigger {
+    width: 100%;
+    padding: 18px 12px 6px;
+    font-size: var(--font-size-base);
+    color: var(--color-text-primary);
+    border: 1px solid var(--color-border-medium);
+    border-radius: var(--radius-input);
+    background: var(--color-surface);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: border-color var(--duration-default) var(--ease-default);
+}
+.checkout-dropdown__trigger:focus {
+    border-color: var(--color-primary-500);
+    outline: none;
+}
+.checkout-dropdown__list {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    max-height: 240px;
+    overflow-y: auto;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border-medium);
+    border-radius: var(--radius-input);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    display: none;
+    margin-top: 4px;
+}
+.checkout-dropdown--open .checkout-dropdown__list {
+    display: block;
+}
+.checkout-dropdown__item {
+    padding: 10px 12px;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-primary);
+    cursor: pointer;
+    transition: background var(--duration-default) var(--ease-default);
+}
+.checkout-dropdown__item:hover {
+    background: var(--color-surface-raised);
+}
+.checkout-dropdown__item--selected {
+    background: var(--color-primary-50);
+    color: var(--color-primary-700);
+}
+
+/* ── Accordion Section ─────────────────────────────────────── */
+.checkout-section {
+    border: 1px solid var(--color-border-medium);
+    border-radius: var(--radius-input);
+    overflow: hidden;
+    transition: all var(--duration-default) var(--ease-default);
+}
+.checkout-section__content {
+    max-height: 2000px;
+    overflow: hidden;
+    transition: max-height 0.3s var(--ease-default), padding 0.3s var(--ease-default);
+}
+.checkout-section--collapsed .checkout-section__content {
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+/* ── Checkout Modal ────────────────────────────────────────── */
+.checkout-modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background: var(--color-surface-overlay);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--duration-default) var(--ease-default);
+}
+.checkout-modal-overlay.open {
+    opacity: 1;
+    pointer-events: auto;
+}
+.checkout-modal-content {
+    background: var(--color-surface);
+    border-radius: var(--radius-lg, 12px);
+    max-width: 560px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    padding: 24px;
+    transform: translateY(20px);
+    transition: transform var(--duration-default) var(--ease-default);
+}
+.checkout-modal-overlay.open .checkout-modal-content {
+    transform: translateY(0);
+}

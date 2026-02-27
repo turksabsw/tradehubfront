@@ -85,6 +85,7 @@ export default defineConfig({
                 dropshipping: resolve(__dirname, 'dropshipping.html'),
                 settings: resolve(__dirname, 'settings.html'),
                 profile: resolve(__dirname, 'profile.html'),
+                checkout: resolve(__dirname, 'checkout.html'),
             },
         },
     },
