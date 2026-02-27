@@ -45,8 +45,8 @@ appEl.innerHTML = `
 
         <!-- Page Header -->
         <div class="mb-4">
-          <h1 class="text-2xl font-bold text-gray-900">Tüm Kategoriler</h1>
-          <p class="text-sm text-gray-500 mt-1">Binlerce ürün arasından aradığınızı bulun</p>
+          <h1 class="text-lg sm:text-2xl font-bold text-gray-900">Tüm Kategoriler</h1>
+          <p class="text-xs sm:text-sm text-gray-500 mt-1">Binlerce ürün arasından aradığınızı bulun</p>
         </div>
 
         <!-- Main layout: Filter Sidebar + Category Grid -->
