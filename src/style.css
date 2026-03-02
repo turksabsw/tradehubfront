@@ -10,6 +10,9 @@
 /* --- Dark Mode: class-based --- */
 @variant dark (&:where(.dark, .dark *));
 
+/* --- Alpine.js: hide elements until Alpine initializes --- */
+[x-cloak] { display: none !important; }
+
 /* ============================================================
    @theme — DESIGN TOKENS
    ============================================================ */
