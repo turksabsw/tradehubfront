@@ -9,7 +9,7 @@ import { initFlowbite } from 'flowbite'
 import { TopBar, initMobileDrawer, initHeaderCart } from './components/header'
 import { FloatingPanel } from './components/floating'
 import { startAlpine } from './alpine'
-import { renderSidebar, initSidebar } from './components/sidebar'
+import { renderSidebar } from './components/sidebar'
 import { PaymentLayout, initPaymentLayout } from './components/payment'
 
 const appEl = document.querySelector<HTMLDivElement>('#app')!;
@@ -45,5 +45,4 @@ initFlowbite();
 startAlpine();
 initHeaderCart();
 initMobileDrawer();
-initSidebar();
 initPaymentLayout();

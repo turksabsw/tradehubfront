@@ -11,7 +11,7 @@ import { Breadcrumb } from './components/shared/Breadcrumb'
 import { FooterLinks } from './components/footer'
 import { FloatingPanel } from './components/floating'
 import { startAlpine } from './alpine'
-import { renderSidebar, initSidebar } from './components/sidebar'
+import { renderSidebar } from './components/sidebar'
 import { ProfileLayout, initProfileLayout } from './components/profile'
 
 const appEl = document.querySelector<HTMLDivElement>('#app')!;
@@ -53,5 +53,4 @@ initFlowbite();
 startAlpine();
 initHeaderCart();
 initMobileDrawer();
-initSidebar();
 initProfileLayout();

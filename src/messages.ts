@@ -9,7 +9,7 @@ import { initFlowbite } from 'flowbite'
 import { TopBar, initMobileDrawer, initHeaderCart } from './components/header'
 import { FloatingPanel } from './components/floating'
 import { startAlpine } from './alpine'
-import { renderSidebar, initSidebar } from './components/sidebar'
+import { renderSidebar } from './components/sidebar'
 import { MessagesLayout, initMessagesLayout } from './components/messages'
 import { mockMessagesData } from './data/mockMessages'
 
@@ -46,5 +46,4 @@ initFlowbite();
 startAlpine();
 initHeaderCart();
 initMobileDrawer();
-initSidebar();
 initMessagesLayout();

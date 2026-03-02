@@ -21,7 +21,7 @@ import { FloatingPanel, initFloatingPanel } from './components/floating'
 
 // Buyer Dashboard components
 import { BuyerDashboardLayout, initBuyerDashboardLayout, OtherServicesLayout, initOtherServicesLayout } from './components/buyer-dashboard'
-import { renderSidebar, initSidebar } from './components/sidebar'
+import { renderSidebar } from './components/sidebar'
 
 // Mock data
 import { mockBuyerDashboardData } from './data/mockBuyerDashboard'
@@ -101,7 +101,6 @@ initFlowbite();
 initHeaderCart();
 initFloatingPanel();
 initMobileDrawer();
-initSidebar();
 
 // Init based on current view
 function initCurrentView(): void {
