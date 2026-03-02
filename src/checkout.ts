@@ -16,10 +16,13 @@ import { Breadcrumb } from './components/shared/Breadcrumb'
 import { FooterLinks } from './components/footer'
 
 // Floating components
-import { FloatingPanel, initFloatingPanel } from './components/floating'
+import { FloatingPanel } from './components/floating'
+
+// Alpine.js
+import { startAlpine } from './alpine'
 
 // Checkout components
-import { CheckoutHeader, CheckoutLayout, ShippingAddressForm, initShippingAddressForm, OrderSummary, PaymentMethodSection, ItemsDeliverySection, initAccordionSections, OrderProtectionModal, initOrderProtectionModal, initAddressAutocomplete } from './components/checkout'
+import { CheckoutHeader, CheckoutLayout, ShippingAddressForm, initShippingAddressForm, OrderSummary, PaymentMethodSection, ItemsDeliverySection, initAccordionSections, OrderProtectionModal, initAddressAutocomplete } from './components/checkout'
 import { protectionSummaryItems, tradeAssuranceText, modalSections, paymentIcons, infoBoxBullets } from './data/mockCheckout'
 import { cartStore } from './components/cart/state/CartStore'
 import type { OrderSummary as OrderSummaryData } from './types/checkout'
@@ -83,12 +86,11 @@ appEl.innerHTML = `
 // Initialize behaviors
 initMegaMenu();
 initFlowbite();
+startAlpine();
 initStickyHeaderSearch();
-initFloatingPanel();
 initMobileDrawer();
 initHeaderCart();
 initShippingAddressForm();
 initAddressAutocomplete();
 initAccordionSections();
-initOrderProtectionModal();
 initStickyHeights();

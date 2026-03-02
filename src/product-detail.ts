@@ -13,7 +13,10 @@ import { TopBar, initMobileDrawer, SubHeader, initStickyHeaderSearch, MegaMenu, 
 import { FooterLinks } from './components/footer'
 
 // Floating components
-import { FloatingPanel, initFloatingPanel } from './components/floating'
+import { FloatingPanel } from './components/floating'
+
+// Alpine.js
+import { startAlpine } from './alpine'
 
 // Shared components
 import { Breadcrumb } from './components/shared/Breadcrumb'
@@ -32,9 +35,7 @@ import {
   initRelatedProducts,
   initAttributesTab,
   ReviewsModal,
-  initReviewsModal,
   LoginModal,
-  initLoginModal,
   ShippingModal,
   initShippingModal,
   MobileProductLayout,
@@ -126,9 +127,9 @@ appEl.innerHTML = `
 // Initialize behaviors
 initMegaMenu();
 initFlowbite();
+startAlpine();
 initStickyHeaderSearch();
 initHeaderCart();
-initFloatingPanel();
 initMobileDrawer();
 initAnimatedPlaceholder('#topbar-compact-search-input');
 
@@ -138,8 +139,6 @@ initProductInfo();
 initProductTabs();
 initAttributesTab();
 initReviews();
-initLoginModal();
-initReviewsModal();
 initShippingModal();
 initCartDrawer();
 initRelatedProducts();

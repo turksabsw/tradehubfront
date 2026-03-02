@@ -9,7 +9,8 @@ import { initFlowbite } from 'flowbite'
 import { TopBar, initMobileDrawer, initHeaderCart } from './components/header'
 import { Breadcrumb } from './components/shared/Breadcrumb'
 import { FooterLinks } from './components/footer'
-import { FloatingPanel, initFloatingPanel } from './components/floating'
+import { FloatingPanel } from './components/floating'
+import { startAlpine } from './alpine'
 import { renderSidebar, initSidebar } from './components/sidebar'
 import { ProfileLayout, initProfileLayout } from './components/profile'
 
@@ -49,8 +50,8 @@ appEl.innerHTML = `
 `;
 
 initFlowbite();
+startAlpine();
 initHeaderCart();
-initFloatingPanel();
 initMobileDrawer();
 initSidebar();
 initProfileLayout();
