@@ -3,17 +3,16 @@
  * Full-screen overlay modal showing all store reviews with filters,
  * mention tags, language toggle, and scrollable review cards.
  * Opened by the "Tümünü Göster" button in the Store Reviews panel.
+ *
+ * Reactivity handled by Alpine.js via x-data="reviewsModal".
+ * Alpine.data('reviewsModal') is registered in src/alpine.ts.
  */
 
 import { mockProduct } from '../../data/mockProduct';
 import {
   renderReviewCard,
   renderStars,
-  filterAndSortReviews,
-  bindHelpfulButtons,
-  SORT_LABELS,
 } from './ProductReviews';
-import type { ReviewFilterState, SortMode } from './ProductReviews';
 
 /* ── Modal HTML ──────────────────────────────────────── */
 
@@ -22,12 +21,37 @@ export function ReviewsModal(): string {
   const photoReviewCount = p.reviews.filter(r => r.images && r.images.length > 0).length;
 
   return `
-    <div id="rv-reviews-modal" class="rv-modal-overlay rv-modal-hidden">
-      <div class="rv-modal max-sm:!w-full max-sm:!h-full max-sm:!max-h-[100vh] max-sm:!rounded-none">
+    <div
+      id="rv-reviews-modal"
+      x-data="reviewsModal"
+      x-show="open"
+      x-cloak
+      x-transition:enter="transition ease-out duration-300"
+      x-transition:enter-start="opacity-0"
+      x-transition:enter-end="opacity-100"
+      x-transition:leave="transition ease-in duration-200"
+      x-transition:leave-start="opacity-100"
+      x-transition:leave-end="opacity-0"
+      @click.self="close()"
+      @keydown.escape.window="if (open) { close() }"
+      @reviews-modal-show.window="show()"
+      :data-open="open"
+      class="rv-modal-overlay"
+    >
+      <div
+        x-show="open"
+        x-transition:enter="transition ease-out duration-300"
+        x-transition:enter-start="opacity-0 scale-95"
+        x-transition:enter-end="opacity-100 scale-100"
+        x-transition:leave="transition ease-in duration-200"
+        x-transition:leave-start="opacity-100 scale-100"
+        x-transition:leave-end="opacity-0 scale-95"
+        class="rv-modal max-sm:!w-full max-sm:!h-full max-sm:!max-h-[100vh] max-sm:!rounded-none"
+      >
         <!-- Fixed Header -->
         <div class="rv-modal-header flex justify-between items-center px-6 py-5 shrink-0 max-sm:!p-4">
           <span class="rv-modal-title">${p.storeReviewCount} Mağaza Yorumları</span>
-          <button type="button" class="rv-modal-close" id="rv-modal-close">
+          <button type="button" @click="close()" class="rv-modal-close" id="rv-modal-close">
             <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
             </svg>
@@ -35,37 +59,37 @@ export function ReviewsModal(): string {
         </div>
 
         <!-- Scrollable Body -->
-        <div class="rv-modal-body overflow-y-auto px-6 pb-6 flex-1 max-sm:!px-4 max-sm:!pb-4">
+        <div class="rv-modal-body overflow-y-auto px-6 pb-6 flex-1 max-sm:!px-4 max-sm:!pb-4" @click="ratingOpen = false; sortOpen = false">
           <!-- Filter Row -->
           <div class="rv-filter-row flex items-center gap-2 flex-wrap mb-4">
-            <button type="button" class="rv-filter-pill active" data-rv-modal-filter="all">Tümü</button>
-            <button type="button" class="rv-filter-pill" data-rv-modal-filter="photo">Fotoğraflı/Videolu (${photoReviewCount})</button>
+            <button type="button" class="rv-filter-pill" :class="{ active: filterType === 'all' }" @click="setFilter('all')">Tümü</button>
+            <button type="button" class="rv-filter-pill" :class="{ active: filterType === 'photo' }" @click="setFilter('photo')">Fotoğraflı/Videolu (${photoReviewCount})</button>
 
             <!-- Rating Dropdown -->
-            <div class="rv-rating-dropdown" id="rv-modal-rating-dropdown">
-              <button type="button" class="rv-rating-dropdown-trigger">
-                Puan
+            <div class="rv-rating-dropdown" id="rv-modal-rating-dropdown" :class="{ open: ratingOpen }" @click.outside="ratingOpen = false">
+              <button type="button" class="rv-rating-dropdown-trigger" @click.stop="ratingOpen = !ratingOpen; sortOpen = false" :class="{ active: ratingFilter !== 'all' }">
+                <span x-text="ratingLabel()"></span>
                 <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
               </button>
               <div class="rv-rating-dropdown-panel max-sm:!min-w-[160px]">
-                <button type="button" class="rv-rating-dropdown-item active" data-rv-modal-rating="all">Tüm Puanlar</button>
-                <button type="button" class="rv-rating-dropdown-item" data-rv-modal-rating="5">${renderStars(5, true)} 5 Yıldız</button>
-                <button type="button" class="rv-rating-dropdown-item" data-rv-modal-rating="4">${renderStars(4, true)} 4 Yıldız</button>
-                <button type="button" class="rv-rating-dropdown-item" data-rv-modal-rating="3">${renderStars(3, true)} 3 Yıldız</button>
-                <button type="button" class="rv-rating-dropdown-item" data-rv-modal-rating="2">${renderStars(2, true)} 2 Yıldız</button>
-                <button type="button" class="rv-rating-dropdown-item" data-rv-modal-rating="1">${renderStars(1, true)} 1 Yıldız</button>
+                <button type="button" class="rv-rating-dropdown-item" :class="{ active: ratingFilter === 'all' }" @click="setRating('all')">Tüm Puanlar</button>
+                <button type="button" class="rv-rating-dropdown-item" :class="{ active: ratingFilter === 5 }" @click="setRating('5')">${renderStars(5, true)} 5 Yıldız</button>
+                <button type="button" class="rv-rating-dropdown-item" :class="{ active: ratingFilter === 4 }" @click="setRating('4')">${renderStars(4, true)} 4 Yıldız</button>
+                <button type="button" class="rv-rating-dropdown-item" :class="{ active: ratingFilter === 3 }" @click="setRating('3')">${renderStars(3, true)} 3 Yıldız</button>
+                <button type="button" class="rv-rating-dropdown-item" :class="{ active: ratingFilter === 2 }" @click="setRating('2')">${renderStars(2, true)} 2 Yıldız</button>
+                <button type="button" class="rv-rating-dropdown-item" :class="{ active: ratingFilter === 1 }" @click="setRating('1')">${renderStars(1, true)} 1 Yıldız</button>
               </div>
             </div>
 
             <!-- Sort Dropdown -->
-            <div class="rv-sort-dropdown max-sm:!ml-0 max-sm:!w-full" id="rv-modal-sort-dropdown">
-              <button type="button" class="rv-sort-dropdown-trigger max-sm:!w-full max-sm:!justify-between">
-                Sırala: En alakalı
+            <div class="rv-sort-dropdown max-sm:!ml-0 max-sm:!w-full" id="rv-modal-sort-dropdown" :class="{ open: sortOpen }" @click.outside="sortOpen = false">
+              <button type="button" class="rv-sort-dropdown-trigger max-sm:!w-full max-sm:!justify-between" @click.stop="sortOpen = !sortOpen; ratingOpen = false">
+                <span x-text="'Sırala: ' + sortLabel()"></span>
                 <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
               </button>
               <div class="rv-sort-dropdown-panel max-sm:!left-0 max-sm:!right-0">
-                <button type="button" class="rv-sort-dropdown-item active" data-rv-modal-sort="relevant">En alakalı</button>
-                <button type="button" class="rv-sort-dropdown-item" data-rv-modal-sort="newest">En yeni</button>
+                <button type="button" class="rv-sort-dropdown-item" :class="{ active: sortBy === 'relevant' }" @click="setSort('relevant')">En alakalı</button>
+                <button type="button" class="rv-sort-dropdown-item" :class="{ active: sortBy === 'newest' }" @click="setSort('newest')">En yeni</button>
               </div>
             </div>
           </div>
@@ -74,7 +98,7 @@ export function ReviewsModal(): string {
           <div class="flex gap-2 flex-wrap mb-5">
             <span style="font-size: 12px; color: var(--pd-rating-text-color, #6b7280); align-self: center;">Sık bahsedilenler:</span>
             ${p.reviewMentionTags.map(tag => `
-              <button type="button" class="rv-mention-tag" data-rv-modal-mention="${tag.label}">${tag.label} (${tag.count})</button>
+              <button type="button" class="rv-mention-tag" :class="{ active: mentionFilter === '${tag.label}' }" @click="toggleMention('${tag.label}')">${tag.label} (${tag.count})</button>
             `).join('')}
           </div>
 
@@ -86,7 +110,7 @@ export function ReviewsModal(): string {
           </div>
 
           <!-- Review Cards (with product thumbnails) -->
-          <div id="rv-modal-reviews-list">
+          <div id="rv-modal-reviews-list" x-ref="reviewsList">
             ${p.reviews.map(r => renderReviewCard(r, true)).join('')}
           </div>
         </div>
@@ -97,167 +121,27 @@ export function ReviewsModal(): string {
 
 /* ── Init logic ──────────────────────────────────────── */
 
+/**
+ * @deprecated Replaced by Alpine.js x-data="reviewsModal" directives.
+ * Alpine handles show/hide, filters, dropdowns, mention tags, Escape key,
+ * and body scroll lock. This function only binds the show-all button
+ * (which lives outside the Alpine component in ProductReviews) as a
+ * transitional bridge until ProductReviews is also migrated.
+ * Remove this call from page entry files and use startAlpine() instead.
+ */
 export function initReviewsModal(): void {
-  const overlay = document.getElementById('rv-reviews-modal');
-  const closeBtn = document.getElementById('rv-modal-close');
-
-  if (!overlay) return;
-
-  // ── Modal chrome: open / close / Escape ────────────
+  // Bind the show-all button (outside the Alpine component) to dispatch
+  // the custom event that the Alpine reviewsModal component listens for.
   const showAllBtn = document.querySelector<HTMLButtonElement>('.rv-show-all-btn');
   if (showAllBtn) {
-    showAllBtn.addEventListener('click', () => {
-      overlay.classList.remove('rv-modal-hidden');
-      document.body.style.overflow = 'hidden';
-    });
+    showAllBtn.addEventListener('click', showReviewsModal);
   }
+}
 
-  function closeModal() {
-    overlay!.classList.add('rv-modal-hidden');
-    document.body.style.overflow = '';
-  }
-
-  if (closeBtn) {
-    closeBtn.addEventListener('click', closeModal);
-  }
-
-  overlay.addEventListener('click', (e) => {
-    if (e.target === overlay) closeModal();
-  });
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && !overlay.classList.contains('rv-modal-hidden')) {
-      closeModal();
-    }
-  });
-
-  // ── Independent filter state for the modal ─────────
-  const modalState: ReviewFilterState = {
-    filterType: 'all',
-    ratingFilter: 'all',
-    mentionFilter: null,
-    sortBy: 'relevant',
-  };
-
-  const cardsContainer = overlay.querySelector<HTMLElement>('#rv-modal-reviews-list');
-
-  function renderModalReviews(): void {
-    if (!cardsContainer) return;
-    const filtered = filterAndSortReviews(modalState);
-
-    if (filtered.length === 0) {
-      cardsContainer.innerHTML = `
-        <div style="text-align: center; padding: 40px 0; color: var(--pd-rating-text-color, #6b7280); font-size: 14px;">
-          Bu filtrelere uygun yorum bulunamadı.
-        </div>
-      `;
-    } else {
-      cardsContainer.innerHTML = filtered.map(r => renderReviewCard(r, true)).join('');
-    }
-    bindHelpfulButtons(cardsContainer);
-  }
-
-  // ── Filter pills (Tümü / Fotoğraflı) ──────────────
-  const filterPills = overlay.querySelectorAll<HTMLButtonElement>('[data-rv-modal-filter]');
-  filterPills.forEach(pill => {
-    pill.addEventListener('click', () => {
-      filterPills.forEach(p => p.classList.remove('active'));
-      pill.classList.add('active');
-      const val = pill.getAttribute('data-rv-modal-filter');
-      modalState.filterType = val === 'photo' ? 'photo' : 'all';
-      renderModalReviews();
-    });
-  });
-
-  // ── Rating dropdown ────────────────────────────────
-  const ratingDropdown = document.getElementById('rv-modal-rating-dropdown');
-  const sortDropdown = document.getElementById('rv-modal-sort-dropdown');
-
-  if (ratingDropdown) {
-    const trigger = ratingDropdown.querySelector<HTMLButtonElement>('.rv-rating-dropdown-trigger');
-    const items = ratingDropdown.querySelectorAll<HTMLButtonElement>('[data-rv-modal-rating]');
-
-    trigger?.addEventListener('click', (e) => {
-      e.stopPropagation();
-      ratingDropdown.classList.toggle('open');
-      sortDropdown?.classList.remove('open');
-    });
-
-    items.forEach(item => {
-      item.addEventListener('click', () => {
-        items.forEach(i => i.classList.remove('active'));
-        item.classList.add('active');
-        ratingDropdown.classList.remove('open');
-
-        const rating = item.getAttribute('data-rv-modal-rating');
-        modalState.ratingFilter = rating === 'all' ? 'all' : parseInt(rating || '0', 10);
-
-        if (trigger) {
-          const label = rating === 'all' ? 'Puan' : `${rating} Yıldız`;
-          trigger.innerHTML = `${label} <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>`;
-          trigger.classList.toggle('active', rating !== 'all');
-        }
-        renderModalReviews();
-      });
-    });
-  }
-
-  // ── Sort dropdown ──────────────────────────────────
-  if (sortDropdown) {
-    const trigger = sortDropdown.querySelector<HTMLButtonElement>('.rv-sort-dropdown-trigger');
-    const items = sortDropdown.querySelectorAll<HTMLButtonElement>('[data-rv-modal-sort]');
-
-    trigger?.addEventListener('click', (e) => {
-      e.stopPropagation();
-      sortDropdown.classList.toggle('open');
-      ratingDropdown?.classList.remove('open');
-    });
-
-    items.forEach(item => {
-      item.addEventListener('click', () => {
-        items.forEach(i => i.classList.remove('active'));
-        item.classList.add('active');
-        sortDropdown.classList.remove('open');
-
-        const sortVal = item.getAttribute('data-rv-modal-sort') as SortMode | null;
-        if (sortVal && sortVal in SORT_LABELS) {
-          modalState.sortBy = sortVal;
-        }
-
-        if (trigger) {
-          trigger.innerHTML = `Sırala: ${SORT_LABELS[modalState.sortBy]} <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>`;
-        }
-        renderModalReviews();
-      });
-    });
-  }
-
-  // ── Mention tags ───────────────────────────────────
-  const mentionTags = overlay.querySelectorAll<HTMLButtonElement>('[data-rv-modal-mention]');
-  mentionTags.forEach(tag => {
-    tag.addEventListener('click', () => {
-      const label = tag.getAttribute('data-rv-modal-mention');
-      const wasActive = tag.classList.contains('active');
-
-      mentionTags.forEach(t => t.classList.remove('active'));
-      if (!wasActive) {
-        tag.classList.add('active');
-        modalState.mentionFilter = label;
-      } else {
-        modalState.mentionFilter = null;
-      }
-      renderModalReviews();
-    });
-  });
-
-  // ── Click-outside to close modal dropdowns ─────────
-  overlay.querySelector('.rv-modal-body')?.addEventListener('click', () => {
-    ratingDropdown?.classList.remove('open');
-    sortDropdown?.classList.remove('open');
-  });
-
-  // ── Helpful buttons (initial binding with auth gate) ──
-  if (cardsContainer) {
-    bindHelpfulButtons(cardsContainer);
-  }
+/**
+ * Show the reviews modal.
+ * Dispatches a custom event that the Alpine reviewsModal component listens for.
+ */
+export function showReviewsModal(): void {
+  window.dispatchEvent(new CustomEvent('reviews-modal-show'));
 }
