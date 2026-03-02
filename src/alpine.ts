@@ -426,6 +426,42 @@ Alpine.data('stickyHeaderSearch', () => ({
   },
 }));
 
+Alpine.data('checkbox', () => ({
+  checked: false,
+  indeterminate: false,
+  inputId: '',
+  handlerId: null as string | null,
+
+  init() {
+    const input = (this.$refs as Record<string, HTMLInputElement>).input;
+    if (!input) return;
+
+    this.inputId = input.id;
+    this.checked = input.checked;
+    this.handlerId = input.dataset.onchange || null;
+
+    if (input.dataset.indeterminate === 'true') {
+      this.indeterminate = true;
+    }
+  },
+
+  handleChange() {
+    const input = (this.$refs as Record<string, HTMLInputElement>).input;
+    if (!input) return;
+
+    this.checked = input.checked;
+    this.indeterminate = false;
+
+    if (this.handlerId) {
+      this.$dispatch('checkbox-change', {
+        id: this.inputId,
+        checked: this.checked,
+        handlerId: this.handlerId,
+      });
+    }
+  },
+}));
+
 // Make Alpine available globally for debugging
 window.Alpine = Alpine;
 
