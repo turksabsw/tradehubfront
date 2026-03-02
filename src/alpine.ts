@@ -16,6 +16,8 @@ import {
   LIGHTBOX_THUMB_GAP,
 } from './components/product/ProductImageGallery';
 import { mockProduct } from './data/mockProduct';
+import { cartStore } from './components/cart/state/CartStore';
+import { showFavoriteToast } from './components/cart/page/CartPage';
 
 // Augment Window interface for Alpine global access (debugging)
 declare global {
@@ -486,6 +488,392 @@ Alpine.data('quantityInput', (props: { value: number; min: number; max: number; 
     const raw = Number(input.value);
     this.value = Math.min(Math.max(Number.isNaN(raw) ? this.min : raw, this.min), this.max);
     this.$dispatch('quantity-change', { id: this.id, value: this.value });
+  },
+}));
+
+Alpine.data('cartPage', () => ({
+  init() {
+    cartStore.subscribe(() => {
+      this.syncSummary();
+      this.syncBatchBar();
+      this.syncSupplierTotals();
+      this.checkEmptyCart();
+    });
+
+    // Initial render synchronization
+    this.syncSummary();
+    this.syncBatchBar();
+    this.syncSupplierTotals();
+
+    // Thumbnail slider for summary section
+    this.initThumbnailSlider();
+  },
+
+  /**
+   * Sync a checkbox's DOM state and Alpine Checkbox component state.
+   * Updates both input.checked/indeterminate and the Alpine :class binding
+   * via _x_dataStack to prevent stale visual state.
+   */
+  syncCheckbox(input: HTMLInputElement, checked: boolean, indeterminate: boolean = false) {
+    input.checked = checked;
+    input.indeterminate = indeterminate;
+
+    // Update Alpine Checkbox component reactive state so :class bindings stay correct
+    const wrapper = input.closest<HTMLElement>('.next-checkbox-wrapper');
+    if (wrapper) {
+      const dataStack = (wrapper as any)._x_dataStack; // eslint-disable-line @typescript-eslint/no-explicit-any
+      if (dataStack?.[0]) {
+        dataStack[0].checked = checked;
+        dataStack[0].indeterminate = indeterminate;
+      }
+    }
+  },
+
+  handleBatchSelectToggle(event: CustomEvent) {
+    const checked = event.detail?.selectAll ?? false;
+    cartStore.toggleAll(checked);
+
+    const el = this.$el as HTMLElement;
+    el.querySelectorAll<HTMLInputElement>('.next-checkbox-input').forEach((input) => {
+      this.syncCheckbox(input, checked);
+    });
+  },
+
+  handleSupplierSelect(event: CustomEvent) {
+    const supplierId = event.detail?.supplierId as string | undefined;
+    const selected = event.detail?.selected ?? false;
+    if (!supplierId) return;
+
+    cartStore.toggleSupplierSelection(supplierId, selected);
+
+    const el = this.$el as HTMLElement;
+    const supplierCard = el.querySelector<HTMLElement>(`[data-supplier-id="${supplierId}"]`);
+    if (!supplierCard) return;
+
+    supplierCard.querySelectorAll<HTMLInputElement>('.next-checkbox-input').forEach((input) => {
+      this.syncCheckbox(input, selected);
+    });
+  },
+
+  handleCheckboxChange(event: CustomEvent) {
+    const target = event.target as HTMLElement;
+    const skuRow = target.closest<HTMLElement>('[data-sku-id]');
+    const productRow = target.closest<HTMLElement>('[data-product-id]');
+    const checked = event.detail?.checked ?? false;
+
+    if (skuRow) {
+      const skuId = skuRow.dataset.skuId;
+      if (!skuId) return;
+      cartStore.toggleSkuSelection(skuId, checked);
+      this.updateParentCheckboxStates(skuRow);
+      return;
+    }
+
+    if (productRow) {
+      const productId = productRow.dataset.productId;
+      if (!productId) return;
+
+      cartStore.toggleProductSelection(productId, checked);
+      productRow.querySelectorAll<HTMLInputElement>('.sc-c-sku-container-new .next-checkbox-input').forEach((input) => {
+        this.syncCheckbox(input, checked);
+      });
+
+      const supplierCard = productRow.closest<HTMLElement>('[data-supplier-id]');
+      if (supplierCard) {
+        const supplierId = supplierCard.dataset.supplierId;
+        if (supplierId) {
+          const supplierCheck = supplierCard.querySelector<HTMLInputElement>(`#supplier-checkbox-${supplierId}`);
+          if (supplierCheck) {
+            const productChecks = supplierCard.querySelectorAll<HTMLInputElement>('.sc-c-spu-container-new > .flex .next-checkbox-input');
+            const allSelected = Array.from(productChecks).every((checkbox) => checkbox.checked);
+            const someSelected = Array.from(productChecks).some((checkbox) => checkbox.checked || checkbox.indeterminate);
+            this.syncCheckbox(supplierCheck, allSelected, someSelected && !allSelected);
+          }
+        }
+      }
+    }
+  },
+
+  handleQuantityChange(event: CustomEvent) {
+    const inputId = event.detail?.id as string | undefined;
+    const value = event.detail?.value as number;
+    if (!inputId) return;
+
+    const skuId = inputId.replace('sku-qty-', '');
+    cartStore.updateSkuQuantity(skuId, value);
+  },
+
+  handleSkuDelete(event: CustomEvent) {
+    const skuId = event.detail?.skuId as string | undefined;
+    if (!skuId) return;
+
+    const snapshot = cartStore.getSku(skuId);
+    const productId = snapshot?.product.id;
+    const supplierId = snapshot?.supplier.id;
+    const productSkuCount = snapshot?.product.skus.length ?? 0;
+    const supplierProductCount = snapshot?.supplier.products.length ?? 0;
+
+    cartStore.deleteSku(skuId);
+
+    const el = this.$el as HTMLElement;
+    el.querySelector(`[data-sku-id="${skuId}"]`)?.remove();
+
+    if (productSkuCount <= 1 && productId) {
+      el.querySelector(`[data-product-id="${productId}"]`)?.remove();
+      if (supplierProductCount <= 1 && supplierId) {
+        el.querySelector(`[data-supplier-id="${supplierId}"]`)?.remove();
+      }
+    }
+  },
+
+  handleProductDelete(event: CustomEvent) {
+    const productId = event.detail?.productId as string | undefined;
+    if (!productId) return;
+
+    const snapshot = cartStore.getProduct(productId);
+    const supplierId = snapshot?.supplier.id;
+    const supplierProductCount = snapshot?.supplier.products.length ?? 0;
+
+    cartStore.deleteProduct(productId);
+
+    const el = this.$el as HTMLElement;
+    el.querySelector(`[data-product-id="${productId}"]`)?.remove();
+
+    if (supplierProductCount <= 1 && supplierId) {
+      el.querySelector(`[data-supplier-id="${supplierId}"]`)?.remove();
+    }
+  },
+
+  handleBatchDelete() {
+    const selectedIds = new Set(cartStore.getSelectedSkus().map((sku) => sku.id));
+    cartStore.deleteSelected();
+
+    const el = this.$el as HTMLElement;
+    selectedIds.forEach((skuId) => {
+      el.querySelector(`[data-sku-id="${skuId}"]`)?.remove();
+    });
+
+    el.querySelectorAll<HTMLElement>('[data-product-id]').forEach((product) => {
+      if (!product.querySelector('[data-sku-id]')) product.remove();
+    });
+
+    el.querySelectorAll<HTMLElement>('[data-supplier-id]').forEach((supplier) => {
+      if (!supplier.querySelector('[data-product-id]')) supplier.remove();
+    });
+  },
+
+  handleProductFavorite(event: CustomEvent) {
+    const productId = event.detail?.productId as string | undefined;
+    if (!productId) return;
+
+    const snapshot = cartStore.getProduct(productId);
+    if (!snapshot) return;
+
+    // Save to local storage mock
+    try {
+      const stored = localStorage.getItem('tradehub-favorites') || '[]';
+      const parsed = JSON.parse(stored);
+      parsed.push({
+        id: productId,
+        image: snapshot.product.skus[0]?.skuImage || 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=300&h=300&fit=crop',
+        title: snapshot.product.title,
+        priceRange: `$${snapshot.product.skus[0]?.unitPrice || 0}`,
+        minOrder: snapshot.product.moqLabel || 'Min. order: 1 piece'
+      });
+      localStorage.setItem('tradehub-favorites', JSON.stringify(parsed));
+    } catch (e) { /* ignore storage errors */ }
+
+    showFavoriteToast();
+
+    const supplierId = snapshot.supplier.id;
+    const supplierProductCount = snapshot.supplier.products.length;
+
+    cartStore.deleteProduct(productId);
+    const el = this.$el as HTMLElement;
+    el.querySelector(`[data-product-id="${productId}"]`)?.remove();
+
+    if (supplierProductCount <= 1 && supplierId) {
+      el.querySelector(`[data-supplier-id="${supplierId}"]`)?.remove();
+    }
+  },
+
+  updateParentCheckboxStates(skuRow: Element) {
+    const productRow = skuRow.closest<HTMLElement>('[data-product-id]');
+    if (!productRow) return;
+
+    const productId = productRow.dataset.productId;
+    const productCheckbox = productId ? productRow.querySelector<HTMLInputElement>(`#product-checkbox-${productId}`) : null;
+    const skuChecks = Array.from(productRow.querySelectorAll<HTMLInputElement>('.sc-c-sku-container-new .next-checkbox-input'));
+
+    if (productCheckbox && skuChecks.length > 0) {
+      const all = skuChecks.every((checkbox) => checkbox.checked);
+      const some = skuChecks.some((checkbox) => checkbox.checked || checkbox.indeterminate);
+      this.syncCheckbox(productCheckbox, all, some && !all);
+    }
+
+    const supplier = productRow.closest<HTMLElement>('[data-supplier-id]');
+    if (!supplier) return;
+
+    const supplierId = supplier.dataset.supplierId;
+    const supplierCheckbox = supplierId ? supplier.querySelector<HTMLInputElement>(`#supplier-checkbox-${supplierId}`) : null;
+    const productChecks = Array.from(supplier.querySelectorAll<HTMLInputElement>('.sc-c-spu-container-new > .flex .next-checkbox-input'));
+
+    if (supplierCheckbox && productChecks.length > 0) {
+      const all = productChecks.every((checkbox) => checkbox.checked);
+      const some = productChecks.some((checkbox) => checkbox.checked || checkbox.indeterminate);
+      this.syncCheckbox(supplierCheckbox, all, some && !all);
+    }
+  },
+
+  syncSummary() {
+    const el = this.$el as HTMLElement;
+    const summary = cartStore.getSummary();
+
+    const countEl = el.querySelector<HTMLElement>('.sc-summary-selected-count');
+    if (countEl) countEl.textContent = String(summary.selectedCount);
+
+    const subtotalEl = el.querySelector<HTMLElement>('.sc-summary-product-subtotal');
+    if (subtotalEl) subtotalEl.textContent = `$${summary.productSubtotal.toFixed(2).replace('.', ',')}`;
+
+    const discountRow = el.querySelector<HTMLElement>('.sc-summary-discount-row');
+    const discountEl = el.querySelector<HTMLElement>('.sc-summary-discount');
+    const banner = el.querySelector<HTMLElement>('.sc-summary-savings-banner');
+
+    if (summary.discount > 0) {
+      const formatted = `- $${summary.discount.toFixed(2).replace('.', ',')}`;
+      discountRow?.classList.remove('hidden');
+      if (discountEl) discountEl.textContent = formatted;
+      if (banner) {
+        banner.classList.remove('hidden');
+        banner.innerHTML = `Siparişinizde <strong>$${summary.discount.toFixed(2).replace('.', ',')}</strong> tasarruf edildi`;
+      }
+    } else {
+      discountRow?.classList.add('hidden');
+      banner?.classList.add('hidden');
+    }
+
+    const totalEl = el.querySelector<HTMLElement>('.sc-summary-subtotal');
+    if (totalEl) totalEl.textContent = `$${summary.subtotal.toFixed(2).replace('.', ',')}`;
+
+    this.updateThumbnailGrid(summary.items);
+  },
+
+  syncSupplierTotals() {
+    const el = this.$el as HTMLElement;
+
+    el.querySelectorAll<HTMLElement>('.sc-c-supplier-container').forEach((container) => {
+      const supplierId = container.dataset.supplierId;
+      if (!supplierId) return;
+
+      const supplier = cartStore.getSupplier(supplierId);
+      if (!supplier) return;
+
+      let subtotal = 0;
+      supplier.products.forEach(product => {
+        product.skus.forEach(sku => {
+          if (sku.selected) {
+            subtotal += sku.unitPrice * sku.quantity;
+          }
+        });
+      });
+
+      const totalEl = container.querySelector<HTMLElement>('.sc-c-supplier-total');
+      if (totalEl) {
+        if (subtotal > 0) {
+          totalEl.textContent = `Toplam: ${supplier.products[0]?.skus[0]?.currency || '$'}${subtotal.toFixed(2).replace('.', ',')}`;
+        } else {
+          totalEl.textContent = '';
+        }
+      }
+    });
+  },
+
+  syncBatchBar() {
+    const el = this.$el as HTMLElement;
+
+    const total = cartStore.getTotalSkuCount();
+    const selected = cartStore.getSelectedSkuCount();
+
+    const count = el.querySelector<HTMLElement>('.sc-c-batch-count');
+    if (count) count.textContent = `(${total})`;
+
+    const deleteBtn = el.querySelector<HTMLButtonElement>('.sc-c-batch-delete-btn');
+    if (deleteBtn) deleteBtn.disabled = selected === 0;
+
+    const selectAll = el.querySelector<HTMLInputElement>('#batch-select-all');
+    if (selectAll) {
+      this.syncCheckbox(selectAll, total > 0 && selected === total, selected > 0 && selected < total);
+    }
+  },
+
+  updateThumbnailGrid(items: { image: string; quantity: number }[]) {
+    const track = document.querySelector<HTMLElement>('.checkout-items-images');
+    if (!track) return;
+
+    track.innerHTML = items.map((item) => `
+      <div class="relative w-16 h-16 rounded-md overflow-hidden border border-border-default shrink-0">
+        <img src="${item.image}" alt="SKU" class="w-full h-full object-cover" />
+        <span class="absolute right-0 bottom-0 px-1 py-[2px] rounded-tl bg-black/65 text-white text-[11px] font-bold leading-none">${item.quantity}</span>
+      </div>
+    `).join('');
+
+    track.dispatchEvent(new Event('scroll'));
+  },
+
+  initThumbnailSlider() {
+    const wrapper = document.querySelector<HTMLElement>('.checkout-items-wrapper');
+    if (!wrapper) return;
+
+    const track = wrapper.querySelector<HTMLElement>('.checkout-items-images');
+    const left = wrapper.querySelector<HTMLButtonElement>('[data-dir="left"]');
+    const right = wrapper.querySelector<HTMLButtonElement>('[data-dir="right"]');
+    if (!track || !left || !right) return;
+
+    const updateVisibility = () => {
+      const overflows = track.scrollWidth > track.clientWidth + 1;
+      left.classList.toggle('!hidden', !overflows);
+      right.classList.toggle('!hidden', !overflows);
+
+      if (!overflows) return;
+
+      const atStart = track.scrollLeft <= 1;
+      const atEnd = track.scrollLeft + track.clientWidth >= track.scrollWidth - 1;
+
+      left.classList.toggle('!opacity-0', atStart);
+      left.classList.toggle('!pointer-events-none', atStart);
+      right.classList.toggle('!opacity-0', atEnd);
+      right.classList.toggle('!pointer-events-none', atEnd);
+    };
+
+    wrapper.querySelectorAll<HTMLButtonElement>('.checkout-items-arrow').forEach((button) => {
+      button.addEventListener('click', () => {
+        const dir = button.dataset.dir;
+        track.scrollBy({ left: dir === 'left' ? -140 : 140, behavior: 'smooth' });
+      });
+    });
+
+    track.addEventListener('scroll', updateVisibility, { passive: true });
+    window.addEventListener('resize', updateVisibility, { passive: true });
+    updateVisibility();
+  },
+
+  checkEmptyCart() {
+    if (cartStore.getTotalSkuCount() > 0) return;
+
+    const el = this.$el as HTMLElement;
+    el.innerHTML = `
+      <div class="flex flex-col items-center justify-center py-20 text-center">
+        <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" class="text-text-tertiary mb-6">
+          <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+        </svg>
+        <h2 class="text-2xl font-bold text-text-heading mb-2">Sepetiniz boş</h2>
+        <p class="text-base text-text-secondary mb-8 max-w-md">Henüz sepetinize ürün eklemediniz. Ürünleri keşfedip sepetinize ekleyebilirsiniz.</p>
+        <a href="/products.html" class="inline-flex items-center justify-center h-12 px-8 rounded-full bg-cta-primary text-white font-semibold text-base hover:bg-cta-primary-hover transition-colors no-underline">
+          Alışverişe devam et
+        </a>
+      </div>
+    `;
   },
 }));
 
