@@ -6,6 +6,16 @@ import {
   SORT_LABELS,
 } from './components/product/ProductReviews';
 import type { ReviewFilterState, SortMode } from './components/product/ProductReviews';
+import {
+  renderGalleryMedia,
+  defaultVisual,
+  ZOOM_SCALE,
+  THUMB_SIZE,
+  THUMB_GAP,
+  LIGHTBOX_THUMB_SIZE,
+  LIGHTBOX_THUMB_GAP,
+} from './components/product/ProductImageGallery';
+import { mockProduct } from './data/mockProduct';
 
 // Augment Window interface for Alpine global access (debugging)
 declare global {
@@ -184,6 +194,178 @@ Alpine.data('orderProtectionModal', () => ({
       e.preventDefault();
       first.focus();
     }
+  },
+}));
+
+Alpine.data('imageGallery', () => ({
+  currentIndex: 0,
+  lightboxIndex: 0,
+  isLightboxOpen: false,
+  isZooming: false,
+  supportsHoverZoom: false,
+  imageCount: mockProduct.images.length,
+  totalSlides: mockProduct.images.length + 1,
+  attrsIndex: mockProduct.images.length,
+
+  init() {
+    this.supportsHoverZoom = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+    // Listen for mobile swipe navigation custom event
+    document.addEventListener('gallery-go-to', ((e: CustomEvent) => {
+      this.goToSlide(e.detail.index);
+    }) as EventListener);
+  },
+
+  getMainMedia(): HTMLElement | null {
+    const mainImage = (this.$refs as Record<string, HTMLElement>).mainImage;
+    return mainImage?.querySelector<HTMLElement>('[data-gallery-main-media="true"]') ?? null;
+  },
+
+  resetZoom() {
+    const media = this.getMainMedia();
+    if (!media) return;
+    media.style.transformOrigin = '50% 50%';
+    media.style.transform = 'scale(1)';
+    this.isZooming = false;
+  },
+
+  handleZoomMove(event: PointerEvent) {
+    if (!this.supportsHoverZoom) return;
+    if (event.pointerType && event.pointerType !== 'mouse') return;
+
+    const mainImage = (this.$refs as Record<string, HTMLElement>).mainImage;
+    const media = this.getMainMedia();
+    if (!media || !mainImage) return;
+
+    const rect = mainImage.getBoundingClientRect();
+    const x = ((event.clientX - rect.left) / rect.width) * 100;
+    const y = ((event.clientY - rect.top) / rect.height) * 100;
+    const clampedX = Math.min(100, Math.max(0, x));
+    const clampedY = Math.min(100, Math.max(0, y));
+
+    media.style.transformOrigin = `${clampedX}% ${clampedY}%`;
+    media.style.transform = `scale(${ZOOM_SCALE})`;
+    this.isZooming = true;
+  },
+
+  scrollActiveThumbIntoView(index: number) {
+    const thumbList = (this.$refs as Record<string, HTMLElement>).thumbList;
+    if (!thumbList) return;
+    const activeThumb = thumbList.children[index] as HTMLElement | undefined;
+    if (!activeThumb) return;
+
+    const listTop = thumbList.scrollTop;
+    const listHeight = thumbList.clientHeight;
+    const thumbTop = activeThumb.offsetTop;
+    const thumbHeight = activeThumb.offsetHeight;
+
+    if (thumbTop < listTop) {
+      thumbList.scrollTo({ top: thumbTop, behavior: 'smooth' });
+    } else if (thumbTop + thumbHeight > listTop + listHeight) {
+      thumbList.scrollTo({ top: thumbTop + thumbHeight - listHeight, behavior: 'smooth' });
+    }
+  },
+
+  goToSlide(index: number) {
+    if (index < 0) index = this.totalSlides - 1;
+    if (index >= this.totalSlides) index = 0;
+    this.currentIndex = index;
+
+    // Dispatch event for mobile gallery sync
+    document.dispatchEvent(new CustomEvent('gallery-slide-change', { detail: { index: this.currentIndex } }));
+
+    const isAttrs = index === this.attrsIndex;
+
+    // Toggle attributes card visibility (ProductAttributes renders its own HTML with id)
+    const attrCard = document.getElementById('pd-attributes-card');
+    attrCard?.classList.toggle('hidden', !isAttrs);
+
+    // Update main image content when showing a photo slide
+    if (!isAttrs) {
+      const mainImage = (this.$refs as Record<string, HTMLElement>).mainImage;
+      if (mainImage) {
+        const image = mockProduct.images[index];
+        mainImage.innerHTML = renderGalleryMedia(
+          image?.src,
+          image?.alt ?? `Ürün görünümü ${index + 1}`,
+          defaultVisual,
+          'large',
+        );
+        this.resetZoom();
+      }
+    }
+
+    // Scroll the active thumbnail into view within the thumb list
+    this.scrollActiveThumbIntoView(index);
+  },
+
+  syncLightboxThumbInView(index: number) {
+    const lightboxThumbList = (this.$refs as Record<string, HTMLElement>).lightboxThumbList;
+    if (!lightboxThumbList) return;
+    const activeThumb = lightboxThumbList.querySelector<HTMLElement>(`.gallery-lightbox-thumb[data-index="${index}"]`);
+    activeThumb?.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'smooth' });
+  },
+
+  setLightboxSlide(index: number) {
+    if (this.imageCount === 0) return;
+
+    if (index < 0) index = this.imageCount - 1;
+    if (index >= this.imageCount) index = 0;
+    this.lightboxIndex = index;
+
+    const lightboxImage = (this.$refs as Record<string, HTMLElement>).lightboxImage;
+    if (lightboxImage) {
+      const image = mockProduct.images[index];
+      lightboxImage.innerHTML = renderGalleryMedia(
+        image?.src,
+        image?.alt ?? `Ürün görünümü ${index + 1}`,
+        defaultVisual,
+        'large',
+      );
+    }
+
+    this.syncLightboxThumbInView(index);
+  },
+
+  openLightbox(index: number) {
+    if (this.imageCount === 0) return;
+    this.setLightboxSlide(index);
+    this.isLightboxOpen = true;
+    document.body.classList.add('gallery-lightbox-open');
+  },
+
+  closeLightbox() {
+    this.isLightboxOpen = false;
+    document.body.classList.remove('gallery-lightbox-open');
+  },
+
+  lightboxPrev() {
+    this.setLightboxSlide(this.lightboxIndex - 1);
+    this.goToSlide(this.lightboxIndex);
+  },
+
+  lightboxNext() {
+    this.setLightboxSlide(this.lightboxIndex + 1);
+    this.goToSlide(this.lightboxIndex);
+  },
+
+  selectLightboxThumb(index: number) {
+    this.setLightboxSlide(index);
+    this.goToSlide(this.lightboxIndex);
+  },
+
+  scrollThumbs(direction: number) {
+    const thumbList = (this.$refs as Record<string, HTMLElement>).thumbList;
+    if (!thumbList) return;
+    const scrollAmount = THUMB_SIZE + THUMB_GAP;
+    thumbList.scrollBy({ top: direction * scrollAmount, behavior: 'smooth' });
+  },
+
+  scrollLightboxThumbs(direction: number) {
+    const lightboxThumbList = (this.$refs as Record<string, HTMLElement>).lightboxThumbList;
+    if (!lightboxThumbList) return;
+    const scrollAmount = LIGHTBOX_THUMB_SIZE + LIGHTBOX_THUMB_GAP;
+    lightboxThumbList.scrollBy({ top: direction * scrollAmount, behavior: 'smooth' });
   },
 }));
 

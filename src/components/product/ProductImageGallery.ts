@@ -4,6 +4,8 @@
  * Thumbnails change main image on HOVER. Up/down scroll arrows on thumbnail strip.
  * Prev/next arrows on main image. Favorite + camera icons top-right.
  * Gallery container uses aspect-ratio 16/10 matching Alibaba layout.
+ *
+ * Interactivity powered by Alpine.js (imageGallery component registered in alpine.ts).
  */
 
 import { mockProduct } from '../../data/mockProduct';
@@ -16,9 +18,9 @@ interface GalleryVisual {
   icon: string;
 }
 
-const ZOOM_SCALE = 1.85;
+export const ZOOM_SCALE = 1.85;
 
-const defaultVisual: GalleryVisual = {
+export const defaultVisual: GalleryVisual = {
   background: 'linear-gradient(180deg, #f8f9fa 0%, #e9ecef 100%)',
   accent: 'rgba(156, 163, 175, 0.2)',
   stroke: '#9ca3af',
@@ -44,7 +46,7 @@ function escapeHtmlAttr(value: string): string {
     .replace(/>/g, '&gt;');
 }
 
-function renderGalleryMedia(src: string | undefined, alt: string, visual: GalleryVisual, size: 'large' | 'thumb'): string {
+export function renderGalleryMedia(src: string | undefined, alt: string, visual: GalleryVisual, size: 'large' | 'thumb'): string {
   if (src) {
     const safeAlt = escapeHtmlAttr(alt);
     return `
@@ -63,10 +65,10 @@ function renderGalleryMedia(src: string | undefined, alt: string, visual: Galler
   return renderPlaceholder(visual, size);
 }
 
-const THUMB_SIZE = 60;
-const THUMB_GAP = 6;
-const LIGHTBOX_THUMB_SIZE = 76;
-const LIGHTBOX_THUMB_GAP = 10;
+export const THUMB_SIZE = 60;
+export const THUMB_GAP = 6;
+export const LIGHTBOX_THUMB_SIZE = 76;
+export const LIGHTBOX_THUMB_GAP = 10;
 
 export function ProductImageGallery(): string {
   const images = mockProduct.images;
@@ -76,9 +78,12 @@ export function ProductImageGallery(): string {
 
   const thumbsHtml = images.map((img, i) => `
     <div
-      class="gallery-thumb${i === 0 ? ' active' : ''}"
+      class="gallery-thumb"
+      :class="{ 'active': currentIndex === ${i} }"
       data-index="${i}"
       aria-label="${img.alt}"
+      @mouseenter="goToSlide(${i})"
+      @click="goToSlide(${i})"
     >${renderGalleryMedia(img.src, img.alt, defaultVisual, 'thumb')}</div>
   `).join('');
 
@@ -86,8 +91,11 @@ export function ProductImageGallery(): string {
   const attrThumbHtml = `
     <div
       class="gallery-thumb gallery-thumb-attrs"
+      :class="{ 'active': currentIndex === ${images.length} }"
       data-index="${images.length}"
       aria-label="Özellikler"
+      @mouseenter="goToSlide(${images.length})"
+      @click="goToSlide(${images.length})"
     >
       <div class="relative w-full h-full overflow-hidden flex items-center justify-center" style="background: linear-gradient(180deg, #f0f4f8 0%, #e2e8f0 100%);" aria-hidden="true">
         <svg width="24" height="24" fill="none" stroke="#64748b" stroke-width="1.4" viewBox="0 0 24 24">
@@ -100,31 +108,34 @@ export function ProductImageGallery(): string {
   const lightboxThumbsHtml = images.map((img, i) => `
     <button
       type="button"
-      class="gallery-lightbox-thumb max-[960px]:!w-[68px] max-[960px]:!h-[68px]${i === 0 ? ' active' : ''}"
+      class="gallery-lightbox-thumb max-[960px]:!w-[68px] max-[960px]:!h-[68px]"
+      :class="{ 'active': lightboxIndex === ${i} }"
       data-index="${i}"
       aria-label="${img.alt}"
+      @click="selectLightboxThumb(${i})"
     >${renderGalleryMedia(img.src, img.alt, defaultVisual, 'thumb')}</button>
   `).join('');
 
   return `
+    <div x-data="imageGallery">
     <div id="product-gallery">
 
       <!-- LEFT: Vertical Thumbnail Strip (hidden on narrow desktop, shown on wider) -->
       <div id="pd-thumb-strip" class="hidden 2xl:flex flex-col items-center shrink-0 w-[68px]">
 
         ${needsScroll ? `
-        <button type="button" id="thumb-scroll-up" class="pd-thumb-arrow flex items-center justify-center w-[56px] h-[28px] rounded-md border cursor-pointer flex-shrink-0 transition-colors" style="background: var(--color-surface, #ffffff); border-color: var(--color-border-default, #e5e5e5); color: var(--color-text-placeholder, #999999);" aria-label="Yukarı kaydır">
+        <button type="button" id="thumb-scroll-up" class="pd-thumb-arrow flex items-center justify-center w-[56px] h-[28px] rounded-md border cursor-pointer flex-shrink-0 transition-colors" style="background: var(--color-surface, #ffffff); border-color: var(--color-border-default, #e5e5e5); color: var(--color-text-placeholder, #999999);" aria-label="Yukarı kaydır" @click="scrollThumbs(-1)">
           <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/></svg>
         </button>
         ` : ''}
 
-        <div id="gallery-thumb-list" class="flex flex-col gap-1.5 overflow-hidden flex-1 py-1.5">
+        <div id="gallery-thumb-list" x-ref="thumbList" class="flex flex-col gap-1.5 overflow-hidden flex-1 py-1.5">
           ${thumbsHtml}
           ${attrThumbHtml}
         </div>
 
         ${needsScroll ? `
-        <button type="button" id="thumb-scroll-down" class="pd-thumb-arrow flex items-center justify-center w-[56px] h-[28px] rounded-md border cursor-pointer flex-shrink-0 transition-colors" style="background: var(--color-surface, #ffffff); border-color: var(--color-border-default, #e5e5e5); color: var(--color-text-placeholder, #999999);" aria-label="Aşağı kaydır">
+        <button type="button" id="thumb-scroll-down" class="pd-thumb-arrow flex items-center justify-center w-[56px] h-[28px] rounded-md border cursor-pointer flex-shrink-0 transition-colors" style="background: var(--color-surface, #ffffff); border-color: var(--color-border-default, #e5e5e5); color: var(--color-text-placeholder, #999999);" aria-label="Aşağı kaydır" @click="scrollThumbs(1)">
           <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
         </button>
         ` : ''}
@@ -132,7 +143,13 @@ export function ProductImageGallery(): string {
       </div>
 
       <!-- RIGHT: Main Image Area (content only) -->
-      <div id="gallery-main-image">
+      <div id="gallery-main-image"
+        x-ref="mainImage"
+        :class="{ 'hidden': currentIndex === attrsIndex, 'zoom-enabled': supportsHoverZoom, 'is-zooming': isZooming }"
+        @pointermove="handleZoomMove($event)"
+        @pointerleave="resetZoom()"
+        @click="currentIndex !== attrsIndex && openLightbox(currentIndex)"
+      >
         ${renderGalleryMedia(firstImage?.src, firstImage?.alt ?? 'Ürün görseli', defaultVisual, 'large')}
       </div>
 
@@ -140,10 +157,10 @@ export function ProductImageGallery(): string {
       ${ProductAttributes()}
 
       <!-- Navigation arrows — always visible on all slides -->
-      <button type="button" id="gallery-prev" class="gallery-nav-btn" aria-label="Önceki">
+      <button type="button" id="gallery-prev" class="gallery-nav-btn" aria-label="Önceki" @click.stop="goToSlide(currentIndex - 1)">
         <svg width="16" height="16" fill="none" stroke="#333" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
       </button>
-      <button type="button" id="gallery-next" class="gallery-nav-btn" aria-label="Sonraki">
+      <button type="button" id="gallery-next" class="gallery-nav-btn" aria-label="Sonraki" @click.stop="goToSlide(currentIndex + 1)">
         <svg width="16" height="16" fill="none" stroke="#333" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
       </button>
 
@@ -161,11 +178,15 @@ export function ProductImageGallery(): string {
 
     <!-- Photos / Attributes tabs -->
     <div id="pd-gallery-tabs" class="inline-flex gap-0.5 mt-3 rounded-full p-[3px]" style="background: var(--color-border-light);">
-      <button type="button" class="gallery-view-tab active">Fotoğraflar</button>
-      <button type="button" class="gallery-view-tab">Özellikler</button>
+      <button type="button" class="gallery-view-tab" :class="{ 'active': currentIndex !== attrsIndex }" @click="goToSlide(0)">Fotoğraflar</button>
+      <button type="button" class="gallery-view-tab" :class="{ 'active': currentIndex === attrsIndex }" @click="goToSlide(attrsIndex)">Özellikler</button>
     </div>
 
-    <div id="gallery-lightbox" class="hidden max-[960px]:!p-[72px_12px_12px]" aria-hidden="true">
+    <div id="gallery-lightbox" x-show="isLightboxOpen" x-cloak :aria-hidden="(!isLightboxOpen).toString()" @click.self="closeLightbox()" class="max-[960px]:!p-[72px_12px_12px]"
+      @keydown.escape.window="isLightboxOpen && closeLightbox()"
+      @keydown.left.window="isLightboxOpen && lightboxPrev()"
+      @keydown.right.window="isLightboxOpen && lightboxNext()"
+    >
       <div id="gallery-lightbox-toolbar" class="max-[960px]:!h-[58px] max-[960px]:!px-2.5">
         <div id="gallery-lightbox-actions" class="max-[960px]:!gap-2">
           <button type="button" class="gallery-lightbox-action-btn max-[960px]:!text-[15px] max-[960px]:!gap-[5px]" aria-label="Favorilere ekle">
@@ -182,9 +203,9 @@ export function ProductImageGallery(): string {
           </button>
         </div>
 
-        <div id="gallery-lightbox-count" class="max-[960px]:!text-sm">1/${images.length}</div>
+        <div id="gallery-lightbox-count" class="max-[960px]:!text-sm" x-text="(lightboxIndex + 1) + '/${images.length}'">${images.length > 0 ? `1/${images.length}` : '0/0'}</div>
 
-        <button type="button" id="gallery-lightbox-close" class="max-[960px]:!w-[34px] max-[960px]:!h-[34px]" aria-label="Galeriyi kapat">
+        <button type="button" id="gallery-lightbox-close" class="max-[960px]:!w-[34px] max-[960px]:!h-[34px]" aria-label="Galeriyi kapat" @click="closeLightbox()">
           <svg class="max-[960px]:!w-[22px] max-[960px]:!h-[22px]" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.1" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6l-12 12"/>
           </svg>
@@ -194,332 +215,49 @@ export function ProductImageGallery(): string {
       <div id="gallery-lightbox-inner" class="max-[960px]:!h-[min(86vh,760px)] max-[960px]:!grid-cols-1 max-[960px]:!grid-rows-[minmax(0,1fr)_82px] max-[960px]:!gap-3" role="dialog" aria-modal="true" aria-label="Ürün görsel galerisi">
         <div id="gallery-lightbox-sidebar" class="max-[960px]:!order-2 max-[960px]:!w-full max-[960px]:!h-auto max-[960px]:!min-h-0">
           ${needsLightboxThumbScroll ? `
-          <button type="button" id="gallery-lightbox-thumb-up" class="gallery-lightbox-scroll max-[960px]:!hidden" aria-label="Yukarı kaydır">
+          <button type="button" id="gallery-lightbox-thumb-up" class="gallery-lightbox-scroll max-[960px]:!hidden" aria-label="Yukarı kaydır" @click="scrollLightboxThumbs(-1)">
             <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/></svg>
           </button>
           ` : ''}
 
-          <div id="gallery-lightbox-thumb-list" class="max-[960px]:!w-full max-[960px]:!flex-row max-[960px]:!overflow-x-auto max-[960px]:!overflow-y-hidden max-[960px]:!px-0.5">
+          <div id="gallery-lightbox-thumb-list" x-ref="lightboxThumbList" class="max-[960px]:!w-full max-[960px]:!flex-row max-[960px]:!overflow-x-auto max-[960px]:!overflow-y-hidden max-[960px]:!px-0.5">
             ${lightboxThumbsHtml}
           </div>
 
           ${needsLightboxThumbScroll ? `
-          <button type="button" id="gallery-lightbox-thumb-down" class="gallery-lightbox-scroll max-[960px]:!hidden" aria-label="Aşağı kaydır">
+          <button type="button" id="gallery-lightbox-thumb-down" class="gallery-lightbox-scroll max-[960px]:!hidden" aria-label="Aşağı kaydır" @click="scrollLightboxThumbs(1)">
             <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
           </button>
           ` : ''}
         </div>
 
         <div id="gallery-lightbox-stage">
-          <div id="gallery-lightbox-image">
+          <div id="gallery-lightbox-image" x-ref="lightboxImage">
             ${renderGalleryMedia(firstImage?.src, firstImage?.alt ?? 'Ürün görseli', defaultVisual, 'large')}
           </div>
 
           <div id="gallery-lightbox-vertical-nav" class="max-[960px]:!w-10 max-[960px]:!right-2.5" aria-label="Görsel gezinme">
-            <button type="button" id="gallery-lightbox-prev" class="gallery-lightbox-nav-btn max-[960px]:!w-10 max-[960px]:!h-10" aria-label="Önceki görsel">
+            <button type="button" id="gallery-lightbox-prev" class="gallery-lightbox-nav-btn max-[960px]:!w-10 max-[960px]:!h-10" aria-label="Önceki görsel" @click="lightboxPrev()">
               <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7-7-7 7"/></svg>
             </button>
-            <button type="button" id="gallery-lightbox-next" class="gallery-lightbox-nav-btn max-[960px]:!w-10 max-[960px]:!h-10" aria-label="Sonraki görsel">
+            <button type="button" id="gallery-lightbox-next" class="gallery-lightbox-nav-btn max-[960px]:!w-10 max-[960px]:!h-10" aria-label="Sonraki görsel" @click="lightboxNext()">
               <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 10l7 7 7-7"/></svg>
             </button>
           </div>
         </div>
       </div>
     </div>
+
+    </div>
   `;
 }
 
 export function initImageGallery(): void {
-  const mainImage = document.getElementById('gallery-main-image');
-  const thumbs = document.querySelectorAll<HTMLElement>('.gallery-thumb');
-  const prevBtn = document.getElementById('gallery-prev');
-  const nextBtn = document.getElementById('gallery-next');
-  const thumbList = document.getElementById('gallery-thumb-list');
-  const scrollUpBtn = document.getElementById('thumb-scroll-up');
-  const scrollDownBtn = document.getElementById('thumb-scroll-down');
-  const attrCard = document.getElementById('pd-attributes-card');
-  const viewTabs = document.querySelectorAll<HTMLButtonElement>('.gallery-view-tab');
-  const lightbox = document.getElementById('gallery-lightbox');
-  const lightboxInner = document.getElementById('gallery-lightbox-inner');
-  const lightboxImage = document.getElementById('gallery-lightbox-image');
-  const lightboxCount = document.getElementById('gallery-lightbox-count');
-  const lightboxCloseBtn = document.getElementById('gallery-lightbox-close');
-  const lightboxPrevBtn = document.getElementById('gallery-lightbox-prev');
-  const lightboxNextBtn = document.getElementById('gallery-lightbox-next');
-  const lightboxThumbList = document.getElementById('gallery-lightbox-thumb-list');
-  const lightboxThumbUpBtn = document.getElementById('gallery-lightbox-thumb-up');
-  const lightboxThumbDownBtn = document.getElementById('gallery-lightbox-thumb-down');
-  const lightboxThumbs = document.querySelectorAll<HTMLButtonElement>('.gallery-lightbox-thumb');
-
-  if (!mainImage || thumbs.length === 0) return;
-  const supportsHoverZoom = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-
-  let currentIndex = 0;
-  let lightboxIndex = 0;
-  let isLightboxOpen = false;
-  const imageCount = mockProduct.images.length;
-  const totalSlides = imageCount + 1; // images + attributes slide
-  const attrsIndex = imageCount;
-
-  const getMainMedia = (): HTMLElement | null => {
-    const node = mainImage.querySelector<HTMLElement>('[data-gallery-main-media="true"]');
-    return node;
-  };
-
-  const resetZoom = (): void => {
-    const media = getMainMedia();
-    if (!media) return;
-    media.style.transformOrigin = '50% 50%';
-    media.style.transform = 'scale(1)';
-    mainImage.classList.remove('is-zooming');
-  };
-
-  const syncLightboxThumbInView = (index: number): void => {
-    if (!lightboxThumbList) return;
-    const activeThumb = lightboxThumbList.querySelector<HTMLElement>(`.gallery-lightbox-thumb[data-index="${index}"]`);
-    activeThumb?.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'smooth' });
-  };
-
-  const setLightboxSlide = (index: number): void => {
-    if (!lightboxImage || imageCount === 0) return;
-
-    if (index < 0) index = imageCount - 1;
-    if (index >= imageCount) index = 0;
-    lightboxIndex = index;
-
-    const image = mockProduct.images[index];
-    const visual = defaultVisual;
-    lightboxImage.innerHTML = renderGalleryMedia(
-      image?.src,
-      image?.alt ?? `Ürün görünümü ${index + 1}`,
-      visual,
-      'large',
-    );
-
-    if (lightboxCount) {
-      lightboxCount.textContent = `${index + 1}/${imageCount}`;
-    }
-
-    lightboxThumbs.forEach((thumb) => {
-      const thumbIndex = parseInt(thumb.dataset.index || '0', 10);
-      thumb.classList.toggle('active', thumbIndex === index);
-    });
-
-    syncLightboxThumbInView(index);
-  };
-
-  const openLightbox = (index: number): void => {
-    if (!lightbox || !lightboxInner || imageCount === 0) return;
-    setLightboxSlide(index);
-    lightbox.classList.remove('hidden');
-    lightbox.setAttribute('aria-hidden', 'false');
-    document.body.classList.add('gallery-lightbox-open');
-    isLightboxOpen = true;
-  };
-
-  const closeLightbox = (): void => {
-    if (!lightbox) return;
-    lightbox.classList.add('hidden');
-    lightbox.setAttribute('aria-hidden', 'true');
-    document.body.classList.remove('gallery-lightbox-open');
-    isLightboxOpen = false;
-  };
-
-  if (supportsHoverZoom) {
-    mainImage.classList.add('zoom-enabled');
-
-    mainImage.addEventListener('pointermove', (event) => {
-      if (event.pointerType && event.pointerType !== 'mouse') return;
-
-      const media = getMainMedia();
-      if (!media) return;
-
-      const rect = mainImage.getBoundingClientRect();
-      const x = ((event.clientX - rect.left) / rect.width) * 100;
-      const y = ((event.clientY - rect.top) / rect.height) * 100;
-      const clampedX = Math.min(100, Math.max(0, x));
-      const clampedY = Math.min(100, Math.max(0, y));
-
-      media.style.transformOrigin = `${clampedX}% ${clampedY}%`;
-      media.style.transform = `scale(${ZOOM_SCALE})`;
-      mainImage.classList.add('is-zooming');
-    });
-
-    mainImage.addEventListener('pointerleave', () => {
-      resetZoom();
-    });
-  } else {
-    mainImage.classList.remove('zoom-enabled');
-  }
-
-  function goToSlide(index: number): void {
-    if (index < 0) index = totalSlides - 1;
-    if (index >= totalSlides) index = 0;
-    currentIndex = index;
-
-    // Dispatch event for mobile gallery sync
-    document.dispatchEvent(new CustomEvent('gallery-slide-change', { detail: { index: currentIndex } }));
-
-    const isAttrs = index === attrsIndex;
-
-    // Toggle main image vs attributes card visibility
-    mainImage!.classList.toggle('hidden', isAttrs);
-    attrCard?.classList.toggle('hidden', !isAttrs);
-
-    // Update image placeholder when showing a photo slide
-    if (!isAttrs) {
-      const visual = defaultVisual;
-      const image = mockProduct.images[index];
-      mainImage!.innerHTML = renderGalleryMedia(
-        image?.src,
-        image?.alt ?? `Ürün görünümü ${index + 1}`,
-        visual,
-        'large',
-      );
-      resetZoom();
-    }
-
-    // Update thumbnail active state
-    thumbs.forEach(t => {
-      const ti = parseInt(t.dataset.index || '0', 10);
-      if (ti === index) {
-        t.classList.add('active');
-      } else {
-        t.classList.remove('active');
-      }
-    });
-
-    // Update tab active state
-    viewTabs.forEach((tab, tabIdx) => {
-      // tab 0 = Fotograflar (active for photo slides), tab 1 = Ozellikler (active for attrs)
-      if ((tabIdx === 1 && isAttrs) || (tabIdx === 0 && !isAttrs)) {
-        tab.classList.add('active');
-      } else {
-        tab.classList.remove('active');
-      }
-    });
-
-    // Scroll the active thumbnail into view within the thumb list
-    if (thumbList) {
-      const activeThumb = thumbList.children[index] as HTMLElement;
-      if (activeThumb) {
-        const listTop = thumbList.scrollTop;
-        const listHeight = thumbList.clientHeight;
-        const thumbTop = activeThumb.offsetTop;
-        const thumbHeight = activeThumb.offsetHeight;
-
-        if (thumbTop < listTop) {
-          thumbList.scrollTo({ top: thumbTop, behavior: 'smooth' });
-        } else if (thumbTop + thumbHeight > listTop + listHeight) {
-          thumbList.scrollTo({ top: thumbTop + thumbHeight - listHeight, behavior: 'smooth' });
-        }
-      }
-    }
-  }
-
-  // HOVER on thumbnails changes slide
-  thumbs.forEach(thumb => {
-    thumb.addEventListener('mouseenter', () => {
-      goToSlide(parseInt(thumb.dataset.index || '0', 10));
-    });
-    thumb.addEventListener('click', () => {
-      goToSlide(parseInt(thumb.dataset.index || '0', 10));
-    });
-  });
-
-  // Prev / Next arrows cycle through all slides including attributes
-  prevBtn?.addEventListener('click', (e) => { e.stopPropagation(); goToSlide(currentIndex - 1); });
-  nextBtn?.addEventListener('click', (e) => { e.stopPropagation(); goToSlide(currentIndex + 1); });
-
-  // Click main image to open full-screen gallery (photo slides only)
-  mainImage.addEventListener('click', () => {
-    if (currentIndex === attrsIndex) return;
-    openLightbox(currentIndex);
-  });
-
-  // Lightbox controls
-  lightboxCloseBtn?.addEventListener('click', closeLightbox);
-
-  lightbox?.addEventListener('click', (event) => {
-    if (event.target === lightbox) {
-      closeLightbox();
-    }
-  });
-
-  lightboxPrevBtn?.addEventListener('click', () => {
-    setLightboxSlide(lightboxIndex - 1);
-    goToSlide(lightboxIndex);
-  });
-
-  lightboxNextBtn?.addEventListener('click', () => {
-    setLightboxSlide(lightboxIndex + 1);
-    goToSlide(lightboxIndex);
-  });
-
-  lightboxThumbs.forEach((thumb) => {
-    thumb.addEventListener('click', () => {
-      const thumbIndex = parseInt(thumb.dataset.index || '0', 10);
-      setLightboxSlide(thumbIndex);
-      goToSlide(lightboxIndex);
-    });
-  });
-
-  if (lightboxThumbList && lightboxThumbUpBtn && lightboxThumbDownBtn) {
-    const lightboxScrollAmount = LIGHTBOX_THUMB_SIZE + LIGHTBOX_THUMB_GAP;
-
-    lightboxThumbUpBtn.addEventListener('click', () => {
-      lightboxThumbList.scrollBy({ top: -lightboxScrollAmount, behavior: 'smooth' });
-    });
-    lightboxThumbDownBtn.addEventListener('click', () => {
-      lightboxThumbList.scrollBy({ top: lightboxScrollAmount, behavior: 'smooth' });
-    });
-  }
-
-  document.addEventListener('keydown', (event) => {
-    if (!isLightboxOpen) return;
-
-    if (event.key === 'Escape') {
-      closeLightbox();
-      return;
-    }
-
-    if (event.key === 'ArrowLeft') {
-      setLightboxSlide(lightboxIndex - 1);
-      goToSlide(lightboxIndex);
-      return;
-    }
-
-    if (event.key === 'ArrowRight') {
-      setLightboxSlide(lightboxIndex + 1);
-      goToSlide(lightboxIndex);
-    }
-  });
-
-  // Thumbnail scroll up/down
-  if (thumbList && scrollUpBtn && scrollDownBtn) {
-    const scrollAmount = THUMB_SIZE + THUMB_GAP;
-
-    scrollUpBtn.addEventListener('click', () => {
-      thumbList.scrollBy({ top: -scrollAmount, behavior: 'smooth' });
-    });
-    scrollDownBtn.addEventListener('click', () => {
-      thumbList.scrollBy({ top: scrollAmount, behavior: 'smooth' });
-    });
-  }
-
-  // Photos / Attributes tab click handlers
-  viewTabs.forEach((tab, tabIdx) => {
-    tab.addEventListener('click', () => {
-      if (tabIdx === 1) {
-        goToSlide(attrsIndex);
-      } else {
-        goToSlide(0);
-      }
-    });
-  });
-
-  // Listen for mobile swipe navigation
-  document.addEventListener('gallery-go-to', ((e: CustomEvent) => {
-    goToSlide(e.detail.index);
-  }) as EventListener);
+  // All gallery interactivity is now handled by Alpine.js (imageGallery component in alpine.ts).
+  // - Thumbnail hover/click navigation
+  // - Prev/next arrow navigation
+  // - Lightbox open/close with keyboard nav (Escape, Left, Right)
+  // - View tab switching (Photos / Attributes)
+  // - Zoom on hover
+  // - Custom events: gallery-slide-change (dispatch) and gallery-go-to (listen)
 }
