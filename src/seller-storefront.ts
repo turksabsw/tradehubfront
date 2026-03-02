@@ -6,6 +6,7 @@ import './style.css';
 import './styles/seller/seller-storefront.css';
 import { initFlowbite } from 'flowbite';
 import 'swiper/swiper-bundle.css';
+import { startAlpine } from './alpine';
 
 // Components
 import {
@@ -48,3 +49,6 @@ appEl.innerHTML = `
 // ─── Initialize ─────────────────────────────────────────
 initFlowbite();
 initSellerStorefront();
+
+// Start Alpine.js (must be called AFTER innerHTML is set)
+startAlpine();
