@@ -462,6 +462,33 @@ Alpine.data('checkbox', () => ({
   },
 }));
 
+Alpine.data('quantityInput', (props: { value: number; min: number; max: number; step: number; id: string }) => ({
+  value: props.value,
+  min: props.min,
+  max: props.max,
+  step: props.step,
+  id: props.id,
+
+  decrement() {
+    const current = this.value || this.min;
+    this.value = Math.min(Math.max(current - this.step, this.min), this.max);
+    this.$dispatch('quantity-change', { id: this.id, value: this.value });
+  },
+
+  increment() {
+    const current = this.value || this.min;
+    this.value = Math.min(Math.max(current + this.step, this.min), this.max);
+    this.$dispatch('quantity-change', { id: this.id, value: this.value });
+  },
+
+  clampAndDispatch() {
+    const input = (this.$refs as Record<string, HTMLInputElement>).input;
+    const raw = Number(input.value);
+    this.value = Math.min(Math.max(Number.isNaN(raw) ? this.min : raw, this.min), this.max);
+    this.$dispatch('quantity-change', { id: this.id, value: this.value });
+  },
+}));
+
 // Make Alpine available globally for debugging
 window.Alpine = Alpine;
 
