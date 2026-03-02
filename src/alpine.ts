@@ -43,6 +43,11 @@ import {
   type ForgotPasswordStep,
 } from './components/auth/ForgotPasswordPage';
 import { getBaseUrl } from './components/auth/AuthLayout';
+import {
+  countries as checkoutCountries,
+  districtsByProvince,
+  geolocationMockAddress,
+} from './data/mockCheckout';
 
 // Augment Window interface for Alpine global access (debugging)
 declare global {
@@ -1617,6 +1622,185 @@ Alpine.data('searchHeader', ({ selectedSort, viewMode, sortLabel }: { selectedSo
   setViewMode(mode: string) {
     this.viewMode = mode;
     this.$dispatch('view-mode-change', { mode });
+  },
+}));
+
+// ── Shipping Address Form (checkout page) ──
+const defaultShippingCountry = checkoutCountries.find(c => c.code === 'TR') ?? checkoutCountries[0];
+
+Alpine.data('shippingForm', () => ({
+  // Dropdown open states
+  countryOpen: false,
+  stateOpen: false,
+  cityOpen: false,
+
+  // Display values
+  countryDisplay: `${defaultShippingCountry.flag} ${defaultShippingCountry.name}`,
+  stateDisplay: '',
+  cityDisplay: '',
+  phonePrefix: defaultShippingCountry.phonePrefix,
+
+  // Error tracking (keyed by field name)
+  errors: {} as Record<string, boolean>,
+
+  toggleDropdown(name: string) {
+    const keys = ['country', 'state', 'city'];
+    // Close all other dropdowns
+    keys.forEach(k => {
+      if (k !== name) (this as any)[`${k}Open`] = false; // eslint-disable-line @typescript-eslint/no-explicit-any
+    });
+    const prop = `${name}Open`;
+    (this as any)[prop] = !(this as any)[prop]; // eslint-disable-line @typescript-eslint/no-explicit-any
+  },
+
+  selectCountryItem(event: Event) {
+    const item = (event.target as HTMLElement).closest('li') as HTMLElement | null;
+    if (!item) return;
+
+    // Update selected state visually
+    const list = item.closest('[data-list]');
+    list?.querySelectorAll('li').forEach(i => i.classList.remove('bg-blue-50', 'text-blue-800'));
+    item.classList.add('bg-blue-50', 'text-blue-800');
+
+    // Update display and phone prefix
+    this.countryDisplay = `${item.dataset.flag || ''} ${item.dataset.name || ''}`;
+    if (item.dataset.prefix) this.phonePrefix = item.dataset.prefix;
+
+    this.countryOpen = false;
+    this.errors.country = false;
+  },
+
+  selectStateItem(event: Event) {
+    const item = (event.target as HTMLElement).closest('li') as HTMLElement | null;
+    if (!item) return;
+
+    const list = item.closest('[data-list]');
+    list?.querySelectorAll('li').forEach(i => i.classList.remove('bg-blue-50', 'text-blue-800'));
+    item.classList.add('bg-blue-50', 'text-blue-800');
+
+    this.stateDisplay = item.dataset.value || '';
+    this.stateOpen = false;
+    this.errors.state = false;
+
+    // Update city dropdown when state changes
+    this.updateCityDropdown(item.dataset.value || '');
+  },
+
+  selectCityItem(event: Event) {
+    const item = (event.target as HTMLElement).closest('li') as HTMLElement | null;
+    if (!item) return;
+
+    const list = item.closest('[data-list]');
+    list?.querySelectorAll('li').forEach(i => i.classList.remove('bg-blue-50', 'text-blue-800'));
+    item.classList.add('bg-blue-50', 'text-blue-800');
+
+    this.cityDisplay = item.dataset.value || item.textContent?.trim() || '';
+    this.cityOpen = false;
+    this.errors.city = false;
+  },
+
+  updateCityDropdown(stateName: string) {
+    const districts = districtsByProvince[stateName] ?? ['Merkez'];
+    this.cityDisplay = '';
+
+    const el = this.$el as HTMLElement;
+    const cityList = el.querySelector('[data-dropdown="city-dropdown"] [data-list]');
+    if (cityList) {
+      cityList.innerHTML = districts.map(d =>
+        `<li class="px-3 py-2 text-[14px] text-[var(--color-text-primary)] cursor-pointer hover:bg-[#f5f5f5] transition-colors" role="option" data-value="${d}">${d}</li>`
+      ).join('');
+    }
+  },
+
+  clearError(fieldName: string) {
+    this.errors[fieldName] = false;
+  },
+
+  handleSubmit() {
+    const requiredFields = ['country', 'firstName', 'phone', 'streetAddress', 'state', 'city', 'postalCode'];
+    requiredFields.forEach(f => { this.errors[f] = false; });
+
+    const el = this.$el as HTMLElement;
+    const idMap: Record<string, string> = {
+      firstName: 'first-name',
+      phone: 'phone',
+      streetAddress: 'street-address',
+      postalCode: 'postal-code',
+    };
+
+    const getValue = (field: string): string => {
+      if (field === 'country') return this.countryDisplay;
+      if (field === 'state') return this.stateDisplay;
+      if (field === 'city') return this.cityDisplay;
+      const id = idMap[field];
+      return id ? (el.querySelector<HTMLInputElement>(`#${id}`))?.value?.trim() ?? '' : '';
+    };
+
+    let hasErrors = false;
+    let firstErrorField: HTMLElement | null = null;
+
+    for (const field of requiredFields) {
+      if (!getValue(field)) {
+        hasErrors = true;
+        this.errors[field] = true;
+        if (!firstErrorField) {
+          firstErrorField = el.querySelector<HTMLElement>(`[data-field="${field}"]`);
+        }
+      }
+    }
+
+    if (hasErrors && firstErrorField) {
+      firstErrorField.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    // Collect form data
+    const formData = {
+      country: this.countryDisplay,
+      firstName: getValue('firstName'),
+      phonePrefix: this.phonePrefix,
+      phone: getValue('phone'),
+      streetAddress: getValue('streetAddress'),
+      apartment: (el.querySelector<HTMLInputElement>('#apartment'))?.value?.trim() ?? '',
+      state: this.stateDisplay,
+      city: this.cityDisplay,
+      postalCode: getValue('postalCode'),
+      isDefaultAddress: (el.querySelector<HTMLInputElement>('#default-address'))?.checked ?? false,
+    };
+
+    console.info('Checkout form submitted:', formData);
+  },
+
+  useCurrentLocation() {
+    if (!navigator.geolocation) return;
+
+    if (confirm('Allow TradeHub to access your current location?')) {
+      navigator.geolocation.getCurrentPosition(
+        () => {
+          const el = this.$el as HTMLElement;
+          const setInput = (id: string, val: string) => {
+            const input = el.querySelector<HTMLInputElement>(`#${id}`);
+            if (input) input.value = val;
+          };
+
+          setInput('street-address', geolocationMockAddress.street || '');
+          setInput('postal-code', geolocationMockAddress.postalCode);
+
+          this.stateDisplay = geolocationMockAddress.state;
+          this.errors.streetAddress = false;
+          this.errors.postalCode = false;
+          this.errors.state = false;
+
+          // Update city dropdown and set city
+          this.updateCityDropdown(geolocationMockAddress.state);
+          this.cityDisplay = geolocationMockAddress.city;
+          this.errors.city = false;
+        },
+        () => {
+          // Silent fail on geolocation denial
+        }
+      );
+    }
   },
 }));
 
