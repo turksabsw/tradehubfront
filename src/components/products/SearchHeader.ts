@@ -3,8 +3,12 @@
  * Displays search results header with:
  * - Search keyword and total product count
  * - Free shipping banner (when available)
- * - Sorting options dropdown
- * - View mode toggle (grid/list)
+ * - Sorting options dropdown (Alpine.js x-show + @click)
+ * - View mode toggle (Alpine.js @click + :class)
+ *
+ * Uses x-data="searchHeader({...})" registered in alpine.ts.
+ * Sort dropdown visibility via x-show="sortOpen".
+ * Sort option selection and view mode toggle via @click + $dispatch.
  */
 
 import type { SearchHeaderInfo, SortOption, ViewMode } from '../../types/productListing';
@@ -60,6 +64,14 @@ function renderFreeShippingBanner(): string {
 
 /**
  * Renders the sorting dropdown
+ * Uses Alpine.js directives:
+ * - @click on toggle button for sortOpen state
+ * - x-show on dropdown for visibility
+ * - @click.outside to close dropdown
+ * - @click on options to call selectSort() + $dispatch('sort-change')
+ * - :class on options for reactive active state
+ * - x-show on checkmark SVG for reactive display
+ * - x-text on sort label for reactive label update
  */
 function renderSortingDropdown(options: SortOption[], selectedValue: string): string {
   const selectedOption = options.find(opt => opt.value === selectedValue) || options[0];
@@ -69,13 +81,13 @@ function renderSortingDropdown(options: SortOption[], selectedValue: string): st
       <button
         id="search-header-sort-btn"
         type="button"
-        data-dropdown-toggle="search-header-sort-dropdown"
+        @click="sortOpen = !sortOpen"
         class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary-500 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-600 dark:hover:bg-gray-700 transition-colors"
         aria-haspopup="listbox"
-        aria-expanded="false"
+        :aria-expanded="sortOpen"
       >
         <span class="hidden sm:inline">Sort by:</span>
-        <span id="search-header-sort-label" class="font-semibold truncate max-w-[100px] sm:max-w-none">${selectedOption.label}</span>
+        <span x-text="sortLabel" class="font-semibold truncate max-w-[100px] sm:max-w-none">${selectedOption.label}</span>
         <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
         </svg>
@@ -84,31 +96,46 @@ function renderSortingDropdown(options: SortOption[], selectedValue: string): st
       <!-- Sorting Dropdown -->
       <div
         id="search-header-sort-dropdown"
-        class="hidden absolute right-0 z-10 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg dark:bg-gray-800 dark:border-gray-700"
+        x-show="sortOpen"
+        x-cloak
+        @click.outside="sortOpen = false"
+        class="absolute right-0 z-10 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg dark:bg-gray-800 dark:border-gray-700"
         role="listbox"
         aria-labelledby="search-header-sort-btn"
       >
         <ul class="py-2">
-          ${options.map(option => `
+          ${options.map(option => {
+            // Escape single quotes in label for Alpine expression safety
+            const safeLabel = option.label.replace(/'/g, "\\'");
+            return `
             <li>
               <button
                 type="button"
-                data-sort-value="${option.value}"
-                class="search-header-sort-option flex items-center justify-between w-full px-4 py-2 text-sm text-left transition-colors ${option.value === selectedValue
+                @click="selectSort('${option.value}', '${safeLabel}')"
+                :class="selectedSort === '${option.value}'
                   ? 'text-primary-600 bg-primary-50 font-medium dark:text-primary-400 dark:bg-primary-900/20'
-                  : 'text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700'}"
+                  : 'text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700'"
+                class="flex items-center justify-between w-full px-4 py-2 text-sm text-left transition-colors"
                 role="option"
-                aria-selected="${option.value === selectedValue}"
+                :aria-selected="selectedSort === '${option.value}'"
               >
                 <span>${option.label}</span>
-                ${option.value === selectedValue ? `
-                  <svg class="w-4 h-4 text-primary-600 dark:text-primary-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
-                  </svg>
-                ` : ''}
+                <svg
+                  x-show="selectedSort === '${option.value}'"
+                  x-cloak
+                  class="w-4 h-4 text-primary-600 dark:text-primary-400"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="2"
+                  stroke="currentColor"
+                >
+                  <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                </svg>
               </button>
             </li>
-          `).join('')}
+          `}).join('')}
         </ul>
       </div>
     </div>
@@ -117,18 +144,23 @@ function renderSortingDropdown(options: SortOption[], selectedValue: string): st
 
 /**
  * Renders the view mode toggle (grid/list)
+ * Uses Alpine.js directives:
+ * - @click to call setViewMode() + $dispatch('view-mode-change')
+ * - :class for reactive active/inactive state styling
+ * - :aria-pressed for reactive accessibility state
  */
-function renderViewModeToggle(currentMode: ViewMode = 'grid'): string {
+function renderViewModeToggle(_currentMode: ViewMode = 'grid'): string {
   return `
     <div class="flex items-center border border-gray-300 rounded-md overflow-hidden dark:border-gray-600">
       <button
         type="button"
-        data-view-mode="grid"
-        class="search-header-view-btn p-2 transition-colors ${currentMode === 'grid'
+        @click="setViewMode('grid')"
+        :class="viewMode === 'grid'
           ? 'bg-gray-100 text-gray-900 dark:bg-gray-700 dark:text-white'
-          : 'bg-white text-gray-500 hover:bg-gray-50 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700'}"
+          : 'bg-white text-gray-500 hover:bg-gray-50 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700'"
+        class="p-2 transition-colors"
         aria-label="Grid view"
-        aria-pressed="${currentMode === 'grid'}"
+        :aria-pressed="viewMode === 'grid'"
       >
         <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 0 1 6 3.75h2.25A2.25 2.25 0 0 1 10.5 6v2.25a2.25 2.25 0 0 1-2.25 2.25H6a2.25 2.25 0 0 1-2.25-2.25V6ZM3.75 15.75A2.25 2.25 0 0 1 6 13.5h2.25a2.25 2.25 0 0 1 2.25 2.25V18a2.25 2.25 0 0 1-2.25 2.25H6A2.25 2.25 0 0 1 3.75 18v-2.25ZM13.5 6a2.25 2.25 0 0 1 2.25-2.25H18A2.25 2.25 0 0 1 20.25 6v2.25A2.25 2.25 0 0 1 18 10.5h-2.25a2.25 2.25 0 0 1-2.25-2.25V6ZM13.5 15.75a2.25 2.25 0 0 1 2.25-2.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-2.25A2.25 2.25 0 0 1 13.5 18v-2.25Z" />
@@ -136,12 +168,13 @@ function renderViewModeToggle(currentMode: ViewMode = 'grid'): string {
       </button>
       <button
         type="button"
-        data-view-mode="list"
-        class="search-header-view-btn p-2 border-l border-gray-300 transition-colors dark:border-gray-600 ${currentMode === 'list'
+        @click="setViewMode('list')"
+        :class="viewMode === 'list'
           ? 'bg-gray-100 text-gray-900 dark:bg-gray-700 dark:text-white'
-          : 'bg-white text-gray-500 hover:bg-gray-50 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700'}"
+          : 'bg-white text-gray-500 hover:bg-gray-50 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700'"
+        class="p-2 border-l border-gray-300 transition-colors dark:border-gray-600"
         aria-label="List view"
-        aria-pressed="${currentMode === 'list'}"
+        :aria-pressed="viewMode === 'list'"
       >
         <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0ZM3.75 12h.007v.008H3.75V12Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm-.375 5.25h.007v.008H3.75v-.008Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
@@ -174,7 +207,8 @@ function renderMobileFilterToggle(): string {
 
 /**
  * SearchHeader Component
- * Renders the search results header with product count, sorting, and view controls
+ * Renders the search results header with product count, sorting, and view controls.
+ * Uses x-data="searchHeader({...})" for Alpine.js reactive state management.
  *
  * @param info - Search header information including keyword, total products, and sort options
  * @param viewMode - Current view mode (grid or list)
@@ -186,9 +220,11 @@ export function SearchHeader(
 ): string {
   const info = { ...defaultSearchHeaderInfo, ...infoOverrides };
   const { keyword, totalProducts, freeShippingAvailable, sortOptions, selectedSort } = info;
+  const selectedOption = sortOptions.find(opt => opt.value === selectedSort) || sortOptions[0];
+  const safeLabel = selectedOption.label.replace(/'/g, "\\'");
 
   return `
-    <div id="search-header" class="mb-4 lg:mb-6">
+    <div id="search-header" x-data="searchHeader({ selectedSort: '${selectedSort}', viewMode: '${viewMode}', sortLabel: '${safeLabel}' })" class="mb-4 lg:mb-6">
       <!-- Results count and free shipping banner row -->
       <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between mb-4">
         <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
@@ -239,101 +275,15 @@ export function SearchHeader(
 }
 
 /**
- * Initializes SearchHeader interactivity:
- * - Sorting dropdown toggle
- * - Sort option selection
- * - View mode toggle
- *
- * Dispatches custom events:
- * - 'sort-change': When sorting option changes
- * - 'view-mode-change': When view mode changes
+ * Initializes SearchHeader interactivity.
+ * No-op — Alpine.js handles all interactions via directives:
+ * - Sort dropdown toggle: @click + x-show
+ * - Sort option selection: @click + $dispatch('sort-change')
+ * - View mode toggle: @click + $dispatch('view-mode-change')
  */
 export function initSearchHeader(): void {
-  // Handle sort option clicks
-  const sortOptions = document.querySelectorAll<HTMLButtonElement>('.search-header-sort-option');
-  const sortLabel = document.getElementById('search-header-sort-label');
-  const sortDropdown = document.getElementById('search-header-sort-dropdown');
-
-  sortOptions.forEach(option => {
-    option.addEventListener('click', () => {
-      const value = option.getAttribute('data-sort-value');
-      const label = option.querySelector('span')?.textContent || '';
-
-      if (sortLabel && value) {
-        // Update label
-        sortLabel.textContent = label;
-
-        // Update selected state
-        sortOptions.forEach(opt => {
-          const isSelected = opt.getAttribute('data-sort-value') === value;
-          opt.setAttribute('aria-selected', String(isSelected));
-
-          if (isSelected) {
-            opt.classList.remove('text-gray-700', 'hover:bg-gray-100', 'dark:text-gray-200', 'dark:hover:bg-gray-700');
-            opt.classList.add('text-primary-600', 'bg-primary-50', 'font-medium', 'dark:text-primary-400', 'dark:bg-primary-900/20');
-
-            // Add checkmark if not present
-            if (!opt.querySelector('svg')) {
-              const checkmark = document.createElement('span');
-              checkmark.innerHTML = `
-                <svg class="w-4 h-4 text-primary-600 dark:text-primary-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
-                </svg>
-              `;
-              opt.appendChild(checkmark.firstElementChild as Node);
-            }
-          } else {
-            opt.classList.add('text-gray-700', 'hover:bg-gray-100', 'dark:text-gray-200', 'dark:hover:bg-gray-700');
-            opt.classList.remove('text-primary-600', 'bg-primary-50', 'font-medium', 'dark:text-primary-400', 'dark:bg-primary-900/20');
-
-            // Remove checkmark
-            const svg = opt.querySelector('svg');
-            if (svg) svg.remove();
-          }
-        });
-
-        // Hide dropdown
-        if (sortDropdown) {
-          sortDropdown.classList.add('hidden');
-        }
-
-        // Dispatch custom event
-        document.dispatchEvent(new CustomEvent('sort-change', {
-          detail: { value, label }
-        }));
-      }
-    });
-  });
-
-  // Handle view mode toggle
-  const viewBtns = document.querySelectorAll<HTMLButtonElement>('.search-header-view-btn');
-
-  viewBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const mode = btn.getAttribute('data-view-mode') as ViewMode;
-
-      if (mode) {
-        // Update pressed state
-        viewBtns.forEach(b => {
-          const isPressed = b.getAttribute('data-view-mode') === mode;
-          b.setAttribute('aria-pressed', String(isPressed));
-
-          if (isPressed) {
-            b.classList.remove('bg-white', 'text-gray-500', 'hover:bg-gray-50', 'dark:bg-gray-800', 'dark:text-gray-400', 'dark:hover:bg-gray-700');
-            b.classList.add('bg-gray-100', 'text-gray-900', 'dark:bg-gray-700', 'dark:text-white');
-          } else {
-            b.classList.add('bg-white', 'text-gray-500', 'hover:bg-gray-50', 'dark:bg-gray-800', 'dark:text-gray-400', 'dark:hover:bg-gray-700');
-            b.classList.remove('bg-gray-100', 'text-gray-900', 'dark:bg-gray-700', 'dark:text-white');
-          }
-        });
-
-        // Dispatch custom event
-        document.dispatchEvent(new CustomEvent('view-mode-change', {
-          detail: { mode }
-        }));
-      }
-    });
-  });
+  // Alpine.js handles sort dropdown, sort selection, and view mode toggle
+  // via @click, x-show, :class, and $dispatch directives
 }
 
 /**

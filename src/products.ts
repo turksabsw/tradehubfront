@@ -116,7 +116,7 @@ appEl.innerHTML = `
         ${SearchHeader({ keyword: searchKeyword })}
 
         <!-- Active Filter Chips -->
-        <div id="active-filter-chips" class="flex flex-wrap gap-2 mb-3 empty:hidden"></div>
+        <div id="active-filter-chips" x-data="filterChips" class="flex flex-wrap gap-2 mb-3 empty:hidden"></div>
 
         <!-- Main layout: Filter Sidebar + Product Grid -->
         <div class="flex flex-col lg:flex-row gap-4 lg:gap-6">

@@ -1574,6 +1574,52 @@ Alpine.data('filterSidebar', (initialCollapsed: Record<string, boolean> = {}) =>
   },
 }));
 
+Alpine.data('filterChips', () => ({
+  removeChipFilter(section: string, value: string) {
+    // Uncheck the corresponding checkbox/radio input
+    const input = document.querySelector<HTMLInputElement>(
+      `input[data-filter-section="${section}"][data-filter-value="${value}"]`
+    );
+    if (input) {
+      input.checked = false;
+      input.dispatchEvent(new Event('change', { bubbles: true }));
+      return;
+    }
+
+    // For price range, clear both min/max inputs
+    if (section === 'price') {
+      document.querySelectorAll<HTMLInputElement>('[data-filter-section="price"][data-filter-type]').forEach(i => { i.value = ''; });
+      document.dispatchEvent(new CustomEvent('filter-change'));
+      return;
+    }
+
+    // For min-order, clear the value input
+    if (section === 'min-order') {
+      document.querySelectorAll<HTMLInputElement>('[data-filter-section="min-order"][data-filter-type]').forEach(i => { i.value = ''; });
+      document.dispatchEvent(new CustomEvent('filter-change'));
+    }
+  },
+}));
+
+Alpine.data('searchHeader', ({ selectedSort, viewMode, sortLabel }: { selectedSort: string; viewMode: string; sortLabel: string }) => ({
+  sortOpen: false,
+  selectedSort,
+  viewMode,
+  sortLabel,
+
+  selectSort(value: string, label: string) {
+    this.selectedSort = value;
+    this.sortLabel = label;
+    this.sortOpen = false;
+    this.$dispatch('sort-change', { value, label });
+  },
+
+  setViewMode(mode: string) {
+    this.viewMode = mode;
+    this.$dispatch('view-mode-change', { mode });
+  },
+}));
+
 // Make Alpine available globally for debugging
 window.Alpine = Alpine;
 

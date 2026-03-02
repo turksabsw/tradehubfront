@@ -2,22 +2,28 @@
  * FilterChips Component
  * Renders active filter chips/tags above the product grid.
  * Each chip shows which filter is active, with an X button to remove it.
- * Uses event delegation via data-remove-filter attribute.
+ * Uses Alpine.js @click on remove buttons within x-data="filterChips" scope.
  */
 
 import type { FilterState } from './filterEngine';
 
 /**
  * Create a single chip HTML
+ * Remove buttons use @click to call removeChipFilter() on the parent
+ * filterChips Alpine component (registered in alpine.ts).
  */
 function makeChip(label: string, section: string, value: string): string {
+  // Escape single quotes for Alpine expression safety
+  const safeSection = section.replace(/'/g, "\\'");
+  const safeValue = value.replace(/'/g, "\\'");
+
   return `
     <span class="inline-flex items-center gap-1 px-3 py-1 text-xs font-medium bg-primary-50 text-primary-700 border border-primary-200 rounded-full dark:bg-primary-900/20 dark:text-primary-300 dark:border-primary-700/50">
       <span>${label}</span>
       <button
         type="button"
         class="ml-0.5 inline-flex items-center justify-center w-4 h-4 rounded-full hover:bg-primary-200 dark:hover:bg-primary-800/50 transition-colors"
-        data-remove-filter="${section}:${value}"
+        @click="removeChipFilter('${safeSection}', '${safeValue}')"
         aria-label="Kaldir: ${label}"
       >
         <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -48,7 +54,9 @@ export function renderFilterChips(state: FilterState): string {
 }
 
 /**
- * Update the #active-filter-chips container in the DOM
+ * Update the #active-filter-chips container in the DOM.
+ * The container must have x-data="filterChips" for @click directives to work.
+ * Alpine's MutationObserver processes new @click directives on innerHTML change.
  */
 export function updateFilterChips(state: FilterState): void {
   const container = document.getElementById('active-filter-chips');
@@ -58,43 +66,9 @@ export function updateFilterChips(state: FilterState): void {
 
 /**
  * Initialize chip removal via event delegation.
- * Listens for clicks on [data-remove-filter] buttons and unchecks
- * the corresponding sidebar filter input, then dispatches filter-change.
+ * No-op — Alpine.js handles clicks via @click directives on remove buttons
+ * within the x-data="filterChips" scope on the #active-filter-chips container.
  */
 export function initFilterChips(): void {
-  document.addEventListener('click', (e) => {
-    const btn = (e.target as HTMLElement).closest<HTMLElement>('[data-remove-filter]');
-    if (!btn) return;
-
-    const attr = btn.getAttribute('data-remove-filter');
-    if (!attr) return;
-
-    const colonIdx = attr.indexOf(':');
-    if (colonIdx === -1) return;
-    const section = attr.slice(0, colonIdx);
-    const value = attr.slice(colonIdx + 1);
-
-    // Uncheck the corresponding checkbox/radio input
-    const input = document.querySelector<HTMLInputElement>(
-      `input[data-filter-section="${section}"][data-filter-value="${value}"]`
-    );
-    if (input) {
-      input.checked = false;
-      input.dispatchEvent(new Event('change', { bubbles: true }));
-      return;
-    }
-
-    // For price range, clear both min/max inputs
-    if (section === 'price') {
-      document.querySelectorAll<HTMLInputElement>('[data-filter-section="price"][data-filter-type]').forEach(i => { i.value = ''; });
-      document.dispatchEvent(new CustomEvent('filter-change'));
-      return;
-    }
-
-    // For min-order, clear the value input
-    if (section === 'min-order') {
-      document.querySelectorAll<HTMLInputElement>('[data-filter-section="min-order"][data-filter-type]').forEach(i => { i.value = ''; });
-      document.dispatchEvent(new CustomEvent('filter-change'));
-    }
-  });
+  // Alpine.js handles chip removal via @click directives
 }
