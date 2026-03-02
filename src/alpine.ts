@@ -49,6 +49,7 @@ import {
   geolocationMockAddress,
   savedAddress as checkoutSavedAddress,
 } from './data/mockCheckout';
+import { ORDER_TABS, ORDER_FILTERS } from './components/buyer-dashboard/ordersData';
 
 // Augment Window interface for Alpine global access (debugging)
 declare global {
@@ -1915,6 +1916,31 @@ Alpine.data('shippingForm', () => ({
     this.countryOpen = false;
     this.stateOpen = false;
     this.cityOpen = false;
+  },
+}));
+
+Alpine.data('ordersSection', () => ({
+  activeTabId: ORDER_TABS[0].id,
+  selectedFilterId: ORDER_FILTERS[0].id as string | null,
+  dropdownOpen: false,
+
+  selectTab(tabId: string, hasDropdown: boolean) {
+    if (hasDropdown) {
+      if (this.activeTabId === tabId) {
+        this.dropdownOpen = !this.dropdownOpen;
+        return;
+      }
+      this.activeTabId = tabId;
+      this.dropdownOpen = true;
+    } else {
+      this.activeTabId = tabId;
+      this.dropdownOpen = false;
+    }
+  },
+
+  selectFilter(filterId: string) {
+    this.selectedFilterId = filterId;
+    this.dropdownOpen = false;
   },
 }));
 

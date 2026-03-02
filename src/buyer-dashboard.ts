@@ -5,6 +5,7 @@
 
 import './style.css'
 import { initFlowbite } from 'flowbite'
+import { startAlpine } from './alpine'
 
 // Header components (simplified for dashboard — no search bar / mega menu)
 import { TopBar, initMobileDrawer, initHeaderCart } from './components/header'
@@ -113,6 +114,7 @@ function initCurrentView(): void {
 }
 
 initCurrentView();
+startAlpine();
 
 // Handle hash changes to switch between views
 window.addEventListener('hashchange', () => {
