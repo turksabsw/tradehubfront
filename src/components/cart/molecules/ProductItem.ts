@@ -1,5 +1,7 @@
 /**
  * Product row inside supplier card.
+ * Alpine.js: Uses x-data on section for @click + $dispatch on favorite/delete buttons.
+ * Checkbox and SkuRow children have their own Alpine scopes.
  */
 
 import type { CartProduct, CartProductTag } from '../../../types/cart';
@@ -28,7 +30,7 @@ export function ProductItem({ product }: ProductItemProps): string {
   const skus = product.skus.map((sku) => SkuRow({ sku })).join('');
 
   return `
-    <section class="sc-c-spu-container-new py-5 border-b border-border-light last:border-b-0" data-product-id="${escapeHtml(product.id)}">
+    <section class="sc-c-spu-container-new py-5 border-b border-border-light last:border-b-0" data-product-id="${escapeHtml(product.id)}" x-data>
       <div class="flex items-start gap-3">
         <div class="pt-1 shrink-0">
           ${Checkbox({ id: `product-checkbox-${product.id}`, checked: product.selected, onChange: `product-select-${product.id}` })}
@@ -42,7 +44,7 @@ export function ProductItem({ product }: ProductItemProps): string {
 
         <div class="shrink-0 flex items-center gap-1">
           <div class="relative group">
-            <button type="button" class="sc-c-spu-favorite-btn w-8 h-8 inline-flex items-center justify-center rounded-full text-text-tertiary hover:bg-black transition-colors" data-product-id="${escapeHtml(product.id)}" aria-label="Favori">
+            <button type="button" class="sc-c-spu-favorite-btn w-8 h-8 inline-flex items-center justify-center rounded-full text-text-tertiary hover:bg-black transition-colors" data-product-id="${escapeHtml(product.id)}" @click="$dispatch('product-favorite', { productId: '${escapeHtml(product.id)}' })" aria-label="Favori">
               <img src="${favIcon}" class="w-[20px] h-[20px] object-contain group-hover:invert transition-all" alt="Favori" />
             </button>
             <div class="absolute right-0 top-full mt-2 w-max px-3 py-2 bg-black text-white text-xs font-medium rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
@@ -52,7 +54,7 @@ export function ProductItem({ product }: ProductItemProps): string {
             </div>
           </div>
           <div class="relative group">
-            <button type="button" class="sc-c-spu-delete-btn w-8 h-8 inline-flex items-center justify-center rounded-full text-text-tertiary hover:bg-black transition-colors" data-product-id="${escapeHtml(product.id)}" aria-label="Ürünü sil">
+            <button type="button" class="sc-c-spu-delete-btn w-8 h-8 inline-flex items-center justify-center rounded-full text-text-tertiary hover:bg-black transition-colors" data-product-id="${escapeHtml(product.id)}" @click="$dispatch('product-delete', { productId: '${escapeHtml(product.id)}' })" aria-label="Ürünü sil">
               <img src="${trashIcon}" class="w-[18px] h-[18px] object-contain group-hover:invert transition-all" alt="Sil" />
             </button>
             <div class="absolute right-0 top-full mt-2 w-max px-3 py-2 bg-black text-white text-xs font-medium rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
@@ -69,28 +71,7 @@ export function ProductItem({ product }: ProductItemProps): string {
   `.trim();
 }
 
-export function initProductItems(container?: HTMLElement): void {
-  const root = container || document;
-  const items = root.querySelectorAll<HTMLElement>('.sc-c-spu-container-new');
-
-  items.forEach((item) => {
-    const productId = item.dataset.productId;
-    if (!productId) return;
-
-    const favoriteBtn = item.querySelector<HTMLButtonElement>('.sc-c-spu-favorite-btn');
-    favoriteBtn?.addEventListener('click', () => {
-      favoriteBtn.dispatchEvent(new CustomEvent('product-favorite', {
-        bubbles: true,
-        detail: { productId },
-      }));
-    });
-
-    const deleteBtn = item.querySelector<HTMLButtonElement>('.sc-c-spu-delete-btn');
-    deleteBtn?.addEventListener('click', () => {
-      deleteBtn.dispatchEvent(new CustomEvent('product-delete', {
-        bubbles: true,
-        detail: { productId },
-      }));
-    });
-  });
+/** @deprecated Alpine.js handles product-favorite and product-delete dispatch declaratively via @click + $dispatch. Kept as no-op for backward compatibility. */
+export function initProductItems(_container?: HTMLElement): void {
+  // No-op — Alpine x-data on section + @click="$dispatch(...)" handles favorite and delete dispatch.
 }
