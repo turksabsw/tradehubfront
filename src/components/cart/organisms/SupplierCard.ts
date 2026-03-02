@@ -1,5 +1,7 @@
 /**
  * Supplier card containing product rows.
+ * Alpine.js: Uses inline x-data="{ expanded }" for accordion toggle.
+ * @checkbox-change on section bridges supplier checkbox to supplier-select for CartPage.
  */
 
 import type { CartSupplier } from '../../../types/cart';
@@ -24,52 +26,36 @@ export function SupplierCard({ supplier, isSingleSupplier = true }: SupplierCard
   const isOpen = isSingleSupplier;
 
   return `
-    <section class="sc-c-supplier-container group/supplier rounded-3xl border border-border-default bg-surface overflow-hidden" data-supplier-id="${escapeHtml(supplier.id)}" data-open="${String(isOpen)}">
-      <header class="sc-c-supplier-header flex items-center justify-between gap-3 px-5 py-4 border-b border-border-default max-sm:px-3 max-sm:py-3 cursor-pointer hover:bg-surface-muted transition-colors select-none">
+    <section class="sc-c-supplier-container rounded-3xl border border-border-default bg-surface overflow-hidden"
+      data-supplier-id="${escapeHtml(supplier.id)}"
+      x-data="{ expanded: ${isOpen} }"
+      @checkbox-change="if ($event.detail.handlerId === 'supplier-select-${escapeHtml(supplier.id)}') $dispatch('supplier-select', { supplierId: '${escapeHtml(supplier.id)}', selected: $event.detail.checked })">
+      <header class="sc-c-supplier-header flex items-center justify-between gap-3 px-5 py-4 border-b border-border-default max-sm:px-3 max-sm:py-3 cursor-pointer hover:bg-surface-muted transition-colors select-none"
+        @click="expanded = !expanded">
         <div class="flex items-center gap-3 w-full lg:w-auto overflow-hidden">
           <div onclick="event.stopPropagation()">
             ${Checkbox({ id: `supplier-checkbox-${supplier.id}`, checked: supplier.selected, onChange: `supplier-select-${supplier.id}` })}
           </div>
           <a href="${escapeHtml(supplier.href)}" onclick="event.stopPropagation()" class="text-lg font-semibold text-text-heading hover:text-cta-primary hover:underline truncate">${escapeHtml(supplier.name)}</a>
-          <svg class="sc-c-supplier-chevron w-5 h-5 text-text-tertiary transition-transform duration-300 ml-1 shrink-0 group-data-[open=true]/supplier:rotate-180" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <svg class="sc-c-supplier-chevron w-5 h-5 text-text-tertiary transition-transform duration-300 ml-1 shrink-0 ${isOpen ? 'rotate-180' : ''}"
+            :class="{ 'rotate-180': expanded }"
+            fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
         </div>
-        <div class="text-sm font-bold text-text-primary whitespace-nowrap sc-c-supplier-total group-data-[open=true]/supplier:hidden">
+        <div class="text-sm font-bold text-text-primary whitespace-nowrap sc-c-supplier-total"
+          x-show="!expanded" ${isOpen ? 'x-cloak' : ''}>
           <!-- Dinamik olarak CartPage üzerinden doldurulacak -->
         </div>
       </header>
-      <div class="sc-c-supplier-content px-5 pb-1 max-sm:px-3 transition-all duration-300 group-data-[open=false]/supplier:hidden">${products}</div>
+      <div class="sc-c-supplier-content px-5 pb-1 max-sm:px-3 transition-all duration-300"
+        x-show="expanded" ${!isOpen ? 'x-cloak' : ''}>${products}</div>
     </section>
   `.trim();
 }
 
-export function initSupplierCards(container?: HTMLElement): void {
-  const root = container || document;
-  const cards = root.querySelectorAll<HTMLElement>('.sc-c-supplier-container');
-
-  cards.forEach((card) => {
-    const supplierId = card.dataset.supplierId;
-    if (!supplierId) return;
-
-    const supplierCheckbox = card.querySelector<HTMLInputElement>(`#supplier-checkbox-${supplierId}`);
-    supplierCheckbox?.addEventListener('change', () => {
-      const checked = supplierCheckbox.checked;
-
-      const productCheckboxes = card.querySelectorAll<HTMLInputElement>('.sc-c-spu-container-new .next-checkbox-input');
-      productCheckboxes.forEach((checkbox) => {
-        checkbox.checked = checked;
-      });
-
-      const skuCheckboxes = card.querySelectorAll<HTMLInputElement>('.sc-c-sku-container-new .next-checkbox-input');
-      skuCheckboxes.forEach((checkbox) => {
-        checkbox.checked = checked;
-      });
-
-      card.dispatchEvent(new CustomEvent('supplier-select', {
-        bubbles: true,
-        detail: { supplierId, selected: checked },
-      }));
-    });
-  });
+/** @deprecated Alpine.js manages accordion toggle and checkbox bridge declaratively. Kept as no-op for backward compatibility. */
+export function initSupplierCards(_container?: HTMLElement): void {
+  // No-op — Alpine x-data on section handles accordion toggle via @click on header;
+  // @checkbox-change bridges supplier checkbox to supplier-select for CartPage.
 }
