@@ -8,7 +8,7 @@ import { initFlowbite } from 'flowbite'
 import { initStickyHeights } from './utils/stickyHeights'
 
 // Header components (reuse from main page)
-import { TopBar, initMobileDrawer, SubHeader, initStickyHeaderSearch, MegaMenu, initMegaMenu, initHeaderCart } from './components/header'
+import { TopBar, initMobileDrawer, SubHeader, MegaMenu, initMegaMenu, initHeaderCart } from './components/header'
 
 // Shared components
 import { Breadcrumb } from './components/shared/Breadcrumb'
@@ -17,7 +17,10 @@ import { Breadcrumb } from './components/shared/Breadcrumb'
 import { FooterLinks } from './components/footer'
 
 // Floating components
-import { FloatingPanel, initFloatingPanel } from './components/floating'
+import { FloatingPanel } from './components/floating'
+
+// Alpine.js
+import { startAlpine } from './alpine'
 
 // Cart components
 import { CartPage, initCartPage } from './components/cart/page/CartPage'
@@ -70,8 +73,6 @@ appEl.innerHTML = `
 // Initialize all behaviors
 initMegaMenu();
 initFlowbite();
-initStickyHeaderSearch();
-initFloatingPanel();
 initMobileDrawer();
 
 // Initialize cart page logic (store zaten load() ile yüklendi)
@@ -80,3 +81,6 @@ initCartPage();
 // Header cart init'i store doldurulduktan SONRA gelsin ki badge güncellensin
 initHeaderCart();
 initStickyHeights();
+
+// Start Alpine LAST — after innerHTML is set so it can find all x-data directives in the DOM
+startAlpine();
