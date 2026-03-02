@@ -8,7 +8,7 @@ import './style.css'
 import { initFlowbite } from 'flowbite'
 
 // Header components (reuse from main page)
-import { TopBar, initMobileDrawer, SubHeader, initStickyHeaderSearch, MegaMenu, initMegaMenu, initHeaderCart } from './components/header'
+import { TopBar, initMobileDrawer, SubHeader, MegaMenu, initMegaMenu, initHeaderCart } from './components/header'
 
 // Shared components
 import { Breadcrumb } from './components/shared/Breadcrumb'
@@ -17,7 +17,7 @@ import { Breadcrumb } from './components/shared/Breadcrumb'
 import { FooterLinks } from './components/footer'
 
 // Floating components
-import { FloatingPanel, initFloatingPanel } from './components/floating'
+import { FloatingPanel } from './components/floating'
 
 // Alpine.js
 import { startAlpine } from './alpine'
@@ -25,19 +25,15 @@ import { startAlpine } from './alpine'
 // Products listing components
 import {
   FilterSidebar,
-  initFilterSidebar,
   ProductListingGrid,
-  initProductListingGrid,
   initProductSliders,
   ListingCartDrawer,
   initListingCartDrawer,
   SearchHeader,
-  initSearchHeader,
   updateSearchHeader,
   rerenderProductGrid,
   initFilterEngine,
   updateFilterChips,
-  initFilterChips,
   setGridViewMode,
 } from './components/products'
 import { ShippingModal, initShippingModal } from './components/product'
@@ -191,20 +187,13 @@ initFlowbite();
 // Start Alpine.js (must be after innerHTML and Flowbite)
 startAlpine();
 
-// Initialize header behaviors
-initStickyHeaderSearch();
+// Initialize header behaviors (non-Alpine: cart store load, mobile drawer DOM move)
 initHeaderCart();
 initMobileDrawer();
 initAnimatedPlaceholder('#topbar-compact-search-input');
 
-// Initialize floating panel
-initFloatingPanel();
-
-// Initialize products page components
-initFilterSidebar();
-initProductListingGrid();
+// Initialize product card image sliders (event delegation, not yet migrated)
 initProductSliders();
-initSearchHeader();
 
 // Listen for view-mode-change events from SearchHeader toggle buttons
 document.addEventListener('view-mode-change', (e: Event) => {
@@ -215,10 +204,9 @@ document.addEventListener('view-mode-change', (e: Event) => {
 initListingCartDrawer(mockProductListingCards);
 initShippingModal();
 
-// Initialize filter chips removal handler (event delegation)
-initFilterChips();
-
 // Initialize filter engine: connects filters + sorting to product grid
+// Note: Alpine $dispatch events (filter-change, sort-change, view-mode-change)
+// bubble through the DOM and reach these document-level listeners.
 let engine: ReturnType<typeof initFilterEngine> | null = null;
 engine = initFilterEngine({
   products: mockProductListingCards,
