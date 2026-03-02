@@ -7,7 +7,7 @@ import './style.css'
 import { initFlowbite } from 'flowbite'
 
 // Header components (reuse from main page)
-import { TopBar, initMobileDrawer, SubHeader, initStickyHeaderSearch, MegaMenu, initMegaMenu, initHeaderCart } from './components/header'
+import { TopBar, initMobileDrawer, SubHeader, MegaMenu, initMegaMenu, initHeaderCart } from './components/header'
 
 // Footer components
 import { FooterLinks } from './components/footer'
@@ -25,7 +25,6 @@ import { Breadcrumb } from './components/shared/Breadcrumb'
 import {
   ProductTitleBar,
   ProductImageGallery,
-  initImageGallery,
   ProductInfo,
   initProductInfo,
   ProductTabs,
@@ -41,7 +40,6 @@ import {
   MobileProductLayout,
   initMobileLayout,
   CartDrawer,
-  initCartDrawer,
 } from './components/product'
 
 
@@ -127,19 +125,21 @@ appEl.innerHTML = `
 // Initialize behaviors
 initMegaMenu();
 initFlowbite();
-startAlpine();
-initStickyHeaderSearch();
 initHeaderCart();
 initMobileDrawer();
 initAnimatedPlaceholder('#topbar-compact-search-input');
 
 // Product-specific inits
-initImageGallery();
+// initStickyHeaderSearch — now handled by Alpine (stickyHeaderSearch component)
+// initImageGallery — now handled by Alpine (imageGallery component)
+// initCartDrawer — now handled by Alpine (@click directives on add-to-cart buttons)
 initProductInfo();
-initProductTabs();
+initProductTabs(); // IntersectionObserver sticky tab bar logic (not migrated)
 initAttributesTab();
 initReviews();
 initShippingModal();
-initCartDrawer();
 initRelatedProducts();
 initMobileLayout();
+
+// Start Alpine LAST — after innerHTML is set so it can find all x-data directives in the DOM
+startAlpine();
