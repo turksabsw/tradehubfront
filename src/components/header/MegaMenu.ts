@@ -301,7 +301,7 @@ function renderCategoriesView(): string {
             <div class="mega-cat-section mb-8" id="mega-section-${cat.id}">
               <div class="flex items-center justify-between mb-5 lg:mb-6">
                 <h3 class="text-base lg:text-lg font-bold dark:text-white" style="color:var(--mega-text-color)">${cat.name}</h3>
-                <a href="products.html?category=${cat.id}" class="th-nav-link hover:underline dark:text-primary-400 dark:hover:text-primary-300" style="color:var(--nav-hover-color)">
+                <a href="categories.html" class="th-nav-link hover:underline dark:text-primary-400 dark:hover:text-primary-300" style="color:var(--nav-hover-color)">
                   Browse all &rarr;
                 </a>
               </div>
@@ -585,7 +585,7 @@ export function MegaMenu(): string {
     ></div>
     <div id="istoc-mega-panel"
       style="position:fixed;left:0;width:100%;z-index:var(--z-modal);opacity:0;pointer-events:none;transform:translateY(-8px);transition:opacity 0.2s ease, transform 0.2s ease;max-height:100vh;background-color:var(--mega-bg);border-color:var(--mega-border-color)"
-      class="border-b shadow-xl dark:bg-gray-800 dark:border-gray-700 max-h-[85vh] sm:max-h-[100vh] lg:!max-h-[80vh] overflow-y-auto overscroll-contain"
+      class="border-b dark:bg-gray-800 dark:border-gray-700 max-h-[85vh] sm:max-h-[100vh] lg:!max-h-[80vh] overflow-y-auto overscroll-contain"
     >
       <div class="container-boxed">
         ${renderCategoriesView()}

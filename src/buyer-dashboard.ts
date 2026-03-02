@@ -65,9 +65,9 @@ appEl.innerHTML = `
 
   <!-- Page body: Sidebar spans entire page including footer -->
   <div class="bg-[#F5F5F5] min-h-screen">
-    <div class="max-w-[1425px] mx-auto px-[clamp(0.5rem,0.3rem+1vw,1.5rem)] flex gap-[14px] max-lg:flex-col">
-      <!-- Sidebar Column (hidden on mobile, visible lg+) -->
-      <div class="w-[260px] flex-shrink-0 pt-4 hidden lg:block">
+    <div class="max-w-[1425px] mx-auto px-[clamp(0.5rem,0.3rem+1vw,1.5rem)] flex gap-[14px] max-md:flex-col">
+      <!-- Sidebar Column (hidden on small mobile, visible md+) -->
+      <div class="w-[72px] xl:w-[260px] flex-shrink-0 pt-4 hidden md:block">
         ${renderSidebar()}
       </div>
 

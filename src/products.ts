@@ -37,6 +37,7 @@ import {
   initFilterChips,
   setGridViewMode,
 } from './components/products'
+import { ShippingModal, initShippingModal } from './components/product'
 
 import { mockProductListingCards } from './data/mockProductListing'
 
@@ -173,8 +174,9 @@ appEl.innerHTML = `
     class="hidden bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-40"
   ></div>
 
-  <!-- Cart Drawer for product listing -->
+  <!-- Listing Cart Drawer -->
   ${ListingCartDrawer()}
+  ${ShippingModal()}
 `;
 
 // Initialize custom component behaviors FIRST (before Flowbite can interfere)
@@ -203,8 +205,9 @@ document.addEventListener('view-mode-change', (e: Event) => {
   setGridViewMode((e as CustomEvent).detail.mode);
 });
 
-// Initialize cart drawer for listing page
+// Initialize listing cart drawer
 initListingCartDrawer(mockProductListingCards);
+initShippingModal();
 
 // Initialize filter chips removal handler (event delegation)
 initFilterChips();

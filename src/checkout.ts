@@ -20,13 +20,30 @@ import { FloatingPanel, initFloatingPanel } from './components/floating'
 
 // Checkout components
 import { CheckoutHeader, CheckoutLayout, ShippingAddressForm, initShippingAddressForm, OrderSummary, PaymentMethodSection, ItemsDeliverySection, initAccordionSections, OrderProtectionModal, initOrderProtectionModal, initAddressAutocomplete } from './components/checkout'
-import { orderSummary, protectionSummaryItems, tradeAssuranceText, modalSections, paymentIcons, infoBoxBullets } from './data/mockCheckout'
+import { protectionSummaryItems, tradeAssuranceText, modalSections, paymentIcons, infoBoxBullets } from './data/mockCheckout'
+import { cartStore } from './components/cart/state/CartStore'
+import type { OrderSummary as OrderSummaryData } from './types/checkout'
+import { initStickyHeights } from './utils/stickyHeights'
+
+// CartStore'dan checkout order summary oluştur
+cartStore.load();
+const cartSummary = cartStore.getSummary();
+const checkoutOrderSummary: OrderSummaryData = {
+  itemCount: cartSummary.selectedCount || cartSummary.items.reduce((s, i) => s + i.quantity, 0),
+  thumbnails: cartSummary.items.map(i => ({ image: i.image, quantity: i.quantity })),
+  itemSubtotal: cartSummary.productSubtotal,
+  shipping: cartSummary.shippingFee,
+  subtotal: cartSummary.productSubtotal + cartSummary.shippingFee - cartSummary.discount,
+  processingFee: 0,
+  total: cartSummary.subtotal,
+  currency: 'USD',
+};
 
 const appEl = document.querySelector<HTMLDivElement>('#app')!;
 appEl.classList.add('relative');
 appEl.innerHTML = `
-  <!-- Sticky Header -->
-  <div id="sticky-header" class="sticky top-0 z-[var(--z-header)]" style="background-color:var(--header-scroll-bg);border-bottom:1px solid var(--header-scroll-border)">
+  <!-- Header (Not Sticky for Checkout Page) -->
+  <div id="sticky-header" class="relative bg-white border-b border-[#e5e5e5] w-full">
     ${TopBar()}
     ${SubHeader()}
   </div>
@@ -39,16 +56,16 @@ appEl.innerHTML = `
       ${Breadcrumb([{ label: 'Sepetim', href: '/cart.html' }, { label: 'Ödeme' }])}
     </div>
     ${CheckoutLayout({
-      leftContent: `
+  leftContent: `
         ${CheckoutHeader()}
         ${ShippingAddressForm()}
         ${PaymentMethodSection()}
         ${ItemsDeliverySection()}
       `,
-      rightContent: `
-        ${OrderSummary({ data: orderSummary, protectionItems: protectionSummaryItems, tradeAssuranceText })}
+  rightContent: `
+        ${OrderSummary({ data: checkoutOrderSummary, protectionItems: protectionSummaryItems, tradeAssuranceText })}
       `
-    })}
+})}
   </main>
 
   <!-- Footer -->
@@ -74,3 +91,4 @@ initShippingAddressForm();
 initAddressAutocomplete();
 initAccordionSections();
 initOrderProtectionModal();
+initStickyHeights();

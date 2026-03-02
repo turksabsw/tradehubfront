@@ -12,11 +12,11 @@ import type { FilterState } from './filterEngine';
  */
 function makeChip(label: string, section: string, value: string): string {
   return `
-    <span class="inline-flex items-center gap-1 px-3 py-1 text-xs font-medium bg-orange-50 text-orange-700 border border-orange-200 rounded-full dark:bg-orange-900/20 dark:text-orange-300 dark:border-orange-700/50">
+    <span class="inline-flex items-center gap-1 px-3 py-1 text-xs font-medium bg-primary-50 text-primary-700 border border-primary-200 rounded-full dark:bg-primary-900/20 dark:text-primary-300 dark:border-primary-700/50">
       <span>${label}</span>
       <button
         type="button"
-        class="ml-0.5 inline-flex items-center justify-center w-4 h-4 rounded-full hover:bg-orange-200 dark:hover:bg-orange-800/50 transition-colors"
+        class="ml-0.5 inline-flex items-center justify-center w-4 h-4 rounded-full hover:bg-primary-200 dark:hover:bg-primary-800/50 transition-colors"
         data-remove-filter="${section}:${value}"
         aria-label="Kaldir: ${label}"
       >

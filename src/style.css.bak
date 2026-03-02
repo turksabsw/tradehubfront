@@ -774,11 +774,11 @@
     --animate-fade-out: fade-out var(--duration-default) var(--ease-default);
     --animate-slide-up: slide-up var(--duration-default) var(--ease-default);
 
-    /* --- CTA Semantic (Secondary / Dark) --- */
-    --color-cta-primary: var(--color-secondary-600);
-    --color-cta-primary-hover: var(--color-secondary-700);
-    --color-cta-primary-light: var(--color-secondary-500);
-    --color-cta-primary-tint: var(--color-secondary-50);
+    /* --- CTA Semantic --- */
+    --color-cta-primary: var(--color-primary-500);
+    --color-cta-primary-hover: var(--color-primary-600);
+    --color-cta-primary-light: var(--color-primary-400);
+    --color-cta-primary-tint: var(--color-primary-50);
 }
 
 
@@ -918,9 +918,12 @@
    ============================================================ */
 
 @layer base {
-    html {
+    body {
         overflow-x: clip;
-        /* clip instead of hidden allows position: sticky to work properly */
+    }
+
+    html {
+        overflow-x: hidden;
         font-family: var(--font-sans);
         font-size: var(--font-size-base);
         /* 18px */
@@ -3987,7 +3990,45 @@ footer {
    pagination bullets (swiper overrides)
    ============================================================ */
 
-/* Navigation Arrows — now styled via Tailwind in OperationSlider.ts */
+/* Navigation Arrows — visible on group hover */
+.operation-slider__prev,
+.operation-slider__next {
+    position: absolute;
+    top: 22px;
+    z-index: 10;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: transparent;
+    border: none;
+    color: var(--color-text-placeholder, #999999);
+    cursor: pointer;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 200ms, color 150ms;
+}
+
+.operation-slider__prev {
+    left: 2px;
+}
+
+.operation-slider__next {
+    right: 2px;
+}
+
+.group\/opslider:hover .operation-slider__prev,
+.group\/opslider:hover .operation-slider__next {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.operation-slider__prev:hover,
+.operation-slider__next:hover {
+    color: var(--color-text-heading, #111827);
+}
 
 /* Pagination Bullets — swiper overrides */
 .operation-slider__pagination .swiper-pagination-bullet {
@@ -4819,3 +4860,4 @@ footer {
    ============================================================ */
 
 /* ── Float-label Field ─────────────────────────────────────── */
+}

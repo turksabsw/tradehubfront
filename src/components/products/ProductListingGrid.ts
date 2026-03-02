@@ -322,7 +322,7 @@ function renderNoResults(): string {
       </p>
       <button
         type="button"
-        class="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium text-white bg-orange-500 hover:bg-orange-600 rounded-md transition-colors"
+        class="th-btn th-btn-pill inline-flex items-center gap-2 px-6 py-2.5 text-sm font-semibold transition-colors"
         data-filter-action="clear-all"
       >
         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">

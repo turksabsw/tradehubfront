@@ -59,16 +59,17 @@ export function renderSidebarMenuItem({ item, expanded }: SidebarMenuItemProps):
   return `
     <a
       href="${item.href}"
-      class="sidebar-item sidebar-item--expanded group flex items-center gap-2 xs:gap-3 px-3 xs:px-4 h-11 xs:h-10 rounded-lg mx-1 xs:mx-2 ${activeClasses} ${hoverClasses} transition-all cursor-pointer"
+      class="sidebar-item sidebar-item--expanded group relative mx-auto flex h-11 w-11 cursor-pointer items-center justify-center rounded-lg ${activeClasses} ${hoverClasses} transition-all xl:mx-2 xl:h-10 xl:w-auto xl:justify-start xl:gap-3 xl:px-4"
       data-sidebar-item="${item.id}"
       role="menuitem"
       aria-label="${item.label}"
+      title="${item.label}"
       ${hasSubmenu ? 'aria-haspopup="true" aria-expanded="false"' : ''}
     >
       <span class="w-5 h-5 flex-shrink-0">${icon}</span>
-      <span class="flex-1 text-sm font-normal text-gray-900 dark:text-gray-200 truncate">${item.label}</span>
-      ${item.badge ? `<span class="inline-flex items-center px-1.5 py-0.5 text-[10px] font-semibold leading-none text-white bg-red-500 rounded-full">${item.badge}</span>` : ''}
-      ${hasSubmenu ? `<span class="w-4 h-4 flex-shrink-0 text-gray-400 dark:text-gray-500 transition-transform">${chevron}</span>` : ''}
+      <span class="sidebar-item-label hidden flex-1 truncate text-sm font-normal text-gray-900 dark:text-gray-200 xl:block">${item.label}</span>
+      ${item.badge ? `<span class="sidebar-item-badge hidden items-center rounded-full bg-red-500 px-1.5 py-0.5 text-[10px] leading-none font-semibold text-white xl:inline-flex">${item.badge}</span>` : ''}
+      ${hasSubmenu ? `<span class="sidebar-item-chevron hidden h-4 w-4 flex-shrink-0 text-gray-400 transition-transform dark:text-gray-500 xl:block">${chevron}</span>` : ''}
     </a>
   `;
 }

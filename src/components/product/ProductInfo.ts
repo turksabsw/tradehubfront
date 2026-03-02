@@ -94,7 +94,7 @@ export function ProductInfo(): string {
             <svg class="shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
             <span class="truncate">Numune fiyatı: <strong class="shrink-0">$${p.samplePrice?.toFixed(2) ?? '30.00'}</strong></span>
           </div>
-          <button type="button" class="pd-sample-btn shrink-0 cursor-pointer">Numune Al</button>
+          <button type="button" data-add-to-cart="${mockProduct.id}" class="pd-sample-btn shrink-0 cursor-pointer">Numune Al</button>
         </div>
 
         <!-- Variations Header -->
@@ -175,7 +175,7 @@ export function ProductInfo(): string {
 
         <!-- CTA Buttons -->
         <div id="pd-cta-buttons">
-          <button type="button" id="pd-add-to-cart" class="pd-cta-primary">
+          <button type="button" id="pd-add-to-cart" data-add-to-cart="${mockProduct.id}" class="pd-cta-primary">
             Sepete Ekle
           </button>
           <button type="button" id="pd-chat-now" class="pd-cta-outline">
@@ -194,15 +194,6 @@ export function initProductInfo(): void {
     tab.addEventListener('click', () => {
       cardTabs.forEach(t => t.classList.remove('active'));
       tab.classList.add('active');
-    });
-  });
-
-  // Price tier highlighting
-  const tierCells = document.querySelectorAll<HTMLElement>('.pd-price-tier');
-  tierCells.forEach(cell => {
-    cell.addEventListener('click', () => {
-      tierCells.forEach(c => c.classList.remove('active'));
-      cell.classList.add('active');
     });
   });
 

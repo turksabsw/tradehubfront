@@ -7,6 +7,7 @@
 
 import { SocialLoginButtons, initSocialLoginButtons, type LoginProvider } from './SocialLoginButtons';
 import { getBaseUrl } from './AuthLayout';
+import { login } from '../../utils/auth';
 
 /* ── Types ──────────────────────────────────────────── */
 
@@ -175,7 +176,11 @@ export function initLoginPage(options: LoginPageOptions = {}): void {
   if (loginForm) {
     loginForm.addEventListener('submit', (e) => {
       e.preventDefault();
-      alert('Giriş yapılıyor...');
+      const email = (document.getElementById('email') as HTMLInputElement)?.value;
+      if (email) {
+        login(email);
+        window.location.href = getBaseUrl();
+      }
     });
   }
 }

@@ -22,43 +22,49 @@ const InfoIcon = `<svg class="w-4 h-4 text-[var(--color-text-muted)]" viewBox="0
 /** Location pin SVG icon */
 const LocationIcon = `<svg class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9.69 18.933l.003.001C9.89 19.02 10 19 10 19s.11.02.308-.066l.002-.001.006-.003.018-.008a5.741 5.741 0 00.281-.14c.186-.096.446-.24.757-.433.62-.384 1.445-.966 2.274-1.765C15.302 14.988 17 12.493 17 9A7 7 0 103 9c0 3.492 1.698 5.988 3.355 7.584a13.731 13.731 0 002.273 1.765 11.842 11.842 0 00.976.544l.062.029.018.008.006.003zM10 11.25a2.25 2.25 0 100-4.5 2.25 2.25 0 000 4.5z" clip-rule="evenodd"/></svg>`;
 
-function floatField(id: string, name: string, label: string, required: boolean, type = 'text'): string {
+function floatField(id: string, name: string, label: string, required: boolean, type = 'text', helperText?: string, helperAction?: string): string {
   return `
-    <div class="checkout-float-field" data-field="${name}">
+    <div class="relative mb-4 group checkout-field-container" data-field="${name}">
       <input
-        class="checkout-float-field__input"
+        class="peer w-full h-[48px] pt-[18px] px-3 pb-0 text-[14px] text-[var(--color-text-primary)] border border-[var(--color-border-medium)] rounded-lg bg-[var(--color-surface)] outline-none transition-colors focus:border-[var(--color-primary-500)] data-[error=true]:border-[var(--color-error-500)] placeholder-transparent"
         type="${type}"
         id="${id}"
         name="${name}"
         autocomplete="off"
+        placeholder=" "
         ${required ? 'required' : ''}
       />
-      <label class="checkout-float-field__label" for="${id}">
+      <label 
+        class="absolute left-3 top-1/2 -translate-y-1/2 text-[14px] text-[#767676] transition-all duration-200 ease-in-out pointer-events-none peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-[14px] peer-placeholder-shown:text-[#767676] peer-focus:top-[12px] peer-focus:-translate-y-1/2 peer-focus:text-[12px] peer-focus:text-[var(--color-primary-500)] peer-focus:bg-transparent group-data-[error=true]:text-[var(--color-error-500)] ${type !== 'tel' && `peer-[:not(:placeholder-shown)]:top-[12px] peer-[:not(:placeholder-shown)]:-translate-y-1/2 peer-[:not(:placeholder-shown)]:text-[12px]`}" 
+        for="${id}"
+      >
         ${label}${required ? ' <span class="text-[var(--color-error-500)]">*</span>' : ''}
       </label>
-      <div class="checkout-float-field__error">${pageContent.requiredFieldError}</div>
+      <div class="hidden text-[12px] text-[var(--color-error-500)] mt-1 group-data-[error=true]:block">${pageContent.requiredFieldError}</div>
+      ${helperText ? `<p class="text-[14px] text-[#767676] mt-2">${helperText}</p>` : ''}
+      ${helperAction ? helperAction : ''}
     </div>
   `;
 }
 
 function dropdownField(id: string, name: string, label: string, displayValue: string): string {
   return `
-    <div class="checkout-dropdown checkout-float-field checkout-float-field--active" data-field="${name}" data-dropdown="${id}">
+    <div class="relative mb-4 group checkout-dropdown-container" data-field="${name}" data-dropdown="${id}">
       <button
         type="button"
-        class="checkout-dropdown__trigger"
+        class="w-full h-[48px] flex items-center justify-between pt-[18px] px-3 pb-0 text-[14px] text-[var(--color-text-primary)] border border-[var(--color-border-medium)] rounded-lg bg-[var(--color-surface)] cursor-pointer outline-none transition-colors focus:border-[var(--color-primary-500)] group-data-[error=true]:border-[var(--color-error-500)] dropdown-trigger"
         id="${id}"
         aria-expanded="false"
         aria-haspopup="listbox"
       >
-        <span class="text-left truncate" data-display>${displayValue}</span>
-        ${ChevronDown}
+        <span class="text-left truncate pb-[6px]" data-display>${displayValue}</span>
+        <span class="pb-[6px]">${ChevronDown}</span>
       </button>
-      <label class="checkout-float-field__label">
+      <label class="absolute left-3 top-[12px] -translate-y-1/2 text-[12px] text-[#767676] transition-all duration-200 ease-in-out pointer-events-none group-data-[error=true]:text-[var(--color-error-500)] dropdown-label">
         ${label} <span class="text-[var(--color-error-500)]">*</span>
       </label>
-      <ul class="checkout-dropdown__list" role="listbox" data-list></ul>
-      <div class="checkout-float-field__error">${pageContent.requiredFieldError}</div>
+      <ul class="absolute top-full left-0 right-0 z-50 max-h-[260px] overflow-y-auto bg-[var(--color-surface)] border border-[var(--color-border-medium)] rounded-lg shadow-lg mt-1 hidden group-data-[open=true]:block" role="listbox" data-list></ul>
+      <div class="hidden text-[12px] text-[var(--color-error-500)] mt-1 group-data-[error=true]:block">${pageContent.requiredFieldError}</div>
     </div>
   `;
 }
@@ -72,12 +78,12 @@ export function ShippingAddressForm(props: ShippingAddressFormProps = {}): strin
 
   // Country dropdown items
   const countryItems = ctrs.map(c =>
-    `<li class="checkout-dropdown__item${c.code === defaultCountry.code ? ' checkout-dropdown__item--selected' : ''}" role="option" data-value="${c.code}" data-flag="${c.flag}" data-name="${c.name}" data-prefix="${c.phonePrefix}">${c.flag} ${c.name}</li>`
+    `<li class="px-3 py-2 text-[14px] text-[var(--color-text-primary)] cursor-pointer hover:bg-blue-100 hover:text-blue-800 transition-colors flex items-center gap-2 ${c.code === defaultCountry.code ? 'bg-blue-50 text-blue-800' : ''}" role="option" data-value="${c.code}" data-flag="${c.flag}" data-name="${c.name}" data-prefix="${c.phonePrefix}">${c.flag} ${c.name}</li>`
   ).join('');
 
   // Province dropdown items
   const provinceItems = _provinces.map(p =>
-    `<li class="checkout-dropdown__item" role="option" data-value="${p.name}">${p.name}</li>`
+    `<li class="px-3 py-2 text-[14px] text-[var(--color-text-primary)] cursor-pointer hover:bg-[#f5f5f5] transition-colors" role="option" data-value="${p.name}">${p.name}</li>`
   ).join('');
 
   return `
@@ -91,54 +97,51 @@ export function ShippingAddressForm(props: ShippingAddressFormProps = {}): strin
       <!-- Form Content -->
       <div class="checkout-section__content">
         <form id="shipping-address-form" class="px-4 lg:px-5 pb-5" novalidate>
-          <!-- Country/Region -->
-          ${dropdownField('country-dropdown', 'country', pageContent.countryLabel, `${defaultCountry.flag} ${defaultCountry.name}`)}
-          <div class="hidden" id="country-items">${countryItems}</div>
-
-          <!-- First name and Last name -->
-          ${floatField('first-name', 'firstName', pageContent.firstNameLabel, true)}
-
-          <!-- Phone Number (composite) -->
-          <div class="checkout-float-field" data-field="phone">
-            <div class="flex rounded-[var(--radius-input)] border border-[var(--color-border-medium)] overflow-hidden transition-colors" id="phone-wrapper">
-              <div class="flex items-center gap-1 px-3 bg-[var(--color-surface-raised)] border-r border-[var(--color-border-medium)] shrink-0 min-w-[70px]">
-                <span class="text-sm font-medium text-[var(--color-text-secondary)]" id="phone-prefix">${defaultCountry.phonePrefix}</span>
-              </div>
-              <input
-                class="flex-1 px-3 py-[18px] pb-[6px] text-[var(--font-size-base)] text-[var(--color-text-primary)] outline-none bg-transparent"
-                type="tel"
-                id="phone"
-                name="phone"
-                required
-              />
+          <div class="flex flex-col gap-0">
+            <div class="flex items-center gap-2 mb-4 text-[#008a00] text-[14px] font-medium">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" class="shrink-0"><path d="M18 10v-3.5A6.5 6.5 0 105 6.5V10H4v12h16V10h-2zm-2 0H8v-3.5a4.5 4.5 0 119 0V10zm-3 5.5v3h-2v-3h2z" fill="currentColor"/></svg>
+              <span>Your information is encrypted and secure</span>
             </div>
-            <label class="checkout-float-field__label" for="phone">
-              ${pageContent.phoneLabel} <span class="text-[var(--color-error-500)]">*</span>
-            </label>
-            <p class="text-xs text-[var(--color-text-muted)] mt-1">Only used to contact you for delivery updates</p>
-            <div class="checkout-float-field__error">${pageContent.requiredFieldError}</div>
-          </div>
+            
+            <!-- Country/Region -->
+            ${dropdownField('country-dropdown', 'country', 'Country / region', `${defaultCountry.flag} ${defaultCountry.name}`)}
+            <div class="hidden" id="country-items">${countryItems}</div>
 
-          <!-- Street Address -->
-          <div class="checkout-float-field" data-field="streetAddress">
-            <input
-              class="checkout-float-field__input"
-              type="text"
-              id="street-address"
-              name="streetAddress"
-              autocomplete="off"
-              required
-            />
-            <label class="checkout-float-field__label" for="street-address">
-              ${pageContent.streetAddressLabel} <span class="text-[var(--color-error-500)]">*</span>
-            </label>
-            <div class="checkout-float-field__error">${pageContent.requiredFieldError}</div>
-            <!-- Use my current location link -->
-            <button type="button" id="use-location-btn" class="flex items-center gap-1.5 mt-2 text-sm text-[var(--color-primary-500)] hover:text-[var(--color-primary-700)] transition-colors">
-              ${LocationIcon}
-              <span>${pageContent.useCurrentLocationText}</span>
-            </button>
-          </div>
+            <!-- First name and Last name -->
+            ${floatField('first-name', 'firstName', 'First name and Last name', true)}
+
+            <!-- Phone Number (composite) -->
+            <div class="relative mb-4 group checkout-field-container flex gap-2" data-field="phone">
+              <div class="flex items-center justify-center w-[70px] h-[48px] rounded-lg border border-[var(--color-border-medium)] bg-transparent text-[14px] text-[var(--color-text-primary)] shrink-0">
+                <span id="phone-prefix">${defaultCountry.phonePrefix}</span>
+              </div>
+              <div class="relative flex-1">
+                <input
+                  class="peer w-full h-[48px] pt-[18px] px-3 pb-0 text-[14px] text-[var(--color-text-primary)] border border-[var(--color-border-medium)] rounded-lg bg-[var(--color-surface)] outline-none transition-colors focus:border-[var(--color-primary-500)] data-[error=true]:border-[var(--color-error-500)] placeholder-transparent"
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  required
+                  placeholder=" "
+                />
+                <label 
+                  class="absolute left-3 top-1/2 -translate-y-1/2 text-[14px] text-[#767676] transition-all duration-200 ease-in-out pointer-events-none peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-[14px] peer-placeholder-shown:text-[#767676] peer-focus:top-[12px] peer-focus:-translate-y-1/2 peer-focus:text-[12px] peer-focus:text-[var(--color-primary-500)] peer-focus:bg-transparent peer-[:not(:placeholder-shown)]:top-[12px] peer-[:not(:placeholder-shown)]:-translate-y-1/2 peer-[:not(:placeholder-shown)]:text-[12px] group-data-[error=true]:text-[var(--color-error-500)]" 
+                  for="phone"
+                >
+                  ${pageContent.phoneLabel} <span class="text-[var(--color-error-500)]">*</span>
+                </label>
+              </div>
+              <p class="absolute top-[100%] left-[78px] text-[14px] text-[#767676] mt-[8px]">Only used to contact you for delivery updates</p>
+            </div>
+            <div class="h-[30px]"></div> <!-- Spacer for absolute absolute positioned help text -->
+
+            <!-- Street Address -->
+            ${floatField('street-address', 'streetAddress', pageContent.streetAddressLabel, true, 'text', '', `
+              <button type="button" id="use-location-btn" class="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1 bg-[#FFFFFF] px-[16px] py-0 text-[14px] text-[var(--color-primary-500)] hover:text-[var(--color-primary-700)] transition-colors">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                <span>${pageContent.useCurrentLocationText}</span>
+              </button>
+            `)}
 
           <!-- Apartment (optional) -->
           ${floatField('apartment', 'apartment', pageContent.apartmentLabel, false)}
@@ -147,34 +150,27 @@ export function ShippingAddressForm(props: ShippingAddressFormProps = {}): strin
           <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
             <!-- State/Province -->
             <div class="relative">
-              ${dropdownField('state-dropdown', 'state', pageContent.stateLabel, '')}
+              ${dropdownField('state-dropdown', 'state', 'State / province', '')}
               <div class="hidden" id="state-items">${provinceItems}</div>
               ${AddressAutocomplete()}
             </div>
 
             <!-- City -->
-            ${dropdownField('city-dropdown', 'city', pageContent.cityLabel, '')}
+            ${dropdownField('city-dropdown', 'city', 'City', '')}
             <div class="hidden" id="city-items"></div>
 
             <!-- Postal Code -->
-            <div class="checkout-float-field" data-field="postalCode">
-              <input
-                class="checkout-float-field__input"
-                type="text"
-                id="postal-code"
-                name="postalCode"
-                autocomplete="off"
-                required
-              />
-              <label class="checkout-float-field__label" for="postal-code">
-                ${pageContent.postalCodeLabel} <span class="text-[var(--color-error-500)]">*</span>
-              </label>
-              <div class="flex items-center gap-1 mt-1" data-tooltip-target="postal-tooltip">
-                ${InfoIcon}
-                <span class="text-xs text-[var(--color-text-muted)]">Enter your postal/ZIP code</span>
+            ${floatField('postal-code', 'postalCode', 'Postal code', true, 'text', '', `
+              <div class="absolute right-3 top-1/2 -translate-y-1/2 flex items-center justify-center cursor-pointer group/tooltip">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="text-[var(--color-text-primary)]"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm-1-11v6h2v-6h-2zm1-4.5a1.5 1.5 0 100 3 1.5 1.5 0 000-3z" fill="currentColor"/></svg>
+                <!-- Tooltip Popup -->
+                <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-[320px] bg-[#222222] text-white text-[14px] leading-snug p-3 rounded-md shadow-lg opacity-0 invisible group-hover/tooltip:opacity-100 group-hover/tooltip:visible transition-all z-50">
+                  Provide the exact postal code of your address to ensure delivery to the correct location
+                  <!-- Tooltip Arrow -->
+                  <div class="absolute top-full left-1/2 -translate-x-1/2 -mt-[1px] border-[6px] border-transparent border-t-[#222222]"></div>
+                </div>
               </div>
-              <div class="checkout-float-field__error">${pageContent.requiredFieldError}</div>
-            </div>
+            `)}
           </div>
 
           <!-- Default address checkbox -->
@@ -246,8 +242,8 @@ export function initShippingAddressForm(): void {
 
   const closeAllDropdowns = () => {
     dropdowns.forEach(dd => {
-      dd.classList.remove('checkout-dropdown--open');
-      const trigger = dd.querySelector('.checkout-dropdown__trigger');
+      delete dd.dataset.open;
+      const trigger = dd.querySelector('.dropdown-trigger');
       trigger?.setAttribute('aria-expanded', 'false');
     });
   };
@@ -266,58 +262,65 @@ export function initShippingAddressForm(): void {
   populateDropdown('state-dropdown', 'state-items');
 
   dropdowns.forEach(dropdown => {
-    const trigger = dropdown.querySelector('.checkout-dropdown__trigger');
+    const trigger = dropdown.querySelector('.dropdown-trigger');
     const list = dropdown.querySelector('[data-list]');
     const display = dropdown.querySelector('[data-display]');
     const fieldName = dropdown.dataset.field;
 
     trigger?.addEventListener('click', (e) => {
       e.preventDefault();
-      const isOpen = dropdown.classList.contains('checkout-dropdown--open');
+      const isOpen = dropdown.dataset.open === 'true';
       closeAllDropdowns();
       if (!isOpen) {
-        dropdown.classList.add('checkout-dropdown--open');
+        dropdown.dataset.open = 'true';
         trigger.setAttribute('aria-expanded', 'true');
       }
     });
 
     list?.addEventListener('click', (e) => {
-      const item = (e.target as HTMLElement).closest('.checkout-dropdown__item') as HTMLElement | null;
+      const item = (e.target as HTMLElement).closest('li') as HTMLElement | null;
       if (!item) return;
 
-      // Update selected state
-      list.querySelectorAll('.checkout-dropdown__item').forEach(i => i.classList.remove('checkout-dropdown__item--selected'));
-      item.classList.add('checkout-dropdown__item--selected');
+      // Update selected state visually
+      list.querySelectorAll('li').forEach(i => {
+        i.classList.remove('bg-blue-50', 'text-blue-800');
+      });
+      item.classList.add('bg-blue-50', 'text-blue-800');
 
       // Update display value
       if (display) display.textContent = item.textContent?.trim() ?? '';
 
-      // Mark field as active
-      dropdown.classList.add('checkout-float-field--active');
-      // Remove error state on selection
-      dropdown.classList.remove('checkout-float-field--error');
-
-      closeAllDropdowns();
-
-      // Country-specific: update phone prefix
+      // Special handling for country to update phone prefix
       if (fieldName === 'country') {
         const prefix = item.dataset.prefix;
         const prefixEl = document.getElementById('phone-prefix');
         if (prefix && prefixEl) prefixEl.textContent = prefix;
       }
 
-      // State-specific: update city dropdown
+      // Special handling for province to update city dropdown
       if (fieldName === 'state') {
-        const stateName = item.dataset.value ?? '';
-        updateCityDropdown(stateName);
+        const provinceName = item.dataset.value;
+        if (provinceName) updateCityDropdown(provinceName);
       }
+
+      closeAllDropdowns();
+
+      // Update float label positioning logic
+      const label = dropdown.querySelector('.dropdown-label');
+      if (label) {
+        label.classList.add('top-[12px]', '-translate-y-1/2', 'text-[12px]');
+        label.classList.remove('top-1/2', 'text-[14px]');
+      }
+
+      // Remove error state on selection
+      delete dropdown.dataset.error;
     });
   });
 
   // Close dropdowns on outside click
   document.addEventListener('click', (e) => {
     const target = e.target as HTMLElement;
-    if (!target.closest('.checkout-dropdown')) {
+    if (!target.closest('.checkout-dropdown-container')) { // Changed to checkout-dropdown-container
       closeAllDropdowns();
     }
   });
@@ -328,20 +331,20 @@ export function initShippingAddressForm(): void {
   if (stateDropdown) stateDropdown.classList.remove('checkout-float-field--active');
   if (cityDropdown) cityDropdown.classList.remove('checkout-float-field--active');
 
-  // ── Form validation on submit ──
+  // ── Form Validation & Submission ──
   form.addEventListener('submit', (e) => {
     e.preventDefault();
 
-    // Clear previous errors
-    form.querySelectorAll('.checkout-float-field--error').forEach(el => el.classList.remove('checkout-float-field--error'));
+    // Reset all errors
+    form.querySelectorAll('[data-error]').forEach(el => delete (el as HTMLElement).dataset.error);
 
-    const requiredFields: { field: string; getValue: () => string }[] = [
-      { field: 'country', getValue: () => document.querySelector('[data-dropdown="country-dropdown"] [data-display]')?.textContent?.trim() ?? '' },
+    const requiredFields = [
+      { field: 'country', getValue: () => (document.getElementById('country-dropdown') as HTMLButtonElement | null)?.querySelector('[data-display]')?.textContent?.trim() },
       { field: 'firstName', getValue: () => (document.getElementById('first-name') as HTMLInputElement)?.value?.trim() ?? '' },
       { field: 'phone', getValue: () => (document.getElementById('phone') as HTMLInputElement)?.value?.trim() ?? '' },
       { field: 'streetAddress', getValue: () => (document.getElementById('street-address') as HTMLInputElement)?.value?.trim() ?? '' },
-      { field: 'state', getValue: () => document.querySelector('[data-dropdown="state-dropdown"] [data-display]')?.textContent?.trim() ?? '' },
-      { field: 'city', getValue: () => document.querySelector('[data-dropdown="city-dropdown"] [data-display]')?.textContent?.trim() ?? '' },
+      { field: 'state', getValue: () => (document.getElementById('state-dropdown') as HTMLButtonElement | null)?.querySelector('[data-display]')?.textContent?.trim() },
+      { field: 'city', getValue: () => (document.getElementById('city-dropdown') as HTMLButtonElement | null)?.querySelector('[data-display]')?.textContent?.trim() },
       { field: 'postalCode', getValue: () => (document.getElementById('postal-code') as HTMLInputElement)?.value?.trim() ?? '' },
     ];
 
@@ -352,26 +355,28 @@ export function initShippingAddressForm(): void {
       if (!getValue()) {
         hasErrors = true;
         const fieldEl = form.querySelector(`[data-field="${field}"]`);
-        fieldEl?.classList.add('checkout-float-field--error');
-        if (!firstErrorField && fieldEl) firstErrorField = fieldEl as HTMLElement;
+        if (fieldEl) {
+          (fieldEl as HTMLElement).dataset.error = 'true';
+          if (!firstErrorField) firstErrorField = fieldEl as HTMLElement;
+        }
       }
     });
 
     if (hasErrors && firstErrorField) {
-      (firstErrorField as HTMLElement).scrollIntoView({ behavior: 'smooth', block: 'center' });
+      firstErrorField.scrollIntoView({ behavior: 'smooth', block: 'center' });
       return;
     }
-    if (hasErrors) return;
 
+    // Collect data
     const formData = {
-      country: document.querySelector('[data-dropdown="country-dropdown"] [data-display]')?.textContent?.trim(),
+      country: (document.getElementById('country-dropdown') as HTMLButtonElement | null)?.querySelector('[data-display]')?.textContent?.trim(),
       firstName: (document.getElementById('first-name') as HTMLInputElement)?.value?.trim(),
       phonePrefix: document.getElementById('phone-prefix')?.textContent?.trim(),
       phone: (document.getElementById('phone') as HTMLInputElement)?.value?.trim(),
       streetAddress: (document.getElementById('street-address') as HTMLInputElement)?.value?.trim(),
       apartment: (document.getElementById('apartment') as HTMLInputElement)?.value?.trim(),
-      state: document.querySelector('[data-dropdown="state-dropdown"] [data-display]')?.textContent?.trim(),
-      city: document.querySelector('[data-dropdown="city-dropdown"] [data-display]')?.textContent?.trim(),
+      state: (document.getElementById('state-dropdown') as HTMLButtonElement | null)?.querySelector('[data-display]')?.textContent?.trim(),
+      city: (document.getElementById('city-dropdown') as HTMLButtonElement | null)?.querySelector('[data-display]')?.textContent?.trim(),
       postalCode: (document.getElementById('postal-code') as HTMLInputElement)?.value?.trim(),
       isDefaultAddress: (document.getElementById('default-address') as HTMLInputElement)?.checked ?? false,
     };
@@ -380,66 +385,73 @@ export function initShippingAddressForm(): void {
   });
 
   // Remove error state on input
-  form.querySelectorAll<HTMLInputElement>('.checkout-float-field__input').forEach(input => {
+  form.querySelectorAll<HTMLInputElement>('input').forEach(input => {
     input.addEventListener('input', () => {
-      const field = input.closest('.checkout-float-field');
-      field?.classList.remove('checkout-float-field--error');
+      const field = input.closest('[data-field]');
+      if (field) delete (field as HTMLElement).dataset.error;
     });
   });
 
-  // Phone input error clearing (separate since it lacks checkout-float-field__input class)
-  if (phoneInput && phoneField) {
-    phoneInput.addEventListener('input', () => {
-      phoneField.classList.remove('checkout-float-field--error');
+  // Phone input error clearing
+  const phoneInputField = document.getElementById('phone');
+  if (phoneInputField) {
+    phoneInputField.addEventListener('input', () => {
+      const phoneFieldContainer = phoneInputField.closest('[data-field="phone"]');
+      if (phoneFieldContainer) delete (phoneFieldContainer as HTMLElement).dataset.error;
     });
   }
 
-  // ── Geolocation (C7) ──
-  const locationBtn = document.getElementById('use-location-btn');
-  locationBtn?.addEventListener('click', () => {
-    if (!navigator.geolocation) return;
-
-    navigator.geolocation.getCurrentPosition(
-      () => {
-        // On success: fill form with mock address data
-        const setInput = (id: string, value: string) => {
-          const input = document.getElementById(id) as HTMLInputElement | null;
-          if (input) {
-            input.value = value;
-            const field = input.closest('.checkout-float-field');
-            field?.classList.add('checkout-float-field--active');
-            field?.classList.remove('checkout-float-field--error');
-          }
-        };
-
-        setInput('street-address', geolocationMockAddress.street);
-        setInput('postal-code', geolocationMockAddress.postalCode);
-
-        // Set state dropdown
-        const stateDD = document.querySelector('[data-dropdown="state-dropdown"]');
-        const stateDisplay = stateDD?.querySelector('[data-display]');
-        if (stateDisplay) {
-          stateDisplay.textContent = geolocationMockAddress.state;
-          stateDD?.classList.add('checkout-float-field--active');
-          stateDD?.classList.remove('checkout-float-field--error');
-        }
-
-        // Update city dropdown and set city
-        updateCityDropdown(geolocationMockAddress.state);
-        const cityDD = document.querySelector('[data-dropdown="city-dropdown"]');
-        const cityDisplay = cityDD?.querySelector('[data-display]');
-        if (cityDisplay) {
-          cityDisplay.textContent = geolocationMockAddress.city;
-          cityDD?.classList.add('checkout-float-field--active');
-          cityDD?.classList.remove('checkout-float-field--error');
-        }
-      },
-      () => {
-        // Silent fail on geolocation denial
-        console.warn('Geolocation permission denied');
+  // ── "Use my current location" Action ──
+  const useLocationBtn = document.getElementById('use-location-btn');
+  if (useLocationBtn) {
+    useLocationBtn.addEventListener('click', () => {
+      if (!navigator.geolocation) {
+        console.warn('Geolocation not supported by this browser.');
+        return;
       }
-    );
-  });
+
+      if (confirm('Allow TradeHub to access your current location?')) {
+        navigator.geolocation.getCurrentPosition(
+          () => {
+            // Set standard inputs
+            const setInput = (id: string, val: string) => {
+              const el = document.getElementById(id) as HTMLInputElement;
+              if (el) {
+                el.value = val;
+                const field = el.closest('[data-field]');
+                if (field) delete (field as HTMLElement).dataset.error;
+              }
+            };
+
+            // Using standard type fallback since interface has .streetAddress
+            setInput('street-address', geolocationMockAddress.streetAddress || (geolocationMockAddress as any).street || '');
+            setInput('postal-code', geolocationMockAddress.postalCode);
+
+            // Set state dropdown
+            const stateDD = document.querySelector('[data-dropdown="state-dropdown"]');
+            const stateDisplay = stateDD?.querySelector('[data-display]');
+            if (stateDisplay) {
+              stateDisplay.textContent = geolocationMockAddress.state;
+              if (stateDD) delete (stateDD as HTMLElement).dataset.error;
+            }
+
+            // Update city dropdown and set city
+            updateCityDropdown(geolocationMockAddress.state);
+            const cityDD = document.querySelector('[data-dropdown="city-dropdown"]');
+            const cityDisplay = cityDD?.querySelector('[data-display]');
+            if (cityDisplay) {
+              cityDisplay.textContent = geolocationMockAddress.city;
+              if (cityDD) delete (cityDD as HTMLElement).dataset.error;
+            }
+          },
+          () => {
+            // Silent fail on geolocation denial
+            console.warn('Geolocation permission denied');
+          }
+        );
+      }
+    });
+  }
 }
 
 /** Update the city dropdown when state changes */

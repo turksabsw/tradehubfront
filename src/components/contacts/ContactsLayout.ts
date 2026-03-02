@@ -25,7 +25,7 @@ export function ContactsLayout(): string {
         <aside class="w-[300px] max-md:w-full shrink-0 border-r max-md:border-r-0 max-md:border-b border-(--color-border-light,#f0f0f0) flex flex-col p-4">
           <!-- Header -->
           <div class="mb-3">
-            <button class="inline-flex items-center gap-1.5 text-sm font-normal text-(--color-text-heading,#111827) bg-transparent border-none cursor-pointer p-0 hover:text-(--color-cta-primary,#cc9900)">
+            <button class="inline-flex items-center gap-1.5 text-sm font-normal text-(--color-text-heading,#111827) bg-transparent border-none cursor-pointer p-0 hover:text-(--color-cta-primary,#333333)">
               Tüm kişiler - 0
               <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>

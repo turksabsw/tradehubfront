@@ -35,13 +35,14 @@ import {
   initReviewsModal,
   LoginModal,
   initLoginModal,
-  CartDrawer,
-  initCartDrawer,
   ShippingModal,
   initShippingModal,
   MobileProductLayout,
   initMobileLayout,
+  CartDrawer,
+  initCartDrawer,
 } from './components/product'
+
 
 // Product mock data (for breadcrumb)
 import { mockProduct } from './data/mockProduct'
@@ -54,6 +55,8 @@ const pdCrumbs = mockProduct.category.slice(1).map((label, i, arr) => ({
   label,
   ...(i < arr.length - 1 ? { href: `products.html?q=${encodeURIComponent(label)}` } : {}),
 }));
+
+
 
 const appEl = document.querySelector<HTMLDivElement>('#app')!;
 appEl.classList.add('relative');
@@ -68,8 +71,8 @@ appEl.innerHTML = `
 
   <!-- Main Content -->
   <main>
-    <!-- DESKTOP LAYOUT (hidden on mobile via CSS) -->
-    <div id="pd-desktop-layout">
+    <!-- DESKTOP LAYOUT (hidden on mobile via Tailwind classes) -->
+    <div id="pd-desktop-layout" class="hidden xl:block">
       <section style="background: var(--pd-bg, #ffffff);">
         <div class="container-boxed">
           <div id="pd-hero-grid" class="flex flex-col gap-5 pt-3 xl:grid xl:grid-cols-[1fr_340px] xl:gap-5 xl:items-start 2xl:grid-cols-[1fr_380px] 2xl:gap-6 3xl:grid-cols-[1fr_407px] 3xl:gap-7">
@@ -90,8 +93,8 @@ appEl.innerHTML = `
       </section>
     </div>
 
-    <!-- MOBILE LAYOUT (hidden on desktop via CSS) -->
-    <div id="pd-mobile-layout">
+    <!-- MOBILE LAYOUT (hidden on desktop via Tailwind classes) -->
+    <div id="pd-mobile-layout" class="xl:hidden pb-20">
       ${MobileProductLayout()}
     </div>
   </main>
@@ -111,11 +114,11 @@ appEl.innerHTML = `
   ${ShippingModal()}
 
   <!-- Mobile Sticky Bottom Bar (Alibaba 3-button style) -->
-  <div id="pd-mobile-bar" class="grid grid-cols-[48px_minmax(0,1fr)_minmax(0,1fr)] gap-2 px-4 py-2.5 pb-[calc(10px+env(safe-area-inset-bottom))] fixed bottom-0 left-0 right-0 z-100 bg-surface border-t border-border-default shadow-[0_-2px_10px_rgba(0,0,0,0.08)] overflow-hidden">
+  <div id="pd-mobile-bar" class="xl:hidden grid grid-cols-[48px_minmax(0,1fr)_minmax(0,1fr)] gap-2 px-4 py-2.5 pb-[calc(10px+env(safe-area-inset-bottom))] fixed bottom-0 left-0 right-0 z-100 bg-surface border-t border-border-default shadow-[0_-2px_10px_rgba(0,0,0,0.08)] overflow-hidden">
     <button type="button" id="pdm-bar-chat" class="pdm-bar-chat-btn w-12 h-11 border border-border-medium rounded-[22px] bg-surface flex items-center justify-center cursor-pointer text-text-body p-0" aria-label="Sohbet">
       <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
     </button>
-    <button type="button" id="pdm-bar-cart" class="pdm-bar-cart-btn h-11 border border-[#222] rounded-[22px] bg-surface text-sm font-semibold text-text-heading cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis min-w-0">Sepete Ekle</button>
+    <button type="button" id="pdm-bar-cart" data-add-to-cart="${mockProduct.id}" class="pdm-bar-cart-btn h-11 border border-[#222] rounded-[22px] bg-surface text-sm font-semibold text-text-heading cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis min-w-0">Sepete Ekle</button>
     <button type="button" id="pdm-bar-order" class="pdm-bar-order-btn h-11 border-none rounded-[22px] bg-cta-primary text-sm font-bold text-white cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis min-w-0">Sipariş Başlat</button>
   </div>
 `;

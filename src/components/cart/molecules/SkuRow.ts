@@ -1,21 +1,19 @@
 /**
- * SkuRow Molecule
- * A single SKU variant row: Checkbox + SKU thumbnail + variant selector display
- * (styled like 'next-select' dropdown) + PriceDisplay + QuantityInput + delete button.
- * Follows sc-c-sku-container-new-wrapper DOM structure from codex brief.
+ * SKU row inside product card.
  */
 
 import type { CartSku } from '../../../types/cart';
 import { Checkbox } from '../atoms/Checkbox';
 import { PriceDisplay } from '../atoms/PriceDisplay';
 import { QuantityInput } from '../atoms/QuantityInput';
+import trashIcon from '../../../assets/images/trash.png';
 
 export interface SkuRowProps {
   sku: CartSku;
 }
 
-function escapeHtml(str: string): string {
-  return str
+function escapeHtml(value: string): string {
+  return value
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
@@ -23,72 +21,58 @@ function escapeHtml(str: string): string {
 }
 
 export function SkuRow({ sku }: SkuRowProps): string {
-  const checkbox = Checkbox({
-    id: `sku-checkbox-${sku.id}`,
-    checked: sku.selected,
-    onChange: `sku-select-${sku.id}`,
-  });
-
-  const thumbnail = `<img class="w-full h-full object-cover block" src="${escapeHtml(sku.skuImage)}" alt="SKU ${escapeHtml(sku.id)}" loading="lazy" />`;
-
-  const variantSelector = `
-    <div class="inline-flex items-center px-2 sm:px-3 py-1 bg-[#f5f5f5] rounded-full text-[12px] sm:text-[13px] text-[#222] cursor-pointer max-w-full transition-colors duration-150 hover:bg-[#e8e8e8]" data-sku-id="${escapeHtml(sku.id)}">
-      <span class="overflow-hidden text-ellipsis whitespace-nowrap">${escapeHtml(sku.variantText)}</span>
-      <i class="ml-1 opacity-60 text-[10px]">&#9660;</i>
-    </div>
-  `.trim();
-
-  const price = PriceDisplay({
-    amount: sku.unitPrice,
-    currency: sku.currency,
-    unit: sku.unit,
-  });
-
-  const quantity = QuantityInput({
-    id: `sku-qty-${sku.id}`,
-    value: sku.quantity,
-    min: sku.minQty,
-    max: sku.maxQty,
-  });
-
-  const deleteBtn = `<button type="button" class="sc-c-sku-delete-btn inline-flex items-center justify-center w-7 h-7 border-none bg-transparent cursor-pointer text-[#999] rounded transition-colors duration-150 hover:text-[#ff4747] hover:bg-[#fff0f0]" data-sku-id="${escapeHtml(sku.id)}" aria-label="Delete SKU">`
-    + `<i class="sc-c-sku-delete-icon before:content-['\\2715'] before:text-sm"></i>`
-    + `</button>`;
-
   return `
-    <div class="sc-c-sku-container-new flex py-3 sm:py-4 pl-1 sm:pl-2 lg:pl-5 border-t border-[#f5f5f5] first:border-t-0 gap-2 sm:gap-3 lg:gap-4 items-start" data-sku-id="${escapeHtml(sku.id)}">
-      <div class="flex items-center justify-center flex-shrink-0 mt-[26px] sm:mt-[34px] lg:mt-[38px]">${checkbox}</div>
-      <div class="w-16 h-16 sm:w-20 sm:h-20 lg:w-[96px] lg:h-[96px] flex-shrink-0 rounded overflow-hidden border border-[#e5e5e5] bg-white">${thumbnail}</div>
-      <div class="flex-1 min-w-0 flex flex-col justify-between self-stretch">
-        <div class="flex justify-between items-start gap-1 sm:gap-2">
-          <div class="min-w-0">${variantSelector}</div>
-          <div class="flex-shrink-0 -mt-1 -mr-1 sm:-mr-2">${deleteBtn}</div>
+    <article class="sc-c-sku-container-new grid grid-cols-[auto_92px_minmax(0,1fr)] gap-3 items-start py-4 border-t border-[#f2f2f2] first:border-t-0 max-sm:grid-cols-[auto_72px_minmax(0,1fr)] max-sm:gap-2" data-sku-id="${escapeHtml(sku.id)}">
+      <div class="pt-9 max-sm:pt-7">
+        ${Checkbox({ id: `sku-checkbox-${sku.id}`, checked: sku.selected, onChange: `sku-select-${sku.id}` })}
+      </div>
+
+      <div class="w-[92px] h-[92px] max-sm:w-[72px] max-sm:h-[72px] rounded-lg border border-border-default overflow-hidden bg-surface-muted">
+        <img src="${escapeHtml(sku.skuImage)}" alt="SKU ${escapeHtml(sku.id)}" class="w-full h-full object-cover" loading="lazy" />
+      </div>
+
+      <div class="min-w-0">
+        <div class="flex items-start justify-between gap-2">
+          <button type="button" class="inline-flex items-center max-w-full rounded-full bg-surface-raised px-3 py-1 text-sm text-text-body hover:bg-secondary-100 transition-colors">
+            <span class="truncate">${escapeHtml(sku.variantText)}</span>
+            <span class="ml-1 text-xs text-text-tertiary">▼</span>
+          </button>
+
+          <div class="relative group">
+            <button type="button" class="sc-c-sku-delete-btn w-8 h-8 inline-flex items-center justify-center rounded-full text-text-tertiary hover:bg-black transition-colors" data-sku-id="${escapeHtml(sku.id)}" aria-label="SKU sil">
+              <img src="${trashIcon}" class="w-[18px] h-[18px] object-contain group-hover:invert transition-all" alt="Sil" />
+            </button>
+            <div class="absolute right-0 top-full mt-2 w-max px-3 py-2 bg-black text-white text-xs font-medium rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
+              Remove this variation
+              <!-- Tooltip stem -->
+              <div class="absolute -top-1 right-3 w-2 h-2 bg-black rotate-45"></div>
+            </div>
+          </div>
         </div>
-        <div class="flex flex-wrap items-end justify-between mt-auto pt-2 gap-1 sm:gap-2" data-unit-price="${sku.unitPrice}">
-          <div class="flex-shrink-0">${price}</div>
-          <div class="flex-shrink-0">${quantity}</div>
+
+        <div class="mt-3 flex items-end justify-between gap-3 flex-wrap">
+          ${PriceDisplay({ amount: sku.unitPrice, currency: sku.currency, unit: `/${sku.unit}` })}
+          ${QuantityInput({ id: `sku-qty-${sku.id}`, value: sku.quantity, min: sku.minQty, max: sku.maxQty })}
         </div>
       </div>
-    </div>
+    </article>
   `.trim();
 }
 
 export function initSkuRows(container?: HTMLElement): void {
   const root = container || document;
-  const rows = root.querySelectorAll<HTMLElement>('.sc-c-sku-container-new-wrapper');
+  const rows = root.querySelectorAll<HTMLElement>('.sc-c-sku-container-new');
 
   rows.forEach((row) => {
     const skuId = row.dataset.skuId;
     if (!skuId) return;
 
     const deleteBtn = row.querySelector<HTMLButtonElement>('.sc-c-sku-delete-btn');
-    if (deleteBtn) {
-      deleteBtn.addEventListener('click', () => {
-        deleteBtn.dispatchEvent(new CustomEvent('sku-delete', {
-          bubbles: true,
-          detail: { skuId },
-        }));
-      });
-    }
+    deleteBtn?.addEventListener('click', () => {
+      deleteBtn.dispatchEvent(new CustomEvent('sku-delete', {
+        bubbles: true,
+        detail: { skuId },
+      }));
+    });
   });
 }

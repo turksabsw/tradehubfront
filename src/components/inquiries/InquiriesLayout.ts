@@ -60,7 +60,7 @@ export function InquiriesLayout(): string {
               <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
             </svg>
           </div>
-          <button class="px-4 py-1.5 text-[13px] text-(--color-cta-primary,#cc9900) border border-(--color-cta-primary,#cc9900) rounded bg-transparent cursor-pointer transition-[background,color] duration-150 hover:bg-(--color-primary-50,#fef9e7)">Sil</button>
+          <button class="px-4 py-1.5 text-[13px] text-(--color-cta-primary,#333333) border border-(--color-cta-primary,#333333) rounded bg-transparent cursor-pointer transition-[background,color] duration-150 hover:bg-(--color-secondary-50,#f5f5f5)">Sil</button>
         </div>
         <div class="flex items-center gap-3">
           <label class="inline-flex items-center gap-1.5 text-[13px] text-(--color-text-muted,#666666) cursor-pointer">

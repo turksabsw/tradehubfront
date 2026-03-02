@@ -327,7 +327,7 @@ function renderTaxInfo(): string {
           </div>
         </div>
         <div class="px-6 pt-4 pb-5 flex justify-end gap-3 border-t border-(--color-border-light,#f0f0f0)">
-          <button class="os-modal__btn os-modal__btn--primary px-6 py-2.5 text-sm font-medium rounded-[20px] cursor-pointer border-none transition-all bg-(--color-cta-primary,#cc9900) text-white hover:bg-[#EA580C]">Doğrula</button>
+          <button class="os-modal__btn os-modal__btn--primary px-6 py-2.5 text-sm font-medium rounded-[20px] cursor-pointer border-none transition-all bg-(--color-cta-primary,#333333) text-white hover:bg-(--color-cta-primary-hover,#1f1f1f)">Doğrula</button>
         </div>
       </div>
     </div>
@@ -375,7 +375,7 @@ function renderTaxInfo(): string {
           </div>
         </div>
         <div class="px-6 pt-4 pb-5 flex justify-end gap-3 border-t border-(--color-border-light,#f0f0f0)">
-          <button class="os-modal__btn os-modal__btn--primary px-6 py-2.5 text-sm font-medium rounded-[20px] cursor-pointer border-none transition-all bg-(--color-cta-primary,#cc9900) text-white hover:bg-[#EA580C]">Doğrula</button>
+          <button class="os-modal__btn os-modal__btn--primary px-6 py-2.5 text-sm font-medium rounded-[20px] cursor-pointer border-none transition-all bg-(--color-cta-primary,#333333) text-white hover:bg-(--color-cta-primary-hover,#1f1f1f)">Doğrula</button>
         </div>
       </div>
     </div>
@@ -417,7 +417,7 @@ function renderTaxInfo(): string {
           </div>
           <div class="flex items-start gap-1.5 text-xs text-(--color-text-placeholder,#999) leading-normal mb-1">
             <svg class="shrink-0 mt-px" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1a4 4 0 00-4 4v2H2a1 1 0 00-1 1v4a1 1 0 001 1h10a1 1 0 001-1V8a1 1 0 00-1-1h-1V5a4 4 0 00-4-4zm-2 4a2 2 0 114 0v2H5V5z" fill="#999"/></svg>
-            <span>Gizlilik bilgilendirmesi: Bilgileriniz <a href="#" class="text-(--color-cta-primary,#cc9900) no-underline hover:underline">Gizlilik Politikamız</a> uyarınca korunmaktadır.</span>
+            <span>Gizlilik bilgilendirmesi: Bilgileriniz <a href="#" class="text-(--color-cta-primary,#333333) no-underline hover:underline">Gizlilik Politikamız</a> uyarınca korunmaktadır.</span>
           </div>
           <label class="os-modal__checkbox flex items-start gap-2.5 text-[13px] text-(--color-text-body,#333) leading-normal cursor-pointer mt-4">
             <input type="checkbox" class="hidden" />
@@ -427,7 +427,7 @@ function renderTaxInfo(): string {
         </div>
         <div class="px-6 pt-4 pb-5 flex justify-end gap-3 border-t border-(--color-border-light,#f0f0f0)">
           <button class="os-modal__btn os-modal__btn--cancel px-6 py-2.5 text-sm font-medium rounded-[20px] cursor-pointer transition-all bg-(--color-surface,#fff) text-(--color-text-body,#333) border border-(--color-border-medium,#d1d5db) hover:border-[#999]">İptal et</button>
-          <button class="os-modal__btn os-modal__btn--primary px-6 py-2.5 text-sm font-medium rounded-[20px] cursor-pointer border-none transition-all bg-(--color-cta-primary,#cc9900) text-white hover:bg-[#EA580C]">Kaydet</button>
+          <button class="os-modal__btn os-modal__btn--primary px-6 py-2.5 text-sm font-medium rounded-[20px] cursor-pointer border-none transition-all bg-(--color-cta-primary,#333333) text-white hover:bg-(--color-cta-primary-hover,#1f1f1f)">Kaydet</button>
         </div>
       </div>
     </div>

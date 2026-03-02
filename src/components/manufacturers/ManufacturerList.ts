@@ -160,7 +160,7 @@ function renderFactoryCard(mfg: any, cardIndex: number): string {
       </div>
 
       <!-- Card Content Row -->
-      <div class="flex justify-between gap-3 xl:gap-0">
+      <div class="flex justify-between gap-3 xl:gap-3 2xl:gap-4">
         <!-- Left Column: Info -->
         <div class="w-[180px] xl:w-[244px] shrink-0 pr-1 xl:pr-3">
           <h4 class="text-[12px] xl:text-[14px] font-normal text-[#222] mb-1">Sıralama ve değerlendirmeler</h4>
@@ -193,7 +193,7 @@ function renderFactoryCard(mfg: any, cardIndex: number): string {
         </div>
 
         <!-- Right Column: Factory Slider (Swiper) -->
-        <div class="factory-slider w-[220px] xl:w-[320px] h-[165px] xl:h-[240px] shrink-0 relative lg:ml-2 xl:ml-0" data-slider-root="${cardIndex}">
+        <div class="factory-slider w-[220px] xl:w-[320px] h-[165px] xl:h-[240px] shrink-0 relative lg:ml-2 xl:ml-2" data-slider-root="${cardIndex}">
           <div class="swiper factory-swiper-${cardIndex} w-full h-full overflow-hidden">
             <div class="swiper-wrapper">
               ${mfg.factoryImages.map((img: string, i: number) => `

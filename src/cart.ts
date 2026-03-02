@@ -5,6 +5,7 @@
 
 import './style.css'
 import { initFlowbite } from 'flowbite'
+import { initStickyHeights } from './utils/stickyHeights'
 
 // Header components (reuse from main page)
 import { TopBar, initMobileDrawer, SubHeader, initStickyHeaderSearch, MegaMenu, initMegaMenu, initHeaderCart } from './components/header'
@@ -19,48 +20,63 @@ import { FooterLinks } from './components/footer'
 import { FloatingPanel, initFloatingPanel } from './components/floating'
 
 // Cart components
-import { CartPage, initCartPage } from './components/cart'
+import { CartPage, initCartPage } from './components/cart/page/CartPage'
+import { cartStore } from './components/cart/state/CartStore'
+import { mockAssuranceItems } from './data/mockCart'
 
-// Mock data
-import { mockCartSuppliers, mockCartSummary, mockAssuranceItems } from './data/mockCart'
+// localStorage'dan sepet verisini yükle
+cartStore.load();
+const cartSuppliers = cartStore.getSuppliers();
+const cartSummary = cartStore.getSummary();
 
 const appEl = document.querySelector<HTMLDivElement>('#app')!;
 appEl.classList.add('relative');
 appEl.innerHTML = `
-  <!-- Sticky Header -->
-  <div id="sticky-header" class="sticky top-0 z-(--z-header)" style="background-color:var(--header-scroll-bg);border-bottom:1px solid var(--header-scroll-border)">
-    ${TopBar()}
-    ${SubHeader()}
+  <!-- Header -->
+  <div id="sticky-header" class="relative bg-white border-b border-[#e5e5e5] w-full z-40">
+    <div class="relative z-50 bg-white">
+      ${TopBar()}
+      ${SubHeader()}
+    </div>
   </div>
 
   ${MegaMenu()}
 
   <!-- Main Content -->
-  <main>
+  <main class="min-h-screen bg-surface relative z-10 pt-4">
     <div class="container-boxed">
       ${Breadcrumb([{ label: 'Sepetim' }])}
     </div>
-    ${CartPage({ suppliers: mockCartSuppliers, summary: mockCartSummary, assuranceItems: mockAssuranceItems })}
+
+    <!-- Client-side Cart Container -->
+    ${CartPage({
+  suppliers: cartSuppliers,
+  summary: cartSummary,
+  assuranceItems: mockAssuranceItems
+})}
   </main>
 
   <!-- Footer -->
-  <footer>
-    ${FooterLinks()}
+  <footer class="relative z-10 mt-12 border-t border-border-default pt-12 pb-8 bg-white">
+    <div class="container-boxed">
+      ${FooterLinks()}
+    </div>
   </footer>
 
   <!-- Floating Panel -->
   ${FloatingPanel()}
 `;
 
-// Initialize behaviors
+// Initialize all behaviors
 initMegaMenu();
 initFlowbite();
 initStickyHeaderSearch();
 initFloatingPanel();
 initMobileDrawer();
 
-// Cart-specific inits — store'u mock data ile başlat
-initCartPage(mockCartSuppliers, mockCartSummary.shippingFee, mockCartSummary.discount);
+// Initialize cart page logic (store zaten load() ile yüklendi)
+initCartPage();
 
 // Header cart init'i store doldurulduktan SONRA gelsin ki badge güncellensin
 initHeaderCart();
+initStickyHeights();

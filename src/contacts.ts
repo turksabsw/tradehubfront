@@ -23,7 +23,7 @@ appEl.innerHTML = `
   <div class="bg-[#F5F5F5] min-h-screen">
     <div class="max-w-[1425px] mx-auto px-4 max-sm:px-2 flex gap-[14px]">
       <!-- Sidebar Column -->
-      <div class="w-[260px] flex-shrink-0 pt-4 max-md:hidden">
+      <div class="w-[72px] xl:w-[260px] flex-shrink-0 pt-4 max-md:hidden">
         ${renderSidebar()}
       </div>
 

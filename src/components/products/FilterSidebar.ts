@@ -236,8 +236,8 @@ function renderCheckbox(option: FilterOption, sectionId: string, idPrefix = ''):
         />
         <div
           class="absolute inset-0 border rounded transition-colors duration-150
-                 peer-checked:bg-orange-500 peer-checked:border-orange-500
-                 peer-focus:ring-2 peer-focus:ring-orange-200"
+                 peer-checked:bg-primary-500 peer-checked:border-primary-500
+                 peer-focus:ring-2 peer-focus:ring-primary-200"
           style="border-color: var(--filter-checkbox-border, #d1d5db);"
         ></div>
         <span class="relative z-10 text-white opacity-0 peer-checked:opacity-100 transition-opacity duration-150">
@@ -245,7 +245,7 @@ function renderCheckbox(option: FilterOption, sectionId: string, idPrefix = ''):
         </span>
       </div>
       <span
-        class="text-[13px] leading-tight group-hover:text-orange-600 transition-colors duration-150"
+        class="text-[13px] leading-tight group-hover:text-primary-600 transition-colors duration-150"
         style="color: var(--filter-text-color, #374151);"
       >${option.label}</span>
       ${option.count !== undefined ? `
@@ -284,17 +284,17 @@ function renderRadioOption(option: StoreReviewFilter, sectionId: string, idPrefi
         />
         <div
           class="absolute inset-0 border rounded-full transition-colors duration-150
-                 peer-checked:border-orange-500"
+                 peer-checked:border-primary-500"
           style="border-color: var(--filter-checkbox-border, #d1d5db);"
         ></div>
-        <div class="w-2 h-2 rounded-full bg-orange-500 opacity-0 peer-checked:opacity-100 transition-opacity duration-150"></div>
+        <div class="w-2 h-2 rounded-full bg-primary-500 opacity-0 peer-checked:opacity-100 transition-opacity duration-150"></div>
       </div>
-      <div class="flex items-center gap-1" style="color: #f59e0b;">
+      <div class="flex items-center gap-1" style="color: var(--color-cta-primary, #cc9900);">
         ${Array.from({ length: stars }, () => icons.star).join('')}
         ${hasHalf ? icons.starEmpty : ''}
       </div>
       <span
-        class="text-[13px] leading-tight group-hover:text-orange-600 transition-colors duration-150"
+        class="text-[13px] leading-tight group-hover:text-primary-600 transition-colors duration-150"
         style="color: var(--filter-text-color, #374151);"
       >${option.label}</span>
     </label>
@@ -309,7 +309,7 @@ function renderCategoryItem(item: CategoryItem): string {
     <li>
       <a
         href="#"
-        class="flex items-center justify-between py-1.5 text-[13px] hover:text-orange-600 transition-colors duration-150"
+        class="flex items-center justify-between py-1.5 text-[13px] hover:text-primary-600 transition-colors duration-150"
         style="color: var(--filter-text-color, #374151);"
         data-category-id="${item.id}"
       >
@@ -330,12 +330,12 @@ function renderCategoryItem(item: CategoryItem): string {
  */
 function renderPriceRange(section: PriceRangeFilterSection): string {
   return `
-    <div class="flex items-center gap-2 mt-2">
+    <div class="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)_auto] items-center gap-2 mt-2">
       <input
         type="number"
         placeholder="Min"
         min="0"
-        class="w-full px-3 py-1.5 text-[13px] border rounded focus:outline-none focus:ring-2 focus:ring-orange-200 focus:border-orange-400"
+        class="w-full min-w-0 px-3 py-1.5 text-[13px] border rounded focus:outline-none focus:ring-2 focus:ring-primary-200 focus:border-primary-400"
         style="border-color: var(--filter-input-border, #d1d5db); color: var(--filter-text-color, #374151);"
         data-filter-section="${section.id}"
         data-filter-type="min"
@@ -345,14 +345,14 @@ function renderPriceRange(section: PriceRangeFilterSection): string {
         type="number"
         placeholder="Max"
         min="0"
-        class="w-full px-3 py-1.5 text-[13px] border rounded focus:outline-none focus:ring-2 focus:ring-orange-200 focus:border-orange-400"
+        class="w-full min-w-0 px-3 py-1.5 text-[13px] border rounded focus:outline-none focus:ring-2 focus:ring-primary-200 focus:border-primary-400"
         style="border-color: var(--filter-input-border, #d1d5db); color: var(--filter-text-color, #374151);"
         data-filter-section="${section.id}"
         data-filter-type="max"
       />
       <button
         type="button"
-        class="px-3 py-1.5 text-[13px] font-medium rounded bg-orange-500 text-white hover:bg-orange-600 transition-colors duration-150"
+        class="px-3 py-1.5 text-[13px] font-medium rounded whitespace-nowrap bg-primary-500 text-white hover:bg-primary-600 transition-colors duration-150"
         data-filter-section="${section.id}"
         data-filter-action="apply"
       >OK</button>
@@ -365,23 +365,23 @@ function renderPriceRange(section: PriceRangeFilterSection): string {
  */
 function renderMinOrder(section: MinOrderFilterSection): string {
   return `
-    <div class="flex items-center gap-2 mt-2">
+    <div class="grid grid-cols-[minmax(0,1fr)_auto_auto] items-center gap-2 mt-2">
       <input
         type="number"
         placeholder="Quantity"
         min="1"
-        class="flex-1 px-3 py-1.5 text-[13px] border rounded focus:outline-none focus:ring-2 focus:ring-orange-200 focus:border-orange-400"
+        class="w-full min-w-0 px-3 py-1.5 text-[13px] border rounded focus:outline-none focus:ring-2 focus:ring-primary-200 focus:border-primary-400"
         style="border-color: var(--filter-input-border, #d1d5db); color: var(--filter-text-color, #374151);"
         data-filter-section="${section.id}"
         data-filter-type="value"
       />
       <span
-        class="text-[12px]"
+        class="text-[12px] whitespace-nowrap"
         style="color: var(--filter-text-color, #6b7280);"
       >${section.filter.unit}</span>
       <button
         type="button"
-        class="px-3 py-1.5 text-[13px] font-medium rounded bg-orange-500 text-white hover:bg-orange-600 transition-colors duration-150"
+        class="px-3 py-1.5 text-[13px] font-medium rounded whitespace-nowrap bg-primary-500 text-white hover:bg-primary-600 transition-colors duration-150"
         data-filter-section="${section.id}"
         data-filter-action="apply"
       >OK</button>
@@ -405,7 +405,7 @@ function renderSearchableCheckbox(section: SearchableCheckboxFilterSection, idPr
         <input
           type="text"
           placeholder="${section.searchPlaceholder || 'Search...'}"
-          class="w-full pl-8 pr-3 py-1.5 text-[13px] border rounded focus:outline-none focus:ring-2 focus:ring-orange-200 focus:border-orange-400"
+          class="w-full pl-8 pr-3 py-1.5 text-[13px] border rounded focus:outline-none focus:ring-2 focus:ring-primary-200 focus:border-primary-400"
           style="border-color: var(--filter-input-border, #d1d5db); color: var(--filter-text-color, #374151);"
           data-filter-section="${section.id}"
           data-filter-type="search"
@@ -446,8 +446,8 @@ function renderCertCheckbox(option: FilterOption, sectionId: string, idPrefix = 
         />
         <div
           class="absolute inset-0 border rounded transition-colors duration-150
-                 peer-checked:bg-orange-500 peer-checked:border-orange-500
-                 peer-focus:ring-2 peer-focus:ring-orange-200"
+                 peer-checked:bg-primary-500 peer-checked:border-primary-500
+                 peer-focus:ring-2 peer-focus:ring-primary-200"
           style="border-color: var(--filter-checkbox-border, #d1d5db);"
         ></div>
         <span class="relative z-10 text-white opacity-0 peer-checked:opacity-100 transition-opacity duration-150">
@@ -456,7 +456,7 @@ function renderCertCheckbox(option: FilterOption, sectionId: string, idPrefix = 
       </div>
       ${icons.certBadge}
       <span
-        class="text-[13px] leading-tight group-hover:text-orange-600 transition-colors duration-150"
+        class="text-[13px] leading-tight group-hover:text-primary-600 transition-colors duration-150"
         style="color: var(--filter-text-color, #374151);"
       >${option.label}</span>
     </label>
@@ -474,7 +474,7 @@ function renderCertDisclaimer(): string {
       </p>
       <a
         href="#"
-        class="inline-block mt-1 text-[12px] font-medium text-gray-700 hover:text-orange-600 hover:underline transition-colors dark:text-gray-300"
+        class="inline-block mt-1 text-[12px] font-medium text-gray-700 hover:text-primary-600 hover:underline transition-colors dark:text-gray-300"
       >Learn More</a>
     </div>
   `;
@@ -543,7 +543,7 @@ function renderSectionContent(section: FilterSection, idPrefix = ''): string {
         ${hasMore && categorySection.showMore ? `
           <button
             type="button"
-            class="mt-2 text-[12px] text-orange-500 hover:text-orange-600 hover:underline transition-colors duration-150"
+            class="mt-2 text-[12px] text-primary-500 hover:text-primary-600 hover:underline transition-colors duration-150"
             data-filter-section="${section.id}"
             data-filter-action="show-more"
           >View more</button>
@@ -610,17 +610,17 @@ function renderTradeAssuranceSection(idPrefix = ''): string {
           />
           <div
             class="absolute inset-0 border rounded transition-colors duration-150
-                   peer-checked:bg-orange-500 peer-checked:border-orange-500
-                   peer-focus:ring-2 peer-focus:ring-orange-200"
+                   peer-checked:bg-primary-500 peer-checked:border-primary-500
+                   peer-focus:ring-2 peer-focus:ring-primary-200"
             style="border-color: var(--filter-checkbox-border, #d1d5db);"
           ></div>
           <span class="relative z-10 text-white opacity-0 peer-checked:opacity-100 transition-opacity duration-150">
             ${icons.check}
           </span>
         </div>
-        <span class="text-orange-500">${icons.shield}</span>
+        <span class="text-primary-500">${icons.shield}</span>
         <span
-          class="text-[13px] font-semibold group-hover:text-orange-600 transition-colors duration-150"
+          class="text-[13px] font-semibold group-hover:text-primary-600 transition-colors duration-150"
           style="color: var(--filter-heading-color, #111827);"
         >Trade Assurance</span>
       </label>

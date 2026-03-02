@@ -7,6 +7,8 @@
 import type { CartSupplier, CartProduct, CartSku, CartSummaryData } from '../../../types/cart';
 
 export class CartStore {
+  private static STORAGE_KEY = 'tradehub_cart';
+
   private suppliers: CartSupplier[] = [];
   private shippingFee = 0;
   private discount = 0;
@@ -21,6 +23,44 @@ export class CartStore {
     this.discount = discount;
     this.currency = currency;
     this.notify();
+  }
+
+  /** localStorage'dan sepet verisini yükle */
+  load(): boolean {
+    try {
+      const raw = localStorage.getItem(CartStore.STORAGE_KEY);
+      if (!raw) return false;
+      const data = JSON.parse(raw) as {
+        suppliers: CartSupplier[];
+        shippingFee: number;
+        discount: number;
+        currency: string;
+      };
+      if (!Array.isArray(data.suppliers) || data.suppliers.length === 0) return false;
+      this.suppliers = data.suppliers;
+      this.shippingFee = data.shippingFee ?? 0;
+      this.discount = data.discount ?? 0;
+      this.currency = data.currency ?? '$';
+      this.notify();
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
+  /** Mevcut durumu localStorage'a kaydet */
+  private save(): void {
+    try {
+      localStorage.setItem(
+        CartStore.STORAGE_KEY,
+        JSON.stringify({
+          suppliers: this.suppliers,
+          shippingFee: this.shippingFee,
+          discount: this.discount,
+          currency: this.currency,
+        }),
+      );
+    } catch { /* quota exceeded — sessizce geç */ }
   }
 
   // ──────────────── READ ────────────────
@@ -258,6 +298,7 @@ export class CartStore {
   }
 
   private notify(): void {
+    this.save();
     for (const listener of this.listeners) {
       listener();
     }

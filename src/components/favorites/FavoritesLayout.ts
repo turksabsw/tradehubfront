@@ -115,19 +115,21 @@ function renderFavorites(): string {
       <div class="fav-products flex min-h-[400px] max-md:flex-col">
         <aside class="fav-products__sidebar w-60 shrink-0 py-5 px-6 border-r border-[#f0f0f0] max-md:w-full max-md:border-r-0 max-md:border-b max-md:border-[#f0f0f0]">
           <h3 class="text-base font-bold text-text-primary mb-2.5">Listem</h3>
-          <a href="#" class="text-sm text-text-primary font-semibold underline underline-offset-2 hover:text-primary-500" data-action="create-list">Bir liste oluştur</a>
-          <div class="mt-4 flex flex-col gap-0.5">
+          <a href="#" class="text-sm text-text-primary font-semibold underline underline-offset-2 hover:text-(--color-cta-primary)" data-action="create-list">Bir liste oluştur</a>
+          <div class="mt-4 flex flex-col gap-0.5" id="fav-list-sidebar">
+            <!-- Sidebar counts populated via JS -->
             <div class="fav-products__list-item fav-products__list-item--active p-2.5 px-3 rounded-md cursor-pointer transition-[background] duration-150 bg-surface-raised hover:bg-surface-raised">
               <span class="block text-sm font-semibold text-text-primary">All</span>
-              <span class="block text-xs text-text-tertiary mt-0.5">0 öğeleri</span>
+              <span class="block text-xs text-text-tertiary mt-0.5" id="fav-all-count">0 öğeleri</span>
             </div>
             <div class="fav-products__list-item p-2.5 px-3 rounded-md cursor-pointer transition-[background] duration-150 hover:bg-surface-raised">
               <span class="block text-sm font-semibold text-text-primary">Ungrouped</span>
-              <span class="block text-xs text-text-tertiary mt-0.5">0 öğeleri</span>
+              <span class="block text-xs text-text-tertiary mt-0.5" id="fav-ungrouped-count">0 öğeleri</span>
             </div>
           </div>
         </aside>
-        <div class="flex-1 min-w-0 flex items-center justify-center">
+        <div class="flex-1 min-w-0" id="fav-products-container">
+          <!-- Populated via JS -->
           ${renderEmptyState()}
         </div>
       </div>
@@ -233,6 +235,70 @@ export function initFavoritesLayout(): void {
   // Init for initial render
   initFavTabs();
   initFavListModal();
+  loadFavoritesData();
+}
+
+function loadFavoritesData(): void {
+  try {
+    const stored = localStorage.getItem('tradehub-favorites');
+    if (!stored) return;
+    const items = JSON.parse(stored);
+
+    // Update counts
+    const countText = `${items.length} öğeleri`;
+    const allCount = document.getElementById('fav-all-count');
+    const ungroupedCount = document.getElementById('fav-ungrouped-count');
+    if (allCount) allCount.textContent = countText;
+    if (ungroupedCount) ungroupedCount.textContent = countText;
+
+    // Render products
+    const container = document.getElementById('fav-products-container');
+    if (!container) return;
+
+    if (items.length > 0) {
+      container.classList.remove('flex', 'items-center', 'justify-center');
+      const cards = items.map((p: any) => `
+        <div class="relative bg-white rounded-lg border border-[#eee] hover:border-[#F60] hover:shadow-[0_12px_24px_rgba(0,0,0,0.12)] transition-all p-4 group">
+          <div class="absolute top-2 right-2 w-8 h-8 rounded-full bg-[#f4f4f4] flex items-center justify-center cursor-pointer hover:bg-[#e0e0e0] z-10 transition-colors">
+            <svg class="w-[18px] h-[18px] text-[#f60]" viewBox="0 0 1024 1024" fill="currentColor"><path d="M512 884.2l-47.6-43.2C130.4 537.4 32 448 32 334.8 32 242.2 104.6 170 197.6 170c52.6 0 102.8 24.6 135.2 62.8C365.2 194.6 415.4 170 468 170c93 0 165.6 72.2 165.6 164.8 0 113.2-98.4 202.6-432.4 506.2L512 884.2zm-289.4-48l241.8 219.8L706.2 836.2C850 705.8 928 642 928 554c0-54.6-41.4-96-96-96-33.8 0-66.2 17.6-86.8 45.4l-39 52.8-39-52.8C646.6 475.6 614.2 458 580.4 458c-54.6 0-96 41.4-96 96 0 88 78 151.8 221.8 282.2zM276.4 52.6c80.8 0 156.4 39.4 203.2 101.8 46.8-62.4 122.4-101.8 203.2-101.8 141.6 0 252.8 111.4 252.8 252.6 0 178-154 316.4-388.6 529.6l-67.4 61-67.4-61c-234.6-213.2-388.6-351.6-388.6-529.6 0-141.2 111.2-252.6 252.8-252.6z" /></svg>
+          </div>
+          <a href="#" class="block no-underline">
+            <div class="w-full aspect-square rounded overflow-hidden mb-3 bg-[#f5f5f5]">
+              <img src="${p.image}" alt="${p.title}" class="w-full h-full object-cover mix-blend-multiply" loading="lazy" />
+            </div>
+            <h4 class="text-[13px] font-normal text-[#333] leading-[18px] line-clamp-2 mb-2 group-hover:text-[#F60] transition-colors">${p.title}</h4>
+            <div class="flex items-baseline gap-1 mb-1">
+              <span class="text-[16px] font-[700] text-[#111] leading-none">${p.priceRange}</span>
+            </div>
+            <p class="text-[12px] text-[#999] opacity-80">${p.minOrder}</p>
+          </a>
+          <div class="mt-4 flex gap-2 w-full pt-3 border-t border-[#f2f2f2] opacity-0 group-hover:opacity-100 transition-opacity">
+            <button class="flex-1 py-[6px] rounded-full border border-[#f60] bg-[#f60] text-white text-[12px] font-bold hover:bg-[#e55a00] transition-colors">Order now</button>
+            <button class="w-8 h-8 rounded-full border border-[#e5e7eb] flex items-center justify-center text-[#666] hover:text-[#333] hover:border-[#d1d5db] transition-colors">
+               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+            </button>
+          </div>
+        </div>
+      `).join('');
+
+      container.innerHTML = `
+        <div class="px-7 pt-5 pb-7 max-sm:px-3">
+          <div class="flex items-center justify-between mb-4">
+               <h2 class="text-[18px] font-bold text-text-primary">Products</h2>
+               <div class="flex items-center gap-2">
+                 <button class="px-3 py-1 bg-surface-raised border border-border-default rounded text-[13px] text-text-secondary hover:bg-[#f0f0f0]">Sort by</button>
+                 <button class="w-8 h-8 rounded bg-surface-raised border border-border-default flex items-center justify-center hover:bg-[#f0f0f0]">
+                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/></svg>
+                 </button>
+               </div>
+          </div>
+          <div class="grid grid-cols-4 gap-4 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2">
+            ${cards}
+          </div>
+        </div>
+      `;
+    }
+  } catch (error) { }
 }
 
 function initFavTabs(): void {

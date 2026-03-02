@@ -1,21 +1,19 @@
 /**
- * ProductItem Molecule
- * A product entry: product-level Checkbox + product title link + favorite heart icon
- * + delete trash icon + delivery tags (green 'Tahmini teslimat tarihi: ...' and optional
- * red '180 günün en düşük fiyatı') + min order label + renders child SkuRow(s).
- * Accepts CartProduct data. Follows sc-c-spu-container-new DOM structure.
+ * Product row inside supplier card.
  */
 
 import type { CartProduct, CartProductTag } from '../../../types/cart';
 import { Checkbox } from '../atoms/Checkbox';
 import { SkuRow } from './SkuRow';
+import trashIcon from '../../../assets/images/trash.png';
+import favIcon from '../../../assets/images/fav.png';
 
 export interface ProductItemProps {
   product: CartProduct;
 }
 
-function escapeHtml(str: string): string {
-  return str
+function escapeHtml(value: string): string {
+  return value
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
@@ -23,54 +21,51 @@ function escapeHtml(str: string): string {
 }
 
 function renderTag(tag: CartProductTag): string {
-  return `<span class="inline-block px-2 py-0.5 rounded text-xs leading-[18px] whitespace-nowrap" style="color:${escapeHtml(tag.color)};background:${escapeHtml(tag.bgColor)}">${escapeHtml(tag.text)}</span>`;
+  return `<span class="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium" style="color:${escapeHtml(tag.color)};background:${escapeHtml(tag.bgColor)}">${escapeHtml(tag.text)}</span>`;
 }
 
 export function ProductItem({ product }: ProductItemProps): string {
-  const checkbox = Checkbox({
-    id: `product-checkbox-${product.id}`,
-    checked: product.selected,
-    onChange: `product-select-${product.id}`,
-  });
-
-  const titleLink = `<a class="block text-[#222] no-underline text-xs sm:text-sm leading-5 overflow-hidden text-ellipsis whitespace-nowrap hover:text-[#cc9900] hover:underline" href="${escapeHtml(product.href)}">${escapeHtml(product.title)}</a>`;
-
-  const actionBtnCls = 'inline-flex items-center justify-center w-7 h-7 border-none bg-transparent cursor-pointer text-[#999] text-base rounded transition-colors duration-150 hover:text-[#ff4747] hover:bg-[#fff0f0]';
-
-  const favoriteBtn = `<button type="button" class="sc-c-spu-favorite-btn ${actionBtnCls}" data-product-id="${escapeHtml(product.id)}" aria-label="Favorite">`
-    + `<i class="sc-c-spu-favorite-icon ${escapeHtml(product.favoriteIcon)}"></i>`
-    + `</button>`;
-
-  const deleteBtn = `<button type="button" class="sc-c-spu-delete-btn ${actionBtnCls}" data-product-id="${escapeHtml(product.id)}" aria-label="Delete product">`
-    + `<i class="sc-c-spu-delete-icon ${escapeHtml(product.deleteIcon)}"></i>`
-    + `</button>`;
-
-  const tags = product.tags.length > 0
-    ? `<div class="flex gap-2 mb-2 pl-7 flex-wrap">${product.tags.map(renderTag).join('')}</div>`
-    : '';
-
-  const moqLabel = product.moqLabel
-    ? `<span class="block text-xs text-[#999] mb-2 pl-7">${escapeHtml(product.moqLabel)}</span>`
-    : '';
-
-  const skuRows = product.skus.map((sku) => SkuRow({ sku })).join('\n');
+  const skus = product.skus.map((sku) => SkuRow({ sku })).join('');
 
   return `
-    <div class="sc-c-spu-container-new py-4 border-b border-[#f0f0f0] last:border-b-0" data-product-id="${escapeHtml(product.id)}">
-      <div class="flex items-start gap-2 sm:gap-3 mb-2">
-        <div class="flex-shrink-0 pt-0.5">${checkbox}</div>
-        <div class="flex-1 min-w-0">${titleLink}</div>
-        <div class="flex items-center gap-1 sm:gap-2 flex-shrink-0">
-          ${favoriteBtn}
-          ${deleteBtn}
+    <section class="sc-c-spu-container-new py-5 border-b border-border-light last:border-b-0" data-product-id="${escapeHtml(product.id)}">
+      <div class="flex items-start gap-3">
+        <div class="pt-1 shrink-0">
+          ${Checkbox({ id: `product-checkbox-${product.id}`, checked: product.selected, onChange: `product-select-${product.id}` })}
+        </div>
+
+        <div class="flex-1 min-w-0">
+          <a href="${escapeHtml(product.href)}" class="block text-base text-text-heading leading-6 hover:text-cta-primary hover:underline truncate">${escapeHtml(product.title)}</a>
+          <div class="mt-2 flex flex-wrap gap-2">${product.tags.map(renderTag).join('')}</div>
+          <p class="mt-2 text-sm text-text-tertiary">${escapeHtml(product.moqLabel)}</p>
+        </div>
+
+        <div class="shrink-0 flex items-center gap-1">
+          <div class="relative group">
+            <button type="button" class="sc-c-spu-favorite-btn w-8 h-8 inline-flex items-center justify-center rounded-full text-text-tertiary hover:bg-black transition-colors" data-product-id="${escapeHtml(product.id)}" aria-label="Favori">
+              <img src="${favIcon}" class="w-[20px] h-[20px] object-contain group-hover:invert transition-all" alt="Favori" />
+            </button>
+            <div class="absolute right-0 top-full mt-2 w-max px-3 py-2 bg-black text-white text-xs font-medium rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
+              Move to favorites
+              <!-- Tooltip stem -->
+              <div class="absolute -top-1 right-3 w-2 h-2 bg-black rotate-45"></div>
+            </div>
+          </div>
+          <div class="relative group">
+            <button type="button" class="sc-c-spu-delete-btn w-8 h-8 inline-flex items-center justify-center rounded-full text-text-tertiary hover:bg-black transition-colors" data-product-id="${escapeHtml(product.id)}" aria-label="Ürünü sil">
+              <img src="${trashIcon}" class="w-[18px] h-[18px] object-contain group-hover:invert transition-all" alt="Sil" />
+            </button>
+            <div class="absolute right-0 top-full mt-2 w-max px-3 py-2 bg-black text-white text-xs font-medium rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
+              Remove this product
+              <!-- Tooltip stem -->
+              <div class="absolute -top-1 right-3 w-2 h-2 bg-black rotate-45"></div>
+            </div>
+          </div>
         </div>
       </div>
-      ${tags}
-      ${moqLabel}
-      <div class="flex flex-col">
-        ${skuRows}
-      </div>
-    </div>
+
+      <div class="mt-3 space-y-0">${skus}</div>
+    </section>
   `.trim();
 }
 
@@ -83,23 +78,19 @@ export function initProductItems(container?: HTMLElement): void {
     if (!productId) return;
 
     const favoriteBtn = item.querySelector<HTMLButtonElement>('.sc-c-spu-favorite-btn');
-    if (favoriteBtn) {
-      favoriteBtn.addEventListener('click', () => {
-        favoriteBtn.dispatchEvent(new CustomEvent('product-favorite', {
-          bubbles: true,
-          detail: { productId },
-        }));
-      });
-    }
+    favoriteBtn?.addEventListener('click', () => {
+      favoriteBtn.dispatchEvent(new CustomEvent('product-favorite', {
+        bubbles: true,
+        detail: { productId },
+      }));
+    });
 
     const deleteBtn = item.querySelector<HTMLButtonElement>('.sc-c-spu-delete-btn');
-    if (deleteBtn) {
-      deleteBtn.addEventListener('click', () => {
-        deleteBtn.dispatchEvent(new CustomEvent('product-delete', {
-          bubbles: true,
-          detail: { productId },
-        }));
-      });
-    }
+    deleteBtn?.addEventListener('click', () => {
+      deleteBtn.dispatchEvent(new CustomEvent('product-delete', {
+        bubbles: true,
+        detail: { productId },
+      }));
+    });
   });
 }

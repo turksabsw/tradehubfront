@@ -1,8 +1,6 @@
 /**
  * QuantityInput Atom
- * Number picker with minus/plus buttons flanking a numeric input.
- * Matches 'number-picker' pattern from codex brief.
- * Minus disabled at min, plus disabled at max. Input accepts direct typing within range.
+ * Rounded stepper used in cart SKU rows.
  */
 
 export interface QuantityInputProps {
@@ -20,30 +18,38 @@ export function QuantityInput({
   max = 9999,
   step = 1,
 }: QuantityInputProps): string {
-  const minusDisabled = value <= min ? ' disabled' : '';
-  const plusDisabled = value >= max ? ' disabled' : '';
+  const minusDisabled = value <= min ? 'disabled' : '';
+  const plusDisabled = value >= max ? 'disabled' : '';
 
   return `
-    <div class="number-picker inline-flex items-center border border-[#c4c6cf] rounded-full overflow-hidden" data-id="${id}" data-min="${min}" data-max="${max}" data-step="${step}">
-      <button type="button" class="number-picker-button number-picker-minus inline-flex items-center justify-center w-8 h-8 p-0 border-none bg-[#f5f5f5] cursor-pointer text-base flex-shrink-0 transition-colors duration-150 hover:bg-[#e5e5e5] disabled:opacity-40 disabled:cursor-not-allowed"${minusDisabled} aria-label="Decrease quantity">&minus;</button>
+    <div class="number-picker inline-flex items-center w-[136px] h-[40px] px-[2px] bg-white border border-[#ddd] rounded-full select-none" data-id="${id}" data-min="${min}" data-max="${max}" data-step="${step}">
+      <button type="button" class="number-picker-button number-picker-minus flex items-center justify-center shrink-0 w-[36px] h-[36px] rounded-full text-text-primary hover:bg-[#F2F2F2] transition-colors disabled:opacity-40 disabled:cursor-not-allowed" ${minusDisabled} aria-label="Miktar azalt">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M5 12h14" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
       <input
         type="number"
         id="${id}"
-        class="number-picker-input block w-[50px] h-8 px-1 border-x border-[#c4c6cf] text-center text-sm leading-8 text-[#222] outline-none bg-white [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+        class="number-picker-input flex-1 w-0 h-full border-none focus:ring-0 focus:outline-none focus:border-none text-center text-[14px] font-medium text-text-heading bg-transparent p-0 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
         data-quantity-input
         value="${value}"
         min="${min}"
         max="${max}"
         step="${step}"
-        aria-label="Quantity"
+        aria-label="Miktar"
       />
-      <button type="button" class="number-picker-button number-picker-plus inline-flex items-center justify-center w-8 h-8 p-0 border-none bg-[#f5f5f5] cursor-pointer text-base flex-shrink-0 transition-colors duration-150 hover:bg-[#e5e5e5] disabled:opacity-40 disabled:cursor-not-allowed"${plusDisabled} aria-label="Increase quantity">+</button>
+      <button type="button" class="number-picker-button number-picker-plus flex items-center justify-center shrink-0 w-[36px] h-[36px] rounded-full text-text-primary hover:bg-[#F2F2F2] transition-colors disabled:opacity-40 disabled:cursor-not-allowed" ${plusDisabled} aria-label="Miktar artır">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 5v14M5 12h14" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
     </div>
   `.trim();
 }
 
-function clamp(val: number, min: number, max: number): number {
-  return Math.min(Math.max(val, min), max);
+function clamp(value: number, min: number, max: number): number {
+  return Math.min(Math.max(value, min), max);
 }
 
 export function initQuantityInputs(container?: HTMLElement): void {
@@ -60,11 +66,11 @@ export function initQuantityInputs(container?: HTMLElement): void {
     const max = Number(picker.dataset.max ?? 9999);
     const step = Number(picker.dataset.step ?? 1);
 
-    function updateButtons(): void {
-      const val = Number(input!.value);
-      minusBtn!.disabled = val <= min;
-      plusBtn!.disabled = val >= max;
-    }
+    const updateButtons = () => {
+      const value = Number(input.value);
+      minusBtn.disabled = value <= min;
+      plusBtn.disabled = value >= max;
+    };
 
     minusBtn.addEventListener('click', () => {
       const current = Number(input.value) || min;
@@ -90,7 +96,7 @@ export function initQuantityInputs(container?: HTMLElement): void {
 
     input.addEventListener('change', () => {
       const raw = Number(input.value);
-      const clamped = clamp(isNaN(raw) ? min : raw, min, max);
+      const clamped = clamp(Number.isNaN(raw) ? min : raw, min, max);
       input.value = String(clamped);
       updateButtons();
       input.dispatchEvent(new CustomEvent('quantity-change', {

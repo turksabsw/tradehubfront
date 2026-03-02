@@ -17,5 +17,5 @@ export { ProductAttributes } from './ProductAttributes';
 export { AttributesTabContent, initAttributesTab } from './AttributesTabContent';
 export { ReviewsModal, initReviewsModal } from './ReviewsModal';
 export { LoginModal, initLoginModal, showLoginModal, hideLoginModal, openLoginModal } from './LoginModal';
-export { CartDrawer, initCartDrawer, ShippingModal, initShippingModal, openShippingModal, openCartDrawer } from './CartDrawer';
+export { CartDrawer, initCartDrawer, ShippingModal, initShippingModal, openShippingModal, openCartDrawer, setCartDrawerContext } from './CartDrawer';
 export { MobileProductLayout, initMobileLayout } from './MobileLayout';

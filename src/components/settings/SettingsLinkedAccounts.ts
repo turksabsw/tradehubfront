@@ -27,7 +27,7 @@ const defaultAccounts: LinkedAccount[] = [
 function renderAccountRow(account: LinkedAccount): string {
   const statusHtml = account.connected
     ? `<span class="text-[13px]" style="color:var(--color-text-muted, #666666)">${account.connectedLabel || 'Bağlı'}</span>
-       <a href="#" class="linked-acc__remove text-[13px] font-medium no-underline hover:underline" style="color:var(--color-primary-500, #cc9900)">Kaldır</a>`
+       <a href="#" class="linked-acc__remove text-[13px] font-medium no-underline hover:underline" style="color:var(--color-cta-primary, #333333)">Kaldır</a>`
     : `<span class="text-[13px]" style="color:var(--color-text-placeholder, #999999)">Bağlı değil</span>`;
 
   return `

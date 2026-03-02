@@ -32,7 +32,7 @@ function renderFlyoutLink(item: SidebarSubmenuItem): string {
   return `
     <a
       href="${item.href}"
-      class="block px-3 py-2 text-sm font-normal text-gray-900 dark:text-gray-300 rounded-md transition-colors hover:bg-gray-50 hover:text-primary-600 dark:hover:bg-gray-700 dark:hover:text-primary-400"
+      class="block px-3 py-2 text-sm font-normal text-gray-900 dark:text-gray-300 rounded-md transition-colors hover:bg-gray-50 hover:text-secondary-600 dark:hover:bg-gray-700 dark:hover:text-primary-400"
     >
       ${item.label}
     </a>
@@ -78,11 +78,11 @@ export function renderSidebarFlyout({ item }: SidebarFlyoutProps): string {
 
   return `
     <div
-      class="sidebar-flyout fixed z-50 w-[196px] bg-gray-100 dark:bg-gray-800 pt-5 px-5 pb-5 overflow-y-auto border-l border-gray-200 dark:border-gray-700 rounded-r-lg"
+      class="sidebar-flyout fixed z-50 w-[196px] bg-gray-100 dark:bg-gray-800 pt-5 px-5 pb-5 overflow-y-auto rounded-r-lg"
       data-sidebar-flyout="${item.id}"
       role="menu"
       aria-label="${item.label} submenu"
-      style="display: none; clip-path: inset(-24px -24px -24px 0); box-shadow: 4px 0 24px rgba(0,0,0,0.08);"
+      style="display: none; clip-path: inset(-20px -20px -20px 0); box-shadow: 0 0 12px 0 rgba(0,0,0,0.12);"
     >
       <h3 class="px-3 mb-3 text-base font-bold text-gray-900 dark:text-white">${item.label}</h3>
       ${content}

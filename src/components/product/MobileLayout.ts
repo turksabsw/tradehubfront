@@ -7,7 +7,7 @@
  */
 
 import { mockProduct } from '../../data/mockProduct';
-import { openShippingModal, openCartDrawer } from './CartDrawer';
+import { openShippingModal } from './CartDrawer';
 import { openLoginModal } from './LoginModal';
 import { renderStars } from './ProductReviews';
 
@@ -165,7 +165,7 @@ export function MobileProductLayout(): string {
   const sampleSection = `
     <div id="pdm-sample-row" class="flex items-center justify-between px-4 py-2.5 max-[374px]:px-3 max-[374px]:py-2 bg-surface text-[13px] max-[374px]:text-xs text-text-body">
       <span>Numune fiyatı: <strong>$${p.samplePrice?.toFixed(2) ?? '30.00'}</strong></span>
-      <button type="button" class="pdm-sample-btn px-[18px] py-1.5 max-[374px]:px-3.5 max-[374px]:py-[5px] border border-[#333] rounded-[20px] text-[13px] max-[374px]:text-xs font-medium bg-surface cursor-pointer text-text-body">Numune Al</button>
+      <button type="button" data-add-to-cart="${mockProduct.id}" class="pdm-sample-btn px-[18px] py-1.5 max-[374px]:px-3.5 max-[374px]:py-[5px] border border-[#333] rounded-[20px] text-[13px] max-[374px]:text-xs font-medium bg-surface cursor-pointer text-text-body">Numune Al</button>
     </div>
   `;
 
@@ -547,7 +547,6 @@ function initSheetTriggers(): void {
 /* ── Bottom bar actions ──────────────────────────────── */
 
 function initBottomBar(): void {
-  document.getElementById('pdm-bar-cart')?.addEventListener('click', openCartDrawer);
   document.getElementById('pdm-bar-order')?.addEventListener('click', openLoginModal);
 }
 
