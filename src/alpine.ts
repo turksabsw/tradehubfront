@@ -8,6 +8,26 @@ declare global {
 }
 
 // Register reusable Alpine.data() components BEFORE Alpine.start()
+
+Alpine.data('loginModal', () => ({
+  open: false,
+
+  show() {
+    this.open = true;
+    document.body.style.overflow = 'hidden';
+  },
+
+  close() {
+    this.open = false;
+    // Only restore body scroll if no other modal is open underneath
+    const reviewsModal = document.getElementById('rv-reviews-modal');
+    const reviewsOpen = reviewsModal && !reviewsModal.classList.contains('rv-modal-hidden');
+    if (!reviewsOpen) {
+      document.body.style.overflow = '';
+    }
+  },
+}));
+
 Alpine.data('floatingPanel', () => ({
   showScrollTop: false,
   chatOpen: false,
