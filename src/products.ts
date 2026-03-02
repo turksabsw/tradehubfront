@@ -19,6 +19,9 @@ import { FooterLinks } from './components/footer'
 // Floating components
 import { FloatingPanel, initFloatingPanel } from './components/floating'
 
+// Alpine.js
+import { startAlpine } from './alpine'
+
 // Products listing components
 import {
   FilterSidebar,
@@ -184,6 +187,9 @@ initMegaMenu();
 
 // Initialize Flowbite for interactive components (dropdowns, drawers, etc.)
 initFlowbite();
+
+// Start Alpine.js (must be after innerHTML and Flowbite)
+startAlpine();
 
 // Initialize header behaviors
 initStickyHeaderSearch();

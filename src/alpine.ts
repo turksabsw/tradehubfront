@@ -1515,6 +1515,65 @@ Alpine.data('forgotPasswordPage', () => ({
   },
 }));
 
+Alpine.data('filterSidebar', (initialCollapsed: Record<string, boolean> = {}) => ({
+  collapsed: { ...initialCollapsed } as Record<string, boolean>,
+  lastRadioValue: {} as Record<string, string | null>,
+
+  init() {
+    // Initialize radio tracking from current DOM state
+    (this.$el as HTMLElement).querySelectorAll<HTMLInputElement>('[data-filter-section][type="radio"]').forEach((radio) => {
+      const section = radio.dataset.filterSection ?? '';
+      if (radio.checked) this.lastRadioValue[section] = radio.value;
+      else if (!(section in this.lastRadioValue)) this.lastRadioValue[section] = null;
+    });
+  },
+
+  toggleSection(sectionId: string) {
+    this.collapsed[sectionId] = !this.collapsed[sectionId];
+  },
+
+  handleRadioClick(event: Event) {
+    const radio = event.target as HTMLInputElement;
+    if (radio.type !== 'radio') return;
+    const section = radio.dataset.filterSection ?? '';
+    if (this.lastRadioValue[section] === radio.value) {
+      radio.checked = false;
+      this.lastRadioValue[section] = null;
+    } else {
+      this.lastRadioValue[section] = radio.value;
+    }
+    this.$dispatch('filter-change');
+  },
+
+  handleSearchInput(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const sectionId = input.dataset.filterSection;
+    if (!sectionId) return;
+    const query = input.value.toLowerCase();
+    const wrapper = input.closest('[data-filter-section-wrapper]') || input.parentElement?.parentElement;
+    if (!wrapper) return;
+    wrapper.querySelectorAll<HTMLLabelElement>('label[for^="filter-"]').forEach((label) => {
+      label.style.display = (label.textContent?.toLowerCase() || '').includes(query) ? '' : 'none';
+    });
+  },
+
+  clearAllFilters() {
+    (this.$el as HTMLElement).querySelectorAll<HTMLInputElement>('[data-filter-section]').forEach((input) => {
+      if (input.type === 'checkbox' || input.type === 'radio') {
+        input.checked = false;
+      } else if (input.type === 'number' || input.type === 'text') {
+        input.value = '';
+      }
+    });
+    // Reset search result visibility
+    (this.$el as HTMLElement).querySelectorAll<HTMLLabelElement>('label[for^="filter-"]').forEach((label) => {
+      label.style.display = '';
+    });
+    for (const key in this.lastRadioValue) this.lastRadioValue[key] = null;
+    this.$dispatch('filter-change');
+  },
+}));
+
 // Make Alpine available globally for debugging
 window.Alpine = Alpine;
 
