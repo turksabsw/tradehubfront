@@ -47,6 +47,7 @@ import {
   countries as checkoutCountries,
   districtsByProvince,
   geolocationMockAddress,
+  savedAddress as checkoutSavedAddress,
 } from './data/mockCheckout';
 
 // Augment Window interface for Alpine global access (debugging)
@@ -1625,6 +1626,41 @@ Alpine.data('searchHeader', ({ selectedSort, viewMode, sortLabel }: { selectedSo
   },
 }));
 
+// ── Checkout Accordion (PaymentMethodSection, ItemsDeliverySection) ──
+
+Alpine.data('checkoutAccordion', (props?: { initialExpanded?: boolean }) => ({
+  expanded: props?.initialExpanded ?? false,
+
+  toggle() {
+    const content = (this.$refs as Record<string, HTMLElement>).content;
+    if (!content) {
+      this.expanded = !this.expanded;
+      return;
+    }
+
+    if (this.expanded) {
+      // Collapse: set explicit height first, then animate to 0
+      content.style.height = `${content.scrollHeight}px`;
+      content.offsetHeight; // force reflow
+      content.style.height = '0';
+      content.style.overflow = 'hidden';
+      this.expanded = false;
+    } else {
+      // Expand: animate from 0 to scrollHeight
+      content.style.height = `${content.scrollHeight}px`;
+      content.style.overflow = 'hidden';
+      this.expanded = true;
+
+      const onEnd = () => {
+        content.style.height = '';
+        content.style.overflow = '';
+        content.removeEventListener('transitionend', onEnd);
+      };
+      content.addEventListener('transitionend', onEnd);
+    }
+  },
+}));
+
 // ── Shipping Address Form (checkout page) ──
 const defaultShippingCountry = checkoutCountries.find(c => c.code === 'TR') ?? checkoutCountries[0];
 
@@ -1634,6 +1670,9 @@ Alpine.data('shippingForm', () => ({
   stateOpen: false,
   cityOpen: false,
 
+  // Address autocomplete popup state
+  autocompleteOpen: false,
+
   // Display values
   countryDisplay: `${defaultShippingCountry.flag} ${defaultShippingCountry.name}`,
   stateDisplay: '',
@@ -1642,6 +1681,23 @@ Alpine.data('shippingForm', () => ({
 
   // Error tracking (keyed by field name)
   errors: {} as Record<string, boolean>,
+
+  init() {
+    // Show autocomplete popup when state dropdown opens
+    this.$watch('stateOpen', (open: boolean) => {
+      if (open) {
+        requestAnimationFrame(() => { this.autocompleteOpen = true; });
+      }
+    });
+
+    // Close autocomplete on outside click (exclude popup and state dropdown)
+    document.addEventListener('click', (e: Event) => {
+      const target = e.target as HTMLElement;
+      if (!target.closest('#address-autocomplete') && !target.closest('[data-dropdown="state-dropdown"]')) {
+        this.autocompleteOpen = false;
+      }
+    });
+  },
 
   toggleDropdown(name: string) {
     const keys = ['country', 'state', 'city'];
@@ -1801,6 +1857,64 @@ Alpine.data('shippingForm', () => ({
         }
       );
     }
+  },
+
+  /**
+   * Fill all form fields from the saved address.
+   * Updates Alpine reactive state for dropdowns and imperatively sets text inputs.
+   */
+  fillSavedAddress() {
+    const addr = checkoutSavedAddress;
+    const el = this.$el as HTMLElement;
+
+    // Update country display and phone prefix
+    const matchedCountry = checkoutCountries.find(c => c.code === addr.country);
+    if (matchedCountry) {
+      this.countryDisplay = `${matchedCountry.flag} ${matchedCountry.name}`;
+      this.phonePrefix = matchedCountry.phonePrefix;
+
+      // Update country list selected styling
+      const countryList = el.querySelector('[data-dropdown="country-dropdown"] [data-list]');
+      countryList?.querySelectorAll('li').forEach(i => i.classList.remove('bg-blue-50', 'text-blue-800'));
+      const countryItem = countryList?.querySelector(`[data-value="${addr.country}"]`) as HTMLElement | null;
+      countryItem?.classList.add('bg-blue-50', 'text-blue-800');
+    }
+
+    // Fill text inputs
+    const setInput = (id: string, val: string) => {
+      const input = el.querySelector<HTMLInputElement>(`#${id}`);
+      if (input) input.value = val;
+    };
+
+    setInput('first-name', addr.firstName);
+    setInput('phone', addr.phone);
+    setInput('street-address', addr.street);
+    setInput('apartment', addr.apartment);
+    setInput('postal-code', addr.postalCode);
+
+    // Update state dropdown
+    this.stateDisplay = addr.state;
+    const stateList = el.querySelector('[data-dropdown="state-dropdown"] [data-list]');
+    stateList?.querySelectorAll('li').forEach(i => {
+      i.classList.toggle('bg-blue-50', (i as HTMLElement).dataset.value === addr.state);
+      i.classList.toggle('text-blue-800', (i as HTMLElement).dataset.value === addr.state);
+    });
+
+    // Update city dropdown with districts for the selected state, then select city
+    this.updateCityDropdown(addr.state);
+    this.cityDisplay = addr.city;
+
+    // Clear all errors
+    const fields = ['country', 'firstName', 'phone', 'streetAddress', 'apartment', 'state', 'city', 'postalCode'];
+    for (const f of fields) {
+      this.errors[f] = false;
+    }
+
+    // Close autocomplete popup and all dropdowns
+    this.autocompleteOpen = false;
+    this.countryOpen = false;
+    this.stateOpen = false;
+    this.cityOpen = false;
   },
 }));
 
