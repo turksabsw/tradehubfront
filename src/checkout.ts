@@ -22,7 +22,7 @@ import { FloatingPanel } from './components/floating'
 import { startAlpine } from './alpine'
 
 // Checkout components
-import { CheckoutHeader, CheckoutLayout, ShippingAddressForm, initShippingAddressForm, OrderSummary, PaymentMethodSection, ItemsDeliverySection, OrderProtectionModal } from './components/checkout'
+import { CheckoutHeader, CheckoutLayout, ShippingAddressForm, OrderSummary, PaymentMethodSection, ItemsDeliverySection, OrderProtectionModal } from './components/checkout'
 import { protectionSummaryItems, tradeAssuranceText, modalSections, paymentIcons, infoBoxBullets } from './data/mockCheckout'
 import { cartStore } from './components/cart/state/CartStore'
 import type { OrderSummary as OrderSummaryData } from './types/checkout'
@@ -90,7 +90,4 @@ startAlpine();
 initStickyHeaderSearch();
 initMobileDrawer();
 initHeaderCart();
-initShippingAddressForm();
-// initAddressAutocomplete() — REMOVED, now handled by Alpine.js shippingForm component
-// initAccordionSections() — REMOVED, now handled by Alpine.js checkoutAccordion component
 initStickyHeights();
