@@ -14,6 +14,6 @@ export { PaymentMethodSection, initAccordionSections } from './PaymentMethodSect
 export type { PaymentMethodSectionProps } from './PaymentMethodSection';
 export { ItemsDeliverySection } from './ItemsDeliverySection';
 export type { ItemsDeliverySectionProps } from './ItemsDeliverySection';
-export { OrderProtectionModal, initOrderProtectionModal } from './OrderProtectionModal';
+export { OrderProtectionModal, initOrderProtectionModal, showOrderProtectionModal } from './OrderProtectionModal';
 export type { OrderProtectionModalProps } from './OrderProtectionModal';
 export { AddressAutocomplete, initAddressAutocomplete } from './AddressAutocomplete';

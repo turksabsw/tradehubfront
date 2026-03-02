@@ -2,6 +2,9 @@
  * OrderProtectionModal Component (C6)
  * Scrollable modal with 6 sections, 11 payment icons, backdrop overlay.
  * Close via X button, backdrop click, or ESC key.
+ *
+ * Reactivity handled by Alpine.js via x-data="orderProtectionModal".
+ * Alpine.data('orderProtectionModal') is registered in src/alpine.ts.
  */
 
 import type { ModalSection, PaymentIcon } from '../../types/checkout';
@@ -93,24 +96,44 @@ export function OrderProtectionModal({
   return `
     <div
       id="order-protection-modal"
-      class="checkout-modal fixed inset-0 z-50 hidden"
+      x-data="orderProtectionModal"
+      x-show="open"
+      x-cloak
+      x-transition:enter="transition ease-out duration-300"
+      x-transition:enter-start="opacity-0"
+      x-transition:enter-end="opacity-100"
+      x-transition:leave="transition ease-in duration-200"
+      x-transition:leave-start="opacity-100"
+      x-transition:leave-end="opacity-0"
+      @click.self="close()"
+      @keydown.escape.window="if (open) close()"
+      @keydown="if (open) trapFocus($event)"
+      @order-protection-modal-show.window="show()"
+      class="checkout-modal fixed inset-0 z-50 bg-black/50 flex items-center justify-center"
       role="dialog"
       aria-labelledby="modal-title"
       aria-modal="true"
     >
-      <!-- Backdrop -->
-      <div class="checkout-modal__backdrop fixed inset-0 bg-black/50" data-modal-backdrop></div>
-
       <!-- Modal Card -->
-      <div class="checkout-modal__card fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-xl shadow-xl max-w-lg w-[calc(100%-2rem)] max-h-[80vh] overflow-y-auto p-7 sm:p-8">
+      <div
+        x-show="open"
+        x-transition:enter="transition ease-out duration-300"
+        x-transition:enter-start="opacity-0 scale-95"
+        x-transition:enter-end="opacity-100 scale-100"
+        x-transition:leave="transition ease-in duration-200"
+        x-transition:leave-start="opacity-100 scale-100"
+        x-transition:leave-end="opacity-0 scale-95"
+        class="checkout-modal__card bg-white rounded-xl shadow-xl max-w-lg w-[calc(100%-2rem)] max-h-[80vh] overflow-y-auto p-7 sm:p-8 relative"
+      >
         <!-- Header -->
         <div class="checkout-modal__header flex items-center justify-between mb-4 sticky top-0 bg-white pb-2 z-10">
           <h2 id="modal-title" class="text-xl font-bold text-[#111827]">${title}</h2>
           <button
             type="button"
+            @click="close()"
+            x-ref="closeBtn"
             class="checkout-modal__close text-[#6b7280] hover:text-[#111827] transition-colors cursor-pointer p-1"
             aria-label="Close modal"
-            data-modal-close
           >
             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"/>
@@ -129,65 +152,25 @@ export function OrderProtectionModal({
 }
 
 /**
- * Initialize modal open/close behavior, body scroll lock, ESC key, focus trap.
+ * @deprecated Replaced by Alpine.js x-data="orderProtectionModal" directives.
+ * Alpine handles show/hide, click handlers, Escape key, body scroll lock, and focus trap.
+ * Remove this call from page entry files and use startAlpine() instead.
+ *
+ * Transitional bridge: binds the trigger button (outside Alpine scope) to dispatch
+ * the custom event that the Alpine component listens for.
  */
 export function initOrderProtectionModal(): void {
-  const modal = document.getElementById('order-protection-modal');
-  if (!modal) return;
-
-  const backdrop = modal.querySelector('[data-modal-backdrop]') as HTMLElement | null;
-  const closeBtn = modal.querySelector('[data-modal-close]') as HTMLElement | null;
   const triggerBtn = document.querySelector('[data-modal-target="order-protection-modal"]') as HTMLElement | null;
-
-  function openModal(): void {
-    if (!modal) return;
-    modal.classList.remove('hidden');
-    document.body.style.overflow = 'hidden';
-    // Focus close button
-    setTimeout(() => closeBtn?.focus(), 50);
-  }
-
-  function closeModal(): void {
-    if (!modal) return;
-    modal.classList.add('hidden');
-    document.body.style.overflow = '';
-    triggerBtn?.focus();
-  }
-
-  // Open trigger
   triggerBtn?.addEventListener('click', (e) => {
     e.preventDefault();
-    openModal();
+    showOrderProtectionModal();
   });
+}
 
-  // Close via X button
-  closeBtn?.addEventListener('click', closeModal);
-
-  // Close via backdrop
-  backdrop?.addEventListener('click', closeModal);
-
-  // Close via ESC
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modal && !modal.classList.contains('hidden')) {
-      closeModal();
-    }
-  });
-
-  // Focus trap
-  modal.addEventListener('keydown', (e) => {
-    if (e.key !== 'Tab') return;
-    const focusable = modal.querySelectorAll<HTMLElement>(
-      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-    );
-    if (focusable.length === 0) return;
-    const first = focusable[0];
-    const last = focusable[focusable.length - 1];
-    if (e.shiftKey && document.activeElement === first) {
-      e.preventDefault();
-      last.focus();
-    } else if (!e.shiftKey && document.activeElement === last) {
-      e.preventDefault();
-      first.focus();
-    }
-  });
+/**
+ * Show the order protection modal.
+ * Dispatches a custom event that the Alpine orderProtectionModal component listens for.
+ */
+export function showOrderProtectionModal(): void {
+  window.dispatchEvent(new CustomEvent('order-protection-modal-show'));
 }
