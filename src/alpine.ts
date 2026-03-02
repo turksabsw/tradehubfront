@@ -369,6 +369,63 @@ Alpine.data('imageGallery', () => ({
   },
 }));
 
+Alpine.data('stickyHeaderSearch', () => ({
+  expanded: false,
+
+  init() {
+    // Manage tabindex on expanded interactive elements
+    this.$watch('expanded', (isExpanded: boolean) => {
+      const el = this.$el as HTMLElement;
+      el.querySelectorAll<HTMLElement>('[data-compact-expanded-interactive]').forEach((interEl) => {
+        if (isExpanded) {
+          interEl.removeAttribute('tabindex');
+        } else {
+          interEl.setAttribute('tabindex', '-1');
+        }
+      });
+    });
+
+    // Sync dropdown offset on resize
+    window.addEventListener('resize', () => {
+      if (this.expanded) {
+        this.syncDropdownOffset();
+      }
+    }, { passive: true });
+  },
+
+  open() {
+    if (this.expanded) return;
+    this.expanded = true;
+    this.syncDropdownOffset();
+  },
+
+  close() {
+    if (!this.expanded) return;
+    this.expanded = false;
+    const dropdown = (this.$refs as Record<string, HTMLElement>).dropdown;
+    if (dropdown) {
+      dropdown.style.removeProperty('top');
+    }
+  },
+
+  syncDropdownOffset() {
+    const form = (this.$refs as Record<string, HTMLElement>).searchForm;
+    const dropdown = (this.$refs as Record<string, HTMLElement>).dropdown;
+    if (!form || !dropdown) return;
+    const dropdownTop = form.offsetTop + form.offsetHeight + 8;
+    dropdown.style.top = `${dropdownTop}px`;
+  },
+
+  pickValue(value: string) {
+    if (!value) return;
+    const input = (this.$refs as Record<string, HTMLInputElement>).searchInput;
+    if (input) {
+      input.value = value;
+      input.focus();
+    }
+  },
+}));
+
 // Make Alpine available globally for debugging
 window.Alpine = Alpine;
 

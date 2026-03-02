@@ -124,23 +124,29 @@ function renderUserButton(): string {
  */
 function renderCompactStickySearch(): string {
   return `
-    <div id="topbar-compact-search-shell" class="hidden lg:flex flex-col justify-center relative min-w-0 flex-1 h-[60px] lg:mx-4">
-      
+    <div id="topbar-compact-search-shell" x-data="stickyHeaderSearch" @click.outside="close()" class="hidden lg:flex flex-col justify-center relative min-w-0 flex-1 h-[60px] lg:mx-4">
+
       <form
         id="topbar-compact-search"
+        x-ref="searchForm"
+        @click="open()"
         action="/search"
         method="GET"
         role="search"
         aria-label="Sticky header search"
-        aria-hidden="true"
+        aria-hidden="false"
         aria-expanded="false"
+        :aria-expanded="expanded ? 'true' : 'false'"
         aria-controls="topbar-compact-dropdown"
-        class="absolute left-0 right-0 top-[8px] z-(--z-popover) w-full rounded-full border border-gray-300 bg-white shadow-sm transition-all duration-200 dark:border-gray-600 dark:bg-gray-800"
+        class="absolute left-0 right-0 top-[8px] z-(--z-popover) w-full border border-gray-300 bg-white shadow-sm transition-all duration-200 dark:border-gray-600 dark:bg-gray-800"
+        :class="expanded ? 'rounded-md shadow-md pt-0.5' : 'rounded-full'"
       >
         <div id="topbar-compact-primary-row" class="flex items-center gap-2 px-3 py-1.5">
           <div class="relative min-w-0 flex-1">
             <input
               id="topbar-compact-search-input"
+              x-ref="searchInput"
+              @focus="open()"
               name="search"
               type="text"
               tabindex="-1"
@@ -148,8 +154,10 @@ function renderCompactStickySearch(): string {
               autocomplete="off"
               aria-label="Search products from sticky header"
               aria-expanded="false"
+              :aria-expanded="expanded ? 'true' : 'false'"
               aria-controls="topbar-compact-dropdown"
-              class="w-full border-0 bg-transparent px-2 py-1.5 text-sm text-gray-900 placeholder:text-gray-400 outline-none ring-0 focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 dark:text-white dark:placeholder:text-gray-400"
+              class="w-full border-0 bg-transparent px-2 text-gray-900 placeholder:text-gray-400 outline-none ring-0 focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 dark:text-white dark:placeholder:text-gray-400"
+              :class="expanded ? 'text-base py-2.5 pr-12' : 'text-sm py-1.5'"
             />
           </div>
 
@@ -158,20 +166,22 @@ function renderCompactStickySearch(): string {
             href="/image-search"
             tabindex="-1"
             aria-label="Image search"
-            class="inline-flex h-8 w-8 items-center justify-center rounded-full text-gray-500 transition-colors hover:bg-gray-100 hover:text-primary-600 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-primary-400"
+            class="inline-flex items-center justify-center text-gray-500 transition-colors hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400"
+            :class="expanded ? 'absolute left-4 bottom-2 h-9 w-auto gap-1.5 rounded-md px-0 text-sm font-medium text-gray-700 hover:bg-transparent dark:hover:bg-transparent' : 'h-8 w-8 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700'"
           >
             <svg class="h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" />
               <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0Z" />
             </svg>
-            <span id="topbar-compact-image-search-label" class="hidden">Image Search</span>
+            <span id="topbar-compact-image-search-label" x-show="expanded" x-cloak>Image Search</span>
           </a>
 
           <button
             id="topbar-compact-search-submit"
             type="submit"
             tabindex="-1"
-            class="th-btn th-btn-pill inline-flex items-center justify-center gap-1.5 px-4 py-1.5 text-sm font-semibold transition-colors"
+            class="th-btn th-btn-pill inline-flex items-center justify-center gap-1.5 font-semibold transition-colors"
+            :class="expanded ? 'px-6 py-2 text-base absolute right-4 bottom-2' : 'px-4 py-1.5 text-sm'"
           >
             <svg class="h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-4.35-4.35m1.6-5.15a6.75 6.75 0 1 1-13.5 0 6.75 6.75 0 0 1 13.5 0Z" />
@@ -180,13 +190,17 @@ function renderCompactStickySearch(): string {
           </button>
         </div>
 
-        <div id="topbar-compact-secondary-row" class="hidden h-11"></div>
+        <div id="topbar-compact-secondary-row" x-show="expanded" x-cloak class="h-11"></div>
       </form>
 
       <div
         id="topbar-compact-dropdown"
+        x-ref="dropdown"
+        x-show="expanded"
+        x-cloak
         aria-hidden="true"
-        class="hidden absolute left-0 right-0 z-(--z-modal) rounded-md border border-gray-200 bg-white px-5 py-4 shadow-xl dark:border-gray-700 dark:bg-gray-800"
+        :aria-hidden="expanded ? 'false' : 'true'"
+        class="absolute left-0 right-0 z-(--z-modal) rounded-md border border-gray-200 bg-white px-5 py-4 shadow-xl dark:border-gray-700 dark:bg-gray-800"
       >
         <div class="flex items-center justify-between gap-4">
           <h3 class="text-lg font-bold text-gray-900 dark:text-white">Recommended for you</h3>
@@ -201,9 +215,9 @@ function renderCompactStickySearch(): string {
         </div>
 
         <div id="topbar-compact-reco-list" class="mt-3 space-y-2">
-          <button type="button" tabindex="-1" data-compact-expanded-interactive="true" data-search-value="women's intimates" class="block text-left text-[22px] font-normal leading-tight text-gray-900 transition-colors hover:text-primary-600 dark:text-white dark:hover:text-primary-400">women's intimates</button>
-          <button type="button" tabindex="-1" data-compact-expanded-interactive="true" data-search-value="iphones 15 pro max" class="block text-left text-[22px] font-normal leading-tight text-gray-900 transition-colors hover:text-primary-600 dark:text-white dark:hover:text-primary-400">iphones 15 pro max</button>
-          <button type="button" tabindex="-1" data-compact-expanded-interactive="true" data-search-value="watch" class="block text-left text-[22px] font-normal leading-tight text-gray-900 transition-colors hover:text-primary-600 dark:text-white dark:hover:text-primary-400">watch</button>
+          <button type="button" tabindex="-1" data-compact-expanded-interactive="true" data-search-value="women's intimates" @click="pickValue($event.currentTarget.dataset.searchValue)" class="block text-left text-[22px] font-normal leading-tight text-gray-900 transition-colors hover:text-primary-600 dark:text-white dark:hover:text-primary-400">women's intimates</button>
+          <button type="button" tabindex="-1" data-compact-expanded-interactive="true" data-search-value="iphones 15 pro max" @click="pickValue($event.currentTarget.dataset.searchValue)" class="block text-left text-[22px] font-normal leading-tight text-gray-900 transition-colors hover:text-primary-600 dark:text-white dark:hover:text-primary-400">iphones 15 pro max</button>
+          <button type="button" tabindex="-1" data-compact-expanded-interactive="true" data-search-value="watch" @click="pickValue($event.currentTarget.dataset.searchValue)" class="block text-left text-[22px] font-normal leading-tight text-gray-900 transition-colors hover:text-primary-600 dark:text-white dark:hover:text-primary-400">watch</button>
         </div>
 
         <div class="mt-4 flex items-center justify-between gap-4">
@@ -222,9 +236,9 @@ function renderCompactStickySearch(): string {
         </div>
 
         <div class="mt-3 grid grid-cols-1 gap-2 lg:grid-cols-3">
-          <button type="button" tabindex="-1" data-compact-expanded-interactive="true" data-search-value="Watch for Men" class="inline-flex items-center gap-1.5 rounded-md border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm text-gray-700 transition-colors hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"><span class="text-primary-500">&#10022;</span><span>Watch for Men</span></button>
-          <button type="button" tabindex="-1" data-compact-expanded-interactive="true" data-search-value="Surron Light Bee X" class="inline-flex items-center gap-1.5 rounded-md border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm text-gray-700 transition-colors hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"><span class="text-primary-500">&#10022;</span><span>Surron Light Bee X</span></button>
-          <button type="button" tabindex="-1" data-compact-expanded-interactive="true" data-search-value="Human Hair Wigs" class="inline-flex items-center gap-1.5 rounded-md border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm text-gray-700 transition-colors hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"><span class="text-primary-500">&#10022;</span><span>Human Hair Wigs</span></button>
+          <button type="button" tabindex="-1" data-compact-expanded-interactive="true" data-search-value="Watch for Men" @click="pickValue($event.currentTarget.dataset.searchValue)" class="inline-flex items-center gap-1.5 rounded-md border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm text-gray-700 transition-colors hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"><span class="text-primary-500">&#10022;</span><span>Watch for Men</span></button>
+          <button type="button" tabindex="-1" data-compact-expanded-interactive="true" data-search-value="Surron Light Bee X" @click="pickValue($event.currentTarget.dataset.searchValue)" class="inline-flex items-center gap-1.5 rounded-md border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm text-gray-700 transition-colors hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"><span class="text-primary-500">&#10022;</span><span>Surron Light Bee X</span></button>
+          <button type="button" tabindex="-1" data-compact-expanded-interactive="true" data-search-value="Human Hair Wigs" @click="pickValue($event.currentTarget.dataset.searchValue)" class="inline-flex items-center gap-1.5 rounded-md border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm text-gray-700 transition-colors hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"><span class="text-primary-500">&#10022;</span><span>Human Hair Wigs</span></button>
         </div>
       </div>
     </div>
