@@ -1,6 +1,7 @@
 /**
  * SettingsLayout Component
  * Account settings page with profile header and settings cards.
+ * Uses Alpine.js x-data="settingsLayout" for hash-based section routing.
  * Supports hash routing for sub-sections:
  *   #profilim, #vergi, #bagli-hesaplar, #gizlilik, #reklam, #eposta, #sifre, #eposta-degistir, #telefon
  */
@@ -104,7 +105,7 @@ function renderProfileHeader(): string {
           <div class="flex items-center gap-2 text-[13px]">
             <span class="max-sm:min-w-0" style="color:var(--color-text-placeholder, #999999); min-width:110px">Üyelik numarası</span>
             <span class="font-mono max-sm:text-[12px] max-sm:break-all" style="color:var(--color-text-body, #333333)">tr29243492599miuy</span>
-            <button class="settings-profile__copy-btn inline-flex items-center justify-center w-6 h-6 border-none bg-none rounded cursor-pointer transition-all hover:bg-surface-raised" style="color:var(--color-text-placeholder, #999999)" title="Kopyala">${ICONS.copy}</button>
+            <button x-ref="copyBtn" @click="copyMemberId()" class="inline-flex items-center justify-center w-6 h-6 border-none bg-none rounded cursor-pointer transition-all hover:bg-surface-raised" style="color:var(--color-text-placeholder, #999999)" title="Kopyala">${ICONS.copy}</button>
           </div>
         </div>
       </div>
@@ -209,40 +210,48 @@ const INIT_MAP: Record<string, () => void> = {
 // ── Main Layout ──────────────────────────────────────────────────
 
 export function SettingsLayout(): string {
-  return `<div class="flex flex-col gap-5 py-4" id="settings-root"></div>`;
+  const sectionEntries = Object.entries(SECTION_MAP);
+  const validHashes = Object.keys(SECTION_MAP).map(s => `'${s}'`).join(',');
+  const currentHash = window.location.hash;
+  const hasSubSection = Object.keys(SECTION_MAP).includes(currentHash);
+
+  return `
+    <div class="flex flex-col gap-5 py-4" id="settings-root"
+      x-data="settingsLayout"
+      @hashchange.window="currentSection = window.location.hash">
+
+      <div x-show="![${validHashes}].includes(currentSection)"${hasSubSection ? ' x-cloak' : ''}>
+        ${renderDefaultView()}
+      </div>
+
+      ${sectionEntries.map(([hash, section]) => `
+        <div x-show="currentSection === '${hash}'"${currentHash !== hash ? ' x-cloak' : ''}>
+          ${renderBackHeader()}
+          ${section.render()}
+        </div>
+      `).join('')}
+    </div>
+  `;
 }
 
 // ── Init ─────────────────────────────────────────────────────────
 
+/**
+ * Transitional bridge: lazily initialize sub-section event listeners.
+ * These init functions will become no-ops as their components are migrated to Alpine.
+ * Copy button is now handled by Alpine @click="copyMemberId()" in the template.
+ */
 export function initSettingsLayout(): void {
-  const root = document.getElementById('settings-root');
-  if (!root) return;
+  const initialized = new Set<string>();
 
-  function renderCurrentSection() {
+  const initCurrent = () => {
     const hash = window.location.hash;
-    const section = SECTION_MAP[hash];
-
-    if (section) {
-      root!.innerHTML = `
-        ${renderBackHeader()}
-        ${section.render()}
-      `;
-      INIT_MAP[hash]?.();
-    } else {
-      root!.innerHTML = renderDefaultView();
-      // Init copy button on default view
-      const copyBtn = document.querySelector<HTMLButtonElement>('.settings-profile__copy-btn');
-      if (copyBtn) {
-        copyBtn.addEventListener('click', () => {
-          navigator.clipboard.writeText('tr29243492599miuy').then(() => {
-            copyBtn.title = 'Kopyalandı!';
-            setTimeout(() => { copyBtn.title = 'Kopyala'; }, 2000);
-          });
-        });
-      }
+    if (hash && INIT_MAP[hash] && !initialized.has(hash)) {
+      INIT_MAP[hash]();
+      initialized.add(hash);
     }
-  }
+  };
 
-  renderCurrentSection();
-  window.addEventListener('hashchange', renderCurrentSection);
+  initCurrent();
+  window.addEventListener('hashchange', initCurrent);
 }

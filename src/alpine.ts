@@ -877,6 +877,24 @@ Alpine.data('cartPage', () => ({
   },
 }));
 
+Alpine.data('settingsLayout', () => ({
+  currentSection: '',
+
+  init() {
+    this.currentSection = window.location.hash || '';
+  },
+
+  copyMemberId() {
+    navigator.clipboard.writeText('tr29243492599miuy').then(() => {
+      const btn = (this.$refs as Record<string, HTMLElement>).copyBtn;
+      if (btn) {
+        btn.title = 'Kopyalandı!';
+        setTimeout(() => { btn.title = 'Kopyala'; }, 2000);
+      }
+    });
+  },
+}));
+
 // Make Alpine available globally for debugging
 window.Alpine = Alpine;
 
