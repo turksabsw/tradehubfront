@@ -18,6 +18,26 @@ import {
 import { mockProduct } from './data/mockProduct';
 import { cartStore } from './components/cart/state/CartStore';
 import { showFavoriteToast } from './components/cart/page/CartPage';
+import {
+  initAccountTypeSelector,
+  getSelectedAccountType,
+  type AccountType,
+} from './components/auth/AccountTypeSelector';
+import {
+  EmailVerification,
+  initEmailVerification,
+  cleanupEmailVerification,
+  type EmailVerificationState,
+} from './components/auth/EmailVerification';
+import {
+  AccountSetupForm,
+  initAccountSetupForm,
+  type AccountSetupFormData,
+} from './components/auth/AccountSetupForm';
+import {
+  escapeHtml,
+  type RegisterStep,
+} from './components/auth/RegisterPage';
 
 // Augment Window interface for Alpine global access (debugging)
 declare global {
@@ -1173,6 +1193,123 @@ Alpine.data('settingsDeleteAccount', () => ({
       clearInterval(this._timerInterval);
       this._timerInterval = null;
     }
+  },
+}));
+
+Alpine.data('registerPage', () => ({
+  currentStep: 'account-type' as RegisterStep,
+  accountType: 'buyer' as AccountType | null,
+  email: '',
+  emailValid: false,
+  emailError: false,
+  otpState: null as EmailVerificationState | null,
+
+  init() {
+    // Read initial step from data attribute if provided
+    const initialStep = (this.$el as HTMLElement).dataset.initialStep as RegisterStep | undefined;
+    if (initialStep && initialStep !== 'account-type') {
+      this.currentStep = initialStep;
+    }
+
+    // Initialize account type selector (child component delegation)
+    initAccountTypeSelector({
+      defaultType: 'buyer',
+      onTypeSelect: (type: AccountType) => {
+        this.accountType = type;
+      }
+    });
+    this.accountType = getSelectedAccountType() || 'buyer';
+
+    // Listen for programmatic navigation via navigateToStep()
+    (this.$el as HTMLElement).addEventListener('register-navigate', ((e: CustomEvent) => {
+      this.goToStep(e.detail.step as RegisterStep);
+    }) as EventListener);
+  },
+
+  validateEmail() {
+    const input = (this.$refs as Record<string, HTMLInputElement>).emailInput;
+    const value = input?.value.trim() || '';
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    this.emailValid = emailRegex.test(value);
+    if (this.emailValid) {
+      this.emailError = false;
+    }
+  },
+
+  submitEmail() {
+    const input = (this.$refs as Record<string, HTMLInputElement>).emailInput;
+    const value = input?.value.trim() || '';
+
+    if (!this.emailValid) {
+      this.emailError = true;
+      return;
+    }
+
+    this.email = value;
+    this.goToStep('otp');
+  },
+
+  goToStep(step: RegisterStep) {
+    // Cleanup OTP state when leaving OTP step
+    if (this.currentStep === 'otp' && this.otpState) {
+      cleanupEmailVerification(this.otpState);
+      this.otpState = null;
+    }
+
+    this.currentStep = step;
+
+    // Notify external listeners via custom event
+    this.$dispatch('register-step-change', { step });
+
+    this.$nextTick(() => {
+      switch (step) {
+        case 'email': {
+          const input = (this.$refs as Record<string, HTMLInputElement>).emailInput;
+          input?.focus();
+          break;
+        }
+        case 'otp': {
+          // Dynamically render OTP content (child component needs fresh DOM each time)
+          const container = (this.$refs as Record<string, HTMLElement>).otpContainer;
+          if (container) {
+            container.innerHTML = EmailVerification(escapeHtml(this.email));
+          }
+          this.otpState = initEmailVerification({
+            email: this.email,
+            onComplete: () => {
+              this.goToStep('setup');
+            },
+            onResend: () => {
+              // In production, resend OTP via backend
+            },
+            onBack: () => {
+              this.goToStep('email');
+            }
+          });
+          break;
+        }
+        case 'setup': {
+          // Dynamically render setup form (child component needs fresh DOM each time)
+          const container = (this.$refs as Record<string, HTMLElement>).setupContainer;
+          if (container) {
+            container.innerHTML = AccountSetupForm('TR');
+          }
+          initAccountSetupForm({
+            defaultCountry: 'TR',
+            onSubmit: (formData: AccountSetupFormData) => {
+              if (this.accountType) {
+                this.$dispatch('register-complete', {
+                  accountType: this.accountType,
+                  email: this.email,
+                  formData
+                });
+              }
+            }
+          });
+          break;
+        }
+      }
+    });
   },
 }));
 
