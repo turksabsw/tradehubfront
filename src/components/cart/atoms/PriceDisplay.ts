@@ -17,9 +17,9 @@ function formatPrice(amount: number, currency: string): string {
 export function PriceDisplay({
   amount,
   currency = '$',
-  bold = false,
+  bold: _bold = false,
   unit,
-  emphasize = false,
+  emphasize: _emphasize = false,
 }: PriceDisplayProps): string {
   const price = formatPrice(amount, currency);
   let unitHtml = '';
