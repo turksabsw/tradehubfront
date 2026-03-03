@@ -28,7 +28,10 @@ import {
 import { FooterLinks } from './components/footer'
 
 // Floating components
-import { FloatingPanel, initFloatingPanel } from './components/floating'
+import { FloatingPanel } from './components/floating'
+
+// Alpine.js
+import { startAlpine } from './alpine'
 
 // Utilities
 import { initAnimatedPlaceholder } from './utils/animatedPlaceholder'
@@ -99,13 +102,15 @@ initMegaMenu();
 // Initialize Flowbite for other interactive components
 initFlowbite();
 
+// Initialize Alpine.js (FloatingPanel is now Alpine-driven)
+startAlpine();
+
 // Initialize remaining custom behaviors
 initStickyHeaderSearch();
 initCategoryBrowse();
 initMobileCategoryBar();
 initRecommendationSlider();
 initHeroSideBannerSlider();
-initFloatingPanel();
 
 initTopDeals();
 initTopRanking();

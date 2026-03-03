@@ -1,6 +1,7 @@
 /**
  * Checkbox Atom
- * Tailwind-only custom checkbox with checked + indeterminate visuals.
+ * Alpine.js-powered custom checkbox with checked + indeterminate visuals.
+ * Registered as Alpine.data('checkbox') in src/alpine.ts.
  */
 
 export interface CheckboxProps {
@@ -10,32 +11,22 @@ export interface CheckboxProps {
   onChange?: string;
 }
 
-function renderVisual(checked: boolean, indeterminate: boolean): string {
-  const active = checked || indeterminate;
-  const boxClass = active
-    ? 'next-checkbox border-transparent bg-text-primary text-white'
-    : 'next-checkbox border-border-strong bg-surface text-transparent';
-
-  const checkClass = checked ? 'next-checkbox-check block' : 'next-checkbox-check hidden';
-  const dashClass = indeterminate && !checked ? 'next-checkbox-dash block' : 'next-checkbox-dash hidden';
-
-  return `
-    <span class="${boxClass} relative inline-flex w-5 h-5 rounded-[4px] border transition-colors duration-150">
-      <svg class="${checkClass} absolute inset-0 m-auto" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <path d="m5 13 4 4L19 7"/>
-      </svg>
-      <span class="${dashClass} absolute left-1 right-1 top-1/2 -translate-y-1/2 h-[2px] bg-current rounded" aria-hidden="true"></span>
-    </span>
-  `;
-}
-
 export function Checkbox({ id, checked, indeterminate = false, onChange }: CheckboxProps): string {
   const checkedAttr = checked ? 'checked' : '';
   const indeterminateAttr = indeterminate ? 'data-indeterminate="true"' : '';
   const onChangeAttr = onChange ? `data-onchange="${onChange}"` : '';
 
+  // Pre-Alpine visual fallback classes (Alpine takes over via :class once initialized)
+  const active = checked || indeterminate;
+  const boxDynamic = active
+    ? 'border-transparent bg-text-primary text-white'
+    : 'border-border-strong bg-surface text-transparent';
+  const checkVisible = checked ? 'block' : 'hidden';
+  const dashVisible = indeterminate && !checked ? 'block' : 'hidden';
+
   return `
-    <label class="next-checkbox-wrapper inline-flex items-center cursor-pointer select-none" for="${id}">
+    <label class="next-checkbox-wrapper inline-flex items-center cursor-pointer select-none" for="${id}"
+      x-data="checkbox">
       <input
         type="checkbox"
         id="${id}"
@@ -44,68 +35,27 @@ export function Checkbox({ id, checked, indeterminate = false, onChange }: Check
         ${checkedAttr}
         ${indeterminateAttr}
         ${onChangeAttr}
-        aria-checked="${indeterminate ? 'mixed' : String(checked)}"
+        x-ref="input"
+        x-effect="$el.indeterminate = indeterminate"
+        @change="handleChange()"
+        :aria-checked="indeterminate ? 'mixed' : String(checked)"
       />
-      ${renderVisual(checked, indeterminate)}
+      <span class="next-checkbox relative inline-flex w-5 h-5 rounded-[4px] border transition-colors duration-150 ${boxDynamic}"
+        :class="(checked || indeterminate) ? 'border-transparent bg-text-primary text-white' : 'border-border-strong bg-surface text-transparent'">
+        <svg class="next-checkbox-check absolute inset-0 m-auto ${checkVisible}"
+          :class="checked ? 'block' : 'hidden'"
+          width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="m5 13 4 4L19 7"/>
+        </svg>
+        <span class="next-checkbox-dash absolute left-1 right-1 top-1/2 -translate-y-1/2 h-[2px] bg-current rounded ${dashVisible}"
+          :class="(indeterminate && !checked) ? 'block' : 'hidden'"
+          aria-hidden="true"></span>
+      </span>
     </label>
   `.trim();
 }
 
-function syncVisual(input: HTMLInputElement): void {
-  const wrapper = input.closest<HTMLElement>('.next-checkbox-wrapper');
-  if (!wrapper) return;
-
-  const box = wrapper.querySelector<HTMLElement>('.next-checkbox');
-  const check = wrapper.querySelector<HTMLElement>('.next-checkbox-check');
-  const dash = wrapper.querySelector<HTMLElement>('.next-checkbox-dash');
-  if (!box || !check || !dash) return;
-
-  const active = input.checked || input.indeterminate;
-
-  box.classList.toggle('border-transparent', active);
-  box.classList.toggle('bg-text-primary', active);
-  box.classList.toggle('text-white', active);
-
-  box.classList.toggle('border-border-strong', !active);
-  box.classList.toggle('bg-surface', !active);
-
-  check.classList.toggle('hidden', !input.checked);
-  check.classList.toggle('block', input.checked);
-
-  const showDash = input.indeterminate && !input.checked;
-  dash.classList.toggle('hidden', !showDash);
-  dash.classList.toggle('block', showDash);
-
-  wrapper.classList.toggle('checked', input.checked);
-  wrapper.classList.toggle('indeterminate', input.indeterminate);
-
-  if (input.indeterminate) input.setAttribute('data-indeterminate', 'true');
-  else input.removeAttribute('data-indeterminate');
-}
-
-export function initCheckbox(container?: HTMLElement): void {
-  const root = container || document;
-  const inputs = root.querySelectorAll<HTMLInputElement>('.next-checkbox-input');
-
-  inputs.forEach((input) => {
-    if (input.dataset.indeterminate === 'true') {
-      input.indeterminate = true;
-    }
-
-    syncVisual(input);
-
-    input.addEventListener('change', () => {
-      input.indeterminate = false;
-      input.setAttribute('aria-checked', String(input.checked));
-      syncVisual(input);
-
-      const handlerId = input.dataset.onchange;
-      if (handlerId) {
-        input.dispatchEvent(new CustomEvent('checkbox-change', {
-          bubbles: true,
-          detail: { id: input.id, checked: input.checked, handlerId },
-        }));
-      }
-    });
-  });
+/** @deprecated Alpine.js manages checkbox behavior declaratively now. Kept as no-op for backward compatibility. */
+export function initCheckbox(_container?: HTMLElement): void {
+  // No-op — Alpine.data('checkbox') handles all behavior declaratively.
 }

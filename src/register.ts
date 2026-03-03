@@ -8,6 +8,7 @@ import { initFlowbite } from 'flowbite'
 
 // Auth components
 import { AuthLayout, initAuthLayout, RegisterPage, initRegisterPage, getBaseUrl } from './components/auth'
+import { startAlpine } from './alpine'
 
 /* ── App Setup ───────────────────────────────────────── */
 
@@ -25,7 +26,10 @@ initFlowbite()
 // Initialize auth layout (back button handler)
 initAuthLayout()
 
-// Initialize register page interactivity (multi-step flow, form validation)
+// Start Alpine.js (processes x-data, x-show, @click directives in the DOM)
+startAlpine()
+
+// Initialize register page interactivity (transitional bridge for callbacks)
 initRegisterPage({
   onComplete: (_data) => {
     // In production, this would send data to the backend

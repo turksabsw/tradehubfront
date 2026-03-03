@@ -107,19 +107,11 @@ export function CartDrawer(): string {
   return SharedCartDrawer();
 }
 
+/** @deprecated No-op — click listeners replaced by @click directives in templates. Use openCartDrawer() directly. */
 export function initCartDrawer(): void {
-  const item = buildActiveItem();
-  initSharedCartDrawer([item]);
-
-  const desktopAddBtn = document.getElementById('pd-add-to-cart');
-  desktopAddBtn?.addEventListener('click', () => {
-    openSharedCartDrawer(item.id);
-  });
-
-  const mobileAddBtn = document.getElementById('pdm-bar-cart');
-  mobileAddBtn?.addEventListener('click', () => {
-    openSharedCartDrawer(item.id);
-  });
+  // No-op: desktop (#pd-add-to-cart) and mobile (#pdm-bar-cart) buttons
+  // now use @click="openCartDrawer()" directives in their templates.
+  // Kept as export for backward compat with page entry files.
 }
 
 export function ShippingModal(): string {

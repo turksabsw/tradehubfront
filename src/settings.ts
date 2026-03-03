@@ -5,6 +5,7 @@
 
 import './style.css'
 import { initFlowbite } from 'flowbite'
+import { startAlpine } from './alpine'
 
 import { TopBar, initMobileDrawer, initHeaderCart } from './components/header'
 import { Breadcrumb } from './components/shared/Breadcrumb'
@@ -54,3 +55,6 @@ initFloatingPanel();
 initMobileDrawer();
 initSidebar();
 initSettingsLayout();
+
+// Start Alpine AFTER innerHTML is set so it can find all x-data directives in the DOM
+startAlpine();

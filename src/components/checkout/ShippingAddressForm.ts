@@ -2,10 +2,13 @@
  * ShippingAddressForm Component (C2)
  * Shipping address form with float-label inputs, country dropdown,
  * composite phone input, and 3-column state/city/postal row.
+ *
+ * Interactivity handled by Alpine.js x-data="shippingForm" (see alpine.ts).
+ * Float-label behavior is CSS-driven via Tailwind peer-* classes.
  */
 
 import type { Country, Province } from '../../types/checkout';
-import { countries, turkishProvinces, districtsByProvince, pageContent, geolocationMockAddress } from '../../data/mockCheckout';
+import { countries, turkishProvinces, pageContent } from '../../data/mockCheckout';
 import { AddressAutocomplete } from './AddressAutocomplete';
 
 export interface ShippingAddressFormProps {
@@ -16,15 +19,17 @@ export interface ShippingAddressFormProps {
 /** Chevron-down SVG icon */
 const ChevronDown = `<svg class="w-4 h-4 shrink-0 transition-transform" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>`;
 
-/** Info circle SVG icon */
-const InfoIcon = `<svg class="w-4 h-4 text-[var(--color-text-muted)]" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a.75.75 0 000 1.5h.253a.25.25 0 01.244.304l-.459 2.066A1.75 1.75 0 0010.747 15H11a.75.75 0 000-1.5h-.253a.25.25 0 01-.244-.304l.459-2.066A1.75 1.75 0 009.253 9H9z" clip-rule="evenodd"/></svg>`;
+// SVG icon constants (InfoIcon, LocationIcon) removed — unused in template.
+// See ChevronDown above for the icon that IS used by dropdown buttons.
 
-/** Location pin SVG icon */
-const LocationIcon = `<svg class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9.69 18.933l.003.001C9.89 19.02 10 19 10 19s.11.02.308-.066l.002-.001.006-.003.018-.008a5.741 5.741 0 00.281-.14c.186-.096.446-.24.757-.433.62-.384 1.445-.966 2.274-1.765C15.302 14.988 17 12.493 17 9A7 7 0 103 9c0 3.492 1.698 5.988 3.355 7.584a13.731 13.731 0 002.273 1.765 11.842 11.842 0 00.976.544l.062.029.018.008.006.003zM10 11.25a2.25 2.25 0 100-4.5 2.25 2.25 0 000 4.5z" clip-rule="evenodd"/></svg>`;
-
+/**
+ * Float-label text input field.
+ * Alpine binds error state via x-bind:data-error and clears on @input.
+ * Float-label animation uses CSS peer-* selectors with transition-all duration-200.
+ */
 function floatField(id: string, name: string, label: string, required: boolean, type = 'text', helperText?: string, helperAction?: string): string {
   return `
-    <div class="relative mb-4 group checkout-field-container" data-field="${name}">
+    <div class="relative mb-4 group checkout-field-container" data-field="${name}" x-bind:data-error="errors.${name}">
       <input
         class="peer w-full h-[48px] pt-[18px] px-3 pb-0 text-[14px] text-[var(--color-text-primary)] border border-[var(--color-border-medium)] rounded-lg bg-[var(--color-surface)] outline-none transition-colors focus:border-[var(--color-primary-500)] data-[error=true]:border-[var(--color-error-500)] placeholder-transparent"
         type="${type}"
@@ -33,9 +38,10 @@ function floatField(id: string, name: string, label: string, required: boolean, 
         autocomplete="off"
         placeholder=" "
         ${required ? 'required' : ''}
+        @input="clearError('${name}')"
       />
-      <label 
-        class="absolute left-3 top-1/2 -translate-y-1/2 text-[14px] text-[#767676] transition-all duration-200 ease-in-out pointer-events-none peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-[14px] peer-placeholder-shown:text-[#767676] peer-focus:top-[12px] peer-focus:-translate-y-1/2 peer-focus:text-[12px] peer-focus:text-[var(--color-primary-500)] peer-focus:bg-transparent group-data-[error=true]:text-[var(--color-error-500)] ${type !== 'tel' && `peer-[:not(:placeholder-shown)]:top-[12px] peer-[:not(:placeholder-shown)]:-translate-y-1/2 peer-[:not(:placeholder-shown)]:text-[12px]`}" 
+      <label
+        class="absolute left-3 top-1/2 -translate-y-1/2 text-[14px] text-[#767676] transition-all duration-200 ease-in-out pointer-events-none peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-[14px] peer-placeholder-shown:text-[#767676] peer-focus:top-[12px] peer-focus:-translate-y-1/2 peer-focus:text-[12px] peer-focus:text-[var(--color-primary-500)] peer-focus:bg-transparent group-data-[error=true]:text-[var(--color-error-500)] ${type !== 'tel' && `peer-[:not(:placeholder-shown)]:top-[12px] peer-[:not(:placeholder-shown)]:-translate-y-1/2 peer-[:not(:placeholder-shown)]:text-[12px]`}"
         for="${id}"
       >
         ${label}${required ? ' <span class="text-[var(--color-error-500)]">*</span>' : ''}
@@ -47,23 +53,46 @@ function floatField(id: string, name: string, label: string, required: boolean, 
   `;
 }
 
-function dropdownField(id: string, name: string, label: string, displayValue: string): string {
+/**
+ * Dropdown select field with Alpine.js bindings.
+ * Uses @click for toggling, @click.outside for closing, and x-text for display sync.
+ * Dropdown visibility controlled via group-data-[open=true]:block CSS.
+ * Float-label on dropdown is always in "floated" position (top-[12px]) since
+ * the label text is always visible.
+ */
+function dropdownField(
+  id: string,
+  name: string,
+  label: string,
+  displayValue: string,
+  items?: string,
+  alpine?: { openProp: string; selectFn: string; displayProp?: string }
+): string {
+  const containerAlpine = alpine
+    ? ` x-bind:data-open="${alpine.openProp}" x-bind:data-error="errors.${name}" @click.outside="${alpine.openProp} = false"`
+    : '';
+  const triggerAlpine = alpine
+    ? `@click.prevent="toggleDropdown('${name}')" x-bind:aria-expanded="${alpine.openProp}"`
+    : 'aria-expanded="false"';
+  const displayAlpine = alpine?.displayProp ? ` x-text="${alpine.displayProp}"` : '';
+  const listAlpine = alpine ? ` @click="${alpine.selectFn}"` : '';
+
   return `
-    <div class="relative mb-4 group checkout-dropdown-container" data-field="${name}" data-dropdown="${id}">
+    <div class="relative mb-4 group checkout-dropdown-container" data-field="${name}" data-dropdown="${id}"${containerAlpine}>
       <button
         type="button"
         class="w-full h-[48px] flex items-center justify-between pt-[18px] px-3 pb-0 text-[14px] text-[var(--color-text-primary)] border border-[var(--color-border-medium)] rounded-lg bg-[var(--color-surface)] cursor-pointer outline-none transition-colors focus:border-[var(--color-primary-500)] group-data-[error=true]:border-[var(--color-error-500)] dropdown-trigger"
         id="${id}"
-        aria-expanded="false"
         aria-haspopup="listbox"
+        ${triggerAlpine}
       >
-        <span class="text-left truncate pb-[6px]" data-display>${displayValue}</span>
+        <span class="text-left truncate pb-[6px]" data-display${displayAlpine}>${displayValue}</span>
         <span class="pb-[6px]">${ChevronDown}</span>
       </button>
       <label class="absolute left-3 top-[12px] -translate-y-1/2 text-[12px] text-[#767676] transition-all duration-200 ease-in-out pointer-events-none group-data-[error=true]:text-[var(--color-error-500)] dropdown-label">
         ${label} <span class="text-[var(--color-error-500)]">*</span>
       </label>
-      <ul class="absolute top-full left-0 right-0 z-50 max-h-[260px] overflow-y-auto bg-[var(--color-surface)] border border-[var(--color-border-medium)] rounded-lg shadow-lg mt-1 hidden group-data-[open=true]:block" role="listbox" data-list></ul>
+      <ul class="absolute top-full left-0 right-0 z-50 max-h-[260px] overflow-y-auto bg-[var(--color-surface)] border border-[var(--color-border-medium)] rounded-lg shadow-lg mt-1 hidden group-data-[open=true]:block" role="listbox" data-list${listAlpine}>${items || ''}</ul>
       <div class="hidden text-[12px] text-[var(--color-error-500)] mt-1 group-data-[error=true]:block">${pageContent.requiredFieldError}</div>
     </div>
   `;
@@ -76,18 +105,18 @@ export function ShippingAddressForm(props: ShippingAddressFormProps = {}): strin
   const ctrs = props.countries ?? countries;
   const _provinces = props.provinces ?? turkishProvinces;
 
-  // Country dropdown items
+  // Country dropdown items (rendered directly into dropdown UL)
   const countryItems = ctrs.map(c =>
     `<li class="px-3 py-2 text-[14px] text-[var(--color-text-primary)] cursor-pointer hover:bg-blue-100 hover:text-blue-800 transition-colors flex items-center gap-2 ${c.code === defaultCountry.code ? 'bg-blue-50 text-blue-800' : ''}" role="option" data-value="${c.code}" data-flag="${c.flag}" data-name="${c.name}" data-prefix="${c.phonePrefix}">${c.flag} ${c.name}</li>`
   ).join('');
 
-  // Province dropdown items
+  // Province dropdown items (rendered directly into dropdown UL)
   const provinceItems = _provinces.map(p =>
     `<li class="px-3 py-2 text-[14px] text-[var(--color-text-primary)] cursor-pointer hover:bg-[#f5f5f5] transition-colors" role="option" data-value="${p.name}">${p.name}</li>`
   ).join('');
 
   return `
-    <section class="checkout-section mb-4" id="shipping-address-section">
+    <section class="checkout-section mb-4" id="shipping-address-section" x-data="shippingForm">
       <!-- Section Header -->
       <div class="flex items-center gap-3 p-4 lg:p-5">
         <div class="flex items-center justify-center w-7 h-7 rounded-full bg-[var(--color-primary-500)] text-white text-sm font-semibold shrink-0">1</div>
@@ -96,24 +125,27 @@ export function ShippingAddressForm(props: ShippingAddressFormProps = {}): strin
 
       <!-- Form Content -->
       <div class="checkout-section__content">
-        <form id="shipping-address-form" class="px-4 lg:px-5 pb-5" novalidate>
+        <form id="shipping-address-form" class="px-4 lg:px-5 pb-5" novalidate @submit.prevent="handleSubmit()">
           <div class="flex flex-col gap-0">
             <div class="flex items-center gap-2 mb-4 text-[#008a00] text-[14px] font-medium">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" class="shrink-0"><path d="M18 10v-3.5A6.5 6.5 0 105 6.5V10H4v12h16V10h-2zm-2 0H8v-3.5a4.5 4.5 0 119 0V10zm-3 5.5v3h-2v-3h2z" fill="currentColor"/></svg>
               <span>Your information is encrypted and secure</span>
             </div>
-            
-            <!-- Country/Region -->
-            ${dropdownField('country-dropdown', 'country', 'Country / region', `${defaultCountry.flag} ${defaultCountry.name}`)}
-            <div class="hidden" id="country-items">${countryItems}</div>
+
+            <!-- Country/Region — Alpine dropdown with @click/@click.outside -->
+            ${dropdownField('country-dropdown', 'country', 'Country / region',
+              `${defaultCountry.flag} ${defaultCountry.name}`,
+              countryItems,
+              { openProp: 'countryOpen', selectFn: 'selectCountryItem($event)', displayProp: 'countryDisplay' }
+            )}
 
             <!-- First name and Last name -->
             ${floatField('first-name', 'firstName', 'First name and Last name', true)}
 
-            <!-- Phone Number (composite) -->
-            <div class="relative mb-4 group checkout-field-container flex gap-2" data-field="phone">
+            <!-- Phone Number (composite) — Alpine binds error and prefix -->
+            <div class="relative mb-4 group checkout-field-container flex gap-2" data-field="phone" x-bind:data-error="errors.phone">
               <div class="flex items-center justify-center w-[70px] h-[48px] rounded-lg border border-[var(--color-border-medium)] bg-transparent text-[14px] text-[var(--color-text-primary)] shrink-0">
-                <span id="phone-prefix">${defaultCountry.phonePrefix}</span>
+                <span id="phone-prefix" x-text="phonePrefix">${defaultCountry.phonePrefix}</span>
               </div>
               <div class="relative flex-1">
                 <input
@@ -123,9 +155,10 @@ export function ShippingAddressForm(props: ShippingAddressFormProps = {}): strin
                   name="phone"
                   required
                   placeholder=" "
+                  @input="clearError('phone')"
                 />
-                <label 
-                  class="absolute left-3 top-1/2 -translate-y-1/2 text-[14px] text-[#767676] transition-all duration-200 ease-in-out pointer-events-none peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-[14px] peer-placeholder-shown:text-[#767676] peer-focus:top-[12px] peer-focus:-translate-y-1/2 peer-focus:text-[12px] peer-focus:text-[var(--color-primary-500)] peer-focus:bg-transparent peer-[:not(:placeholder-shown)]:top-[12px] peer-[:not(:placeholder-shown)]:-translate-y-1/2 peer-[:not(:placeholder-shown)]:text-[12px] group-data-[error=true]:text-[var(--color-error-500)]" 
+                <label
+                  class="absolute left-3 top-1/2 -translate-y-1/2 text-[14px] text-[#767676] transition-all duration-200 ease-in-out pointer-events-none peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-[14px] peer-placeholder-shown:text-[#767676] peer-focus:top-[12px] peer-focus:-translate-y-1/2 peer-focus:text-[12px] peer-focus:text-[var(--color-primary-500)] peer-focus:bg-transparent peer-[:not(:placeholder-shown)]:top-[12px] peer-[:not(:placeholder-shown)]:-translate-y-1/2 peer-[:not(:placeholder-shown)]:text-[12px] group-data-[error=true]:text-[var(--color-error-500)]"
                   for="phone"
                 >
                   ${pageContent.phoneLabel} <span class="text-[var(--color-error-500)]">*</span>
@@ -133,11 +166,11 @@ export function ShippingAddressForm(props: ShippingAddressFormProps = {}): strin
               </div>
               <p class="absolute top-[100%] left-[78px] text-[14px] text-[#767676] mt-[8px]">Only used to contact you for delivery updates</p>
             </div>
-            <div class="h-[30px]"></div> <!-- Spacer for absolute absolute positioned help text -->
+            <div class="h-[30px]"></div> <!-- Spacer for absolute positioned help text -->
 
-            <!-- Street Address -->
+            <!-- Street Address — with "Use my current location" Alpine action -->
             ${floatField('street-address', 'streetAddress', pageContent.streetAddressLabel, true, 'text', '', `
-              <button type="button" id="use-location-btn" class="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1 bg-[#FFFFFF] px-[16px] py-0 text-[14px] text-[var(--color-primary-500)] hover:text-[var(--color-primary-700)] transition-colors">
+              <button type="button" id="use-location-btn" @click.prevent="useCurrentLocation()" class="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1 bg-[#FFFFFF] px-[16px] py-0 text-[14px] text-[var(--color-primary-500)] hover:text-[var(--color-primary-700)] transition-colors">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
                 <span>${pageContent.useCurrentLocationText}</span>
               </button>
@@ -148,16 +181,20 @@ export function ShippingAddressForm(props: ShippingAddressFormProps = {}): strin
 
           <!-- State / City / Postal Code — 3-column row -->
           <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-            <!-- State/Province -->
+            <!-- State/Province — Alpine dropdown -->
             <div class="relative">
-              ${dropdownField('state-dropdown', 'state', 'State / province', '')}
-              <div class="hidden" id="state-items">${provinceItems}</div>
+              ${dropdownField('state-dropdown', 'state', 'State / province', '',
+                provinceItems,
+                { openProp: 'stateOpen', selectFn: 'selectStateItem($event)', displayProp: 'stateDisplay' }
+              )}
               ${AddressAutocomplete()}
             </div>
 
-            <!-- City -->
-            ${dropdownField('city-dropdown', 'city', 'City', '')}
-            <div class="hidden" id="city-items"></div>
+            <!-- City — Alpine dropdown (populated dynamically on state change) -->
+            ${dropdownField('city-dropdown', 'city', 'City', '',
+              '',
+              { openProp: 'cityOpen', selectFn: 'selectCityItem($event)', displayProp: 'cityDisplay' }
+            )}
 
             <!-- Postal Code -->
             ${floatField('postal-code', 'postalCode', 'Postal code', true, 'text', '', `
@@ -200,273 +237,7 @@ export function ShippingAddressForm(props: ShippingAddressFormProps = {}): strin
   `.trim();
 }
 
-/**
- * Initialize ShippingAddressForm interactions:
- * - Float-label focus/blur
- * - Dropdown open/close
- * - Form validation on submit
- */
+/** @deprecated Migrated to Alpine.js x-data="shippingForm" — see alpine.ts */
 export function initShippingAddressForm(): void {
-  const form = document.getElementById('shipping-address-form') as HTMLFormElement | null;
-  if (!form) return;
-
-  // ── Float-label behavior ──
-  form.querySelectorAll<HTMLInputElement>('.checkout-float-field__input').forEach(input => {
-    const field = input.closest('.checkout-float-field');
-    if (!field) return;
-
-    const updateActive = () => {
-      field.classList.toggle('checkout-float-field--active', input.value.trim().length > 0);
-    };
-
-    input.addEventListener('focus', () => {
-      field.classList.add('checkout-float-field--active');
-    });
-    input.addEventListener('blur', updateActive);
-    // Init state
-    updateActive();
-  });
-
-  // ── Phone field float-label ──
-  const phoneInput = document.getElementById('phone') as HTMLInputElement | null;
-  const phoneField = phoneInput?.closest('.checkout-float-field');
-  if (phoneInput && phoneField) {
-    phoneInput.addEventListener('focus', () => phoneField.classList.add('checkout-float-field--active'));
-    phoneInput.addEventListener('blur', () => {
-      phoneField.classList.toggle('checkout-float-field--active', phoneInput.value.trim().length > 0);
-    });
-  }
-
-  // ── Dropdown behavior ──
-  const dropdowns = form.querySelectorAll<HTMLElement>('[data-dropdown]');
-
-  const closeAllDropdowns = () => {
-    dropdowns.forEach(dd => {
-      delete dd.dataset.open;
-      const trigger = dd.querySelector('.dropdown-trigger');
-      trigger?.setAttribute('aria-expanded', 'false');
-    });
-  };
-
-  // Populate dropdown lists from hidden containers
-  const populateDropdown = (dropdownId: string, itemsContainerId: string) => {
-    const dropdown = document.querySelector(`[data-dropdown="${dropdownId}"]`);
-    const itemsContainer = document.getElementById(itemsContainerId);
-    const list = dropdown?.querySelector('[data-list]');
-    if (list && itemsContainer) {
-      list.innerHTML = itemsContainer.innerHTML;
-    }
-  };
-
-  populateDropdown('country-dropdown', 'country-items');
-  populateDropdown('state-dropdown', 'state-items');
-
-  dropdowns.forEach(dropdown => {
-    const trigger = dropdown.querySelector('.dropdown-trigger');
-    const list = dropdown.querySelector('[data-list]');
-    const display = dropdown.querySelector('[data-display]');
-    const fieldName = dropdown.dataset.field;
-
-    trigger?.addEventListener('click', (e) => {
-      e.preventDefault();
-      const isOpen = dropdown.dataset.open === 'true';
-      closeAllDropdowns();
-      if (!isOpen) {
-        dropdown.dataset.open = 'true';
-        trigger.setAttribute('aria-expanded', 'true');
-      }
-    });
-
-    list?.addEventListener('click', (e) => {
-      const item = (e.target as HTMLElement).closest('li') as HTMLElement | null;
-      if (!item) return;
-
-      // Update selected state visually
-      list.querySelectorAll('li').forEach(i => {
-        i.classList.remove('bg-blue-50', 'text-blue-800');
-      });
-      item.classList.add('bg-blue-50', 'text-blue-800');
-
-      // Update display value
-      if (display) display.textContent = item.textContent?.trim() ?? '';
-
-      // Special handling for country to update phone prefix
-      if (fieldName === 'country') {
-        const prefix = item.dataset.prefix;
-        const prefixEl = document.getElementById('phone-prefix');
-        if (prefix && prefixEl) prefixEl.textContent = prefix;
-      }
-
-      // Special handling for province to update city dropdown
-      if (fieldName === 'state') {
-        const provinceName = item.dataset.value;
-        if (provinceName) updateCityDropdown(provinceName);
-      }
-
-      closeAllDropdowns();
-
-      // Update float label positioning logic
-      const label = dropdown.querySelector('.dropdown-label');
-      if (label) {
-        label.classList.add('top-[12px]', '-translate-y-1/2', 'text-[12px]');
-        label.classList.remove('top-1/2', 'text-[14px]');
-      }
-
-      // Remove error state on selection
-      delete dropdown.dataset.error;
-    });
-  });
-
-  // Close dropdowns on outside click
-  document.addEventListener('click', (e) => {
-    const target = e.target as HTMLElement;
-    if (!target.closest('.checkout-dropdown-container')) { // Changed to checkout-dropdown-container
-      closeAllDropdowns();
-    }
-  });
-
-  // State/City empty state: remove --active class if no value
-  const stateDropdown = document.querySelector('[data-dropdown="state-dropdown"]');
-  const cityDropdown = document.querySelector('[data-dropdown="city-dropdown"]');
-  if (stateDropdown) stateDropdown.classList.remove('checkout-float-field--active');
-  if (cityDropdown) cityDropdown.classList.remove('checkout-float-field--active');
-
-  // ── Form Validation & Submission ──
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-
-    // Reset all errors
-    form.querySelectorAll('[data-error]').forEach(el => delete (el as HTMLElement).dataset.error);
-
-    const requiredFields = [
-      { field: 'country', getValue: () => (document.getElementById('country-dropdown') as HTMLButtonElement | null)?.querySelector('[data-display]')?.textContent?.trim() },
-      { field: 'firstName', getValue: () => (document.getElementById('first-name') as HTMLInputElement)?.value?.trim() ?? '' },
-      { field: 'phone', getValue: () => (document.getElementById('phone') as HTMLInputElement)?.value?.trim() ?? '' },
-      { field: 'streetAddress', getValue: () => (document.getElementById('street-address') as HTMLInputElement)?.value?.trim() ?? '' },
-      { field: 'state', getValue: () => (document.getElementById('state-dropdown') as HTMLButtonElement | null)?.querySelector('[data-display]')?.textContent?.trim() },
-      { field: 'city', getValue: () => (document.getElementById('city-dropdown') as HTMLButtonElement | null)?.querySelector('[data-display]')?.textContent?.trim() },
-      { field: 'postalCode', getValue: () => (document.getElementById('postal-code') as HTMLInputElement)?.value?.trim() ?? '' },
-    ];
-
-    let hasErrors = false;
-    let firstErrorField: HTMLElement | null = null;
-
-    requiredFields.forEach(({ field, getValue }) => {
-      if (!getValue()) {
-        hasErrors = true;
-        const fieldEl = form.querySelector(`[data-field="${field}"]`);
-        if (fieldEl) {
-          (fieldEl as HTMLElement).dataset.error = 'true';
-          if (!firstErrorField) firstErrorField = fieldEl as HTMLElement;
-        }
-      }
-    });
-
-    if (hasErrors && firstErrorField) {
-      firstErrorField.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      return;
-    }
-
-    // Collect data
-    const formData = {
-      country: (document.getElementById('country-dropdown') as HTMLButtonElement | null)?.querySelector('[data-display]')?.textContent?.trim(),
-      firstName: (document.getElementById('first-name') as HTMLInputElement)?.value?.trim(),
-      phonePrefix: document.getElementById('phone-prefix')?.textContent?.trim(),
-      phone: (document.getElementById('phone') as HTMLInputElement)?.value?.trim(),
-      streetAddress: (document.getElementById('street-address') as HTMLInputElement)?.value?.trim(),
-      apartment: (document.getElementById('apartment') as HTMLInputElement)?.value?.trim(),
-      state: (document.getElementById('state-dropdown') as HTMLButtonElement | null)?.querySelector('[data-display]')?.textContent?.trim(),
-      city: (document.getElementById('city-dropdown') as HTMLButtonElement | null)?.querySelector('[data-display]')?.textContent?.trim(),
-      postalCode: (document.getElementById('postal-code') as HTMLInputElement)?.value?.trim(),
-      isDefaultAddress: (document.getElementById('default-address') as HTMLInputElement)?.checked ?? false,
-    };
-
-    console.info('Checkout form submitted:', formData);
-  });
-
-  // Remove error state on input
-  form.querySelectorAll<HTMLInputElement>('input').forEach(input => {
-    input.addEventListener('input', () => {
-      const field = input.closest('[data-field]');
-      if (field) delete (field as HTMLElement).dataset.error;
-    });
-  });
-
-  // Phone input error clearing
-  const phoneInputField = document.getElementById('phone');
-  if (phoneInputField) {
-    phoneInputField.addEventListener('input', () => {
-      const phoneFieldContainer = phoneInputField.closest('[data-field="phone"]');
-      if (phoneFieldContainer) delete (phoneFieldContainer as HTMLElement).dataset.error;
-    });
-  }
-
-  // ── "Use my current location" Action ──
-  const useLocationBtn = document.getElementById('use-location-btn');
-  if (useLocationBtn) {
-    useLocationBtn.addEventListener('click', () => {
-      if (!navigator.geolocation) {
-        console.warn('Geolocation not supported by this browser.');
-        return;
-      }
-
-      if (confirm('Allow TradeHub to access your current location?')) {
-        navigator.geolocation.getCurrentPosition(
-          () => {
-            // Set standard inputs
-            const setInput = (id: string, val: string) => {
-              const el = document.getElementById(id) as HTMLInputElement;
-              if (el) {
-                el.value = val;
-                const field = el.closest('[data-field]');
-                if (field) delete (field as HTMLElement).dataset.error;
-              }
-            };
-
-            // Using standard type fallback since interface has .streetAddress
-            setInput('street-address', geolocationMockAddress.streetAddress || (geolocationMockAddress as any).street || '');
-            setInput('postal-code', geolocationMockAddress.postalCode);
-
-            // Set state dropdown
-            const stateDD = document.querySelector('[data-dropdown="state-dropdown"]');
-            const stateDisplay = stateDD?.querySelector('[data-display]');
-            if (stateDisplay) {
-              stateDisplay.textContent = geolocationMockAddress.state;
-              if (stateDD) delete (stateDD as HTMLElement).dataset.error;
-            }
-
-            // Update city dropdown and set city
-            updateCityDropdown(geolocationMockAddress.state);
-            const cityDD = document.querySelector('[data-dropdown="city-dropdown"]');
-            const cityDisplay = cityDD?.querySelector('[data-display]');
-            if (cityDisplay) {
-              cityDisplay.textContent = geolocationMockAddress.city;
-              if (cityDD) delete (cityDD as HTMLElement).dataset.error;
-            }
-          },
-          () => {
-            // Silent fail on geolocation denial
-            console.warn('Geolocation permission denied');
-          }
-        );
-      }
-    });
-  }
-}
-
-/** Update the city dropdown when state changes */
-function updateCityDropdown(stateName: string): void {
-  const districts = districtsByProvince[stateName] ?? ['Merkez'];
-
-  const cityDropdown = document.querySelector('[data-dropdown="city-dropdown"]');
-  const list = cityDropdown?.querySelector('[data-list]');
-  const display = cityDropdown?.querySelector('[data-display]');
-
-  if (list) {
-    list.innerHTML = districts.map(d =>
-      `<li class="checkout-dropdown__item" role="option" data-value="${d}">${d}</li>`
-    ).join('');
-  }
-  if (display) display.textContent = '';
-  cityDropdown?.classList.remove('checkout-float-field--active');
+  // No-op: form interactions now handled by Alpine.js shippingForm component
 }

@@ -1,5 +1,7 @@
 /**
  * SKU row inside product card.
+ * Alpine.js: Uses x-data on article for @click + $dispatch on delete button.
+ * Checkbox and QuantityInput children have their own Alpine scopes.
  */
 
 import type { CartSku } from '../../../types/cart';
@@ -22,7 +24,7 @@ function escapeHtml(value: string): string {
 
 export function SkuRow({ sku }: SkuRowProps): string {
   return `
-    <article class="sc-c-sku-container-new grid grid-cols-[auto_92px_minmax(0,1fr)] gap-3 items-start py-4 border-t border-[#f2f2f2] first:border-t-0 max-sm:grid-cols-[auto_72px_minmax(0,1fr)] max-sm:gap-2" data-sku-id="${escapeHtml(sku.id)}">
+    <article class="sc-c-sku-container-new grid grid-cols-[auto_92px_minmax(0,1fr)] gap-3 items-start py-4 border-t border-[#f2f2f2] first:border-t-0 max-sm:grid-cols-[auto_72px_minmax(0,1fr)] max-sm:gap-2" data-sku-id="${escapeHtml(sku.id)}" x-data>
       <div class="pt-9 max-sm:pt-7">
         ${Checkbox({ id: `sku-checkbox-${sku.id}`, checked: sku.selected, onChange: `sku-select-${sku.id}` })}
       </div>
@@ -39,7 +41,7 @@ export function SkuRow({ sku }: SkuRowProps): string {
           </button>
 
           <div class="relative group">
-            <button type="button" class="sc-c-sku-delete-btn w-8 h-8 inline-flex items-center justify-center rounded-full text-text-tertiary hover:bg-black transition-colors" data-sku-id="${escapeHtml(sku.id)}" aria-label="SKU sil">
+            <button type="button" class="sc-c-sku-delete-btn w-8 h-8 inline-flex items-center justify-center rounded-full text-text-tertiary hover:bg-black transition-colors" data-sku-id="${escapeHtml(sku.id)}" @click="$dispatch('sku-delete', { skuId: '${escapeHtml(sku.id)}' })" aria-label="SKU sil">
               <img src="${trashIcon}" class="w-[18px] h-[18px] object-contain group-hover:invert transition-all" alt="Sil" />
             </button>
             <div class="absolute right-0 top-full mt-2 w-max px-3 py-2 bg-black text-white text-xs font-medium rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
@@ -59,20 +61,7 @@ export function SkuRow({ sku }: SkuRowProps): string {
   `.trim();
 }
 
-export function initSkuRows(container?: HTMLElement): void {
-  const root = container || document;
-  const rows = root.querySelectorAll<HTMLElement>('.sc-c-sku-container-new');
-
-  rows.forEach((row) => {
-    const skuId = row.dataset.skuId;
-    if (!skuId) return;
-
-    const deleteBtn = row.querySelector<HTMLButtonElement>('.sc-c-sku-delete-btn');
-    deleteBtn?.addEventListener('click', () => {
-      deleteBtn.dispatchEvent(new CustomEvent('sku-delete', {
-        bubbles: true,
-        detail: { skuId },
-      }));
-    });
-  });
+/** @deprecated Alpine.js handles sku-delete dispatch declaratively via @click + $dispatch. Kept as no-op for backward compatibility. */
+export function initSkuRows(_container?: HTMLElement): void {
+  // No-op — Alpine x-data on article + @click="$dispatch('sku-delete', ...)" handles delete dispatch.
 }

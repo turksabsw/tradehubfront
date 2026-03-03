@@ -8,6 +8,7 @@ import { initFlowbite } from 'flowbite'
 import Swiper from 'swiper'
 import { Autoplay, Pagination, EffectFade } from 'swiper/modules'
 import 'swiper/swiper-bundle.css'
+import { startAlpine } from './alpine'
 
 // Assets
 import rfqVideoUrl from './assets/images/rfqvidehero.mp4'
@@ -239,6 +240,9 @@ initFlowbite();
 initStickyHeaderSearch();
 initMobileDrawer();
 initAnimatedPlaceholder('#topbar-compact-search-input');
+
+// Start Alpine.js (must be called AFTER innerHTML is set)
+startAlpine();
 
 // --- Initialize Swiper Testimonial Carousel ---
 new Swiper('#rfq-testimonials .swiper', {

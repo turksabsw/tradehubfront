@@ -13,7 +13,10 @@ import { TopBar, initMobileDrawer, SubHeader, initStickyHeaderSearch, MegaMenu, 
 import { FooterLinks } from './components/footer'
 
 // Floating components
-import { FloatingPanel, initFloatingPanel } from './components/floating'
+import { FloatingPanel } from './components/floating'
+
+// Alpine.js
+import { startAlpine } from './alpine'
 
 // Shared components
 import { Breadcrumb } from './components/shared/Breadcrumb'
@@ -77,9 +80,9 @@ appEl.innerHTML = `
 // Initialize custom component behaviors
 initMegaMenu();
 initFlowbite();
+startAlpine();
 initStickyHeaderSearch();
 initHeaderCart();
 initMobileDrawer();
 initAnimatedPlaceholder('#topbar-compact-search-input');
-initFloatingPanel();
 initCategoryFilters();

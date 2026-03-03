@@ -3,16 +3,49 @@
  * Sign-in popup with social buttons (Google, Facebook, LinkedIn, Email),
  * promotional banner, QR code link, and close behavior.
  * Triggered when unauthenticated users try to interact with review actions.
+ *
+ * Reactivity handled by Alpine.js via x-data="loginModal".
+ * Alpine.data('loginModal') is registered in src/alpine.ts.
  */
 
 /* ── Modal HTML ──────────────────────────────────────── */
 
 export function LoginModal(): string {
   return `
-    <div id="rv-login-modal" class="rv-login-overlay rv-modal-hidden fixed inset-0 bg-black/50 z-[60] flex items-center justify-center">
-      <div class="rv-login-modal max-w-[420px] w-[95%] p-0 rounded-2xl bg-surface shadow-modal overflow-hidden relative max-sm:!w-full max-sm:!max-w-full max-sm:!rounded-none max-sm:!min-h-screen">
+    <div
+      id="rv-login-modal"
+      x-data="loginModal"
+      x-show="open"
+      x-cloak
+      x-transition:enter="transition ease-out duration-300"
+      x-transition:enter-start="opacity-0"
+      x-transition:enter-end="opacity-100"
+      x-transition:leave="transition ease-in duration-200"
+      x-transition:leave-start="opacity-100"
+      x-transition:leave-end="opacity-0"
+      @click.self="close()"
+      @keydown.escape.window.capture="if (open) { $event.stopImmediatePropagation(); close() }"
+      @login-modal-show.window="show()"
+      @login-modal-hide.window="close()"
+      class="rv-login-overlay fixed inset-0 bg-black/50 z-[60] flex items-center justify-center"
+    >
+      <div
+        x-show="open"
+        x-transition:enter="transition ease-out duration-300"
+        x-transition:enter-start="opacity-0 scale-95"
+        x-transition:enter-end="opacity-100 scale-100"
+        x-transition:leave="transition ease-in duration-200"
+        x-transition:leave-start="opacity-100 scale-100"
+        x-transition:leave-end="opacity-0 scale-95"
+        class="rv-login-modal max-w-[420px] w-[95%] p-0 rounded-2xl bg-surface shadow-modal overflow-hidden relative max-sm:!w-full max-sm:!max-w-full max-sm:!rounded-none max-sm:!min-h-screen"
+      >
         <!-- Close Button -->
-        <button type="button" class="rv-login-close absolute top-3 right-3 w-8 h-8 flex items-center justify-center rounded-full border-none bg-transparent cursor-pointer text-secondary-400 hover:bg-black/5 hover:text-secondary-900 transition-colors z-[1]" id="rv-login-close">
+        <button
+          type="button"
+          @click="close()"
+          class="rv-login-close absolute top-3 right-3 w-8 h-8 flex items-center justify-center rounded-full border-none bg-transparent cursor-pointer text-secondary-400 hover:bg-black/5 hover:text-secondary-900 transition-colors z-[1]"
+          id="rv-login-close"
+        >
           <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
           </svg>
@@ -29,7 +62,7 @@ export function LoginModal(): string {
           <div class="text-sm text-secondary-400 text-center mt-2 mb-6">Son giriş yönteminizi kullanın</div>
 
           <!-- Social Buttons -->
-          <button type="button" class="rv-login-btn w-full h-12 border border-border-default rounded-lg flex items-center gap-3 px-4 cursor-pointer text-[15px] font-medium text-secondary-900 bg-surface hover:bg-surface-raised transition-colors mb-3" data-login-provider="google">
+          <button type="button" @click="close()" class="rv-login-btn w-full h-12 border border-border-default rounded-lg flex items-center gap-3 px-4 cursor-pointer text-[15px] font-medium text-secondary-900 bg-surface hover:bg-surface-raised transition-colors mb-3" data-login-provider="google">
             <svg class="w-6 h-6 shrink-0" viewBox="0 0 24 24" fill="none">
               <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/>
               <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
@@ -39,14 +72,14 @@ export function LoginModal(): string {
             Google ile devam et
           </button>
 
-          <button type="button" class="rv-login-btn w-full h-12 border border-border-default rounded-lg flex items-center gap-3 px-4 cursor-pointer text-[15px] font-medium text-secondary-900 bg-surface hover:bg-surface-raised transition-colors mb-3" data-login-provider="facebook">
+          <button type="button" @click="close()" class="rv-login-btn w-full h-12 border border-border-default rounded-lg flex items-center gap-3 px-4 cursor-pointer text-[15px] font-medium text-secondary-900 bg-surface hover:bg-surface-raised transition-colors mb-3" data-login-provider="facebook">
             <svg class="w-6 h-6 shrink-0" viewBox="0 0 24 24" fill="#1877F2">
               <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
             </svg>
             Facebook ile devam et
           </button>
 
-          <button type="button" class="rv-login-btn w-full h-12 border border-border-default rounded-lg flex items-center gap-3 px-4 cursor-pointer text-[15px] font-medium text-secondary-900 bg-surface hover:bg-surface-raised transition-colors mb-3" data-login-provider="linkedin">
+          <button type="button" @click="close()" class="rv-login-btn w-full h-12 border border-border-default rounded-lg flex items-center gap-3 px-4 cursor-pointer text-[15px] font-medium text-secondary-900 bg-surface hover:bg-surface-raised transition-colors mb-3" data-login-provider="linkedin">
             <svg class="w-6 h-6 shrink-0" viewBox="0 0 24 24" fill="#0A66C2">
               <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
             </svg>
@@ -57,7 +90,7 @@ export function LoginModal(): string {
           <div class="rv-login-divider flex items-center gap-3 my-5 text-xs text-secondary-400 uppercase">VEYA</div>
 
           <!-- Email Button -->
-          <button type="button" class="rv-login-btn w-full h-12 border border-border-default rounded-lg flex items-center gap-3 px-4 cursor-pointer text-[15px] font-medium text-secondary-900 bg-surface hover:bg-surface-raised transition-colors mb-3" data-login-provider="email">
+          <button type="button" @click="close()" class="rv-login-btn w-full h-12 border border-border-default rounded-lg flex items-center gap-3 px-4 cursor-pointer text-[15px] font-medium text-secondary-900 bg-surface hover:bg-surface-raised transition-colors mb-3" data-login-provider="email">
             <svg class="w-6 h-6 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
             </svg>
@@ -84,63 +117,29 @@ export function LoginModal(): string {
 
 /* ── Init logic ──────────────────────────────────────── */
 
+/**
+ * @deprecated Replaced by Alpine.js x-data="loginModal" directives.
+ * Alpine handles show/hide, click handlers, Escape key, and body scroll lock.
+ * Remove this call from page entry files and use startAlpine() instead.
+ */
 export function initLoginModal(): void {
-  const overlay = document.getElementById('rv-login-modal');
-  if (!overlay) return;
-
-  // Use event delegation on the overlay for all click handling
-  overlay.addEventListener('click', (e) => {
-    const target = e.target as HTMLElement;
-
-    // Close button (or its SVG/path child) clicked
-    if (target.closest('.rv-login-close')) {
-      e.stopPropagation();
-      hideLoginModal();
-      return;
-    }
-
-    // Social login buttons — close modal on click (visual only)
-    if (target.closest('.rv-login-btn')) {
-      hideLoginModal();
-      return;
-    }
-
-    // Overlay background clicked (not the modal card)
-    if (target === overlay) {
-      hideLoginModal();
-    }
-  });
-
-  // Close on Escape key — stopImmediatePropagation prevents reviews modal from also closing
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && !overlay.classList.contains('rv-modal-hidden')) {
-      e.stopImmediatePropagation();
-      hideLoginModal();
-    }
-  });
+  // No-op: All interactivity is now handled by Alpine.js via x-data="loginModal"
 }
 
-/** Show the login modal */
+/**
+ * Show the login modal.
+ * Dispatches a custom event that the Alpine loginModal component listens for.
+ */
 export function showLoginModal(): void {
-  const overlay = document.getElementById('rv-login-modal');
-  if (overlay) {
-    overlay.classList.remove('rv-modal-hidden');
-    document.body.style.overflow = 'hidden';
-  }
+  window.dispatchEvent(new CustomEvent('login-modal-show'));
 }
 
-/** Hide the login modal */
+/**
+ * Hide the login modal.
+ * Dispatches a custom event that the Alpine loginModal component listens for.
+ */
 export function hideLoginModal(): void {
-  const overlay = document.getElementById('rv-login-modal');
-  if (overlay) {
-    overlay.classList.add('rv-modal-hidden');
-    // Only restore body scroll if no other modal is open underneath
-    const reviewsModal = document.getElementById('rv-reviews-modal');
-    const reviewsOpen = reviewsModal && !reviewsModal.classList.contains('rv-modal-hidden');
-    if (!reviewsOpen) {
-      document.body.style.overflow = '';
-    }
-  }
+  window.dispatchEvent(new CustomEvent('login-modal-hide'));
 }
 
 /** Alias for backward compatibility */

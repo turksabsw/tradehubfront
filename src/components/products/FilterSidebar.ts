@@ -233,6 +233,7 @@ function renderCheckbox(option: FilterOption, sectionId: string, idPrefix = ''):
           class="peer sr-only"
           data-filter-section="${sectionId}"
           data-filter-value="${option.value}"
+          @change="$dispatch('filter-change')"
         />
         <div
           class="absolute inset-0 border rounded transition-colors duration-150
@@ -281,6 +282,7 @@ function renderRadioOption(option: StoreReviewFilter, sectionId: string, idPrefi
           class="peer sr-only"
           data-filter-section="${sectionId}"
           data-filter-value="${option.minRating}"
+          @click="handleRadioClick($event)"
         />
         <div
           class="absolute inset-0 border rounded-full transition-colors duration-150
@@ -355,6 +357,7 @@ function renderPriceRange(section: PriceRangeFilterSection): string {
         class="px-3 py-1.5 text-[13px] font-medium rounded whitespace-nowrap bg-primary-500 text-white hover:bg-primary-600 transition-colors duration-150"
         data-filter-section="${section.id}"
         data-filter-action="apply"
+        @click="$dispatch('filter-change')"
       >OK</button>
     </div>
   `;
@@ -384,6 +387,7 @@ function renderMinOrder(section: MinOrderFilterSection): string {
         class="px-3 py-1.5 text-[13px] font-medium rounded whitespace-nowrap bg-primary-500 text-white hover:bg-primary-600 transition-colors duration-150"
         data-filter-section="${section.id}"
         data-filter-action="apply"
+        @click="$dispatch('filter-change')"
       >OK</button>
     </div>
   `;
@@ -409,6 +413,7 @@ function renderSearchableCheckbox(section: SearchableCheckboxFilterSection, idPr
           style="border-color: var(--filter-input-border, #d1d5db); color: var(--filter-text-color, #374151);"
           data-filter-section="${section.id}"
           data-filter-type="search"
+          @input="handleSearchInput($event)"
         />
       </div>
       <!-- Options list -->
@@ -443,6 +448,7 @@ function renderCertCheckbox(option: FilterOption, sectionId: string, idPrefix = 
           class="peer sr-only"
           data-filter-section="${sectionId}"
           data-filter-value="${option.value}"
+          @change="$dispatch('filter-change')"
         />
         <div
           class="absolute inset-0 border rounded transition-colors duration-150
@@ -490,7 +496,7 @@ function renderSectionHeader(section: FilterSection): string {
   return `
     <div
       class="flex items-center justify-between py-2 ${isCollapsible ? 'cursor-pointer group' : ''}"
-      ${isCollapsible ? `data-filter-section-toggle="${section.id}"` : ''}
+      ${isCollapsible ? `@click="toggleSection('${section.id}')"` : ''}
     >
       <h3
         class="text-[13px] font-semibold uppercase tracking-wide"
@@ -499,6 +505,7 @@ function renderSectionHeader(section: FilterSection): string {
       ${isCollapsible ? `
         <span
           class="transition-transform duration-200 ${isCollapsed ? '' : 'rotate-180'}"
+          :class="{ 'rotate-180': !collapsed['${section.id}'] }"
           style="color: var(--filter-chevron-color, #6b7280);"
           data-filter-chevron="${section.id}"
         >
@@ -576,6 +583,7 @@ function renderFilterSection(section: FilterSection, idPrefix = ''): string {
       ${renderSectionHeader(section)}
       <div
         class="overflow-hidden transition-all duration-200 ${isCollapsed ? 'max-h-0 opacity-0' : 'max-h-[500px] opacity-100'}"
+        :class="collapsed['${section.id}'] ? 'max-h-0 opacity-0' : 'max-h-[500px] opacity-100'"
         data-filter-content="${section.id}"
       >
         ${renderSectionContent(section, idPrefix)}
@@ -607,6 +615,7 @@ function renderTradeAssuranceSection(idPrefix = ''): string {
             class="peer sr-only"
             data-filter-section="trade-assurance"
             data-filter-value="enabled"
+            @change="$dispatch('filter-change')"
           />
           <div
             class="absolute inset-0 border rounded transition-colors duration-150
@@ -639,10 +648,19 @@ export function FilterSidebar(sections?: FilterSection[], idPrefix = ''): string
   const tradeAssurance = filterSections.find(s => s.id === 'trade-assurance');
   const otherSections = filterSections.filter(s => s.id !== 'trade-assurance');
 
+  // Build initial collapsed state for Alpine (sections with collapsed: true)
+  const collapsedEntries = otherSections
+    .filter(s => s.collapsible !== false && s.collapsed === true)
+    .map(s => `'${s.id}': true`);
+  const xDataArg = collapsedEntries.length > 0
+    ? `filterSidebar({${collapsedEntries.join(', ')}})`
+    : 'filterSidebar';
+
   return `
     <aside
       class="w-full lg:w-60 xl:w-64 flex-shrink-0"
       aria-label="Product filters"
+      x-data="${xDataArg}"
     >
       <div
         class="sticky top-[120px] p-4 rounded-md border"
@@ -666,6 +684,7 @@ export function FilterSidebar(sections?: FilterSection[], idPrefix = ''): string
           class="w-full mt-4 py-2 text-[13px] font-medium border rounded hover:bg-gray-50 transition-colors duration-150"
           style="border-color: var(--filter-input-border, #d1d5db); color: var(--filter-text-color, #374151);"
           data-filter-action="clear-all"
+          @click="clearAllFilters()"
         >
           Clear All Filters
         </button>
@@ -676,99 +695,11 @@ export function FilterSidebar(sections?: FilterSection[], idPrefix = ''): string
 
 /**
  * Initialize filter sidebar interactions
- * Sets up event listeners for collapsible sections and filter toggles
+ * No-op — Alpine.js handles all filter interactions via x-data="filterSidebar"
  */
 export function initFilterSidebar(): void {
-  // Toggle collapsible sections
-  document.querySelectorAll('[data-filter-section-toggle]').forEach(el => {
-    el.addEventListener('click', () => {
-      const sectionId = el.getAttribute('data-filter-section-toggle');
-      if (!sectionId) return;
-
-      const content = document.querySelector(`[data-filter-content="${sectionId}"]`);
-      const chevron = document.querySelector(`[data-filter-chevron="${sectionId}"]`);
-
-      if (content) {
-        const isHidden = content.classList.contains('max-h-0');
-        content.classList.toggle('max-h-0', !isHidden);
-        content.classList.toggle('max-h-[500px]', isHidden);
-        content.classList.toggle('opacity-0', !isHidden);
-        content.classList.toggle('opacity-100', isHidden);
-      }
-
-      if (chevron) {
-        chevron.classList.toggle('rotate-180');
-      }
-    });
-  });
-
-  // Radio button deselect: track last selected value per group so clicking again unchecks it
-  const lastRadioValue: Record<string, string | null> = {};
-  document.querySelectorAll<HTMLInputElement>('[data-filter-section][type="radio"]').forEach(radio => {
-    const section = radio.dataset.filterSection ?? '';
-    // Initialise tracker with currently-checked value (if any)
-    if (radio.checked) lastRadioValue[section] = radio.value;
-    else if (!(section in lastRadioValue)) lastRadioValue[section] = null;
-
-    radio.addEventListener('click', () => {
-      if (lastRadioValue[section] === radio.value) {
-        // Same radio clicked again — deselect it
-        radio.checked = false;
-        lastRadioValue[section] = null;
-      } else {
-        lastRadioValue[section] = radio.value;
-      }
-      document.dispatchEvent(new CustomEvent('filter-change'));
-    });
-  });
-
-  // Dispatch filter-change on checkbox changes
-  document.querySelectorAll<HTMLInputElement>('[data-filter-section][type="checkbox"]').forEach(input => {
-    input.addEventListener('change', () => {
-      document.dispatchEvent(new CustomEvent('filter-change'));
-    });
-  });
-
-  // Dispatch filter-change on OK button clicks (price range, min order)
-  document.querySelectorAll('[data-filter-action="apply"]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.dispatchEvent(new CustomEvent('filter-change'));
-    });
-  });
-
-  // Searchable filter: hide/show options based on search text
-  document.querySelectorAll<HTMLInputElement>('[data-filter-type="search"]').forEach(searchInput => {
-    searchInput.addEventListener('input', () => {
-      const sectionId = searchInput.dataset.filterSection;
-      if (!sectionId) return;
-      const query = searchInput.value.toLowerCase();
-      const wrapper = searchInput.closest('[data-filter-section-wrapper]') || searchInput.parentElement?.parentElement;
-      if (!wrapper) return;
-      wrapper.querySelectorAll<HTMLLabelElement>(`label[for^="filter-${sectionId}-"]`).forEach(label => {
-        const text = label.textContent?.toLowerCase() || '';
-        label.style.display = text.includes(query) ? '' : 'none';
-      });
-    });
-  });
-
-  // Clear all filters
-  const clearAllBtns = document.querySelectorAll('[data-filter-action="clear-all"]');
-  clearAllBtns.forEach(clearAllBtn => {
-    clearAllBtn.addEventListener('click', () => {
-      // Clear all checkboxes and inputs
-      document.querySelectorAll<HTMLInputElement>('[data-filter-section]').forEach(input => {
-        if (input.type === 'checkbox' || input.type === 'radio') {
-          input.checked = false;
-        } else if (input.type === 'number' || input.type === 'text') {
-          input.value = '';
-        }
-      });
-      // Reset radio deselect tracker
-      for (const key in lastRadioValue) lastRadioValue[key] = null;
-      // Notify filter engine
-      document.dispatchEvent(new CustomEvent('filter-change'));
-    });
-  });
+  // Alpine.js handles section toggle, checkbox change, radio click,
+  // price apply, search input, and clear all via directives
 }
 
 /**

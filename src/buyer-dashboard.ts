@@ -5,6 +5,7 @@
 
 import './style.css'
 import { initFlowbite } from 'flowbite'
+import { startAlpine } from './alpine'
 
 // Header components (simplified for dashboard — no search bar / mega menu)
 import { TopBar, initMobileDrawer, initHeaderCart } from './components/header'
@@ -20,7 +21,7 @@ import { FloatingPanel, initFloatingPanel } from './components/floating'
 
 // Buyer Dashboard components
 import { BuyerDashboardLayout, initBuyerDashboardLayout, OtherServicesLayout, initOtherServicesLayout } from './components/buyer-dashboard'
-import { renderSidebar, initSidebar } from './components/sidebar'
+import { renderSidebar } from './components/sidebar'
 
 // Mock data
 import { mockBuyerDashboardData } from './data/mockBuyerDashboard'
@@ -100,7 +101,6 @@ initFlowbite();
 initHeaderCart();
 initFloatingPanel();
 initMobileDrawer();
-initSidebar();
 
 // Init based on current view
 function initCurrentView(): void {
@@ -113,6 +113,7 @@ function initCurrentView(): void {
 }
 
 initCurrentView();
+startAlpine();
 
 // Handle hash changes to switch between views
 window.addEventListener('hashchange', () => {

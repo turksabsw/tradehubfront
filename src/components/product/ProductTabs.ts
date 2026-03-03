@@ -23,7 +23,7 @@ const tabs: TabConfig[] = [
 
 export function ProductTabs(): string {
   return `
-    <section id="product-tabs-section" class="py-6" style="background: var(--pd-bg, #ffffff);">
+    <section id="product-tabs-section" x-data="{ activeTab: 'attributes' }" class="py-6" style="background: var(--pd-bg, #ffffff);">
       <!-- Tab Navigation -->
       <div
         id="product-tabs-nav"
@@ -31,21 +31,21 @@ export function ProductTabs(): string {
         style="border-bottom: 2px solid var(--pd-spec-border, #e5e5e5);"
         role="tablist"
       >
-        ${tabs.map((tab, i) => `
+        ${tabs.map((tab) => `
           <button
             type="button"
             id="tab-btn-${tab.id}"
             class="product-tab-btn whitespace-nowrap px-5 py-3 text-sm font-medium transition-colors relative"
-            style="color: ${i === 0 ? 'var(--pd-tab-active-color, #cc9900)' : 'var(--pd-tab-color, #6b7280)'};"
+            :style="activeTab === '${tab.id}' ? 'color: var(--pd-tab-active-color, #cc9900)' : 'color: var(--pd-tab-color, #6b7280)'"
             role="tab"
-            aria-selected="${i === 0 ? 'true' : 'false'}"
+            :aria-selected="(activeTab === '${tab.id}').toString()"
             aria-controls="tab-content-${tab.id}"
-            data-tab-target="${tab.id}"
+            @click="activeTab = '${tab.id}'"
           >
             ${tab.label}
             <span
               class="absolute bottom-0 left-0 right-0 h-0.5 transition-all"
-              style="background: ${i === 0 ? 'var(--pd-tab-active-border, #cc9900)' : 'transparent'};"
+              :style="activeTab === '${tab.id}' ? 'background: var(--pd-tab-active-border, #cc9900)' : 'background: transparent'"
             ></span>
           </button>
         `).join('')}
@@ -55,9 +55,11 @@ export function ProductTabs(): string {
       ${tabs.map((tab, i) => `
         <div
           id="tab-content-${tab.id}"
-          class="product-tab-panel ${i === 0 ? '' : 'hidden'}"
+          class="product-tab-panel"
           role="tabpanel"
           aria-labelledby="tab-btn-${tab.id}"
+          x-show="activeTab === '${tab.id}'"
+          ${i !== 0 ? 'x-cloak' : ''}
         >
           ${tab.content()}
         </div>
@@ -67,32 +69,8 @@ export function ProductTabs(): string {
 }
 
 export function initProductTabs(): void {
-  const tabBtns = document.querySelectorAll<HTMLButtonElement>('.product-tab-btn');
-  const tabPanels = document.querySelectorAll<HTMLElement>('.product-tab-panel');
-
-  tabBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const targetId = btn.dataset.tabTarget;
-
-      // Deactivate all
-      tabBtns.forEach(b => {
-        b.style.color = 'var(--pd-tab-color, #6b7280)';
-        b.setAttribute('aria-selected', 'false');
-        const underline = b.querySelector('span');
-        if (underline) underline.style.background = 'transparent';
-      });
-      tabPanels.forEach(p => p.classList.add('hidden'));
-
-      // Activate clicked
-      btn.style.color = 'var(--pd-tab-active-color, #cc9900)';
-      btn.setAttribute('aria-selected', 'true');
-      const underline = btn.querySelector('span');
-      if (underline) underline.style.background = 'var(--pd-tab-active-border, #cc9900)';
-
-      const panel = document.getElementById(`tab-content-${targetId}`);
-      if (panel) panel.classList.remove('hidden');
-    });
-  });
+  // Tab switching is now handled by Alpine.js (x-data, @click, x-show)
+  // Only the IntersectionObserver sticky logic remains as vanilla JS
 
   // Sticky tab bar on scroll
   const tabNav = document.getElementById('product-tabs-nav');

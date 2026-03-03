@@ -7,8 +7,9 @@ import './style.css'
 import { initFlowbite } from 'flowbite'
 
 import { TopBar, initMobileDrawer, initHeaderCart } from './components/header'
-import { FloatingPanel, initFloatingPanel } from './components/floating'
-import { renderSidebar, initSidebar } from './components/sidebar'
+import { FloatingPanel } from './components/floating'
+import { startAlpine } from './alpine'
+import { renderSidebar } from './components/sidebar'
 import { FavoritesLayout, initFavoritesLayout } from './components/favorites'
 
 const appEl = document.querySelector<HTMLDivElement>('#app')!;
@@ -41,8 +42,7 @@ appEl.innerHTML = `
 `;
 
 initFlowbite();
+startAlpine();
 initHeaderCart();
-initFloatingPanel();
 initMobileDrawer();
-initSidebar();
 initFavoritesLayout();
