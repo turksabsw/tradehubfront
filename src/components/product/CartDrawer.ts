@@ -107,11 +107,9 @@ export function CartDrawer(): string {
   return SharedCartDrawer();
 }
 
-/** @deprecated No-op — click listeners replaced by @click directives in templates. Use openCartDrawer() directly. */
 export function initCartDrawer(): void {
-  // No-op: desktop (#pd-add-to-cart) and mobile (#pdm-bar-cart) buttons
-  // now use @click="openCartDrawer()" directives in their templates.
-  // Kept as export for backward compat with page entry files.
+  const item = buildActiveItem();
+  initSharedCartDrawer([item]);
 }
 
 export function ShippingModal(): string {

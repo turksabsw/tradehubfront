@@ -40,9 +40,8 @@ import {
   MobileProductLayout,
   initMobileLayout,
   CartDrawer,
+  initCartDrawer,
 } from './components/product'
-
-
 // Product mock data (for breadcrumb)
 import { mockProduct } from './data/mockProduct'
 
@@ -132,7 +131,7 @@ initAnimatedPlaceholder('#topbar-compact-search-input');
 // Product-specific inits
 // initStickyHeaderSearch — now handled by Alpine (stickyHeaderSearch component)
 // initImageGallery — now handled by Alpine (imageGallery component)
-// initCartDrawer — now handled by Alpine (@click directives on add-to-cart buttons)
+initCartDrawer();
 initProductInfo();
 initProductTabs(); // IntersectionObserver sticky tab bar logic (not migrated)
 initAttributesTab();

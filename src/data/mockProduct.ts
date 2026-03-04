@@ -35,10 +35,10 @@ export const mockProduct: ProductDetail = {
       type: 'color',
       label: 'Renk',
       options: [
-        { id: 'gold', label: 'Altın', value: '#D4AF37', available: true, thumbnail: 'https://placehold.co/80x80/D4AF37/fff?text=Altin' },
-        { id: 'silver', label: 'Gümüş', value: '#C0C0C0', available: true, thumbnail: 'https://placehold.co/80x80/C0C0C0/333?text=Gumus' },
-        { id: 'rosegold', label: 'Rose Gold', value: '#B76E79', available: true, thumbnail: 'https://placehold.co/80x80/B76E79/fff?text=Rose' },
-        { id: 'black', label: 'Siyah', value: '#2D2D2D', available: false, thumbnail: 'https://placehold.co/80x80/2D2D2D/fff?text=Siyah' },
+        { id: 'gold', label: 'Altın', value: '#D4AF37', available: true, thumbnail: 'https://images.unsplash.com/photo-1515562141589-67f0d569b6f5?w=120&h=120&fit=crop&q=80' },
+        { id: 'silver', label: 'Gümüş', value: '#C0C0C0', available: true, thumbnail: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=120&h=120&fit=crop&q=80' },
+        { id: 'rosegold', label: 'Rose Gold', value: '#B76E79', available: true, thumbnail: 'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=120&h=120&fit=crop&q=80' },
+        { id: 'black', label: 'Siyah', value: '#2D2D2D', available: false, thumbnail: 'https://images.unsplash.com/photo-1573408301185-9146fe634ad0?w=120&h=120&fit=crop&q=80' },
       ],
     },
     {

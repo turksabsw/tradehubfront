@@ -9,6 +9,7 @@ import 'swiper/swiper-bundle.css';
 import { startAlpine } from './alpine';
 
 // Components
+import { TopBar } from './components/header';
 import {
   StoreHeader,
   StoreNav,
@@ -26,19 +27,18 @@ import { initSellerStorefront } from './utils/seller/interactions';
 const appEl = document.querySelector<HTMLDivElement>('#app')!;
 
 appEl.innerHTML = `
-  <!-- SITE HEADER BURAYA GELİR -->
+  <!-- MAIN PLATFORM HEADER -->
+  ${TopBar()}
 
-  <main class="seller-storefront" data-seller-slug="${sellerData.seller.slug}">
+  <main class="seller-storefront flex flex-col min-h-screen" data-seller-slug="${sellerData.seller.slug}" x-data="sellerStorefront">
     ${StoreHeader(sellerData.seller)}
     ${StoreNav(sellerData.navData)}
 
     <!-- PROFILE VIEW -->
     ${CompanyProfileComponent(
-  sellerData.seller,
+  sellerData,
   sellerStats,
-  sellerReviews,
-  sellerData.hotProducts,
-  sellerData.categoryListings || []
+  sellerReviews
 )}
 
   </main>

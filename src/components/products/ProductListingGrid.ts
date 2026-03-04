@@ -492,12 +492,23 @@ export function rerenderProductGrid(products: ProductListingCard[]): void {
   const grid = document.querySelector<HTMLElement>('.product-grid');
   if (!grid) return;
 
+  // Preserve the current view mode (if it has !grid-cols-1, it means 'list' mode is active)
+  const isListView = grid.classList.contains('!grid-cols-1');
+
   if (products.length === 0) {
     grid.innerHTML = renderNoResults();
   } else {
     grid.innerHTML = products
       .map(card => `<div role="listitem" class="flex">${renderProductListingCard(card)}</div>`)
       .join('');
+  }
+
+  // Re-apply list view classes if it was in list mode
+  if (isListView) {
+    setGridViewMode('list');
+  } else {
+    // Ensure all grid classes are correct just in case
+    setGridViewMode('grid');
   }
 }
 

@@ -33,30 +33,653 @@ const EMPTY_RECEIPT_ICON = `
    SECTION RENDERERS
    ──────────────────────────────────────── */
 
+const ORDER_STATUS_TABS = [
+  { id: 'all', label: 'Tümü' },
+  { id: 'confirming', label: 'Onay bekliyor' },
+  { id: 'unpaid', label: 'Ödenmemiş' },
+  { id: 'preparing', label: 'Kargoya hazırlanıyor' },
+  { id: 'delivering', label: 'Teslimatta' },
+  { id: 'refunds-aftersales', label: 'İade ve satış sonrası' },
+  { id: 'completed-review', label: 'Tamamlanan ve değerlendirilen' },
+  { id: 'closed', label: 'Kapatılan' },
+];
+
 function renderAllOrders(): string {
   return `
-    <div class="flex items-center justify-between px-7 max-sm:px-3 pt-6 pb-5 border-b border-(--color-border-light,#f0f0f0)">
-      <h1 class="text-[22px] max-sm:text-lg font-bold text-(--color-text-heading,#111827)">Siparişlerim</h1>
-      <button class="orders-page__upload-btn px-5 max-sm:px-3 py-2 text-sm max-sm:text-xs text-(--color-text-body,#333) bg-(--color-surface,#fff) border border-(--color-border-medium,#d1d5db) rounded-[20px] cursor-pointer whitespace-nowrap transition-colors hover:border-(--color-text-placeholder) hover:bg-(--color-surface-muted,#fafafa)">Havale dekontu yükle</button>
-    </div>
-    <div class="flex-1 flex flex-col items-center justify-center gap-3 px-10 max-sm:px-4 py-[60px] text-center">
-      <div class="w-[120px] h-[100px] mb-2">
-        <svg width="120" height="100" viewBox="0 0 120 100" fill="none">
-          <rect x="25" y="10" width="60" height="75" rx="6" fill="#F3F4F6" stroke="#D1D5DB" stroke-width="1.5"/>
-          <rect x="40" y="4" width="30" height="12" rx="4" fill="#E5E7EB" stroke="#D1D5DB" stroke-width="1"/>
-          <rect x="35" y="30" width="40" height="5" rx="2" fill="#E5E7EB"/>
-          <rect x="35" y="42" width="32" height="5" rx="2" fill="#E5E7EB"/>
-          <rect x="35" y="55" width="10" height="10" rx="2" fill="#F97316" opacity="0.7"/>
-          <rect x="50" y="55" width="25" height="5" rx="2" fill="#E5E7EB"/>
-          <rect x="50" y="63" width="18" height="3" rx="1.5" fill="#E5E7EB"/>
-          <circle cx="85" cy="15" r="12" fill="#F3F4F6" stroke="#D1D5DB" stroke-width="1"/>
-          <path d="M80 15l3 3 6-6" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          <circle cx="55" cy="47" r="40" fill="none" stroke="#F0F0F0" stroke-width="1" stroke-dasharray="4 4" opacity="0.6"/>
-        </svg>
+    <div x-data="ordersListComponent()" x-cloak>
+      <template x-if="!selectedOrder"><div>
+      <!-- Header -->
+      <div class="flex items-center justify-between px-7 max-sm:px-3 pt-6 pb-5 border-b border-gray-100">
+        <h1 class="text-[22px] max-sm:text-lg font-bold text-gray-900">Siparişlerim</h1>
+        <button class="px-5 max-sm:px-3 py-2 text-sm max-sm:text-xs text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer whitespace-nowrap transition-colors hover:border-gray-400 hover:bg-gray-50">
+          Havale dekontu yükle
+        </button>
       </div>
-      <h3 class="text-base font-bold text-(--color-text-heading,#111827)">Henüz siparişiniz bulunmamaktadır</h3>
-      <p class="text-sm text-(--color-text-muted,#666) max-w-[400px]">Tedarik etmeye başlamak için ana sayfaya gidin veya aşağıya tıklayın</p>
-      <a href="/" class="inline-block px-8 py-2.5 text-sm text-(--color-text-body,#333) border border-(--color-text-body) rounded-[24px] no-underline mt-2 transition-colors hover:bg-(--color-text-heading) hover:text-(--color-surface)">Tedarik etmeye başla</a>
+
+      <!-- Status Tabs — dynamic counts -->
+      <div class="border-b border-gray-200 overflow-x-auto scrollbar-hide">
+        <div class="flex px-7 max-sm:px-3 min-w-max">
+          ${ORDER_STATUS_TABS.map(tab => `
+            <button
+              @click="activeTab = '${tab.id}'"
+              :class="activeTab === '${tab.id}'
+                ? 'text-gray-900 border-b-2 border-gray-900 font-medium'
+                : 'text-gray-500 border-b-2 border-transparent hover:text-gray-700'"
+              class="py-3 px-4 max-sm:px-2.5 text-sm max-sm:text-xs whitespace-nowrap transition-colors bg-transparent cursor-pointer"
+            >
+              ${tab.label}<template x-if="tabCount('${tab.id}') > 0"><span class="text-gray-400 ml-0.5" x-text="'(' + tabCount('${tab.id}') + ')'"></span></template>
+            </button>
+          `).join('')}
+        </div>
+      </div>
+
+      <!-- Search & Filter Bar -->
+      <div class="flex items-center gap-3 px-7 max-sm:px-3 py-4 flex-wrap max-sm:gap-2">
+        <!-- Search Input -->
+        <div class="flex items-center flex-1 min-w-[200px] max-w-[420px] max-sm:max-w-full max-sm:min-w-full border border-gray-300 rounded-sm overflow-hidden bg-white"
+             :class="searchQuery.trim() ? 'border-amber-400 ring-1 ring-amber-200' : ''">
+          <input
+            type="text"
+            x-model.debounce.300ms="searchQuery"
+            @keydown.escape="searchQuery = ''"
+            placeholder="İsim, sipariş numarası veya bilgi ile ara..."
+            class="flex-1 h-10 px-3 text-sm text-gray-700 border-none outline-none bg-transparent placeholder:text-gray-400"
+          />
+          <!-- Clear button when searching -->
+          <button
+            x-show="searchQuery.trim()"
+            @click="searchQuery = ''"
+            class="flex items-center justify-center w-8 h-10 text-gray-400 hover:text-gray-600 cursor-pointer bg-transparent border-none transition-colors"
+            title="Temizle"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+          </button>
+          <button class="flex items-center justify-center w-10 h-10 border-l border-gray-300 bg-gray-50 hover:bg-gray-100 cursor-pointer transition-colors">
+            <svg class="w-[18px] h-[18px] text-gray-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <circle cx="11" cy="11" r="8"/><path stroke-linecap="round" d="m21 21-4.35-4.35"/>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Order Date Dropdown (no nested x-data — uses parent state) -->
+        <div class="relative">
+          <button
+            @click="dateOpen = !dateOpen; timeOpen = false"
+            class="flex items-center gap-2 h-10 px-3 text-sm border rounded-sm cursor-pointer transition-colors whitespace-nowrap"
+            :class="dateFilter !== 'all' && dateFilter !== 'custom'
+              ? 'text-amber-700 bg-amber-50 border-amber-300 hover:bg-amber-100'
+              : 'text-gray-700 bg-white border-gray-300 hover:bg-gray-50'"
+          >
+            <span x-text="dateFilterLabel"></span>
+            <svg class="w-3.5 h-3.5 transition-transform" :class="dateOpen ? 'rotate-180' : ''" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" d="M6 9l6 6 6-6"/>
+            </svg>
+          </button>
+          <div
+            x-show="dateOpen"
+            @click.outside="dateOpen = false"
+            x-transition:enter="transition ease-out duration-150"
+            x-transition:enter-start="opacity-0 translate-y-1"
+            x-transition:enter-end="opacity-100 translate-y-0"
+            x-transition:leave="transition ease-in duration-100"
+            x-transition:leave-start="opacity-100 translate-y-0"
+            x-transition:leave-end="opacity-0 translate-y-1"
+            class="absolute top-full left-0 mt-1 bg-white border border-gray-200 rounded-md shadow-lg z-20 py-1 min-w-[160px]"
+          >
+            <button @click="setDateFilter('all')"
+              class="flex items-center justify-between w-full text-left px-4 py-2.5 text-sm hover:bg-gray-50 cursor-pointer bg-transparent border-none transition-colors"
+              :class="dateFilter === 'all' ? 'text-amber-700 font-medium' : 'text-gray-700'"
+            >
+              Tüm tarihler
+              <svg x-show="dateFilter === 'all'" class="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            </button>
+            <button @click="setDateFilter('7d')"
+              class="flex items-center justify-between w-full text-left px-4 py-2.5 text-sm hover:bg-gray-50 cursor-pointer bg-transparent border-none transition-colors"
+              :class="dateFilter === '7d' ? 'text-amber-700 font-medium' : 'text-gray-700'"
+            >
+              Son 7 gün
+              <svg x-show="dateFilter === '7d'" class="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            </button>
+            <button @click="setDateFilter('30d')"
+              class="flex items-center justify-between w-full text-left px-4 py-2.5 text-sm hover:bg-gray-50 cursor-pointer bg-transparent border-none transition-colors"
+              :class="dateFilter === '30d' ? 'text-amber-700 font-medium' : 'text-gray-700'"
+            >
+              Son 30 gün
+              <svg x-show="dateFilter === '30d'" class="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            </button>
+            <button @click="setDateFilter('90d')"
+              class="flex items-center justify-between w-full text-left px-4 py-2.5 text-sm hover:bg-gray-50 cursor-pointer bg-transparent border-none transition-colors"
+              :class="dateFilter === '90d' ? 'text-amber-700 font-medium' : 'text-gray-700'"
+            >
+              Son 90 gün
+              <svg x-show="dateFilter === '90d'" class="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Time Range Picker -->
+        <div class="relative">
+          <button
+            @click="timeOpen = !timeOpen; dateOpen = false"
+            class="flex items-center gap-2 h-10 px-3 text-sm border rounded-sm cursor-pointer transition-colors whitespace-nowrap"
+            :class="dateFilter === 'custom'
+              ? 'text-amber-700 bg-amber-50 border-amber-300 hover:bg-amber-100'
+              : 'text-gray-400 bg-white border-gray-300 hover:bg-gray-50'"
+          >
+            <span x-text="timeRangeLabel"></span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+              <rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>
+            </svg>
+          </button>
+          <div
+            x-show="timeOpen"
+            @click.outside="timeOpen = false"
+            x-transition:enter="transition ease-out duration-150"
+            x-transition:enter-start="opacity-0 translate-y-1"
+            x-transition:enter-end="opacity-100 translate-y-0"
+            x-transition:leave="transition ease-in duration-100"
+            x-transition:leave-start="opacity-100 translate-y-0"
+            x-transition:leave-end="opacity-0 translate-y-1"
+            class="absolute top-full right-0 max-sm:left-0 max-sm:right-auto mt-1 bg-white border border-gray-200 rounded-md shadow-lg z-20 p-4 min-w-[280px]"
+          >
+            <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">Tarih aralığı seç</p>
+            <div class="flex items-center gap-2 mb-3">
+              <div class="flex-1">
+                <label class="block text-xs text-gray-500 mb-1">Başlangıç</label>
+                <input type="date" x-model="dateFrom"
+                  class="w-full h-9 px-2 text-sm border border-gray-300 rounded-sm outline-none bg-white text-gray-700 focus:border-amber-400 focus:ring-1 focus:ring-amber-200" />
+              </div>
+              <span class="text-gray-300 mt-4">—</span>
+              <div class="flex-1">
+                <label class="block text-xs text-gray-500 mb-1">Bitiş</label>
+                <input type="date" x-model="dateTo"
+                  class="w-full h-9 px-2 text-sm border border-gray-300 rounded-sm outline-none bg-white text-gray-700 focus:border-amber-400 focus:ring-1 focus:ring-amber-200" />
+              </div>
+            </div>
+            <div class="flex items-center justify-end gap-2">
+              <button @click="clearTimeRange()"
+                class="px-3 py-1.5 text-xs text-gray-500 bg-transparent border border-gray-300 rounded cursor-pointer hover:bg-gray-50 transition-colors">
+                Temizle
+              </button>
+              <button @click="applyTimeRange()"
+                class="px-3 py-1.5 text-xs text-white bg-gray-900 border border-gray-900 rounded cursor-pointer hover:bg-gray-800 transition-colors"
+                :class="!(dateFrom || dateTo) ? 'opacity-40 cursor-not-allowed' : ''"
+                :disabled="!(dateFrom || dateTo)">
+                Uygula
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Active filter badges -->
+        <template x-if="dateFilter !== 'all' || searchQuery.trim()">
+          <button @click="searchQuery = ''; dateFilter = 'all'; dateFrom = ''; dateTo = ''; activeTab = 'all'"
+            class="flex items-center gap-1 h-8 px-3 text-xs text-red-600 bg-red-50 border border-red-200 rounded-full cursor-pointer hover:bg-red-100 transition-colors whitespace-nowrap">
+            <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 18L18 6M6 6l12 12"/></svg>
+            Tüm filtreleri temizle
+          </button>
+        </template>
+      </div>
+
+      <!-- Info Banner -->
+      <div class="mx-7 max-sm:mx-3 mb-4 px-4 py-3 bg-amber-50 border border-amber-200 rounded-sm">
+        <div class="flex items-start gap-2.5">
+          <svg class="w-5 h-5 text-amber-500 shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M3 9l1.5-1.5L6 9V5.5a2.5 2.5 0 015 0V9l1.5-1.5L14 9v5a7 7 0 01-14 0V9z" opacity="0"/>
+            <path d="M12 2C8.14 2 5 5.14 5 9v5l-2 2v1h18v-1l-2-2V9c0-3.86-3.14-7-7-7zm0 20c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2z"/>
+          </svg>
+          <div class="text-[13px] text-gray-700 leading-relaxed">
+            <p class="mb-1"><strong>1.</strong> Havale dekontu gönderin: Banka havale ödemenizin iSTOC TradeHub tarafından korunup korunmadığını kontrol edin. <a href="#" class="text-blue-600 hover:underline">Nasıl yapılır</a></p>
+            <p><strong>2.</strong> Bayram dönemi nedeniyle, belirli tarihlerde verilen siparişlerin kargo tarihi ve üzerinde anlaşmaya varılan teslimat süresi gecikebilir.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Search result info -->
+      <template x-if="searchQuery.trim() || dateFilter !== 'all'">
+        <div class="px-7 max-sm:px-3 pb-3">
+          <p class="text-sm text-gray-500">
+            <span x-text="filteredOrders.length"></span> sonuç bulundu
+            <template x-if="searchQuery.trim()">
+              <span> &mdash; &quot;<strong class="text-gray-700" x-text="searchQuery.trim()"></strong>&quot; araması</span>
+            </template>
+            <template x-if="dateFilter !== 'all' && dateFilter !== 'custom'">
+              <span> &mdash; <span x-text="dateFilterLabel"></span></span>
+            </template>
+            <template x-if="dateFilter === 'custom'">
+              <span> &mdash; <span x-text="timeRangeLabel"></span></span>
+            </template>
+          </p>
+        </div>
+      </template>
+
+      <!-- Orders List -->
+      <div class="px-7 max-sm:px-3 pb-6 space-y-4">
+        <template x-if="filteredOrders.length === 0">
+          <div class="flex flex-col items-center justify-center gap-3 py-16 text-center">
+            ${EMPTY_RECEIPT_ICON}
+            <template x-if="searchQuery.trim() || dateFilter !== 'all'">
+              <div class="flex flex-col items-center gap-2">
+                <h3 class="text-base font-bold text-gray-900">Aramanıza uygun sipariş bulunamadı</h3>
+                <p class="text-sm text-gray-500 max-w-[400px]">Farklı anahtar kelimeler veya filtreler ile tekrar deneyin</p>
+                <button @click="searchQuery = ''; dateFilter = 'all'; dateFrom = ''; dateTo = ''; activeTab = 'all'"
+                  class="inline-block px-6 py-2 text-sm text-amber-700 border border-amber-300 rounded-full no-underline mt-2 transition-colors hover:bg-amber-50 cursor-pointer bg-transparent">
+                  Filtreleri temizle
+                </button>
+              </div>
+            </template>
+            <template x-if="!searchQuery.trim() && dateFilter === 'all'">
+              <div class="flex flex-col items-center gap-2">
+                <h3 class="text-base font-bold text-gray-900">Henüz siparişiniz bulunmamaktadır</h3>
+                <p class="text-sm text-gray-500 max-w-[400px]">Tedarik etmeye başlamak için ana sayfaya gidin veya aşağıya tıklayın</p>
+                <a href="/" class="inline-block px-8 py-2.5 text-sm text-gray-700 border border-gray-700 rounded-full no-underline mt-2 transition-colors hover:bg-gray-900 hover:text-white">Tedarik etmeye başla</a>
+              </div>
+            </template>
+          </div>
+        </template>
+
+        <template x-for="order in filteredOrders" :key="order.id">
+          <div class="border border-gray-200 rounded-sm overflow-hidden bg-white">
+            <!-- Order Header -->
+            <div class="flex items-center justify-between gap-3 px-5 max-sm:px-3 py-3 bg-[#F8F8F8] border-b border-gray-200 flex-wrap max-sm:gap-1.5">
+              <div class="flex items-center gap-4 flex-wrap max-sm:gap-2 text-[13px] max-sm:text-xs text-gray-600">
+                <span class="flex items-center gap-1.5">
+                  <svg class="w-4 h-4 text-amber-500 shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                  </svg>
+                  <span class="font-medium text-amber-700" x-text="'Sipariş ' + order.orderNumber"></span>
+                </span>
+                <span class="max-sm:hidden text-gray-300">|</span>
+                <span x-text="'Sipariş tarihi: ' + order.orderDate"></span>
+                <span class="max-sm:hidden text-gray-300">|</span>
+                <span class="flex items-center gap-1">
+                  <span>Toplam:</span>
+                  <strong class="text-gray-900" x-text="order.currency + ' ' + order.total"></strong>
+                  <svg class="w-3.5 h-3.5 text-gray-400 cursor-help" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 16v-4m0-4h.01"/>
+                  </svg>
+                </span>
+              </div>
+              <div class="flex items-center gap-2 text-[13px] max-sm:text-xs text-gray-600 shrink-0">
+                <span>Satıcı: <strong class="text-gray-700" x-text="order.seller"></strong></span>
+                <a href="#" class="text-blue-600 hover:underline font-medium whitespace-nowrap">Sohbet et</a>
+              </div>
+            </div>
+
+            <!-- Order Body -->
+            <div class="px-5 max-sm:px-3 py-4">
+              <!-- Status -->
+              <p class="text-sm font-bold mb-3" :class="order.statusColor" x-text="order.status"></p>
+
+              <!-- Products -->
+              <template x-for="product in order.products" :key="product.name">
+                <div class="flex items-center gap-4 max-sm:gap-3">
+                  <!-- Product Image -->
+                  <div class="w-20 h-20 max-sm:w-16 max-sm:h-16 rounded-sm border border-gray-200 overflow-hidden shrink-0 bg-gray-50">
+                    <img :src="product.image" :alt="product.name" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\\'flex items-center justify-center w-full h-full text-gray-300\\'><svg class=\\'w-8 h-8\\' fill=\\'none\\' stroke=\\'currentColor\\' stroke-width=\\'1.5\\' viewBox=\\'0 0 24 24\\'><rect x=\\'3\\' y=\\'3\\' width=\\'18\\' height=\\'18\\' rx=\\'2\\'/><circle cx=\\'8.5\\' cy=\\'8.5\\' r=\\'1.5\\'/><path d=\\'M21 15l-5-5L5 21\\'/></svg></div>'" />
+                  </div>
+
+                  <!-- Product Info -->
+                  <div class="flex-1 min-w-0 flex items-center justify-between gap-4 max-sm:flex-col max-sm:items-start max-sm:gap-2">
+                    <div class="min-w-0">
+                      <a href="#" class="text-sm text-gray-800 hover:text-blue-600 transition-colors line-clamp-2 leading-snug block" x-text="product.name"></a>
+                      <div class="flex items-center gap-1.5 mt-1.5">
+                        <span class="inline-block w-4 h-4 rounded-sm bg-gray-200 shrink-0"></span>
+                        <span class="text-xs text-gray-500" x-text="product.variation + ' x ' + product.quantity + ' adet'"></span>
+                      </div>
+                    </div>
+
+                    <!-- View Details Button -->
+                    <button @click="viewDetail(order)" class="px-6 max-sm:px-4 py-2.5 max-sm:py-2 text-sm max-sm:text-xs font-medium text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer whitespace-nowrap transition-all hover:border-gray-900 hover:text-gray-900 shrink-0">
+                      Sipariş detaylarını gör
+                    </button>
+                  </div>
+                </div>
+              </template>
+            </div>
+          </div>
+        </template>
+      </div>
+
+      <!-- Pagination -->
+      <div x-show="filteredOrders.length > 0" class="flex items-center justify-end gap-3 px-7 max-sm:px-3 pb-6">
+        <span class="text-sm text-gray-500" x-text="filteredOrders.length + ' sipariş'"></span>
+        <div class="flex items-center gap-1.5">
+          <button class="flex items-center justify-center w-8 h-8 border border-gray-300 rounded bg-white text-gray-400 cursor-not-allowed" disabled>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M15 19l-7-7 7-7"/></svg>
+          </button>
+          <span class="flex items-center justify-center w-8 h-8 text-sm text-white bg-gray-900 rounded font-medium">1</span>
+          <button class="flex items-center justify-center w-8 h-8 border border-gray-300 rounded bg-white text-gray-400 cursor-not-allowed" disabled>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M9 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+      </div></template>
+
+      <!-- ════════════════════════════════════════
+           ORDER DETAIL VIEW
+           ════════════════════════════════════════ -->
+      <template x-if="selectedOrder"><div>
+
+        <!-- Back Button -->
+        <div class="px-7 max-sm:px-3 pt-5 pb-2">
+          <button @click="backToList()" class="flex items-center gap-1.5 text-sm text-gray-600 hover:text-gray-900 bg-transparent border-none cursor-pointer transition-colors p-0">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M15 19l-7-7 7-7"/></svg>
+            Siparişlere geri dön
+          </button>
+        </div>
+
+        <!-- Section 1: Breadcrumb + Header -->
+        <div class="px-7 max-sm:px-3 pt-2 pb-5 border-b border-gray-100">
+          <!-- Breadcrumb -->
+          <nav class="flex items-center gap-1.5 text-xs text-gray-400 mb-4">
+            <a href="/" class="hover:text-gray-600 transition-colors">Ana Sayfa</a>
+            <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M9 5l7 7-7 7"/></svg>
+            <a href="/orders.html" class="hover:text-gray-600 transition-colors">Sipariş Yönetimi</a>
+            <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M9 5l7 7-7 7"/></svg>
+            <span class="text-gray-600">Sipariş detayları</span>
+          </nav>
+
+          <div class="flex items-start justify-between gap-4 max-sm:flex-col max-sm:gap-3">
+            <div>
+              <h1 class="text-[22px] max-sm:text-lg font-bold text-gray-900 mb-2">Sipariş detayları</h1>
+              <div class="flex items-center gap-3 flex-wrap max-sm:gap-2">
+                <div class="flex items-center gap-1.5">
+                  <svg class="w-4 h-4 text-amber-500 shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                  </svg>
+                  <span class="text-sm font-medium text-gray-800" x-text="selectedOrder.orderNumber"></span>
+                </div>
+                <button @click="copyOrderNumber()" class="flex items-center gap-1 text-xs text-blue-600 hover:text-blue-800 bg-transparent border-none cursor-pointer transition-colors p-0">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                  <span x-text="copiedNumber ? 'Kopyalandı!' : 'Kopyala'"></span>
+                </button>
+                <span class="text-gray-300 max-sm:hidden">|</span>
+                <span class="text-sm text-gray-500" x-text="'Sipariş tarihi: ' + selectedOrder.orderDateTime"></span>
+              </div>
+            </div>
+            <a href="#" class="flex items-center gap-1.5 text-sm text-blue-600 hover:text-blue-800 transition-colors whitespace-nowrap shrink-0">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M12 5v14M5 12h14"/></svg>
+              Detayları indir
+            </a>
+          </div>
+        </div>
+
+        <!-- Section 2: Progress Stepper -->
+        <div class="px-7 max-sm:px-3 py-6 border-b border-gray-100">
+          <div class="flex items-center justify-between max-w-2xl mx-auto max-sm:max-w-full">
+            <!-- Step 1: Siparis -->
+            <div class="flex flex-col items-center gap-1.5 relative z-10">
+              <div class="w-8 h-8 max-sm:w-6 max-sm:h-6 rounded-full flex items-center justify-center text-xs font-bold transition-colors"
+                   :class="getStepIndex(selectedOrder) >= 0 ? 'bg-amber-500 text-white' : 'bg-gray-200 text-gray-500'">1</div>
+              <span class="text-xs max-sm:text-[10px] text-gray-600 whitespace-nowrap">Sipariş</span>
+            </div>
+            <div class="flex-1 h-0.5 -mt-4 max-sm:-mt-3" :class="getStepIndex(selectedOrder) >= 1 ? 'bg-amber-500' : 'bg-gray-200'"></div>
+            <!-- Step 2: Ödeme -->
+            <div class="flex flex-col items-center gap-1.5 relative z-10">
+              <div class="w-8 h-8 max-sm:w-6 max-sm:h-6 rounded-full flex items-center justify-center text-xs font-bold transition-colors"
+                   :class="getStepIndex(selectedOrder) >= 1 ? 'bg-amber-500 text-white' : 'bg-gray-200 text-gray-500'">2</div>
+              <span class="text-xs max-sm:text-[10px] text-gray-600 whitespace-nowrap">Ödeme</span>
+            </div>
+            <div class="flex-1 h-0.5 -mt-4 max-sm:-mt-3" :class="getStepIndex(selectedOrder) >= 2 ? 'bg-amber-500' : 'bg-gray-200'"></div>
+            <!-- Step 3: Kargolama -->
+            <div class="flex flex-col items-center gap-1.5 relative z-10">
+              <div class="w-8 h-8 max-sm:w-6 max-sm:h-6 rounded-full flex items-center justify-center text-xs font-bold transition-colors"
+                   :class="getStepIndex(selectedOrder) >= 2 ? 'bg-amber-500 text-white' : 'bg-gray-200 text-gray-500'">3</div>
+              <span class="text-xs max-sm:text-[10px] text-gray-600 whitespace-nowrap">Kargolama</span>
+            </div>
+            <div class="flex-1 h-0.5 -mt-4 max-sm:-mt-3" :class="getStepIndex(selectedOrder) >= 3 ? 'bg-amber-500' : 'bg-gray-200'"></div>
+            <!-- Step 4: Teslimat -->
+            <div class="flex flex-col items-center gap-1.5 relative z-10">
+              <div class="w-8 h-8 max-sm:w-6 max-sm:h-6 rounded-full flex items-center justify-center text-xs font-bold transition-colors"
+                   :class="getStepIndex(selectedOrder) >= 3 ? 'bg-amber-500 text-white' : 'bg-gray-200 text-gray-500'">4</div>
+              <span class="text-xs max-sm:text-[10px] text-gray-600 whitespace-nowrap">Teslimat</span>
+            </div>
+            <div class="flex-1 h-0.5 -mt-4 max-sm:-mt-3" :class="getStepIndex(selectedOrder) >= 4 ? 'bg-amber-500' : 'bg-gray-200'"></div>
+            <!-- Step 5: Degerlendirme -->
+            <div class="flex flex-col items-center gap-1.5 relative z-10">
+              <div class="w-8 h-8 max-sm:w-6 max-sm:h-6 rounded-full flex items-center justify-center text-xs font-bold transition-colors"
+                   :class="getStepIndex(selectedOrder) >= 4 ? 'bg-amber-500 text-white' : 'bg-gray-200 text-gray-500'">5</div>
+              <span class="text-xs max-sm:text-[10px] text-gray-600 whitespace-nowrap">Değerlendirme</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 3: Status -->
+        <div class="px-7 max-sm:px-3 py-5 border-b border-gray-100">
+          <p class="text-base font-bold mb-1" :class="selectedOrder.statusColor" x-text="selectedOrder.status"></p>
+          <p class="text-sm text-gray-500" x-text="selectedOrder.statusDescription"></p>
+        </div>
+
+        <!-- Section 4: Ürün detayları -->
+        <div class="px-7 max-sm:px-3 py-5 border-b border-gray-100">
+          <div class="flex items-center gap-2 mb-4">
+            <svg class="w-5 h-5 text-gray-500 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+              <path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+            </svg>
+            <h2 class="text-base font-bold text-gray-900">Ürün detayları</h2>
+          </div>
+          <div class="flex items-center gap-2 mb-4 text-sm">
+            <span class="text-gray-500">Satıcı:</span>
+            <span class="font-medium text-gray-800" x-text="selectedOrder.seller"></span>
+            <a href="#" class="text-blue-600 hover:underline text-sm">Sohbet et</a>
+          </div>
+
+          <!-- Products Table -->
+          <div class="overflow-x-auto -mx-3 px-3">
+            <table class="w-full min-w-[560px] border-collapse">
+              <thead>
+                <tr class="border-b border-gray-200">
+                  <th class="text-left text-xs font-semibold text-gray-500 uppercase tracking-wide pb-3 pr-4">Ürün adı</th>
+                  <th class="text-left text-xs font-semibold text-gray-500 uppercase tracking-wide pb-3 pr-4">Özellikler</th>
+                  <th class="text-right text-xs font-semibold text-gray-500 uppercase tracking-wide pb-3 pr-4">Birim fiyatı</th>
+                  <th class="text-center text-xs font-semibold text-gray-500 uppercase tracking-wide pb-3 pr-4">Miktar</th>
+                  <th class="text-right text-xs font-semibold text-gray-500 uppercase tracking-wide pb-3">Toplam</th>
+                </tr>
+              </thead>
+              <tbody>
+                <template x-for="product in selectedOrder.products" :key="product.name">
+                  <tr class="border-b border-gray-100">
+                    <td class="py-3 pr-4">
+                      <div class="flex items-center gap-3">
+                        <div class="w-14 h-14 max-sm:w-10 max-sm:h-10 rounded border border-gray-200 overflow-hidden shrink-0 bg-gray-50">
+                          <img :src="product.image" :alt="product.name" class="w-full h-full object-cover" />
+                        </div>
+                        <span class="text-sm text-gray-800 line-clamp-2 leading-snug" x-text="product.name"></span>
+                      </div>
+                    </td>
+                    <td class="py-3 pr-4 text-sm text-gray-600" x-text="product.variation"></td>
+                    <td class="py-3 pr-4 text-sm text-gray-800 text-right whitespace-nowrap">USD <span x-text="product.unitPrice"></span></td>
+                    <td class="py-3 pr-4 text-sm text-gray-800 text-center" x-text="product.quantity"></td>
+                    <td class="py-3 text-sm font-medium text-gray-900 text-right whitespace-nowrap">USD <span x-text="product.totalPrice"></span></td>
+                  </tr>
+                </template>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Summary Row -->
+          <div class="flex items-center justify-between mt-4 pt-3 border-t border-gray-200">
+            <span class="text-sm text-gray-500">Ürün Miktarı: <strong class="text-gray-800" x-text="selectedOrder.products.reduce((s, p) => s + p.quantity, 0)"></strong></span>
+            <span class="text-sm text-gray-500">Toplam Fiyatı: <strong class="text-gray-900" x-text="'USD ' + selectedOrder.products.reduce((s, p) => { const v = parseFloat(String(p.totalPrice).replace(/,/g, '')); return s + (isNaN(v) ? 0 : v); }, 0).toLocaleString('en-US', {minimumFractionDigits:2})"></strong></span>
+          </div>
+        </div>
+
+        <!-- Section 5: Kargo detayları -->
+        <div class="px-7 max-sm:px-3 py-5 border-b border-gray-100">
+          <div class="flex items-center justify-between gap-3 mb-4 flex-wrap">
+            <div class="flex items-center gap-2">
+              <svg class="w-5 h-5 text-gray-500 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                <path d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0"/>
+              </svg>
+              <h2 class="text-base font-bold text-gray-900">Kargo detayları</h2>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium rounded-full"
+                    :class="selectedOrder.shipping.trackingStatus === 'Kargo yolda' ? 'bg-blue-50 text-blue-700' : 'bg-amber-50 text-amber-700'"
+                    x-text="selectedOrder.shipping.trackingStatus"></span>
+              <a href="#" class="text-sm text-blue-600 hover:underline whitespace-nowrap">Kargo takip</a>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-4 max-sm:grid-cols-1 gap-4 max-sm:gap-3">
+            <div>
+              <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">Teslimat adresi</p>
+              <p class="text-sm text-gray-700 leading-relaxed" x-text="selectedOrder.shipping.address"></p>
+            </div>
+            <div>
+              <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">Çıkış ülkesi</p>
+              <p class="text-sm text-gray-700" x-text="selectedOrder.shipping.shipFrom"></p>
+            </div>
+            <div>
+              <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">Kargo yöntemi</p>
+              <p class="text-sm text-gray-700 whitespace-pre-line" x-text="selectedOrder.shipping.method"></p>
+            </div>
+            <div>
+              <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">Incoterms</p>
+              <p class="text-sm text-gray-700" x-text="selectedOrder.shipping.incoterms"></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 6: Ödeme detayları -->
+        <div class="px-7 max-sm:px-3 py-5 border-b border-gray-100">
+          <div class="flex items-center gap-2 mb-4">
+            <svg class="w-5 h-5 text-gray-500 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+              <rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/>
+            </svg>
+            <h2 class="text-base font-bold text-gray-900">Ödeme detaylari</h2>
+          </div>
+
+          <div class="grid grid-cols-2 max-sm:grid-cols-1 gap-6 max-sm:gap-4">
+            <!-- Left: Payment status -->
+            <div>
+              <div class="flex items-center gap-2 mb-3">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium bg-green-50 text-green-700 rounded-full">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M5 13l4 4L19 7"/></svg>
+                  <span x-text="selectedOrder.payment.status"></span>
+                </span>
+              </div>
+              <template x-if="selectedOrder.payment.hasRecord">
+                <a href="#" class="inline-flex items-center gap-1.5 text-sm text-blue-600 hover:underline">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                  Ödeme geçmişini gör
+                </a>
+              </template>
+              <template x-if="!selectedOrder.payment.hasRecord">
+                <p class="text-sm text-gray-400">Ödeme kaydı bulunmuyor</p>
+              </template>
+            </div>
+
+            <!-- Right: Summary table -->
+            <div class="bg-gray-50 rounded-lg p-4 max-sm:p-3">
+              <div class="space-y-2.5">
+                <div class="flex items-center justify-between text-sm">
+                  <span class="text-gray-500">Ara toplam</span>
+                  <span class="text-gray-800">USD <span x-text="selectedOrder.payment.subtotal"></span></span>
+                </div>
+                <div class="flex items-center justify-between text-sm">
+                  <span class="text-gray-500">Kargo ücreti</span>
+                  <span class="text-gray-800">USD <span x-text="selectedOrder.payment.shippingFee"></span></span>
+                </div>
+                <div class="border-t border-gray-200 pt-2.5 flex items-center justify-between text-sm">
+                  <span class="text-gray-500">Ara toplam</span>
+                  <span class="text-gray-800">USD <span x-text="selectedOrder.payment.grandTotal"></span></span>
+                </div>
+                <div class="flex items-center justify-between text-base font-bold">
+                  <span class="text-gray-900">Toplam*</span>
+                  <span class="text-gray-900">USD <span x-text="selectedOrder.payment.grandTotal"></span></span>
+                </div>
+              </div>
+              <p class="text-[11px] text-gray-400 mt-3 leading-relaxed">*Toplam tutara işlem ücreti dahil değildir.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 7: Tedarikçi detayları -->
+        <div class="px-7 max-sm:px-3 py-5 border-b border-gray-100">
+          <div class="flex items-center gap-2 mb-4">
+            <svg class="w-5 h-5 text-gray-500 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+              <path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+            </svg>
+            <h2 class="text-base font-bold text-gray-900">Tedarikçi detayları</h2>
+          </div>
+
+          <div class="grid grid-cols-4 max-sm:grid-cols-2 max-[380px]:grid-cols-1 gap-4 max-sm:gap-3 mb-4">
+            <div>
+              <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">Tedarikçi</p>
+              <p class="text-sm font-medium text-gray-800" x-text="selectedOrder.supplier.name"></p>
+            </div>
+            <div>
+              <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">İletişim adı</p>
+              <p class="text-sm text-gray-700" x-text="selectedOrder.supplier.contact"></p>
+            </div>
+            <div>
+              <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">Telefon</p>
+              <p class="text-sm text-gray-700" x-text="selectedOrder.supplier.phone"></p>
+            </div>
+            <div>
+              <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">E-posta</p>
+              <p class="text-sm text-gray-700 break-all" x-text="selectedOrder.supplier.email"></p>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-4 max-sm:gap-3">
+            <a href="#" class="text-sm text-blue-600 hover:underline">Mağazayı ziyaret et</a>
+            <span class="text-gray-300">|</span>
+            <a href="#" class="text-sm text-blue-600 hover:underline">Sohbet et</a>
+          </div>
+        </div>
+
+        <!-- Section 8: iSTOC TradeHub sipariş koruması -->
+        <div class="px-7 max-sm:px-3 py-5 border-b border-gray-100">
+          <div class="flex items-center gap-2 mb-4">
+            <svg class="w-5 h-5 text-amber-500 shrink-0" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/>
+            </svg>
+            <h2 class="text-base font-bold text-gray-900">iSTOC TradeHub sipariş koruması</h2>
+          </div>
+
+          <div class="space-y-4 max-sm:space-y-3">
+            <div class="flex items-start gap-3 max-sm:gap-2">
+              <svg class="w-5 h-5 text-green-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+              </svg>
+              <div class="flex-1 min-w-0">
+                <p class="text-sm font-medium text-gray-800 mb-0.5">Güvenli ödemeler</p>
+                <p class="text-xs text-gray-500 leading-relaxed">Ödemeniz iSTOC TradeHub tarafından güvenli bir şekilde korunmaktadır.</p>
+                <a href="#" class="text-xs text-blue-600 hover:underline mt-1 inline-block">Detayları gör</a>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-3 max-sm:gap-2">
+              <svg class="w-5 h-5 text-green-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+              </svg>
+              <div class="flex-1 min-w-0">
+                <p class="text-sm font-medium text-gray-800 mb-0.5">Para iadesi garantisi</p>
+                <p class="text-xs text-gray-500 leading-relaxed">Ürün kalitesi veya teslimat sorunları için para iadesi garantisi sunulmaktadır.</p>
+                <a href="#" class="text-xs text-blue-600 hover:underline mt-1 inline-block">Detayları gör</a>
+              </div>
+            </div>
+
+            <p class="text-[11px] text-gray-400 leading-relaxed pl-8 max-sm:pl-7">Trade Assurance, iSTOC TradeHub üzerindeki siparişler için ücretsiz bir koruma hizmetidir.</p>
+          </div>
+        </div>
+
+        <!-- Section 9: Action Buttons -->
+        <div class="px-7 max-sm:px-3 py-5 flex items-center gap-3 flex-wrap">
+          <button class="px-6 max-sm:px-4 py-2.5 max-sm:py-2 text-sm max-sm:text-xs font-medium text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer whitespace-nowrap transition-all hover:border-gray-900 hover:text-gray-900">
+            İşlem geçmişi
+          </button>
+          <button class="px-6 max-sm:px-4 py-2.5 max-sm:py-2 text-sm max-sm:text-xs font-medium text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer whitespace-nowrap transition-all hover:border-gray-900 hover:text-gray-900">
+            Sözleşmeyi görüntüle
+          </button>
+        </div>
+
+      </div></template>
     </div>
   `;
 }
@@ -66,7 +689,7 @@ function renderRefunds(): string {
     <div class="flex items-center justify-between px-7 max-sm:px-3 pt-6 pb-5 border-b border-(--color-border-light,#f0f0f0)">
       <h1 class="text-[22px] font-bold text-(--color-text-heading,#111827)">Satış sonrası işlemler ve para iadeleri</h1>
     </div>
-    <div class="os-tabs flex border-b overflow-x-auto no-scrollbar border-(--color-border-default,#e5e5e5) px-7 max-sm:px-3" data-tabgroup="refunds">
+    <div class="os-tabs flex border-b overflow-x-auto scrollbar-hide border-(--color-border-default,#e5e5e5) px-7 max-sm:px-3" data-tabgroup="refunds">
       <button class="os-tabs__tab os-tabs__tab--active py-3 px-4 text-sm bg-transparent border-none border-b-2 border-b-transparent cursor-pointer whitespace-nowrap transition-colors" data-tab="refund-returns">Para İadeleri</button>
       <button class="os-tabs__tab py-3 px-4 text-sm bg-transparent border-none border-b-2 border-b-transparent cursor-pointer whitespace-nowrap transition-colors text-(--color-text-muted,#666)" data-tab="refund-tax">Vergi iadeleri</button>
       <button class="os-tabs__tab py-3 px-4 text-sm bg-transparent border-none border-b-2 border-b-transparent cursor-pointer whitespace-nowrap transition-colors text-(--color-text-muted,#666)" data-tab="refund-after">Satış sonrası hizmetler</button>
@@ -127,7 +750,7 @@ function renderReviews(): string {
         </svg>
       </div>
     </div>
-    <div class="os-tabs flex border-b overflow-x-auto no-scrollbar border-(--color-border-default,#e5e5e5) px-7 max-sm:px-3" data-tabgroup="reviews">
+    <div class="os-tabs flex border-b overflow-x-auto scrollbar-hide border-(--color-border-default,#e5e5e5) px-7 max-sm:px-3" data-tabgroup="reviews">
       <button class="os-tabs__tab os-tabs__tab--active os-tabs__tab--orange py-3 px-4 text-sm bg-transparent border-none border-b-2 border-b-transparent cursor-pointer whitespace-nowrap transition-colors" data-tab="review-pending">Bekleyen değerlendirmeler (0)</button>
       <button class="os-tabs__tab py-3 px-4 text-sm bg-transparent border-none border-b-2 border-b-transparent cursor-pointer whitespace-nowrap transition-colors text-(--color-text-muted,#666)" data-tab="review-done">Değerlendirilenler (0)</button>
     </div>
@@ -170,7 +793,7 @@ function renderCoupons(): string {
     <div class="flex items-center justify-between px-7 max-sm:px-3 pt-6 pb-5 border-b border-(--color-border-light,#f0f0f0)">
       <h1 class="text-[22px] font-bold text-(--color-text-heading,#111827)">Kupon ve krediler</h1>
     </div>
-    <div class="os-tabs flex border-b overflow-x-auto no-scrollbar border-(--color-border-default,#e5e5e5) px-7 max-sm:px-3" data-tabgroup="coupons">
+    <div class="os-tabs flex border-b overflow-x-auto scrollbar-hide border-(--color-border-default,#e5e5e5) px-7 max-sm:px-3" data-tabgroup="coupons">
       <button class="os-tabs__tab os-tabs__tab--active py-3 px-4 text-sm bg-transparent border-none border-b-2 border-b-transparent cursor-pointer whitespace-nowrap transition-colors" data-tab="coupons-list">Kuponlar</button>
       <button class="os-tabs__tab py-3 px-4 text-sm bg-transparent border-none border-b-2 border-b-transparent cursor-pointer whitespace-nowrap transition-colors text-(--color-text-muted,#666)" data-tab="coupons-credit">Kredi</button>
     </div>
@@ -232,7 +855,7 @@ function renderTaxInfo(): string {
     <div class="flex items-center justify-between px-7 max-sm:px-3 pt-6 pb-5 border-b border-(--color-border-light,#f0f0f0)">
       <h1 class="text-[22px] font-bold text-(--color-text-heading,#111827)">Vergi bilgileri</h1>
     </div>
-    <div class="os-tabs flex border-b overflow-x-auto no-scrollbar border-(--color-border-default,#e5e5e5) px-7 max-sm:px-3" data-tabgroup="tax">
+    <div class="os-tabs flex border-b overflow-x-auto scrollbar-hide border-(--color-border-default,#e5e5e5) px-7 max-sm:px-3" data-tabgroup="tax">
       <button class="os-tabs__tab os-tabs__tab--active py-3 px-4 text-sm bg-transparent border-none border-b-2 border-b-transparent cursor-pointer whitespace-nowrap transition-colors" data-tab="tax-info-tab">Vergi Bilgileri</button>
       <button class="os-tabs__tab py-3 px-4 text-sm bg-transparent border-none border-b-2 border-b-transparent cursor-pointer whitespace-nowrap transition-colors text-(--color-text-muted,#666)" data-tab="tax-customs">Gümrük muayenesi bilgileri</button>
     </div>
@@ -471,7 +1094,7 @@ export function OrdersPageLayout(): string {
     <div class="orders-page flex bg-(--color-surface,#fff) rounded-lg min-h-[calc(100vh-80px)] overflow-hidden max-md:flex-col max-md:rounded-none max-md:min-h-0">
       <aside class="orders-page__nav w-[240px] shrink-0 border-r border-(--color-border-light,#f0f0f0) py-6 max-md:w-full max-md:border-r-0 max-md:border-b max-md:border-b-(--color-border-light,#f0f0f0) max-md:py-3">
         <h2 class="text-base font-bold text-(--color-text-heading,#111827) px-5 pb-4 max-md:pb-2 max-md:px-4 max-md:text-sm">Siparişlerim</h2>
-        <nav class="orders-page__nav-links flex flex-col max-md:flex-row max-md:overflow-x-auto max-md:px-3 max-md:gap-1 max-md:no-scrollbar">
+        <nav class="orders-page__nav-links flex flex-col max-md:flex-row max-md:overflow-x-auto max-md:px-3 max-md:gap-1 max-md:scrollbar-hide">
           ${renderNav(activeId)}
         </nav>
       </aside>

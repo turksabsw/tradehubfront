@@ -1,5 +1,92 @@
-import type { SellerProfile, ProductCategory, SimpleProduct } from '../../types/seller/types';
-import { ProductCard } from '../shared/ProductCard';
+import type { SellerStorefrontData, SellerProfile, ProductCategory, SimpleProduct, CompanyInfo as CompanyInfoData, Certificate, ContactFormData, CategoryCard } from '../../types/seller/types';
+import { CompanyInfoComponent } from './CompanyInfo';
+import { Certificates } from './Certificates';
+import { ContactForm } from './ContactForm';
+import { CategoryGrid } from './CategoryGrid';
+
+function lensIcon(): string {
+  return `
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+      <path d="M3 9a2 2 0 0 1 2-2h2l1-2h8l1 2h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9Z" />
+      <circle cx="12" cy="13" r="3" />
+    </svg>
+  `;
+}
+
+function renderSellerProductCard(product: any, index: number = 0): string {
+  const price = typeof product.priceMin === 'number' ? `$${product.priceMin.toFixed(2)}` : '$25.40';
+  const nameSafe = product.name.replace(/"/g, '&quot;');
+  const link = product.link || 'product-detail.html';
+  const soldCount = product.soldCount || 0;
+  const moqText = product.moq ? `${product.moq} ${product.moqUnit}` : '1 Adet';
+
+  // Find discount badge if exists
+  const discountBadge = (product.badges || []).find((b: { type: string, label: string }) => b.type === 'discount');
+  const discountText = discountBadge ? discountBadge.label : '';
+
+  return `
+    <a
+      class="hFR19 animate-fade-slide-up"
+      style="animation-delay: ${Math.min(index * 60, 600)}ms;"
+      href="${link}"
+      aria-label="${nameSafe}"
+    >
+      <!-- Image area -->
+      <div class="uE82p">
+        <div class="rcEIR gT6Yt aspect-square bg-gray-50 relative overflow-hidden w-full rounded-t-lg">
+          <img
+            class="kRa33 absolute inset-0 w-full h-full object-cover"
+            src="${product.image}"
+            alt="${nameSafe}"
+            loading="lazy"
+          />
+        </div>
+        <div class="searchx-find-similar__wrapper ya497">
+          <div
+            class="searchx-find-similar searchx-find-similar__icon theme-float"
+            role="button"
+            aria-label="Benzer ürünleri bulun"
+            tabindex="0"
+          >
+            ${lensIcon()}
+          </div>
+        </div>
+      </div>
+
+      <!-- Content area -->
+      <div class="sZpNS">
+        <div class="th-hfr19-stack">
+          <!-- Title (3 lines) -->
+          <div class="u1SHv Cye1T">
+            <div class="iyDLA" style="--lines: 3;">
+              <span title="${nameSafe}">${product.name}</span>
+            </div>
+          </div>
+
+          <div class="th-hfr19-stack-compact">
+            <!-- Price + discount -->
+            <div class="XBlq6 e9DGa">
+              <div class="R3Kcz eg6xk">${price}</div>
+              ${discountText ? `<div class="YGd3t vE7bg">${discountText}</div>` : ''}
+            </div>
+
+            <!-- MOQ + sold -->
+            <div class="iyDLA yUble" style="--lines: 1;">
+              <div class="hVMAV z5oZw"><bdi>${moqText}</bdi></div>
+              <span class="mHuc8" title="${soldCount} adet satıldı">${soldCount} adet satıldı</span>
+            </div>
+
+            <!-- Supplier info -->
+            <div class="YpiVg">
+              <span class="wELvB">1 yıl</span>
+              <span class="wELvB">CN</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </a>
+  `;
+}
 
 // Mock Review Data Type (to be added to types/seller/types.ts)
 export interface SellerReview {
@@ -25,10 +112,9 @@ export interface SellerPerformanceStats {
   productQualityScore: number;
 }
 
-// ─── Contact Sidebar Component ─────────────────────────────────
 function ContactSidebar(seller: SellerProfile): string {
   return `
-    <div class="company-profile__sidebar sticky top-[100px] bg-white rounded-(--radius-md) border border-gray-200 p-4 sm:p-6">
+    <div class="company-profile__sidebar sticky top-[100px] bg-white rounded-(--radius-md) border border-gray-200 p-4 sm:p-6" x-show="activeTab !== 'contact'" x-transition>
       <h3 class="text-[18px] font-bold text-gray-900 mb-4">Tedarikçiye Ulaşın</h3>
       
       <div class="flex items-center gap-3 mb-6">
@@ -41,10 +127,10 @@ function ContactSidebar(seller: SellerProfile): string {
       </div>
 
       <div class="flex flex-col gap-3">
-        <button class="w-full bg-[#f97316] hover:bg-[#ea580c] text-white font-bold py-2.5 px-4 rounded-full transition-colors text-[14px] company-profile__contact-btn">
+        <button @click="setTab('contact')" class="w-full bg-primary-500 hover:bg-primary-600 active:bg-primary-700 text-white font-bold py-2.5 px-4 rounded-full transition-colors text-[14px] company-profile__contact-btn">
           Şimdi iletişime geçin
         </button>
-        <button class="w-full bg-white hover:bg-gray-50 text-gray-900 border border-gray-300 font-medium py-2.5 px-4 rounded-full transition-colors text-[14px] company-profile__inquiry-btn">
+        <button @click="setTab('contact')" class="w-full bg-white hover:bg-gray-50 text-gray-900 border border-gray-300 font-medium py-2.5 px-4 rounded-full transition-colors text-[14px] company-profile__inquiry-btn">
           Sorgu gönder
         </button>
       </div>
@@ -55,7 +141,7 @@ function ContactSidebar(seller: SellerProfile): string {
 // ─── Overview Tab (Genel Bakış) ────────────────────────────────
 function OverviewTab(stats: SellerPerformanceStats, mainProducts: SimpleProduct[]): string {
   return `
-    <div class="company-profile__tab-content active transition-opacity duration-300" id="tab-overview">
+    <div class="company-profile__tab-content" x-show="activeTab === 'overview'" style="display: none;" x-transition.opacity.duration.300ms id="tab-overview">
       
       <!-- Performance Section -->
       <section class="bg-white rounded-(--radius-md) border border-gray-200 p-6 mb-6">
@@ -69,7 +155,7 @@ function OverviewTab(stats: SellerPerformanceStats, mainProducts: SimpleProduct[
               <span class="text-[14px] text-gray-500 mb-1">/5</span>
               <div class="ml-2">
                 <span class="block text-[12px] text-gray-900 font-medium">Hoşnut eden</span>
-                <a href="#tab-reviews" class="text-[12px] text-blue-600 hover:underline company-profile__tab-link" data-target="tab-reviews">${stats.reviewCount} değerlendirmeler</a>
+                <button type="button" @click="setTab('reviews')" class="text-[12px] text-blue-600 hover:underline cursor-pointer">${stats.reviewCount} değerlendirmeler</button>
               </div>
             </div>
             
@@ -109,19 +195,8 @@ function OverviewTab(stats: SellerPerformanceStats, mainProducts: SimpleProduct[
       <section class="bg-white rounded-(--radius-md) border border-gray-200 p-6">
         <h3 class="text-[18px] font-bold text-gray-900 mb-6 uppercase">ANA ÜRÜNLER</h3>
         
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
-          ${mainProducts.map(product => `
-            <div class="p-2 border border-gray-100 rounded-lg hover:border-gray-200 transition-colors">
-               ${ProductCard({
-    image: product.image,
-    price: "25.40", // using placeholder because SimpleProduct is missing prices in mockData
-    currency: "$",
-    minOrder: "1 set",
-    href: product.link
-  })}
-               <h4 class="mt-2 text-[13px] text-gray-700 font-medium line-clamp-2 cursor-pointer hover:text-[#f97316] transition-colors">${product.name}</h4>
-            </div>
-          `).join('')}
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 product-grid">
+          ${mainProducts.map((product, idx) => renderSellerProductCard(product, idx)).join('')}
         </div>
       </section>
 
@@ -132,7 +207,7 @@ function OverviewTab(stats: SellerPerformanceStats, mainProducts: SimpleProduct[
 // ─── Reviews Tab (Yorumlar) ────────────────────────────────────
 function ReviewsTab(stats: SellerPerformanceStats, reviews: SellerReview[]): string {
   return `
-    <div class="company-profile__tab-content hidden transition-opacity duration-300" id="tab-reviews">
+    <div class="company-profile__tab-content" x-show="activeTab === 'reviews'" x-transition.opacity.duration.300ms id="tab-reviews">
       <section class="bg-white rounded-(--radius-md) border border-gray-200 p-6">
         <h3 class="text-[18px] font-bold text-gray-900 mb-8">Şirket Değerlendirmeleri (${stats.reviewCount})</h3>
         
@@ -147,21 +222,21 @@ function ReviewsTab(stats: SellerPerformanceStats, reviews: SellerReview[]): str
             <div class="flex items-center justify-between text-[13px]">
               <span class="text-gray-600 w-32">Tedarikçi Hizmeti</span>
               <div class="flex-1 mx-4 h-1.5 bg-gray-100 rounded-full overflow-hidden">
-                <div class="h-full bg-[#f97316] rounded-full" style="width: ${(stats.supplierServiceScore / 5) * 100}%"></div>
+                <div class="h-full bg-[var(--color-primary-500)] rounded-full" style="width: ${(stats.supplierServiceScore / 5) * 100}%"></div>
               </div>
               <span class="font-bold text-gray-900">${stats.supplierServiceScore.toFixed(1)}</span>
             </div>
             <div class="flex items-center justify-between text-[13px]">
               <span class="text-gray-600 w-32">Zamanında Sevkiyat</span>
               <div class="flex-1 mx-4 h-1.5 bg-gray-100 rounded-full overflow-hidden">
-                <div class="h-full bg-[#f97316] rounded-full" style="width: ${(stats.onTimeShipmentScore / 5) * 100}%"></div>
+                <div class="h-full bg-[var(--color-primary-500)] rounded-full" style="width: ${(stats.onTimeShipmentScore / 5) * 100}%"></div>
               </div>
               <span class="font-bold text-gray-900">${stats.onTimeShipmentScore.toFixed(1)}</span>
             </div>
             <div class="flex items-center justify-between text-[13px]">
               <span class="text-gray-600 w-32">Ürün Kalitesi</span>
               <div class="flex-1 mx-4 h-1.5 bg-gray-100 rounded-full overflow-hidden">
-                <div class="h-full bg-[#f97316] rounded-full" style="width: ${(stats.productQualityScore / 5) * 100}%"></div>
+                <div class="h-full bg-[var(--color-primary-500)] rounded-full" style="width: ${(stats.productQualityScore / 5) * 100}%"></div>
               </div>
               <span class="font-bold text-gray-900">${stats.productQualityScore.toFixed(1)}</span>
             </div>
@@ -185,7 +260,7 @@ function ReviewsTab(stats: SellerPerformanceStats, reviews: SellerReview[]): str
                 <div class="flex items-start gap-3 bg-gray-50 p-3 rounded-md border border-gray-100">
                   <img src="${review.productImage}" alt="${review.productName}" class="w-12 h-12 object-cover rounded bg-white border border-gray-200">
                   <div>
-                    <a href="#" class="text-[12px] text-gray-600 hover:text-[#f97316] line-clamp-2 transition-colors">${review.productName}</a>
+                    <a href="#" class="text-[12px] text-gray-600 hover:text-[var(--color-primary-500)] line-clamp-2 transition-colors">${review.productName}</a>
                     <div class="text-[13px] font-medium text-gray-900 mt-1">${review.productPrice}</div>
                   </div>
                 </div>
@@ -210,7 +285,7 @@ function ProductsTab(categories: ProductCategory[]): string {
   const allProducts = categories.flatMap(c => c.products).slice(0, 12);
 
   return `
-    <div class="company-profile__tab-content hidden transition-opacity duration-300" id="tab-products">
+    <div class="company-profile__tab-content" x-show="activeTab === 'products'" x-transition.opacity.duration.300ms id="tab-products">
       <section class="bg-white rounded-(--radius-md) border border-gray-200 p-6">
         
         <!-- Category Filter Bar -->
@@ -222,53 +297,75 @@ function ProductsTab(categories: ProductCategory[]): string {
         </div>
 
         <!-- Dynamic Product Grid -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          ${allProducts.map(product => `
-            <div class="p-3 border border-gray-100 rounded-[calc(var(--radius-md)+4px)] hover:shadow-md transition-shadow bg-white">
-                <div class="mb-3">
-                   ${ProductCard({
-    image: product.image,
-    price: product.priceMin.toFixed(2),
-    currency: "$",
-    minOrder: `${product.moq} ${product.moqUnit}`,
-    href: product.link
-  })}
-                </div>
-                <!-- Extra Product Meta (Title and Badge) -->
-                ${product.badges && product.badges.length ? `<div class="mb-2 flex flex-wrap gap-1">${product.badges.map(b => `<span class="bg-blue-50 text-blue-600 border border-blue-200 text-[10px] px-1.5 py-0.5 rounded font-medium tracking-wide uppercase">${b.label}</span>`).join('')}</div>` : ''}
-                <a href="${product.link}" class="text-[13px] text-[#222222] font-medium leading-[1.4] line-clamp-2 hover:text-[#f97316] transition-colors mb-2">
-                    ${product.name}
-                </a>
-                <div class="text-[12px] text-gray-500 border-t border-gray-100 pt-2 mt-auto text-right">
-                   ${product.soldCount} sold
-                </div>
-            </div>
-          `).join('')}
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 product-grid">
+          ${allProducts.map((product, idx) => renderSellerProductCard(product, idx)).join('')}
         </div>
-
       </section>
+    </div>
+  `;
+}
+
+// ─── Categories Tab (Kategoriler) ────────────────────────────────────
+function CategoriesTab(categories: CategoryCard[]): string {
+  // Using the new CategoryGrid component
+  return `
+    <div class="company-profile__tab-content" x-show="activeTab === 'categories'" x-transition.opacity.duration.300ms id="tab-categories">
+      ${CategoryGrid(categories)}
+    </div>
+  `;
+}
+
+// ─── Company Info Tab (Şirket Bilgileri) ─────────────────────────────
+function CompanyTab(seller: SellerProfile, infoData: CompanyInfoData, certs: Certificate[]): string {
+  return `
+    <div class="company-profile__tab-content" x-show="activeTab === 'company'" x-transition.opacity.duration.300ms id="tab-company">
+      <div class="bg-white rounded-(--radius-md) border border-gray-200 mb-6 px-4">
+        ${CompanyInfoComponent(infoData, seller)}
+      </div>
+      <div class="bg-white rounded-(--radius-md) border border-gray-200 px-4">
+        ${Certificates(certs)}
+      </div>
+    </div>
+  `;
+}
+
+// ─── Contact Info Tab (İletişim) ─────────────────────────────────────
+function ContactTab(formData: ContactFormData): string {
+  return `
+    <div class="company-profile__tab-content" x-show="activeTab === 'contact'" x-transition.opacity.duration.300ms id="tab-contact">
+      ${ContactForm(formData)}
     </div>
   `;
 }
 
 // ─── Main Wrapper ──────────────────────────────────────────────
 export function CompanyProfileComponent(
-  seller: SellerProfile,
+  data: SellerStorefrontData,
   stats: SellerPerformanceStats,
-  reviews: SellerReview[],
-  mainProducts: SimpleProduct[],
-  categories: ProductCategory[]
+  reviews: SellerReview[]
 ): string {
+  const seller = data.seller;
+  const categories = data.categoryListings || [];
+  const categoryCards = data.categoryCards || [];
+  const companyInfo = data.company || {} as CompanyInfoData;
+  const certs = data.certificates || [];
+  const contact = data.contactForm || {} as ContactFormData;
+  const mainProducts = data.hotProducts || [];
+  // Placeholder data for the mock integration
+  // Need to import mock data dynamically or rely on it passed from seller-storefront.ts
+  // For now, assume it's exposed or injected.
   return `
     <section class="company-profile bg-[#f9fafb] py-8 min-h-screen" aria-label="Satıcı Profili">
       <div class="max-w-(--container-xl) mx-auto px-[clamp(0.75rem,0.5rem+1vw,1.5rem)] lg:px-6 xl:px-8">
         
         <!-- Main Navigation Tabs -->
         <div class="bg-white rounded-t-(--radius-md) border-b border-gray-200 px-3 sm:px-6 py-0 flex items-center gap-4 sm:gap-8 mb-6 overflow-x-auto no-scrollbar">
-          <button class="company-profile__main-tab active py-4 text-[15px] font-bold text-gray-900 border-b-2 border-gray-900 whitespace-nowrap" data-target="tab-overview">Hesabım</button>
-          <button class="company-profile__main-tab py-4 text-[15px] font-medium text-gray-500 hover:text-gray-900 border-b-2 border-transparent transition-colors whitespace-nowrap" data-target="tab-reviews">Yorumlar</button>
-          <button class="company-profile__main-tab py-4 text-[15px] font-medium text-gray-500 hover:text-gray-900 border-b-2 border-transparent transition-colors whitespace-nowrap" data-target="tab-video" disabled>Video İpuçları</button>
-          <button class="company-profile__main-tab py-4 text-[15px] font-medium text-gray-500 hover:text-gray-900 border-b-2 border-transparent transition-colors whitespace-nowrap" data-target="tab-products">Ürünler</button>
+          <button @click="setTab('overview')" :class="activeTab === 'overview' ? 'active font-bold text-gray-900 border-gray-900 border-b-2' : 'font-medium text-gray-500 hover:text-gray-900 border-transparent border-b-2'" class="company-profile__main-tab py-4 text-[15px] transition-colors whitespace-nowrap">Hesabım</button>
+          <button @click="setTab('reviews')" :class="activeTab === 'reviews' ? 'active font-bold text-gray-900 border-gray-900 border-b-2' : 'font-medium text-gray-500 hover:text-gray-900 border-transparent border-b-2'" class="company-profile__main-tab py-4 text-[15px] transition-colors whitespace-nowrap">Yorumlar</button>
+          <button @click="setTab('products')" :class="activeTab === 'products' ? 'active font-bold text-gray-900 border-gray-900 border-b-2' : 'font-medium text-gray-500 hover:text-gray-900 border-transparent border-b-2'" class="company-profile__main-tab py-4 text-[15px] transition-colors whitespace-nowrap">Ürünler</button>
+          <button @click="setTab('categories')" :class="activeTab === 'categories' ? 'active font-bold text-gray-900 border-gray-900 border-b-2' : 'font-medium text-gray-500 hover:text-gray-900 border-transparent border-b-2'" class="company-profile__main-tab py-4 text-[15px] transition-colors whitespace-nowrap">Kategoriler</button>
+          <button @click="setTab('company')" :class="activeTab === 'company' ? 'active font-bold text-gray-900 border-gray-900 border-b-2' : 'font-medium text-gray-500 hover:text-gray-900 border-transparent border-b-2'" class="company-profile__main-tab py-4 text-[15px] transition-colors whitespace-nowrap">Şirket Profili</button>
+          <button @click="setTab('contact')" :class="activeTab === 'contact' ? 'active font-bold text-gray-900 border-gray-900 border-b-2' : 'font-medium text-gray-500 hover:text-gray-900 border-transparent border-b-2'" class="company-profile__main-tab py-4 text-[15px] transition-colors whitespace-nowrap">İletişim</button>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
@@ -278,6 +375,9 @@ export function CompanyProfileComponent(
             ${OverviewTab(stats, mainProducts)}
             ${ReviewsTab(stats, reviews)}
             ${ProductsTab(categories)}
+            ${CategoriesTab(categoryCards)}
+            ${CompanyTab(seller, companyInfo, certs)}
+            ${ContactTab(contact)}
           </div>
 
           <!-- Right Sidebar -->

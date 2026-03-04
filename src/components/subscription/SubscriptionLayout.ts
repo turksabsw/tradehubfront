@@ -168,7 +168,7 @@ function renderPlanCard(plan: Plan, isYearly: boolean): string {
   if (plan.currentPlan) {
     btnHtml = '<button class="w-full py-3 px-5 text-[14px] font-semibold rounded-full bg-gray-200 text-gray-400 cursor-default" disabled>Güncel plan</button>';
   } else if (plan.popular) {
-    btnHtml = '<button class="w-full py-3 px-5 text-[14px] font-semibold rounded-full bg-primary-500 text-white cursor-pointer hover:bg-[#EA580C] transition-colors">3 günlük ücretsiz denemeyi başlat</button>';
+    btnHtml = '<button class="w-full py-3 px-5 text-[14px] font-semibold rounded-full bg-primary-500 text-white cursor-pointer hover:bg-primary-600 transition-colors">3 günlük ücretsiz denemeyi başlat</button>';
   } else {
     btnHtml = '<button class="w-full py-3 px-5 text-[14px] font-semibold rounded-full bg-[#222] text-white cursor-pointer hover:bg-[#444] transition-colors">3 günlük ücretsiz denemeyi başlat</button>';
   }

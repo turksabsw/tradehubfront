@@ -13,7 +13,13 @@ export type { OrderSummaryProps, ProtectionSummaryItem } from './OrderSummary';
 export { PaymentMethodSection, initAccordionSections } from './PaymentMethodSection';
 export type { PaymentMethodSectionProps } from './PaymentMethodSection';
 export { ItemsDeliverySection } from './ItemsDeliverySection';
-export type { ItemsDeliverySectionProps } from './ItemsDeliverySection';
+export type {
+  ItemsDeliverySectionProps,
+  CheckoutDeliveryOrderGroup,
+  CheckoutDeliveryProductCard,
+  CheckoutDeliverySkuLine,
+  CheckoutDeliveryMethod,
+} from './ItemsDeliverySection';
 export { OrderProtectionModal, initOrderProtectionModal, showOrderProtectionModal } from './OrderProtectionModal';
 export type { OrderProtectionModalProps } from './OrderProtectionModal';
 export { AddressAutocomplete, initAddressAutocomplete } from './AddressAutocomplete';

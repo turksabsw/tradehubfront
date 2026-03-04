@@ -47,17 +47,18 @@ export function CartPage({ suppliers, summary, assuranceItems }: CartPageProps):
   );
 
   return `
-    <div class="sc-cart-page max-w-[1640px] mx-auto px-(--space-page-x) py-4 sm:py-6"
+    <div class="sc-cart-page flex flex-col flex-1 w-full max-w-[1640px] mx-auto px-(--space-page-x) py-4 sm:py-6"
       x-data="cartPage"
       @batch-select-toggle="handleBatchSelectToggle($event)"
       @supplier-select="handleSupplierSelect($event)"
       @checkbox-change="handleCheckboxChange($event)"
       @quantity-change="handleQuantityChange($event)"
+      @sku-fill-min="handleSkuFillMin($event)"
       @sku-delete="handleSkuDelete($event)"
       @product-delete="handleProductDelete($event)"
       @batch-delete="handleBatchDelete()"
       @product-favorite="handleProductFavorite($event)">
-      <div class="flex flex-col lg:flex-row gap-5 items-start">
+      <div class="flex flex-col lg:flex-row gap-5 items-start flex-1">
         <section class="w-full lg:min-w-0 lg:flex-1 space-y-4">
           ${CartHeader()}
           ${BatchSelectBar({ totalCount: totalItems, selectedCount })}

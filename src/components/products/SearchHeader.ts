@@ -230,9 +230,10 @@ export function SearchHeader(
         <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
           <!-- Search results count -->
           <h1 class="text-base sm:text-xl font-bold text-gray-900 dark:text-white min-w-0 break-words">
-            <span id="search-header-count">${formatNumber(totalProducts)}</span>
+            Showing
+            <span id="search-header-count">${formatNumber(totalProducts)}+</span>
             <span class="font-normal text-gray-600 dark:text-gray-400">
-              products for
+              products from global suppliers for
             </span>
             <span class="text-primary-600 dark:text-primary-400">"${keyword}"</span>
           </h1>

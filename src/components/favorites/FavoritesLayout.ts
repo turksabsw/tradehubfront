@@ -158,7 +158,7 @@ function renderFavorites(): string {
         </div>
         <div class="flex justify-center gap-4 px-6 pb-6">
           <button class="fav-modal__btn--cancel py-2.5 px-8 text-sm font-medium rounded-[20px] cursor-pointer transition-all duration-150 bg-surface text-text-secondary border border-border-strong hover:border-secondary-400">iptal et</button>
-          <button class="fav-modal__btn--save py-2.5 px-8 text-sm font-medium rounded-[20px] cursor-pointer transition-all duration-150 bg-surface text-text-tertiary border border-border-default disabled:opacity-100 enabled:bg-primary-500 enabled:text-white enabled:border-primary-500 enabled:hover:bg-[#EA580C]" disabled>Kaydet</button>
+          <button class="fav-modal__btn--save py-2.5 px-8 text-sm font-medium rounded-[20px] cursor-pointer transition-all duration-150 bg-surface text-text-tertiary border border-border-default disabled:opacity-100 enabled:bg-primary-500 enabled:text-white enabled:border-primary-500 enabled:hover:bg-primary-600" disabled>Kaydet</button>
         </div>
       </div>
     </div>

@@ -112,7 +112,7 @@ export function StoreHeader(seller: SellerProfile): string {
 
         <!-- Right: CTA Buttons -->
         <div class="store-header__actions flex flex-col w-full gap-2 mt-3 lg:flex-row lg:w-auto lg:gap-3 lg:mt-0 flex-shrink-0">
-          <button class="store-header__contact-btn w-full lg:w-auto bg-(--store-accent) hover:bg-(--store-accent-hover) active:bg-[#c2410c] focus:ring-2 focus:ring-[#f97316] focus:ring-offset-2 text-white font-semibold text-[14px] rounded-(--radius-button) px-6 py-2.5 shadow-(--shadow-sm) hover:shadow-md transition-[background-color,box-shadow] duration-200 cursor-pointer"
+          <button class="store-header__contact-btn w-full lg:w-auto bg-primary-500 hover:bg-primary-600 active:bg-primary-700 focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 text-white font-semibold text-[14px] rounded-(--radius-button) px-6 py-2.5 shadow-(--shadow-sm) hover:shadow-md transition-[background-color,box-shadow] duration-200 cursor-pointer"
                   onclick="document.getElementById('contact-form')?.scrollIntoView({behavior:'smooth'})">
             Contact supplier
           </button>

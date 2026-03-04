@@ -24,7 +24,7 @@ function escapeHtml(value: string): string {
 
 export function SkuRow({ sku }: SkuRowProps): string {
   return `
-    <article class="sc-c-sku-container-new grid grid-cols-[auto_92px_minmax(0,1fr)] gap-3 items-start py-4 border-t border-[#f2f2f2] first:border-t-0 max-sm:grid-cols-[auto_72px_minmax(0,1fr)] max-sm:gap-2" data-sku-id="${escapeHtml(sku.id)}" x-data>
+    <article class="sc-c-sku-container-new rounded-xl grid grid-cols-[auto_92px_minmax(0,1fr)] gap-3 items-start py-4 border-t border-[#f2f2f2] first:border-t-0 max-sm:grid-cols-[auto_72px_minmax(0,1fr)] max-sm:gap-2 transition-colors" data-sku-id="${escapeHtml(sku.id)}" x-data>
       <div class="pt-9 max-sm:pt-7">
         ${Checkbox({ id: `sku-checkbox-${sku.id}`, checked: sku.selected, onChange: `sku-select-${sku.id}` })}
       </div>
@@ -54,7 +54,19 @@ export function SkuRow({ sku }: SkuRowProps): string {
 
         <div class="mt-3 flex items-end justify-between gap-3 flex-wrap">
           ${PriceDisplay({ amount: sku.unitPrice, currency: sku.currency, unit: `/${sku.unit}` })}
-          ${QuantityInput({ id: `sku-qty-${sku.id}`, value: sku.quantity, min: sku.minQty, max: sku.maxQty })}
+          <div class="flex flex-col items-end">
+            ${QuantityInput({ id: `sku-qty-${sku.id}`, value: sku.quantity, min: sku.minQty, max: sku.maxQty })}
+            <div class="sc-c-sku-moq-warning mt-2 text-right text-[14px] leading-[20px] text-[#dc2626] hidden">
+              <span class="sc-c-sku-moq-missing">0</span> more required to check out
+              <button
+                type="button"
+                class="ml-1 underline font-semibold text-[#8b1e1e] hover:opacity-80"
+                @click="$dispatch('sku-fill-min', { skuId: '${escapeHtml(sku.id)}' })"
+              >
+                Add all
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </article>

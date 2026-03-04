@@ -44,14 +44,6 @@ function renderThumbnailGrid(thumbnails: OrderSummaryThumbnail[], itemCount: num
     </div>`;
 }
 
-function renderPriceRow(label: string, value: string): string {
-  return `
-    <div class="flex justify-between items-center py-[6px] text-[14px] leading-5 text-[#222222]">
-      <span>${label}</span>
-      <span>${value}</span>
-    </div>`;
-}
-
 export function OrderSummary({ data, protectionItems, tradeAssuranceText }: OrderSummaryProps): string {
   const currency = data.currency;
 
@@ -59,6 +51,7 @@ export function OrderSummary({ data, protectionItems, tradeAssuranceText }: Orde
   const subtotalStr = `${currency} ${(data.itemSubtotal).toFixed(2)}`;
   const shippingStr = `${currency} ${(data.shipping).toFixed(2)}`;
   const totalStr = `${currency} ${(data.total).toFixed(2)}`;
+  const implicitDiscount = Number((data.itemSubtotal + data.shipping - data.total).toFixed(2));
 
   // The protection items rendering
   const protectionRows = protectionItems.map(item => `
@@ -72,7 +65,10 @@ export function OrderSummary({ data, protectionItems, tradeAssuranceText }: Orde
   `).join('');
 
   return `
-    <div class="checkout-sidebar w-full p-[28px] bg-[#FFFFFF] border border-[#e5e5e5] rounded-xl max-h-[calc(100vh-48px)] overflow-y-auto [&::-webkit-scrollbar]:w-[6px] [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-black/20 hover:[&::-webkit-scrollbar-thumb]:bg-black/30 [&::-webkit-scrollbar-thumb]:rounded-full">
+    <div
+      class="checkout-sidebar w-full p-[28px] bg-[#FFFFFF] border border-[#e5e5e5] rounded-xl max-h-[calc(100vh-48px)] overflow-y-auto [&::-webkit-scrollbar]:w-[6px] [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-black/20 hover:[&::-webkit-scrollbar-thumb]:bg-black/30 [&::-webkit-scrollbar-thumb]:rounded-full"
+      x-data="checkoutOrderSummary({ itemSubtotal: ${data.itemSubtotal}, discount: ${implicitDiscount}, initialShippingFee: ${data.shipping}, currency: '${currency}' })"
+    >
       <!-- Title -->
       <div class="text-[20px] font-bold leading-7 text-[#222222] mb-5 font-inter">
         Order summary (${data.itemCount} items)
@@ -83,14 +79,20 @@ export function OrderSummary({ data, protectionItems, tradeAssuranceText }: Orde
 
       <!-- Price Breakdown -->
       <div class="flex flex-col summary-amounts-layout-row">
-        ${renderPriceRow('Item subtotal', subtotalStr)}
-        ${renderPriceRow('Estimated shipping fee', shippingStr)}
+        <div class="flex justify-between items-center py-[6px] text-[14px] leading-5 text-[#222222]">
+          <span>Item subtotal</span>
+          <span x-text="formatMoney(itemSubtotal)">${subtotalStr}</span>
+        </div>
+        <div class="flex justify-between items-center py-[6px] text-[14px] leading-5 text-[#222222]">
+          <span>Estimated shipping fee</span>
+          <span x-text="formatMoney(shippingFee)">${shippingStr}</span>
+        </div>
       </div>
 
       <!-- Total -->
       <div class="flex justify-between items-center mt-[10px] pt-[16px] border-t border-[#e5e5e5] summary-amounts-total-block text-[20px] font-bold text-[#222222]">
         <span>Total</span>
-        <span>${totalStr}</span>
+        <span x-text="formatMoney(total)">${totalStr}</span>
       </div>
 
       <!-- Place Order Button -->

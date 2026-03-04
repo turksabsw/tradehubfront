@@ -103,6 +103,42 @@ export class CartStore {
     return selected;
   }
 
+  getSelectedSkuMoqViolations(): Array<{
+    skuId: string;
+    minQty: number;
+    quantity: number;
+    missingQty: number;
+  }> {
+    const violations: Array<{
+      skuId: string;
+      minQty: number;
+      quantity: number;
+      missingQty: number;
+    }> = [];
+
+    for (const supplier of this.suppliers) {
+      for (const product of supplier.products) {
+        for (const sku of product.skus) {
+          if (!sku.selected) continue;
+          if (sku.quantity >= sku.minQty) continue;
+
+          violations.push({
+            skuId: sku.id,
+            minQty: sku.minQty,
+            quantity: sku.quantity,
+            missingQty: sku.minQty - sku.quantity,
+          });
+        }
+      }
+    }
+
+    return violations;
+  }
+
+  hasSelectedSkuMoqViolation(): boolean {
+    return this.getSelectedSkuMoqViolations().length > 0;
+  }
+
   getAllSkus(): CartSku[] {
     const all: CartSku[] = [];
     for (const supplier of this.suppliers) {
@@ -185,6 +221,16 @@ export class CartStore {
     if (!found) return;
     found.sku.quantity = quantity;
     this.notify();
+  }
+
+  fillSkuToMinQty(skuId: string): void {
+    const found = this.getSku(skuId);
+    if (!found) return;
+
+    if (found.sku.quantity < found.sku.minQty) {
+      found.sku.quantity = found.sku.minQty;
+      this.notify();
+    }
   }
 
   toggleSkuSelection(skuId: string, selected: boolean): void {

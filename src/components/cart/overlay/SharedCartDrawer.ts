@@ -90,25 +90,16 @@ function escapeHtml(value: string): string {
     .replace(/'/g, '&#39;');
 }
 
-function renderPlaceholderSvg(kind: ProductImageKind, size = 56): string {
-  const visual = productVisuals[kind];
-  return `<svg width="${size}" height="${size}" fill="none" stroke-width="1.4" viewBox="0 0 24 24" style="stroke:${visual.stroke}">${visual.icon}</svg>`;
-}
-
 function renderColorThumb(color: CartDrawerColorModel, size = 64): string {
   if (color.imageUrl) {
     return `
-      <div style="width:${size}px;height:${size}px;border-radius:10px;overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:#f5f5f5;">
+      <div style="width:${size}px;height:${size}px;border-radius:50%;overflow:hidden;flex-shrink:0;background:#f5f5f5;">
         <img src="${color.imageUrl}" alt="${escapeHtml(color.label)}" style="width:100%;height:100%;object-fit:cover;" loading="lazy" />
       </div>
     `;
   }
-  const visual = productVisuals[color.imageKind];
   return `
-    <div style="width:${size}px;height:${size}px;border-radius:10px;overflow:hidden;background:${visual.background};position:relative;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-      <div style="position:absolute;inset:0;background:${color.colorHex};opacity:0.22"></div>
-      ${renderPlaceholderSvg(color.imageKind, Math.round(size * 0.52))}
-    </div>
+    <div style="width:${size}px;height:${size}px;border-radius:50%;overflow:hidden;flex-shrink:0;background:${color.colorHex};"></div>
   `;
 }
 
@@ -182,8 +173,13 @@ function applyDrawerTransform(open: boolean): void {
 function setPreviewVisible(visible: boolean): void {
   const preview = document.getElementById('shared-cart-preview');
   if (!preview) return;
-  if (visible) preview.classList.remove('hidden');
-  else preview.classList.add('hidden');
+  if (visible) {
+    preview.classList.remove('hidden');
+    preview.classList.add('flex');
+  } else {
+    preview.classList.remove('flex');
+    preview.classList.add('hidden');
+  }
 }
 
 function updatePreview(): void {
@@ -193,20 +189,14 @@ function updatePreview(): void {
 
   const color = state.item.colors[state.previewColorIndex];
   if (!color) return;
-  const visual = productVisuals[color.imageKind];
 
   if (color.imageUrl) {
     image.innerHTML = `
-      <div style="width:100%;height:100%;position:relative;background:#f5f5f5;display:flex;align-items:center;justify-content:center;">
-        <img src="${color.imageUrl}" alt="${escapeHtml(color.label)}" style="width:100%;height:100%;object-fit:contain;" />
-      </div>
+      <img src="${color.imageUrl}" alt="${escapeHtml(color.label)}" style="width:100%;height:100%;object-fit:cover;" />
     `;
   } else {
     image.innerHTML = `
-      <div style="width:100%;height:100%;position:relative;background:${visual.background};display:flex;align-items:center;justify-content:center;">
-        <div style="position:absolute;inset:0;background:${color.colorHex};opacity:0.12"></div>
-        <div style="position:relative;z-index:2">${renderPlaceholderSvg(color.imageKind, 240)}</div>
-      </div>
+      <div style="width:100%;height:100%;background:${color.colorHex};"></div>
     `;
   }
   label.textContent = `color : ${color.label}`;
@@ -241,7 +231,7 @@ function renderDrawerBody(): void {
     const selectedBorder = qty > 0 ? 'border-primary-500' : 'border-border-default';
     return `
             <div class="flex items-center gap-4 py-3" data-color-id="${escapeHtml(color.id)}">
-              <button type="button" data-preview-color="${escapeHtml(color.id)}" class="shrink-0 rounded-xl border-2 ${selectedBorder}">
+              <button type="button" data-preview-color="${escapeHtml(color.id)}" class="shrink-0 rounded-full border-2 ${selectedBorder}">
                 ${renderColorThumb(color, 72)}
               </button>
               <div class="flex-1 min-w-0">

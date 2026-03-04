@@ -350,14 +350,14 @@ export function initGalleryLightbox(): void {
 export function initSellerStorefront(): void {
   initAllSwipers();
   initStoreHeaderInteractions();
-  initStoreNavDropdowns();
+  // initStoreNavDropdowns(); // Migrated to Alpine.js
   initStickyNav();
   initSearchInput();
-  initMobileMenu();
+  // initMobileMenu(); // Migrated to Alpine.js
   initContactForm();
   initFloatingActions();
   initGalleryLightbox();
-  initCompanyProfileTabs();
+  // initCompanyProfileTabs(); // Migrated to Alpine.js
 }
 
 // ═══════════════════════════════════════════════════════════

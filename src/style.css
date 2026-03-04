@@ -2957,7 +2957,7 @@ body.gallery-lightbox-open {
     height: 64px;
     padding: 0;
     border: 2px solid var(--color-border-default, var(--color-border-default, #e5e5e5));
-    border-radius: 6px;
+    border-radius: 50%;
     overflow: hidden;
     cursor: pointer;
     background: transparent;

@@ -57,7 +57,7 @@ function renderLogo(): string {
   const baseUrl = getBaseUrl();
   return `
     <a href="${baseUrl}" class="flex items-center hover:opacity-80 transition-opacity cursor-pointer shrink-0" aria-label="iSTOC Home">
-      <img src="${baseUrl}images/istoc-logo.png" alt="iSTOC" class="h-7 sm:h-8 lg:h-9 shrink-0" />
+      <img src="${baseUrl}images/istoc-logo.png" alt="iSTOC" class="h-[25px] shrink-0" />
     </a>
   `;
 }
@@ -124,13 +124,13 @@ function renderUserButton(): string {
  */
 function renderCompactStickySearch(): string {
   return `
-    <div id="topbar-compact-search-shell" x-data="stickyHeaderSearch" @click.outside="close()" class="hidden lg:flex flex-col justify-center relative min-w-0 flex-1 h-[60px] lg:mx-4">
+    <div id="topbar-compact-search-shell" x-data="stickyHeaderSearch" @click.outside="close()" class="hidden lg:flex flex-col justify-center relative min-w-0 flex-1 lg:mx-4 h-[56px]">
 
       <form
         id="topbar-compact-search"
         x-ref="searchForm"
         @click="open()"
-        action="/search"
+        action="/products.html"
         method="GET"
         role="search"
         aria-label="Sticky header search"
@@ -138,26 +138,26 @@ function renderCompactStickySearch(): string {
         aria-expanded="false"
         :aria-expanded="expanded ? 'true' : 'false'"
         aria-controls="topbar-compact-dropdown"
-        class="absolute left-0 right-0 top-[8px] z-(--z-popover) w-full border border-gray-300 bg-white shadow-sm transition-all duration-200 dark:border-gray-600 dark:bg-gray-800"
-        :class="expanded ? 'rounded-md shadow-md pt-0.5' : 'rounded-full'"
+        class="absolute left-0 right-0 top-[7px] z-[50] w-full border border-gray-300 bg-white shadow-sm transition-all duration-200 dark:border-gray-600 dark:bg-gray-800"
+        :class="expanded ? 'rounded-md shadow-md pt-0.5' : 'rounded-full h-[42px] flex flex-col justify-center'"
       >
-        <div id="topbar-compact-primary-row" class="flex items-center gap-2 px-3 py-1.5">
-          <div class="relative min-w-0 flex-1">
+        <div id="topbar-compact-primary-row" class="flex items-center gap-1.5" :class="expanded ? 'px-3 py-1.5' : 'px-1.5 h-[42px]'">
+          <div class="relative min-w-0 flex-1" :class="expanded ? '' : 'h-full'">
             <input
               id="topbar-compact-search-input"
               x-ref="searchInput"
               @focus="open()"
-              name="search"
+              name="q"
               type="text"
               tabindex="-1"
-              placeholder="Search products"
+              placeholder="What are you looking for?"
               autocomplete="off"
               aria-label="Search products from sticky header"
               aria-expanded="false"
               :aria-expanded="expanded ? 'true' : 'false'"
               aria-controls="topbar-compact-dropdown"
-              class="w-full border-0 bg-transparent px-2 text-gray-900 placeholder:text-gray-400 outline-none ring-0 focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 dark:text-white dark:placeholder:text-gray-400"
-              :class="expanded ? 'text-base py-2.5 pr-12' : 'text-sm py-1.5'"
+              class="w-full border-0 bg-transparent px-3 text-gray-900 placeholder:text-gray-400 outline-none ring-0 focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 dark:text-white dark:placeholder:text-gray-400"
+              :class="expanded ? 'text-base py-2.5 pr-12' : 'h-full text-[13px] py-0'"
             />
           </div>
 
@@ -166,8 +166,8 @@ function renderCompactStickySearch(): string {
             href="/image-search"
             tabindex="-1"
             aria-label="Image search"
-            class="inline-flex items-center justify-center text-gray-500 transition-colors hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400"
-            :class="expanded ? 'absolute left-4 bottom-2 h-9 w-auto gap-1.5 rounded-md px-0 text-sm font-medium text-gray-700 hover:bg-transparent dark:hover:bg-transparent' : 'h-8 w-8 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700'"
+            class="inline-flex items-center justify-center text-gray-500 transition-colors hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400 shrink-0"
+            :class="expanded ? 'absolute left-4 bottom-2 h-9 w-auto gap-1.5 rounded-md px-0 text-sm font-medium text-gray-700 hover:bg-transparent dark:hover:bg-transparent' : 'h-[36px] w-[36px] rounded-full hover:bg-gray-100 dark:hover:bg-gray-700'"
           >
             <svg class="h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" />
@@ -180,13 +180,15 @@ function renderCompactStickySearch(): string {
             id="topbar-compact-search-submit"
             type="submit"
             tabindex="-1"
-            class="th-btn th-btn-pill inline-flex items-center justify-center gap-1.5 font-semibold transition-colors"
-            :class="expanded ? 'px-6 py-2 text-base absolute right-4 bottom-2' : 'px-4 py-1.5 text-sm'"
+            class="th-btn inline-flex items-center justify-center gap-1.5 font-semibold transition-colors shrink-0"
+            :class="expanded ? 'px-6 py-2 text-base absolute right-4 bottom-2 th-btn-pill' : 'px-5 h-[36px] text-[13px] rounded-full ml-1'"
+            style="background: linear-gradient(135deg, var(--search-btn-gradient-start) 0%, var(--search-btn-gradient-end) 100%); color: white; border: none;"
           >
-            <svg class="h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+            <span x-show="!expanded">Search</span>
+            <svg x-show="expanded" class="h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-4.35-4.35m1.6-5.15a6.75 6.75 0 1 1-13.5 0 6.75 6.75 0 0 1 13.5 0Z" />
             </svg>
-            <span>Search</span>
+            <span x-show="expanded">Search</span>
           </button>
         </div>
 
@@ -917,7 +919,7 @@ export function initMobileDrawer(): void {
   // TopBar mobile search tabs switching
   const topbarTabs = document.querySelectorAll<HTMLButtonElement>('.topbar-search-tab');
   const mobileSearchType = document.getElementById('mobile-search-type') as HTMLInputElement | null;
-  const mobileSearchInput = document.querySelector<HTMLInputElement>('#mobile-search-form input[name="mobile-search"]');
+  const mobileSearchInput = document.querySelector<HTMLInputElement>('#mobile-search-form input[name="q"]');
   const TB_ACT = ['font-semibold', 'text-gray-900', 'dark:text-white', 'after:bg-gray-900', 'after:dark:bg-white'];
   const TB_INACT = ['font-normal', 'text-gray-400', 'dark:text-gray-500', 'after:bg-transparent'];
   topbarTabs.forEach(tab => {
@@ -1155,12 +1157,12 @@ export function TopBar(props?: TopBarProps): string {
 
           <!-- Mobile Inline Search (between logo and icons) -->
           <div class="flex-1 min-w-0 mx-1 sm:mx-2 lg:hidden">
-            <form id="mobile-search-form" action="/search" method="GET" role="search">
+            <form id="mobile-search-form" action="/products.html" method="GET" role="search">
               <input type="hidden" id="mobile-search-type" name="searchType" value="products" />
               <div class="flex">
                 <input
                   type="text"
-                  name="mobile-search"
+                  name="q"
                   class="w-full h-9 sm:h-10 px-2 sm:px-3 text-xs sm:text-sm text-gray-900 bg-white border-2 border-primary-400 border-r-0 rounded-l-md focus:ring-1 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-primary-600 dark:placeholder-gray-400 dark:text-white"
                   placeholder="Search products..."
                   autocomplete="off"

@@ -47,8 +47,9 @@ import {
   countries as checkoutCountries,
   districtsByProvince,
   geolocationMockAddress,
-  savedAddress as checkoutSavedAddress,
 } from './data/mockCheckout';
+import type { SavedAddress } from './types/checkout';
+import { getUser, isLoggedIn } from './utils/auth';
 import { ORDER_TABS, ORDER_FILTERS } from './components/buyer-dashboard/ordersData';
 
 // Augment Window interface for Alpine global access (debugging)
@@ -430,7 +431,9 @@ Alpine.data('stickyHeaderSearch', () => ({
   open() {
     if (this.expanded) return;
     this.expanded = true;
-    this.syncDropdownOffset();
+    this.$nextTick(() => {
+      this.syncDropdownOffset();
+    });
   },
 
   close() {
@@ -529,6 +532,7 @@ Alpine.data('cartPage', () => ({
       this.syncSummary();
       this.syncBatchBar();
       this.syncSupplierTotals();
+      this.syncMoqRestrictions();
       this.checkEmptyCart();
     });
 
@@ -536,6 +540,7 @@ Alpine.data('cartPage', () => ({
     this.syncSummary();
     this.syncBatchBar();
     this.syncSupplierTotals();
+    this.syncMoqRestrictions();
 
     // Thumbnail slider for summary section
     this.initThumbnailSlider();
@@ -633,6 +638,21 @@ Alpine.data('cartPage', () => ({
 
     const skuId = inputId.replace('sku-qty-', '');
     cartStore.updateSkuQuantity(skuId, value);
+  },
+
+  handleSkuFillMin(event: CustomEvent) {
+    const skuId = event.detail?.skuId as string | undefined;
+    if (!skuId) return;
+
+    const snapshot = cartStore.getSku(skuId);
+    if (!snapshot) return;
+
+    cartStore.fillSkuToMinQty(skuId);
+
+    const updatedSku = cartStore.getSku(skuId)?.sku;
+    if (updatedSku) {
+      this.syncSkuQuantityInput(skuId, updatedSku.quantity);
+    }
   },
 
   handleSkuDelete(event: CustomEvent) {
@@ -754,6 +774,83 @@ Alpine.data('cartPage', () => ({
       const all = productChecks.every((checkbox) => checkbox.checked);
       const some = productChecks.some((checkbox) => checkbox.checked || checkbox.indeterminate);
       this.syncCheckbox(supplierCheckbox, all, some && !all);
+    }
+  },
+
+  syncSkuQuantityInput(skuId: string, quantity: number) {
+    const el = this.$el as HTMLElement;
+    const input = el.querySelector<HTMLInputElement>(`#sku-qty-${skuId}`);
+    if (input) input.value = String(quantity);
+
+    const picker = input?.closest<HTMLElement>('.number-picker');
+    if (!picker) return;
+
+    const dataStack = (picker as any)._x_dataStack; // eslint-disable-line @typescript-eslint/no-explicit-any
+    if (dataStack?.[0]) {
+      dataStack[0].value = quantity;
+    }
+  },
+
+  syncMoqRestrictions() {
+    const el = this.$el as HTMLElement;
+    const violations = cartStore.getSelectedSkuMoqViolations();
+    const violationsBySkuId = new Map(violations.map((violation) => [violation.skuId, violation]));
+
+    el.querySelectorAll<HTMLElement>('[data-sku-id]').forEach((skuRow) => {
+      const skuId = skuRow.dataset.skuId;
+      if (!skuId) return;
+
+      const violation = violationsBySkuId.get(skuId);
+      const warning = skuRow.querySelector<HTMLElement>('.sc-c-sku-moq-warning');
+      const missingEl = skuRow.querySelector<HTMLElement>('.sc-c-sku-moq-missing');
+      const quantityPicker = skuRow.querySelector<HTMLElement>('.number-picker');
+
+      if (violation) {
+        skuRow.style.backgroundColor = '#fff1f1';
+        if (quantityPicker) quantityPicker.style.borderColor = '#ef4444';
+        if (missingEl) missingEl.textContent = String(violation.missingQty);
+        warning?.classList.remove('hidden');
+      } else {
+        skuRow.style.backgroundColor = '';
+        if (quantityPicker) quantityPicker.style.borderColor = '';
+        warning?.classList.add('hidden');
+      }
+    });
+
+    const checkoutBtn = el.querySelector<HTMLAnchorElement>('.sc-summary-checkout-btn');
+    const checkoutWarning = el.querySelector<HTMLElement>('.sc-summary-checkout-warning');
+    const summary = cartStore.getSummary();
+    const canCheckout = summary.selectedCount > 0 && violations.length === 0;
+
+    if (checkoutBtn) {
+      if (canCheckout) {
+        checkoutBtn.setAttribute('href', '/checkout.html');
+        checkoutBtn.removeAttribute('aria-disabled');
+        checkoutBtn.style.pointerEvents = '';
+        checkoutBtn.style.cursor = '';
+        checkoutBtn.style.opacity = '';
+        checkoutBtn.style.backgroundColor = '';
+      } else {
+        checkoutBtn.removeAttribute('href');
+        checkoutBtn.setAttribute('aria-disabled', 'true');
+        checkoutBtn.style.pointerEvents = 'none';
+        checkoutBtn.style.cursor = 'not-allowed';
+        checkoutBtn.style.opacity = '0.55';
+        checkoutBtn.style.backgroundColor = '#9ca3af';
+      }
+    }
+
+    if (checkoutWarning) {
+      if (violations.length > 0) {
+        checkoutWarning.textContent = 'Minimum sipariş adedi eksik ürünler var. "Add all" ile tamamlayın.';
+        checkoutWarning.classList.remove('hidden');
+      } else if (summary.selectedCount === 0) {
+        checkoutWarning.textContent = 'Checkout için en az 1 ürün seçin.';
+        checkoutWarning.classList.remove('hidden');
+      } else {
+        checkoutWarning.textContent = '';
+        checkoutWarning.classList.add('hidden');
+      }
     }
   },
 
@@ -1627,6 +1724,184 @@ Alpine.data('searchHeader', ({ selectedSort, viewMode, sortLabel }: { selectedSo
   },
 }));
 
+interface CheckoutDeliveryMethod {
+  id: string;
+  etaLabel: string;
+  shippingFee: number;
+  isDefault?: boolean;
+}
+
+interface CheckoutDeliveryOrderGroup {
+  orderId: string;
+  methods: CheckoutDeliveryMethod[];
+}
+
+interface CheckoutSupplierNotesStorage {
+  [ownerKey: string]: Record<string, string>;
+}
+
+function parseCheckoutDeliveryOrders(raw: string | undefined): CheckoutDeliveryOrderGroup[] {
+  if (!raw) return [];
+  try {
+    const parsed = JSON.parse(raw) as CheckoutDeliveryOrderGroup[];
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
+
+const CHECKOUT_SUPPLIER_NOTES_KEY = 'tradehub_checkout_supplier_notes';
+
+function getCheckoutOwnerKey(): string {
+  const user = getUser();
+  if (isLoggedIn() && user?.email) {
+    return `user:${user.email.toLowerCase()}`;
+  }
+  return 'guest';
+}
+
+function readCheckoutSupplierNotesStorage(): CheckoutSupplierNotesStorage {
+  try {
+    const raw = localStorage.getItem(CHECKOUT_SUPPLIER_NOTES_KEY);
+    if (!raw) return {};
+    return JSON.parse(raw) as CheckoutSupplierNotesStorage;
+  } catch {
+    return {};
+  }
+}
+
+function writeCheckoutSupplierNotesStorage(storage: CheckoutSupplierNotesStorage): void {
+  localStorage.setItem(CHECKOUT_SUPPLIER_NOTES_KEY, JSON.stringify(storage));
+}
+
+Alpine.data('checkoutItemsDelivery', () => ({
+  deliveryOrders: [] as CheckoutDeliveryOrderGroup[],
+  selectedMethodByOrderId: {} as Record<string, string>,
+  supplierNotesByOrderId: {} as Record<string, string>,
+  isNoteModalOpen: false,
+  activeNoteOrderId: '',
+  noteDraft: '',
+
+  init() {
+    const root = this.$el as HTMLElement;
+    this.deliveryOrders = parseCheckoutDeliveryOrders(root.dataset.deliveryOrders);
+
+    this.deliveryOrders.forEach((order) => {
+      const defaultMethod = order.methods.find((method) => method.isDefault) ?? order.methods[0];
+      if (defaultMethod) this.selectedMethodByOrderId[order.orderId] = defaultMethod.id;
+    });
+
+    this.loadSupplierNotes();
+    this.emitShippingFeeUpdate();
+  },
+
+  selectMethod(orderId: string, methodId: string) {
+    this.selectedMethodByOrderId[orderId] = methodId;
+    this.emitShippingFeeUpdate();
+  },
+
+  isMethodSelected(orderId: string, methodId: string): boolean {
+    return this.selectedMethodByOrderId[orderId] === methodId;
+  },
+
+  loadSupplierNotes() {
+    const storage = readCheckoutSupplierNotesStorage();
+    const ownerNotes = storage[getCheckoutOwnerKey()] ?? {};
+    const validOrderIds = new Set(this.deliveryOrders.map((order) => order.orderId));
+
+    this.supplierNotesByOrderId = Object.fromEntries(
+      Object.entries(ownerNotes).filter(([orderId, note]) => validOrderIds.has(orderId) && typeof note === 'string' && note.trim().length > 0),
+    );
+  },
+
+  persistSupplierNotes() {
+    const storage = readCheckoutSupplierNotesStorage();
+    storage[getCheckoutOwnerKey()] = this.supplierNotesByOrderId;
+    writeCheckoutSupplierNotesStorage(storage);
+  },
+
+  openNoteModal(orderId: string) {
+    this.activeNoteOrderId = orderId;
+    this.noteDraft = this.getOrderNote(orderId);
+    this.isNoteModalOpen = true;
+  },
+
+  closeNoteModal() {
+    this.isNoteModalOpen = false;
+    this.activeNoteOrderId = '';
+    this.noteDraft = '';
+  },
+
+  saveNote() {
+    if (!this.activeNoteOrderId) {
+      this.closeNoteModal();
+      return;
+    }
+
+    const note = this.noteDraft.trim();
+    if (note) {
+      this.supplierNotesByOrderId[this.activeNoteOrderId] = note;
+    } else {
+      delete this.supplierNotesByOrderId[this.activeNoteOrderId];
+    }
+
+    this.persistSupplierNotes();
+    this.closeNoteModal();
+  },
+
+  hasOrderNote(orderId: string): boolean {
+    return this.getOrderNote(orderId).trim().length > 0;
+  },
+
+  getOrderNote(orderId: string): string {
+    return this.supplierNotesByOrderId[orderId] ?? '';
+  },
+
+  getSelectedShippingFeeTotal(): number {
+    const total = this.deliveryOrders.reduce((sum, order) => {
+      const selectedMethodId = this.selectedMethodByOrderId[order.orderId];
+      const selectedMethod = order.methods.find((method) => method.id === selectedMethodId)
+        ?? order.methods.find((method) => method.isDefault)
+        ?? order.methods[0];
+
+      return sum + (selectedMethod?.shippingFee ?? 0);
+    }, 0);
+
+    return Number(total.toFixed(2));
+  },
+
+  emitShippingFeeUpdate() {
+    window.dispatchEvent(new CustomEvent('checkout:shipping-updated', {
+      detail: { shippingFee: this.getSelectedShippingFeeTotal() },
+    }));
+  },
+}));
+
+Alpine.data('checkoutOrderSummary', (props?: { itemSubtotal?: number; discount?: number; initialShippingFee?: number; currency?: string }) => ({
+  itemSubtotal: Number(props?.itemSubtotal ?? 0),
+  discount: Number(props?.discount ?? 0),
+  shippingFee: Number(props?.initialShippingFee ?? 0),
+  currency: props?.currency ?? 'USD',
+
+  init() {
+    window.addEventListener('checkout:shipping-updated', (event: Event) => {
+      const detail = (event as CustomEvent<{ shippingFee?: number }>).detail;
+      const nextShippingFee = detail?.shippingFee;
+      if (typeof nextShippingFee === 'number' && Number.isFinite(nextShippingFee)) {
+        this.shippingFee = Number(nextShippingFee.toFixed(2));
+      }
+    });
+  },
+
+  get total(): number {
+    return Number((this.itemSubtotal + this.shippingFee - this.discount).toFixed(2));
+  },
+
+  formatMoney(value: number): string {
+    return `${this.currency} ${value.toFixed(2)}`;
+  },
+}));
+
 // ── Checkout Accordion (PaymentMethodSection, ItemsDeliverySection) ──
 
 Alpine.data('checkoutAccordion', (props?: { initialExpanded?: boolean }) => ({
@@ -1663,63 +1938,430 @@ Alpine.data('checkoutAccordion', (props?: { initialExpanded?: boolean }) => ({
 }));
 
 // ── Shipping Address Form (checkout page) ──
+interface CheckoutStoredAddress extends SavedAddress {
+  id: string;
+  isDefault: boolean;
+}
+
+interface CheckoutAddressBookStorage {
+  [userKey: string]: CheckoutStoredAddress[];
+}
+
+interface CheckoutAddAddressForm {
+  country: string;
+  fullName: string;
+  phonePrefix: string;
+  phone: string;
+  street: string;
+  apartment: string;
+  state: string;
+  city: string;
+  postalCode: string;
+  isDefaultAddress: boolean;
+}
+
+const CHECKOUT_ADDRESS_BOOK_KEY = 'tradehub_checkout_address_book';
 const defaultShippingCountry = checkoutCountries.find(c => c.code === 'TR') ?? checkoutCountries[0];
 
+function generateAddressId(): string {
+  return `addr-${Date.now()}-${Math.random().toString(16).slice(2, 8)}`;
+}
+
+function splitFullName(fullName: string): { firstName: string; lastName: string } {
+  const parts = fullName.trim().split(/\s+/).filter(Boolean);
+  if (parts.length === 0) return { firstName: '', lastName: '' };
+  if (parts.length === 1) return { firstName: parts[0], lastName: '' };
+  return {
+    firstName: parts[0],
+    lastName: parts.slice(1).join(' '),
+  };
+}
+
+function readCheckoutAddressBook(): CheckoutAddressBookStorage {
+  try {
+    const raw = localStorage.getItem(CHECKOUT_ADDRESS_BOOK_KEY);
+    if (!raw) return {};
+    return JSON.parse(raw) as CheckoutAddressBookStorage;
+  } catch {
+    return {};
+  }
+}
+
+function writeCheckoutAddressBook(storage: CheckoutAddressBookStorage): void {
+  localStorage.setItem(CHECKOUT_ADDRESS_BOOK_KEY, JSON.stringify(storage));
+}
+
+function getCountryByCode(code: string) {
+  return checkoutCountries.find((country) => country.code === code) ?? defaultShippingCountry;
+}
+
+function formatAddressLine(address: Pick<SavedAddress, 'street' | 'city' | 'state' | 'postalCode' | 'countryName'>): string {
+  return [address.street, address.city, address.state, address.postalCode, address.countryName]
+    .filter(Boolean)
+    .join(', ');
+}
+
+function normalizeProvinceName(value: string): string {
+  return value
+    .toLocaleLowerCase('tr-TR')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replaceAll('ı', 'i')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+const DISTRICTS_BY_PROVINCE_NORMALIZED = Object.fromEntries(
+  Object.entries(districtsByProvince).map(([province, districts]) => [normalizeProvinceName(province), districts]),
+) as Record<string, string[]>;
+
+const FALLBACK_CITY_OPTIONS = ['Merkez', 'Cumhuriyet', 'Yeni Mahalle', 'Sanayi'];
+
 Alpine.data('shippingForm', () => ({
-  // Dropdown open states
   countryOpen: false,
   stateOpen: false,
   cityOpen: false,
 
-  // Address autocomplete popup state
-  autocompleteOpen: false,
-
-  // Display values
   countryDisplay: `${defaultShippingCountry.flag} ${defaultShippingCountry.name}`,
   stateDisplay: '',
   cityDisplay: '',
   phonePrefix: defaultShippingCountry.phonePrefix,
-
-  // Error tracking (keyed by field name)
   errors: {} as Record<string, boolean>,
 
-  init() {
-    // Show autocomplete popup when state dropdown opens
-    this.$watch('stateOpen', (open: boolean) => {
-      if (open) {
-        requestAnimationFrame(() => { this.autocompleteOpen = true; });
-      }
-    });
+  showAddressForm: true,
+  savedAddresses: [] as CheckoutStoredAddress[],
+  selectedAddressId: '',
+  pendingAddressId: '',
+  selectedAddressName: '',
+  selectedAddressPhone: '',
+  selectedAddressLine: '',
 
-    // Close autocomplete on outside click (exclude popup and state dropdown)
-    document.addEventListener('click', (e: Event) => {
-      const target = e.target as HTMLElement;
-      if (!target.closest('#address-autocomplete') && !target.closest('[data-dropdown="state-dropdown"]')) {
-        this.autocompleteOpen = false;
-      }
-    });
+  isAddressSelectorOpen: false,
+  isAddAddressModalOpen: false,
+  isEditingAddress: false,
+  editingAddressId: '',
+  addAddressForm: {
+    country: defaultShippingCountry.code,
+    fullName: '',
+    phonePrefix: defaultShippingCountry.phonePrefix,
+    phone: '',
+    street: '',
+    apartment: '',
+    state: '',
+    city: '',
+    postalCode: '',
+    isDefaultAddress: false,
+  } as CheckoutAddAddressForm,
+  addFormErrors: {} as Record<string, boolean>,
+
+  init() {
+    this.loadAddressesForCurrentUser();
+    this.updateCityDropdown(this.stateDisplay);
+  },
+
+  getAddressOwnerKey(): string {
+    const user = getUser();
+    if (isLoggedIn() && user?.email) {
+      return `user:${user.email.toLowerCase()}`;
+    }
+    return 'guest';
+  },
+
+  loadAddressesForCurrentUser() {
+    const storage = readCheckoutAddressBook();
+    const ownerKey = this.getAddressOwnerKey();
+    const addresses = storage[ownerKey] ?? [];
+
+    this.savedAddresses = addresses;
+
+    if (this.savedAddresses.length === 0) {
+      this.showAddressForm = true;
+      this.selectedAddressId = '';
+      this.pendingAddressId = '';
+      this.selectedAddressName = '';
+      this.selectedAddressPhone = '';
+      this.selectedAddressLine = '';
+      return;
+    }
+
+    const defaultAddress = this.savedAddresses.find((address) => address.isDefault) ?? this.savedAddresses[0];
+    this.applySelectedAddress(defaultAddress.id);
+    this.showAddressForm = false;
+  },
+
+  persistAddresses() {
+    const storage = readCheckoutAddressBook();
+    storage[this.getAddressOwnerKey()] = this.savedAddresses;
+    writeCheckoutAddressBook(storage);
+  },
+
+  fillMainFormFromAddress(address: CheckoutStoredAddress) {
+    const el = this.$el as HTMLElement;
+    const setInput = (id: string, value: string) => {
+      const input = el.querySelector<HTMLInputElement>(`#${id}`);
+      if (input) input.value = value;
+    };
+
+    const country = getCountryByCode(address.country);
+    this.countryDisplay = `${country.flag} ${country.name}`;
+    this.phonePrefix = address.phonePrefix || country.phonePrefix;
+    this.stateDisplay = address.state;
+    this.updateCityDropdown(address.state);
+    this.cityDisplay = address.city;
+
+    setInput('first-name', `${address.firstName} ${address.lastName}`.trim());
+    setInput('phone', address.phone);
+    setInput('street-address', address.street);
+    setInput('apartment', address.apartment);
+    setInput('postal-code', address.postalCode);
+
+    this.errors.country = false;
+    this.errors.firstName = false;
+    this.errors.phone = false;
+    this.errors.streetAddress = false;
+    this.errors.state = false;
+    this.errors.city = false;
+    this.errors.postalCode = false;
+  },
+
+  applySelectedAddress(addressId: string) {
+    const address = this.savedAddresses.find((row) => row.id === addressId);
+    if (!address) return;
+
+    this.selectedAddressId = address.id;
+    this.pendingAddressId = address.id;
+    this.selectedAddressName = `${address.firstName} ${address.lastName}`.trim();
+    this.selectedAddressPhone = `${address.phonePrefix} ${address.phone}`.trim();
+    this.selectedAddressLine = address.fullAddress || formatAddressLine(address);
+    this.fillMainFormFromAddress(address);
+  },
+
+  openAddressSelector() {
+    if (this.savedAddresses.length === 0) {
+      this.openAddAddressModal();
+      return;
+    }
+    this.pendingAddressId = this.selectedAddressId || this.savedAddresses[0].id;
+    this.isAddressSelectorOpen = true;
+  },
+
+  closeAddressSelector() {
+    this.isAddressSelectorOpen = false;
+  },
+
+  confirmSelectedAddress() {
+    const address = this.savedAddresses.find((row) => row.id === this.pendingAddressId) ?? this.savedAddresses[0];
+    if (!address) return;
+
+    this.applySelectedAddress(address.id);
+    this.showAddressForm = false;
+    this.isAddressSelectorOpen = false;
+  },
+
+  resetAddAddressForm() {
+    this.addAddressForm = {
+      country: defaultShippingCountry.code,
+      fullName: '',
+      phonePrefix: defaultShippingCountry.phonePrefix,
+      phone: '',
+      street: '',
+      apartment: '',
+      state: '',
+      city: '',
+      postalCode: '',
+      isDefaultAddress: false,
+    };
+    this.addFormErrors = {};
+    this.isEditingAddress = false;
+    this.editingAddressId = '';
+  },
+
+  openAddAddressModal() {
+    this.resetAddAddressForm();
+    this.isAddressSelectorOpen = false;
+    this.isAddAddressModalOpen = true;
+  },
+
+  closeAddAddressModal() {
+    this.isAddAddressModalOpen = false;
+    this.addFormErrors = {};
+  },
+
+  syncAddAddressCountry() {
+    const country = getCountryByCode(this.addAddressForm.country);
+    this.addAddressForm.phonePrefix = country.phonePrefix;
+  },
+
+  startEditAddress(addressId: string) {
+    const address = this.savedAddresses.find((row) => row.id === addressId);
+    if (!address) return;
+
+    this.isEditingAddress = true;
+    this.editingAddressId = address.id;
+    this.addAddressForm = {
+      country: address.country,
+      fullName: `${address.firstName} ${address.lastName}`.trim(),
+      phonePrefix: address.phonePrefix,
+      phone: address.phone,
+      street: address.street,
+      apartment: address.apartment,
+      state: address.state,
+      city: address.city,
+      postalCode: address.postalCode,
+      isDefaultAddress: address.isDefault,
+    };
+    this.addFormErrors = {};
+    this.isAddressSelectorOpen = false;
+    this.isAddAddressModalOpen = true;
+  },
+
+  deleteAddress(addressId: string) {
+    this.savedAddresses = this.savedAddresses.filter((address) => address.id !== addressId);
+
+    if (this.savedAddresses.length === 0) {
+      this.persistAddresses();
+      this.selectedAddressId = '';
+      this.pendingAddressId = '';
+      this.selectedAddressName = '';
+      this.selectedAddressPhone = '';
+      this.selectedAddressLine = '';
+      this.showAddressForm = true;
+      this.isAddressSelectorOpen = false;
+      return;
+    }
+
+    if (!this.savedAddresses.some((address) => address.isDefault)) {
+      this.savedAddresses[0].isDefault = true;
+    }
+
+    const nextAddress = this.savedAddresses.find((address) => address.id === this.selectedAddressId)
+      ?? this.savedAddresses.find((address) => address.isDefault)
+      ?? this.savedAddresses[0];
+
+    this.persistAddresses();
+    this.applySelectedAddress(nextAddress.id);
+  },
+
+  setDefaultAddress(addressId: string) {
+    this.savedAddresses = this.savedAddresses.map((address) => ({
+      ...address,
+      isDefault: address.id === addressId,
+    }));
+    this.persistAddresses();
+  },
+
+  validateAddAddressForm(): boolean {
+    const requiredFields: Array<keyof CheckoutAddAddressForm> = [
+      'country',
+      'fullName',
+      'phone',
+      'street',
+      'state',
+      'city',
+      'postalCode',
+    ];
+
+    this.addFormErrors = {};
+    let hasErrors = false;
+
+    for (const field of requiredFields) {
+      const value = String(this.addAddressForm[field] ?? '').trim();
+      const invalid = !value;
+      this.addFormErrors[field] = invalid;
+      if (invalid) hasErrors = true;
+    }
+
+    return !hasErrors;
+  },
+
+  buildAddressFromAddForm(): CheckoutStoredAddress {
+    const country = getCountryByCode(this.addAddressForm.country);
+    const nameParts = splitFullName(this.addAddressForm.fullName);
+    const baseAddress: SavedAddress = {
+      label: 'Shipping address',
+      fullAddress: formatAddressLine({
+        street: this.addAddressForm.street.trim(),
+        city: this.addAddressForm.city.trim(),
+        state: this.addAddressForm.state.trim(),
+        postalCode: this.addAddressForm.postalCode.trim(),
+        countryName: country.name,
+      }),
+      country: country.code,
+      countryName: country.name,
+      firstName: nameParts.firstName,
+      lastName: nameParts.lastName,
+      phone: this.addAddressForm.phone.trim(),
+      phonePrefix: this.addAddressForm.phonePrefix,
+      street: this.addAddressForm.street.trim(),
+      apartment: this.addAddressForm.apartment.trim(),
+      state: this.addAddressForm.state.trim(),
+      city: this.addAddressForm.city.trim(),
+      postalCode: this.addAddressForm.postalCode.trim(),
+    };
+
+    return {
+      id: this.editingAddressId || generateAddressId(),
+      isDefault: this.addAddressForm.isDefaultAddress,
+      ...baseAddress,
+    };
+  },
+
+  submitAddAddress() {
+    if (!this.validateAddAddressForm()) return;
+
+    const candidate = this.buildAddressFromAddForm();
+
+    if (this.isEditingAddress && this.editingAddressId) {
+      this.savedAddresses = this.savedAddresses.map((address) => (
+        address.id === this.editingAddressId ? candidate : address
+      ));
+    } else {
+      this.savedAddresses = [candidate, ...this.savedAddresses];
+    }
+
+    if (candidate.isDefault || this.savedAddresses.length === 1) {
+      this.savedAddresses = this.savedAddresses.map((address) => ({
+        ...address,
+        isDefault: address.id === candidate.id,
+      }));
+    } else if (!this.savedAddresses.some((address) => address.isDefault)) {
+      this.savedAddresses[0].isDefault = true;
+    }
+
+    this.persistAddresses();
+    this.applySelectedAddress(candidate.id);
+    this.showAddressForm = false;
+    this.isAddAddressModalOpen = false;
+    this.isAddressSelectorOpen = false;
   },
 
   toggleDropdown(name: string) {
     const keys = ['country', 'state', 'city'];
-    // Close all other dropdowns
-    keys.forEach(k => {
-      if (k !== name) (this as any)[`${k}Open`] = false; // eslint-disable-line @typescript-eslint/no-explicit-any
+    keys.forEach((key) => {
+      if (key !== name) {
+        const otherProp = `${key}Open` as 'countryOpen' | 'stateOpen' | 'cityOpen';
+        this[otherProp] = false;
+      }
     });
-    const prop = `${name}Open`;
-    (this as any)[prop] = !(this as any)[prop]; // eslint-disable-line @typescript-eslint/no-explicit-any
+    const prop = `${name}Open` as 'countryOpen' | 'stateOpen' | 'cityOpen';
+    if (name === 'city') {
+      const stateFromDom = ((this.$el as HTMLElement)
+        .querySelector('[data-dropdown="state-dropdown"] [data-display]')?.textContent ?? '')
+        .trim();
+      const effectiveState = this.stateDisplay.trim() || stateFromDom;
+      this.updateCityDropdown(effectiveState);
+    }
+    this[prop] = !this[prop];
   },
 
   selectCountryItem(event: Event) {
     const item = (event.target as HTMLElement).closest('li') as HTMLElement | null;
     if (!item) return;
 
-    // Update selected state visually
     const list = item.closest('[data-list]');
-    list?.querySelectorAll('li').forEach(i => i.classList.remove('bg-blue-50', 'text-blue-800'));
+    list?.querySelectorAll('li').forEach((node) => node.classList.remove('bg-blue-50', 'text-blue-800'));
     item.classList.add('bg-blue-50', 'text-blue-800');
 
-    // Update display and phone prefix
     this.countryDisplay = `${item.dataset.flag || ''} ${item.dataset.name || ''}`;
     if (item.dataset.prefix) this.phonePrefix = item.dataset.prefix;
 
@@ -1732,23 +2374,23 @@ Alpine.data('shippingForm', () => ({
     if (!item) return;
 
     const list = item.closest('[data-list]');
-    list?.querySelectorAll('li').forEach(i => i.classList.remove('bg-blue-50', 'text-blue-800'));
+    list?.querySelectorAll('li').forEach((node) => node.classList.remove('bg-blue-50', 'text-blue-800'));
     item.classList.add('bg-blue-50', 'text-blue-800');
 
-    this.stateDisplay = item.dataset.value || '';
+    const stateValue = (item.dataset.value || item.textContent || '').trim();
+    this.stateDisplay = stateValue;
     this.stateOpen = false;
     this.errors.state = false;
-
-    // Update city dropdown when state changes
-    this.updateCityDropdown(item.dataset.value || '');
+    this.updateCityDropdown(stateValue);
   },
 
   selectCityItem(event: Event) {
     const item = (event.target as HTMLElement).closest('li') as HTMLElement | null;
     if (!item) return;
+    if (item.dataset.disabled === 'true') return;
 
     const list = item.closest('[data-list]');
-    list?.querySelectorAll('li').forEach(i => i.classList.remove('bg-blue-50', 'text-blue-800'));
+    list?.querySelectorAll('li').forEach((node) => node.classList.remove('bg-blue-50', 'text-blue-800'));
     item.classList.add('bg-blue-50', 'text-blue-800');
 
     this.cityDisplay = item.dataset.value || item.textContent?.trim() || '';
@@ -1757,16 +2399,30 @@ Alpine.data('shippingForm', () => ({
   },
 
   updateCityDropdown(stateName: string) {
-    const districts = districtsByProvince[stateName] ?? ['Merkez'];
+    const normalizedState = normalizeProvinceName(stateName);
     this.cityDisplay = '';
 
     const el = this.$el as HTMLElement;
     const cityList = el.querySelector('[data-dropdown="city-dropdown"] [data-list]');
-    if (cityList) {
-      cityList.innerHTML = districts.map(d =>
-        `<li class="px-3 py-2 text-[14px] text-[var(--color-text-primary)] cursor-pointer hover:bg-[#f5f5f5] transition-colors" role="option" data-value="${d}">${d}</li>`
-      ).join('');
+    if (!cityList) return;
+
+    if (!normalizedState) {
+      cityList.innerHTML = `
+        <li
+          class="px-3 py-2 text-[13px] text-[#9ca3af] cursor-not-allowed"
+          role="option"
+          data-disabled="true"
+        >
+          Once state / province secin
+        </li>
+      `;
+      return;
     }
+
+    const districts = DISTRICTS_BY_PROVINCE_NORMALIZED[normalizedState] ?? FALLBACK_CITY_OPTIONS;
+    cityList.innerHTML = districts.map(district =>
+      `<li class="px-3 py-2 text-[14px] text-[var(--color-text-primary)] cursor-pointer hover:bg-[#f5f5f5] transition-colors" role="option" data-value="${district}">${district}</li>`
+    ).join('');
   },
 
   clearError(fieldName: string) {
@@ -1775,7 +2431,7 @@ Alpine.data('shippingForm', () => ({
 
   handleSubmit() {
     const requiredFields = ['country', 'firstName', 'phone', 'streetAddress', 'state', 'city', 'postalCode'];
-    requiredFields.forEach(f => { this.errors[f] = false; });
+    requiredFields.forEach(field => { this.errors[field] = false; });
 
     const el = this.$el as HTMLElement;
     const idMap: Record<string, string> = {
@@ -1811,21 +2467,53 @@ Alpine.data('shippingForm', () => ({
       return;
     }
 
-    // Collect form data
-    const formData = {
-      country: this.countryDisplay,
-      firstName: getValue('firstName'),
-      phonePrefix: this.phonePrefix,
+    const countryMatch = checkoutCountries.find((country) => this.countryDisplay.includes(country.name));
+    const country = countryMatch ?? defaultShippingCountry;
+    const fullName = getValue('firstName');
+    const nameParts = splitFullName(fullName);
+    const street = getValue('streetAddress');
+    const state = this.stateDisplay;
+    const city = this.cityDisplay;
+    const postalCode = getValue('postalCode');
+    const apartment = (el.querySelector<HTMLInputElement>('#apartment'))?.value?.trim() ?? '';
+
+    const candidate: CheckoutStoredAddress = {
+      id: generateAddressId(),
+      isDefault: (el.querySelector<HTMLInputElement>('#default-address'))?.checked ?? this.savedAddresses.length === 0,
+      label: 'Shipping address',
+      fullAddress: formatAddressLine({
+        street,
+        city,
+        state,
+        postalCode,
+        countryName: country.name,
+      }),
+      country: country.code,
+      countryName: country.name,
+      firstName: nameParts.firstName,
+      lastName: nameParts.lastName,
       phone: getValue('phone'),
-      streetAddress: getValue('streetAddress'),
-      apartment: (el.querySelector<HTMLInputElement>('#apartment'))?.value?.trim() ?? '',
-      state: this.stateDisplay,
-      city: this.cityDisplay,
-      postalCode: getValue('postalCode'),
-      isDefaultAddress: (el.querySelector<HTMLInputElement>('#default-address'))?.checked ?? false,
+      phonePrefix: this.phonePrefix,
+      street,
+      apartment,
+      state,
+      city,
+      postalCode,
     };
 
-    console.info('Checkout form submitted:', formData);
+    this.savedAddresses = [candidate, ...this.savedAddresses];
+    if (candidate.isDefault || this.savedAddresses.length === 1) {
+      this.savedAddresses = this.savedAddresses.map((address) => ({
+        ...address,
+        isDefault: address.id === candidate.id,
+      }));
+    }
+
+    this.persistAddresses();
+    this.applySelectedAddress(candidate.id);
+    this.showAddressForm = false;
+    this.isAddressSelectorOpen = false;
+    this.isAddAddressModalOpen = false;
   },
 
   useCurrentLocation() {
@@ -1835,22 +2523,20 @@ Alpine.data('shippingForm', () => ({
       navigator.geolocation.getCurrentPosition(
         () => {
           const el = this.$el as HTMLElement;
-          const setInput = (id: string, val: string) => {
+          const setInput = (id: string, value: string) => {
             const input = el.querySelector<HTMLInputElement>(`#${id}`);
-            if (input) input.value = val;
+            if (input) input.value = value;
           };
 
           setInput('street-address', geolocationMockAddress.street || '');
           setInput('postal-code', geolocationMockAddress.postalCode);
-
           this.stateDisplay = geolocationMockAddress.state;
+          this.updateCityDropdown(geolocationMockAddress.state);
+          this.cityDisplay = geolocationMockAddress.city;
+
           this.errors.streetAddress = false;
           this.errors.postalCode = false;
           this.errors.state = false;
-
-          // Update city dropdown and set city
-          this.updateCityDropdown(geolocationMockAddress.state);
-          this.cityDisplay = geolocationMockAddress.city;
           this.errors.city = false;
         },
         () => {
@@ -1860,62 +2546,26 @@ Alpine.data('shippingForm', () => ({
     }
   },
 
-  /**
-   * Fill all form fields from the saved address.
-   * Updates Alpine reactive state for dropdowns and imperatively sets text inputs.
-   */
-  fillSavedAddress() {
-    const addr = checkoutSavedAddress;
-    const el = this.$el as HTMLElement;
+  useCurrentLocationForAddForm() {
+    if (!navigator.geolocation) return;
 
-    // Update country display and phone prefix
-    const matchedCountry = checkoutCountries.find(c => c.code === addr.country);
-    if (matchedCountry) {
-      this.countryDisplay = `${matchedCountry.flag} ${matchedCountry.name}`;
-      this.phonePrefix = matchedCountry.phonePrefix;
-
-      // Update country list selected styling
-      const countryList = el.querySelector('[data-dropdown="country-dropdown"] [data-list]');
-      countryList?.querySelectorAll('li').forEach(i => i.classList.remove('bg-blue-50', 'text-blue-800'));
-      const countryItem = countryList?.querySelector(`[data-value="${addr.country}"]`) as HTMLElement | null;
-      countryItem?.classList.add('bg-blue-50', 'text-blue-800');
+    if (confirm('Allow TradeHub to access your current location?')) {
+      navigator.geolocation.getCurrentPosition(
+        () => {
+          this.addAddressForm.street = geolocationMockAddress.street || '';
+          this.addAddressForm.state = geolocationMockAddress.state;
+          this.addAddressForm.city = geolocationMockAddress.city;
+          this.addAddressForm.postalCode = geolocationMockAddress.postalCode;
+          this.addFormErrors.street = false;
+          this.addFormErrors.state = false;
+          this.addFormErrors.city = false;
+          this.addFormErrors.postalCode = false;
+        },
+        () => {
+          // Silent fail on geolocation denial
+        }
+      );
     }
-
-    // Fill text inputs
-    const setInput = (id: string, val: string) => {
-      const input = el.querySelector<HTMLInputElement>(`#${id}`);
-      if (input) input.value = val;
-    };
-
-    setInput('first-name', addr.firstName);
-    setInput('phone', addr.phone);
-    setInput('street-address', addr.street);
-    setInput('apartment', addr.apartment);
-    setInput('postal-code', addr.postalCode);
-
-    // Update state dropdown
-    this.stateDisplay = addr.state;
-    const stateList = el.querySelector('[data-dropdown="state-dropdown"] [data-list]');
-    stateList?.querySelectorAll('li').forEach(i => {
-      i.classList.toggle('bg-blue-50', (i as HTMLElement).dataset.value === addr.state);
-      i.classList.toggle('text-blue-800', (i as HTMLElement).dataset.value === addr.state);
-    });
-
-    // Update city dropdown with districts for the selected state, then select city
-    this.updateCityDropdown(addr.state);
-    this.cityDisplay = addr.city;
-
-    // Clear all errors
-    const fields = ['country', 'firstName', 'phone', 'streetAddress', 'apartment', 'state', 'city', 'postalCode'];
-    for (const f of fields) {
-      this.errors[f] = false;
-    }
-
-    // Close autocomplete popup and all dropdowns
-    this.autocompleteOpen = false;
-    this.countryOpen = false;
-    this.stateOpen = false;
-    this.cityOpen = false;
   },
 }));
 
@@ -2189,6 +2839,160 @@ Alpine.data('sidebar', () => ({
     if (!this.shouldUsePeekExpand()) {
       this.setPeekExpanded(false);
     }
+  },
+}));
+
+// ─── Messages / Inbox Component ────────────────────────────────────
+Alpine.data('messagesComponent', () => ({
+  activeCategory: 'all',
+  searchQuery: '',
+  selectedConversation: null as any,
+  newMessage: '',
+  filterOpen: false,
+  filterType: 'all',
+  feedbackVisible: true,
+
+  categories: [
+    { id: 'all', label: 'Tümü', icon: 'chat' },
+    { id: 'unread', label: 'Okunmamış', icon: 'eye' },
+  ],
+
+  conversations: [
+    {
+      id: 'conv-001',
+      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face',
+      name: 'Robert Song',
+      company: 'Ningbo Happiness Statio...',
+      preview: '[Fiyat teklifi] Tedarikçi RFQ\'nuza yanıt verdi',
+      date: '2026-2-19',
+      unreadCount: 2,
+      messages: [
+        { id: 'm1', sender: 'Robert Song', text: 'Merhaba, RFQ talebinize yanıt vermek istiyorum. Ürünlerimiz hakkında detaylı bilgi paylaşabilirim.', time: '09:15', isMe: false },
+        { id: 'm2', sender: 'Ben', text: 'Merhaba Robert, fiyat teklifinizi bekliyorum. Minimum sipariş miktarı nedir?', time: '09:30', isMe: true },
+        { id: 'm3', sender: 'Robert Song', text: 'Minimum sipariş miktarımız 500 adet. Birim fiyat $2.50\'dir. Toplu alımlarda %15\'e kadar indirim yapabiliriz.', time: '10:05', isMe: false },
+        { id: 'm4', sender: 'Ben', text: '1000 adet için özel fiyat teklifi alabilir miyim?', time: '10:20', isMe: true },
+        { id: 'm5', sender: 'Robert Song', text: '1000 adet için birim fiyat $2.15 olarak teklif edebilirim. Kargo dahil değildir. Teslimat süresi 15-20 iş günüdür.', time: '11:00', isMe: false },
+      ],
+    },
+    {
+      id: 'conv-002',
+      avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&fit=crop&crop=face',
+      name: 'Leo',
+      company: 'Dg Excelpro Rubber Co., L...',
+      preview: '[Fiyat teklifi] Tedarikçi RFQ\'nuza yanıt verdi',
+      date: '2026-2-19',
+      unreadCount: 2,
+      messages: [
+        { id: 'm1', sender: 'Leo', text: 'RFQ talebiniz için teşekkürler. Kauçuk ürünlerimiz hakkında detaylı katalog gönderebilirim.', time: '14:00', isMe: false },
+        { id: 'm2', sender: 'Ben', text: 'Katalog gönderirseniz sevinirim. Özellikle silikon ürünlerle ilgileniyorum.', time: '14:15', isMe: true },
+        { id: 'm3', sender: 'Leo', text: 'Tabii, silikon ürün katalogumuzu ekte bulabilirsiniz. Herhangi bir sorunuz olursa çekinmeden sorun.', time: '14:45', isMe: false },
+      ],
+    },
+    {
+      id: 'conv-003',
+      avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop&crop=face',
+      name: 'Yue Luo',
+      company: 'Sichuan Wang Zhihao Tra...',
+      preview: '[Fiyat teklifi] Tedarikçi RFQ\'nuza yanıt verdi',
+      date: '2026-2-19',
+      unreadCount: 2,
+      messages: [
+        { id: 'm1', sender: 'Yue Luo', text: 'Merhaba, tekstil ürünlerimiz hakkında bilgi almak ister misiniz?', time: '16:00', isMe: false },
+        { id: 'm2', sender: 'Ben', text: 'Evet, pamuklu kumaş fiyatları hakkında bilgi alabilir miyim?', time: '16:10', isMe: true },
+      ],
+    },
+    {
+      id: 'conv-004',
+      avatar: '',
+      name: 'TradeHub.com',
+      company: '',
+      preview: 'Yeni mi? TradeHub.com İleri düzey tedarikçi hizmetlerimizi keşfedin',
+      date: '2026-2-19',
+      unreadCount: 1,
+      messages: [
+        { id: 'm1', sender: 'TradeHub.com', text: 'TradeHub.com\'a hoş geldiniz! İleri düzey tedarikçi hizmetlerimizi keşfedin. Trade Assurance ile güvenli ticaret yapın.', time: '08:00', isMe: false },
+      ],
+    },
+  ],
+
+  getUnreadTotal(): number {
+    return this.conversations.reduce((sum: number, c: any) => sum + c.unreadCount, 0);
+  },
+
+  getFilteredConversations(): any[] {
+    let list = [...this.conversations] as any[];
+    if (this.activeCategory === 'unread') {
+      list = list.filter((c: any) => c.unreadCount > 0);
+    }
+    if (this.filterType === 'unread') {
+      list = list.filter((c: any) => c.unreadCount > 0);
+    } else if (this.filterType === 'read') {
+      list = list.filter((c: any) => c.unreadCount === 0);
+    }
+    if (this.searchQuery.trim()) {
+      const q = this.searchQuery.toLowerCase();
+      list = list.filter((c: any) =>
+        c.name.toLowerCase().includes(q) ||
+        c.company.toLowerCase().includes(q) ||
+        c.preview.toLowerCase().includes(q)
+      );
+    }
+    return list;
+  },
+
+  setCategory(id: string) {
+    this.activeCategory = id;
+    this.filterType = 'all';
+    this.filterOpen = false;
+  },
+
+  selectConversation(conv: any) {
+    this.selectedConversation = conv;
+    const found = this.conversations.find((c: any) => c.id === conv.id);
+    if (found) (found as any).unreadCount = 0;
+    this.$nextTick(() => {
+      const chatBody = document.getElementById('msg-chat-body');
+      if (chatBody) chatBody.scrollTop = chatBody.scrollHeight;
+    });
+  },
+
+  backToList() {
+    this.selectedConversation = null;
+    this.newMessage = '';
+  },
+
+  sendMessage() {
+    if (!this.newMessage.trim() || !this.selectedConversation) return;
+    const now = new Date();
+    const timeStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+    const msg = {
+      id: 'm' + Date.now(),
+      sender: 'Ben',
+      text: this.newMessage.trim(),
+      time: timeStr,
+      isMe: true,
+    };
+    (this.selectedConversation as any).messages.push(msg);
+    const found = this.conversations.find((c: any) => c.id === (this.selectedConversation as any).id);
+    if (found) (found as any).preview = this.newMessage.trim();
+    this.newMessage = '';
+    this.$nextTick(() => {
+      const chatBody = document.getElementById('msg-chat-body');
+      if (chatBody) chatBody.scrollTop = chatBody.scrollHeight;
+    });
+  },
+
+  toggleFilter() {
+    this.filterOpen = !this.filterOpen;
+  },
+
+  setFilter(type: string) {
+    this.filterType = type;
+    this.filterOpen = false;
+  },
+
+  dismissFeedback() {
+    this.feedbackVisible = false;
   },
 }));
 

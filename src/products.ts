@@ -105,7 +105,7 @@ appEl.innerHTML = `
 
   <!-- Main Content -->
   <main>
-    <section class="py-4 lg:py-6" style="background: var(--products-bg, #f9fafb);">
+    <section class="pt-6 pb-4 lg:pt-8 lg:pb-6" style="background: var(--products-bg, #f9fafb);">
       <div class="container-boxed">
         ${Breadcrumb(productsBreadcrumb)}
         <!-- Search Header (keyword, product count, sorting, view toggle) -->

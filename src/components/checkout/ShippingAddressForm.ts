@@ -1,32 +1,19 @@
 /**
  * ShippingAddressForm Component (C2)
- * Shipping address form with float-label inputs, country dropdown,
- * composite phone input, and 3-column state/city/postal row.
- *
- * Interactivity handled by Alpine.js x-data="shippingForm" (see alpine.ts).
- * Float-label behavior is CSS-driven via Tailwind peer-* classes.
+ * Shipping address form + saved address selector/add modals.
+ * Interactivity is handled by Alpine.js x-data="shippingForm" (see alpine.ts).
  */
 
 import type { Country, Province } from '../../types/checkout';
 import { countries, turkishProvinces, pageContent } from '../../data/mockCheckout';
-import { AddressAutocomplete } from './AddressAutocomplete';
 
 export interface ShippingAddressFormProps {
   countries?: Country[];
   provinces?: Province[];
 }
 
-/** Chevron-down SVG icon */
 const ChevronDown = `<svg class="w-4 h-4 shrink-0 transition-transform" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>`;
 
-// SVG icon constants (InfoIcon, LocationIcon) removed — unused in template.
-// See ChevronDown above for the icon that IS used by dropdown buttons.
-
-/**
- * Float-label text input field.
- * Alpine binds error state via x-bind:data-error and clears on @input.
- * Float-label animation uses CSS peer-* selectors with transition-all duration-200.
- */
 function floatField(id: string, name: string, label: string, required: boolean, type = 'text', helperText?: string, helperAction?: string): string {
   return `
     <div class="relative mb-4 group checkout-field-container" data-field="${name}" x-bind:data-error="errors.${name}">
@@ -41,7 +28,7 @@ function floatField(id: string, name: string, label: string, required: boolean, 
         @input="clearError('${name}')"
       />
       <label
-        class="absolute left-3 top-1/2 -translate-y-1/2 text-[14px] text-[#767676] transition-all duration-200 ease-in-out pointer-events-none peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-[14px] peer-placeholder-shown:text-[#767676] peer-focus:top-[12px] peer-focus:-translate-y-1/2 peer-focus:text-[12px] peer-focus:text-[var(--color-primary-500)] peer-focus:bg-transparent group-data-[error=true]:text-[var(--color-error-500)] ${type !== 'tel' && `peer-[:not(:placeholder-shown)]:top-[12px] peer-[:not(:placeholder-shown)]:-translate-y-1/2 peer-[:not(:placeholder-shown)]:text-[12px]`}"
+        class="absolute left-3 top-1/2 -translate-y-1/2 text-[14px] text-[#767676] transition-all duration-200 ease-in-out pointer-events-none peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-[14px] peer-placeholder-shown:text-[#767676] peer-focus:top-[12px] peer-focus:-translate-y-1/2 peer-focus:text-[12px] peer-focus:text-[var(--color-primary-500)] peer-focus:bg-transparent group-data-[error=true]:text-[var(--color-error-500)] ${type !== 'tel' ? `peer-[:not(:placeholder-shown)]:top-[12px] peer-[:not(:placeholder-shown)]:-translate-y-1/2 peer-[:not(:placeholder-shown)]:text-[12px]` : ''}"
         for="${id}"
       >
         ${label}${required ? ' <span class="text-[var(--color-error-500)]">*</span>' : ''}
@@ -53,13 +40,6 @@ function floatField(id: string, name: string, label: string, required: boolean, 
   `;
 }
 
-/**
- * Dropdown select field with Alpine.js bindings.
- * Uses @click for toggling, @click.outside for closing, and x-text for display sync.
- * Dropdown visibility controlled via group-data-[open=true]:block CSS.
- * Float-label on dropdown is always in "floated" position (top-[12px]) since
- * the label text is always visible.
- */
 function dropdownField(
   id: string,
   name: string,
@@ -98,51 +78,260 @@ function dropdownField(
   `;
 }
 
-/** Default country (Turkey) */
 const defaultCountry = countries.find(c => c.code === 'TR') ?? countries[0];
+
+function renderAddressSelectorModal(): string {
+  return `
+    <div
+      class="fixed inset-0 z-[80] bg-black/45 p-4 flex items-center justify-center"
+      x-cloak
+      x-show="isAddressSelectorOpen"
+      @keydown.escape.window="closeAddressSelector()"
+    >
+      <div class="w-full max-w-[840px] max-h-[88vh] overflow-hidden rounded-xl bg-white shadow-xl">
+        <div class="flex items-center justify-between px-6 py-5 border-b border-[#e5e7eb]">
+          <h3 class="text-[32px] font-bold text-[#111827] leading-tight">Select shipping address</h3>
+          <button type="button" class="text-[#111827] hover:opacity-70" @click="closeAddressSelector()">
+            <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M18 6L6 18M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+
+        <div class="px-6 py-5 overflow-y-auto max-h-[56vh]">
+          <button
+            type="button"
+            class="h-12 rounded-full border border-[#111827] px-6 text-[16px] font-semibold text-[#111827] hover:bg-[#f9fafb]"
+            @click="openAddAddressModal()"
+          >
+            + Add an address
+          </button>
+
+          <div class="mt-5 border-t border-[#e5e7eb] pt-5 space-y-4">
+            <template x-for="address in savedAddresses" :key="address.id">
+              <div
+                class="rounded-lg border p-4"
+                :class="pendingAddressId === address.id ? 'border-[#111827]' : 'border-[#e5e7eb]'"
+              >
+                <div class="flex items-start gap-3">
+                  <input
+                    type="radio"
+                    class="mt-1 h-5 w-5 accent-[#111827]"
+                    :value="address.id"
+                    x-model="pendingAddressId"
+                  />
+                  <div class="flex-1 min-w-0">
+                    <div class="flex items-start justify-between gap-3">
+                      <div>
+                        <p class="text-[16px] font-semibold text-[#111827]" x-text="address.firstName + ' ' + address.lastName"></p>
+                        <p class="mt-1 text-[16px] text-[#374151]" x-text="address.fullAddress"></p>
+                        <p class="mt-1 text-[16px] text-[#374151]" x-text="address.phonePrefix + ' ' + address.phone"></p>
+                        <button
+                          type="button"
+                          class="mt-2 text-[16px] underline text-[#374151] hover:text-[#111827]"
+                          x-show="!address.isDefault"
+                          @click="setDefaultAddress(address.id)"
+                        >
+                          Set as default
+                        </button>
+                      </div>
+                      <div class="flex items-center gap-2">
+                        <button type="button" class="text-[#374151] hover:text-[#111827]" @click="startEditAddress(address.id)">
+                          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 113 3L7 19l-4 1 1-4 12.5-12.5z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </button>
+                        <button type="button" class="text-[#374151] hover:text-[#111827]" @click="deleteAddress(address.id)">
+                          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </template>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-end gap-3 border-t border-[#e5e7eb] px-6 py-5">
+          <button
+            type="button"
+            class="min-w-[200px] h-12 rounded-full border border-[#111827] px-6 text-[16px] font-semibold text-[#111827] hover:bg-[#f9fafb]"
+            @click="closeAddressSelector()"
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            class="min-w-[200px] h-12 rounded-full bg-[var(--color-primary-500)] px-6 text-[16px] font-semibold text-white hover:bg-[var(--color-primary-600)]"
+            @click="confirmSelectedAddress()"
+          >
+            Ship to this address
+          </button>
+        </div>
+      </div>
+    </div>
+  `.trim();
+}
+
+function renderAddAddressModal(countryOptions: string): string {
+  return `
+    <div
+      class="fixed inset-0 z-[90] bg-black/45 p-4 flex items-center justify-center"
+      x-cloak
+      x-show="isAddAddressModalOpen"
+      @keydown.escape.window="closeAddAddressModal()"
+    >
+      <div class="w-full max-w-[980px] max-h-[92vh] overflow-hidden rounded-xl bg-white shadow-xl">
+        <div class="flex items-center justify-between border-b border-[#e5e7eb] px-6 py-5">
+          <div>
+            <h3 class="text-[32px] font-bold text-[#111827]" x-text="isEditingAddress ? 'Edit address' : 'Add address'">Add address</h3>
+            <p class="mt-1 text-[14px] text-[#198f35]">Your information is encrypted and secure</p>
+          </div>
+          <button type="button" class="text-[#111827] hover:opacity-70" @click="closeAddAddressModal()">
+            <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M18 6L6 18M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+
+        <div class="px-6 py-5 overflow-y-auto max-h-[62vh]">
+          <div class="grid grid-cols-1 gap-4">
+            <div>
+              <label class="block text-[14px] text-[#6b7280] mb-1">Country / region *</label>
+              <select class="w-full h-12 rounded-lg border border-[#d1d5db] px-3 text-[14px] text-[#111827] outline-none focus:border-[#111827]" x-model="addAddressForm.country" @change="syncAddAddressCountry()">
+                ${countryOptions}
+              </select>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-[14px] text-[#6b7280] mb-1">First name and Last name *</label>
+                <input class="w-full h-12 rounded-lg border border-[#d1d5db] px-3 text-[14px] text-[#111827] outline-none focus:border-[#111827]" type="text" x-model="addAddressForm.fullName" />
+                <p class="mt-1 text-[12px] text-[#dc2626]" x-show="addFormErrors.fullName">Required</p>
+              </div>
+              <div>
+                <label class="block text-[14px] text-[#6b7280] mb-1">Phone number *</label>
+                <div class="flex gap-2">
+                  <div class="w-[84px] h-12 rounded-lg border border-[#d1d5db] flex items-center justify-center text-[14px] text-[#111827]" x-text="addAddressForm.phonePrefix"></div>
+                  <input class="flex-1 h-12 rounded-lg border border-[#d1d5db] px-3 text-[14px] text-[#111827] outline-none focus:border-[#111827]" type="tel" x-model="addAddressForm.phone" />
+                </div>
+                <p class="mt-1 text-[12px] text-[#dc2626]" x-show="addFormErrors.phone">Required</p>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-[14px] text-[#6b7280] mb-1">Street address or P.O. box *</label>
+              <div class="relative">
+                <input class="w-full h-12 rounded-lg border border-[#d1d5db] px-3 pr-[180px] text-[14px] text-[#111827] outline-none focus:border-[#111827]" type="text" x-model="addAddressForm.street" />
+                <button type="button" class="absolute right-3 top-1/2 -translate-y-1/2 text-[14px] text-[var(--color-primary-500)] hover:text-[var(--color-primary-700)]" @click="useCurrentLocationForAddForm()">Use my current location</button>
+              </div>
+              <p class="mt-1 text-[12px] text-[#dc2626]" x-show="addFormErrors.street">Required</p>
+            </div>
+
+            <div>
+              <label class="block text-[14px] text-[#6b7280] mb-1">Apartment, suite, unit, building, floor (optional)</label>
+              <input class="w-full h-12 rounded-lg border border-[#d1d5db] px-3 text-[14px] text-[#111827] outline-none focus:border-[#111827]" type="text" x-model="addAddressForm.apartment" />
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div>
+                <label class="block text-[14px] text-[#6b7280] mb-1">State / province *</label>
+                <input class="w-full h-12 rounded-lg border border-[#d1d5db] px-3 text-[14px] text-[#111827] outline-none focus:border-[#111827]" type="text" x-model="addAddressForm.state" />
+                <p class="mt-1 text-[12px] text-[#dc2626]" x-show="addFormErrors.state">Required</p>
+              </div>
+              <div>
+                <label class="block text-[14px] text-[#6b7280] mb-1">City *</label>
+                <input class="w-full h-12 rounded-lg border border-[#d1d5db] px-3 text-[14px] text-[#111827] outline-none focus:border-[#111827]" type="text" x-model="addAddressForm.city" />
+                <p class="mt-1 text-[12px] text-[#dc2626]" x-show="addFormErrors.city">Required</p>
+              </div>
+              <div>
+                <label class="block text-[14px] text-[#6b7280] mb-1">Postal code *</label>
+                <input class="w-full h-12 rounded-lg border border-[#d1d5db] px-3 text-[14px] text-[#111827] outline-none focus:border-[#111827]" type="text" x-model="addAddressForm.postalCode" />
+                <p class="mt-1 text-[12px] text-[#dc2626]" x-show="addFormErrors.postalCode">Required</p>
+              </div>
+            </div>
+
+            <label class="inline-flex items-center gap-2 text-[14px] text-[#374151]">
+              <input type="checkbox" class="h-4 w-4 rounded border-[#d1d5db] accent-[#111827]" x-model="addAddressForm.isDefaultAddress" />
+              <span>Set as default shipping address</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-end gap-3 border-t border-[#e5e7eb] px-6 py-5">
+          <button
+            type="button"
+            class="min-w-[200px] h-12 rounded-full border border-[#111827] px-6 text-[16px] font-semibold text-[#111827] hover:bg-[#f9fafb]"
+            @click="closeAddAddressModal()"
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            class="min-w-[200px] h-12 rounded-full bg-[var(--color-primary-500)] px-6 text-[16px] font-semibold text-white hover:bg-[var(--color-primary-600)]"
+            @click="submitAddAddress()"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+  `.trim();
+}
 
 export function ShippingAddressForm(props: ShippingAddressFormProps = {}): string {
   const ctrs = props.countries ?? countries;
-  const _provinces = props.provinces ?? turkishProvinces;
+  const provinces = props.provinces ?? turkishProvinces;
 
-  // Country dropdown items (rendered directly into dropdown UL)
   const countryItems = ctrs.map(c =>
     `<li class="px-3 py-2 text-[14px] text-[var(--color-text-primary)] cursor-pointer hover:bg-blue-100 hover:text-blue-800 transition-colors flex items-center gap-2 ${c.code === defaultCountry.code ? 'bg-blue-50 text-blue-800' : ''}" role="option" data-value="${c.code}" data-flag="${c.flag}" data-name="${c.name}" data-prefix="${c.phonePrefix}">${c.flag} ${c.name}</li>`
   ).join('');
 
-  // Province dropdown items (rendered directly into dropdown UL)
-  const provinceItems = _provinces.map(p =>
+  const countryOptions = ctrs.map((c) => `<option value="${c.code}">${c.name}</option>`).join('');
+
+  const provinceItems = provinces.map(p =>
     `<li class="px-3 py-2 text-[14px] text-[var(--color-text-primary)] cursor-pointer hover:bg-[#f5f5f5] transition-colors" role="option" data-value="${p.name}">${p.name}</li>`
   ).join('');
 
   return `
     <section class="checkout-section mb-4" id="shipping-address-section" x-data="shippingForm">
-      <!-- Section Header -->
       <div class="flex items-center gap-3 p-4 lg:p-5">
         <div class="flex items-center justify-center w-7 h-7 rounded-full bg-[var(--color-primary-500)] text-white text-sm font-semibold shrink-0">1</div>
         <h2 class="text-base lg:text-lg font-semibold text-[var(--color-text-primary)]">${pageContent.shippingAddressTitle}</h2>
       </div>
 
-      <!-- Form Content -->
-      <div class="checkout-section__content">
-        <form id="shipping-address-form" class="px-4 lg:px-5 pb-5" novalidate @submit.prevent="handleSubmit()">
+      <div class="checkout-section__content px-4 lg:px-5 pb-5">
+        <div
+          class="rounded-xl border border-[#e5e7eb] bg-white p-4"
+          x-cloak
+          x-show="selectedAddressId && !showAddressForm"
+        >
+          <div class="flex items-center justify-between gap-4">
+            <div>
+              <p class="text-[14px] font-semibold text-[#111827]">Shipping address</p>
+              <p class="mt-2 text-[15px] font-semibold text-[#111827]" x-text="selectedAddressName"></p>
+              <p class="mt-1 text-[15px] text-[#374151]" x-text="selectedAddressPhone"></p>
+              <p class="mt-1 text-[15px] text-[#374151]" x-text="selectedAddressLine"></p>
+            </div>
+            <button type="button" class="text-[14px] font-semibold underline text-[#111827] hover:opacity-70" @click="openAddressSelector()">
+              Change
+            </button>
+          </div>
+        </div>
+
+        <form id="shipping-address-form" class="mt-2" novalidate @submit.prevent="handleSubmit()" x-cloak x-show="showAddressForm">
           <div class="flex flex-col gap-0">
             <div class="flex items-center gap-2 mb-4 text-[#008a00] text-[14px] font-medium">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" class="shrink-0"><path d="M18 10v-3.5A6.5 6.5 0 105 6.5V10H4v12h16V10h-2zm-2 0H8v-3.5a4.5 4.5 0 119 0V10zm-3 5.5v3h-2v-3h2z" fill="currentColor"/></svg>
               <span>Your information is encrypted and secure</span>
             </div>
 
-            <!-- Country/Region — Alpine dropdown with @click/@click.outside -->
-            ${dropdownField('country-dropdown', 'country', 'Country / region',
+            ${dropdownField(
+              'country-dropdown',
+              'country',
+              'Country / region',
               `${defaultCountry.flag} ${defaultCountry.name}`,
               countryItems,
               { openProp: 'countryOpen', selectFn: 'selectCountryItem($event)', displayProp: 'countryDisplay' }
             )}
 
-            <!-- First name and Last name -->
             ${floatField('first-name', 'firstName', 'First name and Last name', true)}
 
-            <!-- Phone Number (composite) — Alpine binds error and prefix -->
             <div class="relative mb-4 group checkout-field-container flex gap-2" data-field="phone" x-bind:data-error="errors.phone">
               <div class="flex items-center justify-center w-[70px] h-[48px] rounded-lg border border-[var(--color-border-medium)] bg-transparent text-[14px] text-[var(--color-text-primary)] shrink-0">
                 <span id="phone-prefix" x-text="phonePrefix">${defaultCountry.phonePrefix}</span>
@@ -166,9 +355,8 @@ export function ShippingAddressForm(props: ShippingAddressFormProps = {}): strin
               </div>
               <p class="absolute top-[100%] left-[78px] text-[14px] text-[#767676] mt-[8px]">Only used to contact you for delivery updates</p>
             </div>
-            <div class="h-[30px]"></div> <!-- Spacer for absolute positioned help text -->
+            <div class="h-[30px]"></div>
 
-            <!-- Street Address — with "Use my current location" Alpine action -->
             ${floatField('street-address', 'streetAddress', pageContent.streetAddressLabel, true, 'text', '', `
               <button type="button" id="use-location-btn" @click.prevent="useCurrentLocation()" class="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1 bg-[#FFFFFF] px-[16px] py-0 text-[14px] text-[var(--color-primary-500)] hover:text-[var(--color-primary-700)] transition-colors">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
@@ -176,68 +364,62 @@ export function ShippingAddressForm(props: ShippingAddressFormProps = {}): strin
               </button>
             `)}
 
-          <!-- Apartment (optional) -->
-          ${floatField('apartment', 'apartment', pageContent.apartmentLabel, false)}
+            ${floatField('apartment', 'apartment', pageContent.apartmentLabel, false)}
 
-          <!-- State / City / Postal Code — 3-column row -->
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-            <!-- State/Province — Alpine dropdown -->
-            <div class="relative">
-              ${dropdownField('state-dropdown', 'state', 'State / province', '',
-                provinceItems,
-                { openProp: 'stateOpen', selectFn: 'selectStateItem($event)', displayProp: 'stateDisplay' }
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+              <div class="relative">
+                ${dropdownField(
+                  'state-dropdown',
+                  'state',
+                  'State / province',
+                  '',
+                  provinceItems,
+                  { openProp: 'stateOpen', selectFn: 'selectStateItem($event)', displayProp: 'stateDisplay' }
+                )}
+              </div>
+
+              ${dropdownField(
+                'city-dropdown',
+                'city',
+                'City',
+                '',
+                '',
+                { openProp: 'cityOpen', selectFn: 'selectCityItem($event)', displayProp: 'cityDisplay' }
               )}
-              ${AddressAutocomplete()}
+
+              ${floatField('postal-code', 'postalCode', 'Postal code', true, 'text')}
             </div>
 
-            <!-- City — Alpine dropdown (populated dynamically on state change) -->
-            ${dropdownField('city-dropdown', 'city', 'City', '',
-              '',
-              { openProp: 'cityOpen', selectFn: 'selectCityItem($event)', displayProp: 'cityDisplay' }
-            )}
+            <div class="flex items-center gap-2 mt-2 mb-4">
+              <input
+                type="checkbox"
+                id="default-address"
+                name="isDefaultAddress"
+                class="w-4 h-4 rounded border-[var(--color-border-medium)] text-[var(--color-primary-500)] focus:ring-[var(--color-primary-500)]"
+              />
+              <label for="default-address" class="text-sm text-[var(--color-text-secondary)] cursor-pointer select-none">
+                ${pageContent.defaultAddressCheckbox}
+              </label>
+            </div>
 
-            <!-- Postal Code -->
-            ${floatField('postal-code', 'postalCode', 'Postal code', true, 'text', '', `
-              <div class="absolute right-3 top-1/2 -translate-y-1/2 flex items-center justify-center cursor-pointer group/tooltip">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="text-[var(--color-text-primary)]"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm-1-11v6h2v-6h-2zm1-4.5a1.5 1.5 0 100 3 1.5 1.5 0 000-3z" fill="currentColor"/></svg>
-                <!-- Tooltip Popup -->
-                <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-[320px] bg-[#222222] text-white text-[14px] leading-snug p-3 rounded-md shadow-lg opacity-0 invisible group-hover/tooltip:opacity-100 group-hover/tooltip:visible transition-all z-50">
-                  Provide the exact postal code of your address to ensure delivery to the correct location
-                  <!-- Tooltip Arrow -->
-                  <div class="absolute top-full left-1/2 -translate-x-1/2 -mt-[1px] border-[6px] border-transparent border-t-[#222222]"></div>
-                </div>
-              </div>
-            `)}
+            <button
+              type="submit"
+              id="continue-payment-btn"
+              class="px-8 py-3 bg-[var(--color-primary-500)] hover:bg-[var(--color-primary-600)] text-white font-semibold text-sm rounded-[var(--radius-input)] transition-colors self-start"
+            >
+              Save and continue
+            </button>
           </div>
-
-          <!-- Default address checkbox -->
-          <div class="flex items-center gap-2 mt-2 mb-4">
-            <input
-              type="checkbox"
-              id="default-address"
-              name="isDefaultAddress"
-              class="w-4 h-4 rounded border-[var(--color-border-medium)] text-[var(--color-primary-500)] focus:ring-[var(--color-primary-500)]"
-            />
-            <label for="default-address" class="text-sm text-[var(--color-text-secondary)] cursor-pointer select-none">
-              ${pageContent.defaultAddressCheckbox}
-            </label>
-          </div>
-
-          <!-- Continue to payment button -->
-          <button
-            type="submit"
-            id="continue-payment-btn"
-            class="px-8 py-3 bg-[var(--color-primary-500)] hover:bg-[var(--color-primary-600)] text-white font-semibold text-sm rounded-[var(--radius-input)] transition-colors"
-          >
-            ${pageContent.submitButtonText}
-          </button>
         </form>
       </div>
+
+      ${renderAddressSelectorModal()}
+      ${renderAddAddressModal(countryOptions)}
     </section>
   `.trim();
 }
 
 /** @deprecated Migrated to Alpine.js x-data="shippingForm" — see alpine.ts */
 export function initShippingAddressForm(): void {
-  // No-op: form interactions now handled by Alpine.js shippingForm component
+  // No-op: interactions are handled by Alpine.js shippingForm component
 }

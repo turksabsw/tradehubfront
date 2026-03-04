@@ -170,9 +170,9 @@ function renderProductCard(card: ProductCard, index: number): string {
     >
       <!-- Image area -->
       <div class="uE82p">
-        <div class="rcEIR gT6Yt">
+        <div class="rcEIR gT6Yt aspect-square bg-gray-50 relative overflow-hidden w-full rounded-t-lg">
           <img
-            class="kRa33"
+            class="kRa33 absolute inset-0 w-full h-full object-cover"
             src="${card.imageSrc}"
             alt="${safeName}"
             loading="lazy"

@@ -47,7 +47,7 @@ export function ContactForm(data: ContactFormData): string {
 
           <!-- Send Button -->
           <div class="flex justify-center mb-4">
-            <button class="contact-form__send bg-[#f97316] hover:bg-[#ea580c] active:scale-[0.97] text-white font-semibold text-[14px] rounded-(--radius-button) px-8 py-2 xs:w-full xs:py-3 transition-[background-color,transform] duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-(--color-store-accent) focus-visible:ring-offset-2 outline-none">
+            <button class="contact-form__send bg-[var(--color-primary-500)] hover:bg-primary-600 active:scale-[0.97] text-white font-semibold text-[14px] rounded-(--radius-button) px-8 py-2 xs:w-full xs:py-3 transition-[background-color,transform] duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-(--color-store-accent) focus-visible:ring-offset-2 outline-none">
               Send
             </button>
           </div>
@@ -55,7 +55,7 @@ export function ContactForm(data: ContactFormData): string {
           <!-- Business Card Checkbox -->
           <div class="contact-form__checkbox flex items-center gap-2 justify-center">
             <input type="checkbox" id="business-card"
-                   class="w-4 h-4 text-[#f97316] border-[#d1d5db] rounded focus:ring-[#f97316]"
+                   class="w-4 h-4 text-[var(--color-primary-500)] border-[#d1d5db] rounded focus:ring-[var(--color-primary-500)]"
                    ${data.businessCardDefault !== false ? 'checked' : ''} />
             <label for="business-card" class="text-[13px] text-[#6b7280] dark:text-gray-400">
               I agree to share my Business Card to the supplier.

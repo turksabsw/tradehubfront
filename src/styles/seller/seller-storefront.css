@@ -38,17 +38,6 @@
   background-color: #f9fafb !important;
 }
 
-/* Mobile Nav Panel — max-height animation */
-.store-nav__mobile-menu {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.3s ease;
-}
-
-.store-nav__mobile-menu--open {
-  max-height: 80vh;
-  overflow-y: auto;
-}
 
 /* ═══════════════════════════════════════════════════════════
    C3: Hero Banner — Swiper Dot Pagination
@@ -142,10 +131,12 @@
 }
 
 @keyframes badge-pulse {
+
   0%,
   100% {
     opacity: 1;
   }
+
   50% {
     opacity: 0.85;
   }
@@ -263,15 +254,7 @@
   border-bottom-color: #111827;
 }
 
-.company-profile__tab-content {
-  display: none;
-  opacity: 0;
-}
 
-.company-profile__tab-content.active {
-  display: block;
-  opacity: 1;
-}
 
 .company-profile__contact-btn:focus-visible,
 .company-profile__inquiry-btn:focus-visible {

@@ -46,7 +46,7 @@ appEl.innerHTML = `
   ${MegaMenu()}
 
   <!-- Main Content -->
-  <main class="min-h-screen bg-surface relative z-10 pt-4">
+  <main class="min-h-screen bg-surface relative z-10 pt-4 flex flex-col">
     <div class="container-boxed">
       ${Breadcrumb([{ label: 'Sepetim' }])}
     </div>
