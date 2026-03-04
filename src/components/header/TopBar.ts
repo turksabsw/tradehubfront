@@ -9,6 +9,7 @@ import type { LocaleOption, CurrencyOption } from '../../types/navigation';
 import { megaCategories } from './MegaMenu';
 import { cartStore } from '../cart/state/CartStore';
 import { isLoggedIn, getUser, logout } from '../../utils/auth';
+import { mockConversations } from '../../data/mockMessages';
 
 /** Default country options for the delivery selector */
 const countryOptions: LocaleOption[] = [
@@ -124,7 +125,7 @@ function renderUserButton(): string {
  */
 function renderCompactStickySearch(): string {
   return `
-    <div id="topbar-compact-search-shell" x-data="stickyHeaderSearch" @click.outside="close()" class="hidden lg:flex flex-col justify-center relative min-w-0 flex-1 lg:mx-4 h-[56px]">
+    <div id="topbar-compact-search-shell" x-data="stickyHeaderSearch" @click.outside="close()" @istoc:close-search.window="close()" class="hidden lg:flex flex-col justify-center relative min-w-0 flex-1 lg:mx-4 h-[56px]">
 
       <form
         id="topbar-compact-search"
@@ -138,11 +139,11 @@ function renderCompactStickySearch(): string {
         aria-expanded="false"
         :aria-expanded="expanded ? 'true' : 'false'"
         aria-controls="topbar-compact-dropdown"
-        class="absolute left-0 right-0 top-[7px] z-[50] w-full border border-gray-300 bg-white shadow-sm transition-all duration-200 dark:border-gray-600 dark:bg-gray-800"
-        :class="expanded ? 'rounded-md shadow-md pt-0.5' : 'rounded-full h-[42px] flex flex-col justify-center'"
+        class="absolute left-0 right-0 top-[7px] z-[50] w-full border border-gray-300 bg-white shadow-sm transition-all duration-300 ease-in-out overflow-hidden dark:border-gray-600 dark:bg-gray-800"
+        :class="expanded ? 'rounded-2xl shadow-md h-[100px] pt-1.5' : 'rounded-full h-[42px]'"
       >
-        <div id="topbar-compact-primary-row" class="flex items-center gap-1.5" :class="expanded ? 'px-3 py-1.5' : 'px-1.5 h-[42px]'">
-          <div class="relative min-w-0 flex-1" :class="expanded ? '' : 'h-full'">
+        <div id="topbar-compact-primary-row" class="flex items-center gap-1.5 transition-all duration-300 ease-in-out shrink-0" :class="expanded ? 'px-3 h-[42px] w-full' : 'px-1.5 h-[42px]'">
+          <div class="relative min-w-0 flex-1 h-full">
             <input
               id="topbar-compact-search-input"
               x-ref="searchInput"
@@ -156,8 +157,8 @@ function renderCompactStickySearch(): string {
               aria-expanded="false"
               :aria-expanded="expanded ? 'true' : 'false'"
               aria-controls="topbar-compact-dropdown"
-              class="w-full border-0 bg-transparent px-3 text-gray-900 placeholder:text-gray-400 outline-none ring-0 focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 dark:text-white dark:placeholder:text-gray-400"
-              :class="expanded ? 'text-base py-2.5 pr-12' : 'h-full text-[13px] py-0'"
+              class="w-full h-full border-0 bg-transparent px-3 text-gray-900 placeholder:text-gray-400 outline-none ring-0 focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 transition-all duration-300 ease-in-out dark:text-white dark:placeholder:text-gray-400"
+              :class="expanded ? 'text-base pr-12' : 'text-[13px] py-0'"
             />
           </div>
 
@@ -166,21 +167,21 @@ function renderCompactStickySearch(): string {
             href="/image-search"
             tabindex="-1"
             aria-label="Image search"
-            class="inline-flex items-center justify-center text-gray-500 transition-colors hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400 shrink-0"
+            class="inline-flex items-center justify-center text-gray-500 transition-all duration-300 ease-in-out hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400 shrink-0"
             :class="expanded ? 'absolute left-4 bottom-2 h-9 w-auto gap-1.5 rounded-md px-0 text-sm font-medium text-gray-700 hover:bg-transparent dark:hover:bg-transparent' : 'h-[36px] w-[36px] rounded-full hover:bg-gray-100 dark:hover:bg-gray-700'"
           >
             <svg class="h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" />
               <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0Z" />
             </svg>
-            <span id="topbar-compact-image-search-label" x-show="expanded" x-cloak>Image Search</span>
+            <span id="topbar-compact-image-search-label" x-show="expanded" x-transition.opacity.duration.300ms x-cloak>Image Search</span>
           </a>
 
           <button
             id="topbar-compact-search-submit"
             type="submit"
             tabindex="-1"
-            class="th-btn inline-flex items-center justify-center gap-1.5 font-semibold transition-colors shrink-0"
+            class="th-btn inline-flex items-center justify-center gap-1.5 font-semibold transition-all duration-300 ease-in-out shrink-0"
             :class="expanded ? 'px-6 py-2 text-base absolute right-4 bottom-2 th-btn-pill' : 'px-5 h-[36px] text-[13px] rounded-full ml-1'"
             style="background: linear-gradient(135deg, var(--search-btn-gradient-start) 0%, var(--search-btn-gradient-end) 100%); color: white; border: none;"
           >
@@ -192,17 +193,23 @@ function renderCompactStickySearch(): string {
           </button>
         </div>
 
-        <div id="topbar-compact-secondary-row" x-show="expanded" x-cloak class="h-11"></div>
+        <div id="topbar-compact-secondary-row" class="h-11 w-full shrink-0"></div>
       </form>
 
       <div
         id="topbar-compact-dropdown"
         x-ref="dropdown"
         x-show="expanded"
+        x-transition:enter="transition ease-out duration-300 transform origin-top"
+        x-transition:enter-start="opacity-0 scale-y-95 -translate-y-2"
+        x-transition:enter-end="opacity-100 scale-y-100 translate-y-0"
+        x-transition:leave="transition ease-in duration-200 transform origin-top"
+        x-transition:leave-start="opacity-100 scale-y-100 translate-y-0"
+        x-transition:leave-end="opacity-0 scale-y-95 -translate-y-2"
         x-cloak
         aria-hidden="true"
         :aria-hidden="expanded ? 'false' : 'true'"
-        class="absolute left-0 right-0 z-(--z-modal) rounded-md border border-gray-200 bg-white px-5 py-4 shadow-xl dark:border-gray-700 dark:bg-gray-800"
+        class="absolute left-0 right-0 top-[110px] z-(--z-modal) rounded-2xl border border-gray-200 bg-white px-5 py-4 shadow-xl dark:border-gray-700 dark:bg-gray-800"
       >
         <div class="flex items-center justify-between gap-4">
           <h3 class="text-lg font-bold text-gray-900 dark:text-white">Recommended for you</h3>
@@ -372,6 +379,9 @@ function renderLanguageCurrencySelector(): string {
  * Generates the Messages icon button with popover panel
  */
 function renderMessagesButton(): string {
+  const recentMessages = mockConversations.slice(0, 3);
+  const unreadTotal = mockConversations.reduce((sum, msg) => sum + (msg.unreadCount || 0), 0);
+
   return `
     <button
       data-popover-target="popover-messages"
@@ -383,7 +393,7 @@ function renderMessagesButton(): string {
       <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 9.75a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375m-13.5 3.01c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.184-4.183a1.14 1.14 0 0 1 .778-.332 48.294 48.294 0 0 0 5.83-.498c1.585-.233 2.708-1.626 2.708-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
       </svg>
-      <span class="th-badge absolute -top-0.5 -right-0.5 flex items-center justify-center w-4 h-4 text-[10px] font-bold" style="background:var(--color-error-500);color:#fff">1</span>
+      ${unreadTotal > 0 ? `<span class="th-badge absolute -top-0.5 -right-0.5 flex items-center justify-center w-4 h-4 text-[10px] font-bold" style="background:var(--color-error-500);color:#fff">${unreadTotal > 9 ? '9+' : unreadTotal}</span>` : ''}
     </button>
 
     <!-- Messages Popover -->
@@ -394,44 +404,31 @@ function renderMessagesButton(): string {
         <h3 class="text-base font-bold text-gray-900 dark:text-white mb-4">Messages</h3>
 
         <!-- Message Items -->
-        <div class="space-y-4 mb-4">
-          <!-- Message 1 -->
-          <div class="flex items-start gap-3">
-            <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
-              <svg class="w-5 h-5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+        <div class="space-y-2 mb-4">
+          ${recentMessages.map(msg => `
+          <a href="/messages.html" class="flex items-start gap-3 p-2 -mx-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer group">
+            <div class="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center flex-shrink-0 overflow-hidden">
+              ${msg.avatar ? `<img src="${msg.avatar}" alt="${msg.name}" class="w-full h-full object-cover" />` : `
+              <svg class="w-5 h-5 text-blue-500 dark:text-blue-300" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
               </svg>
+              `}
             </div>
             <div class="flex-1 min-w-0">
               <div class="flex items-center justify-between">
-                <p class="text-sm font-semibold text-gray-900 dark:text-white">Procurement Assistant</p>
-                <span class="text-xs text-gray-400">2025-1-16</span>
+                <p class="text-sm font-semibold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">${msg.name}</p>
+                <span class="text-xs text-gray-400">${msg.date}</span>
               </div>
-              <p class="text-xs text-gray-500 dark:text-gray-400">iSTOC.com</p>
-              <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">[Message]</p>
+              <p class="text-[11px] text-gray-500 dark:text-gray-400 mt-0.5 truncate">${msg.company || 'iSTOC'}</p>
+              <p class="text-xs text-gray-600 dark:text-gray-300 mt-0.5 line-clamp-1">${msg.preview}</p>
             </div>
-            <span class="th-badge flex items-center justify-center min-w-5 h-5 px-1 text-[10px] font-bold" style="background:var(--color-error-500);color:#fff">32</span>
-          </div>
-
-          <!-- Message 2 -->
-          <div class="flex items-start gap-3">
-            <div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0 overflow-hidden">
-              <svg class="w-5 h-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
-              </svg>
-            </div>
-            <div class="flex-1 min-w-0">
-              <div class="flex items-center justify-between">
-                <p class="text-sm font-semibold text-gray-900 dark:text-white">Connie Zhao</p>
-              </div>
-              <p class="text-xs text-gray-500 dark:text-gray-400">Guangzhou Senka Electronics Co., Ltd.</p>
-            </div>
-            <span class="th-badge flex items-center justify-center min-w-5 h-5 px-1 text-[10px] font-bold" style="background:var(--color-error-500);color:#fff">1</span>
-          </div>
+            ${msg.unreadCount > 0 ? `<span class="th-badge flex items-center justify-center min-w-5 h-5 px-1 text-[10px] font-bold" style="background:var(--color-error-500);color:#fff">${msg.unreadCount}</span>` : ''}
+          </a>
+          `).join('')}
         </div>
 
         <!-- View More Button -->
-        <a href="/messages" class="th-btn th-btn-pill block w-full px-4 py-2.5 text-sm font-medium text-center transition-colors">
+        <a href="/messages.html" class="th-btn th-btn-pill block w-full px-4 py-2.5 text-sm font-medium text-center transition-colors">
           View more
         </a>
       </div>

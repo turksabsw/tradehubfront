@@ -287,6 +287,9 @@ export function initSearchArea(): void {
           hideDropdown();
         }, { passive: true });
 
+        // Close when mega menu opens
+        document.addEventListener('istoc:close-search', hideDropdown);
+
         // Click on suggestion chip fills search input
         const chips = searchDropdown.querySelectorAll('.search-chip');
         chips.forEach(chip => {

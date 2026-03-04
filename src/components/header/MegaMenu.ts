@@ -651,6 +651,9 @@ export function initMegaMenu(): void {
     positionMenu();
     showView(viewName);
 
+    // Dispatch event to close search dropdowns when mega menu opens
+    document.dispatchEvent(new CustomEvent('istoc:close-search'));
+
     if (!isOpen) {
       isOpen = true;
       megaMenu!.style.opacity = '1';

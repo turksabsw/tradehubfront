@@ -352,3 +352,49 @@ export const pageContent: PageContent = {
 // 11. Trade Assurance footer text
 export const tradeAssuranceText =
   'Only orders placed and paid through Alibaba.com can enjoy free protection by 🛡 Trade Assurance';
+
+// 12. Mock Coupon Codes
+export interface CouponData {
+  code: string;
+  type: 'percent' | 'fixed' | 'shipping';
+  value: number;
+  minOrder: number;
+  description: string;
+  status: 'available' | 'used' | 'expired';
+  expiresAt: string;
+  usedAt?: string;
+}
+
+export const mockCoupons: CouponData[] = [
+  // 3 available
+  { code: 'WELCOME10', type: 'percent', value: 10, minOrder: 50, description: 'İlk siparişinize %10 indirim', status: 'available', expiresAt: '2026-06-30T23:59:59Z' },
+  { code: 'SAVE20', type: 'fixed', value: 20, minOrder: 100, description: '$20 indirim kuponu', status: 'available', expiresAt: '2026-05-15T23:59:59Z' },
+  { code: 'FREESHIP', type: 'shipping', value: 0, minOrder: 0, description: 'Ücretsiz kargo', status: 'available', expiresAt: '2026-04-30T23:59:59Z' },
+  // 3 used
+  { code: 'SUMMER15', type: 'percent', value: 15, minOrder: 75, description: 'Yaz kampanyası %15 indirim', status: 'used', expiresAt: '2026-02-28T23:59:59Z', usedAt: '2026-02-10T14:30:00Z' },
+  { code: 'FLAT50', type: 'fixed', value: 50, minOrder: 250, description: '$50 indirim kuponu', status: 'used', expiresAt: '2026-03-01T23:59:59Z', usedAt: '2026-02-25T09:15:00Z' },
+  { code: 'SHIPFREE2', type: 'shipping', value: 0, minOrder: 30, description: 'Ücretsiz kargo (min $30)', status: 'used', expiresAt: '2026-02-15T23:59:59Z', usedAt: '2026-02-12T18:00:00Z' },
+  // 3 expired
+  { code: 'NEWYEAR25', type: 'percent', value: 25, minOrder: 100, description: 'Yılbaşı özel %25 indirim', status: 'expired', expiresAt: '2026-01-15T23:59:59Z' },
+  { code: 'FLASH10', type: 'fixed', value: 10, minOrder: 40, description: '$10 flash indirim', status: 'expired', expiresAt: '2026-01-31T23:59:59Z' },
+  { code: 'XMASSHIP', type: 'shipping', value: 0, minOrder: 0, description: 'Noel ücretsiz kargo', status: 'expired', expiresAt: '2025-12-31T23:59:59Z' },
+];
+
+// 13. Mock Credit History
+export interface CreditHistoryEntry {
+  id: string;
+  type: 'earned' | 'spent' | 'refund';
+  description: string;
+  date: string;
+  amount: number;
+}
+
+export const mockCreditHistory: CreditHistoryEntry[] = [
+  { id: 'cr-1', type: 'earned', description: 'Hoş geldin bonusu', date: '2026-01-15T10:00:00Z', amount: 25.00 },
+  { id: 'cr-2', type: 'spent', description: 'Sipariş #29303B587501 — Kredi kullanımı', date: '2026-02-01T14:30:00Z', amount: -10.00 },
+  { id: 'cr-3', type: 'refund', description: 'Sipariş #29303B591501 — İade kredisi', date: '2026-02-10T09:00:00Z', amount: 15.00 },
+  { id: 'cr-4', type: 'earned', description: 'Değerlendirme ödülü', date: '2026-02-20T11:00:00Z', amount: 5.00 },
+  { id: 'cr-5', type: 'spent', description: 'Sipariş #29303B602501 — Kredi kullanımı', date: '2026-03-01T16:45:00Z', amount: -8.50 },
+];
+
+export const mockCreditBalance = 26.50;

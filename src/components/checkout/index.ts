@@ -22,4 +22,5 @@ export type {
 } from './ItemsDeliverySection';
 export { OrderProtectionModal, initOrderProtectionModal, showOrderProtectionModal } from './OrderProtectionModal';
 export type { OrderProtectionModalProps } from './OrderProtectionModal';
+export { OrderReviewModal } from './OrderReviewModal';
 export { AddressAutocomplete, initAddressAutocomplete } from './AddressAutocomplete';

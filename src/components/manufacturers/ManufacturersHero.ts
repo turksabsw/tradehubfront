@@ -1,3 +1,5 @@
+import { isLoggedIn, getUser } from '../../utils/auth';
+
 interface SubcategoryGroup {
   title: string;
   items: string[];
@@ -441,24 +443,24 @@ function renderSourceByCategory(): string {
             >
               <div class="flex flex-wrap gap-y-2.5 leading-5">
                 ${[
-                  ['Araç Parçaları ve Aksesuarları', 'Araç Aksesuarları, Elektronik ve Araçlar', 'Araçlar & Ulaşım'],
-                  ['Endüstriyel Makineler', 'İnşaat ve Yapı Makineleri'],
-                  ['Kişisel Elektronik Cihazlar', 'Ev Aletleri'],
-                  ['Giyim & Aksesuar', 'Takı & Gözlük & Saat ve Aksesuarlar'],
-                  ['Lambalar & Aydınlatma', 'İnşaat & Gayrimenkul'],
-                  ['Ev & Bahçe', 'Mobilya', 'Evcil Hayvan Ürünleri', 'Hediyelik Eşya & Hobi Malzemeleri'],
-                  ['Kozmetik', 'Kişisel Bakım ve Ev Temizliği', 'Sağlık Hizmetleri', 'Tıbbi Cihazlar & Medikal Ürünler'],
-                  ['Ambalaj & Baskı', 'Okul ve Ofis Malzemeleri', 'Test Cihaz ve Ekipmanları'],
-                  ['El aletleri ve donanım', 'Güvenlik', 'İş Güvenliği', 'İmalat Hizmetleri'],
-                  ['Elektrikli Ekipmanlar ve Gereçler', 'Elektronik Parça ve Aksesuarlar & Telekomünikasyon'],
-                  ['Spor & Eğlence', 'Anne & Çocuk & Oyuncaklar', 'Spor Giyim ve Outdoor Kıyafetleri'],
-                  ['Valiz & Çanta & Kılıf', 'Ayakkabı & Aksesuar'],
-                  ['Metal & Alaşımlar', 'Kimyasallar', 'Kauçuk & Plastik Ürünler', 'Kumaş & Tekstil Ham Maddeleri'],
-                  ['Tarım', 'Gıda & İçecek'],
-                  ['Ticari Ekipman ve Makineler'],
-                  ['Yenilenebilir Enerji', 'Çevre'],
-                  ['Güç Aktarımı', 'Malzeme Taşıma'],
-                ].map(row => `
+      ['Araç Parçaları ve Aksesuarları', 'Araç Aksesuarları, Elektronik ve Araçlar', 'Araçlar & Ulaşım'],
+      ['Endüstriyel Makineler', 'İnşaat ve Yapı Makineleri'],
+      ['Kişisel Elektronik Cihazlar', 'Ev Aletleri'],
+      ['Giyim & Aksesuar', 'Takı & Gözlük & Saat ve Aksesuarlar'],
+      ['Lambalar & Aydınlatma', 'İnşaat & Gayrimenkul'],
+      ['Ev & Bahçe', 'Mobilya', 'Evcil Hayvan Ürünleri', 'Hediyelik Eşya & Hobi Malzemeleri'],
+      ['Kozmetik', 'Kişisel Bakım ve Ev Temizliği', 'Sağlık Hizmetleri', 'Tıbbi Cihazlar & Medikal Ürünler'],
+      ['Ambalaj & Baskı', 'Okul ve Ofis Malzemeleri', 'Test Cihaz ve Ekipmanları'],
+      ['El aletleri ve donanım', 'Güvenlik', 'İş Güvenliği', 'İmalat Hizmetleri'],
+      ['Elektrikli Ekipmanlar ve Gereçler', 'Elektronik Parça ve Aksesuarlar & Telekomünikasyon'],
+      ['Spor & Eğlence', 'Anne & Çocuk & Oyuncaklar', 'Spor Giyim ve Outdoor Kıyafetleri'],
+      ['Valiz & Çanta & Kılıf', 'Ayakkabı & Aksesuar'],
+      ['Metal & Alaşımlar', 'Kimyasallar', 'Kauçuk & Plastik Ürünler', 'Kumaş & Tekstil Ham Maddeleri'],
+      ['Tarım', 'Gıda & İçecek'],
+      ['Ticari Ekipman ve Makineler'],
+      ['Yenilenebilir Enerji', 'Çevre'],
+      ['Güç Aktarımı', 'Malzeme Taşıma'],
+    ].map(row => `
                   <div class="w-full flex flex-wrap items-center">
                     ${row.map((cat, i) => `<a href="#" class="text-xs hover:text-primary-600 hover:underline transition-colors" style="color: var(--mfr-flyout-link-color, #222222)">${cat}</a>${i < row.length - 1 ? '<span class="text-xs text-[#999] mx-2">/</span>' : ''}`).join('')}
                   </div>
@@ -551,6 +553,10 @@ function renderProfileColumn(): string {
     'https://picsum.photos/seed/hist4/80/80',
   ];
 
+  const loggedIn = isLoggedIn();
+  const user = getUser();
+  const userName = user ? user.name : 'Guest';
+
   return `
     <div class="flex-1 h-[400px] overflow-hidden flex flex-col" style="border-radius: var(--mfr-hero-card-radius, 6px)">
 
@@ -562,20 +568,41 @@ function renderProfileColumn(): string {
             <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
           </div>
           <div>
-            <span class="text-xs" style="color: var(--mfr-profile-text-color, #222222)">Hoş geldiniz!</span>
-            <p class="text-base font-bold leading-6" style="color: var(--mfr-profile-text-color, #222222)">Guest</p>
+            ${loggedIn
+      ? `<span class="text-xs" style="color: var(--mfr-profile-text-color, #222222)">Welcome back</span>
+                 <p class="text-base font-bold leading-6" style="color: var(--mfr-profile-text-color, #222222)">${userName}</p>`
+      : `<span class="text-xs" style="color: var(--mfr-profile-text-color, #222222)">Hoş geldiniz!</span>
+                 <p class="text-base font-bold leading-6" style="color: var(--mfr-profile-text-color, #222222)">Guest</p>`
+    }
           </div>
         </div>
 
-        <!-- Butonlar -->
-        <div class="flex justify-between mt-6 mb-4">
-          <a href="/login" class="w-[calc(50%-4px)] flex items-center justify-center rounded-full h-10 text-xs font-bold transition-colors" style="background-color: var(--mfr-profile-btn-bg, #cc9900); color: var(--mfr-profile-btn-text, #ffffff)" onmouseover="this.style.backgroundColor='var(--mfr-profile-btn-hover, #8a6800)'" onmouseout="this.style.backgroundColor='var(--mfr-profile-btn-bg, #cc9900)'" data-spm="button_login">Giriş Yap</a>
-          <a href="/register" class="w-[calc(50%-4px)] flex items-center justify-center rounded-full h-10 text-xs font-bold transition-colors" style="background-color: var(--mfr-profile-btn-bg, #cc9900); color: var(--mfr-profile-btn-text, #ffffff)" onmouseover="this.style.backgroundColor='var(--mfr-profile-btn-hover, #8a6800)'" onmouseout="this.style.backgroundColor='var(--mfr-profile-btn-bg, #cc9900)'" data-spm="button_register">Ücretsiz Kaydolun</a>
-        </div>
+        ${loggedIn
+      ? `<!-- Favoriler (Logged In) -->
+             <div class="flex items-center justify-center rounded-md p-3 mt-4 mb-4 bg-gray-50 dark:bg-gray-800 border border-transparent">
+               <div class="flex-1 text-center border-r border-gray-200 dark:border-gray-700">
+                 <div class="flex items-center justify-center gap-1.5">
+                   <span class="text-xl font-bold dark:text-gray-100">2</span>
+                   <span class="text-xs text-left leading-tight text-gray-600 dark:text-gray-400">Favorite<br/>products</span>
+                 </div>
+               </div>
+               <div class="flex-1 text-center">
+                 <div class="flex items-center justify-center gap-1.5 ml-2">
+                   <span class="text-xl font-bold dark:text-gray-100">0</span>
+                   <span class="text-xs text-left leading-tight text-gray-600 dark:text-gray-400">Favorite<br/>suppliers</span>
+                 </div>
+               </div>
+             </div>`
+      : `<!-- Butonlar (Logged Out) -->
+             <div class="flex justify-between mt-6 mb-4">
+               <a href="/login" class="w-[calc(50%-4px)] flex items-center justify-center rounded-full h-10 text-xs font-bold transition-colors" style="background-color: var(--mfr-profile-btn-bg, #cc9900); color: var(--mfr-profile-btn-text, #ffffff)" onmouseover="this.style.backgroundColor='var(--mfr-profile-btn-hover, #8a6800)'" onmouseout="this.style.backgroundColor='var(--mfr-profile-btn-bg, #cc9900)'" data-spm="button_login">Giriş Yap</a>
+               <a href="/register" class="w-[calc(50%-4px)] flex items-center justify-center rounded-full h-10 text-xs font-bold transition-colors" style="background-color: var(--mfr-profile-btn-bg, #cc9900); color: var(--mfr-profile-btn-text, #ffffff)" onmouseover="this.style.backgroundColor='var(--mfr-profile-btn-hover, #8a6800)'" onmouseout="this.style.backgroundColor='var(--mfr-profile-btn-bg, #cc9900)'" data-spm="button_register">Ücretsiz Kaydolun</a>
+             </div>`
+    }
 
         <!-- Arama geçmişi -->
         <div class="mt-auto">
-          <a href="#" class="block text-base font-bold mb-2 leading-6" style="color: var(--mfr-profile-text-color, #222222)">Arama geçmişiniz</a>
+          <a href="#" class="block text-base font-bold mb-2 leading-6" style="color: var(--mfr-profile-text-color, #222222)">${loggedIn ? 'Your browsing history' : 'Arama geçmişiniz'}</a>
           <div class="grid grid-cols-4 gap-2">
             ${thumbs.map(src => `
               <a href="#" class="aspect-square rounded-md overflow-hidden group">

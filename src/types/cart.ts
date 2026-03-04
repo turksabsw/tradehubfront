@@ -3,6 +3,12 @@
  * Types for cart items, suppliers, summary, and assurance data.
  */
 
+export interface PaymentMethod {
+  id: string;
+  name: string;
+  icon: string;
+}
+
 export interface CartSku {
   id: string;
   skuImage: string;
@@ -41,6 +47,7 @@ export interface CartSupplier {
   href: string;
   selected: boolean;
   products: CartProduct[];
+  paymentMethods?: PaymentMethod[];
 }
 
 export interface CartSummaryData {

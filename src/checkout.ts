@@ -22,13 +22,18 @@ import { FloatingPanel } from './components/floating'
 import { startAlpine } from './alpine'
 
 // Checkout components
-import { CheckoutHeader, CheckoutLayout, ShippingAddressForm, OrderSummary, PaymentMethodSection, ItemsDeliverySection, OrderProtectionModal } from './components/checkout'
-import { protectionSummaryItems, tradeAssuranceText, modalSections, paymentIcons, infoBoxBullets } from './data/mockCheckout'
+import { CheckoutHeader, CheckoutLayout, ShippingAddressForm, OrderSummary, PaymentMethodSection, ItemsDeliverySection, OrderProtectionModal, OrderReviewModal } from './components/checkout'
+import { protectionSummaryItems, tradeAssuranceText, modalSections, paymentIcons, infoBoxBullets, mockCoupons } from './data/mockCheckout'
 import { cartStore } from './components/cart/state/CartStore'
 import type { OrderSummary as OrderSummaryData } from './types/checkout'
 import type { CartProduct, CartSku } from './types/cart'
 import type { CheckoutDeliveryOrderGroup } from './components/checkout'
 import { initStickyHeights } from './utils/stickyHeights'
+import { orderStore } from './components/orders/state/OrderStore'
+import type { Order } from './types/order'
+
+// Expose mock coupons for Alpine component
+(window as unknown as Record<string, unknown>).__mockCoupons = mockCoupons;
 
 // CartStore'dan checkout order summary oluştur
 cartStore.load();
@@ -168,7 +173,7 @@ appEl.innerHTML = `
   leftContent: `
         ${CheckoutHeader()}
         ${ShippingAddressForm()}
-        ${PaymentMethodSection()}
+        ${PaymentMethodSection({ suppliers: cartStore.getSuppliers().filter(s => s.products.some(p => p.skus.some(sku => sku.selected))) })}
         ${ItemsDeliverySection({ orders: checkoutDeliveryOrders })}
       `,
   rightContent: `
@@ -187,6 +192,9 @@ appEl.innerHTML = `
 
   <!-- Order Protection Modal -->
   ${OrderProtectionModal({ sections: modalSections, paymentIcons, infoBoxBullets })}
+
+  <!-- Order Review Modal -->
+  ${OrderReviewModal()}
 `;
 
 // Initialize behaviors
@@ -197,3 +205,158 @@ initStickyHeaderSearch();
 initMobileDrawer();
 initHeaderCart();
 initStickyHeights();
+
+// Build Order objects from checkout data
+function buildOrdersFromCheckout(paymentMethod: string): Order[] {
+  const now = Date.now();
+  const dateStr = new Date().toLocaleDateString('en-US', {
+    month: 'short',
+    day: '2-digit',
+    year: 'numeric',
+  }) + ', PST';
+
+  const isCreditCard = paymentMethod === 'credit_card';
+
+  return checkoutDeliveryOrders.map((deliveryOrder, idx) => {
+    const supplier = cartStore.getSupplier(deliveryOrder.sellerId);
+    const selectedMethod = deliveryOrder.methods.find((m) => m.isDefault) ?? deliveryOrder.methods[0];
+    const shippingFee = selectedMethod?.shippingFee ?? 0;
+
+    // Collect products from the delivery order
+    const products = deliveryOrder.products.map((p) => {
+      const totalQty = p.skuLines.reduce((sum, sku) => sum + sku.quantity, 0);
+      const totalPrice = p.skuLines.reduce((sum, sku) => sum + sku.unitPrice * sku.quantity, 0);
+      return {
+        name: p.title,
+        variation: p.skuLines.map((s) => s.variantText).join(', '),
+        unitPrice: (totalPrice / totalQty).toFixed(2),
+        quantity: totalQty,
+        totalPrice: totalPrice.toFixed(2),
+        image: p.image,
+      };
+    });
+
+    const subtotal = products.reduce((sum, p) => sum + Number(p.totalPrice), 0);
+    const grandTotal = subtotal + shippingFee;
+    const orderNumber = `ORD-${(now + idx).toString(36).toUpperCase()}`;
+
+    return {
+      id: `ord-${now}-${idx}`,
+      orderNumber,
+      orderDate: dateStr,
+      total: grandTotal.toFixed(2),
+      currency: 'USD',
+      seller: deliveryOrder.sellerName,
+      status: isCreditCard ? 'Confirming' : 'Waiting for payment',
+      statusColor: isCreditCard ? 'text-blue-600' : 'text-amber-600',
+      statusDescription: isCreditCard
+        ? 'Your payment is being confirmed.'
+        : 'Please complete your payment soon.',
+      products,
+      shipping: {
+        trackingStatus: 'Pending',
+        address: 'Turkey',
+        shipFrom: 'China',
+        method: selectedMethod?.etaLabel ?? 'Standard',
+        incoterms: 'DAP',
+      },
+      payment: {
+        status: isCreditCard ? 'Processing' : 'Unpaid',
+        hasRecord: false,
+        subtotal: subtotal.toFixed(2),
+        shippingFee: shippingFee.toFixed(2),
+        grandTotal: grandTotal.toFixed(2),
+      },
+      supplier: {
+        name: supplier?.name ?? deliveryOrder.sellerName,
+        contact: 'Sales Team',
+        phone: '+86 123 4567 8900',
+        email: `contact@supplier${idx + 1}.com`,
+      },
+      paymentMethod,
+      createdAt: now,
+    } as Order;
+  });
+}
+
+// Gather review data from DOM
+function gatherReviewData() {
+  // Shipping address
+  const addrParts: string[] = [];
+  const firstNameEl = document.querySelector<HTMLInputElement>('[name="firstName"]');
+  const lastNameEl = document.querySelector<HTMLInputElement>('[name="lastName"]');
+  const streetEl = document.querySelector<HTMLInputElement>('[name="streetAddress"]');
+  const cityEl = document.querySelector<HTMLInputElement>('[name="city"]');
+  const stateEl = document.querySelector<HTMLSelectElement>('[name="state"]');
+  const postalEl = document.querySelector<HTMLInputElement>('[name="postalCode"]');
+  if (firstNameEl?.value) addrParts.push(firstNameEl.value + (lastNameEl?.value ? ' ' + lastNameEl.value : ''));
+  if (streetEl?.value) addrParts.push(streetEl.value);
+  if (cityEl?.value) addrParts.push(cityEl.value);
+  if (stateEl?.value) addrParts.push(stateEl.value);
+  if (postalEl?.value) addrParts.push(postalEl.value);
+  const shippingAddress = addrParts.length > 0 ? addrParts.join(', ') : 'Not provided';
+
+  // Payment method
+  const isMultiSeller = checkoutDeliveryOrders.length > 1;
+  let paymentLabel = 'Credit/Debit Card';
+  if (!isMultiSeller) {
+    const selected = document.querySelector<HTMLInputElement>('input[name="payment_method"]:checked');
+    if (selected?.value === 'banka_havale') paymentLabel = 'Bank Transfer / EFT';
+  }
+
+  // Coupon discount from Alpine
+  const sidebarEl = document.querySelector<HTMLElement>('.checkout-sidebar');
+  const alpineData = sidebarEl && (sidebarEl as unknown as Record<string, unknown>)._x_dataStack?.[0] as Record<string, unknown> | undefined;
+  const couponDiscount = Number(alpineData?.couponDiscount ?? 0);
+  const shippingFee = Number(alpineData?.shippingFee ?? defaultShippingFee);
+  const itemSubtotal = Number(alpineData?.itemSubtotal ?? checkoutOrderSummary.itemSubtotal);
+  const discount = Number(alpineData?.discount ?? 0);
+  const total = Number((itemSubtotal + shippingFee - discount - couponDiscount).toFixed(2));
+
+  return {
+    shippingAddress,
+    paymentMethod: paymentLabel,
+    orders: checkoutDeliveryOrders,
+    summary: {
+      itemSubtotal: itemSubtotal.toFixed(2),
+      shippingFee: shippingFee.toFixed(2),
+      couponDiscount: couponDiscount.toFixed(2),
+      total: total.toFixed(2),
+    },
+  };
+}
+
+// Place Order → open review modal
+const placeOrderBtn = document.getElementById('summary-place-order-btn');
+if (placeOrderBtn) {
+  placeOrderBtn.addEventListener('click', () => {
+    const reviewData = gatherReviewData();
+    window.dispatchEvent(new CustomEvent('checkout:open-review', { detail: reviewData }));
+  });
+}
+
+// Confirm Order (from review modal) → redirect
+window.addEventListener('checkout:confirm-order', () => {
+  const orderCount = checkoutDeliveryOrders.length;
+  const isMultiSeller = checkoutDeliveryOrders.length > 1;
+
+  let isCreditCard = isMultiSeller;
+  if (!isMultiSeller) {
+    const selected = document.querySelector<HTMLInputElement>('input[name="payment_method"]:checked');
+    isCreditCard = selected?.value === 'kredi_karti';
+  }
+
+  const paymentMethod = isCreditCard ? 'credit_card' : 'bank_transfer';
+  const newOrders = buildOrdersFromCheckout(paymentMethod);
+
+  orderStore.load();
+  orderStore.addOrders(newOrders);
+
+  const orderNumbers = newOrders.map((o) => o.orderNumber).join(',');
+
+  if (isCreditCard) {
+    window.location.href = `/payment-processing.html?count=${orderCount}&method=credit_card&orderNumbers=${encodeURIComponent(orderNumbers)}`;
+  } else {
+    window.location.href = `/order-success.html?status=pending&count=${orderCount}&orderNumbers=${encodeURIComponent(orderNumbers)}`;
+  }
+});

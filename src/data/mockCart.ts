@@ -13,6 +13,11 @@ export const mockCartSuppliers: CartSupplier[] = [
     name: 'JOTA KA & EUROPE 2016 SL',
     href: '/supplier/jota-ka',
     selected: true,
+    paymentMethods: [
+      { id: 'visa', name: 'Visa', icon: 'https://s.alicdn.com/@img/tfs/TB1xcNWdZLJ8KJjy0FnXXcFDpXa-120-120.png' },
+      { id: 'mastercard', name: 'Mastercard', icon: 'https://s.alicdn.com/@img/tfs/TB1xcNWdZLJ8KJjy0FnXXcFDpXa-120-120.png' },
+      { id: 'paypal', name: 'PayPal', icon: 'https://s.alicdn.com/@img/tfs/TB1xcNWdZLJ8KJjy0FnXXcFDpXa-120-120.png' }
+    ],
     products: [
       {
         id: 'prod-001',
@@ -52,6 +57,10 @@ export const mockCartSuppliers: CartSupplier[] = [
     name: 'WANGDU COUNTY S.PETER SHOES CO.,LTD.',
     href: '/supplier/wangdu-county',
     selected: true,
+    paymentMethods: [
+      { id: 'tt', name: 'T/T', icon: 'https://s.alicdn.com/@img/tfs/TB1xcNWdZLJ8KJjy0FnXXcFDpXa-120-120.png' },
+      { id: 'applepay', name: 'Apple Pay', icon: 'https://s.alicdn.com/@img/tfs/TB1xcNWdZLJ8KJjy0FnXXcFDpXa-120-120.png' }
+    ],
     products: [
       {
         id: 'prod-002',

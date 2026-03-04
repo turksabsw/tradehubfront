@@ -25,10 +25,12 @@ import { startAlpine } from './alpine'
 // Cart components
 import { CartPage, initCartPage } from './components/cart/page/CartPage'
 import { cartStore } from './components/cart/state/CartStore'
-import { mockAssuranceItems } from './data/mockCart'
+import { mockCartSuppliers, mockCartSummary, mockAssuranceItems } from './data/mockCart'
 
-// localStorage'dan sepet verisini yükle
-cartStore.load();
+// localStorage'dan sepet verisini yükle, yoksa mock verisini kullan
+if (!cartStore.load()) {
+  cartStore.init(mockCartSuppliers, mockCartSummary.shippingFee, mockCartSummary.currency, mockCartSummary.discount);
+}
 const cartSuppliers = cartStore.getSuppliers();
 const cartSummary = cartStore.getSummary();
 

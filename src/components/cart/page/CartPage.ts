@@ -57,7 +57,8 @@ export function CartPage({ suppliers, summary, assuranceItems }: CartPageProps):
       @sku-delete="handleSkuDelete($event)"
       @product-delete="handleProductDelete($event)"
       @batch-delete="handleBatchDelete()"
-      @product-favorite="handleProductFavorite($event)">
+      @product-favorite="handleProductFavorite($event)"
+      @checkout-supplier="handleCheckoutSupplier($event)">
       <div class="flex flex-col lg:flex-row gap-5 items-start flex-1">
         <section class="w-full lg:min-w-0 lg:flex-1 space-y-4">
           ${CartHeader()}

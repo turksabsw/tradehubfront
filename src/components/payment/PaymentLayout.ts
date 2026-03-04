@@ -9,6 +9,8 @@
  * Inline view: "Havale dekontu yükle"
  */
 
+import { paymentCardStore } from './state/PaymentCardStore';
+
 /* ────────────────────────────────────────
    NAV STRUCTURE
    ──────────────────────────────────────── */
@@ -52,15 +54,57 @@ const RECEIPT_ICON = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none
    SECTION: Ödeme yönetimi
    ──────────────────────────────────────── */
 function renderPaymentManagement(): string {
+  const cards = paymentCardStore.getCards();
+  const savedCardsHtml = cards.length > 0 ? cards.map(c => `
+      <div data-card-id="${c.id}" class="relative shrink-0 w-[200px] h-[120px] rounded-xl p-4 flex flex-col justify-between group cursor-default"
+           style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%); box-shadow: 0 4px 12px rgba(0,0,0,0.18);">
+        <div class="flex items-center justify-between">
+          <span class="text-[10px] font-bold tracking-widest text-white/50 uppercase">TradeHub</span>
+          <span class="text-[11px] font-black tracking-wide px-1.5 py-0.5 rounded"
+                style="background: rgba(255,255,255,0.15); color: white;">${c.brand}</span>
+        </div>
+        <div>
+          <div class="text-sm font-mono font-bold text-white tracking-widest mb-1 truncate">${c.cardNumber}</div>
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="text-[9px] text-white/40 uppercase tracking-wide">Isim</div>
+              <div class="text-[11px] text-white font-medium truncate max-w-[110px]">${c.cardholderName}</div>
+            </div>
+            <div class="text-right">
+              <div class="text-[9px] text-white/40 uppercase tracking-wide">Son K.</div>
+              <div class="text-[11px] text-white font-medium">${c.expiry || '—'}</div>
+            </div>
+          </div>
+        </div>
+        <!-- Sil button -->
+        <button class="absolute top-2 right-2 w-5 h-5 rounded-full flex items-center justify-center text-white bg-red-500/70 hover:bg-red-500 opacity-0 group-hover:opacity-100 transition-opacity border-none cursor-pointer text-[10px] font-bold"
+                onclick="this.closest('[data-card-id]').remove(); if(window.removeSavedCard) window.removeSavedCard('${c.id}')" title="Sil">
+          &times;
+        </button>
+      </div>
+  `).join('') : '';
+
+  // Add-card button as a card-shaped tile
+  const addCardTile = `
+    <div id="pay-add-card-btn" class="pay-add-card shrink-0 w-[200px] h-[120px] rounded-xl flex flex-col items-center justify-center gap-2 border-2 border-dashed cursor-pointer transition-[border-color,background] duration-200"
+         style="border-color: var(--color-border-strong, #ccc); background: transparent;"
+         data-action="open-card-modal"
+         onmouseenter="this.style.borderColor='var(--btn-bg, #ff6600)'; this.style.background='var(--color-primary-50, #fff9f5)';"
+         onmouseleave="this.style.borderColor='var(--color-border-strong, #ccc)'; this.style.background='transparent';">
+      <span style="font-size: 28px; line-height: 1; color: var(--color-text-secondary, #888);">+</span>
+      <span class="text-xs font-medium text-center px-2" style="color: var(--color-text-primary, #333);">Yeni kart ekle</span>
+    </div>
+  `;
+
   return `
     <div class="mb-6"><h1 class="text-[22px] font-bold text-text-primary m-0">Ödeme yönetimi</h1></div>
 
     <!-- Kayıtlı kartlar -->
     <div class="mb-8">
       <h2 class="text-base font-semibold text-text-primary mb-4">Kayıtlı kartlar ve hesaplar</h2>
-      <div class="pay-add-card flex items-center gap-3 py-5 px-6 border-2 border-dashed border-border-strong rounded-lg cursor-pointer transition-[border-color,background] duration-200 hover:border-[#999] hover:bg-surface-muted" data-action="open-card-modal">
-        <span class="flex items-center justify-center w-10 h-10 rounded-full bg-surface-raised text-2xl text-text-secondary font-light">+</span>
-        <span class="text-sm text-text-primary font-medium">Yeni bir kart ekle</span>
+      <div class="flex gap-4 overflow-x-auto pb-3" style="scrollbar-width: thin; scrollbar-color: var(--color-border-strong, #ccc) transparent;">
+        ${savedCardsHtml}
+        ${addCardTile}
       </div>
     </div>
 
@@ -95,28 +139,48 @@ function renderPaymentManagement(): string {
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M14 4L4 14M4 4l10 10" stroke="#333" stroke-width="1.8" stroke-linecap="round"/></svg>
           </button>
         </div>
-        <div class="pay-modal__body px-6 py-5">
+        <div class="pay-modal__body px-6 py-5" x-data="{
+          ccNum: '',
+          get brand() {
+             if (!this.ccNum) return '';
+             const first = this.ccNum[0];
+             return first === '4' ? 'VISA' : first === '5' ? 'MC' : first === '3' ? 'AMEX' : '';
+          },
+          formatCard() {
+             let v = this.ccNum.replace(/\\D/g, '').substring(0, 16);
+             this.ccNum = v.match(/.{1,4}/g)?.join(' ') || '';
+             // Sync back to underlying element for the vanilla JS save handler
+             $refs.numInput.value = this.ccNum;
+          }
+        }">
           <div class="flex gap-2 flex-wrap mb-5">
-            <span class="inline-flex items-center justify-center min-w-[44px] h-7 px-1.5 border border-border-default rounded text-[10px] font-bold bg-surface-muted tracking-wide text-[#1a1f71]">VISA</span>
-            <span class="inline-flex items-center justify-center min-w-[44px] h-7 px-1.5 border border-border-default rounded text-[10px] font-bold bg-surface-muted tracking-wide text-[#eb001b]">MC</span>
-            <span class="inline-flex items-center justify-center min-w-[44px] h-7 px-1.5 border border-border-default rounded text-[10px] font-bold bg-surface-muted tracking-wide text-[#006fcf]">AMEX</span>
-            <span class="inline-flex items-center justify-center min-w-[44px] h-7 px-1.5 border border-border-default rounded text-[10px] font-bold bg-surface-muted tracking-wide text-[#ff6000]">D</span>
-            <span class="inline-flex items-center justify-center min-w-[44px] h-7 px-1.5 border border-border-default rounded text-[10px] font-bold bg-surface-muted tracking-wide text-[#0079be]">DC</span>
-            <span class="inline-flex items-center justify-center min-w-[44px] h-7 px-1.5 border border-border-default rounded text-[10px] font-bold bg-surface-muted tracking-wide text-[#0e4c96]">JCB</span>
-            <span class="inline-flex items-center justify-center min-w-[44px] h-7 px-1.5 border border-border-default rounded text-[10px] font-bold bg-surface-muted tracking-wide text-[#d81e06]">UP</span>
-            <span class="inline-flex items-center justify-center min-w-[44px] h-7 px-1.5 border border-border-default rounded text-[10px] font-bold bg-surface-muted tracking-wide text-text-secondary">CB</span>
+            <!-- VISA -->
+            <div class="h-7 px-2 border rounded flex items-center justify-center bg-white transition-opacity" :class="brand && brand !== 'VISA' ? 'opacity-30' : 'opacity-100'" style="border-color: var(--color-border-default, #e5e5e5);">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png" class="h-3 object-contain" alt="Visa" />
+            </div>
+            <!-- Mastercard -->
+            <div class="h-7 px-2 border rounded flex items-center justify-center bg-white transition-opacity" :class="brand && brand !== 'MC' ? 'opacity-30' : 'opacity-100'" style="border-color: var(--color-border-default, #e5e5e5);">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/1280px-Mastercard-logo.svg.png" class="h-4 object-contain" alt="Mastercard" />
+            </div>
+            <!-- AMEX -->
+            <div class="h-7 px-2 border rounded flex items-center justify-center bg-white transition-opacity" :class="brand && brand !== 'AMEX' ? 'opacity-30' : 'opacity-100'" style="border-color: var(--color-border-default, #e5e5e5);">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/American_Express_logo_%282018%29.svg/1200px-American_Express_logo_%282018%29.svg.png" class="h-4 object-contain" alt="Amex" />
+            </div>
+            <!-- Diğer logolar (Görsel tutarlılık için) -->
+            <div class="h-7 px-2 border rounded flex items-center justify-center bg-white transition-opacity text-[10px] font-bold text-[#ff6000]" :class="brand ? 'opacity-30' : 'opacity-100'" style="border-color: var(--color-border-default, #e5e5e5);">Discover</div>
+            <div class="h-7 px-2 border rounded flex items-center justify-center bg-white transition-opacity text-[10px] font-bold text-[#0e4c96]" :class="brand ? 'opacity-30' : 'opacity-100'" style="border-color: var(--color-border-default, #e5e5e5);">JCB</div>
           </div>
           <div class="mb-4">
-            <input type="text" class="w-full py-2.5 px-3.5 text-sm border border-border-strong rounded-lg outline-none text-text-primary transition-[border-color] duration-150 focus:border-[#999]" placeholder="Kart numarası *" maxlength="19" />
+            <input id="pay-card-num" x-ref="numInput" x-model="ccNum" @input="formatCard" type="text" class="w-full py-2.5 px-3.5 text-sm border border-border-strong rounded-lg outline-none text-text-primary transition-[border-color] duration-150 focus:border-[#999]" placeholder="Kart numarası *" maxlength="19" />
           </div>
           <div class="flex gap-3 mb-4">
-            <input type="text" class="flex-1 py-2.5 px-3.5 text-sm border border-border-strong rounded-lg outline-none text-text-primary transition-[border-color] duration-150 focus:border-[#999]" placeholder="Ad *" />
-            <input type="text" class="flex-1 py-2.5 px-3.5 text-sm border border-border-strong rounded-lg outline-none text-text-primary transition-[border-color] duration-150 focus:border-[#999]" placeholder="Soyad *" />
+            <input id="pay-card-fn" type="text" class="flex-1 py-2.5 px-3.5 text-sm border border-border-strong rounded-lg outline-none text-text-primary transition-[border-color] duration-150 focus:border-[#999]" placeholder="Ad *" />
+            <input id="pay-card-ln" type="text" class="flex-1 py-2.5 px-3.5 text-sm border border-border-strong rounded-lg outline-none text-text-primary transition-[border-color] duration-150 focus:border-[#999]" placeholder="Soyad *" />
           </div>
           <div class="flex gap-3 mb-4 items-center flex-wrap">
-            <select class="py-2.5 px-3.5 text-sm border border-border-strong rounded-lg outline-none text-text-primary bg-surface cursor-pointer min-w-[80px]"><option>Ay *</option>${Array.from({length:12},(_,i)=>`<option>${String(i+1).padStart(2,'0')}</option>`).join('')}</select>
+            <select id="pay-card-month" class="py-2.5 px-3.5 text-sm border border-border-strong rounded-lg outline-none text-text-primary bg-surface cursor-pointer min-w-[80px]"><option value="">Ay *</option>${Array.from({ length: 12 }, (_, i) => `<option value="${String(i + 1).padStart(2, '0')}">${String(i + 1).padStart(2, '0')}</option>`).join('')}</select>
             <span class="text-base text-text-tertiary px-0.5">/</span>
-            <select class="py-2.5 px-3.5 text-sm border border-border-strong rounded-lg outline-none text-text-primary bg-surface cursor-pointer min-w-[90px]"><option>Yıl *</option>${Array.from({length:10},(_,i)=>`<option>${2025+i}</option>`).join('')}</select>
+            <select id="pay-card-year" class="py-2.5 px-3.5 text-sm border border-border-strong rounded-lg outline-none text-text-primary bg-surface cursor-pointer min-w-[90px]"><option value="">Yıl *</option>${Array.from({ length: 10 }, (_, i) => `<option value="${2025 + i}">${2025 + i}</option>`).join('')}</select>
             <div class="flex items-center gap-2 ml-auto">
               <input type="text" class="w-[100px] py-2.5 px-3.5 text-sm border border-border-strong rounded-lg outline-none text-text-primary transition-[border-color] duration-150 focus:border-[#999]" placeholder="CVV/CVC *" maxlength="4" />
               <div class="flex gap-1 opacity-60">
@@ -561,6 +625,91 @@ function initPayModals(): void {
     const cancelBtn = modal.querySelector('.pay-modal__btn--cancel');
     if (cancelBtn) cancelBtn.addEventListener('click', () => closePayModal(modal));
   });
+
+  // Save card button in card modal
+  const cardModal = document.getElementById('pay-card-modal');
+  if (cardModal) {
+    const saveBtn = cardModal.querySelector<HTMLElement>('.pay-modal__btn--primary');
+    if (saveBtn) {
+      saveBtn.addEventListener('click', () => {
+        const numEl = document.getElementById('pay-card-num') as HTMLInputElement;
+        const fnEl = document.getElementById('pay-card-fn') as HTMLInputElement;
+        const lnEl = document.getElementById('pay-card-ln') as HTMLInputElement;
+        const monthEl = document.getElementById('pay-card-month') as HTMLSelectElement;
+        const yearEl = document.getElementById('pay-card-year') as HTMLSelectElement;
+
+        const cardNumber = numEl?.value?.trim();
+        const firstName = fnEl?.value?.trim();
+        const lastName = lnEl?.value?.trim();
+        const month = monthEl?.value;
+        const year = yearEl?.value;
+
+        if (!cardNumber || !firstName) {
+          numEl?.classList.toggle('!border-red-400', !cardNumber);
+          fnEl?.classList.toggle('!border-red-400', !firstName);
+          return;
+        }
+
+        const cardholderName = `${firstName} ${lastName}`.trim();
+        const expiry = month && year ? `${month}/${year}` : '';
+        // Detect brand from first digit
+        const firstDigit = cardNumber[0];
+        const brand = firstDigit === '4' ? 'VISA' : firstDigit === '5' ? 'MC' : firstDigit === '3' ? 'AMEX' : 'CARD';
+
+        // Save to store
+        if ((window as any).addSavedCard) {
+          (window as any).addSavedCard({ cardNumber, expiry, cardholderName, brand });
+        }
+
+        // Get the masked card (last 4 digits)
+        const masked = cardNumber.replace(/\d(?=\d{4})/g, '*');
+
+        // Dynamically insert card row before the add-card button
+        const addBtn = document.getElementById('pay-add-card-btn');
+        if (addBtn) {
+          const savedId = Math.random().toString(36).substr(2, 9);
+          const cardRow = document.createElement('div');
+          cardRow.className = 'relative shrink-0 w-[200px] h-[120px] rounded-xl p-4 flex flex-col justify-between group cursor-default';
+          cardRow.style.cssText = 'background: linear-gradient(135deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%); box-shadow: 0 4px 12px rgba(0,0,0,0.18);';
+          cardRow.dataset.cardId = savedId;
+          cardRow.innerHTML = `
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] font-bold tracking-widest uppercase" style="color: rgba(255,255,255,0.5);">TradeHub</span>
+              <span class="text-[11px] font-black tracking-wide px-1.5 py-0.5 rounded" style="background: rgba(255,255,255,0.15); color: white;">${brand}</span>
+            </div>
+            <div>
+              <div class="text-sm font-mono font-bold text-white tracking-widest mb-1 truncate">${masked}</div>
+              <div class="flex items-center justify-between">
+                <div>
+                  <div class="text-[9px] uppercase tracking-wide" style="color: rgba(255,255,255,0.4);">Isim</div>
+                  <div class="text-[11px] text-white font-medium truncate max-w-[110px]">${cardholderName}</div>
+                </div>
+                <div class="text-right">
+                  <div class="text-[9px] uppercase tracking-wide" style="color: rgba(255,255,255,0.4);">Son K.</div>
+                  <div class="text-[11px] text-white font-medium">${expiry || '—'}</div>
+                </div>
+              </div>
+            </div>
+            <button class="absolute top-2 right-2 w-5 h-5 rounded-full flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity border-none cursor-pointer text-[10px] font-bold"
+                    style="background: rgba(239,68,68,0.7);"
+                    onmouseenter="this.style.background='rgb(239,68,68)'" onmouseleave="this.style.background='rgba(239,68,68,0.7)'"
+                    onclick="this.closest('[data-card-id]').remove(); if(window.removeSavedCard) window.removeSavedCard('${savedId}')" title="Sil">
+              &times;
+            </button>
+          `;
+          addBtn.parentElement?.insertBefore(cardRow, addBtn);
+        }
+
+        // Clear inputs and close modal
+        if (numEl) numEl.value = '';
+        if (fnEl) fnEl.value = '';
+        if (lnEl) lnEl.value = '';
+        if (monthEl) monthEl.selectedIndex = 0;
+        if (yearEl) yearEl.selectedIndex = 0;
+        closePayModal(cardModal);
+      });
+    }
+  }
 
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {

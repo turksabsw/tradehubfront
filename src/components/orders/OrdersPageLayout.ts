@@ -10,11 +10,11 @@ interface OrdersNavItem {
 }
 
 const NAV_ITEMS: OrdersNavItem[] = [
-  { id: 'all-orders', label: 'Tüm siparişlerim' },
-  { id: 'refunds', label: 'Para iadesi ve satış sonrası hizmetler' },
-  { id: 'reviews', label: 'Değerlendirmelerim' },
-  { id: 'coupons', label: 'Kupon ve kredilerim' },
-  { id: 'tax-info', label: 'Vergi bilgilerim' },
+  { id: 'all-orders', label: 'All orders' },
+  { id: 'refunds', label: 'Refunds & after-sales' },
+  { id: 'reviews', label: 'Reviews' },
+  { id: 'coupons', label: 'Coupons & credit' },
+  { id: 'tax-info', label: 'Tax Information' },
 ];
 
 /* ────────────────────────────────────────
@@ -34,14 +34,14 @@ const EMPTY_RECEIPT_ICON = `
    ──────────────────────────────────────── */
 
 const ORDER_STATUS_TABS = [
-  { id: 'all', label: 'Tümü' },
-  { id: 'confirming', label: 'Onay bekliyor' },
-  { id: 'unpaid', label: 'Ödenmemiş' },
-  { id: 'preparing', label: 'Kargoya hazırlanıyor' },
-  { id: 'delivering', label: 'Teslimatta' },
-  { id: 'refunds-aftersales', label: 'İade ve satış sonrası' },
-  { id: 'completed-review', label: 'Tamamlanan ve değerlendirilen' },
-  { id: 'closed', label: 'Kapatılan' },
+  { id: 'all', label: 'All' },
+  { id: 'confirming', label: 'Confirming' },
+  { id: 'unpaid', label: 'Unpaid' },
+  { id: 'preparing', label: 'Preparing to ship' },
+  { id: 'delivering', label: 'Delivering' },
+  { id: 'refunds-aftersales', label: 'Refunds & after-sales' },
+  { id: 'completed-review', label: 'Completed & in review' },
+  { id: 'closed', label: 'Closed' },
 ];
 
 function renderAllOrders(): string {
@@ -50,9 +50,9 @@ function renderAllOrders(): string {
       <template x-if="!selectedOrder"><div>
       <!-- Header -->
       <div class="flex items-center justify-between px-7 max-sm:px-3 pt-6 pb-5 border-b border-gray-100">
-        <h1 class="text-[22px] max-sm:text-lg font-bold text-gray-900">Siparişlerim</h1>
+        <h1 class="text-[22px] max-sm:text-lg font-bold text-gray-900">Your orders</h1>
         <button class="px-5 max-sm:px-3 py-2 text-sm max-sm:text-xs text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer whitespace-nowrap transition-colors hover:border-gray-400 hover:bg-gray-50">
-          Havale dekontu yükle
+          Submit remittance proof
         </button>
       </div>
 
@@ -82,7 +82,7 @@ function renderAllOrders(): string {
             type="text"
             x-model.debounce.300ms="searchQuery"
             @keydown.escape="searchQuery = ''"
-            placeholder="İsim, sipariş numarası veya bilgi ile ara..."
+            placeholder="Search by name, order number, or other information"
             class="flex-1 h-10 px-3 text-sm text-gray-700 border-none outline-none bg-transparent placeholder:text-gray-400"
           />
           <!-- Clear button when searching -->
@@ -292,10 +292,10 @@ function renderAllOrders(): string {
                   <span class="font-medium text-amber-700" x-text="'Sipariş ' + order.orderNumber"></span>
                 </span>
                 <span class="max-sm:hidden text-gray-300">|</span>
-                <span x-text="'Sipariş tarihi: ' + order.orderDate"></span>
+                <span x-text="'Order time: ' + order.orderDate"></span>
                 <span class="max-sm:hidden text-gray-300">|</span>
                 <span class="flex items-center gap-1">
-                  <span>Toplam:</span>
+                  <span>Total:</span>
                   <strong class="text-gray-900" x-text="order.currency + ' ' + order.total"></strong>
                   <svg class="w-3.5 h-3.5 text-gray-400 cursor-help" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 16v-4m0-4h.01"/>
@@ -303,41 +303,65 @@ function renderAllOrders(): string {
                 </span>
               </div>
               <div class="flex items-center gap-2 text-[13px] max-sm:text-xs text-gray-600 shrink-0">
-                <span>Satıcı: <strong class="text-gray-700" x-text="order.seller"></strong></span>
-                <a href="#" class="text-blue-600 hover:underline font-medium whitespace-nowrap">Sohbet et</a>
+                <span>Supplier: <strong class="text-gray-700" x-text="order.seller"></strong></span>
+                <a href="#" class="text-blue-600 hover:underline font-medium whitespace-nowrap hidden">Chat now</a>
               </div>
             </div>
 
             <!-- Order Body -->
-            <div class="px-5 max-sm:px-3 py-4">
-              <!-- Status -->
-              <p class="text-sm font-bold mb-3" :class="order.statusColor" x-text="order.status"></p>
+            <div class="px-5 max-sm:px-3 py-4 flex flex-col md:flex-row gap-6 border-b border-gray-100">
+              <div class="flex-1 min-w-0">
+                <!-- Status -->
+                <p class="text-sm font-bold mb-3" :class="order.statusColor" x-text="order.status"></p>
 
-              <!-- Products -->
-              <template x-for="product in order.products" :key="product.name">
-                <div class="flex items-center gap-4 max-sm:gap-3">
-                  <!-- Product Image -->
-                  <div class="w-20 h-20 max-sm:w-16 max-sm:h-16 rounded-sm border border-gray-200 overflow-hidden shrink-0 bg-gray-50">
-                    <img :src="product.image" :alt="product.name" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\\'flex items-center justify-center w-full h-full text-gray-300\\'><svg class=\\'w-8 h-8\\' fill=\\'none\\' stroke=\\'currentColor\\' stroke-width=\\'1.5\\' viewBox=\\'0 0 24 24\\'><rect x=\\'3\\' y=\\'3\\' width=\\'18\\' height=\\'18\\' rx=\\'2\\'/><circle cx=\\'8.5\\' cy=\\'8.5\\' r=\\'1.5\\'/><path d=\\'M21 15l-5-5L5 21\\'/></svg></div>'" />
-                  </div>
-
-                  <!-- Product Info -->
-                  <div class="flex-1 min-w-0 flex items-center justify-between gap-4 max-sm:flex-col max-sm:items-start max-sm:gap-2">
-                    <div class="min-w-0">
-                      <a href="#" class="text-sm text-gray-800 hover:text-blue-600 transition-colors line-clamp-2 leading-snug block" x-text="product.name"></a>
-                      <div class="flex items-center gap-1.5 mt-1.5">
-                        <span class="inline-block w-4 h-4 rounded-sm bg-gray-200 shrink-0"></span>
-                        <span class="text-xs text-gray-500" x-text="product.variation + ' x ' + product.quantity + ' adet'"></span>
-                      </div>
+                <!-- Products -->
+                <template x-for="product in order.products" :key="product.name">
+                  <div class="flex items-start gap-4 max-sm:gap-3 mb-4 last:mb-0">
+                    <!-- Product Image -->
+                    <div class="w-20 h-20 max-sm:w-16 max-sm:h-16 rounded-sm border border-gray-200 overflow-hidden shrink-0 bg-gray-50">
+                      <img :src="product.image" :alt="product.name" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\\'flex items-center justify-center w-full h-full text-gray-300\\'><svg class=\\'w-8 h-8\\' fill=\\'none\\' stroke=\\'currentColor\\' stroke-width=\\'1.5\\' viewBox=\\'0 0 24 24\\'><rect x=\\'3\\' y=\\'3\\' width=\\'18\\' height=\\'18\\' rx=\\'2\\'/><circle cx=\\'8.5\\' cy=\\'8.5\\' r=\\'1.5\\'/><path d=\\'M21 15l-5-5L5 21\\'/></svg></div>'" />
                     </div>
 
-                    <!-- View Details Button -->
-                    <button @click="viewDetail(order)" class="px-6 max-sm:px-4 py-2.5 max-sm:py-2 text-sm max-sm:text-xs font-medium text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer whitespace-nowrap transition-all hover:border-gray-900 hover:text-gray-900 shrink-0">
-                      Sipariş detaylarını gör
-                    </button>
+                    <!-- Product Info -->
+                    <div class="flex-1 min-w-0 flex items-center justify-between gap-4 max-sm:flex-col max-sm:items-start max-sm:gap-2">
+                      <div class="min-w-0 flex-1">
+                        <a href="#" class="text-sm text-gray-800 hover:text-blue-600 transition-colors line-clamp-2 leading-snug block" x-text="product.name"></a>
+                        <div class="flex items-center gap-1.5 mt-1.5 flex-wrap">
+                          <span class="text-xs text-gray-500" x-text="product.variation"></span>
+                          <span class="text-xs text-gray-500 px-1">|</span>
+                          <span class="text-xs text-gray-500" x-text="order.currency + ' ' + product.unitPrice"></span>
+                          <span class="text-xs text-gray-500 px-1">|</span>
+                          <span class="text-xs text-gray-500" x-text="product.quantity + ' piece'"></span>
+                        </div>
+                      </div>
+                    </div>
                   </div>
+                </template>
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="flex flex-col md:w-[220px] shrink-0 border-l border-gray-100 md:pl-6 max-md:-mx-5 max-md:px-5 max-md:pt-4 max-md:border-t justify-center gap-3">
+                <button @click="window.location.href='/order-success.html'" class="w-full px-6 py-2 text-[14px] font-medium text-white bg-[#FF6600] rounded-full cursor-pointer transition-colors hover:bg-[#e65c00] border-none">
+                  Make payment
+                </button>
+                <div class="flex items-center justify-center gap-4 text-xs">
+                  <button @click="viewDetail(order)" class="text-gray-700 hover:text-blue-600 hover:underline bg-transparent border-none cursor-pointer p-0 font-medium">
+                    View details
+                  </button>
+                  <span class="text-gray-300">|</span>
+                  <button class="text-gray-700 hover:text-blue-600 hover:underline bg-transparent border-none cursor-pointer p-0 font-medium">
+                    Cancel order
+                  </button>
                 </div>
-              </template>
+              </div>
+            </div>
+            
+            <!-- Contact Supplier Footer -->
+            <div class="px-5 max-sm:px-3 py-3 bg-gray-50 border-t border-gray-100 flex items-center justify-between">
+              <div class="text-[13px] text-gray-600 flex items-center gap-2">
+                 <svg class="w-4 h-4 text-blue-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg> 
+                 <a href="#" class="text-gray-700 font-medium hover:text-blue-600">Contact supplier</a>
+              </div>
             </div>
           </div>
         </template>
@@ -397,7 +421,7 @@ function renderAllOrders(): string {
                   <span x-text="copiedNumber ? 'Kopyalandı!' : 'Kopyala'"></span>
                 </button>
                 <span class="text-gray-300 max-sm:hidden">|</span>
-                <span class="text-sm text-gray-500" x-text="'Sipariş tarihi: ' + selectedOrder.orderDateTime"></span>
+                <span class="text-sm text-gray-500" x-text="'Sipariş tarihi: ' + selectedOrder.orderDate"></span>
               </div>
             </div>
             <a href="#" class="flex items-center gap-1.5 text-sm text-blue-600 hover:text-blue-800 transition-colors whitespace-nowrap shrink-0">
@@ -451,6 +475,47 @@ function renderAllOrders(): string {
         <div class="px-7 max-sm:px-3 py-5 border-b border-gray-100">
           <p class="text-base font-bold mb-1" :class="selectedOrder.statusColor" x-text="selectedOrder.status"></p>
           <p class="text-sm text-gray-500" x-text="selectedOrder.statusDescription"></p>
+        </div>
+
+        <!-- Info Box: Inspection + Payment Info -->
+        <div class="px-7 max-sm:px-3 py-5 border-b border-gray-100">
+          <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 space-y-3">
+            <!-- Inspection services -->
+            <div class="flex items-center gap-3 flex-wrap">
+              <span class="text-sm text-gray-700">Inspection services provided by</span>
+              <div class="flex items-center gap-2">
+                <span class="inline-flex items-center px-2 py-0.5 text-xs font-bold text-blue-800 bg-blue-100 rounded">SGS</span>
+                <span class="inline-flex items-center px-2 py-0.5 text-xs font-bold text-red-800 bg-red-100 rounded">BV</span>
+                <span class="inline-flex items-center px-2 py-0.5 text-xs font-bold text-green-800 bg-green-100 rounded">TÜV</span>
+              </div>
+              <a href="#" class="text-sm text-blue-600 hover:underline">Learn more &gt;</a>
+            </div>
+            <!-- Payment amount -->
+            <div class="flex items-center gap-2">
+              <svg class="w-4 h-4 text-amber-500 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M10 2a8 8 0 100 16 8 8 0 000-16zm1 11H9v-2h2v2zm0-4H9V5h2v4z"/>
+              </svg>
+              <span class="text-sm text-gray-800">Your payment amount: <strong x-text="selectedOrder.currency + ' ' + selectedOrder.total"></strong></span>
+            </div>
+            <!-- Notes -->
+            <ul class="text-xs text-gray-600 space-y-1 pl-4 list-disc">
+              <li>Order terms are subject to the signed contract. Please review your order carefully.</li>
+              <li>Online payment is protected by iSTOC TradeHub Trade Assurance.</li>
+            </ul>
+          </div>
+
+          <!-- 3 Action Buttons -->
+          <div class="flex items-center gap-3 mt-4 flex-wrap">
+            <button @click="window.location.href='/order-success.html'" class="px-6 py-2.5 text-sm font-medium text-white bg-[#FF6600] rounded-full cursor-pointer transition-colors hover:bg-[#e65c00] border-none">
+              Make payment
+            </button>
+            <button @click="openModal('showModifyShipping')" class="px-6 py-2.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer transition-colors hover:border-gray-900 hover:text-gray-900">
+              Modify shipping details
+            </button>
+            <button @click="openModal('showCancelOrder')" class="px-6 py-2.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer transition-colors hover:border-red-500 hover:text-red-600">
+              Cancel order
+            </button>
+          </div>
         </div>
 
         <!-- Section 4: Ürün detayları -->
@@ -520,7 +585,8 @@ function renderAllOrders(): string {
               <span class="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium rounded-full"
                     :class="selectedOrder.shipping.trackingStatus === 'Kargo yolda' ? 'bg-blue-50 text-blue-700' : 'bg-amber-50 text-amber-700'"
                     x-text="selectedOrder.shipping.trackingStatus"></span>
-              <a href="#" class="text-sm text-blue-600 hover:underline whitespace-nowrap">Kargo takip</a>
+              <button @click="openModal('showTrackPackage')" class="text-sm text-blue-600 hover:underline whitespace-nowrap bg-transparent border-none cursor-pointer p-0">Track shipment(s) &gt;</button>
+              <button @click="openModal('showModifyShipping')" class="text-sm text-blue-600 hover:underline whitespace-nowrap bg-transparent border-none cursor-pointer p-0">Modify shipping details</button>
             </div>
           </div>
 
@@ -546,11 +612,27 @@ function renderAllOrders(): string {
 
         <!-- Section 6: Ödeme detayları -->
         <div class="px-7 max-sm:px-3 py-5 border-b border-gray-100">
-          <div class="flex items-center gap-2 mb-4">
-            <svg class="w-5 h-5 text-gray-500 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-              <rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/>
-            </svg>
-            <h2 class="text-base font-bold text-gray-900">Ödeme detaylari</h2>
+          <div class="flex items-center justify-between gap-3 mb-4 flex-wrap">
+            <div class="flex items-center gap-2">
+              <svg class="w-5 h-5 text-gray-500 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                <rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/>
+              </svg>
+              <h2 class="text-base font-bold text-gray-900">Ödeme detaylari</h2>
+            </div>
+            <div class="flex items-center gap-2">
+              <button @click="openModal('showPaymentHistory')" class="px-4 py-1.5 text-xs font-medium text-blue-600 bg-blue-50 border border-blue-200 rounded-full cursor-pointer hover:bg-blue-100 transition-colors">
+                Payment history
+              </button>
+              <div class="relative" x-data="{ moreOpen: false }">
+                <button @click="moreOpen = !moreOpen" class="flex items-center justify-center w-8 h-8 text-gray-400 hover:text-gray-600 bg-transparent border border-gray-200 rounded-full cursor-pointer transition-colors">
+                  <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><circle cx="4" cy="10" r="2"/><circle cx="10" cy="10" r="2"/><circle cx="16" cy="10" r="2"/></svg>
+                </button>
+                <div x-show="moreOpen" @click.outside="moreOpen = false" x-transition class="absolute right-0 top-full mt-1 bg-white border border-gray-200 rounded-md shadow-lg z-20 py-1 min-w-[160px]">
+                  <button class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 bg-transparent border-none cursor-pointer">Download invoice</button>
+                  <button class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 bg-transparent border-none cursor-pointer">Request refund</button>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div class="grid grid-cols-2 max-sm:grid-cols-1 gap-6 max-sm:gap-4">
@@ -669,15 +751,422 @@ function renderAllOrders(): string {
           </div>
         </div>
 
-        <!-- Section 9: Action Buttons -->
+        <!-- Section 9: Production Monitoring & Inspection Services -->
+        <div class="px-7 max-sm:px-3 py-5 border-b border-gray-100">
+          <div class="flex items-center justify-between gap-3 mb-4 flex-wrap">
+            <div class="flex items-center gap-2">
+              <svg class="w-5 h-5 text-gray-500 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+              </svg>
+              <h2 class="text-base font-bold text-gray-900">Production Monitoring & Inspection Services</h2>
+            </div>
+          </div>
+          <div class="bg-gray-50 rounded-lg p-4 flex items-center justify-between gap-4 flex-wrap">
+            <div>
+              <p class="text-sm text-gray-700 mb-1">Ensure product quality with third-party inspection services</p>
+              <p class="text-xs text-gray-500">as low as <strong class="text-amber-600">USD 48.00</strong></p>
+            </div>
+            <button @click="openModal('showAddServices')" class="px-5 py-2 text-sm font-medium text-white bg-[#FF6600] rounded-full cursor-pointer transition-colors hover:bg-[#e65c00] border-none whitespace-nowrap">
+              Add services
+            </button>
+          </div>
+        </div>
+
+        <!-- Section 10: Action Buttons -->
         <div class="px-7 max-sm:px-3 py-5 flex items-center gap-3 flex-wrap">
-          <button class="px-6 max-sm:px-4 py-2.5 max-sm:py-2 text-sm max-sm:text-xs font-medium text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer whitespace-nowrap transition-all hover:border-gray-900 hover:text-gray-900">
-            İşlem geçmişi
+          <button @click="openModal('showOperationHistory')" class="px-6 max-sm:px-4 py-2.5 max-sm:py-2 text-sm max-sm:text-xs font-medium text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer whitespace-nowrap transition-all hover:border-gray-900 hover:text-gray-900">
+            Operation history
           </button>
           <button class="px-6 max-sm:px-4 py-2.5 max-sm:py-2 text-sm max-sm:text-xs font-medium text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer whitespace-nowrap transition-all hover:border-gray-900 hover:text-gray-900">
-            Sözleşmeyi görüntüle
+            View contract
           </button>
         </div>
+
+      <!-- ═══════════════════════════════════════
+           MODALS
+           ═══════════════════════════════════════ -->
+
+      <!-- Modal 1: Operation History -->
+      <template x-if="showOperationHistory">
+        <div class="fixed inset-0 z-50 flex items-center justify-center p-4" @keydown.escape.window="closeModal('showOperationHistory')">
+          <div class="absolute inset-0 bg-black/50" @click="closeModal('showOperationHistory')"></div>
+          <div class="relative bg-white rounded-xl shadow-2xl w-full max-w-lg max-h-[80vh] overflow-hidden" @click.stop>
+            <!-- Header -->
+            <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200">
+              <h3 class="text-lg font-bold text-gray-900">Operation History</h3>
+              <button @click="closeModal('showOperationHistory')" class="flex items-center justify-center w-8 h-8 text-gray-400 hover:text-gray-600 bg-transparent border-none cursor-pointer rounded-full hover:bg-gray-100 transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 18L18 6M6 6l12 12"/></svg>
+              </button>
+            </div>
+            <!-- Body -->
+            <div class="px-6 py-5 overflow-y-auto max-h-[60vh]">
+              <div class="relative pl-6 border-l-2 border-gray-200 space-y-6">
+                <!-- Timeline item -->
+                <div class="relative">
+                  <div class="absolute -left-[25px] top-1 w-3 h-3 bg-amber-500 rounded-full border-2 border-white"></div>
+                  <p class="text-sm font-medium text-gray-900">Order submitted</p>
+                  <p class="text-xs text-gray-500 mt-0.5" x-text="selectedOrder.orderDate"></p>
+                  <p class="text-xs text-gray-400 mt-1">Order <span x-text="selectedOrder.orderNumber"></span> has been created successfully.</p>
+                </div>
+                <div class="relative">
+                  <div class="absolute -left-[25px] top-1 w-3 h-3 bg-gray-300 rounded-full border-2 border-white"></div>
+                  <p class="text-sm font-medium text-gray-600">Awaiting payment</p>
+                  <p class="text-xs text-gray-400 mt-1">Waiting for buyer to complete payment.</p>
+                </div>
+              </div>
+            </div>
+            <!-- Footer -->
+            <div class="px-6 py-4 border-t border-gray-100 flex justify-end">
+              <button @click="closeModal('showOperationHistory')" class="px-5 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer hover:bg-gray-50 transition-colors">
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </template>
+
+      <!-- Modal 2: Choose a Service -->
+      <template x-if="showAddServices">
+        <div class="fixed inset-0 z-50 flex items-center justify-center p-4" @keydown.escape.window="closeModal('showAddServices')">
+          <div class="absolute inset-0 bg-black/50" @click="closeModal('showAddServices')"></div>
+          <div class="relative bg-white rounded-xl shadow-2xl w-full max-w-2xl max-h-[85vh] overflow-hidden" @click.stop>
+            <!-- Header -->
+            <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200">
+              <h3 class="text-lg font-bold text-gray-900">Choose a Service</h3>
+              <button @click="closeModal('showAddServices')" class="flex items-center justify-center w-8 h-8 text-gray-400 hover:text-gray-600 bg-transparent border-none cursor-pointer rounded-full hover:bg-gray-100 transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 18L18 6M6 6l12 12"/></svg>
+              </button>
+            </div>
+            <!-- Body -->
+            <div class="px-6 py-5 overflow-y-auto max-h-[65vh] space-y-4">
+              <!-- Production Monitoring -->
+              <div class="border border-gray-200 rounded-lg p-5 hover:border-amber-300 transition-colors cursor-pointer">
+                <div class="flex items-start justify-between gap-4">
+                  <div class="flex-1">
+                    <div class="flex items-center gap-2 mb-2">
+                      <svg class="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                      <h4 class="text-base font-bold text-gray-900">Production Monitoring</h4>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-2">Real-time production progress tracking with photo/video updates from the factory floor.</p>
+                    <p class="text-xs text-gray-500">Starting from <strong class="text-amber-600">USD 48.00</strong></p>
+                  </div>
+                  <button class="px-4 py-2 text-sm font-medium text-white bg-[#FF6600] rounded-full cursor-pointer hover:bg-[#e65c00] border-none whitespace-nowrap shrink-0">
+                    Select
+                  </button>
+                </div>
+              </div>
+              <!-- Inspection Service -->
+              <div class="border border-gray-200 rounded-lg p-5 hover:border-amber-300 transition-colors cursor-pointer">
+                <div class="flex items-start justify-between gap-4">
+                  <div class="flex-1">
+                    <div class="flex items-center gap-2 mb-2">
+                      <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+                      <h4 class="text-base font-bold text-gray-900">Pre-shipment Inspection</h4>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-2">Professional third-party inspection before goods are shipped. Conducted by SGS, BV, or TÜV certified inspectors.</p>
+                    <p class="text-xs text-gray-500">Starting from <strong class="text-amber-600">USD 88.00</strong></p>
+                  </div>
+                  <button class="px-4 py-2 text-sm font-medium text-white bg-[#FF6600] rounded-full cursor-pointer hover:bg-[#e65c00] border-none whitespace-nowrap shrink-0">
+                    Select
+                  </button>
+                </div>
+              </div>
+            </div>
+            <!-- Footer -->
+            <div class="px-6 py-4 border-t border-gray-100 flex justify-end">
+              <button @click="closeModal('showAddServices')" class="px-5 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer hover:bg-gray-50 transition-colors">
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      </template>
+
+      <!-- Modal 3: Payment History -->
+      <template x-if="showPaymentHistory">
+        <div class="fixed inset-0 z-50 flex items-center justify-center p-4" @keydown.escape.window="closeModal('showPaymentHistory')">
+          <div class="absolute inset-0 bg-black/50" @click="closeModal('showPaymentHistory')"></div>
+          <div class="relative bg-white rounded-xl shadow-2xl w-full max-w-2xl max-h-[85vh] overflow-hidden" @click.stop>
+            <!-- Header -->
+            <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200">
+              <h3 class="text-lg font-bold text-gray-900">Payment History</h3>
+              <button @click="closeModal('showPaymentHistory')" class="flex items-center justify-center w-8 h-8 text-gray-400 hover:text-gray-600 bg-transparent border-none cursor-pointer rounded-full hover:bg-gray-100 transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 18L18 6M6 6l12 12"/></svg>
+              </button>
+            </div>
+            <!-- Tabs -->
+            <div class="border-b border-gray-200 px-6">
+              <div class="flex gap-0">
+                <button @click="paymentHistoryTab = 'records'"
+                  :class="paymentHistoryTab === 'records' ? 'text-gray-900 border-b-2 border-gray-900 font-medium' : 'text-gray-500 border-b-2 border-transparent hover:text-gray-700'"
+                  class="py-3 px-4 text-sm bg-transparent cursor-pointer transition-colors border-none">
+                  Payment records
+                </button>
+                <button @click="paymentHistoryTab = 'refunds'"
+                  :class="paymentHistoryTab === 'refunds' ? 'text-gray-900 border-b-2 border-gray-900 font-medium' : 'text-gray-500 border-b-2 border-transparent hover:text-gray-700'"
+                  class="py-3 px-4 text-sm bg-transparent cursor-pointer transition-colors border-none">
+                  Refunds
+                </button>
+                <button @click="paymentHistoryTab = 'wire'"
+                  :class="paymentHistoryTab === 'wire' ? 'text-gray-900 border-b-2 border-gray-900 font-medium' : 'text-gray-500 border-b-2 border-transparent hover:text-gray-700'"
+                  class="py-3 px-4 text-sm bg-transparent cursor-pointer transition-colors border-none">
+                  Wire transfer tracking
+                </button>
+              </div>
+            </div>
+            <!-- Body -->
+            <div class="px-6 py-5 overflow-y-auto max-h-[55vh]">
+              <!-- Payment records tab -->
+              <div x-show="paymentHistoryTab === 'records'">
+                <table class="w-full text-sm">
+                  <thead>
+                    <tr class="border-b border-gray-200">
+                      <th class="text-left text-xs font-semibold text-gray-500 uppercase pb-3 pr-4">Date</th>
+                      <th class="text-left text-xs font-semibold text-gray-500 uppercase pb-3 pr-4">Method</th>
+                      <th class="text-right text-xs font-semibold text-gray-500 uppercase pb-3 pr-4">Amount</th>
+                      <th class="text-right text-xs font-semibold text-gray-500 uppercase pb-3">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td colspan="4" class="py-12 text-center text-gray-400 text-sm">No payment records found</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- Refunds tab -->
+              <div x-show="paymentHistoryTab === 'refunds'">
+                <table class="w-full text-sm">
+                  <thead>
+                    <tr class="border-b border-gray-200">
+                      <th class="text-left text-xs font-semibold text-gray-500 uppercase pb-3 pr-4">Date</th>
+                      <th class="text-left text-xs font-semibold text-gray-500 uppercase pb-3 pr-4">Reason</th>
+                      <th class="text-right text-xs font-semibold text-gray-500 uppercase pb-3 pr-4">Amount</th>
+                      <th class="text-right text-xs font-semibold text-gray-500 uppercase pb-3">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td colspan="4" class="py-12 text-center text-gray-400 text-sm">No refund records found</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- Wire transfer tab -->
+              <div x-show="paymentHistoryTab === 'wire'">
+                <table class="w-full text-sm">
+                  <thead>
+                    <tr class="border-b border-gray-200">
+                      <th class="text-left text-xs font-semibold text-gray-500 uppercase pb-3 pr-4">Date</th>
+                      <th class="text-left text-xs font-semibold text-gray-500 uppercase pb-3 pr-4">Reference</th>
+                      <th class="text-right text-xs font-semibold text-gray-500 uppercase pb-3 pr-4">Amount</th>
+                      <th class="text-right text-xs font-semibold text-gray-500 uppercase pb-3">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td colspan="4" class="py-12 text-center text-gray-400 text-sm">No wire transfer records found</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <!-- Footer -->
+            <div class="px-6 py-4 border-t border-gray-100 flex justify-end">
+              <button @click="closeModal('showPaymentHistory')" class="px-5 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer hover:bg-gray-50 transition-colors">
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </template>
+
+      <!-- Modal 4: Track Package -->
+      <template x-if="showTrackPackage">
+        <div class="fixed inset-0 z-50 flex items-center justify-center p-4" @keydown.escape.window="closeModal('showTrackPackage')">
+          <div class="absolute inset-0 bg-black/50" @click="closeModal('showTrackPackage')"></div>
+          <div class="relative bg-white rounded-xl shadow-2xl w-full max-w-lg max-h-[80vh] overflow-hidden" @click.stop>
+            <!-- Header -->
+            <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200">
+              <h3 class="text-lg font-bold text-gray-900">Track Package</h3>
+              <button @click="closeModal('showTrackPackage')" class="flex items-center justify-center w-8 h-8 text-gray-400 hover:text-gray-600 bg-transparent border-none cursor-pointer rounded-full hover:bg-gray-100 transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 18L18 6M6 6l12 12"/></svg>
+              </button>
+            </div>
+            <!-- Body -->
+            <div class="px-6 py-5 overflow-y-auto max-h-[60vh] space-y-5">
+              <!-- Shipment info -->
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">Ship time</p>
+                  <p class="text-sm text-gray-700">Pending</p>
+                </div>
+                <div>
+                  <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">Shipping method</p>
+                  <p class="text-sm text-gray-700" x-text="selectedOrder.shipping.method"></p>
+                </div>
+                <div>
+                  <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">Estimated delivery</p>
+                  <p class="text-sm text-gray-700">To be confirmed</p>
+                </div>
+                <div>
+                  <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">Tracking number</p>
+                  <p class="text-sm text-gray-400">Not available yet</p>
+                </div>
+              </div>
+              <!-- Timeline -->
+              <div class="border-t border-gray-100 pt-4">
+                <h4 class="text-sm font-bold text-gray-900 mb-3">Tracking updates</h4>
+                <div class="flex flex-col items-center justify-center py-8 text-center">
+                  <svg class="w-10 h-10 text-gray-300 mb-2" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                    <path d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0"/>
+                  </svg>
+                  <p class="text-sm text-gray-400">No tracking updates available yet</p>
+                </div>
+              </div>
+            </div>
+            <!-- Footer -->
+            <div class="px-6 py-4 border-t border-gray-100 flex justify-end">
+              <button @click="closeModal('showTrackPackage')" class="px-5 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer hover:bg-gray-50 transition-colors">
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </template>
+
+      <!-- Modal 5: Modify Shipping Details -->
+      <template x-if="showModifyShipping">
+        <div class="fixed inset-0 z-50 flex items-center justify-center p-4" @keydown.escape.window="closeModal('showModifyShipping')">
+          <div class="absolute inset-0 bg-black/50" @click="closeModal('showModifyShipping')"></div>
+          <div class="relative bg-white rounded-xl shadow-2xl w-full max-w-lg max-h-[85vh] overflow-hidden" @click.stop>
+            <!-- Header -->
+            <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200">
+              <h3 class="text-lg font-bold text-gray-900">Modify Shipping Details</h3>
+              <button @click="closeModal('showModifyShipping')" class="flex items-center justify-center w-8 h-8 text-gray-400 hover:text-gray-600 bg-transparent border-none cursor-pointer rounded-full hover:bg-gray-100 transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 18L18 6M6 6l12 12"/></svg>
+              </button>
+            </div>
+            <!-- Body -->
+            <div class="px-6 py-5 overflow-y-auto max-h-[60vh] space-y-4">
+              <!-- Address -->
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1.5">Shipping address</label>
+                <textarea class="w-full h-20 px-3 py-2 text-sm border border-gray-300 rounded-lg outline-none bg-white text-gray-700 focus:border-amber-400 focus:ring-1 focus:ring-amber-200 resize-none" x-model="selectedOrder.shipping.address" placeholder="Enter full shipping address"></textarea>
+              </div>
+              <!-- Country -->
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1.5">Ship from</label>
+                  <input type="text" class="w-full h-10 px-3 text-sm border border-gray-300 rounded-lg outline-none bg-gray-50 text-gray-500 cursor-not-allowed" :value="selectedOrder.shipping.shipFrom" disabled />
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1.5">Incoterms</label>
+                  <input type="text" class="w-full h-10 px-3 text-sm border border-gray-300 rounded-lg outline-none bg-gray-50 text-gray-500 cursor-not-allowed" :value="selectedOrder.shipping.incoterms" disabled />
+                </div>
+              </div>
+              <!-- Service line -->
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1.5">Shipping service line</label>
+                <select class="w-full h-10 px-3 text-sm border border-gray-300 rounded-lg outline-none bg-white text-gray-700 focus:border-amber-400 focus:ring-1 focus:ring-amber-200 cursor-pointer">
+                  <option>Standard shipping</option>
+                  <option>Express shipping</option>
+                  <option>Economy shipping</option>
+                </select>
+              </div>
+              <!-- Fee info -->
+              <div class="bg-amber-50 border border-amber-200 rounded-lg p-3">
+                <div class="flex items-start gap-2">
+                  <svg class="w-4 h-4 text-amber-500 shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M10 2a8 8 0 100 16 8 8 0 000-16zm1 11H9v-2h2v2zm0-4H9V5h2v4z"/>
+                  </svg>
+                  <p class="text-xs text-gray-600">Modifying shipping details may result in additional fees. Changes are subject to supplier confirmation.</p>
+                </div>
+              </div>
+            </div>
+            <!-- Footer -->
+            <div class="px-6 py-4 border-t border-gray-100 flex items-center justify-end gap-3">
+              <button @click="closeModal('showModifyShipping')" class="px-5 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer hover:bg-gray-50 transition-colors">
+                Cancel
+              </button>
+              <button @click="closeModal('showModifyShipping')" class="px-5 py-2 text-sm font-medium text-white bg-[#FF6600] rounded-full cursor-pointer hover:bg-[#e65c00] border-none transition-colors">
+                Submit changes
+              </button>
+            </div>
+          </div>
+        </div>
+      </template>
+
+      <!-- Modal 6: Cancel Order -->
+      <template x-if="showCancelOrder">
+        <div class="fixed inset-0 z-50 flex items-center justify-center p-4" @keydown.escape.window="closeModal('showCancelOrder')">
+          <div class="absolute inset-0 bg-black/50" @click="closeModal('showCancelOrder')"></div>
+          <div class="relative bg-white rounded-xl shadow-2xl w-full max-w-md max-h-[85vh] overflow-hidden" @click.stop>
+            <!-- Header -->
+            <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200">
+              <h3 class="text-lg font-bold text-gray-900">Cancel order</h3>
+              <button @click="closeModal('showCancelOrder')" class="flex items-center justify-center w-8 h-8 text-gray-400 hover:text-gray-600 bg-transparent border-none cursor-pointer rounded-full hover:bg-gray-100 transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 18L18 6M6 6l12 12"/></svg>
+              </button>
+            </div>
+            <!-- Body -->
+            <div class="px-6 py-5 overflow-y-auto max-h-[60vh]">
+              <p class="text-sm text-gray-700 mb-1">Please tell us what was the reason for canceling this order?</p>
+              <p class="text-sm text-gray-500 mb-5">Tell us why you would like to cancel</p>
+              <div class="space-y-3">
+                <label class="flex items-center gap-3 cursor-pointer group">
+                  <input type="radio" name="cancelReason" value="shipping_fee" x-model="cancelReason" class="w-4 h-4 accent-[#FF6600] cursor-pointer" />
+                  <span class="text-sm text-gray-700 group-hover:text-gray-900">Shipping fee increased</span>
+                </label>
+                <label class="flex items-center gap-3 cursor-pointer group">
+                  <input type="radio" name="cancelReason" value="no_stock" x-model="cancelReason" class="w-4 h-4 accent-[#FF6600] cursor-pointer" />
+                  <span class="text-sm text-gray-700 group-hover:text-gray-900">No stock</span>
+                </label>
+                <label class="flex items-center gap-3 cursor-pointer group">
+                  <input type="radio" name="cancelReason" value="not_paid_30" x-model="cancelReason" class="w-4 h-4 accent-[#FF6600] cursor-pointer" />
+                  <span class="text-sm text-gray-700 group-hover:text-gray-900">Order is not paid within 30 days</span>
+                </label>
+                <label class="flex items-center gap-3 cursor-pointer group">
+                  <input type="radio" name="cancelReason" value="shipping_method" x-model="cancelReason" class="w-4 h-4 accent-[#FF6600] cursor-pointer" />
+                  <span class="text-sm text-gray-700 group-hover:text-gray-900">Unable to ship in accordance to agreed shipping method</span>
+                </label>
+                <label class="flex items-center gap-3 cursor-pointer group">
+                  <input type="radio" name="cancelReason" value="shipping_time" x-model="cancelReason" class="w-4 h-4 accent-[#FF6600] cursor-pointer" />
+                  <span class="text-sm text-gray-700 group-hover:text-gray-900">Unable to ship in accordance to agreed shipping time</span>
+                </label>
+                <label class="flex items-center gap-3 cursor-pointer group">
+                  <input type="radio" name="cancelReason" value="no_longer_needed" x-model="cancelReason" class="w-4 h-4 accent-[#FF6600] cursor-pointer" />
+                  <span class="text-sm text-gray-700 group-hover:text-gray-900">No longer needed</span>
+                </label>
+                <label class="flex items-center gap-3 cursor-pointer group">
+                  <input type="radio" name="cancelReason" value="wrong_info" x-model="cancelReason" class="w-4 h-4 accent-[#FF6600] cursor-pointer" />
+                  <span class="text-sm text-gray-700 group-hover:text-gray-900">Wrong order information or a new order will be placed</span>
+                </label>
+                <label class="flex items-center gap-3 cursor-pointer group">
+                  <input type="radio" name="cancelReason" value="price_increased" x-model="cancelReason" class="w-4 h-4 accent-[#FF6600] cursor-pointer" />
+                  <span class="text-sm text-gray-700 group-hover:text-gray-900">Product price increased</span>
+                </label>
+                <label class="flex items-center gap-3 cursor-pointer group">
+                  <input type="radio" name="cancelReason" value="others" x-model="cancelReason" class="w-4 h-4 accent-[#FF6600] cursor-pointer" />
+                  <span class="text-sm text-gray-700 group-hover:text-gray-900">Others</span>
+                </label>
+              </div>
+            </div>
+            <!-- Footer -->
+            <div class="px-6 py-4 border-t border-gray-100 flex items-center justify-end gap-3">
+              <button @click="closeModal('showCancelOrder')"
+                :class="cancelReason ? 'bg-[#FF6600] text-white hover:bg-[#e65c00] border-[#FF6600]' : 'bg-gray-200 text-gray-400 border-gray-200 cursor-not-allowed'"
+                :disabled="!cancelReason"
+                class="px-6 py-2 text-sm font-medium rounded-full cursor-pointer transition-colors border">
+                Confirm
+              </button>
+              <button @click="cancelReason = ''; closeModal('showCancelOrder')" class="px-6 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer hover:bg-gray-50 transition-colors">
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      </template>
 
       </div></template>
     </div>
@@ -790,61 +1279,117 @@ function renderReviews(): string {
 
 function renderCoupons(): string {
   return `
-    <div class="flex items-center justify-between px-7 max-sm:px-3 pt-6 pb-5 border-b border-(--color-border-light,#f0f0f0)">
-      <h1 class="text-[22px] font-bold text-(--color-text-heading,#111827)">Kupon ve krediler</h1>
-    </div>
-    <div class="os-tabs flex border-b overflow-x-auto scrollbar-hide border-(--color-border-default,#e5e5e5) px-7 max-sm:px-3" data-tabgroup="coupons">
-      <button class="os-tabs__tab os-tabs__tab--active py-3 px-4 text-sm bg-transparent border-none border-b-2 border-b-transparent cursor-pointer whitespace-nowrap transition-colors" data-tab="coupons-list">Kuponlar</button>
-      <button class="os-tabs__tab py-3 px-4 text-sm bg-transparent border-none border-b-2 border-b-transparent cursor-pointer whitespace-nowrap transition-colors text-(--color-text-muted,#666)" data-tab="coupons-credit">Kredi</button>
-    </div>
-
-    <!-- Tab: Kuponlar -->
-    <div class="os-tab-content os-tab-content--active" data-content="coupons-list">
-      <div class="os-pill-filters flex gap-2 px-7 max-sm:px-3 py-4">
-        <button class="os-pill os-pill--active px-4 py-1.5 text-[13px] bg-(--color-surface,#fff) border border-(--color-border-medium,#d1d5db) rounded-[20px] cursor-pointer transition-all">Mevcut</button>
-        <button class="os-pill px-4 py-1.5 text-[13px] text-(--color-text-muted,#666) bg-(--color-surface,#fff) border border-(--color-border-medium,#d1d5db) rounded-[20px] cursor-pointer transition-all">Kullanıldı</button>
-        <button class="os-pill px-4 py-1.5 text-[13px] text-(--color-text-muted,#666) bg-(--color-surface,#fff) border border-(--color-border-medium,#d1d5db) rounded-[20px] cursor-pointer transition-all">Süresi doldu</button>
-      </div>
-      <div class="flex flex-col items-center justify-center gap-3 px-10 max-sm:px-4 py-[60px] text-center">
-        <p class="text-sm text-(--color-text-muted,#666)">Kupon Yok</p>
-      </div>
-    </div>
-
-    <!-- Tab: Kredi -->
-    <div class="os-tab-content" data-content="coupons-credit">
-      <div class="mx-7 my-5 p-5 border border-(--color-border-default,#e5e5e5) rounded-lg">
-        <p class="text-sm text-(--color-text-body,#333) mb-2">Toplam kredi bakiyesi</p>
-        <p class="text-[28px] font-bold text-(--color-text-heading,#111827) mb-2">0.00</p>
-        <p class="text-[13px] text-(--color-text-muted,#666)">1 kredi 1 USD'ye eşittir <a href="#terms" class="text-[#2563EB] underline">Hükümler ve koşullar</a></p>
+    <div x-data="couponsPageComponent()">
+      <div class="flex items-center justify-between px-7 max-sm:px-3 pt-6 pb-5 border-b border-(--color-border-light,#f0f0f0)">
+        <h1 class="text-[22px] font-bold text-(--color-text-heading,#111827)">Kupon ve krediler</h1>
       </div>
 
-      <h3 class="text-base font-bold text-(--color-text-heading,#111827) px-7 max-sm:px-3 pt-5 pb-3">Geçmiş</h3>
-      <div class="px-7 max-sm:px-3">
-        <div class="overflow-x-auto"><table class="os-table w-full border-collapse border border-(--color-border-default,#e5e5e5) rounded-md overflow-hidden">
-          <thead>
-            <tr>
-              <th class="px-4 py-3 text-[13px] font-semibold text-(--color-text-body,#333) bg-(--color-surface-muted,#fafafa) border-b border-(--color-border-default,#e5e5e5) text-left whitespace-nowrap">İşlem</th>
-              <th class="px-4 py-3 text-[13px] font-semibold text-(--color-text-body,#333) bg-(--color-surface-muted,#fafafa) border-b border-(--color-border-default,#e5e5e5) text-left whitespace-nowrap">Ayrıntılar</th>
-              <th class="px-4 py-3 text-[13px] font-semibold text-(--color-text-body,#333) bg-(--color-surface-muted,#fafafa) border-b border-(--color-border-default,#e5e5e5) text-left whitespace-nowrap">Tarih (UTC-8)</th>
-              <th class="px-4 py-3 text-[13px] font-semibold text-(--color-text-body,#333) bg-(--color-surface-muted,#fafafa) border-b border-(--color-border-default,#e5e5e5) text-left whitespace-nowrap">Tutar</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td colspan="4" class="text-center py-10 px-4 text-[13px] text-(--color-text-placeholder,#999)">Henüz bir kayıt yok.</td>
-            </tr>
-          </tbody>
-        </table></div>
+      <!-- Tabs -->
+      <div class="flex border-b overflow-x-auto scrollbar-hide border-(--color-border-default,#e5e5e5) px-7 max-sm:px-3">
+        <button @click="switchTab('coupons-list')" class="py-3 px-4 text-sm bg-transparent border-none border-b-2 cursor-pointer whitespace-nowrap transition-colors"
+          :class="activeTab === 'coupons-list' ? 'border-b-[#222] text-(--color-text-heading,#111827) font-semibold' : 'border-b-transparent text-(--color-text-muted,#666)'">Kuponlar</button>
+        <button @click="switchTab('coupons-credit')" class="py-3 px-4 text-sm bg-transparent border-none border-b-2 cursor-pointer whitespace-nowrap transition-colors"
+          :class="activeTab === 'coupons-credit' ? 'border-b-[#222] text-(--color-text-heading,#111827) font-semibold' : 'border-b-transparent text-(--color-text-muted,#666)'">Kredi</button>
       </div>
 
-      <div class="flex items-center justify-end gap-2 px-7 max-sm:px-3 py-4">
-        <button class="flex items-center justify-center w-8 h-8 border border-(--color-border-medium,#d1d5db) rounded-full bg-(--color-surface,#fff) text-(--color-text-muted,#666) cursor-pointer disabled:opacity-40 disabled:cursor-default" disabled>
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M15 19l-7-7 7-7"/></svg>
-        </button>
-        <span class="flex items-center justify-center w-8 h-8 text-[13px] text-(--color-text-heading,#111827) border border-[#222] rounded-full font-semibold">1</span>
-        <button class="flex items-center justify-center w-8 h-8 border border-(--color-border-medium,#d1d5db) rounded-full bg-(--color-surface,#fff) text-(--color-text-muted,#666) cursor-pointer disabled:opacity-40 disabled:cursor-default" disabled>
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M9 5l7 7-7 7"/></svg>
-        </button>
+      <!-- Tab: Kuponlar -->
+      <div x-show="activeTab === 'coupons-list'">
+        <!-- Pill filters -->
+        <div class="flex gap-2 px-7 max-sm:px-3 py-4">
+          <template x-for="pill in [{id:'available',label:'Mevcut'},{id:'used',label:'Kullanıldı'},{id:'expired',label:'Süresi doldu'}]" :key="pill.id">
+            <button @click="setPill(pill.id)" class="px-4 py-1.5 text-[13px] bg-(--color-surface,#fff) border rounded-[20px] cursor-pointer transition-all"
+              :class="activePill === pill.id ? 'border-[#222] text-(--color-text-heading,#111827) font-semibold' : 'border-(--color-border-medium,#d1d5db) text-(--color-text-muted,#666)'"
+              x-text="pill.label"></button>
+          </template>
+        </div>
+
+        <!-- Empty state -->
+        <div x-show="filteredCoupons.length === 0" class="flex flex-col items-center justify-center gap-3 px-10 max-sm:px-4 py-[60px] text-center">
+          <p class="text-sm text-(--color-text-muted,#666)">Kupon Yok</p>
+        </div>
+
+        <!-- Coupon cards -->
+        <div x-show="filteredCoupons.length > 0" class="flex flex-col gap-3 px-7 max-sm:px-3 pb-6">
+          <template x-for="coupon in filteredCoupons" :key="coupon.code">
+            <div class="border rounded-lg p-4 transition-all"
+              :class="coupon.status === 'available' ? 'border-(--color-border-default,#e5e5e5) bg-white' : 'border-(--color-border-light,#f0f0f0) bg-(--color-surface-muted,#fafafa) opacity-60'">
+              <div class="flex items-start gap-4">
+                <!-- Type badge -->
+                <div class="flex-shrink-0 w-12 h-12 rounded-lg flex items-center justify-center text-lg font-bold"
+                  :class="coupon.type === 'percent' ? 'bg-blue-50 text-blue-600' : coupon.type === 'fixed' ? 'bg-green-50 text-green-600' : 'bg-orange-50 text-orange-600'"
+                  x-text="couponTypeBadge(coupon.type)"></div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-center gap-2 mb-1">
+                    <span class="text-xs font-medium px-2 py-0.5 rounded-full"
+                      :class="coupon.type === 'percent' ? 'bg-blue-50 text-blue-600' : coupon.type === 'fixed' ? 'bg-green-50 text-green-600' : 'bg-orange-50 text-orange-600'"
+                      x-text="couponTypeLabel(coupon.type)"></span>
+                    <span class="font-mono text-sm font-semibold text-(--color-text-heading,#111827)" x-text="coupon.code"></span>
+                  </div>
+                  <p class="text-sm text-(--color-text-body,#333) mb-1" x-text="coupon.description"></p>
+                  <div class="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-(--color-text-muted,#666)">
+                    <span x-show="coupon.minOrder > 0" x-text="'Min sipariş: $' + coupon.minOrder"></span>
+                    <span x-text="'Son tarih: ' + formatDate(coupon.expiresAt)"></span>
+                    <span x-show="coupon.usedAt" x-text="'Kullanıldı: ' + formatDate(coupon.usedAt || '')"></span>
+                  </div>
+                </div>
+                <!-- Value display -->
+                <div class="flex-shrink-0 text-right">
+                  <span class="text-lg font-bold" :class="coupon.status === 'available' ? 'text-(--color-text-heading,#111827)' : 'text-(--color-text-muted,#666)'"
+                    x-text="coupon.type === 'shipping' ? 'Ücretsiz' : (coupon.type === 'percent' ? '%' + coupon.value : '$' + coupon.value)"></span>
+                </div>
+              </div>
+            </div>
+          </template>
+        </div>
+      </div>
+
+      <!-- Tab: Kredi -->
+      <div x-show="activeTab === 'coupons-credit'">
+        <div class="mx-7 my-5 p-5 border border-(--color-border-default,#e5e5e5) rounded-lg">
+          <p class="text-sm text-(--color-text-body,#333) mb-2">Toplam kredi bakiyesi</p>
+          <p class="text-[28px] font-bold text-(--color-text-heading,#111827) mb-2" x-text="'$' + creditBalance.toFixed(2)"></p>
+          <p class="text-[13px] text-(--color-text-muted,#666)">1 kredi 1 USD'ye eşittir <a href="#terms" class="text-[#2563EB] underline">Hükümler ve koşullar</a></p>
+        </div>
+
+        <h3 class="text-base font-bold text-(--color-text-heading,#111827) px-7 max-sm:px-3 pt-5 pb-3">Geçmiş</h3>
+        <div class="px-7 max-sm:px-3">
+          <div class="overflow-x-auto"><table class="w-full border-collapse border border-(--color-border-default,#e5e5e5) rounded-md overflow-hidden">
+            <thead>
+              <tr>
+                <th class="px-4 py-3 text-[13px] font-semibold text-(--color-text-body,#333) bg-(--color-surface-muted,#fafafa) border-b border-(--color-border-default,#e5e5e5) text-left whitespace-nowrap">İşlem</th>
+                <th class="px-4 py-3 text-[13px] font-semibold text-(--color-text-body,#333) bg-(--color-surface-muted,#fafafa) border-b border-(--color-border-default,#e5e5e5) text-left whitespace-nowrap">Ayrıntılar</th>
+                <th class="px-4 py-3 text-[13px] font-semibold text-(--color-text-body,#333) bg-(--color-surface-muted,#fafafa) border-b border-(--color-border-default,#e5e5e5) text-left whitespace-nowrap">Tarih (UTC-8)</th>
+                <th class="px-4 py-3 text-[13px] font-semibold text-(--color-text-body,#333) bg-(--color-surface-muted,#fafafa) border-b border-(--color-border-default,#e5e5e5) text-left whitespace-nowrap">Tutar</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Empty state -->
+              <template x-if="creditHistory.length === 0">
+                <tr>
+                  <td colspan="4" class="text-center py-10 px-4 text-[13px] text-(--color-text-placeholder,#999)">Henüz bir kayıt yok.</td>
+                </tr>
+              </template>
+              <!-- Credit rows -->
+              <template x-for="entry in creditHistory" :key="entry.id">
+                <tr class="border-b border-(--color-border-light,#f0f0f0) last:border-b-0">
+                  <td class="px-4 py-3 text-[13px]">
+                    <span class="px-2 py-0.5 rounded-full text-xs font-medium"
+                      :class="entry.type === 'earned' ? 'bg-green-50 text-green-700' : entry.type === 'spent' ? 'bg-red-50 text-red-600' : 'bg-blue-50 text-blue-600'"
+                      x-text="creditTypeLabel(entry.type)"></span>
+                  </td>
+                  <td class="px-4 py-3 text-[13px] text-(--color-text-body,#333)" x-text="entry.description"></td>
+                  <td class="px-4 py-3 text-[13px] text-(--color-text-muted,#666) whitespace-nowrap" x-text="formatDate(entry.date)"></td>
+                  <td class="px-4 py-3 text-[13px] font-semibold whitespace-nowrap" :class="creditTypeColor(entry.type)"
+                    x-text="(entry.amount >= 0 ? '+' : '') + '$' + Math.abs(entry.amount).toFixed(2)"></td>
+                </tr>
+              </template>
+            </tbody>
+          </table></div>
+        </div>
+
+        <div class="flex items-center justify-end gap-2 px-7 max-sm:px-3 py-4">
+          <span class="text-[13px] text-(--color-text-muted,#666)" x-text="creditHistory.length + ' kayıt'"></span>
+        </div>
       </div>
     </div>
   `;
@@ -1093,7 +1638,7 @@ export function OrdersPageLayout(): string {
   return `
     <div class="orders-page flex bg-(--color-surface,#fff) rounded-lg min-h-[calc(100vh-80px)] overflow-hidden max-md:flex-col max-md:rounded-none max-md:min-h-0">
       <aside class="orders-page__nav w-[240px] shrink-0 border-r border-(--color-border-light,#f0f0f0) py-6 max-md:w-full max-md:border-r-0 max-md:border-b max-md:border-b-(--color-border-light,#f0f0f0) max-md:py-3">
-        <h2 class="text-base font-bold text-(--color-text-heading,#111827) px-5 pb-4 max-md:pb-2 max-md:px-4 max-md:text-sm">Siparişlerim</h2>
+        <h2 class="text-base font-bold text-(--color-text-heading,#111827) px-5 pb-4 max-md:pb-2 max-md:px-4 max-md:text-sm">Orders</h2>
         <nav class="orders-page__nav-links flex flex-col max-md:flex-row max-md:overflow-x-auto max-md:px-3 max-md:gap-1 max-md:scrollbar-hide">
           ${renderNav(activeId)}
         </nav>

@@ -43,11 +43,17 @@ export function SupplierCard({ supplier, isSingleSupplier = true }: SupplierCard
             <path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
         </div>
-        <div class="text-sm font-bold text-text-primary whitespace-nowrap sc-c-supplier-total"
-          x-show="!expanded" ${isOpen ? 'x-cloak' : ''}>
-          <!-- Dinamik olarak CartPage üzerinden doldurulacak -->
-        </div>
-      </header>
+          <div class="flex items-center gap-4 text-sm font-bold text-text-primary whitespace-nowrap sc-c-supplier-total">
+            <!-- Total is only visible when collapsed (or can be always visible if desired, but we'll leave it hidden when expanded) -->
+            <span class="sc-c-supplier-total-text" x-show="!expanded" ${isOpen ? 'x-cloak' : ''}></span>
+            
+            <button type="button" class="sc-c-supplier-checkout-btn px-4 py-1.5 rounded-[var(--radius-button,8px)] transition-colors hover:brightness-95"
+                    style="background-color: var(--btn-bg, #FF6600); color: var(--btn-text, #ffffff); font-size: var(--btn-font-size, 0.875rem); font-weight: var(--btn-font-weight, 600); border: var(--btn-border-width, 0) solid var(--btn-border-color, transparent); box-shadow: var(--btn-shadow, none);"
+                    @click.stop="$dispatch('checkout-supplier', { supplierId: '${escapeHtml(supplier.id)}' })">
+              Bu satıcıya ödeme yap
+            </button>
+          </div>
+        </header>
       <div class="sc-c-supplier-content px-5 pb-1 max-sm:px-3 transition-all duration-300"
         x-show="expanded" ${!isOpen ? 'x-cloak' : ''}>${products}</div>
     </section>

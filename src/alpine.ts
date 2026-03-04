@@ -51,6 +51,9 @@ import {
 import type { SavedAddress } from './types/checkout';
 import { getUser, isLoggedIn } from './utils/auth';
 import { ORDER_TABS, ORDER_FILTERS } from './components/buyer-dashboard/ordersData';
+import { orderStore } from './components/orders/state/OrderStore';
+import { couponStore } from './components/orders/state/CouponStore';
+import type { CouponData, CreditHistoryEntry } from './data/mockCheckout';
 
 // Augment Window interface for Alpine global access (debugging)
 declare global {
@@ -60,6 +63,231 @@ declare global {
 }
 
 // Register reusable Alpine.data() components BEFORE Alpine.start()
+
+Alpine.data('ordersListComponent', () => ({
+  activeTab: 'all',
+  searchQuery: '',
+  dateFilter: 'all',
+  dateFrom: '',
+  dateTo: '',
+  dateOpen: false,
+  timeOpen: false,
+  selectedOrder: null,
+  copiedNumber: false,
+  orders: [] as any[],
+
+  init() {
+    orderStore.load();
+    this.orders = orderStore.getOrders();
+    orderStore.subscribe(() => {
+      this.orders = orderStore.getOrders();
+    });
+  },
+
+  get filteredOrders() {
+    const statusMap: Record<string, string[]> = {
+      all: [],
+      unpaid: ['Waiting for payment'],
+      confirming: ['Confirming'],
+      delivering: ['Delivering'],
+      completed: ['Completed'],
+      cancelled: ['Cancelled'],
+    };
+
+    return this.orders.filter((o: any) => {
+      // Status filter
+      const allowedStatuses = statusMap[this.activeTab];
+      const matchStatus = !allowedStatuses || allowedStatuses.length === 0 || allowedStatuses.includes(o.status);
+
+      // Search filter
+      const q = this.searchQuery.toLowerCase();
+      const matchSearch = !q || o.orderNumber.toLowerCase().includes(q) || o.seller.toLowerCase().includes(q) || o.products.some((p: any) => p.name.toLowerCase().includes(q));
+
+      // Date filter
+      let matchDate = true;
+      if (this.dateFilter !== 'all' && o.createdAt) {
+        const orderTime = o.createdAt;
+        const now = Date.now();
+        if (this.dateFilter === '7d') {
+          matchDate = now - orderTime <= 7 * 24 * 60 * 60 * 1000;
+        } else if (this.dateFilter === '30d') {
+          matchDate = now - orderTime <= 30 * 24 * 60 * 60 * 1000;
+        } else if (this.dateFilter === '90d') {
+          matchDate = now - orderTime <= 90 * 24 * 60 * 60 * 1000;
+        } else if (this.dateFilter === 'custom') {
+          if (this.dateFrom) matchDate = orderTime >= new Date(this.dateFrom).getTime();
+          if (this.dateTo && matchDate) matchDate = orderTime <= new Date(this.dateTo).getTime() + 24 * 60 * 60 * 1000;
+        }
+      }
+
+      return matchStatus && matchSearch && matchDate;
+    });
+  },
+
+  tabCount(tabId: string) {
+    const statusMap: Record<string, string[]> = {
+      all: [],
+      unpaid: ['Waiting for payment'],
+      confirming: ['Confirming'],
+      delivering: ['Delivering'],
+      completed: ['Completed'],
+      cancelled: ['Cancelled'],
+    };
+    const allowedStatuses = statusMap[tabId];
+    if (!allowedStatuses || allowedStatuses.length === 0) return this.orders.length;
+    return this.orders.filter((o: any) => allowedStatuses.includes(o.status)).length;
+  },
+
+  viewDetail(order: any) {
+    this.selectedOrder = order;
+    window.scrollTo({ top: 0 });
+  },
+
+  backToList() {
+    this.selectedOrder = null;
+    this.copiedNumber = false;
+  },
+
+  get dateFilterLabel() {
+    if (this.dateFilter === 'custom') return 'Özel tarih';
+    if (this.dateFilter === '7d') return 'Son 7 gün';
+    if (this.dateFilter === '30d') return 'Son 30 gün';
+    if (this.dateFilter === '90d') return 'Son 90 gün';
+    return 'Sipariş tarihi';
+  },
+
+  get timeRangeLabel() {
+    if (this.dateFilter === 'custom' && (this.dateFrom || this.dateTo)) {
+      return `${this.dateFrom || '...'} / ${this.dateTo || '...'}`;
+    }
+    return 'Zaman seçin';
+  },
+
+  setDateFilter(val: string) {
+    this.dateFilter = val;
+    this.dateOpen = false;
+    if (val !== 'custom') {
+      this.dateFrom = '';
+      this.dateTo = '';
+    }
+  },
+
+  clearTimeRange() {
+    this.dateFrom = '';
+    this.dateTo = '';
+    this.dateFilter = 'all';
+    this.timeOpen = false;
+  },
+
+  applyTimeRange() {
+    if (this.dateFrom || this.dateTo) {
+      this.dateFilter = 'custom';
+      this.timeOpen = false;
+    }
+  },
+
+  copyOrderNumber() {
+    if (!this.selectedOrder) return;
+    navigator.clipboard.writeText(this.selectedOrder.orderNumber);
+    this.copiedNumber = true;
+    setTimeout(() => { this.copiedNumber = false; }, 2000);
+  },
+
+  // Modal states
+  showOperationHistory: false,
+  showPaymentHistory: false,
+  showTrackPackage: false,
+  showModifyShipping: false,
+  showAddServices: false,
+  showCancelOrder: false,
+  paymentHistoryTab: 'records',
+  cancelReason: '',
+
+  openModal(name: string) {
+    (this as any)[name] = true;
+    document.body.style.overflow = 'hidden';
+  },
+
+  closeModal(name: string) {
+    (this as any)[name] = false;
+    document.body.style.overflow = '';
+  },
+
+  getStepIndex(order: any) {
+    if (!order) return -1;
+    if (order.status === 'Waiting for payment') return 0;
+    if (order.status === 'Delivering') return 2;
+    if (order.status === 'Completed') return 4;
+    return 1;
+  }
+}));
+
+Alpine.data('couponsPageComponent', () => ({
+  activeTab: 'coupons-list' as string,
+  activePill: 'available' as string,
+  coupons: [] as CouponData[],
+  creditBalance: 0,
+  creditHistory: [] as CreditHistoryEntry[],
+
+  init() {
+    couponStore.load();
+    this.coupons = couponStore.getCoupons();
+    this.creditBalance = couponStore.getCreditBalance();
+    this.creditHistory = couponStore.getCreditHistory();
+    couponStore.subscribe(() => {
+      this.coupons = couponStore.getCoupons();
+      this.creditBalance = couponStore.getCreditBalance();
+      this.creditHistory = couponStore.getCreditHistory();
+    });
+  },
+
+  get filteredCoupons(): CouponData[] {
+    const statusMap: Record<string, CouponData['status']> = {
+      available: 'available',
+      used: 'used',
+      expired: 'expired',
+    };
+    const status = statusMap[this.activePill] ?? 'available';
+    return this.coupons.filter((c: CouponData) => c.status === status);
+  },
+
+  switchTab(tab: string) {
+    this.activeTab = tab;
+  },
+
+  setPill(pill: string) {
+    this.activePill = pill;
+  },
+
+  formatDate(iso: string): string {
+    if (!iso) return '-';
+    const d = new Date(iso);
+    return d.toLocaleDateString('tr-TR', { day: '2-digit', month: 'short', year: 'numeric' });
+  },
+
+  couponTypeBadge(type: string): string {
+    if (type === 'percent') return '%';
+    if (type === 'fixed') return '$';
+    return '🚚';
+  },
+
+  couponTypeLabel(type: string): string {
+    if (type === 'percent') return 'Yüzde İndirim';
+    if (type === 'fixed') return 'Sabit İndirim';
+    return 'Ücretsiz Kargo';
+  },
+
+  creditTypeLabel(type: string): string {
+    if (type === 'earned') return 'Kazanıldı';
+    if (type === 'spent') return 'Harcandı';
+    return 'İade';
+  },
+
+  creditTypeColor(type: string): string {
+    if (type === 'earned' || type === 'refund') return 'text-green-600';
+    return 'text-red-500';
+  },
+}));
 
 Alpine.data('loginModal', () => ({
   open: false,
@@ -426,6 +654,15 @@ Alpine.data('stickyHeaderSearch', () => ({
         this.syncDropdownOffset();
       }
     }, { passive: true });
+
+    // Close when mega menu opens (listens to custom event)
+    document.addEventListener('istoc:close-search', () => {
+      this.close();
+      const input = (this.$refs as Record<string, HTMLInputElement>).searchInput;
+      if (input && document.activeElement === input) {
+        input.blur();
+      }
+    });
   },
 
   open() {
@@ -439,18 +676,11 @@ Alpine.data('stickyHeaderSearch', () => ({
   close() {
     if (!this.expanded) return;
     this.expanded = false;
-    const dropdown = (this.$refs as Record<string, HTMLElement>).dropdown;
-    if (dropdown) {
-      dropdown.style.removeProperty('top');
-    }
   },
 
   syncDropdownOffset() {
-    const form = (this.$refs as Record<string, HTMLElement>).searchForm;
-    const dropdown = (this.$refs as Record<string, HTMLElement>).dropdown;
-    if (!form || !dropdown) return;
-    const dropdownTop = form.offsetTop + form.offsetHeight + 8;
-    dropdown.style.top = `${dropdownTop}px`;
+    // Top position is now handled purely via Tailwind CSS classes (e.g. top-[115px])
+    // to allow smooth CSS transitions without JS height recalculation interference.
   },
 
   pickValue(value: string) {
@@ -749,6 +979,20 @@ Alpine.data('cartPage', () => ({
     }
   },
 
+  handleCheckoutSupplier(event: CustomEvent) {
+    const supplierId = event.detail?.supplierId as string | undefined;
+    if (!supplierId) return;
+
+    // First, uncheck all selected skus globally
+    cartStore.toggleAll(false);
+
+    // Then, select only the specific supplier
+    cartStore.toggleSupplierSelection(supplierId, true);
+
+    // Finally, redirect to checkout
+    window.location.href = '/checkout.html';
+  },
+
   updateParentCheckboxStates(skuRow: Element) {
     const productRow = skuRow.closest<HTMLElement>('[data-product-id]');
     if (!productRow) return;
@@ -906,7 +1150,7 @@ Alpine.data('cartPage', () => ({
         });
       });
 
-      const totalEl = container.querySelector<HTMLElement>('.sc-c-supplier-total');
+      const totalEl = container.querySelector<HTMLElement>('.sc-c-supplier-total-text');
       if (totalEl) {
         if (subtotal > 0) {
           totalEl.textContent = `Toplam: ${supplier.products[0]?.skus[0]?.currency || '$'}${subtotal.toFixed(2).replace('.', ',')}`;
@@ -1883,22 +2127,110 @@ Alpine.data('checkoutOrderSummary', (props?: { itemSubtotal?: number; discount?:
   shippingFee: Number(props?.initialShippingFee ?? 0),
   currency: props?.currency ?? 'USD',
 
+  // Coupon state
+  couponCode: '',
+  couponError: '',
+  couponApplied: null as { code: string; type: string; value: number; description: string } | null,
+  couponDiscount: 0,
+
   init() {
     window.addEventListener('checkout:shipping-updated', (event: Event) => {
       const detail = (event as CustomEvent<{ shippingFee?: number }>).detail;
       const nextShippingFee = detail?.shippingFee;
       if (typeof nextShippingFee === 'number' && Number.isFinite(nextShippingFee)) {
         this.shippingFee = Number(nextShippingFee.toFixed(2));
+        this.recalcCouponDiscount();
       }
     });
   },
 
+  applyCoupon() {
+    const code = this.couponCode.trim().toUpperCase();
+    if (!code) { this.couponError = 'Please enter a coupon code'; return; }
+
+    const coupons = (window as unknown as Record<string, unknown>).__mockCoupons as Array<{ code: string; type: string; value: number; minOrder: number; description: string }> | undefined;
+    const coupon = coupons?.find(c => c.code === code);
+    if (!coupon) { this.couponError = 'Invalid coupon code'; return; }
+
+    const subtotalBeforeCoupon = this.itemSubtotal + this.shippingFee - this.discount;
+    if (coupon.minOrder > 0 && subtotalBeforeCoupon < coupon.minOrder) {
+      this.couponError = `Minimum order amount: ${this.currency} ${coupon.minOrder.toFixed(2)}`;
+      return;
+    }
+
+    this.couponApplied = { code: coupon.code, type: coupon.type, value: coupon.value, description: coupon.description };
+    this.couponError = '';
+    this.recalcCouponDiscount();
+
+    window.dispatchEvent(new CustomEvent('checkout:coupon-updated', {
+      detail: { coupon: this.couponApplied, couponDiscount: this.couponDiscount },
+    }));
+  },
+
+  removeCoupon() {
+    this.couponApplied = null;
+    this.couponDiscount = 0;
+    this.couponCode = '';
+    this.couponError = '';
+
+    window.dispatchEvent(new CustomEvent('checkout:coupon-updated', {
+      detail: { coupon: null, couponDiscount: 0 },
+    }));
+  },
+
+  recalcCouponDiscount() {
+    if (!this.couponApplied) { this.couponDiscount = 0; return; }
+    const subtotalBeforeCoupon = this.itemSubtotal + this.shippingFee - this.discount;
+    if (this.couponApplied.type === 'percent') {
+      this.couponDiscount = Number((subtotalBeforeCoupon * this.couponApplied.value / 100).toFixed(2));
+    } else if (this.couponApplied.type === 'fixed') {
+      this.couponDiscount = Math.min(this.couponApplied.value, subtotalBeforeCoupon);
+    } else if (this.couponApplied.type === 'shipping') {
+      this.couponDiscount = this.shippingFee;
+    }
+  },
+
   get total(): number {
-    return Number((this.itemSubtotal + this.shippingFee - this.discount).toFixed(2));
+    return Number((this.itemSubtotal + this.shippingFee - this.discount - this.couponDiscount).toFixed(2));
   },
 
   formatMoney(value: number): string {
     return `${this.currency} ${value.toFixed(2)}`;
+  },
+}));
+
+// ── Checkout Review Modal ──
+
+Alpine.data('checkoutReviewModal', () => ({
+  open: false,
+  shippingAddress: '',
+  paymentMethod: '',
+  orders: [] as Array<{ orderId: string; orderLabel: string; sellerName: string; products: Array<{ id: string; title: string; image: string; skuLines: Array<{ id: string; variantText: string; unitPrice: number; quantity: number }> }> }>,
+  summary: { itemSubtotal: '0.00', shippingFee: '0.00', couponDiscount: '0.00', total: '0.00' },
+
+  init() {
+    window.addEventListener('checkout:open-review', ((event: CustomEvent) => {
+      const d = event.detail;
+      this.shippingAddress = d.shippingAddress || '';
+      this.paymentMethod = d.paymentMethod || '';
+      this.orders = d.orders || [];
+      this.summary = d.summary || this.summary;
+      this.open = true;
+      document.body.style.overflow = 'hidden';
+    }) as EventListener);
+  },
+
+  confirmOrder() {
+    this.open = false;
+    document.body.style.overflow = '';
+    window.dispatchEvent(new CustomEvent('checkout:confirm-order'));
+  },
+
+  // Clean up on close
+  '$watch': {
+    open(val: boolean) {
+      if (!val) document.body.style.overflow = '';
+    },
   },
 }));
 

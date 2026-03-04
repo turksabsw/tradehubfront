@@ -89,6 +89,52 @@ export function OrderSummary({ data, protectionItems, tradeAssuranceText }: Orde
         </div>
       </div>
 
+      <!-- Coupon Code Section -->
+      <div class="mt-3 mb-1">
+        <!-- Input row (hidden when coupon applied) -->
+        <template x-if="!couponApplied">
+          <div class="flex gap-2">
+            <input
+              type="text"
+              x-model="couponCode"
+              @keydown.enter="applyCoupon()"
+              placeholder="Enter coupon code"
+              class="flex-1 h-[38px] px-3 text-[14px] border border-[#d1d5db] rounded-lg focus:outline-none focus:border-[#e87400] focus:ring-1 focus:ring-[#e87400] transition-colors"
+            />
+            <button
+              type="button"
+              @click="applyCoupon()"
+              class="h-[38px] px-4 text-[14px] font-semibold bg-[#f5f5f5] border border-[#d1d5db] rounded-lg hover:bg-[#e8e8e8] transition-colors cursor-pointer"
+            >Apply</button>
+          </div>
+        </template>
+        <!-- Applied coupon badge -->
+        <template x-if="couponApplied">
+          <div class="flex items-center justify-between bg-[#f0fdf4] border border-[#bbf7d0] rounded-lg px-3 py-2">
+            <div class="flex items-center gap-2">
+              <svg class="w-4 h-4 text-[#16a34a]" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              <span class="text-[14px] font-semibold text-[#16a34a]" x-text="couponApplied.code"></span>
+              <span class="text-[13px] text-[#4b5563]" x-text="'— ' + couponApplied.description"></span>
+            </div>
+            <button type="button" @click="removeCoupon()" class="text-[#6b7280] hover:text-[#ef4444] transition-colors cursor-pointer p-0.5" aria-label="Remove coupon">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+        </template>
+        <!-- Error message -->
+        <template x-if="couponError && !couponApplied">
+          <p class="text-[13px] text-[#ef4444] mt-1" x-text="couponError"></p>
+        </template>
+      </div>
+
+      <!-- Coupon discount row -->
+      <template x-if="couponDiscount > 0">
+        <div class="flex justify-between items-center py-[6px] text-[14px] leading-5">
+          <span class="text-[#16a34a]">Coupon discount</span>
+          <span class="text-[#16a34a] font-semibold" x-text="'- ' + formatMoney(couponDiscount)"></span>
+        </div>
+      </template>
+
       <!-- Total -->
       <div class="flex justify-between items-center mt-[10px] pt-[16px] border-t border-[#e5e5e5] summary-amounts-total-block text-[20px] font-bold text-[#222222]">
         <span>Total</span>
