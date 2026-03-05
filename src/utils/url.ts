@@ -14,7 +14,7 @@ export function toHref(path: string): string {
 
 /**
  * Rewrite all internal <a> href and <form> action attributes to include the base URL.
- * Handles both initial render and dynamically added elements.
+ * Also intercepts clicks as a safety net for links not yet rewritten.
  * No-op when deployed at root (/).
  */
 export function initLinkRewriter(): void {
@@ -50,10 +50,23 @@ export function initLinkRewriter(): void {
     }
   };
 
+  // Observe DOM changes for dynamically rendered content
   new MutationObserver(schedule).observe(document.documentElement, {
     childList: true,
     subtree: true,
   });
 
+  // Initial rewrite
   schedule();
+
+  // Click interceptor: safety net for links not yet rewritten by MutationObserver
+  document.addEventListener('click', (e) => {
+    const link = (e.target as HTMLElement).closest<HTMLAnchorElement>('a[href]');
+    if (!link) return;
+    const href = link.getAttribute('href');
+    if (href && href.startsWith('/') && !href.startsWith('//') && !href.startsWith(base)) {
+      e.preventDefault();
+      window.location.href = base + href.slice(1);
+    }
+  }, true);
 }
