@@ -5,6 +5,7 @@
 
 import '../style.css'
 import { initFlowbite } from 'flowbite'
+import { getBaseUrl } from '../utils/url'
 
 // Header components (reuse from main page)
 import { TopBar, initMobileDrawer, SubHeader, initStickyHeaderSearch, MegaMenu, initMegaMenu, initHeaderCart } from '../components/header'
@@ -365,8 +366,8 @@ window.addEventListener('checkout:confirm-order', () => {
   const orderNumbers = newOrders.map((o) => o.orderNumber).join(',');
 
   if (isCreditCard) {
-    window.location.href = `/pages/order/payment-processing.html?count=${orderCount}&method=credit_card&orderNumbers=${encodeURIComponent(orderNumbers)}`;
+    window.location.href = `${getBaseUrl()}pages/order/payment-processing.html?count=${orderCount}&method=credit_card&orderNumbers=${encodeURIComponent(orderNumbers)}`;
   } else {
-    window.location.href = `/pages/order/order-success.html?status=pending&count=${orderCount}&orderNumbers=${encodeURIComponent(orderNumbers)}`;
+    window.location.href = `${getBaseUrl()}pages/order/order-success.html?status=pending&count=${orderCount}&orderNumbers=${encodeURIComponent(orderNumbers)}`;
   }
 });

@@ -800,7 +800,7 @@ export function initSharedCartDrawer(items: CartDrawerItemModel[]): void {
         // Sample mode: go directly to checkout (same as Alibaba "Order sample" flow)
         applyDrawerTransform(false);
         const base = (typeof import.meta !== 'undefined' ? import.meta.env?.BASE_URL : undefined) || '/';
-        window.location.href = `${base}checkout.html`;
+        window.location.href = `${base}pages/order/checkout.html`;
       } else {
         dispatchCartAdd();
         applyDrawerTransform(false);

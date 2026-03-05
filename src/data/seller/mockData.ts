@@ -141,15 +141,15 @@ const categoryCards: CategoryCard[] = [
 
 // ─── C5: Hot Products ───────────────────────────────────
 const hotProducts: SimpleProduct[] = [
-  { id: 'hp-1', name: 'DIN Ray Tipi Ön Ödemeli Sayaç (CIU Modüllü)', image: 'https://images.unsplash.com/photo-1550989460-0adf9ea622e2?q=80&w=400&auto=format&fit=crop', link: 'product-detail.html' },
-  { id: 'hp-2', name: 'Tek Fazlı Ön Ödemeli Çift Kaynaklı Enerji Sayacı', image: 'https://images.unsplash.com/photo-1544928147-79a2dbc1f389?q=80&w=400&auto=format&fit=crop', link: 'product-detail.html' },
-  { id: 'hp-3', name: 'Üç Fazlı Ön Ödemeli Enerji Sayacı', image: 'https://images.unsplash.com/photo-1557800636-894a64c1696f?q=80&w=400&auto=format&fit=crop', link: 'product-detail.html' },
-  { id: 'hp-4', name: 'Ultrasonik Su Sayacı DN15-DN300', image: 'https://images.unsplash.com/photo-1627964434947-d5ab70b8c66e?q=80&w=400&auto=format&fit=crop', link: 'product-detail.html' },
-  { id: 'hp-5', name: 'Akıllı Ön Ödemeli Tokenli Elektrik Sayacı', image: 'https://images.unsplash.com/photo-1631541909061-71e34ddce158?q=80&w=400&auto=format&fit=crop', link: 'product-detail.html' },
-  { id: 'hp-6', name: 'Endüstriyel Doğalgaz Sayacı G4-G100', image: 'https://images.unsplash.com/photo-1582046426742-b06f8c792ea8?q=80&w=400&auto=format&fit=crop', link: 'product-detail.html' },
-  { id: 'hp-7', name: 'LoRa Haberleşmeli Uzaktan Okuma Sayacı', image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=400&auto=format&fit=crop', link: 'product-detail.html' },
-  { id: 'hp-8', name: 'Çok Tarifeli Akıllı Elektrik Sayacı', image: 'https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?q=80&w=400&auto=format&fit=crop', link: 'product-detail.html' },
-  { id: 'hp-9', name: 'Kompakt Tip Isı Sayacı DN20-DN100', image: 'https://images.unsplash.com/photo-1581092335878-2d9ff86ca2bf?q=80&w=400&auto=format&fit=crop', link: 'product-detail.html' },
+  { id: 'hp-1', name: 'DIN Ray Tipi Ön Ödemeli Sayaç (CIU Modüllü)', image: 'https://images.unsplash.com/photo-1550989460-0adf9ea622e2?q=80&w=400&auto=format&fit=crop', link: '/pages/product-detail.html' },
+  { id: 'hp-2', name: 'Tek Fazlı Ön Ödemeli Çift Kaynaklı Enerji Sayacı', image: 'https://images.unsplash.com/photo-1544928147-79a2dbc1f389?q=80&w=400&auto=format&fit=crop', link: '/pages/product-detail.html' },
+  { id: 'hp-3', name: 'Üç Fazlı Ön Ödemeli Enerji Sayacı', image: 'https://images.unsplash.com/photo-1557800636-894a64c1696f?q=80&w=400&auto=format&fit=crop', link: '/pages/product-detail.html' },
+  { id: 'hp-4', name: 'Ultrasonik Su Sayacı DN15-DN300', image: 'https://images.unsplash.com/photo-1627964434947-d5ab70b8c66e?q=80&w=400&auto=format&fit=crop', link: '/pages/product-detail.html' },
+  { id: 'hp-5', name: 'Akıllı Ön Ödemeli Tokenli Elektrik Sayacı', image: 'https://images.unsplash.com/photo-1631541909061-71e34ddce158?q=80&w=400&auto=format&fit=crop', link: '/pages/product-detail.html' },
+  { id: 'hp-6', name: 'Endüstriyel Doğalgaz Sayacı G4-G100', image: 'https://images.unsplash.com/photo-1582046426742-b06f8c792ea8?q=80&w=400&auto=format&fit=crop', link: '/pages/product-detail.html' },
+  { id: 'hp-7', name: 'LoRa Haberleşmeli Uzaktan Okuma Sayacı', image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=400&auto=format&fit=crop', link: '/pages/product-detail.html' },
+  { id: 'hp-8', name: 'Çok Tarifeli Akıllı Elektrik Sayacı', image: 'https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?q=80&w=400&auto=format&fit=crop', link: '/pages/product-detail.html' },
+  { id: 'hp-9', name: 'Kompakt Tip Isı Sayacı DN20-DN100', image: 'https://images.unsplash.com/photo-1581092335878-2d9ff86ca2bf?q=80&w=400&auto=format&fit=crop', link: '/pages/product-detail.html' },
 ];
 
 // ─── C6: Category Product Listings ──────────────────────
@@ -173,7 +173,7 @@ const categoryListings: ProductCategory[] = [
         moq: 500,
         moqUnit: 'adet',
         soldCount: 28212,
-        link: 'product-detail.html',
+        link: '/pages/product-detail.html',
       },
       {
         id: 'clp-2',
@@ -186,7 +186,7 @@ const categoryListings: ProductCategory[] = [
         moq: 300,
         moqUnit: 'adet',
         soldCount: 15843,
-        link: 'product-detail.html',
+        link: '/pages/product-detail.html',
       },
       {
         id: 'clp-3',
@@ -199,7 +199,7 @@ const categoryListings: ProductCategory[] = [
         moq: 500,
         moqUnit: 'adet',
         soldCount: 12567,
-        link: 'product-detail.html',
+        link: '/pages/product-detail.html',
       },
       {
         id: 'clp-4',
@@ -212,7 +212,7 @@ const categoryListings: ProductCategory[] = [
         moq: 200,
         moqUnit: 'adet',
         soldCount: 8934,
-        link: 'product-detail.html',
+        link: '/pages/product-detail.html',
       },
       {
         id: 'clp-5',
@@ -225,7 +225,7 @@ const categoryListings: ProductCategory[] = [
         moq: 300,
         moqUnit: 'adet',
         soldCount: 19450,
-        link: 'product-detail.html',
+        link: '/pages/product-detail.html',
       },
       {
         id: 'clp-6',
@@ -241,7 +241,7 @@ const categoryListings: ProductCategory[] = [
         moq: 100,
         moqUnit: 'adet',
         soldCount: 6721,
-        link: 'product-detail.html',
+        link: '/pages/product-detail.html',
       },
       {
         id: 'clp-7',
@@ -254,7 +254,7 @@ const categoryListings: ProductCategory[] = [
         moq: 1000,
         moqUnit: 'adet',
         soldCount: 31245,
-        link: 'product-detail.html',
+        link: '/pages/product-detail.html',
       },
       {
         id: 'clp-8',
@@ -267,7 +267,7 @@ const categoryListings: ProductCategory[] = [
         moq: 500,
         moqUnit: 'adet',
         soldCount: 14320,
-        link: 'product-detail.html',
+        link: '/pages/product-detail.html',
       },
     ],
   },
@@ -290,7 +290,7 @@ const categoryListings: ProductCategory[] = [
         moq: 200,
         moqUnit: 'adet',
         soldCount: 22456,
-        link: 'product-detail.html',
+        link: '/pages/product-detail.html',
       },
       {
         id: 'clp-10',
@@ -303,7 +303,7 @@ const categoryListings: ProductCategory[] = [
         moq: 500,
         moqUnit: 'adet',
         soldCount: 34210,
-        link: 'product-detail.html',
+        link: '/pages/product-detail.html',
       },
       {
         id: 'clp-11',
@@ -316,7 +316,7 @@ const categoryListings: ProductCategory[] = [
         moq: 50,
         moqUnit: 'adet',
         soldCount: 4560,
-        link: 'product-detail.html',
+        link: '/pages/product-detail.html',
       },
       {
         id: 'clp-12',
@@ -329,7 +329,7 @@ const categoryListings: ProductCategory[] = [
         moq: 300,
         moqUnit: 'adet',
         soldCount: 18970,
-        link: 'product-detail.html',
+        link: '/pages/product-detail.html',
       },
       {
         id: 'clp-13',
@@ -345,7 +345,7 @@ const categoryListings: ProductCategory[] = [
         moq: 200,
         moqUnit: 'adet',
         soldCount: 11230,
-        link: 'product-detail.html',
+        link: '/pages/product-detail.html',
       },
       {
         id: 'clp-14',
@@ -358,7 +358,7 @@ const categoryListings: ProductCategory[] = [
         moq: 20,
         moqUnit: 'adet',
         soldCount: 2340,
-        link: 'product-detail.html',
+        link: '/pages/product-detail.html',
       },
       {
         id: 'clp-15',
@@ -371,7 +371,7 @@ const categoryListings: ProductCategory[] = [
         moq: 100,
         moqUnit: 'adet',
         soldCount: 7650,
-        link: 'product-detail.html',
+        link: '/pages/product-detail.html',
       },
       {
         id: 'clp-16',
@@ -384,7 +384,7 @@ const categoryListings: ProductCategory[] = [
         moq: 200,
         moqUnit: 'adet',
         soldCount: 9870,
-        link: 'product-detail.html',
+        link: '/pages/product-detail.html',
       },
     ],
   },

@@ -3,6 +3,7 @@
  * Simulates 3D Secure / OTP verification before redirecting to success or failed.
  */
 import '../style.css';
+import { getBaseUrl } from '../utils/url';
 
 document.addEventListener('DOMContentLoaded', () => {
   const params = new URLSearchParams(window.location.search);
@@ -143,7 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
         phase = 'verifying';
         render();
         setTimeout(() => {
-          window.location.href = `/pages/order/order-success.html?status=success&count=${count}&orderNumbers=${encodeURIComponent(orderNumbers)}`;
+          window.location.href = `${getBaseUrl()}pages/order/order-success.html?status=success&count=${count}&orderNumbers=${encodeURIComponent(orderNumbers)}`;
         }, 2000);
       } else {
         if (errorEl) errorEl.classList.remove('hidden');
@@ -172,7 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
   } else {
     // Non-credit card: just redirect after delay
     setTimeout(() => {
-      window.location.href = `/pages/order/order-success.html?status=pending&count=${count}&orderNumbers=${encodeURIComponent(orderNumbers)}`;
+      window.location.href = `${getBaseUrl()}pages/order/order-success.html?status=pending&count=${count}&orderNumbers=${encodeURIComponent(orderNumbers)}`;
     }, 3000);
   }
 });

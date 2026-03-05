@@ -37,6 +37,6 @@ Alpine.store('auth', {
     (this as any).token = null
     ;(this as any).user = null
     localStorage.removeItem(AUTH_KEY)
-    window.location.href = '/pages/auth/login.html'
+    window.location.href = `${(import.meta.env.BASE_URL || '/')}pages/auth/login.html`
   },
 })

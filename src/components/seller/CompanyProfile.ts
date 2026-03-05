@@ -16,7 +16,7 @@ function lensIcon(): string {
 function renderSellerProductCard(product: any, index: number = 0): string {
   const price = typeof product.priceMin === 'number' ? `$${product.priceMin.toFixed(2)}` : '$25.40';
   const nameSafe = product.name.replace(/"/g, '&quot;');
-  const link = product.link || 'product-detail.html';
+  const link = product.link || '/pages/product-detail.html';
   const soldCount = product.soldCount || 0;
   const moqText = product.moq ? `${product.moq} ${product.moqUnit}` : '1 Adet';
 

@@ -3,6 +3,7 @@
  * "Siparişlerim" page — 2-panel: left nav + right dynamic content.
  * Supports hash-based sub-pages: #all-orders, #refunds, #reviews, #coupons, #tax-info
  */
+import { getBaseUrl } from '../../utils/url';
 
 interface OrdersNavItem {
   id: string;
@@ -341,7 +342,7 @@ function renderAllOrders(): string {
 
               <!-- Action Buttons -->
               <div class="flex flex-col md:w-[220px] shrink-0 border-l border-gray-100 md:pl-6 max-md:-mx-5 max-md:px-5 max-md:pt-4 max-md:border-t justify-center gap-3">
-                <button @click="window.location.href='/pages/order/order-success.html'" class="w-full px-6 py-2 text-[14px] font-medium text-white bg-[#FF6600] rounded-full cursor-pointer transition-colors hover:bg-[#e65c00] border-none">
+                <button @click="window.location.href='${getBaseUrl()}pages/order/order-success.html'" class="w-full px-6 py-2 text-[14px] font-medium text-white bg-[#FF6600] rounded-full cursor-pointer transition-colors hover:bg-[#e65c00] border-none">
                   Make payment
                 </button>
                 <div class="flex items-center justify-center gap-4 text-xs">
@@ -506,7 +507,7 @@ function renderAllOrders(): string {
 
           <!-- 3 Action Buttons -->
           <div class="flex items-center gap-3 mt-4 flex-wrap">
-            <button @click="window.location.href='/pages/order/order-success.html'" class="px-6 py-2.5 text-sm font-medium text-white bg-[#FF6600] rounded-full cursor-pointer transition-colors hover:bg-[#e65c00] border-none">
+            <button @click="window.location.href='${getBaseUrl()}pages/order/order-success.html'" class="px-6 py-2.5 text-sm font-medium text-white bg-[#FF6600] rounded-full cursor-pointer transition-colors hover:bg-[#e65c00] border-none">
               Make payment
             </button>
             <button @click="openModal('showModifyShipping')" class="px-6 py-2.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer transition-colors hover:border-gray-900 hover:text-gray-900">

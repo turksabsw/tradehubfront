@@ -274,7 +274,7 @@ export function AccountSetupForm(defaultCountry: string = 'TR'): string {
       <!-- Login Link -->
       <div class="mt-6 text-center text-sm text-gray-500 dark:text-gray-400">
         Zaten hesabınız var mı?
-        <a href="login.html" class="ml-1 font-medium text-orange-600 dark:text-orange-400 hover:underline">
+        <a href="/pages/auth/login.html" class="ml-1 font-medium text-orange-600 dark:text-orange-400 hover:underline">
           Giriş yapın
         </a>
       </div>

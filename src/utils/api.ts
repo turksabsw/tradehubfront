@@ -1,3 +1,5 @@
+import { getBaseUrl } from './url'
+
 const BASE_URL = import.meta.env.VITE_API_URL || ''
 
 export async function api<T>(
@@ -17,7 +19,7 @@ export async function api<T>(
 
   if (res.status === 401) {
     localStorage.removeItem('tradehub_auth')
-    window.location.href = '/pages/auth/login.html'
+    window.location.href = `${getBaseUrl()}pages/auth/login.html`
     throw new Error('Unauthorized')
   }
 

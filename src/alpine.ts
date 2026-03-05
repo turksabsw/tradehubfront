@@ -1,4 +1,5 @@
 import Alpine from 'alpinejs'
+import { initLinkRewriter } from './utils/url'
 import {
   filterAndSortReviews,
   renderReviewCard,
@@ -1002,7 +1003,7 @@ Alpine.data('cartPage', () => ({
     cartStore.toggleSupplierSelection(supplierId, true);
 
     // Finally, redirect to checkout
-    window.location.href = '/pages/order/checkout.html';
+    window.location.href = `${getBaseUrl()}pages/order/checkout.html`;
   },
 
   updateParentCheckboxStates(skuRow: Element) {
@@ -3941,7 +3942,7 @@ Alpine.data('ticketForm', () => ({
     if (!this.validateStep(this.currentStep)) return;
     this.submitted = true;
     setTimeout(() => {
-      window.location.href = '/pages/help/help-tickets.html';
+      window.location.href = `${getBaseUrl()}pages/help/help-tickets.html`;
     }, 2000);
   },
 }));
@@ -4100,7 +4101,7 @@ Alpine.data('sellPricing', () => ({
 
   selectPlan(name: string) {
     this.selectedPlan = name;
-    window.location.href = '/pages/seller/sell.html';
+    window.location.href = `${getBaseUrl()}pages/seller/sell.html`;
   },
 }));
 
@@ -4116,5 +4117,6 @@ window.Alpine = Alpine;
  * elements that don't exist in the DOM yet.
  */
 export function startAlpine(): void {
+  initLinkRewriter();
   Alpine.start();
 }

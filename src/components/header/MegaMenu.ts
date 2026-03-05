@@ -283,7 +283,7 @@ function renderCategoriesView(): string {
             ${megaCategories.map((cat, index) => `
               <li>
                 <a
-                  href="products.html?category=${cat.id}"
+                  href="/pages/products.html?category=${cat.id}"
                   class="th-mega-sidebar-item mega-cat-btn flex items-center gap-2 sm:gap-3 w-full px-3 sm:px-4 py-3 sm:py-2.5 text-sm text-left transition-colors border-l-2 border-transparent ${index === 0 ? 'th-mega-sidebar-item--active' : ''}"
                   data-category="${cat.id}"
                 >
@@ -301,7 +301,7 @@ function renderCategoriesView(): string {
             <div class="mega-cat-section mb-8" id="mega-section-${cat.id}">
               <div class="flex items-center justify-between mb-5 lg:mb-6">
                 <h3 class="text-base lg:text-lg font-bold dark:text-white" style="color:var(--mega-text-color)">${cat.name}</h3>
-                <a href="categories.html" class="th-nav-link hover:underline dark:text-primary-400 dark:hover:text-primary-300" style="color:var(--nav-hover-color)">
+                <a href="/pages/categories.html" class="th-nav-link hover:underline dark:text-primary-400 dark:hover:text-primary-300" style="color:var(--nav-hover-color)">
                   Browse all &rarr;
                 </a>
               </div>
