@@ -4,6 +4,7 @@
  */
 import '../style.css';
 import { orderStore } from '../components/orders/state/OrderStore';
+import { initLinkRewriter } from '../utils/url';
 
 document.addEventListener('DOMContentLoaded', () => {
   const params = new URLSearchParams(window.location.search);
@@ -146,3 +147,4 @@ style.textContent = `
   }
 `;
 document.head.appendChild(style);
+initLinkRewriter();

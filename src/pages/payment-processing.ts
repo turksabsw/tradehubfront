@@ -3,7 +3,9 @@
  * Simulates 3D Secure / OTP verification before redirecting to success or failed.
  */
 import '../style.css';
-import { getBaseUrl } from '../utils/url';
+import { getBaseUrl, initLinkRewriter } from '../utils/url';
+
+initLinkRewriter();
 
 document.addEventListener('DOMContentLoaded', () => {
   const params = new URLSearchParams(window.location.search);

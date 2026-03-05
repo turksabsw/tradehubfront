@@ -3,6 +3,9 @@
  * Shows error state with retry options.
  */
 import '../style.css';
+import { initLinkRewriter } from '../utils/url';
+
+initLinkRewriter();
 
 document.addEventListener('DOMContentLoaded', () => {
   const params = new URLSearchParams(window.location.search);
