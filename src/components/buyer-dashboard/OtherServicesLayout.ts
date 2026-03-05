@@ -73,7 +73,7 @@ function renderPaymentTerms(): string {
             Yaşanan herhangi bir aksaklıktan dolayı içtenlikle özür dileriz ve daha iyi çözümler sunmak için
             çalışırken gösterdiğiniz anlayış için minnettarız. Hâlâ ödeme çözümü hizmetlerine ihtiyacınız varsa
             <strong class="text-gray-900 font-bold">Buy Now Pay Later</strong> veya <strong class="text-gray-900 font-bold">Pay Later for Business</strong> ödeme seçeneklerini
-            değerlendirebilirsiniz. Daha fazla bilgi edinmek için <a href="/payment.html#pay-later" class="text-blue-600 underline underline-offset-2 font-medium hover:text-blue-700">buraya</a> tıklayın.
+            değerlendirebilirsiniz. Daha fazla bilgi edinmek için <a href="/pages/dashboard/payment.html#pay-later" class="text-blue-600 underline underline-offset-2 font-medium hover:text-blue-700">buraya</a> tıklayın.
           </p>
 
           <p class="text-sm leading-[1.7] mb-4" style="color:var(--color-text-body, #333333)">Sürekli desteğiniz için teşekkür ederiz!</p>

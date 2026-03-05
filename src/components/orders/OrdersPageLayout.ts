@@ -341,7 +341,7 @@ function renderAllOrders(): string {
 
               <!-- Action Buttons -->
               <div class="flex flex-col md:w-[220px] shrink-0 border-l border-gray-100 md:pl-6 max-md:-mx-5 max-md:px-5 max-md:pt-4 max-md:border-t justify-center gap-3">
-                <button @click="window.location.href='/order-success.html'" class="w-full px-6 py-2 text-[14px] font-medium text-white bg-[#FF6600] rounded-full cursor-pointer transition-colors hover:bg-[#e65c00] border-none">
+                <button @click="window.location.href='/pages/order/order-success.html'" class="w-full px-6 py-2 text-[14px] font-medium text-white bg-[#FF6600] rounded-full cursor-pointer transition-colors hover:bg-[#e65c00] border-none">
                   Make payment
                 </button>
                 <div class="flex items-center justify-center gap-4 text-xs">
@@ -401,7 +401,7 @@ function renderAllOrders(): string {
           <nav class="flex items-center gap-1.5 text-xs text-gray-400 mb-4">
             <a href="/" class="hover:text-gray-600 transition-colors">Ana Sayfa</a>
             <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M9 5l7 7-7 7"/></svg>
-            <a href="/orders.html" class="hover:text-gray-600 transition-colors">Sipariş Yönetimi</a>
+            <a href="/pages/dashboard/orders.html" class="hover:text-gray-600 transition-colors">Sipariş Yönetimi</a>
             <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M9 5l7 7-7 7"/></svg>
             <span class="text-gray-600">Sipariş detayları</span>
           </nav>
@@ -506,7 +506,7 @@ function renderAllOrders(): string {
 
           <!-- 3 Action Buttons -->
           <div class="flex items-center gap-3 mt-4 flex-wrap">
-            <button @click="window.location.href='/order-success.html'" class="px-6 py-2.5 text-sm font-medium text-white bg-[#FF6600] rounded-full cursor-pointer transition-colors hover:bg-[#e65c00] border-none">
+            <button @click="window.location.href='/pages/order/order-success.html'" class="px-6 py-2.5 text-sm font-medium text-white bg-[#FF6600] rounded-full cursor-pointer transition-colors hover:bg-[#e65c00] border-none">
               Make payment
             </button>
             <button @click="openModal('showModifyShipping')" class="px-6 py-2.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer transition-colors hover:border-gray-900 hover:text-gray-900">
@@ -1285,20 +1285,20 @@ function renderCoupons(): string {
       </div>
 
       <!-- Tabs -->
-      <div class="flex border-b overflow-x-auto scrollbar-hide border-(--color-border-default,#e5e5e5) px-7 max-sm:px-3">
-        <button @click="switchTab('coupons-list')" class="py-3 px-4 text-sm bg-transparent border-none border-b-2 cursor-pointer whitespace-nowrap transition-colors"
-          :class="activeTab === 'coupons-list' ? 'border-b-[#222] text-(--color-text-heading,#111827) font-semibold' : 'border-b-transparent text-(--color-text-muted,#666)'">Kuponlar</button>
-        <button @click="switchTab('coupons-credit')" class="py-3 px-4 text-sm bg-transparent border-none border-b-2 cursor-pointer whitespace-nowrap transition-colors"
-          :class="activeTab === 'coupons-credit' ? 'border-b-[#222] text-(--color-text-heading,#111827) font-semibold' : 'border-b-transparent text-(--color-text-muted,#666)'">Kredi</button>
+      <div class="os-tabs flex border-b overflow-x-auto scrollbar-hide border-(--color-border-default,#e5e5e5) px-7 max-sm:px-3">
+        <button @click="switchTab('coupons-list')" class="os-tabs__tab py-3 px-4 text-sm bg-transparent border-none border-b-2 border-b-transparent cursor-pointer whitespace-nowrap transition-colors"
+          :class="activeTab === 'coupons-list' ? 'os-tabs__tab--active' : 'text-(--color-text-muted,#666)'">Kuponlar</button>
+        <button @click="switchTab('coupons-credit')" class="os-tabs__tab py-3 px-4 text-sm bg-transparent border-none border-b-2 border-b-transparent cursor-pointer whitespace-nowrap transition-colors"
+          :class="activeTab === 'coupons-credit' ? 'os-tabs__tab--active' : 'text-(--color-text-muted,#666)'">Kredi</button>
       </div>
 
       <!-- Tab: Kuponlar -->
       <div x-show="activeTab === 'coupons-list'">
         <!-- Pill filters -->
-        <div class="flex gap-2 px-7 max-sm:px-3 py-4">
+        <div class="os-pill-filters flex gap-2 px-7 max-sm:px-3 py-4">
           <template x-for="pill in [{id:'available',label:'Mevcut'},{id:'used',label:'Kullanıldı'},{id:'expired',label:'Süresi doldu'}]" :key="pill.id">
-            <button @click="setPill(pill.id)" class="px-4 py-1.5 text-[13px] bg-(--color-surface,#fff) border rounded-[20px] cursor-pointer transition-all"
-              :class="activePill === pill.id ? 'border-[#222] text-(--color-text-heading,#111827) font-semibold' : 'border-(--color-border-medium,#d1d5db) text-(--color-text-muted,#666)'"
+            <button @click="setPill(pill.id)" class="os-pill px-4 py-1.5 text-[13px] bg-(--color-surface,#fff) border border-(--color-border-medium,#d1d5db) rounded-[20px] cursor-pointer transition-all text-(--color-text-muted,#666)"
+              :class="activePill === pill.id ? 'os-pill--active' : ''"
               x-text="pill.label"></button>
           </template>
         </div>
@@ -1312,16 +1312,16 @@ function renderCoupons(): string {
         <div x-show="filteredCoupons.length > 0" class="flex flex-col gap-3 px-7 max-sm:px-3 pb-6">
           <template x-for="coupon in filteredCoupons" :key="coupon.code">
             <div class="border rounded-lg p-4 transition-all"
-              :class="coupon.status === 'available' ? 'border-(--color-border-default,#e5e5e5) bg-white' : 'border-(--color-border-light,#f0f0f0) bg-(--color-surface-muted,#fafafa) opacity-60'">
+              :class="coupon.status === 'available' ? 'border-(--color-border-default,#e5e5e5) bg-(--color-surface,#fff)' : 'border-(--color-border-light,#f0f0f0) bg-(--color-surface-muted,#fafafa) opacity-60'">
               <div class="flex items-start gap-4">
                 <!-- Type badge -->
                 <div class="flex-shrink-0 w-12 h-12 rounded-lg flex items-center justify-center text-lg font-bold"
-                  :class="coupon.type === 'percent' ? 'bg-blue-50 text-blue-600' : coupon.type === 'fixed' ? 'bg-green-50 text-green-600' : 'bg-orange-50 text-orange-600'"
+                  :class="couponBadgeClass(coupon.type)"
                   x-text="couponTypeBadge(coupon.type)"></div>
                 <div class="flex-1 min-w-0">
                   <div class="flex items-center gap-2 mb-1">
                     <span class="text-xs font-medium px-2 py-0.5 rounded-full"
-                      :class="coupon.type === 'percent' ? 'bg-blue-50 text-blue-600' : coupon.type === 'fixed' ? 'bg-green-50 text-green-600' : 'bg-orange-50 text-orange-600'"
+                      :class="couponBadgeClass(coupon.type)"
                       x-text="couponTypeLabel(coupon.type)"></span>
                     <span class="font-mono text-sm font-semibold text-(--color-text-heading,#111827)" x-text="coupon.code"></span>
                   </div>
@@ -1348,7 +1348,7 @@ function renderCoupons(): string {
         <div class="mx-7 my-5 p-5 border border-(--color-border-default,#e5e5e5) rounded-lg">
           <p class="text-sm text-(--color-text-body,#333) mb-2">Toplam kredi bakiyesi</p>
           <p class="text-[28px] font-bold text-(--color-text-heading,#111827) mb-2" x-text="'$' + creditBalance.toFixed(2)"></p>
-          <p class="text-[13px] text-(--color-text-muted,#666)">1 kredi 1 USD'ye eşittir <a href="#terms" class="text-[#2563EB] underline">Hükümler ve koşullar</a></p>
+          <p class="text-[13px] text-(--color-text-muted,#666)">1 kredi 1 USD'ye eşittir <a href="#terms" class="text-(--color-text-link,#cc9900) hover:text-(--color-text-link-hover,#b38600) underline">Hükümler ve koşullar</a></p>
         </div>
 
         <h3 class="text-base font-bold text-(--color-text-heading,#111827) px-7 max-sm:px-3 pt-5 pb-3">Geçmiş</h3>
@@ -1374,12 +1374,12 @@ function renderCoupons(): string {
                 <tr class="border-b border-(--color-border-light,#f0f0f0) last:border-b-0">
                   <td class="px-4 py-3 text-[13px]">
                     <span class="px-2 py-0.5 rounded-full text-xs font-medium"
-                      :class="entry.type === 'earned' ? 'bg-green-50 text-green-700' : entry.type === 'spent' ? 'bg-red-50 text-red-600' : 'bg-blue-50 text-blue-600'"
+                      :class="creditBadgeClass(entry.type)"
                       x-text="creditTypeLabel(entry.type)"></span>
                   </td>
                   <td class="px-4 py-3 text-[13px] text-(--color-text-body,#333)" x-text="entry.description"></td>
                   <td class="px-4 py-3 text-[13px] text-(--color-text-muted,#666) whitespace-nowrap" x-text="formatDate(entry.date)"></td>
-                  <td class="px-4 py-3 text-[13px] font-semibold whitespace-nowrap" :class="creditTypeColor(entry.type)"
+                  <td class="px-4 py-3 text-[13px] font-semibold whitespace-nowrap" :class="creditAmountClass(entry.type)"
                     x-text="(entry.amount >= 0 ? '+' : '') + '$' + Math.abs(entry.amount).toFixed(2)"></td>
                 </tr>
               </template>

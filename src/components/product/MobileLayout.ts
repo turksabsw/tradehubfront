@@ -76,8 +76,8 @@ function renderVariantSection(variant: typeof mockProduct.variants[number]): str
       <button type="button" class="pdm-color-thumb w-14 h-14 rounded-[6px] border-2 border-border-default overflow-hidden cursor-pointer p-0 bg-none${!opt.available ? ' pdm-disabled' : ''}"
         data-value="${opt.id}" data-label="${opt.label}" ${!opt.available ? 'disabled' : ''}>
         ${opt.thumbnail
-          ? `<img src="${opt.thumbnail}" alt="${opt.label}" class="w-full h-full object-cover" />`
-          : `<span class="pdm-color-swatch" style="background:${opt.value}"></span>`}
+        ? `<img src="${opt.thumbnail}" alt="${opt.label}" class="w-full h-full object-cover" />`
+        : `<span class="pdm-color-swatch" style="background:${opt.value}"></span>`}
       </button>
     `).join('');
 
@@ -118,13 +118,13 @@ export function MobileProductLayout(): string {
         ${p.images.map((img, i) => `
           <div class="pdm-gallery-slide shrink-0 basis-full w-full h-full [scroll-snap-align:start] [scroll-snap-stop:always]" data-slide-index="${i}">
             ${img.src
-              ? `<img class="w-full h-full object-contain select-none" src="${img.src}" alt="${img.alt}" draggable="false" loading="${i === 0 ? 'eager' : 'lazy'}">`
-              : `<div class="pdm-gallery-placeholder w-full h-full flex items-center justify-center">
+      ? `<img class="w-full h-full object-contain select-none" src="${img.src}" alt="${img.alt}" draggable="false" loading="${i === 0 ? 'eager' : 'lazy'}">`
+      : `<div class="pdm-gallery-placeholder w-full h-full flex items-center justify-center">
                   <svg width="64" height="64" fill="none" stroke="#9ca3af" stroke-width="1.4" viewBox="0 0 24 24">
                     <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/>
                   </svg>
                 </div>`
-            }
+    }
           </div>
         `).join('')}
       </div>
@@ -155,8 +155,8 @@ export function MobileProductLayout(): string {
         <div class="pdm-tier-col flex flex-col items-center px-3 border-r border-border-default last:border-r-0">
           <span class="pdm-tier-price text-lg max-[374px]:text-[15px] font-bold text-[#111] leading-[1.3]">$${tier.price.toFixed(2)}</span>
           <span class="pdm-tier-qty text-[11px] max-[374px]:text-[10px] text-text-placeholder mt-[3px] text-center">${tier.maxQty !== null
-            ? `${tier.minQty} - ${tier.maxQty} ${p.unit}`
-            : `>= ${tier.minQty} ${p.unit}`}</span>
+      ? `${tier.minQty} - ${tier.maxQty} ${p.unit}`
+      : `>= ${tier.minQty} ${p.unit}`}</span>
         </div>
       `).join('')}
     </div>
@@ -165,7 +165,7 @@ export function MobileProductLayout(): string {
   const sampleSection = `
     <div id="pdm-sample-row" class="flex items-center justify-between px-4 py-2.5 max-[374px]:px-3 max-[374px]:py-2 bg-surface text-[13px] max-[374px]:text-xs text-text-body">
       <span>Numune fiyatı: <strong>$${p.samplePrice?.toFixed(2) ?? '30.00'}</strong></span>
-      <button type="button" data-add-to-cart="${mockProduct.id}" class="pdm-sample-btn px-[18px] py-1.5 max-[374px]:px-3.5 max-[374px]:py-[5px] border border-[#333] rounded-[20px] text-[13px] max-[374px]:text-xs font-medium bg-surface cursor-pointer text-text-body">Numune Al</button>
+      <button type="button" data-order-sample="${mockProduct.id}" class="pdm-sample-btn px-[18px] py-1.5 max-[374px]:px-3.5 max-[374px]:py-[5px] border border-[#333] rounded-[20px] text-[13px] max-[374px]:text-xs font-medium bg-surface cursor-pointer text-text-body">Numune Al</button>
     </div>
   `;
 
@@ -283,10 +283,10 @@ export function MobileProductLayout(): string {
       </div>
       <div class="pdm-supplier-stats grid grid-cols-3 border border-border-default rounded-lg my-3 overflow-hidden">
         ${[
-          { val: si.onTimeDelivery, label: 'Zamanında Teslimat' },
-          { val: si.annualRevenue, label: 'Yıllık Gelir' },
-          { val: si.responseTime, label: 'Yanıt Süresi' },
-        ].map(s => `
+      { val: si.onTimeDelivery, label: 'Zamanında Teslimat' },
+      { val: si.annualRevenue, label: 'Yıllık Gelir' },
+      { val: si.responseTime, label: 'Yanıt Süresi' },
+    ].map(s => `
           <div class="pdm-supplier-stat flex flex-col items-center py-2.5 px-1 border-r border-border-default last:border-r-0 text-center"><strong class="text-sm font-bold text-text-heading">${s.val}</strong><span class="text-[11px] text-text-placeholder mt-0.5">${s.label}</span></div>
         `).join('')}
       </div>

@@ -35,9 +35,11 @@ export interface CartDrawerItemModel {
   priceTiers: CartDrawerTierModel[];
   colors: CartDrawerColorModel[];
   shippingOptions: CartDrawerShippingOption[];
+  samplePrice?: number;
 }
 
 interface DrawerState {
+  mode: 'cart' | 'sample';
   item: CartDrawerItemModel | null;
   selectedShippingIndex: number;
   colorQuantities: Map<string, number>;
@@ -68,6 +70,7 @@ const productVisuals: Record<ProductImageKind, ProductVisual> = {
 };
 
 const state: DrawerState = {
+  mode: 'cart',
   item: null,
   selectedShippingIndex: 0,
   colorQuantities: new Map(),
@@ -127,7 +130,9 @@ function getTotals(): {
 } {
   const totalQty = Array.from(state.colorQuantities.values()).reduce((acc, qty) => acc + qty, 0);
   const tierIndex = getActiveTierIndex(totalQty);
-  const activePrice = state.item?.priceTiers[tierIndex]?.price ?? 0;
+  const activePrice = state.mode === 'sample'
+    ? (state.item?.samplePrice ?? 30)
+    : (state.item?.priceTiers[tierIndex]?.price ?? 0);
   const itemSubtotal = activePrice * totalQty;
   const shippingCost = state.item?.shippingOptions[state.selectedShippingIndex]?.cost ?? 0;
   const grandTotal = itemSubtotal + shippingCost;
@@ -202,26 +207,57 @@ function updatePreview(): void {
   label.textContent = `color : ${color.label}`;
 }
 
+function showSampleMaxToast(): void {
+  const existing = document.getElementById('sample-max-toast');
+  if (existing) return; // already visible
+
+  const toast = document.createElement('div');
+  toast.id = 'sample-max-toast';
+  toast.className = 'fixed bottom-24 left-1/2 -translate-x-1/2 z-[9999] flex items-start gap-3 bg-[#1a1a1a] text-white text-sm rounded-2xl px-5 py-4 shadow-xl max-w-xs w-max pointer-events-none';
+  toast.innerHTML = `
+    <svg class="shrink-0 mt-0.5" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#e05c25" stroke-width="2">
+      <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+    </svg>
+    <span>Bu numunenin maksimum sipariş miktarı 1 adettir</span>
+  `;
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 2800);
+}
+
+function renderPriceSectionHtml(totals: ReturnType<typeof getTotals>): string {
+  if (!state.item) return '';
+  if (state.mode === 'sample') {
+    return `
+      <div class="mb-5 pb-5 border-b border-border-default">
+        <p class="text-sm text-text-secondary mb-1">Numuneler için maksimum sipariş miktarı: 1 adet</p>
+        <p class="text-[22px] font-bold text-text-heading">$${(state.item.samplePrice ?? 30).toFixed(2)} <span class="text-base font-normal text-text-tertiary">/adet</span></p>
+      </div>
+    `;
+  }
+  return `
+    <div class="grid grid-cols-3 gap-6 pb-5 mb-5 border-b border-border-default">
+      ${state.item.priceTiers.map((tier, index) => {
+    const activeClass = index === totals.tierIndex ? 'text-error-500' : 'text-text-heading';
+    return `<div class="cart-tier-item" data-tier-index="${index}">
+          <p class="text-sm text-text-tertiary">${formatTierLabel(tier, state.item!.unit)}</p>
+          <p class="mt-1 text-[22px] font-bold ${activeClass}">$${tier.price.toFixed(2)}</p>
+        </div>`;
+  }).join('')}
+    </div>
+  `;
+}
+
 function renderDrawerBody(): void {
   const { body } = getDrawerElements();
   if (!body || !state.item) return;
 
   const totals = getTotals();
+  const priceSection = renderPriceSectionHtml(totals);
 
   body.innerHTML = `
     <h4 class="text-base font-bold text-text-heading leading-tight mb-4">${escapeHtml(state.item.title)}</h4>
 
-    <div class="grid grid-cols-3 gap-6 pb-5 mb-5 border-b border-border-default">
-      ${state.item.priceTiers.map((tier, index) => {
-    const activeClass = index === totals.tierIndex ? 'text-error-500' : 'text-text-heading';
-    return `
-          <div class="cart-tier-item" data-tier-index="${index}">
-            <p class="text-sm text-text-tertiary">${formatTierLabel(tier, state.item!.unit)}</p>
-            <p class="mt-1 text-[22px] font-bold ${activeClass}">$${tier.price.toFixed(2)}</p>
-          </div>
-        `;
-  }).join('')}
-    </div>
+    ${priceSection}
 
     <div class="mb-5">
       <h5 class="text-base font-bold text-text-heading mb-3">Renk</h5>
@@ -308,7 +344,7 @@ function renderDrawerFooter(): void {
 
   footer.innerHTML = `
     ${details}
-    <button type="button" id="shared-cart-confirm" class="w-full h-12 rounded-full bg-cta-primary text-white font-semibold text-lg hover:bg-cta-primary-hover transition-colors">Sepete Ekle</button>
+    <button type="button" id="shared-cart-confirm" class="w-full h-12 rounded-full bg-cta-primary text-white font-semibold text-lg hover:bg-cta-primary-hover transition-colors">${state.mode === 'sample' ? 'Numune Al' : 'Sepete Ekle'}</button>
   `;
 }
 
@@ -497,15 +533,21 @@ function dispatchCartAdd(): void {
   }));
 }
 
-function openDrawer(itemId?: string): void {
+function openDrawer(itemId?: string, mode: 'cart' | 'sample' = 'cart'): void {
   const item = itemId ? productsById.get(itemId) : Array.from(productsById.values())[0];
   if (!item) return;
 
+  state.mode = mode;
   state.item = item;
   state.selectedShippingIndex = 0;
   state.previewColorIndex = 0;
   state.footerExpanded = false;
   state.colorQuantities = new Map(item.colors.map((color) => [color.id, 0]));
+
+  const heading = document.getElementById('shared-cart-heading');
+  if (heading) {
+    heading.textContent = mode === 'sample' ? 'Numune varyasyonları' : 'Varyasyon ve miktar seçin';
+  }
 
   rerenderDrawer();
   applyDrawerTransform(true);
@@ -576,7 +618,7 @@ export function SharedCartDrawer(): string {
 
       <aside id="shared-cart-drawer" class="fixed right-0 top-0 h-full w-full sm:w-[500px] lg:w-[600px] max-w-full bg-surface shadow-[-8px_0_30px_rgba(0,0,0,0.18)] xl:rounded-l-2xl xl:border-l xl:border-border-default flex flex-col transition-transform duration-300">
         <div class="flex items-center justify-between px-6 py-4 border-b border-border-default shrink-0 max-md:px-4 max-md:py-3">
-          <h3 class="text-lg font-bold text-text-heading">Varyasyon ve miktar seçin</h3>
+          <h3 id="shared-cart-heading" class="text-lg font-bold text-text-heading">Varyasyon ve miktar seçin</h3>
           <button type="button" id="shared-cart-close" class="w-8 h-8 rounded-full text-secondary-400 hover:text-secondary-900 hover:bg-surface-raised transition-colors">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 18 18 6M6 6l12 12"/></svg>
           </button>
@@ -635,13 +677,27 @@ export function initSharedCartDrawer(items: CartDrawerItemModel[]): void {
   });
 
   document.addEventListener('click', (event) => {
-    const trigger = (event.target as HTMLElement).closest<HTMLElement>('[data-add-to-cart]');
-    if (!trigger) return;
-    const id = trigger.dataset.addToCart;
-    if (!id || !productsById.has(id)) return;
+    const target = event.target as HTMLElement;
 
-    event.preventDefault();
-    openDrawer(id);
+    const cartTrigger = target.closest<HTMLElement>('[data-add-to-cart]');
+    if (cartTrigger) {
+      const id = cartTrigger.dataset.addToCart;
+      if (id && productsById.has(id)) {
+        event.preventDefault();
+        openDrawer(id, 'cart');
+      }
+      return;
+    }
+
+    const sampleTrigger = target.closest<HTMLElement>('[data-order-sample]');
+    if (sampleTrigger) {
+      const id = sampleTrigger.dataset.orderSample;
+      if (id && productsById.has(id)) {
+        event.preventDefault();
+        openDrawer(id, 'sample');
+      }
+      return;
+    }
   });
 
   body.addEventListener('click', (event) => {
@@ -666,6 +722,13 @@ export function initSharedCartDrawer(items: CartDrawerItemModel[]): void {
       const current = state.colorQuantities.get(colorId) ?? 0;
 
       if (action === 'plus') {
+        if (state.mode === 'sample') {
+          const totalQty = Array.from(state.colorQuantities.values()).reduce((a, b) => a + b, 0);
+          if (totalQty >= 1) {
+            showSampleMaxToast();
+            return;
+          }
+        }
         state.colorQuantities.set(colorId, current + 1);
       }
       if (action === 'minus') {
@@ -686,8 +749,22 @@ export function initSharedCartDrawer(items: CartDrawerItemModel[]): void {
     if (!input) return;
 
     const colorId = input.dataset.qtyInput ?? '';
-    const nextValue = Number(input.value);
-    state.colorQuantities.set(colorId, Number.isNaN(nextValue) || nextValue < 0 ? 0 : nextValue);
+    let nextValue = Number(input.value);
+    if (Number.isNaN(nextValue) || nextValue < 0) nextValue = 0;
+
+    if (state.mode === 'sample') {
+      // Sum of other colors + this one cannot exceed 1
+      const othersTotal = Array.from(state.colorQuantities.entries())
+        .filter(([id]) => id !== colorId)
+        .reduce((a, [, b]) => a + b, 0);
+      if (othersTotal + nextValue > 1) {
+        nextValue = Math.max(0, 1 - othersTotal);
+        input.value = String(nextValue);
+        showSampleMaxToast();
+      }
+    }
+
+    state.colorQuantities.set(colorId, nextValue);
     rerenderDrawer();
   });
 
@@ -719,8 +796,15 @@ export function initSharedCartDrawer(items: CartDrawerItemModel[]): void {
         return;
       }
 
-      dispatchCartAdd();
-      applyDrawerTransform(false);
+      if (state.mode === 'sample') {
+        // Sample mode: go directly to checkout (same as Alibaba "Order sample" flow)
+        applyDrawerTransform(false);
+        const base = (typeof import.meta !== 'undefined' ? import.meta.env?.BASE_URL : undefined) || '/';
+        window.location.href = `${base}checkout.html`;
+      } else {
+        dispatchCartAdd();
+        applyDrawerTransform(false);
+      }
     }
   });
 
@@ -749,8 +833,8 @@ export function initSharedCartDrawer(items: CartDrawerItemModel[]): void {
   });
 }
 
-export function openSharedCartDrawer(itemId?: string): void {
-  openDrawer(itemId);
+export function openSharedCartDrawer(itemId?: string, mode: 'cart' | 'sample' = 'cart'): void {
+  openDrawer(itemId, mode);
 }
 
 export function setSharedCartItems(items: CartDrawerItemModel[]): void {

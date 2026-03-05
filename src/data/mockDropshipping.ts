@@ -115,7 +115,7 @@ export const dropshippingProducts: ProductListingCard[] = [
   {
     id: 'ds-001',
     name: 'Kablosuz Bluetooth Kulaklık TWS Gürültü Önleyici',
-    href: '/product-detail.html?id=ds-001',
+    href: '/pages/product-detail.html?id=ds-001',
     price: '$3.50-5.20',
     moq: '2 adet',
     stats: '12,450 satış',
@@ -132,7 +132,7 @@ export const dropshippingProducts: ProductListingCard[] = [
   {
     id: 'ds-002',
     name: 'Paslanmaz Çelik Su Şişesi Termos 500ml Vakumlu',
-    href: '/product-detail.html?id=ds-002',
+    href: '/pages/product-detail.html?id=ds-002',
     price: '$2.80-4.50',
     originalPrice: '$3.50-5.20',
     discount: '20% off',
@@ -151,7 +151,7 @@ export const dropshippingProducts: ProductListingCard[] = [
   {
     id: 'ds-003',
     name: 'Mini Taşınabilir Projektör 1080P HD WiFi Bağlantılı',
-    href: '/product-detail.html?id=ds-003',
+    href: '/pages/product-detail.html?id=ds-003',
     price: '$28.50-42.00',
     moq: '1 adet',
     stats: '5,670 satış',
@@ -168,7 +168,7 @@ export const dropshippingProducts: ProductListingCard[] = [
   {
     id: 'ds-004',
     name: 'Erkek Rahat Spor Ayakkabı Hafif Nefes Alabilir Koşu',
-    href: '/product-detail.html?id=ds-004',
+    href: '/pages/product-detail.html?id=ds-004',
     price: '$8.90-12.50',
     moq: '2 adet',
     stats: '15,200 satış',
@@ -186,7 +186,7 @@ export const dropshippingProducts: ProductListingCard[] = [
   {
     id: 'ds-005',
     name: 'Akıllı Saat Spor Bileklik Kalp Atışı Monitörü',
-    href: '/product-detail.html?id=ds-005',
+    href: '/pages/product-detail.html?id=ds-005',
     price: '$5.20-8.80',
     originalPrice: '$7.00-10.50',
     discount: '16% off',
@@ -204,7 +204,7 @@ export const dropshippingProducts: ProductListingCard[] = [
   {
     id: 'ds-006',
     name: 'LED Şerit Işık RGB 5M Uzaktan Kumandalı',
-    href: '/product-detail.html?id=ds-006',
+    href: '/pages/product-detail.html?id=ds-006',
     price: '$1.90-3.20',
     moq: '5 adet',
     stats: '22,100 satış',
@@ -222,7 +222,7 @@ export const dropshippingProducts: ProductListingCard[] = [
   {
     id: 'ds-007',
     name: 'Kadın Çapraz Vücut Çanta PU Deri Omuz',
-    href: '/product-detail.html?id=ds-007',
+    href: '/pages/product-detail.html?id=ds-007',
     price: '$4.50-7.80',
     moq: '3 adet',
     stats: '6,780 satış',
@@ -238,7 +238,7 @@ export const dropshippingProducts: ProductListingCard[] = [
   {
     id: 'ds-008',
     name: 'Elektrikli Yüz Temizleme Fırçası Silikon Sonic',
-    href: '/product-detail.html?id=ds-008',
+    href: '/pages/product-detail.html?id=ds-008',
     price: '$2.30-4.10',
     originalPrice: '$3.00-5.00',
     discount: '18% off',
@@ -257,7 +257,7 @@ export const dropshippingProducts: ProductListingCard[] = [
   {
     id: 'ds-009',
     name: 'Katlanabilir Drone 4K Kamera GPS Pozisyonlama',
-    href: '/product-detail.html?id=ds-009',
+    href: '/pages/product-detail.html?id=ds-009',
     price: '$35.00-55.00',
     moq: '1 adet',
     stats: '3,290 satış',
@@ -274,7 +274,7 @@ export const dropshippingProducts: ProductListingCard[] = [
   {
     id: 'ds-010',
     name: 'Bambu Mutfak Kesme Tahtası Organik Set',
-    href: '/product-detail.html?id=ds-010',
+    href: '/pages/product-detail.html?id=ds-010',
     price: '$3.20-5.50',
     moq: '10 adet',
     stats: '11,890 satış',
@@ -292,7 +292,7 @@ export const dropshippingProducts: ProductListingCard[] = [
   {
     id: 'ds-011',
     name: 'Kablosuz Araç Şarj Tutucu Manyetik 15W',
-    href: '/product-detail.html?id=ds-011',
+    href: '/pages/product-detail.html?id=ds-011',
     price: '$4.80-7.20',
     moq: '3 adet',
     stats: '8,450 satış',
@@ -308,7 +308,7 @@ export const dropshippingProducts: ProductListingCard[] = [
   {
     id: 'ds-012',
     name: 'Vintage Güneş Gözlüğü Polarize UV400 Unisex',
-    href: '/product-detail.html?id=ds-012',
+    href: '/pages/product-detail.html?id=ds-012',
     price: '$1.50-3.00',
     originalPrice: '$2.20-4.00',
     discount: '25% off',
@@ -328,7 +328,7 @@ export const dropshippingProducts: ProductListingCard[] = [
   {
     id: 'ds-013',
     name: 'Yoğunlaştırılabilir Masaj Tabancası Derin Doku',
-    href: '/product-detail.html?id=ds-013',
+    href: '/pages/product-detail.html?id=ds-013',
     price: '$12.00-18.50',
     moq: '2 adet',
     stats: '4,560 satış',
@@ -345,7 +345,7 @@ export const dropshippingProducts: ProductListingCard[] = [
   {
     id: 'ds-014',
     name: 'Silikon Buz Kalıbı Küp Tepsi Kapaklı BPA Free',
-    href: '/product-detail.html?id=ds-014',
+    href: '/pages/product-detail.html?id=ds-014',
     price: '$0.80-1.50',
     moq: '20 adet',
     stats: '25,340 satış',
@@ -363,7 +363,7 @@ export const dropshippingProducts: ProductListingCard[] = [
   {
     id: 'ds-015',
     name: 'Çok Fonksiyonlu Laptop Standı Alüminyum Ayarlanabilir',
-    href: '/product-detail.html?id=ds-015',
+    href: '/pages/product-detail.html?id=ds-015',
     price: '$6.50-9.80',
     moq: '3 adet',
     stats: '6,120 satış',
@@ -379,7 +379,7 @@ export const dropshippingProducts: ProductListingCard[] = [
   {
     id: 'ds-016',
     name: 'Evcil Hayvan Otomatik Su Çeşmesi Filtreli',
-    href: '/product-detail.html?id=ds-016',
+    href: '/pages/product-detail.html?id=ds-016',
     price: '$5.80-8.90',
     originalPrice: '$7.50-11.00',
     discount: '19% off',
@@ -397,7 +397,7 @@ export const dropshippingProducts: ProductListingCard[] = [
   {
     id: 'ds-017',
     name: 'Taşınabilir Blender USB Şarjlı Mini Smoothie',
-    href: '/product-detail.html?id=ds-017',
+    href: '/pages/product-detail.html?id=ds-017',
     price: '$3.90-6.20',
     moq: '5 adet',
     stats: '14,670 satış',
@@ -415,7 +415,7 @@ export const dropshippingProducts: ProductListingCard[] = [
   {
     id: 'ds-018',
     name: 'Erkek Kol Saati Minimalist Paslanmaz Çelik Kayış',
-    href: '/product-detail.html?id=ds-018',
+    href: '/pages/product-detail.html?id=ds-018',
     price: '$4.20-7.00',
     moq: '3 adet',
     stats: '7,890 satış',

@@ -11,9 +11,11 @@ import type { NavLink } from '../../types/navigation';
  */
 const policyLinks: NavLink[] = [
   { label: 'Legal Notice', href: '/legal/notice' },
-  { label: 'Privacy Policy', href: '/privacy' },
+  { label: 'Privacy Policy', href: '/pages/legal/privacy.html' },
   { label: 'Product Listing Policy', href: '/legal/product-listing' },
-  { label: 'Terms of Use', href: '/terms' },
+  { label: 'Terms of Use', href: '/pages/legal/terms.html' },
+  { label: 'Cookie Policy', href: '/pages/legal/cookies.html' },
+  { label: 'Return Policy', href: '/pages/legal/returns.html' },
   { label: 'Intellectual Property', href: '/legal/ip' },
   { label: 'Accessibility', href: '/accessibility' },
 ];

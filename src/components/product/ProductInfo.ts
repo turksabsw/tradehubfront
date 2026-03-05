@@ -12,16 +12,16 @@ function renderPriceTiers(tiers: PriceTier[]): string {
   return `
     <div id="pd-price-tiers">
       ${tiers.map((tier, i) => {
-        const qtyLabel = tier.maxQty
-          ? `${tier.minQty} - ${tier.maxQty} ${mockProduct.unit}`
-          : `>= ${tier.minQty} ${mockProduct.unit}`;
-        return `
+    const qtyLabel = tier.maxQty
+      ? `${tier.minQty} - ${tier.maxQty} ${mockProduct.unit}`
+      : `>= ${tier.minQty} ${mockProduct.unit}`;
+    return `
           <div class="pd-price-tier ${i === 0 ? 'active' : ''}" data-tier-index="${i}">
             <span class="pd-price-tier-qty">${qtyLabel}</span>
             <span class="pd-price-tier-price shrink-0">$${tier.price.toFixed(2)}</span>
           </div>
         `;
-      }).join('')}
+  }).join('')}
     </div>
   `;
 }
@@ -94,7 +94,7 @@ export function ProductInfo(): string {
             <svg class="shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
             <span class="truncate">Numune fiyatı: <strong class="shrink-0">$${p.samplePrice?.toFixed(2) ?? '30.00'}</strong></span>
           </div>
-          <button type="button" data-add-to-cart="${mockProduct.id}" class="pd-sample-btn shrink-0 cursor-pointer">Numune Al</button>
+          <button type="button" data-order-sample="${mockProduct.id}" class="pd-sample-btn shrink-0 cursor-pointer">Numune Al</button>
         </div>
 
         <!-- Variations Header -->

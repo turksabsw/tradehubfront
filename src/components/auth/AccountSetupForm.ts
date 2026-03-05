@@ -255,8 +255,8 @@ export function AccountSetupForm(defaultCountry: string = 'TR'): string {
             required
           />
           <label for="terms-checkbox" class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
-            <a href="/terms" class="text-orange-600 dark:text-orange-400 hover:underline">Kullanım Koşulları</a> ve
-            <a href="/privacy" class="text-orange-600 dark:text-orange-400 hover:underline">Gizlilik Politikası</a>'nı okudum ve kabul ediyorum.
+            <a href="/pages/legal/terms.html" class="text-orange-600 dark:text-orange-400 hover:underline">Kullanım Koşulları</a> ve
+            <a href="/pages/legal/privacy.html" class="text-orange-600 dark:text-orange-400 hover:underline">Gizlilik Politikası</a>'nı okudum ve kabul ediyorum.
           </label>
         </div>
 

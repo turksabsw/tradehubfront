@@ -18,7 +18,7 @@ interface ProductCard {
 const productCardSeed: ProductCard[] = [
   {
     name: "Custom Beanie Patch Hat | Leather Patch Winter Beanie ADD YOUR LOGO Company Employee...",
-    href: '/product-detail.html',
+    href: '/pages/product-detail.html',
     price: '$1.28-2.99',
     discount: '%15 indirim',
     moq: '10 Adet',
@@ -29,7 +29,7 @@ const productCardSeed: ProductCard[] = [
   },
   {
     name: 'New Wireless TWS M10 Mini Black Earbuds Earphone Headphone Power Bank In-ear...',
-    href: '/product-detail.html',
+    href: '/pages/product-detail.html',
     price: '$1.30-1.99',
     discount: '%10 indirim',
     moq: '1 Adet',
@@ -40,7 +40,7 @@ const productCardSeed: ProductCard[] = [
   },
   {
     name: "Hot Sale 125ml High Quality Men's Perfume Floral Fragrance Light and Long Lasting Factory...",
-    href: '/product-detail.html',
+    href: '/pages/product-detail.html',
     price: '$6.02-7.02',
     moq: '10 Adet',
     sold: '490 adet satıldı',
@@ -50,7 +50,7 @@ const productCardSeed: ProductCard[] = [
   },
   {
     name: 'Free to Door DHL FEDEX UPS Express Sea Railway Air Shipping Agent China to Egypt Freight...',
-    href: '/product-detail.html',
+    href: '/pages/product-detail.html',
     price: '$0.50-1',
     discount: '%5 indirim',
     moq: '1 Kilogram',
@@ -61,7 +61,7 @@ const productCardSeed: ProductCard[] = [
   },
   {
     name: 'Cross-Border New Style Cat-Eye Glasses Frame Fashion Eyewear...',
-    href: '/product-detail.html',
+    href: '/pages/product-detail.html',
     price: '$1.53-1.62',
     discount: '%8 indirim',
     moq: '5 Adet',
@@ -72,7 +72,7 @@ const productCardSeed: ProductCard[] = [
   },
   {
     name: "MORESE 2085 Men's Optical Eyeglasses Frame Full Rim...",
-    href: '/product-detail.html',
+    href: '/pages/product-detail.html',
     price: '$3.65-4.05',
     moq: '2 Adet',
     sold: '228 adet satıldı',
@@ -82,7 +82,7 @@ const productCardSeed: ProductCard[] = [
   },
   {
     name: '2026 New Smart Fitness Watch Waterproof Touch Screen Men Women...',
-    href: '/product-detail.html',
+    href: '/pages/product-detail.html',
     price: '$4.10-5.90',
     discount: '%12 indirim',
     moq: '2 Adet',
@@ -93,7 +93,7 @@ const productCardSeed: ProductCard[] = [
   },
   {
     name: 'Wholesale Mini Crossbody Bag PU Leather Casual Fashion Design...',
-    href: '/product-detail.html',
+    href: '/pages/product-detail.html',
     price: '$2.10-3.40',
     moq: '20 Adet',
     sold: '2,345 adet satıldı',
@@ -103,7 +103,7 @@ const productCardSeed: ProductCard[] = [
   },
   {
     name: 'Oversized Cotton Streetwear Blank T-Shirt Custom Logo Printing...',
-    href: '/product-detail.html',
+    href: '/pages/product-detail.html',
     price: '$2.60-3.20',
     discount: '%10 indirim',
     moq: '30 Adet',
@@ -114,7 +114,7 @@ const productCardSeed: ProductCard[] = [
   },
   {
     name: 'Wireless Bluetooth Stereo Headphones Foldable Deep Bass Sound...',
-    href: '/product-detail.html',
+    href: '/pages/product-detail.html',
     price: '$5.30-7.20',
     moq: '5 Adet',
     sold: '413 adet satıldı',
@@ -124,7 +124,7 @@ const productCardSeed: ProductCard[] = [
   },
   {
     name: 'Private Label Skincare Moisturizing Essence Serum Set OEM...',
-    href: '/product-detail.html',
+    href: '/pages/product-detail.html',
     price: '$3.90-6.50',
     discount: '%20 indirim',
     moq: '12 Adet',
@@ -135,7 +135,7 @@ const productCardSeed: ProductCard[] = [
   },
   {
     name: 'Premium Optical Frames With Case Lightweight Business Style...',
-    href: '/product-detail.html',
+    href: '/pages/product-detail.html',
     price: '$2.95-3.88',
     moq: '6 Adet',
     sold: '529 adet satıldı',

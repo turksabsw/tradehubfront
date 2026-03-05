@@ -81,7 +81,7 @@ export function LoginPage(): string {
 
         <!-- Forgot Password -->
         <div class="text-right">
-          <a href="${baseUrl}forgot-password.html" class="text-sm font-medium text-gray-900 dark:text-gray-300 hover:underline">
+          <a href="${baseUrl}pages/auth/forgot-password.html" class="text-sm font-medium text-gray-900 dark:text-gray-300 hover:underline">
             Şifremi unuttum?
           </a>
         </div>
@@ -112,7 +112,7 @@ export function LoginPage(): string {
         <p class="text-sm text-gray-600 dark:text-gray-400">
           TradeHub'da yeni misiniz? 
           <a
-            href="${baseUrl}register.html"
+            href="${baseUrl}pages/auth/register.html"
             id="login-create-account-link"
             class="font-medium text-gray-900 dark:text-white hover:underline ml-1"
           >

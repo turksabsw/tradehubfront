@@ -38,7 +38,7 @@ interface TopDealVisual {
 const topDealCards: TopDealCard[] = [
   {
     name: 'Wireless Bluetooth Headphones',
-    href: '/product-detail.html',
+    href: '/pages/product-detail.html',
     price: '$12.50',
     originalPrice: '$25.00',
     moq: '2 pieces',
@@ -47,7 +47,7 @@ const topDealCards: TopDealCard[] = [
   },
   {
     name: 'Smart Fitness Watch',
-    href: '/product-detail.html',
+    href: '/pages/product-detail.html',
     price: '$8.99',
     originalPrice: '$18.00',
     moq: '5 pieces',
@@ -55,7 +55,7 @@ const topDealCards: TopDealCard[] = [
   },
   {
     name: 'Waterproof Travel Backpack',
-    href: '/product-detail.html',
+    href: '/pages/product-detail.html',
     price: '$6.80',
     originalPrice: '$15.50',
     moq: '10 pieces',
@@ -63,7 +63,7 @@ const topDealCards: TopDealCard[] = [
   },
   {
     name: 'Running Sports Sneakers',
-    href: '/product-detail.html',
+    href: '/pages/product-detail.html',
     price: '$9.20',
     originalPrice: '$22.00',
     moq: '5 pairs',
@@ -71,7 +71,7 @@ const topDealCards: TopDealCard[] = [
   },
   {
     name: 'Polarized UV Sunglasses',
-    href: '/product-detail.html',
+    href: '/pages/product-detail.html',
     price: '$3.50',
     originalPrice: '$8.99',
     moq: '20 pieces',
@@ -79,7 +79,7 @@ const topDealCards: TopDealCard[] = [
   },
   {
     name: '10000mAh Power Bank',
-    href: '/product-detail.html',
+    href: '/pages/product-detail.html',
     price: '$7.20',
     originalPrice: '$14.00',
     moq: '10 pieces',
@@ -87,7 +87,7 @@ const topDealCards: TopDealCard[] = [
   },
   {
     name: 'Portable Bluetooth Speaker',
-    href: '/product-detail.html',
+    href: '/pages/product-detail.html',
     price: '$5.60',
     originalPrice: '$12.00',
     moq: '10 pieces',
@@ -95,7 +95,7 @@ const topDealCards: TopDealCard[] = [
   },
   {
     name: 'Energy Saving LED Bulb',
-    href: '/product-detail.html',
+    href: '/pages/product-detail.html',
     price: '$1.20',
     originalPrice: '$3.50',
     moq: '50 pieces',

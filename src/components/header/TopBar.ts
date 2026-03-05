@@ -105,12 +105,12 @@ function renderUserButton(): string {
           <p class="text-[14px] font-semibold text-[#222]">Merhaba, ${displayName}</p>
         </div>
         <ul class="py-1">
-          <li><a href="/buyer-dashboard.html" class="block px-4 py-2 text-[13px] text-[#222] hover:bg-gray-50 transition-colors">Kontrol Panelim</a></li>
-          <li><a href="/orders.html" class="block px-4 py-2 text-[13px] text-[#222] hover:bg-gray-50 transition-colors">Siparişlerim</a></li>
-          <li><a href="/messages.html" class="block px-4 py-2 text-[13px] text-[#222] hover:bg-gray-50 transition-colors">Mesajlarım</a></li>
-          <li><a href="/rfq.html" class="block px-4 py-2 text-[13px] text-[#222] hover:bg-gray-50 transition-colors">Teklif Taleplerim (RFQ)</a></li>
-          <li><a href="/favorites.html" class="block px-4 py-2 text-[13px] text-[#222] hover:bg-gray-50 transition-colors">Favorilerim</a></li>
-          <li><a href="/settings.html" class="block px-4 py-2 text-[13px] text-[#222] hover:bg-gray-50 transition-colors">Hesap Bilgilerim</a></li>
+          <li><a href="/pages/dashboard/buyer-dashboard.html" class="block px-4 py-2 text-[13px] text-[#222] hover:bg-gray-50 transition-colors">Kontrol Panelim</a></li>
+          <li><a href="/pages/dashboard/orders.html" class="block px-4 py-2 text-[13px] text-[#222] hover:bg-gray-50 transition-colors">Siparişlerim</a></li>
+          <li><a href="/pages/dashboard/messages.html" class="block px-4 py-2 text-[13px] text-[#222] hover:bg-gray-50 transition-colors">Mesajlarım</a></li>
+          <li><a href="/pages/dashboard/rfq.html" class="block px-4 py-2 text-[13px] text-[#222] hover:bg-gray-50 transition-colors">Teklif Taleplerim (RFQ)</a></li>
+          <li><a href="/pages/dashboard/favorites.html" class="block px-4 py-2 text-[13px] text-[#222] hover:bg-gray-50 transition-colors">Favorilerim</a></li>
+          <li><a href="/pages/dashboard/settings.html" class="block px-4 py-2 text-[13px] text-[#222] hover:bg-gray-50 transition-colors">Hesap Bilgilerim</a></li>
         </ul>
         <div class="border-t border-gray-100 pt-1">
           <button id="logout-btn" class="w-full text-left block px-4 py-2 text-[13px] text-[#222] hover:bg-gray-50 transition-colors cursor-pointer">Çıkış yap</button>
@@ -131,7 +131,7 @@ function renderCompactStickySearch(): string {
         id="topbar-compact-search"
         x-ref="searchForm"
         @click="open()"
-        action="/products.html"
+        action="/pages/products.html"
         method="GET"
         role="search"
         aria-label="Sticky header search"
@@ -235,7 +235,7 @@ function renderCompactStickySearch(): string {
             Navigate complex requirements with Deep Search
           </p>
           <a
-            href="/terms"
+            href="/pages/legal/terms.html"
             tabindex="-1"
             data-compact-expanded-interactive="true"
             class="text-sm text-gray-500 underline decoration-gray-300 underline-offset-2 transition-colors hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
@@ -406,7 +406,7 @@ function renderMessagesButton(): string {
         <!-- Message Items -->
         <div class="space-y-2 mb-4">
           ${recentMessages.map(msg => `
-          <a href="/messages.html" class="flex items-start gap-3 p-2 -mx-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer group">
+          <a href="/pages/dashboard/messages.html" class="flex items-start gap-3 p-2 -mx-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer group">
             <div class="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center flex-shrink-0 overflow-hidden">
               ${msg.avatar ? `<img src="${msg.avatar}" alt="${msg.name}" class="w-full h-full object-cover" />` : `
               <svg class="w-5 h-5 text-blue-500 dark:text-blue-300" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -428,7 +428,7 @@ function renderMessagesButton(): string {
         </div>
 
         <!-- View More Button -->
-        <a href="/messages.html" class="th-btn th-btn-pill block w-full px-4 py-2.5 text-sm font-medium text-center transition-colors">
+        <a href="/pages/dashboard/messages.html" class="th-btn th-btn-pill block w-full px-4 py-2.5 text-sm font-medium text-center transition-colors">
           View more
         </a>
       </div>
@@ -546,37 +546,41 @@ function renderCartButton(itemCount: number = 0): string {
 
     <!-- Cart Popover -->
     <div data-popover id="popover-cart" role="tooltip"
-      class="absolute z-50 invisible inline-block w-[420px] max-w-[calc(100vw-24px)] bg-surface border border-border-default rounded-2xl shadow-lg opacity-0 transition-opacity duration-300"
+      class="absolute z-50 invisible inline-block w-[400px] max-w-[calc(100vw-16px)] bg-white border border-gray-100 rounded-2xl shadow-2xl opacity-0 transition-opacity duration-300 overflow-hidden"
     >
-      <div class="p-5 max-sm:p-4" id="header-cart-body">
-        <h3 class="text-lg font-bold text-text-heading mb-3">Sepetim</h3>
+      <!-- Header -->
+      <div class="flex items-center justify-between px-5 pt-4 pb-3 border-b border-gray-100">
+        <div class="flex items-center gap-2">
+          <h3 class="text-[15px] font-bold text-gray-900">Sepetim</h3>
+          <span id="header-cart-count-chip" class="hidden text-[11px] font-bold px-2 py-0.5 rounded-full" style="background:var(--btn-bg,#d97706);color:#fff"></span>
+        </div>
+        <a href="${baseUrl}pages/cart.html" class="text-xs font-semibold text-[--btn-bg] hover:underline" style="color:var(--btn-bg,#d97706)">Tümünü Gör →</a>
+      </div>
 
+      <div class="px-5 py-4" id="header-cart-body">
         <!-- Empty Cart State -->
-        <div id="header-cart-empty" class="flex flex-col items-center py-5 rounded-xl bg-surface-muted">
-          <div class="mb-3">
-            <svg class="w-16 h-16 text-text-placeholder" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="20" y="28" width="56" height="44" rx="4" fill="currentColor" fill-opacity=".12" stroke="currentColor" stroke-width="2"/>
-              <path d="M20 36h56" stroke="currentColor" stroke-width="2"/>
-              <rect x="32" y="20" width="32" height="12" rx="2" fill="currentColor" fill-opacity=".2" stroke="currentColor" stroke-width="2"/>
-              <circle cx="36" cy="76" r="4" fill="currentColor"/>
-              <circle cx="60" cy="76" r="4" fill="currentColor"/>
-              <path d="M40 48h16M48 44v8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <div id="header-cart-empty" class="flex flex-col items-center py-8">
+          <div class="w-16 h-16 rounded-2xl bg-amber-50 flex items-center justify-center mb-3">
+            <svg class="w-8 h-8 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"/>
             </svg>
           </div>
-          <p class="text-sm text-text-tertiary">Sepetiniz boş</p>
+          <p class="text-sm font-semibold text-gray-700 mb-1">Sepetiniz boş</p>
+          <p class="text-xs text-gray-400">Ürün ekleyerek alışverişe başlayın</p>
         </div>
 
         <!-- Cart Items (hidden initially) -->
-        <div id="header-cart-items" class="hidden mt-1"></div>
+        <div id="header-cart-items" class="hidden"></div>
 
         <!-- Subtotal (hidden initially) -->
-        <div id="header-cart-subtotal" style="display:none" class="flex items-center justify-between pt-3 mt-3 border-t border-border-default">
-          <span class="text-sm text-text-secondary">Ara Toplam</span>
-          <span id="header-cart-subtotal-price" class="text-lg font-bold text-cta-primary">$0.00</span>
+        <div id="header-cart-subtotal" style="display:none" class="flex items-center justify-between pt-3 mt-3 border-t border-gray-100">
+          <span class="text-sm text-gray-500">Ara Toplam</span>
+          <span id="header-cart-subtotal-price" class="text-lg font-bold" style="color:var(--btn-bg,#d97706)">$0.00</span>
         </div>
 
         <!-- Go to Cart Button -->
-        <a href="${baseUrl}cart.html" class="inline-flex items-center justify-center w-full mt-3 h-11 px-4 text-base font-semibold text-center rounded-full bg-cta-primary text-white hover:bg-cta-primary-hover transition-colors">
+        <a href="${baseUrl}pages/cart.html" class="inline-flex items-center justify-center w-full mt-4 h-11 px-4 text-sm font-bold text-center rounded-full text-white transition-all hover:opacity-90 hover:shadow-md gap-2" style="background:linear-gradient(135deg,var(--btn-bg,#d97706),var(--btn-bg-end,#b45309))">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138A60.114 60.114 0 0 0 3.375 5.272M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"/></svg>
           Sepete Git
         </a>
       </div>
@@ -647,12 +651,12 @@ function renderAuthButtons(): string {
 
         <!-- Navigation Links -->
         <ul class="py-1">
-          <li><a href="/buyer-dashboard.html" class="block px-5 py-2 text-[13px] text-[#222] hover:bg-gray-50 transition-colors">Kontrol Panelim</a></li>
-          <li><a href="/orders.html" class="block px-5 py-2 text-[13px] text-[#222] hover:bg-gray-50 transition-colors">Siparişlerim</a></li>
-          <li><a href="/messages.html" class="block px-5 py-2 text-[13px] text-[#222] hover:bg-gray-50 transition-colors">Mesajlarım</a></li>
-          <li><a href="/rfq.html" class="block px-5 py-2 text-[13px] text-[#222] hover:bg-gray-50 transition-colors">Teklif Taleplerim (RFQ)</a></li>
-          <li><a href="/favorites.html" class="block px-5 py-2 text-[13px] text-[#222] hover:bg-gray-50 transition-colors">Favorilerim</a></li>
-          <li><a href="/settings.html" class="block px-5 py-2 text-[13px] text-[#222] hover:bg-gray-50 transition-colors">Hesap Bilgilerim</a></li>
+          <li><a href="/pages/dashboard/buyer-dashboard.html" class="block px-5 py-2 text-[13px] text-[#222] hover:bg-gray-50 transition-colors">Kontrol Panelim</a></li>
+          <li><a href="/pages/dashboard/orders.html" class="block px-5 py-2 text-[13px] text-[#222] hover:bg-gray-50 transition-colors">Siparişlerim</a></li>
+          <li><a href="/pages/dashboard/messages.html" class="block px-5 py-2 text-[13px] text-[#222] hover:bg-gray-50 transition-colors">Mesajlarım</a></li>
+          <li><a href="/pages/dashboard/rfq.html" class="block px-5 py-2 text-[13px] text-[#222] hover:bg-gray-50 transition-colors">Teklif Taleplerim (RFQ)</a></li>
+          <li><a href="/pages/dashboard/favorites.html" class="block px-5 py-2 text-[13px] text-[#222] hover:bg-gray-50 transition-colors">Favorilerim</a></li>
+          <li><a href="/pages/dashboard/settings.html" class="block px-5 py-2 text-[13px] text-[#222] hover:bg-gray-50 transition-colors">Hesap Bilgilerim</a></li>
         </ul>
       </div>
     </div>
@@ -735,7 +739,7 @@ function renderMobileDrawer(): string {
               <a href="/buyer/orders" class="flex items-center gap-3 px-3 py-2.5 text-sm rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300">
                 <span>Orders</span>
               </a>
-              <a href="${baseUrl}cart.html" class="flex items-center gap-3 px-3 py-2.5 text-sm rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300">
+              <a href="${baseUrl}pages/cart.html" class="flex items-center gap-3 px-3 py-2.5 text-sm rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300">
                 <span>Shopping Cart</span>
                 <span class="th-badge ml-auto flex items-center justify-center min-w-5 h-5 px-1 text-[10px] font-bold" style="background:var(--btn-bg);color:var(--btn-text)">3</span>
               </a>
@@ -1036,7 +1040,7 @@ export function MobileSearchTabs(activeTab: 'products' | 'manufacturers' | 'coun
   return `
     <div class="lg:hidden flex items-center gap-3 sm:gap-6 px-2 sm:px-4 border-b border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-900 overflow-x-auto no-scrollbar scroll-smooth">
       <a href="/" class="${activeTab === 'products' ? activeClass : inactiveClass}" data-search-tab="products">Ürünler</a>
-      <a href="/manufacturers.html" class="${activeTab === 'manufacturers' ? activeClass : inactiveClass}" data-search-tab="manufacturers">Tedarikçiler</a>
+      <a href="/pages/manufacturers.html" class="${activeTab === 'manufacturers' ? activeClass : inactiveClass}" data-search-tab="manufacturers">Tedarikçiler</a>
       <a href="#" class="${activeTab === 'country' ? activeClass : inactiveClass}" data-search-tab="country">Ülkeye göre tedarikler</a>
     </div>
   `;
@@ -1091,7 +1095,7 @@ export function TopBar(props?: TopBarProps): string {
               </div>
 
               <!-- Sell on iSTOC link -->
-              <a href="/seller/register" class="hidden lg:inline-flex items-center text-[13px] text-[#333] hover:text-[#000] transition-opacity whitespace-nowrap">
+              <a href="/pages/seller/sell.html" class="hidden lg:inline-flex items-center text-[13px] text-[#333] hover:text-[#000] transition-opacity whitespace-nowrap">
                 <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 21v-7.5a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 .75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349M3.75 21V9.349m0 0a3.001 3.001 0 0 0 3.75-.615A2.993 2.993 0 0 0 9.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 0 0 2.25 1.016c.896 0 1.7-.393 2.25-1.015a3.001 3.001 0 0 0 3.75.614m-16.5 0a3.004 3.004 0 0 1-.621-4.72l1.189-1.19A1.5 1.5 0 0 1 5.378 3h13.243a1.5 1.5 0 0 1 1.06.44l1.19 1.189a3 3 0 0 1-.621 4.72M6.75 18h3.75a.75.75 0 0 0 .75-.75V13.5a.75.75 0 0 0-.75-.75H6.75a.75.75 0 0 0-.75.75v3.75c0 .414.336.75.75.75Z"/></svg>
                 Satışa başlayın
               </a>
@@ -1154,7 +1158,7 @@ export function TopBar(props?: TopBarProps): string {
 
           <!-- Mobile Inline Search (between logo and icons) -->
           <div class="flex-1 min-w-0 mx-1 sm:mx-2 lg:hidden">
-            <form id="mobile-search-form" action="/products.html" method="GET" role="search">
+            <form id="mobile-search-form" action="/pages/products.html" method="GET" role="search">
               <input type="hidden" id="mobile-search-type" name="searchType" value="products" />
               <div class="flex">
                 <input
@@ -1237,7 +1241,7 @@ export function TopBar(props?: TopBarProps): string {
         <!-- Row 2: Search Tabs (Desktop Only) -->
         <div class="hidden lg:flex items-center gap-6 pb-2 -mt-1">
           <a href="/" class="${isManufacturersPage ? desktopInactiveTabClass : desktopActiveTabClass}" data-search-tab="products">Products</a>
-          <a href="/manufacturers.html" class="${isManufacturersPage ? desktopActiveTabClass : desktopInactiveTabClass}" data-search-tab="manufacturers">Manufacturers</a>
+          <a href="/pages/manufacturers.html" class="${isManufacturersPage ? desktopActiveTabClass : desktopInactiveTabClass}" data-search-tab="manufacturers">Manufacturers</a>
         </div>
       </div>
 
@@ -1269,6 +1273,17 @@ export function initHeaderCart(): void {
       else badge.classList.add('hidden');
     }
 
+    // Update count chip in popover header
+    const countChip = document.getElementById('header-cart-count-chip');
+    if (countChip) {
+      if (count > 0) {
+        countChip.textContent = `${count} ürün`;
+        countChip.classList.remove('hidden');
+      } else {
+        countChip.classList.add('hidden');
+      }
+    }
+
     const emptyState = document.getElementById('header-cart-empty');
     const itemsContainer = document.getElementById('header-cart-items');
     const subtotalContainer = document.getElementById('header-cart-subtotal');
@@ -1289,33 +1304,37 @@ export function initHeaderCart(): void {
     }
 
     if (itemsContainer) {
-      let html = '<div class="max-h-[340px] overflow-y-auto pr-1 space-y-3">';
+      let html = '<div class="max-h-[320px] overflow-y-auto -mx-1 px-1 space-y-1 scrollbar-thin">';
       for (const supplier of suppliers) {
+        // Supplier header
         html += `
-          <div class="rounded-xl border border-border-light bg-surface px-3 py-2">
-            <p class="text-xs font-semibold text-text-tertiary mb-1 truncate">${supplier.name}</p>`;
+          <div class="flex items-center gap-2 pt-1 pb-0.5">
+            <div class="w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0">
+              <svg class="w-3 h-3 text-gray-400" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 21v-7.5a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 .75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349M3.75 21V9.349m0 0a3.001 3.001 0 0 0 3.75-.615A2.993 2.993 0 0 0 9.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 0 0 2.25 1.016 2.993 2.993 0 0 0 2.25-1.016 3.001 3.001 0 0 0 3.75.614m-16.5 0a3.004 3.004 0 0 1-.621-4.72l1.189-1.19A1.5 1.5 0 0 1 5.378 3h13.243a1.5 1.5 0 0 1 1.06.44l1.19 1.189a3 3 0 0 1-.621 4.72"/></svg>
+            </div>
+            <p class="text-[11px] font-semibold text-gray-400 uppercase tracking-wide truncate">${supplier.name}</p>
+          </div>`;
 
         for (const product of supplier.products) {
-          html += `<p class="text-[13px] font-medium text-text-heading mb-2 leading-tight overflow-hidden [display:-webkit-box] [-webkit-line-clamp:2] [-webkit-box-orient:vertical]">${product.title}</p>`;
           for (const sku of product.skus) {
             const thumbHtml = sku.skuImage
-              ? `<img src="${sku.skuImage}" alt="sku" class="w-12 h-12 rounded-lg object-cover border border-border-default flex-shrink-0">`
-              : '<div class="w-12 h-12 rounded-lg flex-shrink-0 bg-surface-muted border border-border-default"></div>';
+              ? `<img src="${sku.skuImage}" alt="sku" class="w-[52px] h-[52px] rounded-xl object-cover border border-gray-100 flex-shrink-0 shadow-sm">`
+              : `<div class="w-[52px] h-[52px] rounded-xl flex-shrink-0 bg-gray-100 border border-gray-100 flex items-center justify-center"><svg class="w-5 h-5 text-gray-300" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Z"/></svg></div>`;
 
             html += `
-              <div class="flex items-center gap-3 py-1.5 border-b border-border-light last:border-0">
+              <div class="flex items-center gap-3 py-2.5 px-1 rounded-xl hover:bg-gray-50 transition-colors group">
                 ${thumbHtml}
                 <div class="flex-1 min-w-0">
-                  <p class="text-[11px] text-text-tertiary truncate">${sku.variantText || ''}</p>
-                  <div class="flex items-center justify-between mt-0.5">
-                    <span class="text-[13px] font-semibold text-text-heading">$${sku.unitPrice.toFixed(2)}</span>
-                    <span class="text-xs text-text-tertiary">x ${sku.quantity}</span>
-                  </div>
+                  <p class="text-[12px] font-medium text-gray-800 leading-tight line-clamp-2 mb-1">${product.title}</p>
+                  <p class="text-[11px] text-gray-400">${sku.variantText || ''}</p>
+                </div>
+                <div class="flex flex-col items-end gap-1 flex-shrink-0">
+                  <span class="text-[13px] font-bold text-gray-900">$${sku.unitPrice.toFixed(2)}</span>
+                  <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-gray-100 text-gray-500">x${sku.quantity}</span>
                 </div>
               </div>`;
           }
         }
-        html += '</div>';
       }
       html += '</div>';
 

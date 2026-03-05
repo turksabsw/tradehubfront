@@ -36,7 +36,7 @@ const footerColumns: FooterColumn[] = [
   {
     title: 'Get support',
     links: [
-      { label: 'Help Center', href: '/help' },
+      { label: 'Help Center', href: '/pages/help/help-center.html' },
       { label: 'Live chat', href: '/chat' },
       { label: 'Check order status', href: '/buyer/orders' },
       { label: 'Refunds', href: '/help/refunds' },
@@ -65,7 +65,7 @@ const footerColumns: FooterColumn[] = [
   {
     title: 'Sell on iSTOC',
     links: [
-      { label: 'Start selling', href: '/seller/register' },
+      { label: 'Start selling', href: '/pages/seller/sell.html' },
       { label: 'Seller Central', href: '/seller/dashboard' },
       { label: 'Become a Verified Supplier', href: '/seller/verification' },
       { label: 'Partnerships', href: '/partnerships' },
@@ -75,7 +75,7 @@ const footerColumns: FooterColumn[] = [
   {
     title: 'Get to know us',
     links: [
-      { label: 'About iSTOC.com', href: '/about' },
+      { label: 'About iSTOC.com', href: '/pages/legal/about.html' },
       { label: 'Corporate responsibility', href: '/csr' },
       { label: 'News center', href: '/news' },
       { label: 'Careers', href: '/careers' },

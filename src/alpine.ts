@@ -188,7 +188,7 @@ Alpine.data('ordersListComponent', () => ({
 
   copyOrderNumber() {
     if (!this.selectedOrder) return;
-    navigator.clipboard.writeText(this.selectedOrder.orderNumber);
+    navigator.clipboard.writeText((this.selectedOrder as any).orderNumber);
     this.copiedNumber = true;
     setTimeout(() => { this.copiedNumber = false; }, 2000);
   },
@@ -277,15 +277,27 @@ Alpine.data('couponsPageComponent', () => ({
     return 'Ücretsiz Kargo';
   },
 
+  couponBadgeClass(type: string): string {
+    if (type === 'percent') return 'bg-(--color-info-50,#eff6ff) text-(--color-info-700,#1d4ed8)';
+    if (type === 'fixed') return 'bg-(--color-success-50,#f0fdf4) text-(--color-success-700,#15803d)';
+    return 'bg-(--color-warning-50,#fffbeb) text-(--color-warning-700,#b45309)';
+  },
+
   creditTypeLabel(type: string): string {
     if (type === 'earned') return 'Kazanıldı';
     if (type === 'spent') return 'Harcandı';
     return 'İade';
   },
 
-  creditTypeColor(type: string): string {
-    if (type === 'earned' || type === 'refund') return 'text-green-600';
-    return 'text-red-500';
+  creditBadgeClass(type: string): string {
+    if (type === 'earned') return 'bg-(--color-success-50,#f0fdf4) text-(--color-success-700,#15803d)';
+    if (type === 'spent') return 'bg-(--color-error-50,#fef2f2) text-(--color-error-700,#b91c1c)';
+    return 'bg-(--color-info-50,#eff6ff) text-(--color-info-700,#1d4ed8)';
+  },
+
+  creditAmountClass(type: string): string {
+    if (type === 'earned' || type === 'refund') return 'text-(--color-success-500,#22c55e)';
+    return 'text-(--color-error-500,#ef4444)';
   },
 }));
 
@@ -990,7 +1002,7 @@ Alpine.data('cartPage', () => ({
     cartStore.toggleSupplierSelection(supplierId, true);
 
     // Finally, redirect to checkout
-    window.location.href = '/checkout.html';
+    window.location.href = '/pages/order/checkout.html';
   },
 
   updateParentCheckboxStates(skuRow: Element) {
@@ -1068,7 +1080,7 @@ Alpine.data('cartPage', () => ({
 
     if (checkoutBtn) {
       if (canCheckout) {
-        checkoutBtn.setAttribute('href', '/checkout.html');
+        checkoutBtn.setAttribute('href', '/pages/order/checkout.html');
         checkoutBtn.removeAttribute('aria-disabled');
         checkoutBtn.style.pointerEvents = '';
         checkoutBtn.style.cursor = '';
@@ -1242,7 +1254,7 @@ Alpine.data('cartPage', () => ({
         </svg>
         <h2 class="text-2xl font-bold text-text-heading mb-2">Sepetiniz boş</h2>
         <p class="text-base text-text-secondary mb-8 max-w-md">Henüz sepetinize ürün eklemediniz. Ürünleri keşfedip sepetinize ekleyebilirsiniz.</p>
-        <a href="/products.html" class="inline-flex items-center justify-center h-12 px-8 rounded-full bg-cta-primary text-white font-semibold text-base hover:bg-cta-primary-hover transition-colors no-underline">
+        <a href="/pages/products.html" class="inline-flex items-center justify-center h-12 px-8 rounded-full bg-cta-primary text-white font-semibold text-base hover:bg-cta-primary-hover transition-colors no-underline">
           Alışverişe devam et
         </a>
       </div>
@@ -1855,7 +1867,7 @@ Alpine.data('forgotPasswordPage', () => ({
     if (!this.passwordValid) return;
     const baseUrl = getBaseUrl();
     alert('Şifreniz başarıyla güncellendi!');
-    window.location.href = `${baseUrl}login.html`;
+    window.location.href = `${baseUrl}pages/auth/login.html`;
   },
 
   destroy() {
@@ -3328,7 +3340,771 @@ Alpine.data('messagesComponent', () => ({
   },
 }));
 
-// Make Alpine available globally for debugging
+Alpine.data('helpCenter', () => ({
+  searchQuery: '',
+  searchActive: false,
+  searchResults: [] as string[],
+  activeTab: 'account',
+  activeLearningCard: '' as string,
+
+  popularSearches: ['Şifremi unuttum', 'Sipariş iptali', 'Kargo takibi', 'İade'],
+
+  learningCards: [
+    {
+      id: 'sourcing',
+      icon: `<svg xmlns="http://www.w3.org/2000/svg" class="w-9 h-9" viewBox="0 0 64 64" fill="none">
+        <circle cx="26" cy="26" r="18" stroke="#FF8C00" stroke-width="4" fill="#FFF3E0"/>
+        <path d="M39 39 L54 54" stroke="#FF8C00" stroke-width="5" stroke-linecap="round"/>
+        <path d="M20 26 L26 32 L34 22" stroke="#FF8C00" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>`,
+      title: 'Kaynak Bulmak',
+      subtitle: 'Tedarik, Sipariş ve Kargo',
+    },
+    {
+      id: 'assurance',
+      icon: `<svg xmlns="http://www.w3.org/2000/svg" class="w-9 h-9" viewBox="0 0 64 64" fill="none">
+        <path d="M32 6L10 16v16c0 12 9.8 22.4 22 25 12.2-2.6 22-13 22-25V16L32 6z" fill="#FFF3E0" stroke="#FF8C00" stroke-width="4"/>
+        <circle cx="32" cy="30" r="8" fill="#FF8C00" opacity="0.3"/>
+        <path d="M26 30l4 4 8-8" stroke="#FF8C00" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M28 18h8M28 42h8" stroke="#FF8C00" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+      </svg>`,
+      title: 'Ticaret Güvencesi',
+      subtitle: 'iSTOC Siparişlerinizi Koruyun',
+    },
+    {
+      id: 'app',
+      icon: `<svg xmlns="http://www.w3.org/2000/svg" class="w-9 h-9" viewBox="0 0 64 64" fill="none">
+        <rect x="18" y="6" width="28" height="52" rx="5" fill="#FFF3E0" stroke="#FF8C00" stroke-width="4"/>
+        <rect x="24" y="14" width="16" height="10" rx="2" fill="#FF8C00" opacity="0.3"/>
+        <circle cx="32" cy="50" r="3" fill="#FF8C00"/>
+        <path d="M26 30h12M26 38h8" stroke="#FF8C00" stroke-width="2.5" stroke-linecap="round"/>
+      </svg>`,
+      title: 'Mobil Uygulamayı İndir',
+      subtitle: 'iSTOC TradeHub Uygulaması',
+    },
+    {
+      id: 'logistics',
+      icon: `<svg xmlns="http://www.w3.org/2000/svg" class="w-9 h-9" viewBox="0 0 64 64" fill="none">
+        <rect x="6" y="20" width="36" height="26" rx="3" fill="#FFF3E0" stroke="#FF8C00" stroke-width="3.5"/>
+        <path d="M42 30h10l6 10v10H42V30z" fill="#FFF3E0" stroke="#FF8C00" stroke-width="3.5"/>
+        <circle cx="16" cy="50" r="5" fill="#FF8C00"/>
+        <circle cx="48" cy="50" r="5" fill="#FF8C00"/>
+        <path d="M10 20V14a4 4 0 0 1 4-4h16a4 4 0 0 1 4 4v6" stroke="#FF8C00" stroke-width="3" stroke-linecap="round"/>
+      </svg>`,
+      title: 'iSTOC Lojistik',
+      subtitle: 'Akıllı lojistik hizmetleri',
+    },
+  ],
+
+  tabs: [
+    {
+      id: 'account',
+      label: 'Hesabım',
+      icon: `<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"/></svg>`,
+      questions: [
+        'Şifremi unutursam ne yapmalıyım?',
+        'iSTOC\'ta nasıl hesap açabilirim?',
+        'E-posta doğrulama kodunu neden alamıyorum?',
+        'SMS doğrulama kodu neden gelmiyor?',
+        'Hesabım neden devre dışı bırakıldı?',
+        'Şikayet portalına nasıl ulaşırım?',
+        'Hesap bilgilerimi nasıl güncellerim?',
+        'İki faktörlü kimlik doğrulama nedir?',
+        'Hesabımı nasıl silerim?',
+      ],
+    },
+    {
+      id: 'sourcing',
+      label: 'Kaynak Bulmak',
+      icon: `<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m21 21-4.35-4.35m1.6-5.15a6.75 6.75 0 1 1-13.5 0 6.75 6.75 0 0 1 13.5 0Z"/></svg>`,
+      questions: [
+        'iSTOC\'ta nasıl alışveriş yapabilirim?',
+        'iSTOC\'ta ürünleri nasıl arayabilirim?',
+        'Favorilerime nasıl ürün eklerim?',
+        'Ürün fiyatı, MOQ, kargo masrafı gibi bilgiler nasıl öğrenirim?',
+        'Tedarikçinin iletişim bilgilerine nasıl ulaşırım?',
+        'RFQ talebi nasıl oluşturum?',
+        'Toplu sipariş indirimi var mı?',
+        'Numune sipariş edebilir miyim?',
+        'Tedarikçiyle nasıl iletişim kurabilirim?',
+      ],
+    },
+    {
+      id: 'negotiation',
+      label: 'Müzakere',
+      icon: `<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.625 9.75a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375m-13.5 3.01c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.184-4.183a1.14 1.14 0 0 1 .778-.332 48.294 48.294 0 0 0 5.83-.498c1.585-.233 2.708-1.626 2.708-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z"/></svg>`,
+      questions: [
+        'Tedarikçiyle nasıl fiyat pazarlığı yapabilirim?',
+        'Sipariş öncesi sözleşme şartları nasıl belirlenir?',
+        'Tedarikçiyle mesajlaşma nasıl çalışır?',
+        'Teklif (Quotation) talebinde nasıl bulunurum?',
+        'Pazarlık süreci ne kadar sürer?',
+        'Çoklu tedarikçilerle aynı anda nasıl müzakere edebilirim?',
+      ],
+    },
+    {
+      id: 'payment',
+      label: 'Sipariş & Ödeme',
+      icon: `<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Z"/></svg>`,
+      questions: [
+        'Hangi ödeme yöntemlerini kullanabilirim?',
+        'Ödeme işlemim neden tamamlanmadı?',
+        'Fatura veya makbuzuma nasıl ulaşırım?',
+        'Siparişimi nasıl iptal edebilirim?',
+        'Para iadesi ne zaman hesabıma geçer?',
+        'Taksitli ödeme mevcut mu?',
+        'Döviz kuru fiyatı nasıl hesaplanır?',
+        'Kısmi ödeme yapabilir miyim?',
+        'Ödeme sonrası siparişimi nasıl takip edebilirim?',
+      ],
+    },
+    {
+      id: 'after-sales',
+      label: 'Satış Sonrası',
+      icon: `<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z"/></svg>`,
+      questions: [
+        'Ürünüm hasarlı geldi, ne yapmalıyım?',
+        'İade ve değişim süreci nasıl işliyor?',
+        'Anlaşmazlık durumunda nasıl destek alabilirim?',
+        'Garanti kapsamındaki ürünler için ne yapabilirim?',
+        'Teslimat süresi aşıldığında ne yapabilirim?',
+        'Ticaret Güvencesi nedir?',
+      ],
+    },
+    {
+      id: 'self-service',
+      label: 'Self-Servis',
+      icon: `<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17 17.25 21A2.652 2.652 0 0 0 21 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 1 1-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 0 0 4.486-6.336l-3.276 3.277a3.004 3.004 0 0 1-2.25-2.25l3.276-3.276a4.5 4.5 0 0 0-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437 1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008Z"/></svg>`,
+      questions: [
+        'Kendi kendime sorun nasıl çözebilirim?',
+        'Video rehberler nerede bulunur?',
+        'Kontrol panelimdeki araçları nasıl kullanırım?',
+        'Rapor ve analizlere nasıl erişirim?',
+        'Toplu sipariş araçlarını nasıl kullanırım?',
+        'API entegrasyonu mevcut mu?',
+      ],
+    },
+  ],
+
+  init() {
+    // Initialize with first learning card active
+    this.activeLearningCard = 'sourcing';
+  },
+
+  doSearch() {
+    const q = this.searchQuery.trim().toLowerCase();
+    if (!q) return;
+    this.searchActive = true;
+
+    // Flat-map all questions from all tabs and filter
+    const allQuestions = this.tabs.flatMap((t: any) => t.questions);
+    this.searchResults = allQuestions.filter((question: string) =>
+      question.toLowerCase().includes(q)
+    );
+  },
+
+  clearSearch() {
+    this.searchQuery = '';
+    this.searchActive = false;
+    this.searchResults = [];
+  },
+
+  selectLearningCard(card: any) {
+    this.activeLearningCard = card.id;
+    // Scroll to matching tab if it exists
+    const matchTab = this.tabs.find((t: any) => t.id === card.id);
+    if (matchTab) this.activeTab = card.id;
+  },
+}));
+
+
+Alpine.data('faqPage', () => ({
+  searchQuery: '',
+  activeCategory: 'all',
+
+  categories: [
+    { id: 'all', label: 'All categories' },
+    { id: 'intro', label: 'İSTOC Giriş' },
+    { id: 'account', label: 'Hesap Yönetimi' },
+    { id: 'sourcing', label: 'Kaynak Bulma' },
+    { id: 'negotiation', label: 'Ticari Müzakere' },
+    { id: 'place-order', label: 'Sipariş Ver' },
+    { id: 'payment', label: 'Sipariş Ödemesi' },
+    { id: 'tax', label: 'Vergi Yönetimi' },
+    { id: 'shipping', label: 'Kargo' },
+    { id: 'receipt', label: 'Sipariş Alımı' },
+    { id: 'inspection', label: 'Denetim & Üretim' },
+    { id: 'after-sales', label: 'Satış Sonrası Servis' },
+    { id: 'feedback', label: 'Sipariş Geri Bildirimi' },
+    { id: 'security', label: 'Güvenlik & Kurallar' },
+    { id: 'others', label: 'Diğerleri' },
+    { id: 'promotions', label: 'Promosyonlar & Alışveriş' },
+    { id: 'guaranteed', label: 'iSTOC Garantisi' },
+    { id: 'app-settings', label: 'Uygulama Ayarları' },
+    { id: 'localization', label: 'Dil ve Yerelleştirme' },
+  ],
+
+  allCategoryCards: [
+    {
+      id: 'intro', label: 'iSTOC Giriş',
+      subs: [
+        { label: 'iSTOC Tanıtımı' },
+        { label: 'iSTOC Üyeliği', highlight: true },
+      ],
+    },
+    {
+      id: 'account', label: 'Hesap Yönetimi',
+      subs: [
+        { label: 'Hesap Ayarları' },
+        { label: 'İptal & Yeniden Etkinleştirme' },
+        { label: 'Giriş', highlight: true },
+        { label: 'Kayıt' },
+        { label: 'Satıcı Ol' },
+      ],
+    },
+    {
+      id: 'sourcing', label: 'Kaynak Bulma',
+      subs: [
+        { label: 'Arama' },
+        { label: 'Tedarikçi Değerlendirme' },
+        { label: 'Ticaret Bilgisi', highlight: true },
+        { label: 'Öneren', highlight: true },
+        { label: 'AI Uygulaması' },
+        { label: 'Kaynak Bulma' },
+      ],
+    },
+    {
+      id: 'negotiation', label: 'Ticari Müzakere',
+      subs: [
+        { label: 'RFQ' },
+        { label: 'Mesajlar' },
+        { label: 'Diğer İletişim Sorunları', highlight: true },
+      ],
+    },
+    {
+      id: 'place-order', label: 'Sipariş Ver',
+      subs: [
+        { label: 'Ticaret Güvencesi Tanıtımı' },
+        { label: 'Sipariş Ver' },
+        { label: 'Siparişi Onayla' },
+        { label: 'Sipariş Yönetimi' },
+      ],
+    },
+    {
+      id: 'payment', label: 'Sipariş Ödemesi',
+      subs: [
+        { label: 'Sipariş Ödemesi', highlight: true },
+        { label: 'Ödeme Makbuzu' },
+        { label: 'Finansal' },
+        { label: 'Ödeme' },
+        { label: 'Ödeme Türleri' },
+      ],
+    },
+    {
+      id: 'tax', label: 'Vergi Yönetimi',
+      subs: [
+        { label: 'Vergi Bilgisi Gönder' },
+        { label: 'Vergi Türleri' },
+        { label: 'Vergi Faturası' },
+        { label: 'Vergi Bilgisini Doğrula' },
+        { label: 'Vergi Sipariş Yönetimi' },
+        { label: 'Vergi İadesi', highlight: true },
+      ],
+    },
+    {
+      id: 'shipping', label: 'Kargo',
+      subs: [
+        { label: 'Kargo' },
+        { label: 'iSTOC Lojistik Hizmetleri', highlight: true },
+        { label: 'MSK Kargo Hizmetleri (Maersk)' },
+        { label: 'İthalat Ücretleri' },
+      ],
+    },
+    {
+      id: 'receipt', label: 'Sipariş Alımı',
+      subs: [
+        { label: 'Sipariş Teslimatı' },
+        { label: 'Sipariş Tamamlanma' },
+      ],
+    },
+    {
+      id: 'inspection', label: 'Denetim & Üretim İzleme',
+      subs: [
+        { label: 'Denetim Hizmetleri', highlight: true },
+        { label: 'Üretim İzleme Hizmetleri' },
+      ],
+    },
+    {
+      id: 'after-sales', label: 'Satış Sonrası Servis',
+      subs: [
+        { label: 'Sipariş Anlaşmazlığı' },
+        { label: 'Sipariş İadesi', highlight: true },
+        { label: 'Anlaşmazlık Süreci' },
+        { label: 'Mal Sorunu' },
+        { label: 'Anlaşmazlık Kuralları' },
+        { label: 'Geri Ödeme' },
+      ],
+    },
+    {
+      id: 'feedback', label: 'Sipariş Geri Bildirimi',
+      subs: [
+        { label: 'Geri Bildirim Yönetimi', highlight: true },
+        { label: 'Geri Bildirim Kuralları' },
+      ],
+    },
+    {
+      id: 'security', label: 'Güvenlik & iSTOC Kuralları',
+      subs: [
+        { label: 'Dolandırıcılık/Sahte E-posta' },
+        { label: 'IPR Şikayeti' },
+      ],
+    },
+    {
+      id: 'others', label: 'Diğerleri',
+      subs: [
+        { label: 'Müşteri Hizmetleri Operasyonları' },
+        { label: 'Belirsiz Endişe' },
+        { label: 'Çevrimdışı Hizmet' },
+      ],
+    },
+    {
+      id: 'promotions', label: 'Promosyonlar & Alışveriş Rehberi',
+      subs: [
+        { label: 'Alışveriş Rehberi' },
+        { label: 'Senaryolu Promosyon', highlight: true },
+        { label: 'Süper Promosyon', highlight: true },
+        { label: 'Ödeme Promosyonları' },
+        { label: 'Diğer Promosyon Sorunları' },
+      ],
+    },
+    {
+      id: 'guaranteed', label: 'iSTOC Garantisi',
+      subs: [
+        { label: 'Garantili Kargo', highlight: true },
+        { label: 'Garantili Satış Sonrası' },
+        { label: 'Garantili Ön Satış', highlight: true },
+        { label: 'Garantili Sipariş Verme' },
+        { label: 'Denizaşırı Doğrulanmış Depo' },
+      ],
+    },
+    {
+      id: 'app-settings', label: 'iSTOC Uygulama Ayarları',
+      subs: [
+        { label: 'iSTOC Uygulama Ayarları' },
+      ],
+    },
+    {
+      id: 'localization', label: 'Dil ve Yerelleştirme',
+      subs: [
+        { label: 'iSTOC Dil Ayarları', highlight: true },
+      ],
+    },
+  ],
+
+  get activeCategoryLabel(): string {
+    const cat = (this.categories as any[]).find((c: any) => c.id === this.activeCategory);
+    return cat ? cat.label : 'All categories';
+  },
+
+  get visibleCategories(): any[] {
+    const q = this.searchQuery.trim().toLowerCase();
+    let cards = this.allCategoryCards as any[];
+
+    // Filter by sidebar selection
+    if (this.activeCategory !== 'all') {
+      cards = cards.filter((c: any) => c.id === this.activeCategory);
+    }
+
+    // Filter by search query
+    if (q) {
+      cards = cards.filter((c: any) =>
+        c.label.toLowerCase().includes(q) ||
+        c.subs.some((s: any) => s.label.toLowerCase().includes(q))
+      );
+    }
+
+    return cards;
+  },
+
+  init() { },
+
+  selectCategory(id: string) {
+    this.activeCategory = id;
+    this.searchQuery = '';
+  },
+
+  doSearch() {
+    if (this.searchQuery.trim()) {
+      this.activeCategory = 'all';
+    }
+  },
+}));
+
+
+// ─── Legal TOC scrollspy ───────────────────────────────────────────────
+Alpine.data('legalToc', () => ({
+  activeSection: '',
+  tocOpen: false,
+  _observer: null as IntersectionObserver | null,
+
+  init() {
+    this.$nextTick(() => {
+      const sections = document.querySelectorAll('section[id]');
+      this._observer = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) {
+              this.activeSection = entry.target.id;
+            }
+          }
+        },
+        { rootMargin: '-80px 0px -60% 0px' }
+      );
+      sections.forEach((s) => this._observer!.observe(s));
+      // Set initial from hash
+      if (window.location.hash) {
+        this.activeSection = window.location.hash.slice(1);
+      } else if (sections.length) {
+        this.activeSection = sections[0].id;
+      }
+    });
+  },
+
+  destroy() {
+    this._observer?.disconnect();
+  },
+
+  scrollToSection(id: string) {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+      history.replaceState(null, '', `#${id}`);
+    }
+  },
+
+  printPage() {
+    window.print();
+  },
+}));
+
+// ─── Cookie Consent ────────────────────────────────────────────────────
+Alpine.data('cookieConsent', () => ({
+  categories: {
+    necessary: true,
+    functional: false,
+    analytics: false,
+    marketing: false,
+  },
+
+  init() {
+    this.loadPreferences();
+  },
+
+  toggleCategory(cat: string) {
+    if (cat === 'necessary') return;
+    (this.categories as any)[cat] = !(this.categories as any)[cat];
+  },
+
+  savePreferences() {
+    localStorage.setItem('istoc_cookie_prefs', JSON.stringify(this.categories));
+    // Show brief confirmation
+    const el = document.getElementById('cookie-save-toast');
+    if (el) {
+      el.classList.remove('hidden');
+      setTimeout(() => el.classList.add('hidden'), 2000);
+    }
+  },
+
+  loadPreferences() {
+    const saved = localStorage.getItem('istoc_cookie_prefs');
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        this.categories = { ...this.categories, ...parsed, necessary: true };
+      } catch { /* ignore */ }
+    }
+  },
+}));
+
+// ─── Contact Page ──────────────────────────────────────────────────────
+Alpine.data('contactPage', () => ({
+  name: '',
+  email: '',
+  subject: '',
+  message: '',
+  attachment: null as File | null,
+  formSubmitting: false,
+  formSubmitted: false,
+  errors: {} as Record<string, string>,
+
+  subjectOptions: ['Sipariş', 'Ödeme', 'Kargo', 'Hesap', 'Ürün Kalitesi', 'Diğer'],
+
+  validateForm(): boolean {
+    this.errors = {};
+    if (!this.name.trim()) this.errors.name = 'Ad soyad gerekli';
+    if (!this.email.trim()) this.errors.email = 'E-posta gerekli';
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.email)) this.errors.email = 'Geçerli bir e-posta girin';
+    if (!this.subject) this.errors.subject = 'Konu seçiniz';
+    if (!this.message.trim()) this.errors.message = 'Mesaj gerekli';
+    return Object.keys(this.errors).length === 0;
+  },
+
+  submitForm() {
+    if (!this.validateForm()) return;
+    this.formSubmitting = true;
+    setTimeout(() => {
+      this.formSubmitting = false;
+      this.formSubmitted = true;
+    }, 1500);
+  },
+
+  resetForm() {
+    this.name = '';
+    this.email = '';
+    this.subject = '';
+    this.message = '';
+    this.attachment = null;
+    this.formSubmitted = false;
+    this.errors = {};
+  },
+}));
+
+// ─── Ticket Form (multi-step) ─────────────────────────────────────────
+Alpine.data('ticketForm', () => ({
+  currentStep: 1,
+  category: '',
+  subCategory: '',
+  subject: '',
+  description: '',
+  priority: 'normal',
+  orderRef: '',
+  files: [] as { name: string; size: number }[],
+  errors: {} as Record<string, string>,
+  submitted: false,
+
+  categories: [
+    { id: 'siparis', label: 'Sipariş', subs: ['Teslimat gecikmesi', 'Yanlış ürün', 'Eksik ürün', 'İptal talebi'] },
+    { id: 'odeme', label: 'Ödeme', subs: ['Çift çekim', 'İade gecikmesi', 'Fatura hatası', 'Kupon sorunu'] },
+    { id: 'kargo', label: 'Kargo', subs: ['Hasarlı paket', 'Kayıp kargo', 'Adres değişikliği', 'Takip sorunu'] },
+    { id: 'hesap', label: 'Hesap', subs: ['Şifre sorunu', 'E-posta değişikliği', 'Hesap doğrulama', 'Hesap silme'] },
+    { id: 'urun', label: 'Ürün Kalitesi', subs: ['Açıklama uyumsuzluğu', 'Kalite sorunu', 'Sahte ürün şüphesi'] },
+    { id: 'diger', label: 'Diğer', subs: ['Öneri', 'Şikayet', 'Genel soru'] },
+  ],
+
+  get subCategories(): string[] {
+    const cat = this.categories.find((c: any) => c.id === this.category);
+    return cat ? cat.subs : [];
+  },
+
+  get charCount(): number {
+    return this.description.length;
+  },
+
+  addFiles(fileList: FileList) {
+    const maxFiles = 5;
+    const maxSize = 10 * 1024 * 1024;
+    for (let i = 0; i < fileList.length && this.files.length < maxFiles; i++) {
+      const f = fileList[i];
+      if (f.size <= maxSize) {
+        this.files.push({ name: f.name, size: f.size });
+      }
+    }
+  },
+
+  removeFile(index: number) {
+    this.files.splice(index, 1);
+  },
+
+  validateStep(step: number): boolean {
+    this.errors = {};
+    if (step === 1) {
+      if (!this.category) this.errors.category = 'Kategori seçiniz';
+      if (!this.subject.trim()) this.errors.subject = 'Konu giriniz';
+    } else if (step === 2) {
+      if (!this.description.trim()) this.errors.description = 'Açıklama giriniz';
+      if (this.description.length < 20) this.errors.description = 'En az 20 karakter giriniz';
+    }
+    return Object.keys(this.errors).length === 0;
+  },
+
+  nextStep() {
+    if (this.validateStep(this.currentStep)) {
+      this.currentStep++;
+    }
+  },
+
+  prevStep() {
+    if (this.currentStep > 1) this.currentStep--;
+  },
+
+  submitTicket() {
+    if (!this.validateStep(this.currentStep)) return;
+    this.submitted = true;
+    setTimeout(() => {
+      window.location.href = '/pages/help/help-tickets.html';
+    }, 2000);
+  },
+}));
+
+// ─── Tickets List ──────────────────────────────────────────────────────
+Alpine.data('ticketsList', () => ({
+  activeTab: 'all' as 'all' | 'open' | 'pending' | 'closed',
+  searchQuery: '',
+  currentPage: 1,
+  pageSize: 10,
+  expandedTicket: null as string | null,
+
+  get tickets(): any[] {
+    // Import mock tickets inline to avoid circular deps at module level
+    return (window as any).__mockTickets || [];
+  },
+
+  get filteredTickets(): any[] {
+    return this.tickets.filter((t: any) => {
+      const matchTab = this.activeTab === 'all' || t.status === this.activeTab;
+      const q = this.searchQuery.toLowerCase().trim();
+      const matchSearch = !q || t.id.toLowerCase().includes(q) || t.subject.toLowerCase().includes(q);
+      return matchTab && matchSearch;
+    });
+  },
+
+  get paginatedTickets(): any[] {
+    const start = (this.currentPage - 1) * this.pageSize;
+    return this.filteredTickets.slice(start, start + this.pageSize);
+  },
+
+  get totalPages(): number {
+    return Math.max(1, Math.ceil(this.filteredTickets.length / this.pageSize));
+  },
+
+  tabCount(status: string): number {
+    if (status === 'all') return this.tickets.length;
+    return this.tickets.filter((t: any) => t.status === status).length;
+  },
+
+  setTab(tab: string) {
+    this.activeTab = tab as any;
+    this.currentPage = 1;
+  },
+
+  setPage(page: number) {
+    this.currentPage = page;
+  },
+
+  toggleTicket(id: string) {
+    this.expandedTicket = this.expandedTicket === id ? null : id;
+  },
+}));
+
+// ─── About Page (counter animation) ───────────────────────────────────
+Alpine.data('aboutPage', () => ({
+  counters: { users: 0, sellers: 0, countries: 0, categories: 0 },
+  targets: { users: 250000, sellers: 12000, countries: 45, categories: 180 },
+  animated: false,
+
+  animateCounters() {
+    if (this.animated) return;
+    this.animated = true;
+    const duration = 2000;
+    const startTime = performance.now();
+    const step = (now: number) => {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const ease = 1 - Math.pow(1 - progress, 3); // easeOutCubic
+      this.counters = {
+        users: Math.round(this.targets.users * ease),
+        sellers: Math.round(this.targets.sellers * ease),
+        countries: Math.round(this.targets.countries * ease),
+        categories: Math.round(this.targets.categories * ease),
+      };
+      if (progress < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  },
+}));
+
+// ─── Sell Page (registration form) ────────────────────────────────────
+Alpine.data('sellPage', () => ({
+  currentStep: 1,
+  formData: {
+    companyName: '',
+    businessType: '',
+    taxNumber: '',
+    contactName: '',
+    email: '',
+    phone: '',
+    mainCategories: [] as string[],
+    productCount: '',
+    termsAccepted: false,
+  },
+  formErrors: {} as Record<string, string>,
+  submitted: false,
+
+  businessTypes: ['Üretici', 'Toptancı', 'Distribütör', 'Perakendeci', 'İthalatçı/İhracatçı'],
+  categoryOptions: ['Tekstil & Giyim', 'Elektronik', 'Gıda & İçecek', 'Otomotiv', 'Makine & Ekipman', 'İnşaat & Yapı', 'Kozmetik', 'Mobilya', 'Tarım', 'Diğer'],
+
+  validateStep(step: number): boolean {
+    this.formErrors = {};
+    if (step === 1) {
+      if (!this.formData.companyName.trim()) this.formErrors.companyName = 'Firma adı gerekli';
+      if (!this.formData.businessType) this.formErrors.businessType = 'İş tipi seçiniz';
+      if (!this.formData.taxNumber.trim()) this.formErrors.taxNumber = 'Vergi numarası gerekli';
+    } else if (step === 2) {
+      if (!this.formData.contactName.trim()) this.formErrors.contactName = 'İletişim adı gerekli';
+      if (!this.formData.email.trim()) this.formErrors.email = 'E-posta gerekli';
+      else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.formData.email)) this.formErrors.email = 'Geçerli e-posta girin';
+      if (!this.formData.phone.trim()) this.formErrors.phone = 'Telefon gerekli';
+    } else if (step === 3) {
+      if (this.formData.mainCategories.length === 0) this.formErrors.mainCategories = 'En az 1 kategori seçin';
+    } else if (step === 4) {
+      if (!this.formData.termsAccepted) this.formErrors.termsAccepted = 'Koşulları kabul etmelisiniz';
+    }
+    return Object.keys(this.formErrors).length === 0;
+  },
+
+  nextStep() {
+    if (this.validateStep(this.currentStep)) this.currentStep++;
+  },
+
+  prevStep() {
+    if (this.currentStep > 1) this.currentStep--;
+  },
+
+  toggleCategory(cat: string) {
+    const idx = this.formData.mainCategories.indexOf(cat);
+    if (idx === -1) this.formData.mainCategories.push(cat);
+    else this.formData.mainCategories.splice(idx, 1);
+  },
+
+  submitForm() {
+    if (!this.validateStep(4)) return;
+    this.submitted = true;
+  },
+}));
+
+// ─── Sell Pricing ──────────────────────────────────────────────────────
+Alpine.data('sellPricing', () => ({
+  billingPeriod: 'monthly' as 'monthly' | 'yearly',
+  faqItems: [
+    { question: 'Ücretsiz plan ne kadar süre kullanılabilir?', answer: 'Ücretsiz plan süresiz olarak kullanılabilir. Ancak listeleme sayısı ve bazı özellikler sınırlıdır.', open: false },
+    { question: 'Plan yükseltme veya düşürme yapabilir miyim?', answer: 'Evet, dilediğiniz zaman planınızı değiştirebilirsiniz. Yükseltme anında, düşürme ise mevcut dönem sonunda uygulanır.', open: false },
+    { question: 'Yıllık planda erken iptal yaparsam ne olur?', answer: 'Kalan süre için kısmi iade yapılır. İptal talebi sonrası mevcut dönem sonuna kadar Gold/Verified özellikleri aktif kalır.', open: false },
+    { question: 'Verified satıcı avantajları nelerdir?', answer: 'Verified rozeti, öncelikli arama sıralaması, özel hesap yöneticisi, genişletilmiş analitik ve sınırsız ürün listeleme gibi avantajlar sunar.', open: false },
+    { question: 'Ödeme yöntemleri nelerdir?', answer: 'Kredi kartı, banka kartı ve havale/EFT ile ödeme yapabilirsiniz. Yıllık planlarda fatura düzenlenir.', open: false },
+  ],
+  selectedPlan: '',
+
+  toggleFaq(index: number) {
+    this.faqItems[index].open = !this.faqItems[index].open;
+  },
+
+  selectPlan(name: string) {
+    this.selectedPlan = name;
+    window.location.href = '/pages/seller/sell.html';
+  },
+}));
+
+
 window.Alpine = Alpine;
 
 /**

@@ -111,7 +111,7 @@ function renderProfileHeader(): string {
       </div>
       <div class="flex items-center gap-4 flex-shrink-0 max-md:w-full">
         <a href="#profilim" class="inline-flex items-center justify-center px-6 max-sm:px-3 h-10 rounded-full text-sm max-sm:text-[13px] font-semibold no-underline transition-all whitespace-nowrap text-white max-md:flex-1 max-md:text-center" style="background:var(--color-text-heading)">Profilimi düzenle</a>
-        <a href="/login.html" class="inline-flex items-center justify-center px-6 max-sm:px-3 h-10 rounded-full text-sm max-sm:text-[13px] font-semibold no-underline transition-all whitespace-nowrap bg-none hover:underline max-md:flex-1 max-md:text-center" style="color:var(--color-text-body, #333333)">Çıkış yap</a>
+        <a href="/pages/auth/login.html" class="inline-flex items-center justify-center px-6 max-sm:px-3 h-10 rounded-full text-sm max-sm:text-[13px] font-semibold no-underline transition-all whitespace-nowrap bg-none hover:underline max-md:flex-1 max-md:text-center" style="color:var(--color-text-body, #333333)">Çıkış yap</a>
       </div>
     </div>
   `;

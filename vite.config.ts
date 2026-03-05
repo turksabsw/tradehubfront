@@ -2,7 +2,8 @@ import { defineConfig } from 'vite'
 import type { Plugin } from 'vite'
 import tailwindcss from '@tailwindcss/vite'
 import { resolve } from 'path'
-import { readFileSync, writeFileSync } from 'fs'
+import { readFileSync, writeFileSync, existsSync } from 'fs'
+import fg from 'fast-glob'
 
 /** Dev-only plugin: POST /__save-css to update @theme variables in style.css */
 function cssEditorPlugin(): Plugin {
@@ -53,43 +54,53 @@ function cssEditorPlugin(): Plugin {
     };
 }
 
+/** Dev-only plugin: serve 404.html for unknown routes */
+function notFoundFallbackPlugin(): Plugin {
+    return {
+        name: 'not-found-fallback',
+        apply: 'serve',
+        configureServer(server) {
+            // Return handler runs AFTER Vite's built-in middleware
+            return () => {
+                server.middlewares.use((req, res, next) => {
+                    const url = req.url?.split('?')[0] ?? '/';
+                    // Skip internal Vite paths, assets, and node_modules
+                    if (url.startsWith('/@') || url.startsWith('/src/') || url.startsWith('/node_modules/') || url.includes('.')) {
+                        return next();
+                    }
+                    // Check if an .html file exists for this path
+                    const htmlPath = resolve(__dirname, url.endsWith('/') ? `${url.slice(1)}index.html` : `${url.slice(1)}.html`);
+                    const directPath = resolve(__dirname, url.slice(1));
+                    if (existsSync(htmlPath) || existsSync(directPath)) {
+                        return next();
+                    }
+                    // Serve 404.html
+                    req.url = '/404.html';
+                    next();
+                });
+            };
+        },
+    };
+}
+
 export default defineConfig({
     base: process.env.GITHUB_PAGES === 'true' ? '/tradehubfront/' : '/',
     plugins: [
         tailwindcss(),
         cssEditorPlugin(),
+        notFoundFallbackPlugin(),
     ],
     build: {
+        copyPublicDir: true,
         rollupOptions: {
-            input: {
-                main: resolve(__dirname, 'index.html'),
-                'product-detail': resolve(__dirname, 'product-detail.html'),
-                products: resolve(__dirname, 'products.html'),
-                manufacturers: resolve(__dirname, 'manufacturers.html'),
-                login: resolve(__dirname, 'login.html'),
-                register: resolve(__dirname, 'register.html'),
-                cart: resolve(__dirname, 'cart.html'),
-                'buyer-dashboard': resolve(__dirname, 'buyer-dashboard.html'),
-                rfq: resolve(__dirname, 'rfq.html'),
-                'seller-storefront': resolve(__dirname, 'seller-storefront.html'),
-                categories: resolve(__dirname, 'categories.html'),
-                'forgot-password': resolve(__dirname, 'forgot-password.html'),
-                messages: resolve(__dirname, 'messages.html'),
-                inquiries: resolve(__dirname, 'inquiries.html'),
-                contacts: resolve(__dirname, 'contacts.html'),
-                orders: resolve(__dirname, 'orders.html'),
-                favorites: resolve(__dirname, 'favorites.html'),
-                subscription: resolve(__dirname, 'subscription.html'),
-                logistics: resolve(__dirname, 'logistics.html'),
-                payment: resolve(__dirname, 'payment.html'),
-                dropshipping: resolve(__dirname, 'dropshipping.html'),
-                settings: resolve(__dirname, 'settings.html'),
-                profile: resolve(__dirname, 'profile.html'),
-                checkout: resolve(__dirname, 'checkout.html'),
-                'order-success': resolve(__dirname, 'order-success.html'),
-                'payment-processing': resolve(__dirname, 'payment-processing.html'),
-                'payment-failed': resolve(__dirname, 'payment-failed.html'),
-            },
+            input: Object.fromEntries(
+                fg.sync('**/*.html', {
+                    ignore: ['node_modules/**', 'dist/**', '**/style-test.html', '**/test-*.html'],
+                }).map(file => [
+                    file.replace(/\.html$/, '').replace(/\//g, '-'),
+                    resolve(__dirname, file),
+                ])
+            ),
         },
     },
 })

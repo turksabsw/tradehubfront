@@ -11,7 +11,7 @@ export const mockProductListingCards: ProductListingCard[] = [
   {
     id: 'prod-001',
     name: 'Paslanmaz Celik Ozel Logo Kolye Ucu Altin Kaplama Toptan',
-    href: '/product-detail.html?id=prod-001',
+    href: '/pages/product-detail.html?id=prod-001',
     price: '$1.80-2.50',
     originalPrice: '$2.10-2.90',
     discount: '14% off',
@@ -30,7 +30,7 @@ export const mockProductListingCards: ProductListingCard[] = [
   {
     id: 'prod-002',
     name: 'Titanyum Celik Cuban Link Zincir Bileklik Erkek',
-    href: '/product-detail.html?id=prod-002',
+    href: '/pages/product-detail.html?id=prod-002',
     price: '$2.10-3.60',
     moq: '10 adet',
     stats: '3,580 satis',
@@ -47,7 +47,7 @@ export const mockProductListingCards: ProductListingCard[] = [
   {
     id: 'prod-003',
     name: '925 Ayar Gumus Kubik Zirkon Kupe Set Kadin Toptan',
-    href: '/product-detail.html?id=prod-003',
+    href: '/pages/product-detail.html?id=prod-003',
     price: '$0.90-1.60',
     originalPrice: '$1.10-1.90',
     discount: '18% off',
@@ -65,7 +65,7 @@ export const mockProductListingCards: ProductListingCard[] = [
   {
     id: 'prod-004',
     name: 'Rose Gold PVD Kaplama Charm Bileklik Ozel Tasarim',
-    href: '/product-detail.html?id=prod-004',
+    href: '/pages/product-detail.html?id=prod-004',
     price: '$3.20-4.80',
     moq: '15 adet',
     stats: '1,230 satis',
@@ -84,7 +84,7 @@ export const mockProductListingCards: ProductListingCard[] = [
   {
     id: 'prod-005',
     name: 'Akilli WiFi Guvenlik Kamerasi 1080P Gece Gorusu',
-    href: '/product-detail.html?id=prod-005',
+    href: '/pages/product-detail.html?id=prod-005',
     price: '$8.50-12.00',
     originalPrice: '$10.00-14.50',
     discount: '15% off',
@@ -102,7 +102,7 @@ export const mockProductListingCards: ProductListingCard[] = [
   {
     id: 'prod-006',
     name: 'Tasinabilir Mini Bluetooth Hoparlor Su Gecirmez IPX7',
-    href: '/product-detail.html?id=prod-006',
+    href: '/pages/product-detail.html?id=prod-006',
     price: '$4.20-6.00',
     moq: '20 adet',
     stats: '5,610 satis',
@@ -119,7 +119,7 @@ export const mockProductListingCards: ProductListingCard[] = [
   {
     id: 'prod-007',
     name: 'Akilli LED Masa Lambasi USB Sarjli Dokunmatik Kontrol',
-    href: '/product-detail.html?id=prod-007',
+    href: '/pages/product-detail.html?id=prod-007',
     price: '$5.60-8.20',
     moq: '10 adet',
     stats: '2,670 satis',
@@ -136,7 +136,7 @@ export const mockProductListingCards: ProductListingCard[] = [
   {
     id: 'prod-008',
     name: 'Kablosuz Gurultu Engelleyici Kulaklik ANC Over-Ear',
-    href: '/product-detail.html?id=prod-008',
+    href: '/pages/product-detail.html?id=prod-008',
     price: '$9.80-15.00',
     originalPrice: '$12.00-18.00',
     discount: '18% off',
@@ -157,7 +157,7 @@ export const mockProductListingCards: ProductListingCard[] = [
   {
     id: 'prod-009',
     name: 'Ozel Baski Su Gecirmez Vinil Etiket Rulo Toptan',
-    href: '/product-detail.html?id=prod-009',
+    href: '/pages/product-detail.html?id=prod-009',
     price: '$0.02-0.05',
     moq: '1000 adet',
     stats: '15,200 satis',
@@ -174,7 +174,7 @@ export const mockProductListingCards: ProductListingCard[] = [
   {
     id: 'prod-010',
     name: 'Ozel Dokuma Giysi Etiketi Saten Marka Etiketi',
-    href: '/product-detail.html?id=prod-010',
+    href: '/pages/product-detail.html?id=prod-010',
     price: '$0.01-0.03',
     moq: '2000 adet',
     stats: '28,900 satis',
@@ -190,7 +190,7 @@ export const mockProductListingCards: ProductListingCard[] = [
   {
     id: 'prod-011',
     name: 'Holografik Lazer Yapiskanlı Etiket Yaprak Toptan',
-    href: '/product-detail.html?id=prod-011',
+    href: '/pages/product-detail.html?id=prod-011',
     price: '$0.03-0.08',
     originalPrice: '$0.04-0.10',
     discount: '20% off',
@@ -209,7 +209,7 @@ export const mockProductListingCards: ProductListingCard[] = [
   {
     id: 'prod-012',
     name: 'El Yapimi Kuru Cicek Recine Telefon Kilifi Kalip Seti',
-    href: '/product-detail.html?id=prod-012',
+    href: '/pages/product-detail.html?id=prod-012',
     price: '$2.40-3.80',
     moq: '20 adet',
     stats: '890 satis',
@@ -226,7 +226,7 @@ export const mockProductListingCards: ProductListingCard[] = [
   {
     id: 'prod-013',
     name: 'Elmas Boyama Kiti Tam Delgi 5D DIY El Sanati Seti',
-    href: '/product-detail.html?id=prod-013',
+    href: '/pages/product-detail.html?id=prod-013',
     price: '$1.20-2.80',
     moq: '10 adet',
     stats: '7,890 satis',
@@ -242,7 +242,7 @@ export const mockProductListingCards: ProductListingCard[] = [
   {
     id: 'prod-014',
     name: 'Makrome El Dokuma Duvar Susu Boho Ev Dekorasyonu',
-    href: '/product-detail.html?id=prod-014',
+    href: '/pages/product-detail.html?id=prod-014',
     price: '$3.50-5.80',
     moq: '10 adet',
     stats: '2,340 satis',
@@ -259,7 +259,7 @@ export const mockProductListingCards: ProductListingCard[] = [
   {
     id: 'prod-015',
     name: 'Deri Minimalist Kartlik Cuzdan RFID Korumali',
-    href: '/product-detail.html?id=prod-015',
+    href: '/pages/product-detail.html?id=prod-015',
     price: '$1.50-2.20',
     moq: '50 adet',
     stats: '6,730 satis',
@@ -277,7 +277,7 @@ export const mockProductListingCards: ProductListingCard[] = [
   {
     id: 'prod-016',
     name: 'Vintage Hakiki Deri Kemer Erkek Otomatik Toka',
-    href: '/product-detail.html?id=prod-016',
+    href: '/pages/product-detail.html?id=prod-016',
     price: '$2.80-4.20',
     moq: '30 adet',
     stats: '5,120 satis',
@@ -294,7 +294,7 @@ export const mockProductListingCards: ProductListingCard[] = [
   {
     id: 'prod-017',
     name: 'Unisex Polarize UV400 Aviator Gunes Gozlugu Metal',
-    href: '/product-detail.html?id=prod-017',
+    href: '/pages/product-detail.html?id=prod-017',
     price: '$1.20-2.40',
     moq: '50 adet',
     stats: '14,200 satis',
@@ -315,7 +315,7 @@ export const mockProductListingCards: ProductListingCard[] = [
   {
     id: 'prod-018',
     name: 'Oversize Pamuk Vintage Grafik Baski Tisort Unisex',
-    href: '/product-detail.html?id=prod-018',
+    href: '/pages/product-detail.html?id=prod-018',
     price: '$3.20-4.50',
     moq: '30 adet',
     stats: '9,450 satis',
@@ -332,7 +332,7 @@ export const mockProductListingCards: ProductListingCard[] = [
   {
     id: 'prod-019',
     name: 'Kadin Yaz Cicek Desenli Maxi Elbise V Yaka Casual',
-    href: '/product-detail.html?id=prod-019',
+    href: '/pages/product-detail.html?id=prod-019',
     price: '$6.50-9.00',
     moq: '5 adet',
     stats: '3,240 satis',
@@ -350,7 +350,7 @@ export const mockProductListingCards: ProductListingCard[] = [
   {
     id: 'prod-020',
     name: 'Erkek Slim Fit Takim Elbise Ceket Is Casual Blazer',
-    href: '/product-detail.html?id=prod-020',
+    href: '/pages/product-detail.html?id=prod-020',
     price: '$12.00-18.00',
     moq: '10 adet',
     stats: '1,890 satis',
@@ -368,7 +368,7 @@ export const mockProductListingCards: ProductListingCard[] = [
   {
     id: 'prod-021',
     name: 'Profesyonel Sarjli Elektrikli Tornavida Seti 48 Parca',
-    href: '/product-detail.html?id=prod-021',
+    href: '/pages/product-detail.html?id=prod-021',
     price: '$6.80-9.50',
     moq: '5 adet',
     stats: '2,150 satis',
@@ -384,7 +384,7 @@ export const mockProductListingCards: ProductListingCard[] = [
   {
     id: 'prod-022',
     name: 'Endustriyel Isiya Dayanikli Silikon Kaucuk Conta',
-    href: '/product-detail.html?id=prod-022',
+    href: '/pages/product-detail.html?id=prod-022',
     price: '$0.05-0.12',
     moq: '5000 adet',
     stats: '320 satis',
@@ -399,7 +399,7 @@ export const mockProductListingCards: ProductListingCard[] = [
   {
     id: 'prod-023',
     name: 'Ayarlanabilir Tork Anahtar Seti Krom Vanadyum Celik',
-    href: '/product-detail.html?id=prod-023',
+    href: '/pages/product-detail.html?id=prod-023',
     price: '$7.80-11.00',
     moq: '3 adet',
     stats: '1,430 satis',
@@ -417,7 +417,7 @@ export const mockProductListingCards: ProductListingCard[] = [
   {
     id: 'prod-024',
     name: 'Dijital Kaliper Paslanmaz Celik 150mm LCD Ekran',
-    href: '/product-detail.html?id=prod-024',
+    href: '/pages/product-detail.html?id=prod-024',
     price: '$4.50-7.20',
     moq: '10 adet',
     stats: '2,890 satis',
@@ -436,7 +436,7 @@ export const mockProductListingCards: ProductListingCard[] = [
   {
     id: 'prod-025',
     name: 'Kraft Kagit Hediye Kutusu Ozel Logo Ambalaj Toptan',
-    href: '/product-detail.html?id=prod-025',
+    href: '/pages/product-detail.html?id=prod-025',
     price: '$0.15-0.40',
     moq: '500 adet',
     stats: '74 goruntulenme',
@@ -453,7 +453,7 @@ export const mockProductListingCards: ProductListingCard[] = [
   {
     id: 'prod-026',
     name: 'Cevre Dostu Bambu Fiber Pamuk Bez Canta Ozel Baski',
-    href: '/product-detail.html?id=prod-026',
+    href: '/pages/product-detail.html?id=prod-026',
     price: '$0.80-1.50',
     moq: '200 adet',
     stats: '11,340 satis',
@@ -471,7 +471,7 @@ export const mockProductListingCards: ProductListingCard[] = [
   {
     id: 'prod-027',
     name: 'Oluklu Karton Kargo Kutusu Ozel Nakliye Paketi Kahve',
-    href: '/product-detail.html?id=prod-027',
+    href: '/pages/product-detail.html?id=prod-027',
     price: '$0.25-0.60',
     moq: '500 adet',
     stats: '18,700 satis',
@@ -488,7 +488,7 @@ export const mockProductListingCards: ProductListingCard[] = [
   {
     id: 'prod-028',
     name: 'Luksuzlu Takı Kutusu Kadife Ic Yuzey Marka Kutusu',
-    href: '/product-detail.html?id=prod-028',
+    href: '/pages/product-detail.html?id=prod-028',
     price: '$0.35-0.80',
     moq: '300 adet',
     stats: '5,670 satis',
@@ -506,7 +506,7 @@ export const mockProductListingCards: ProductListingCard[] = [
   {
     id: 'prod-029',
     name: 'Akilli Saat Fitness Takipcisi Su Gecirmez IP68',
-    href: '/product-detail.html?id=prod-029',
+    href: '/pages/product-detail.html?id=prod-029',
     price: '$7.90-12.50',
     moq: '10 adet',
     stats: '4,560 satis',
@@ -524,7 +524,7 @@ export const mockProductListingCards: ProductListingCard[] = [
   {
     id: 'prod-030',
     name: '18K Altin Kaplama Zincir Kolye Kadin Ozel Tasarim',
-    href: '/product-detail.html?id=prod-030',
+    href: '/pages/product-detail.html?id=prod-030',
     price: '$2.50-4.20',
     moq: '20 adet',
     stats: '7,890 satis',
@@ -541,7 +541,7 @@ export const mockProductListingCards: ProductListingCard[] = [
   {
     id: 'prod-031',
     name: 'Ozel Baski Seffaf PVC Ambalaj Kutusu Hediye',
-    href: '/product-detail.html?id=prod-031',
+    href: '/pages/product-detail.html?id=prod-031',
     price: '$0.08-0.18',
     moq: '1000 adet',
     stats: '8,230 satis',
@@ -558,7 +558,7 @@ export const mockProductListingCards: ProductListingCard[] = [
   {
     id: 'prod-032',
     name: 'El Yapimi Dogal Tas Boncuk Bileklik Yoga Meditasyon',
-    href: '/product-detail.html?id=prod-032',
+    href: '/pages/product-detail.html?id=prod-032',
     price: '$0.80-1.40',
     moq: '50 adet',
     stats: '12,450 satis',

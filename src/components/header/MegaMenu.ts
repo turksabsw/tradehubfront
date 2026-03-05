@@ -402,7 +402,7 @@ const buyerCentralColumns: BuyerCentralColumn[] = [
   {
     title: 'Get started',
     links: [
-      { label: 'What is iSTOC', href: '/about' },
+      { label: 'What is iSTOC', href: '/pages/legal/about.html' },
     ],
   },
   {
@@ -427,7 +427,7 @@ const buyerCentralColumns: BuyerCentralColumn[] = [
       { label: 'Success stories', href: '/success-stories' },
       { label: 'Blogs', href: '/blogs' },
       { label: 'Industry reports', href: '/reports' },
-      { label: 'Help Center', href: '/help' },
+      { label: 'Help Center', href: '/pages/help/help-center.html' },
     ],
   },
   {

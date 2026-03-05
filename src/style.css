@@ -11,7 +11,9 @@
 @variant dark (&:where(.dark, .dark *));
 
 /* --- Alpine.js: hide elements until Alpine initializes --- */
-[x-cloak] { display: none !important; }
+[x-cloak] {
+    display: none !important;
+}
 
 /* ============================================================
    @theme — DESIGN TOKENS
@@ -1634,8 +1636,8 @@
 @variant xl {
     #pd-hero-info.pd-sticky {
         position: sticky;
-        top: 130px;
-        max-height: calc(100vh - 150px);
+        top: 165px;
+        max-height: calc(100vh - 180px);
         display: flex;
         flex-direction: column;
     }
@@ -3451,7 +3453,13 @@ body.pdm-sheet-open {
 /* -- 375px overrides for elements not in modifiable TS files -- */
 /* Bottom bar 375px */
 #pd-mobile-bar {
-    @apply max-[374px]:grid-cols-[36px_minmax(0,_1fr)_minmax(0,_1fr)] max-[374px]:gap-1 max-[374px]:px-2 max-[374px]:py-2 max-[374px]:pb-[calc(8px+env(safe-area-inset-bottom))] max-[374px]:max-w-[100vw] max-[374px]:box-border;
+    @apply max-[374px]:gap-1 max-[374px]:px-2 max-[374px]:py-2 max-[374px]:pb-[calc(8px+env(safe-area-inset-bottom))] max-[374px]:max-w-[100vw] max-[374px]:box-border;
+}
+
+@media (max-width: 374px) {
+    #pd-mobile-bar {
+        grid-template-columns: 36px minmax(0, 1fr) minmax(0, 1fr);
+    }
 }
 
 .pdm-bar-chat-btn {
@@ -4815,6 +4823,39 @@ footer {
 
 .ds-toggle--on .ds-toggle__thumb {
     transform: translateX(20px);
+}
+
+/* ============================================================
+   PRINT STYLES
+   ============================================================ */
+@media print {
+  header, footer, nav,
+  .floating-panel, [data-floating-panel],
+  #sticky-header,
+  .scrollbar-hide,
+  button:not([type="submit"]) {
+    display: none !important;
+  }
+  main {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  body {
+    font-size: 12pt;
+    line-height: 1.5;
+    color: #000;
+    background: #fff;
+  }
+  a {
+    color: #000;
+    text-decoration: underline;
+  }
+  .max-w-\[1200px\] {
+    max-width: 100% !important;
+  }
+  aside {
+    display: none !important;
+  }
 }
 
 /* ============================================================

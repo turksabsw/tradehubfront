@@ -278,7 +278,7 @@ export function ManufacturersHero(): string {
           <span class="text-lg font-black">▲</span> Accio AI
         </a>
         <span class="text-gray-300 dark:text-gray-600">|</span>
-        <a href="/rfq.html" class="flex items-center gap-1.5 hover:text-primary-600 transition-colors">
+        <a href="/pages/dashboard/rfq.html" class="flex items-center gap-1.5 hover:text-primary-600 transition-colors">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
           Request for Quotation
         </a>
@@ -616,7 +616,7 @@ function renderProfileColumn(): string {
       <!-- Alt kart: RFQ -->
       <div class="flex-1 py-3 px-4 flex flex-col items-center justify-center text-center" style="background-color: var(--mfr-hero-card-bg, #ffffff); border-radius: var(--mfr-hero-card-radius, 6px); box-shadow: var(--mfr-hero-card-shadow, 0 0 12px rgba(0,0,0,0.05))">
         <p class="text-xs font-semibold mb-4" style="color: var(--mfr-profile-rfq-text, #222222)">Bir istek, birden fazla teklif</p>
-        <a href="/rfq.html" class="hover-expand-center w-full h-10 flex items-center justify-center border rounded-full text-xs font-bold transition-colors" style="background-color: var(--mfr-hero-card-bg, #ffffff); border-color: var(--mfr-profile-rfq-border, #222222); color: var(--mfr-profile-rfq-text, #222222)" title="Fiyat Teklifi Talebi (RFQ)">
+        <a href="/pages/dashboard/rfq.html" class="hover-expand-center w-full h-10 flex items-center justify-center border rounded-full text-xs font-bold transition-colors" style="background-color: var(--mfr-hero-card-bg, #ffffff); border-color: var(--mfr-profile-rfq-border, #222222); color: var(--mfr-profile-rfq-text, #222222)" title="Fiyat Teklifi Talebi (RFQ)">
           Fiyat Teklifi Talebi (RFQ)
         </a>
       </div>

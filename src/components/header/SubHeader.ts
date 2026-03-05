@@ -6,7 +6,7 @@
 
 /** Right-side utility links (non-mega-trigger) */
 const utilityLinks = [
-  { label: 'Sell on iSTOC', href: '/sell' },
+  { label: 'Sell on iSTOC', href: '/pages/seller/sell.html' },
 ];
 
 /**
@@ -67,13 +67,12 @@ function renderUtilityLinks(): string {
       >
         Buyer Central
       </button>
-      <button
-        class="mega-trigger subheader-link th-subheader-link relative px-2 xl:px-3 py-2.5 rounded-md text-sm whitespace-nowrap dark:text-gray-300 dark:hover:text-primary-400 dark:hover:bg-gray-800/60 transition-all"
-        type="button"
-        data-mega-target="help-center"
+      <a
+        href="/pages/help/help-center.html"
+        class="subheader-link th-subheader-link relative px-2 xl:px-3 py-2.5 rounded-md text-sm whitespace-nowrap dark:text-gray-300 dark:hover:text-primary-400 dark:hover:bg-gray-800/60 transition-all"
       >
         Help Center
-      </button>
+      </a>
       <button
         class="mega-trigger subheader-link th-subheader-link relative px-2 xl:px-3 py-2.5 rounded-md text-sm whitespace-nowrap dark:text-gray-300 dark:hover:text-primary-400 dark:hover:bg-gray-800/60 transition-all"
         type="button"

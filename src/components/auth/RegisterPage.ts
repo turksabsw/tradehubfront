@@ -110,7 +110,7 @@ export function RegisterPage(initialStep: RegisterStep = 'account-type'): string
         <!-- Login Link -->
         <div class="mt-6 text-center text-sm text-gray-500 dark:text-gray-400">
           Zaten hesabınız var mı?
-          <a href="${baseUrl}login.html" id="register-login-link" class="ml-1 font-medium text-orange-600 dark:text-orange-400 hover:underline">
+          <a href="${baseUrl}pages/auth/login.html" id="register-login-link" class="ml-1 font-medium text-orange-600 dark:text-orange-400 hover:underline">
             Giriş yapın
           </a>
         </div>
