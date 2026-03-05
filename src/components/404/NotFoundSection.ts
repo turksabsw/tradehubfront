@@ -63,16 +63,13 @@ export function NotFoundSection(): string {
             <div class="flex flex-wrap items-center justify-center sm:justify-start gap-3 mt-1">
               <button
                 onclick="history.back()"
-                class="inline-flex items-center justify-center px-6 py-2.5 rounded-lg text-sm font-semibold text-white transition-colors duration-150"
-                style="background-color: var(--color-primary-500, #cc9900);"
-                onmouseover="this.style.backgroundColor='var(--color-primary-600, #a37a00)'"
-                onmouseout="this.style.backgroundColor='var(--color-primary-500, #cc9900)'"
+                class="th-btn"
               >
                 Geri Don
               </button>
               <a
                 href="/"
-                class="inline-flex items-center justify-center px-6 py-2.5 rounded-lg text-sm font-semibold border transition-colors duration-150 text-secondary-700 dark:text-secondary-300 border-secondary-300 dark:border-secondary-600 hover:bg-secondary-50 dark:hover:bg-secondary-800"
+                class="th-btn-outline"
               >
                 Ana Sayfaya Git
               </a>

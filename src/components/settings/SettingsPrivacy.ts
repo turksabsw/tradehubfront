@@ -81,7 +81,7 @@ export function SettingsPrivacy(sections?: PrivacySection[]): string {
         ${items.map(renderPrivacySection).join('')}
       </div>
       <div class="mt-8">
-        <button class="privacy__save-btn py-2.5 px-7 border-none rounded text-sm font-semibold cursor-pointer transition-colors text-white hover:opacity-90 disabled:opacity-60 disabled:cursor-default" style="background:var(--color-cta-primary, #333333)" type="button">Kaydet</button>
+        <button class="privacy__save-btn th-btn-dark disabled:opacity-60 disabled:cursor-default" type="button">Kaydet</button>
       </div>
     </div>
   `;

@@ -158,7 +158,7 @@ function renderFavorites(): string {
         </div>
         <div class="flex justify-center gap-4 px-6 pb-6">
           <button class="fav-modal__btn--cancel py-2.5 px-8 text-sm font-medium rounded-[20px] cursor-pointer transition-all duration-150 bg-surface text-text-secondary border border-border-strong hover:border-secondary-400">iptal et</button>
-          <button class="fav-modal__btn--save py-2.5 px-8 text-sm font-medium rounded-[20px] cursor-pointer transition-all duration-150 bg-surface text-text-tertiary border border-border-default disabled:opacity-100 enabled:bg-primary-500 enabled:text-white enabled:border-primary-500 enabled:hover:bg-primary-600" disabled>Kaydet</button>
+          <button class="fav-modal__btn--save th-btn th-btn-pill" disabled>Kaydet</button>
         </div>
       </div>
     </div>
@@ -273,7 +273,7 @@ function loadFavoritesData(): void {
             <p class="text-[12px] text-[#999] opacity-80">${p.minOrder}</p>
           </a>
           <div class="mt-4 flex gap-2 w-full pt-3 border-t border-[#f2f2f2] opacity-0 group-hover:opacity-100 transition-opacity">
-            <button class="flex-1 py-[6px] rounded-full border border-[#f60] bg-[#f60] text-white text-[12px] font-bold hover:bg-[#e55a00] transition-colors">Order now</button>
+            <button class="flex-1 th-btn th-btn-pill th-btn-sm">Order now</button>
             <button class="w-8 h-8 rounded-full border border-[#e5e7eb] flex items-center justify-center text-[#666] hover:text-[#333] hover:border-[#d1d5db] transition-colors">
                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
             </button>

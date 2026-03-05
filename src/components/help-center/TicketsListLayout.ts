@@ -17,7 +17,7 @@ export function TicketsListLayout(): string {
         <!-- Header -->
         <div class="flex items-center justify-between mb-6">
           <h1 class="text-2xl font-bold text-gray-900">Destek Taleplerim</h1>
-          <a href="/pages/help/help-ticket-new.html" class="inline-flex items-center gap-2 px-4 py-2.5 bg-primary-500 text-white text-sm font-medium rounded-lg hover:bg-primary-600 transition-colors">
+          <a href="/pages/help/help-ticket-new.html" class="th-btn th-btn-sm inline-flex items-center gap-2">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
             Yeni Talep
           </a>

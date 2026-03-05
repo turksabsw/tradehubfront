@@ -322,7 +322,7 @@ function renderEmptyState(): string {
       </div>
       <h3 class="text-base font-semibold text-secondary-600 m-0 mb-2">Henüz sipariş yok</h3>
       <p class="text-sm text-secondary-300 m-0 mb-5 max-w-[320px]">Tedarik etmeye başlamak için ana sayfaya gidin veya aşağıya tıklayın</p>
-      <a href="/pages/dashboard/dropshipping.html#find-products" class="inline-flex py-2.5 px-7 bg-primary-500 text-white rounded-[20px] text-sm font-semibold no-underline transition-colors hover:bg-primary-600">Tedarik etmeye başla</a>
+      <a href="/pages/dashboard/dropshipping.html#find-products" class="th-btn th-btn-pill inline-flex no-underline">Tedarik etmeye başla</a>
     </div>
   `;
 }
@@ -354,7 +354,7 @@ function renderAutoApprovalModal(): string {
           </label>
         </div>
         <div class="py-4 px-6 border-t border-border-default flex justify-end">
-          <button class="ds-modal__btn ds-modal__btn--primary" id="ds-save-approval">Değişikliği kaydet</button>
+          <button class="th-btn" id="ds-save-approval">Değişikliği kaydet</button>
         </div>
       </div>
     </div>

@@ -197,8 +197,8 @@ export function SellPageLayout(): string {
               <div class="flex justify-between mt-8">
                 <button x-show="currentStep > 1" @click="prevStep()" class="px-5 py-2.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">Geri</button>
                 <div x-show="currentStep === 1"></div>
-                <button x-show="currentStep < 4" @click="nextStep()" class="px-5 py-2.5 text-sm font-medium text-white bg-primary-500 rounded-lg hover:bg-primary-600 cursor-pointer ml-auto">İleri</button>
-                <button x-show="currentStep === 4" @click="submitForm()" class="px-6 py-2.5 text-sm font-medium text-white bg-primary-500 rounded-lg hover:bg-primary-600 cursor-pointer ml-auto">Kaydı Tamamla</button>
+                <button x-show="currentStep < 4" @click="nextStep()" class="th-btn cursor-pointer ml-auto">İleri</button>
+                <button x-show="currentStep === 4" @click="submitForm()" class="th-btn cursor-pointer ml-auto">Kaydı Tamamla</button>
               </div>
             </div>
           </div>
@@ -212,7 +212,7 @@ export function SellPageLayout(): string {
             </div>
             <h3 class="text-lg font-semibold text-gray-900 mb-2">Başvurunuz Alındı!</h3>
             <p class="text-sm text-gray-500 mb-4">Satıcı hesabınız 1-2 iş günü içinde aktifleştirilecektir. E-posta adresinize onay bildirimi gönderilecektir.</p>
-            <a href="/" class="inline-block px-6 py-2.5 bg-primary-500 text-white text-sm font-medium rounded-lg hover:bg-primary-600">Ana Sayfaya Dön</a>
+            <a href="/" class="th-btn inline-block">Ana Sayfaya Dön</a>
           </div>
         </template>
       </div>
@@ -245,7 +245,7 @@ export function SellPageLayout(): string {
       <div class="max-w-[600px] mx-auto px-4 sm:px-6 text-center">
         <h2 class="text-2xl font-bold text-gray-900 mb-3">Fiyatlandırma Planlarını İnceleyin</h2>
         <p class="text-gray-500 mb-6">Ücretsiz başlayın veya premium planlarla daha fazla özelliğe erişin.</p>
-        <a href="/pages/seller/sell-pricing.html" class="inline-block px-8 py-3 bg-primary-500 text-white font-medium rounded-lg hover:bg-primary-600 transition-colors">Üyelik Paketleri</a>
+        <a href="/pages/seller/sell-pricing.html" class="th-btn inline-block">Üyelik Paketleri</a>
       </div>
     </section>
   `;

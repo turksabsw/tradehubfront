@@ -152,14 +152,14 @@ function renderAddressSelectorModal(): string {
         <div class="flex items-center justify-end gap-3 border-t border-[#e5e7eb] px-6 py-5">
           <button
             type="button"
-            class="min-w-[200px] h-12 rounded-full border border-[#111827] px-6 text-[16px] font-semibold text-[#111827] hover:bg-[#f9fafb]"
+            class="min-w-[200px] th-btn-outline th-btn-pill"
             @click="closeAddressSelector()"
           >
             Cancel
           </button>
           <button
             type="button"
-            class="min-w-[200px] h-12 rounded-full bg-[var(--color-primary-500)] px-6 text-[16px] font-semibold text-white hover:bg-[var(--color-primary-600)]"
+            class="min-w-[200px] th-btn th-btn-pill"
             @click="confirmSelectedAddress()"
           >
             Ship to this address
@@ -256,14 +256,14 @@ function renderAddAddressModal(countryOptions: string): string {
         <div class="flex items-center justify-end gap-3 border-t border-[#e5e7eb] px-6 py-5">
           <button
             type="button"
-            class="min-w-[200px] h-12 rounded-full border border-[#111827] px-6 text-[16px] font-semibold text-[#111827] hover:bg-[#f9fafb]"
+            class="min-w-[200px] th-btn-outline th-btn-pill"
             @click="closeAddAddressModal()"
           >
             Cancel
           </button>
           <button
             type="button"
-            class="min-w-[200px] h-12 rounded-full bg-[var(--color-primary-500)] px-6 text-[16px] font-semibold text-white hover:bg-[var(--color-primary-600)]"
+            class="min-w-[200px] th-btn th-btn-pill"
             @click="submitAddAddress()"
           >
             Submit
@@ -405,7 +405,7 @@ export function ShippingAddressForm(props: ShippingAddressFormProps = {}): strin
             <button
               type="submit"
               id="continue-payment-btn"
-              class="px-8 py-3 bg-[var(--color-primary-500)] hover:bg-[var(--color-primary-600)] text-white font-semibold text-sm rounded-[var(--radius-input)] transition-colors self-start"
+              class="th-btn th-btn-pill self-start"
             >
               Save and continue
             </button>

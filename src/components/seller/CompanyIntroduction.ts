@@ -100,14 +100,14 @@ export function CompanyIntroduction(
 
           <!-- CTA Buttons -->
           <div class="company-intro__cta flex flex-wrap items-center justify-center gap-4">
-            <button class="bg-[var(--color-primary-500)] hover:bg-primary-600 text-white font-semibold text-[14px] rounded-(--radius-button) px-6 py-2.5 transition-colors cursor-pointer flex items-center gap-2 focus:ring-2 focus:ring-[var(--color-primary-500)] focus:ring-offset-2"
+            <button class="th-btn flex items-center gap-2"
                     onclick="document.getElementById('contact-form')?.scrollIntoView({behavior:'smooth'})">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
               </svg>
               Contact Supplier
             </button>
-            <button class="bg-transparent border border-[#d1d5db] dark:border-gray-600 hover:bg-[#f9fafb] text-[#374151] dark:text-gray-300 font-medium text-[14px] rounded-(--radius-button) px-6 py-2.5 transition-colors cursor-pointer focus:ring-2 focus:ring-[var(--color-primary-500)] focus:ring-offset-2">
+            <button class="th-btn-outline">
               Start Order
             </button>
             <a href="#company-info" class="text-[var(--color-primary-500)] font-medium text-[14px] hover:underline flex items-center gap-1 focus:ring-2 focus:ring-[var(--color-primary-500)] focus:ring-offset-2 rounded">

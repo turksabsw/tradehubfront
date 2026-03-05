@@ -54,7 +54,7 @@ export function SettingsChangeEmail(): string {
               <input type="email" class="w-full max-w-[320px] py-3 px-3.5 border-[1.5px] border-gray-300 rounded-lg text-sm outline-none focus:border-(--color-text-heading)" style="color:var(--color-text-heading, #111827)" x-ref="ecNewEmail" placeholder="" />
             </div>
             <p class="text-[13px] text-red-500 mb-3" x-show="error" x-text="error" x-cloak></p>
-            <button class="w-full max-w-[320px] py-3 border-none rounded-lg text-sm font-semibold cursor-pointer transition-colors text-white" style="background:var(--color-cta-primary-light, #e6b212)" type="button" @click="submitEmail()">Devam</button>
+            <button class="th-btn w-full max-w-[320px]" type="button" @click="submitEmail()">Devam</button>
             <p class="text-xs text-right mt-6 m-0" style="color:var(--color-text-placeholder, #999999)">Müşteri hizmetleriyle iletişime geçin</p>
           </div>
         </div>
@@ -66,7 +66,7 @@ export function SettingsChangeEmail(): string {
             </div>
             <h2 class="text-xl font-bold mb-3 m-0 text-center" style="color:var(--color-text-heading, #111827)">E-posta adresiniz güncellendi!</h2>
             <p class="text-sm text-center mb-2 m-0" style="color:var(--color-text-muted, #666666)">Yeni e-posta adresiniz kaydedildi.</p>
-            <a href="#" class="block w-full max-w-[320px] mx-auto py-3 border-none rounded-lg text-sm font-semibold cursor-pointer transition-colors text-white text-center no-underline" style="background:var(--color-cta-primary-light, #e6b212)">Hesap ayarlarına dön</a>
+            <a href="#" class="th-btn block w-full max-w-[320px] mx-auto text-center no-underline">Hesap ayarlarına dön</a>
           </div>
         </div>
       </div>

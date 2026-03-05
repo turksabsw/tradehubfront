@@ -89,7 +89,7 @@ export function LoginPage(): string {
         <!-- Submit Button -->
         <button 
           type="submit" 
-          class="w-full h-12 auth-btn-primary font-bold rounded-full transition-colors text-lg"
+          class="w-full h-12 th-btn th-btn-pill"
         >
           Devam Et
         </button>

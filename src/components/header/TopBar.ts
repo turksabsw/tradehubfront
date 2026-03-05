@@ -619,7 +619,7 @@ function renderAuthButtons(): string {
           <p class="text-[15px] font-semibold text-[#222] mb-3">Sign back in to continue</p>
           <a
             href="/login"
-            class="block w-full text-center bg-[#ff6a00] hover:bg-[#e55e00] text-white font-semibold text-[14px] py-2.5 rounded-full transition-colors"
+            class="block w-full text-center th-btn th-btn-pill"
           >
             Sign In
           </a>

@@ -275,7 +275,7 @@ function renderAllOrders(): string {
               <div class="flex flex-col items-center gap-2">
                 <h3 class="text-base font-bold text-gray-900">Henüz siparişiniz bulunmamaktadır</h3>
                 <p class="text-sm text-gray-500 max-w-[400px]">Tedarik etmeye başlamak için ana sayfaya gidin veya aşağıya tıklayın</p>
-                <a href="/" class="inline-block px-8 py-2.5 text-sm text-gray-700 border border-gray-700 rounded-full no-underline mt-2 transition-colors hover:bg-gray-900 hover:text-white">Tedarik etmeye başla</a>
+                <a href="/" class="th-btn-outline th-btn-pill mt-2">Tedarik etmeye başla</a>
               </div>
             </template>
           </div>
@@ -342,7 +342,7 @@ function renderAllOrders(): string {
 
               <!-- Action Buttons -->
               <div class="flex flex-col md:w-[220px] shrink-0 border-l border-gray-100 md:pl-6 max-md:-mx-5 max-md:px-5 max-md:pt-4 max-md:border-t justify-center gap-3">
-                <button @click="window.location.href='${getBaseUrl()}pages/order/order-success.html'" class="w-full px-6 py-2 text-[14px] font-medium text-white bg-[#FF6600] rounded-full cursor-pointer transition-colors hover:bg-[#e65c00] border-none">
+                <button @click="window.location.href='${getBaseUrl()}pages/order/order-success.html'" class="w-full th-btn th-btn-pill">
                   Make payment
                 </button>
                 <div class="flex items-center justify-center gap-4 text-xs">
@@ -507,13 +507,13 @@ function renderAllOrders(): string {
 
           <!-- 3 Action Buttons -->
           <div class="flex items-center gap-3 mt-4 flex-wrap">
-            <button @click="window.location.href='${getBaseUrl()}pages/order/order-success.html'" class="px-6 py-2.5 text-sm font-medium text-white bg-[#FF6600] rounded-full cursor-pointer transition-colors hover:bg-[#e65c00] border-none">
+            <button @click="window.location.href='${getBaseUrl()}pages/order/order-success.html'" class="th-btn th-btn-pill">
               Make payment
             </button>
-            <button @click="openModal('showModifyShipping')" class="px-6 py-2.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer transition-colors hover:border-gray-900 hover:text-gray-900">
+            <button @click="openModal('showModifyShipping')" class="th-btn-outline th-btn-pill">
               Modify shipping details
             </button>
-            <button @click="openModal('showCancelOrder')" class="px-6 py-2.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer transition-colors hover:border-red-500 hover:text-red-600">
+            <button @click="openModal('showCancelOrder')" class="th-btn-outline th-btn-pill">
               Cancel order
             </button>
           </div>
@@ -767,7 +767,7 @@ function renderAllOrders(): string {
               <p class="text-sm text-gray-700 mb-1">Ensure product quality with third-party inspection services</p>
               <p class="text-xs text-gray-500">as low as <strong class="text-amber-600">USD 48.00</strong></p>
             </div>
-            <button @click="openModal('showAddServices')" class="px-5 py-2 text-sm font-medium text-white bg-[#FF6600] rounded-full cursor-pointer transition-colors hover:bg-[#e65c00] border-none whitespace-nowrap">
+            <button @click="openModal('showAddServices')" class="th-btn th-btn-pill whitespace-nowrap">
               Add services
             </button>
           </div>
@@ -775,10 +775,10 @@ function renderAllOrders(): string {
 
         <!-- Section 10: Action Buttons -->
         <div class="px-7 max-sm:px-3 py-5 flex items-center gap-3 flex-wrap">
-          <button @click="openModal('showOperationHistory')" class="px-6 max-sm:px-4 py-2.5 max-sm:py-2 text-sm max-sm:text-xs font-medium text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer whitespace-nowrap transition-all hover:border-gray-900 hover:text-gray-900">
+          <button @click="openModal('showOperationHistory')" class="th-btn-outline th-btn-pill whitespace-nowrap">
             Operation history
           </button>
-          <button class="px-6 max-sm:px-4 py-2.5 max-sm:py-2 text-sm max-sm:text-xs font-medium text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer whitespace-nowrap transition-all hover:border-gray-900 hover:text-gray-900">
+          <button class="th-btn-outline th-btn-pill whitespace-nowrap">
             View contract
           </button>
         </div>
@@ -851,7 +851,7 @@ function renderAllOrders(): string {
                     <p class="text-sm text-gray-600 mb-2">Real-time production progress tracking with photo/video updates from the factory floor.</p>
                     <p class="text-xs text-gray-500">Starting from <strong class="text-amber-600">USD 48.00</strong></p>
                   </div>
-                  <button class="px-4 py-2 text-sm font-medium text-white bg-[#FF6600] rounded-full cursor-pointer hover:bg-[#e65c00] border-none whitespace-nowrap shrink-0">
+                  <button class="th-btn th-btn-pill whitespace-nowrap shrink-0">
                     Select
                   </button>
                 </div>
@@ -867,7 +867,7 @@ function renderAllOrders(): string {
                     <p class="text-sm text-gray-600 mb-2">Professional third-party inspection before goods are shipped. Conducted by SGS, BV, or TÜV certified inspectors.</p>
                     <p class="text-xs text-gray-500">Starting from <strong class="text-amber-600">USD 88.00</strong></p>
                   </div>
-                  <button class="px-4 py-2 text-sm font-medium text-white bg-[#FF6600] rounded-full cursor-pointer hover:bg-[#e65c00] border-none whitespace-nowrap shrink-0">
+                  <button class="th-btn th-btn-pill whitespace-nowrap shrink-0">
                     Select
                   </button>
                 </div>
@@ -1087,10 +1087,10 @@ function renderAllOrders(): string {
             </div>
             <!-- Footer -->
             <div class="px-6 py-4 border-t border-gray-100 flex items-center justify-end gap-3">
-              <button @click="closeModal('showModifyShipping')" class="px-5 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer hover:bg-gray-50 transition-colors">
+              <button @click="closeModal('showModifyShipping')" class="th-btn-outline th-btn-pill">
                 Cancel
               </button>
-              <button @click="closeModal('showModifyShipping')" class="px-5 py-2 text-sm font-medium text-white bg-[#FF6600] rounded-full cursor-pointer hover:bg-[#e65c00] border-none transition-colors">
+              <button @click="closeModal('showModifyShipping')" class="th-btn th-btn-pill">
                 Submit changes
               </button>
             </div>
@@ -1156,12 +1156,12 @@ function renderAllOrders(): string {
             <!-- Footer -->
             <div class="px-6 py-4 border-t border-gray-100 flex items-center justify-end gap-3">
               <button @click="closeModal('showCancelOrder')"
-                :class="cancelReason ? 'bg-[#FF6600] text-white hover:bg-[#e65c00] border-[#FF6600]' : 'bg-gray-200 text-gray-400 border-gray-200 cursor-not-allowed'"
+                :class="cancelReason ? 'th-btn th-btn-pill' : 'bg-gray-200 text-gray-400 border-gray-200 cursor-not-allowed rounded-full'"
                 :disabled="!cancelReason"
                 class="px-6 py-2 text-sm font-medium rounded-full cursor-pointer transition-colors border">
                 Confirm
               </button>
-              <button @click="cancelReason = ''; closeModal('showCancelOrder')" class="px-6 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer hover:bg-gray-50 transition-colors">
+              <button @click="cancelReason = ''; closeModal('showCancelOrder')" class="th-btn-outline th-btn-pill">
                 Cancel
               </button>
             </div>

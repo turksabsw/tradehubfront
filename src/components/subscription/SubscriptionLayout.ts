@@ -121,7 +121,7 @@ function renderMainView(): string {
       </div>
       <div class="flex items-center justify-between px-6 py-3.5 bg-primary-50 text-[14px] text-gray-700 max-md:flex-col max-md:items-start max-md:gap-3">
         <span>Yükseltmeden önce <strong>AI Modunu</strong> ücretsiz deneyin!</span>
-        <button class="px-6 py-2.5 text-[14px] font-semibold text-white bg-[#222] border-none rounded-full cursor-pointer whitespace-nowrap hover:bg-[#444] transition-colors" id="sub-try-btn">AI Modunu ücretsiz deneyin</button>
+        <button class="th-btn-dark th-btn-pill whitespace-nowrap" id="sub-try-btn">AI Modunu ücretsiz deneyin</button>
       </div>
     </div>
 
@@ -168,9 +168,9 @@ function renderPlanCard(plan: Plan, isYearly: boolean): string {
   if (plan.currentPlan) {
     btnHtml = '<button class="w-full py-3 px-5 text-[14px] font-semibold rounded-full bg-gray-200 text-gray-400 cursor-default" disabled>Güncel plan</button>';
   } else if (plan.popular) {
-    btnHtml = '<button class="w-full py-3 px-5 text-[14px] font-semibold rounded-full bg-primary-500 text-white cursor-pointer hover:bg-primary-600 transition-colors">3 günlük ücretsiz denemeyi başlat</button>';
+    btnHtml = '<button class="w-full th-btn th-btn-pill">3 günlük ücretsiz denemeyi başlat</button>';
   } else {
-    btnHtml = '<button class="w-full py-3 px-5 text-[14px] font-semibold rounded-full bg-[#222] text-white cursor-pointer hover:bg-[#444] transition-colors">3 günlük ücretsiz denemeyi başlat</button>';
+    btnHtml = '<button class="w-full th-btn-dark th-btn-pill">3 günlük ücretsiz denemeyi başlat</button>';
   }
 
   return `

@@ -104,7 +104,7 @@ export function SettingsDeleteAccount(): string {
           <h2 class="text-lg font-bold mb-2 mt-4" style="color:var(--color-text-heading, #111827)">Hesabınız silindi</h2>
           <p class="text-sm leading-normal mb-4" style="color:var(--color-text-muted, #666666)">Hesabınız başarıyla silindi. 30 gün içinde giriş yaparak hesabınızı tekrar aktif edebilirsiniz.</p>
           <div class="flex flex-col gap-3 items-center">
-            <a href="/pages/auth/login.html" class="inline-flex items-center justify-center py-3 px-6 rounded-lg text-sm font-semibold cursor-pointer border-none transition-all min-w-[200px] text-center text-white no-underline" style="background:var(--color-cta-primary, #cc9900)">Giriş sayfasına git</a>
+            <a href="/pages/auth/login.html" class="th-btn inline-flex items-center justify-center min-w-[200px] text-center no-underline">Giriş sayfasına git</a>
           </div>
         </div>
       </div>

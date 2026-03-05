@@ -81,7 +81,7 @@ export function PricingPageLayout(): string {
                   </li>
                 `).join('')}
               </ul>
-              <a href="/pages/seller/sell.html" class="block text-center py-2.5 rounded-lg font-medium text-sm transition-colors ${plan.recommended ? 'bg-primary-500 text-white hover:bg-primary-600' : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'}">
+              <a href="/pages/seller/sell.html" class="block text-center ${plan.recommended ? 'th-btn' : 'th-btn-outline'}">
                 ${plan.name === 'Ücretsiz' ? 'Ücretsiz Başla' : 'Planı Seç'}
               </a>
             </div>
@@ -121,7 +121,7 @@ export function PricingPageLayout(): string {
 
         <!-- CTA -->
         <div class="text-center mt-14">
-          <a href="/pages/seller/sell.html" class="inline-block px-8 py-3.5 bg-primary-500 text-white font-semibold rounded-lg hover:bg-primary-600 transition-colors text-base">Hemen Başlayın</a>
+          <a href="/pages/seller/sell.html" class="th-btn inline-block">Hemen Başlayın</a>
         </div>
       </div>
     </div>

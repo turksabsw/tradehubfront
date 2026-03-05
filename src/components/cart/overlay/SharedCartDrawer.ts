@@ -344,7 +344,7 @@ function renderDrawerFooter(): void {
 
   footer.innerHTML = `
     ${details}
-    <button type="button" id="shared-cart-confirm" class="w-full h-12 rounded-full bg-cta-primary text-white font-semibold text-lg hover:bg-cta-primary-hover transition-colors">${state.mode === 'sample' ? 'Numune Al' : 'Sepete Ekle'}</button>
+    <button type="button" id="shared-cart-confirm" class="w-full th-btn-dark th-btn-pill h-12 text-lg">${state.mode === 'sample' ? 'Numune Al' : 'Sepete Ekle'}</button>
   `;
 }
 
@@ -645,7 +645,7 @@ export function SharedShippingModal(): string {
         <p class="mt-4 text-base text-text-secondary">Gönderim: <strong>Türkiye</strong> · Miktar: <span id="shared-cart-shipping-qty">1 adet</span></p>
         <div id="shared-cart-shipping-options" class="mt-5 space-y-3 max-h-[46vh] overflow-y-auto"></div>
 
-        <button type="button" id="shared-cart-shipping-apply" class="mt-6 w-full h-12 rounded-full bg-cta-primary text-white font-semibold hover:bg-cta-primary-hover transition-colors">Uygula</button>
+        <button type="button" id="shared-cart-shipping-apply" class="mt-6 w-full th-btn-dark th-btn-pill h-12">Uygula</button>
       </div>
     </div>
   `;
@@ -785,13 +785,11 @@ export function initSharedCartDrawer(items: CartDrawerItemModel[]): void {
 
         const originalText = confirmBtn.textContent;
         confirmBtn.textContent = 'Lütfen miktar seçin';
-        confirmBtn.classList.remove('bg-cta-primary');
         confirmBtn.classList.add('bg-error-500');
 
         setTimeout(() => {
           confirmBtn.textContent = originalText;
           confirmBtn.classList.remove('bg-error-500');
-          confirmBtn.classList.add('bg-cta-primary');
         }, 1400);
         return;
       }

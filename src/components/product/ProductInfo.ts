@@ -175,10 +175,10 @@ export function ProductInfo(): string {
 
         <!-- CTA Buttons -->
         <div id="pd-cta-buttons">
-          <button type="button" id="pd-add-to-cart" data-add-to-cart="${mockProduct.id}" class="pd-cta-primary">
+          <button type="button" id="pd-add-to-cart" data-add-to-cart="${mockProduct.id}" class="th-btn-dark th-btn-pill">
             Sepete Ekle
           </button>
-          <button type="button" id="pd-chat-now" class="pd-cta-outline">
+          <button type="button" id="pd-chat-now" class="th-btn-outline th-btn-pill">
             Sohbet Başlat
           </button>
         </div>

@@ -1,6 +1,6 @@
 /**
  * Theme Token Definitions
- * Extracted from style-test.html for use in ThemeEditorPanel
+ * Token definitions for ThemeEditorPanel
  * Contains all CSS variable tokens organized by category
  */
 

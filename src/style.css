@@ -385,7 +385,7 @@
      ========================================================== */
 
     /* --- Button --- */
-    --btn-bg: var(--color-primary-500);
+    --btn-bg: #cc9900;
     --btn-text: var(--color-surface);
     --btn-border-width: 0px;
     --btn-border-color: var(--color-primary-500);
@@ -400,9 +400,6 @@
     --btn-outline-border-color: var(--color-primary-500);
 
     /* --- Auth Pages (Login, Register, Forgot Password) --- */
-    --auth-btn-bg: var(--color-primary-500);
-    --auth-btn-hover: var(--color-primary-600);
-    --auth-btn-text: var(--color-surface);
     --auth-accent: var(--color-primary-500);
     --auth-input-focus: var(--color-primary-500);
     --auth-header-border: var(--color-primary-500);
@@ -721,8 +718,6 @@
     --color-border-medium: #d1d5db;
 
     /* --- CTA Button Token'ları --- */
-    --pd-cta-primary-bg: var(--color-cta-primary);
-    --pd-cta-primary-hover: var(--color-cta-primary-hover);
     --search-btn-bg: var(--color-cta-primary);
     --search-btn-hover: var(--color-cta-primary-hover);
 
@@ -1033,24 +1028,31 @@
         border-radius: var(--radius-full);
     }
 
-    /* --- Auth Page Components --- */
-    .auth-btn-primary {
-        background: var(--auth-btn-bg, #cc9900);
-        color: var(--auth-btn-text, #ffffff);
-        transition: background 0.15s ease, opacity 0.15s ease;
+    /* --- Dark Button (CTA: Add to Cart, Checkout, etc.) --- */
+    .th-btn-dark {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.375rem;
+        background: var(--color-cta-primary, #333333);
+        color: var(--color-text-inverse, #ffffff);
+        border: none;
+        border-radius: var(--radius-button);
+        padding: var(--spacing-button-y) var(--spacing-button-x);
+        font-size: var(--btn-font-size);
+        font-weight: var(--btn-font-weight);
+        cursor: pointer;
+        line-height: 1.25;
+        transition: all 0.15s ease;
     }
 
-    .auth-btn-primary:hover {
-        background: var(--auth-btn-hover, #b38600);
+    .th-btn-dark:hover {
+        background: var(--color-cta-primary-hover, #1f1f1f);
     }
 
-    .auth-btn-primary:disabled {
+    .th-btn-dark:disabled {
         opacity: 0.5;
         cursor: not-allowed;
-    }
-
-    .auth-accent-bg {
-        background-color: var(--auth-accent, #cc9900);
     }
 
     .auth-input-focus:focus {
@@ -3034,40 +3036,6 @@ body.gallery-lightbox-open {
     box-shadow: 0 -8px 18px -14px rgba(17, 24, 39, 0.35);
 }
 
-.pd-cta-primary {
-    flex: 1;
-    padding: 12px 16px;
-    border-radius: 24px;
-    font-size: 15px;
-    font-weight: 700;
-    background: var(--pd-cta-primary-bg, #cc9900);
-    color: var(--color-text-inverse);
-    border: none;
-    cursor: pointer;
-    transition: background .15s;
-}
-
-.pd-cta-primary:hover {
-    background: var(--pd-cta-primary-hover, #b38600);
-}
-
-.pd-cta-outline {
-    flex: 1;
-    padding: 12px 16px;
-    border-radius: 24px;
-    font-size: 15px;
-    font-weight: 700;
-    background: var(--color-surface, #ffffff);
-    color: var(--pd-title-color, #111827);
-    border: 1px solid var(--color-border-medium, #d1d5db);
-    cursor: pointer;
-    transition: border-color .15s;
-}
-
-.pd-cta-outline:hover {
-    border-color: #999;
-}
-
 /* Trade Assurance section — keep #pd-trade-assurance and .pd-sticky ordering in CSS */
 #pd-trade-assurance {
     padding: 20px 0 0;
@@ -4779,17 +4747,6 @@ footer {
     color: var(--color-text-body, #333);
     cursor: pointer;
     transition: all 0.15s;
-}
-
-.ds-modal__btn--primary {
-    background: var(--color-cta-primary, #cc9900);
-    color: var(--color-text-inverse);
-    border-color: var(--color-cta-primary, #cc9900);
-}
-
-.ds-modal__btn--primary:hover {
-    background: var(--color-cta-primary-hover, #b38600);
-    border-color: var(--color-cta-primary-hover, #b38600);
 }
 
 /* Responsive: ds-modal__dialog — migrated to Tailwind in DropshippingLayout.ts */

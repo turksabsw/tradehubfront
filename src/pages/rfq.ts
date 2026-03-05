@@ -166,7 +166,7 @@ appEl.innerHTML = `
               </div>
 
               <!-- Submit CTA (Dynamic Color) -->
-              <button type="submit" class="w-full rounded-full bg-primary-600 px-8 py-3 text-base font-bold text-white transition-colors hover:bg-primary-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2 sm:min-w-[260px] sm:w-auto sm:py-2.5">
+              <button type="submit" class="th-btn th-btn-pill w-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2 sm:min-w-[260px] sm:w-auto">
                 RFQ detaylarını yaz
               </button>
             </div>

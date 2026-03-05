@@ -1255,7 +1255,7 @@ Alpine.data('cartPage', () => ({
         </svg>
         <h2 class="text-2xl font-bold text-text-heading mb-2">Sepetiniz boş</h2>
         <p class="text-base text-text-secondary mb-8 max-w-md">Henüz sepetinize ürün eklemediniz. Ürünleri keşfedip sepetinize ekleyebilirsiniz.</p>
-        <a href="/pages/products.html" class="inline-flex items-center justify-center h-12 px-8 rounded-full bg-cta-primary text-white font-semibold text-base hover:bg-cta-primary-hover transition-colors no-underline">
+        <a href="/pages/products.html" class="inline-flex items-center justify-center th-btn-dark th-btn-pill no-underline">
           Alışverişe devam et
         </a>
       </div>

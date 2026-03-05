@@ -142,7 +142,7 @@ function renderViewMode(data: AccountData): string {
         </div>
       </div>
       <div class="mt-6 py-4 bg-[#eff1f7] rounded-md flex justify-center">
-        <button class="py-1.5 px-7 rounded border-[1.5px] border-primary-600 bg-white text-sm font-medium cursor-pointer transition-all hover:bg-amber-50 hover:border-amber-700" style="color:var(--color-text-heading, #111827)" type="button" id="acc-edit-toggle">Düzenle</button>
+        <button class="th-btn-outline" type="button" id="acc-edit-toggle">Düzenle</button>
       </div>
     </div>
   `;
@@ -272,7 +272,7 @@ function renderEditMode(data: AccountData): string {
         </div>
       </div>
       <div class="mt-6 py-4 bg-[#eff1f7] rounded-md flex justify-center">
-        <button class="py-1.5 px-7 rounded border-[1.5px] border-primary-600 bg-white text-sm font-medium cursor-pointer transition-all hover:bg-amber-50 hover:border-amber-700" style="color:var(--color-text-heading, #111827)" type="button" id="acc-edit-submit">Gönder</button>
+        <button class="th-btn-outline" type="button" id="acc-edit-submit">Gönder</button>
       </div>
     </div>
   `;

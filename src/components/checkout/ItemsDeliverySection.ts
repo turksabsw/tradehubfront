@@ -205,14 +205,14 @@ function renderSupplierNoteModal(): string {
           <div class="mt-6 flex items-center justify-center gap-3">
             <button
               type="button"
-              class="min-w-[200px] h-12 rounded-full bg-[var(--color-primary-500)] px-6 text-[16px] font-semibold text-white hover:bg-[var(--color-primary-600)]"
+              class="min-w-[200px] th-btn th-btn-pill"
               @click="saveNote()"
             >
               Confirm
             </button>
             <button
               type="button"
-              class="min-w-[200px] h-12 rounded-full border border-[#111827] px-6 text-[16px] font-semibold text-[#111827] hover:bg-[#f9fafb]"
+              class="min-w-[200px] th-btn-outline th-btn-pill"
               @click="closeNoteModal()"
             >
               Cancel

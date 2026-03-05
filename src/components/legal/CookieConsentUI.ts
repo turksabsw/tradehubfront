@@ -44,7 +44,7 @@ export function CookieConsentUI(): string {
         `).join('')}
       </div>
 
-      <button @click="savePreferences()" class="px-6 py-2.5 bg-primary-500 text-white text-sm font-medium rounded-lg hover:bg-primary-600 transition-colors cursor-pointer mb-8">
+      <button @click="savePreferences()" class="th-btn cursor-pointer mb-8">
         Tercihleri Kaydet
       </button>
 

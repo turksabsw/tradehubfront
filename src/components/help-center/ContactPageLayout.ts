@@ -95,7 +95,7 @@ export function ContactPageLayout(): string {
                 </div>
 
                 <!-- Submit -->
-                <button @click="submitForm()" :disabled="formSubmitting" class="w-full py-3 bg-primary-500 text-white font-medium rounded-lg hover:bg-primary-600 transition-colors disabled:opacity-50 cursor-pointer">
+                <button @click="submitForm()" :disabled="formSubmitting" class="th-btn w-full disabled:opacity-50 cursor-pointer">
                   <span x-show="!formSubmitting">Gönder</span>
                   <span x-show="formSubmitting" class="flex items-center justify-center gap-2">
                     <svg class="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg>
@@ -114,7 +114,7 @@ export function ContactPageLayout(): string {
               </div>
               <h3 class="text-lg font-semibold text-gray-900 mb-2">Mesajınız Gönderildi!</h3>
               <p class="text-sm text-gray-500 mb-6">En kısa sürede size dönüş yapacağız. Ortalama yanıt süremiz 24 saattir.</p>
-              <button @click="resetForm()" class="px-6 py-2.5 bg-primary-500 text-white text-sm font-medium rounded-lg hover:bg-primary-600 transition-colors cursor-pointer">Yeni Mesaj Gönder</button>
+              <button @click="resetForm()" class="th-btn cursor-pointer">Yeni Mesaj Gönder</button>
             </div>
           </template>
         </div>

@@ -191,7 +191,7 @@ function renderPaymentManagement(): string {
           </div>
         </div>
         <div class="flex justify-end gap-2.5 px-6 pb-5 pt-4 border-t border-[#f0f0f0]">
-          <button class="pay-modal__btn--primary py-2.5 px-6 text-sm font-medium rounded-lg border-none text-white bg-[#222] cursor-pointer transition-[background] duration-150 hover:bg-[#333]">Kaydet</button>
+          <button class="pay-modal__btn--primary th-btn-dark">Kaydet</button>
         </div>
       </div>
     </div>
@@ -234,7 +234,7 @@ function renderTransactions(): string {
           <select class="py-2 px-3 text-[13px] border border-border-strong rounded-md outline-none text-text-primary bg-surface cursor-pointer min-w-[120px]"><option>Para birimi</option><option>USD</option><option>EUR</option><option>TRY</option></select>
           <a href="#" class="text-[13px] text-text-secondary no-underline whitespace-nowrap transition-[color] duration-150 hover:text-text-primary hover:underline">Filtreleri Kaldır</a>
         </div>
-        <button class="inline-flex items-center gap-1.5 py-2 px-4 text-[13px] text-white bg-[#222] border-none rounded-md cursor-pointer transition-[background] duration-150 whitespace-nowrap hover:bg-[#333]">
+        <button class="th-btn-dark inline-flex items-center gap-1.5 whitespace-nowrap">
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2v8m0 0l-3-3m3 3l3-3M3 12h10" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           İhracat Ayrıntıları
         </button>
@@ -344,7 +344,7 @@ function renderTTAccounts(): string {
         </div>
         <div class="flex justify-between gap-2.5 px-6 pb-5 pt-4 border-t border-[#f0f0f0]">
           <button class="pay-modal__btn--cancel py-2.5 px-6 text-sm font-medium rounded-lg border border-border-strong bg-surface text-text-secondary cursor-pointer transition-all duration-150 hover:border-[#999] hover:bg-surface-muted">Vazgeç</button>
-          <button class="pay-modal__btn--primary inline-flex items-center gap-1.5 py-2.5 px-6 text-sm font-medium rounded-lg border-none text-white bg-[#222] cursor-pointer transition-[background] duration-150 hover:bg-[#333]">
+          <button class="pay-modal__btn--primary th-btn-dark inline-flex items-center gap-1.5">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3.5 3.5L13 5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
             Doğrula
           </button>
@@ -437,7 +437,7 @@ function renderUpload(): string {
           <p>Dosya boyutu: 20 MB altında</p>
           <p>Desteklenen formatlar: JPG, JPEG, PNG, GIF ve PDF</p>
           <p>Ayrıca manuel olarak <a href="#" class="text-[#2563eb] no-underline hover:underline">havale bilgilerini girebilirsiniz</a></p>
-          <button class="inline-flex items-center gap-2 py-2.5 px-6 mt-4 text-sm font-medium text-white bg-[#222] border-none rounded-lg cursor-pointer transition-[background] duration-150 hover:bg-[#333]">
+          <button class="th-btn-dark inline-flex items-center gap-2 mt-4">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2v8m0-8l-3 3m3-3l3 3M3 12h10" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             Dosya yükle
           </button>

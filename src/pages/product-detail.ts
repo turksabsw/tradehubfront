@@ -117,7 +117,7 @@ appEl.innerHTML = `
       <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
     </button>
     <button type="button" id="pdm-bar-cart" data-add-to-cart="${mockProduct.id}" class="pdm-bar-cart-btn h-11 border border-[#222] rounded-[22px] bg-surface text-sm font-semibold text-text-heading cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis min-w-0">Sepete Ekle</button>
-    <button type="button" id="pdm-bar-order" class="pdm-bar-order-btn h-11 border-none rounded-[22px] bg-cta-primary text-sm font-bold text-white cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis min-w-0">Sipariş Başlat</button>
+    <button type="button" id="pdm-bar-order" class="pdm-bar-order-btn th-btn-dark th-btn-pill h-11 whitespace-nowrap overflow-hidden text-ellipsis min-w-0">Sipariş Başlat</button>
   </div>
 `;
 

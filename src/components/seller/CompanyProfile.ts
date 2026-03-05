@@ -127,7 +127,7 @@ function ContactSidebar(seller: SellerProfile): string {
       </div>
 
       <div class="flex flex-col gap-3">
-        <button @click="setTab('contact')" class="w-full bg-primary-500 hover:bg-primary-600 active:bg-primary-700 text-white font-bold py-2.5 px-4 rounded-full transition-colors text-[14px] company-profile__contact-btn">
+        <button @click="setTab('contact')" class="w-full th-btn th-btn-pill company-profile__contact-btn">
           Şimdi iletişime geçin
         </button>
         <button @click="setTab('contact')" class="w-full bg-white hover:bg-gray-50 text-gray-900 border border-gray-300 font-medium py-2.5 px-4 rounded-full transition-colors text-[14px] company-profile__inquiry-btn">

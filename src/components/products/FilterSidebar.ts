@@ -354,7 +354,7 @@ function renderPriceRange(section: PriceRangeFilterSection): string {
       />
       <button
         type="button"
-        class="px-3 py-1.5 text-[13px] font-medium rounded whitespace-nowrap bg-primary-500 text-white hover:bg-primary-600 transition-colors duration-150"
+        class="th-btn th-btn-sm whitespace-nowrap"
         data-filter-section="${section.id}"
         data-filter-action="apply"
         @click="$dispatch('filter-change')"
@@ -384,7 +384,7 @@ function renderMinOrder(section: MinOrderFilterSection): string {
       >${section.filter.unit}</span>
       <button
         type="button"
-        class="px-3 py-1.5 text-[13px] font-medium rounded whitespace-nowrap bg-primary-500 text-white hover:bg-primary-600 transition-colors duration-150"
+        class="th-btn th-btn-sm whitespace-nowrap"
         data-filter-section="${section.id}"
         data-filter-action="apply"
         @click="$dispatch('filter-change')"

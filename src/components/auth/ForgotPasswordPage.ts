@@ -104,7 +104,7 @@ function StepFindAccount(): string {
           type="submit"
           :disabled="!email.trim()"
           disabled
-          class="w-full h-12 auth-btn-primary font-bold rounded-full transition-colors text-base disabled:opacity-50 disabled:cursor-not-allowed"
+          class="w-full h-12 th-btn th-btn-pill disabled:opacity-50 disabled:cursor-not-allowed"
         >
           Devam
         </button>
@@ -234,7 +234,7 @@ function StepResetPassword(): string {
           type="submit"
           :disabled="!passwordValid"
           disabled
-          class="w-full h-12 auth-btn-primary font-bold rounded-full transition-colors text-base disabled:opacity-50 disabled:cursor-not-allowed"
+          class="w-full h-12 th-btn th-btn-pill disabled:opacity-50 disabled:cursor-not-allowed"
         >
           Yenile ve giriş yap
         </button>

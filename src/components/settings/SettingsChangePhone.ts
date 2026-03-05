@@ -21,7 +21,7 @@ export function SettingsChangePhone(): string {
               <input type="tel" class="w-full max-w-[320px] py-2.5 px-3.5 border-[1.5px] border-gray-300 rounded-lg text-sm outline-none focus:border-(--color-text-heading)" style="color:var(--color-text-heading, #111827)" x-model="phoneNumber" placeholder="5XX XXX XX XX" />
             </div>
             <p class="text-[13px] text-red-500 mb-3" x-show="phoneError" x-text="phoneError" x-cloak></p>
-            <button class="block w-full max-w-[320px] mx-auto py-3 border-none rounded-lg text-sm font-semibold cursor-pointer transition-colors text-white" style="background:var(--color-cta-primary, #cc9900)" type="button" @click="sendCode()">Doğrulama kodu gönder</button>
+            <button class="th-btn block w-full max-w-[320px] mx-auto" type="button" @click="sendCode()">Doğrulama kodu gönder</button>
           </div>
         </div>
 
@@ -34,7 +34,7 @@ export function SettingsChangePhone(): string {
               <span class="py-1.5 px-3 border border-primary-500 rounded text-[13px] font-semibold whitespace-nowrap" style="color:var(--color-primary-500, #cc9900)" x-text="countdown > 0 ? countdown + ' s' : ''"></span>
             </div>
             <p class="text-[13px] text-red-500 mb-3" x-show="verifyError" x-text="verifyError" x-cloak></p>
-            <button class="block w-full max-w-[320px] mx-auto py-3 border-none rounded-lg text-sm font-semibold cursor-pointer transition-colors text-white" style="background:var(--color-cta-primary, #cc9900)" type="button" @click="verify()">Doğrula</button>
+            <button class="th-btn block w-full max-w-[320px] mx-auto" type="button" @click="verify()">Doğrula</button>
           </div>
         </div>
 
@@ -45,7 +45,7 @@ export function SettingsChangePhone(): string {
             </div>
             <h2 class="text-xl font-bold mb-3 m-0" style="color:var(--color-text-heading, #111827)">Telefon numaranız güncellendi!</h2>
             <p class="text-sm mb-2 m-0" style="color:var(--color-text-muted, #666666)">Yeni telefon numaranız kaydedildi.</p>
-            <a href="#" class="block w-full max-w-[320px] mx-auto py-3 border-none rounded-lg text-sm font-semibold cursor-pointer transition-colors text-white text-center no-underline" style="background:var(--color-cta-primary, #cc9900)">Hesap ayarlarına dön</a>
+            <a href="#" class="th-btn block w-full max-w-[320px] mx-auto text-center no-underline">Hesap ayarlarına dön</a>
           </div>
         </div>
       </div>

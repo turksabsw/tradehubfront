@@ -162,10 +162,10 @@ export function TicketForm(): string {
                   Geri
                 </button>
                 <div x-show="currentStep === 1" class="w-1"></div>
-                <button x-show="currentStep < 3" @click="nextStep()" class="px-5 py-2.5 text-sm font-medium text-white bg-primary-500 rounded-lg hover:bg-primary-600 transition-colors cursor-pointer ml-auto">
+                <button x-show="currentStep < 3" @click="nextStep()" class="th-btn cursor-pointer ml-auto">
                   İleri
                 </button>
-                <button x-show="currentStep === 3" @click="submitTicket()" class="px-6 py-2.5 text-sm font-medium text-white bg-primary-500 rounded-lg hover:bg-primary-600 transition-colors cursor-pointer ml-auto">
+                <button x-show="currentStep === 3" @click="submitTicket()" class="th-btn cursor-pointer ml-auto">
                   Talebi Gönder
                 </button>
               </div>

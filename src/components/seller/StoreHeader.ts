@@ -112,11 +112,11 @@ export function StoreHeader(seller: SellerProfile): string {
 
         <!-- Right: CTA Buttons -->
         <div class="store-header__actions flex flex-col w-full gap-2 mt-3 lg:flex-row lg:w-auto lg:gap-3 lg:mt-0 flex-shrink-0">
-          <button class="store-header__contact-btn w-full lg:w-auto bg-primary-500 hover:bg-primary-600 active:bg-primary-700 focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 text-white font-semibold text-[14px] rounded-(--radius-button) px-6 py-2.5 shadow-(--shadow-sm) hover:shadow-md transition-[background-color,box-shadow] duration-200 cursor-pointer"
+          <button class="store-header__contact-btn w-full lg:w-auto th-btn"
                   onclick="document.getElementById('contact-form')?.scrollIntoView({behavior:'smooth'})">
             Contact supplier
           </button>
-          <button class="store-header__chat-btn w-full lg:w-auto bg-transparent border border-(--color-border-strong) dark:border-gray-600 hover:bg-(--color-surface-muted) hover:border-(--color-text-muted) active:bg-[#f3f4f6] focus:ring-2 focus:ring-[#d1d5db] focus:ring-offset-2 text-[#374151] dark:text-gray-300 font-medium text-[14px] rounded-(--radius-button) px-6 py-2.5 hover:shadow-md transition-[background-color,box-shadow] duration-200 cursor-pointer">
+          <button class="store-header__chat-btn w-full lg:w-auto th-btn-outline">
             Chat now
           </button>
         </div>

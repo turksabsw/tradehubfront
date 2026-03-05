@@ -132,13 +132,13 @@ export function OrderReviewModal(): string {
           <button
             type="button"
             @click="open = false"
-            class="flex-1 h-[44px] text-[14px] font-semibold text-[#222222] bg-white border border-[#d1d5db] rounded-full hover:bg-[#f5f5f5] transition-colors cursor-pointer"
+            class="flex-1 th-btn-outline th-btn-pill"
           >Back to checkout</button>
           <button
             type="button"
             id="review-confirm-btn"
             @click="confirmOrder()"
-            class="flex-1 h-[44px] flex items-center justify-center text-[14px] font-bold text-white bg-cta-primary rounded-full hover:bg-cta-primary-hover transition-colors cursor-pointer"
+            class="flex-1 flex items-center justify-center th-btn-dark th-btn-pill"
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" class="mr-2 shrink-0"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             Confirm order

@@ -75,7 +75,7 @@ export function SettingsChangePassword(): string {
             <p class="text-xs text-green-500 mt-2 mb-3 pl-[132px] max-md:pl-0">E-postanıza yeni bir doğrulama kodu gönderildi ve 30 dakika geçerli olacak. Lütfen bu kodu başkalarıyla paylaşmayın.</p>
             <p class="text-[13px] mb-5 pl-[132px] max-md:pl-0" style="color:var(--color-text-body, #333333)">Doğrulama kodu gelmedi mi? <a href="#" class="text-blue-600 no-underline hover:underline" @click.prevent="resendCode()">Buraya tıklayın.</a></p>
             <div class="flex items-center gap-4 max-sm:flex-col max-sm:items-start pl-[132px] max-md:pl-0">
-              <button class="py-2.5 px-9 rounded text-sm font-semibold border-none cursor-pointer transition-all text-white max-sm:w-full" style="background:var(--color-cta-primary, #cc9900)" type="button" @click="verifySubmit()">Gönder</button>
+              <button class="th-btn max-sm:w-full" type="button" @click="verifySubmit()">Gönder</button>
               <a href="#" class="text-[13px] text-green-500 no-underline font-medium hover:underline">Farklı bir doğrulama yöntemi deneyin</a>
             </div>
           </div>
@@ -95,7 +95,7 @@ export function SettingsChangePassword(): string {
             </div>
             <p class="text-[13px] text-red-500 mb-3" x-show="error" x-text="error" x-cloak></p>
             <div class="flex items-center gap-4">
-              <button class="py-2.5 px-9 rounded text-sm font-semibold border-none cursor-pointer transition-all text-white" style="background:var(--color-cta-primary, #cc9900)" type="button" @click="savePassword()">Kaydet</button>
+              <button class="th-btn" type="button" @click="savePassword()">Kaydet</button>
             </div>
           </div>
         </div>
@@ -107,7 +107,7 @@ export function SettingsChangePassword(): string {
             <h3 class="text-lg font-bold mb-2 m-0" style="color:var(--color-text-heading, #111827)">Parolanız başarıyla değiştirildi!</h3>
             <p class="text-sm mb-6 m-0" style="color:var(--color-text-muted, #666666)">Yeni parolanızla giriş yapabilirsiniz.</p>
             <div class="flex items-center gap-4 justify-center">
-              <a href="#" class="py-2.5 px-9 rounded text-sm font-semibold border-none cursor-pointer transition-all text-white no-underline" style="background:var(--color-cta-primary, #cc9900)">Hesap ayarlarına dön</a>
+              <a href="#" class="th-btn no-underline">Hesap ayarlarına dön</a>
             </div>
           </div>
         </div>
