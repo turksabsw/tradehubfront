@@ -3,7 +3,9 @@
  * Renders the "Ozellikler" tab content with Key Attributes and Packaging tables.
  */
 
-import { mockProduct } from '../../data/mockProduct';
+import { getMockProduct } from '../../data/mockProduct';
+import { t } from '../../i18n';
+const mockProduct = getMockProduct();
 
 function buildTableRows(specs: { key: string; value: string }[]): string {
   const rows: string[] = [];
@@ -22,14 +24,14 @@ function buildTableRows(specs: { key: string; value: string }[]): string {
 export function AttributesTabContent(): string {
   return `
     <div id="pd-tab-attributes">
-      <h3 class="text-lg font-bold mb-4" style="color: var(--pd-title-color, #111827);">Temel Özellikler</h3>
+      <h3 class="text-lg font-bold mb-4" style="color: var(--pd-title-color, #111827);">${t('product.keyAttributes')}</h3>
       <table class="pd-attrs-table">
         <tbody>
           ${buildTableRows(mockProduct.specs)}
         </tbody>
       </table>
 
-      <h3 class="text-lg font-bold mb-4 mt-8" style="color: var(--pd-title-color, #111827);">Paketleme ve Teslimat</h3>
+      <h3 class="text-lg font-bold mb-4 mt-8" style="color: var(--pd-title-color, #111827);">${t('product.packagingDelivery')}</h3>
       <table class="pd-attrs-table">
         <tbody>
           ${buildTableRows(mockProduct.packagingSpecs)}
@@ -39,7 +41,7 @@ export function AttributesTabContent(): string {
       <!-- Lead Time — collapsible -->
       <div class="mt-8" style="border-top: 1px solid var(--pd-spec-border, #e5e5e5);">
         <button type="button" class="pd-section-collapsible flex items-center justify-between w-full py-4 border-0 bg-transparent text-lg font-bold cursor-pointer" id="pd-leadtime-toggle" style="color: var(--pd-title-color, #111827);">
-          <span>Teslim Süresi</span>
+          <span>${t('product.leadTime')}</span>
           <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
           </svg>
@@ -48,13 +50,13 @@ export function AttributesTabContent(): string {
           <table class="pd-attrs-table">
             <thead>
               <tr>
-                <th>Miktar (adet)</th>
+                <th>${t('product.leadTimeQty')}</th>
                 ${mockProduct.leadTimeRanges.map(r => `<th>${r.quantityRange}</th>`).join('')}
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td class="pd-attrs-key">Teslim süresi (gün)</td>
+                <td class="pd-attrs-key">${t('product.leadTimeDays')}</td>
                 ${mockProduct.leadTimeRanges.map(r => `<td class="pd-attrs-val">${r.days}</td>`).join('')}
               </tr>
             </tbody>
@@ -64,7 +66,7 @@ export function AttributesTabContent(): string {
 
       <!-- Customization Options -->
       <div class="mt-8 pt-6" style="border-top: 1px solid var(--pd-spec-border, #e5e5e5);">
-        <h3 class="text-lg font-bold mb-4" style="color: var(--pd-title-color, #111827);">Özelleştirme Seçenekleri</h3>
+        <h3 class="text-lg font-bold mb-4" style="color: var(--pd-title-color, #111827);">${t('product.customizationOptions')}</h3>
         ${mockProduct.customizationOptions.map(opt => `
           <div class="flex items-baseline gap-2 mb-2 text-sm">
             <strong style="color: var(--pd-spec-value-color, #111827);">${opt.name}</strong>
@@ -72,9 +74,9 @@ export function AttributesTabContent(): string {
             <span style="color: var(--pd-spec-key-color, #6b7280);">(${opt.minOrder})</span>
           </div>
         `).join('')}
-        <a class="text-sm underline cursor-pointer" style="color: var(--pd-title-color, #111827);">Detayları Gör</a>
+        <a class="text-sm underline cursor-pointer" style="color: var(--pd-title-color, #111827);">${t('product.viewDetails')}</a>
         <div>
-          <button type="button" class="inline-flex items-center gap-1.5 mt-3 px-6 py-2.5 text-sm font-medium rounded-full cursor-pointer transition-colors" style="border: 1px solid #333; background: var(--color-surface, #ffffff);">Sohbet Başlat</button>
+          <button type="button" class="inline-flex items-center gap-1.5 mt-3 px-6 py-2.5 text-sm font-medium rounded-full cursor-pointer transition-colors" style="border: 1px solid #333; background: var(--color-surface, #ffffff);">${t('product.startChat')}</button>
         </div>
       </div>
     </div>

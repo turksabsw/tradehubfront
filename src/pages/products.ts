@@ -6,9 +6,11 @@
 
 import '../style.css'
 import { initFlowbite } from 'flowbite'
+import { t } from '../i18n'
 
 // Header components (reuse from main page)
 import { TopBar, initMobileDrawer, SubHeader, MegaMenu, initMegaMenu, initHeaderCart } from '../components/header'
+import { initLanguageSelector } from '../components/header/TopBar'
 
 // Shared components
 import { Breadcrumb } from '../components/shared/Breadcrumb'
@@ -38,7 +40,8 @@ import {
 } from '../components/products'
 import { ShippingModal, initShippingModal } from '../components/product'
 
-import { mockProductListingCards } from '../data/mockProductListing'
+import { getMockProductListingCards } from '../data/mockProductListing'
+const mockProductListingCards = getMockProductListingCards();
 
 // Category data for ID → name mapping
 import { megaCategories } from '../components/header'
@@ -81,7 +84,7 @@ const searchKeyword = resolveKeyword();
 // Build dynamic breadcrumb from URL params
 const productsBreadcrumb = (() => {
   const crumbs: { label: string; href?: string }[] = [
-    { label: 'Ürünler', href: 'products.html' },
+    { label: t('search.products'), href: 'products.html' },
   ];
   if (categoryParam) {
     const cat = megaCategories.find(c => c.id === categoryParam);
@@ -190,6 +193,7 @@ startAlpine();
 // Initialize header behaviors (non-Alpine: cart store load, mobile drawer DOM move)
 initHeaderCart();
 initMobileDrawer();
+initLanguageSelector();
 initAnimatedPlaceholder('#topbar-compact-search-input');
 
 // Initialize product card image sliders (event delegation, not yet migrated)

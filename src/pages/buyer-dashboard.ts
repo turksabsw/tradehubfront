@@ -6,9 +6,11 @@
 import '../style.css'
 import { initFlowbite } from 'flowbite'
 import { startAlpine } from '../alpine'
+import { t } from '../i18n'
 
 // Header components (simplified for dashboard — no search bar / mega menu)
 import { TopBar, initMobileDrawer, initHeaderCart } from '../components/header'
+import { initLanguageSelector } from '../components/header/TopBar'
 
 // Shared components
 import { Breadcrumb } from '../components/shared/Breadcrumb'
@@ -24,7 +26,7 @@ import { BuyerDashboardLayout, initBuyerDashboardLayout, OtherServicesLayout, in
 import { renderSidebar } from '../components/sidebar'
 
 // Mock data
-import { mockBuyerDashboardData } from '../data/mockBuyerDashboard'
+import { getMockBuyerDashboardData } from '../data/mockBuyerDashboard'
 
 // ── Hash routing: dashboard vs other-services sub-pages ──
 type DashboardView = 'dashboard' | 'other-services';
@@ -41,17 +43,17 @@ function renderMainContent(view: DashboardView): string {
   if (view === 'other-services') {
     return OtherServicesLayout();
   }
-  return BuyerDashboardLayout({ data: mockBuyerDashboardData });
+  return BuyerDashboardLayout({ data: getMockBuyerDashboardData() });
 }
 
 function getBreadcrumbItems(view: DashboardView): { label: string; href?: string }[] {
   if (view === 'other-services') {
     return [
-      { label: 'Hesabım', href: '/pages/dashboard/buyer-dashboard.html' },
-      { label: 'Diğer hizmetlerim' },
+      { label: t('header.myAccount'), href: '/pages/dashboard/buyer-dashboard.html' },
+      { label: t('dashboard.otherServices') },
     ];
   }
-  return [{ label: 'Hesabım' }];
+  return [{ label: t('header.myAccount') }];
 }
 
 const activeView = getActiveView();
@@ -101,6 +103,7 @@ initFlowbite();
 initHeaderCart();
 initFloatingPanel();
 initMobileDrawer();
+initLanguageSelector();
 
 // Init based on current view
 function initCurrentView(): void {

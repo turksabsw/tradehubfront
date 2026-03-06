@@ -4,11 +4,13 @@
 import '../style.css'
 import { initFlowbite } from 'flowbite'
 import { TopBar, SubHeader, MegaMenu, initMegaMenu, initStickyHeaderSearch, initMobileDrawer } from '../components/header'
+import { initLanguageSelector } from '../components/header/TopBar'
 import { Breadcrumb } from '../components/shared/Breadcrumb'
 import { FooterLinks } from '../components/footer'
 import { FloatingPanel } from '../components/floating'
 import { startAlpine } from '../alpine'
 import { AboutPageLayout } from '../components/about'
+import { t } from '../i18n'
 
 const appEl = document.querySelector<HTMLDivElement>('#app')!;
 appEl.classList.add('relative');
@@ -20,7 +22,7 @@ appEl.innerHTML = `
   ${MegaMenu()}
   <main class="flex-1 min-w-0 bg-white">
     <div class="container-boxed">
-      ${Breadcrumb([{ label: 'Hakkımızda' }])}
+      ${Breadcrumb([{ label: t('legal.aboutUs') }])}
     </div>
     ${AboutPageLayout()}
   </main>
@@ -35,3 +37,4 @@ initFlowbite();
 startAlpine();
 initStickyHeaderSearch();
 initMobileDrawer();
+initLanguageSelector();

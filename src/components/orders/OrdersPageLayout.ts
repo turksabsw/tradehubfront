@@ -4,6 +4,7 @@
  * Supports hash-based sub-pages: #all-orders, #refunds, #reviews, #coupons, #tax-info
  */
 import { getBaseUrl } from '../../utils/url';
+import { t } from '../../i18n';
 
 interface OrdersNavItem {
   id: string;
@@ -91,7 +92,7 @@ function renderAllOrders(): string {
             x-show="searchQuery.trim()"
             @click="searchQuery = ''"
             class="flex items-center justify-center w-8 h-10 text-gray-400 hover:text-gray-600 cursor-pointer bg-transparent border-none transition-colors"
-            title="Temizle"
+            title="${t('common.clear')}"
           >
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path stroke-linecap="round" d="M6 18L18 6M6 6l12 12"/>
@@ -133,28 +134,28 @@ function renderAllOrders(): string {
               class="flex items-center justify-between w-full text-left px-4 py-2.5 text-sm hover:bg-gray-50 cursor-pointer bg-transparent border-none transition-colors"
               :class="dateFilter === 'all' ? 'text-amber-700 font-medium' : 'text-gray-700'"
             >
-              Tüm tarihler
+              ${t('orders.allDates')}
               <svg x-show="dateFilter === 'all'" class="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
             </button>
             <button @click="setDateFilter('7d')"
               class="flex items-center justify-between w-full text-left px-4 py-2.5 text-sm hover:bg-gray-50 cursor-pointer bg-transparent border-none transition-colors"
               :class="dateFilter === '7d' ? 'text-amber-700 font-medium' : 'text-gray-700'"
             >
-              Son 7 gün
+              ${t('orders.last7Days')}
               <svg x-show="dateFilter === '7d'" class="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
             </button>
             <button @click="setDateFilter('30d')"
               class="flex items-center justify-between w-full text-left px-4 py-2.5 text-sm hover:bg-gray-50 cursor-pointer bg-transparent border-none transition-colors"
               :class="dateFilter === '30d' ? 'text-amber-700 font-medium' : 'text-gray-700'"
             >
-              Son 30 gün
+              ${t('orders.last30Days')}
               <svg x-show="dateFilter === '30d'" class="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
             </button>
             <button @click="setDateFilter('90d')"
               class="flex items-center justify-between w-full text-left px-4 py-2.5 text-sm hover:bg-gray-50 cursor-pointer bg-transparent border-none transition-colors"
               :class="dateFilter === '90d' ? 'text-amber-700 font-medium' : 'text-gray-700'"
             >
-              Son 90 gün
+              ${t('orders.last90Days')}
               <svg x-show="dateFilter === '90d'" class="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
             </button>
           </div>
@@ -185,16 +186,16 @@ function renderAllOrders(): string {
             x-transition:leave-end="opacity-0 translate-y-1"
             class="absolute top-full right-0 max-sm:left-0 max-sm:right-auto mt-1 bg-white border border-gray-200 rounded-md shadow-lg z-20 p-4 min-w-[280px]"
           >
-            <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">Tarih aralığı seç</p>
+            <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">${t('orders.selectDateRange')}</p>
             <div class="flex items-center gap-2 mb-3">
               <div class="flex-1">
-                <label class="block text-xs text-gray-500 mb-1">Başlangıç</label>
+                <label class="block text-xs text-gray-500 mb-1">${t('orders.startDate')}</label>
                 <input type="date" x-model="dateFrom"
                   class="w-full h-9 px-2 text-sm border border-gray-300 rounded-sm outline-none bg-white text-gray-700 focus:border-amber-400 focus:ring-1 focus:ring-amber-200" />
               </div>
               <span class="text-gray-300 mt-4">—</span>
               <div class="flex-1">
-                <label class="block text-xs text-gray-500 mb-1">Bitiş</label>
+                <label class="block text-xs text-gray-500 mb-1">${t('orders.endDate')}</label>
                 <input type="date" x-model="dateTo"
                   class="w-full h-9 px-2 text-sm border border-gray-300 rounded-sm outline-none bg-white text-gray-700 focus:border-amber-400 focus:ring-1 focus:ring-amber-200" />
               </div>
@@ -202,13 +203,13 @@ function renderAllOrders(): string {
             <div class="flex items-center justify-end gap-2">
               <button @click="clearTimeRange()"
                 class="px-3 py-1.5 text-xs text-gray-500 bg-transparent border border-gray-300 rounded cursor-pointer hover:bg-gray-50 transition-colors">
-                Temizle
+                ${t('common.clear')}
               </button>
               <button @click="applyTimeRange()"
                 class="px-3 py-1.5 text-xs text-white bg-gray-900 border border-gray-900 rounded cursor-pointer hover:bg-gray-800 transition-colors"
                 :class="!(dateFrom || dateTo) ? 'opacity-40 cursor-not-allowed' : ''"
                 :disabled="!(dateFrom || dateTo)">
-                Uygula
+                ${t('common.apply')}
               </button>
             </div>
           </div>
@@ -219,7 +220,7 @@ function renderAllOrders(): string {
           <button @click="searchQuery = ''; dateFilter = 'all'; dateFrom = ''; dateTo = ''; activeTab = 'all'"
             class="flex items-center gap-1 h-8 px-3 text-xs text-red-600 bg-red-50 border border-red-200 rounded-full cursor-pointer hover:bg-red-100 transition-colors whitespace-nowrap">
             <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 18L18 6M6 6l12 12"/></svg>
-            Tüm filtreleri temizle
+            ${t('orders.clearAllFilters')}
           </button>
         </template>
       </div>
@@ -232,8 +233,8 @@ function renderAllOrders(): string {
             <path d="M12 2C8.14 2 5 5.14 5 9v5l-2 2v1h18v-1l-2-2V9c0-3.86-3.14-7-7-7zm0 20c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2z"/>
           </svg>
           <div class="text-[13px] text-gray-700 leading-relaxed">
-            <p class="mb-1"><strong>1.</strong> Havale dekontu gönderin: Banka havale ödemenizin iSTOC TradeHub tarafından korunup korunmadığını kontrol edin. <a href="#" class="text-blue-600 hover:underline">Nasıl yapılır</a></p>
-            <p><strong>2.</strong> Bayram dönemi nedeniyle, belirli tarihlerde verilen siparişlerin kargo tarihi ve üzerinde anlaşmaya varılan teslimat süresi gecikebilir.</p>
+            <p class="mb-1"><strong>1.</strong> ${t('orders.bannerRemittance')} <a href="#" class="text-blue-600 hover:underline">${t('orders.bannerHowTo')}</a></p>
+            <p><strong>2.</strong> ${t('orders.bannerHolidayDelay')}</p>
           </div>
         </div>
       </div>
@@ -242,9 +243,9 @@ function renderAllOrders(): string {
       <template x-if="searchQuery.trim() || dateFilter !== 'all'">
         <div class="px-7 max-sm:px-3 pb-3">
           <p class="text-sm text-gray-500">
-            <span x-text="filteredOrders.length"></span> sonuç bulundu
+            <span x-text="filteredOrders.length"></span> ${t('orders.resultsFound')}
             <template x-if="searchQuery.trim()">
-              <span> &mdash; &quot;<strong class="text-gray-700" x-text="searchQuery.trim()"></strong>&quot; araması</span>
+              <span> &mdash; &quot;<strong class="text-gray-700" x-text="searchQuery.trim()"></strong>&quot; ${t('orders.searchFor')}</span>
             </template>
             <template x-if="dateFilter !== 'all' && dateFilter !== 'custom'">
               <span> &mdash; <span x-text="dateFilterLabel"></span></span>
@@ -263,19 +264,19 @@ function renderAllOrders(): string {
             ${EMPTY_RECEIPT_ICON}
             <template x-if="searchQuery.trim() || dateFilter !== 'all'">
               <div class="flex flex-col items-center gap-2">
-                <h3 class="text-base font-bold text-gray-900">Aramanıza uygun sipariş bulunamadı</h3>
-                <p class="text-sm text-gray-500 max-w-[400px]">Farklı anahtar kelimeler veya filtreler ile tekrar deneyin</p>
+                <h3 class="text-base font-bold text-gray-900">${t('orders.noOrdersFound')}</h3>
+                <p class="text-sm text-gray-500 max-w-[400px]">${t('orders.tryDifferentKeywords')}</p>
                 <button @click="searchQuery = ''; dateFilter = 'all'; dateFrom = ''; dateTo = ''; activeTab = 'all'"
                   class="inline-block px-6 py-2 text-sm text-amber-700 border border-amber-300 rounded-full no-underline mt-2 transition-colors hover:bg-amber-50 cursor-pointer bg-transparent">
-                  Filtreleri temizle
+                  ${t('orders.clearFilters')}
                 </button>
               </div>
             </template>
             <template x-if="!searchQuery.trim() && dateFilter === 'all'">
               <div class="flex flex-col items-center gap-2">
-                <h3 class="text-base font-bold text-gray-900">Henüz siparişiniz bulunmamaktadır</h3>
-                <p class="text-sm text-gray-500 max-w-[400px]">Tedarik etmeye başlamak için ana sayfaya gidin veya aşağıya tıklayın</p>
-                <a href="/" class="th-btn-outline th-btn-pill mt-2">Tedarik etmeye başla</a>
+                <h3 class="text-base font-bold text-gray-900">${t('orders.noOrdersYet')}</h3>
+                <p class="text-sm text-gray-500 max-w-[400px]">${t('orders.startSourcingDesc')}</p>
+                <a href="/" class="th-btn-outline th-btn-pill mt-2">${t('orders.startSourcing')}</a>
               </div>
             </template>
           </div>
@@ -290,7 +291,7 @@ function renderAllOrders(): string {
                   <svg class="w-4 h-4 text-amber-500 shrink-0" viewBox="0 0 20 20" fill="currentColor">
                     <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
                   </svg>
-                  <span class="font-medium text-amber-700" x-text="'Sipariş ' + order.orderNumber"></span>
+                  <span class="font-medium text-amber-700" x-text="'${t('orders.orderPrefix')} ' + order.orderNumber"></span>
                 </span>
                 <span class="max-sm:hidden text-gray-300">|</span>
                 <span x-text="'Order time: ' + order.orderDate"></span>
@@ -370,7 +371,7 @@ function renderAllOrders(): string {
 
       <!-- Pagination -->
       <div x-show="filteredOrders.length > 0" class="flex items-center justify-end gap-3 px-7 max-sm:px-3 pb-6">
-        <span class="text-sm text-gray-500" x-text="filteredOrders.length + ' sipariş'"></span>
+        <span class="text-sm text-gray-500" x-text="filteredOrders.length + ' ${t('orders.ordersCount')}'"></span>
         <div class="flex items-center gap-1.5">
           <button class="flex items-center justify-center w-8 h-8 border border-gray-300 rounded bg-white text-gray-400 cursor-not-allowed" disabled>
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M15 19l-7-7 7-7"/></svg>
@@ -392,7 +393,7 @@ function renderAllOrders(): string {
         <div class="px-7 max-sm:px-3 pt-5 pb-2">
           <button @click="backToList()" class="flex items-center gap-1.5 text-sm text-gray-600 hover:text-gray-900 bg-transparent border-none cursor-pointer transition-colors p-0">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M15 19l-7-7 7-7"/></svg>
-            Siparişlere geri dön
+            ${t('orders.backToOrders')}
           </button>
         </div>
 
@@ -400,16 +401,16 @@ function renderAllOrders(): string {
         <div class="px-7 max-sm:px-3 pt-2 pb-5 border-b border-gray-100">
           <!-- Breadcrumb -->
           <nav class="flex items-center gap-1.5 text-xs text-gray-400 mb-4">
-            <a href="/" class="hover:text-gray-600 transition-colors">Ana Sayfa</a>
+            <a href="/" class="hover:text-gray-600 transition-colors">${t('common.home')}</a>
             <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M9 5l7 7-7 7"/></svg>
-            <a href="/pages/dashboard/orders.html" class="hover:text-gray-600 transition-colors">Sipariş Yönetimi</a>
+            <a href="/pages/dashboard/orders.html" class="hover:text-gray-600 transition-colors">${t('orders.orderManagement')}</a>
             <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M9 5l7 7-7 7"/></svg>
-            <span class="text-gray-600">Sipariş detayları</span>
+            <span class="text-gray-600">${t('orders.orderDetails')}</span>
           </nav>
 
           <div class="flex items-start justify-between gap-4 max-sm:flex-col max-sm:gap-3">
             <div>
-              <h1 class="text-[22px] max-sm:text-lg font-bold text-gray-900 mb-2">Sipariş detayları</h1>
+              <h1 class="text-[22px] max-sm:text-lg font-bold text-gray-900 mb-2">${t('orders.orderDetails')}</h1>
               <div class="flex items-center gap-3 flex-wrap max-sm:gap-2">
                 <div class="flex items-center gap-1.5">
                   <svg class="w-4 h-4 text-amber-500 shrink-0" viewBox="0 0 20 20" fill="currentColor">
@@ -419,15 +420,15 @@ function renderAllOrders(): string {
                 </div>
                 <button @click="copyOrderNumber()" class="flex items-center gap-1 text-xs text-blue-600 hover:text-blue-800 bg-transparent border-none cursor-pointer transition-colors p-0">
                   <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
-                  <span x-text="copiedNumber ? 'Kopyalandı!' : 'Kopyala'"></span>
+                  <span x-text="copiedNumber ? '${t('orders.copied')}' : '${t('orders.copy')}'"></span>
                 </button>
                 <span class="text-gray-300 max-sm:hidden">|</span>
-                <span class="text-sm text-gray-500" x-text="'Sipariş tarihi: ' + selectedOrder.orderDate"></span>
+                <span class="text-sm text-gray-500" x-text="'${t('orders.orderDateLabel')} ' + selectedOrder.orderDate"></span>
               </div>
             </div>
             <a href="#" class="flex items-center gap-1.5 text-sm text-blue-600 hover:text-blue-800 transition-colors whitespace-nowrap shrink-0">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M12 5v14M5 12h14"/></svg>
-              Detayları indir
+              ${t('orders.downloadDetails')}
             </a>
           </div>
         </div>
@@ -439,35 +440,35 @@ function renderAllOrders(): string {
             <div class="flex flex-col items-center gap-1.5 relative z-10">
               <div class="w-8 h-8 max-sm:w-6 max-sm:h-6 rounded-full flex items-center justify-center text-xs font-bold transition-colors"
                    :class="getStepIndex(selectedOrder) >= 0 ? 'bg-amber-500 text-white' : 'bg-gray-200 text-gray-500'">1</div>
-              <span class="text-xs max-sm:text-[10px] text-gray-600 whitespace-nowrap">Sipariş</span>
+              <span class="text-xs max-sm:text-[10px] text-gray-600 whitespace-nowrap">${t('orders.stepOrder')}</span>
             </div>
             <div class="flex-1 h-0.5 -mt-4 max-sm:-mt-3" :class="getStepIndex(selectedOrder) >= 1 ? 'bg-amber-500' : 'bg-gray-200'"></div>
             <!-- Step 2: Ödeme -->
             <div class="flex flex-col items-center gap-1.5 relative z-10">
               <div class="w-8 h-8 max-sm:w-6 max-sm:h-6 rounded-full flex items-center justify-center text-xs font-bold transition-colors"
                    :class="getStepIndex(selectedOrder) >= 1 ? 'bg-amber-500 text-white' : 'bg-gray-200 text-gray-500'">2</div>
-              <span class="text-xs max-sm:text-[10px] text-gray-600 whitespace-nowrap">Ödeme</span>
+              <span class="text-xs max-sm:text-[10px] text-gray-600 whitespace-nowrap">${t('orders.stepPayment')}</span>
             </div>
             <div class="flex-1 h-0.5 -mt-4 max-sm:-mt-3" :class="getStepIndex(selectedOrder) >= 2 ? 'bg-amber-500' : 'bg-gray-200'"></div>
             <!-- Step 3: Kargolama -->
             <div class="flex flex-col items-center gap-1.5 relative z-10">
               <div class="w-8 h-8 max-sm:w-6 max-sm:h-6 rounded-full flex items-center justify-center text-xs font-bold transition-colors"
                    :class="getStepIndex(selectedOrder) >= 2 ? 'bg-amber-500 text-white' : 'bg-gray-200 text-gray-500'">3</div>
-              <span class="text-xs max-sm:text-[10px] text-gray-600 whitespace-nowrap">Kargolama</span>
+              <span class="text-xs max-sm:text-[10px] text-gray-600 whitespace-nowrap">${t('orders.stepShipping')}</span>
             </div>
             <div class="flex-1 h-0.5 -mt-4 max-sm:-mt-3" :class="getStepIndex(selectedOrder) >= 3 ? 'bg-amber-500' : 'bg-gray-200'"></div>
             <!-- Step 4: Teslimat -->
             <div class="flex flex-col items-center gap-1.5 relative z-10">
               <div class="w-8 h-8 max-sm:w-6 max-sm:h-6 rounded-full flex items-center justify-center text-xs font-bold transition-colors"
                    :class="getStepIndex(selectedOrder) >= 3 ? 'bg-amber-500 text-white' : 'bg-gray-200 text-gray-500'">4</div>
-              <span class="text-xs max-sm:text-[10px] text-gray-600 whitespace-nowrap">Teslimat</span>
+              <span class="text-xs max-sm:text-[10px] text-gray-600 whitespace-nowrap">${t('orders.stepDelivery')}</span>
             </div>
             <div class="flex-1 h-0.5 -mt-4 max-sm:-mt-3" :class="getStepIndex(selectedOrder) >= 4 ? 'bg-amber-500' : 'bg-gray-200'"></div>
             <!-- Step 5: Degerlendirme -->
             <div class="flex flex-col items-center gap-1.5 relative z-10">
               <div class="w-8 h-8 max-sm:w-6 max-sm:h-6 rounded-full flex items-center justify-center text-xs font-bold transition-colors"
                    :class="getStepIndex(selectedOrder) >= 4 ? 'bg-amber-500 text-white' : 'bg-gray-200 text-gray-500'">5</div>
-              <span class="text-xs max-sm:text-[10px] text-gray-600 whitespace-nowrap">Değerlendirme</span>
+              <span class="text-xs max-sm:text-[10px] text-gray-600 whitespace-nowrap">${t('orders.stepReview')}</span>
             </div>
           </div>
         </div>
@@ -525,12 +526,12 @@ function renderAllOrders(): string {
             <svg class="w-5 h-5 text-gray-500 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
               <path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
             </svg>
-            <h2 class="text-base font-bold text-gray-900">Ürün detayları</h2>
+            <h2 class="text-base font-bold text-gray-900">${t('orders.productDetails')}</h2>
           </div>
           <div class="flex items-center gap-2 mb-4 text-sm">
-            <span class="text-gray-500">Satıcı:</span>
+            <span class="text-gray-500">${t('orders.seller')}:</span>
             <span class="font-medium text-gray-800" x-text="selectedOrder.seller"></span>
-            <a href="#" class="text-blue-600 hover:underline text-sm">Sohbet et</a>
+            <a href="#" class="text-blue-600 hover:underline text-sm">${t('orders.chatNow')}</a>
           </div>
 
           <!-- Products Table -->
@@ -538,11 +539,11 @@ function renderAllOrders(): string {
             <table class="w-full min-w-[560px] border-collapse">
               <thead>
                 <tr class="border-b border-gray-200">
-                  <th class="text-left text-xs font-semibold text-gray-500 uppercase tracking-wide pb-3 pr-4">Ürün adı</th>
-                  <th class="text-left text-xs font-semibold text-gray-500 uppercase tracking-wide pb-3 pr-4">Özellikler</th>
-                  <th class="text-right text-xs font-semibold text-gray-500 uppercase tracking-wide pb-3 pr-4">Birim fiyatı</th>
-                  <th class="text-center text-xs font-semibold text-gray-500 uppercase tracking-wide pb-3 pr-4">Miktar</th>
-                  <th class="text-right text-xs font-semibold text-gray-500 uppercase tracking-wide pb-3">Toplam</th>
+                  <th class="text-left text-xs font-semibold text-gray-500 uppercase tracking-wide pb-3 pr-4">${t('orders.productName')}</th>
+                  <th class="text-left text-xs font-semibold text-gray-500 uppercase tracking-wide pb-3 pr-4">${t('orders.specifications')}</th>
+                  <th class="text-right text-xs font-semibold text-gray-500 uppercase tracking-wide pb-3 pr-4">${t('orders.unitPrice')}</th>
+                  <th class="text-center text-xs font-semibold text-gray-500 uppercase tracking-wide pb-3 pr-4">${t('orders.quantity')}</th>
+                  <th class="text-right text-xs font-semibold text-gray-500 uppercase tracking-wide pb-3">${t('orders.total')}</th>
                 </tr>
               </thead>
               <tbody>
@@ -568,8 +569,8 @@ function renderAllOrders(): string {
 
           <!-- Summary Row -->
           <div class="flex items-center justify-between mt-4 pt-3 border-t border-gray-200">
-            <span class="text-sm text-gray-500">Ürün Miktarı: <strong class="text-gray-800" x-text="selectedOrder.products.reduce((s, p) => s + p.quantity, 0)"></strong></span>
-            <span class="text-sm text-gray-500">Toplam Fiyatı: <strong class="text-gray-900" x-text="'USD ' + selectedOrder.products.reduce((s, p) => { const v = parseFloat(String(p.totalPrice).replace(/,/g, '')); return s + (isNaN(v) ? 0 : v); }, 0).toLocaleString('en-US', {minimumFractionDigits:2})"></strong></span>
+            <span class="text-sm text-gray-500">${t('orders.productQuantity')}: <strong class="text-gray-800" x-text="selectedOrder.products.reduce((s, p) => s + p.quantity, 0)"></strong></span>
+            <span class="text-sm text-gray-500">${t('orders.totalPrice')}: <strong class="text-gray-900" x-text="'USD ' + selectedOrder.products.reduce((s, p) => { const v = parseFloat(String(p.totalPrice).replace(/,/g, '')); return s + (isNaN(v) ? 0 : v); }, 0).toLocaleString('en-US', {minimumFractionDigits:2})"></strong></span>
           </div>
         </div>
 
@@ -580,7 +581,7 @@ function renderAllOrders(): string {
               <svg class="w-5 h-5 text-gray-500 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
                 <path d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0"/>
               </svg>
-              <h2 class="text-base font-bold text-gray-900">Kargo detayları</h2>
+              <h2 class="text-base font-bold text-gray-900">${t('orders.shippingDetails')}</h2>
             </div>
             <div class="flex items-center gap-3">
               <span class="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium rounded-full"
@@ -593,15 +594,15 @@ function renderAllOrders(): string {
 
           <div class="grid grid-cols-4 max-sm:grid-cols-1 gap-4 max-sm:gap-3">
             <div>
-              <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">Teslimat adresi</p>
+              <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">${t('orders.deliveryAddress')}</p>
               <p class="text-sm text-gray-700 leading-relaxed" x-text="selectedOrder.shipping.address"></p>
             </div>
             <div>
-              <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">Çıkış ülkesi</p>
+              <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">${t('orders.shipFromCountry')}</p>
               <p class="text-sm text-gray-700" x-text="selectedOrder.shipping.shipFrom"></p>
             </div>
             <div>
-              <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">Kargo yöntemi</p>
+              <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">${t('orders.shippingMethod')}</p>
               <p class="text-sm text-gray-700 whitespace-pre-line" x-text="selectedOrder.shipping.method"></p>
             </div>
             <div>
@@ -618,7 +619,7 @@ function renderAllOrders(): string {
               <svg class="w-5 h-5 text-gray-500 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
                 <rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/>
               </svg>
-              <h2 class="text-base font-bold text-gray-900">Ödeme detaylari</h2>
+              <h2 class="text-base font-bold text-gray-900">${t('orders.paymentDetails')}</h2>
             </div>
             <div class="flex items-center gap-2">
               <button @click="openModal('showPaymentHistory')" class="px-4 py-1.5 text-xs font-medium text-blue-600 bg-blue-50 border border-blue-200 rounded-full cursor-pointer hover:bg-blue-100 transition-colors">
@@ -648,11 +649,11 @@ function renderAllOrders(): string {
               <template x-if="selectedOrder.payment.hasRecord">
                 <a href="#" class="inline-flex items-center gap-1.5 text-sm text-blue-600 hover:underline">
                   <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                  Ödeme geçmişini gör
+                  ${t('orders.viewPaymentHistory')}
                 </a>
               </template>
               <template x-if="!selectedOrder.payment.hasRecord">
-                <p class="text-sm text-gray-400">Ödeme kaydı bulunmuyor</p>
+                <p class="text-sm text-gray-400">${t('orders.noPaymentRecord')}</p>
               </template>
             </div>
 
@@ -660,23 +661,23 @@ function renderAllOrders(): string {
             <div class="bg-gray-50 rounded-lg p-4 max-sm:p-3">
               <div class="space-y-2.5">
                 <div class="flex items-center justify-between text-sm">
-                  <span class="text-gray-500">Ara toplam</span>
+                  <span class="text-gray-500">${t('orders.subtotal')}</span>
                   <span class="text-gray-800">USD <span x-text="selectedOrder.payment.subtotal"></span></span>
                 </div>
                 <div class="flex items-center justify-between text-sm">
-                  <span class="text-gray-500">Kargo ücreti</span>
+                  <span class="text-gray-500">${t('orders.shippingFee')}</span>
                   <span class="text-gray-800">USD <span x-text="selectedOrder.payment.shippingFee"></span></span>
                 </div>
                 <div class="border-t border-gray-200 pt-2.5 flex items-center justify-between text-sm">
-                  <span class="text-gray-500">Ara toplam</span>
+                  <span class="text-gray-500">${t('orders.subtotal')}</span>
                   <span class="text-gray-800">USD <span x-text="selectedOrder.payment.grandTotal"></span></span>
                 </div>
                 <div class="flex items-center justify-between text-base font-bold">
-                  <span class="text-gray-900">Toplam*</span>
+                  <span class="text-gray-900">${t('orders.grandTotal')}*</span>
                   <span class="text-gray-900">USD <span x-text="selectedOrder.payment.grandTotal"></span></span>
                 </div>
               </div>
-              <p class="text-[11px] text-gray-400 mt-3 leading-relaxed">*Toplam tutara işlem ücreti dahil değildir.</p>
+              <p class="text-[11px] text-gray-400 mt-3 leading-relaxed">${t('orders.totalDisclaimer')}</p>
             </div>
           </div>
         </div>
@@ -687,16 +688,16 @@ function renderAllOrders(): string {
             <svg class="w-5 h-5 text-gray-500 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
               <path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
             </svg>
-            <h2 class="text-base font-bold text-gray-900">Tedarikçi detayları</h2>
+            <h2 class="text-base font-bold text-gray-900">${t('orders.supplierDetails')}</h2>
           </div>
 
           <div class="grid grid-cols-4 max-sm:grid-cols-2 max-[380px]:grid-cols-1 gap-4 max-sm:gap-3 mb-4">
             <div>
-              <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">Tedarikçi</p>
+              <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">${t('orders.supplier')}</p>
               <p class="text-sm font-medium text-gray-800" x-text="selectedOrder.supplier.name"></p>
             </div>
             <div>
-              <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">İletişim adı</p>
+              <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">${t('orders.contactName')}</p>
               <p class="text-sm text-gray-700" x-text="selectedOrder.supplier.contact"></p>
             </div>
             <div>
@@ -710,9 +711,9 @@ function renderAllOrders(): string {
           </div>
 
           <div class="flex items-center gap-4 max-sm:gap-3">
-            <a href="#" class="text-sm text-blue-600 hover:underline">Mağazayı ziyaret et</a>
+            <a href="#" class="text-sm text-blue-600 hover:underline">${t('orders.visitStore')}</a>
             <span class="text-gray-300">|</span>
-            <a href="#" class="text-sm text-blue-600 hover:underline">Sohbet et</a>
+            <a href="#" class="text-sm text-blue-600 hover:underline">${t('orders.chatNow')}</a>
           </div>
         </div>
 
@@ -722,7 +723,7 @@ function renderAllOrders(): string {
             <svg class="w-5 h-5 text-amber-500 shrink-0" fill="currentColor" viewBox="0 0 24 24">
               <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/>
             </svg>
-            <h2 class="text-base font-bold text-gray-900">iSTOC TradeHub sipariş koruması</h2>
+            <h2 class="text-base font-bold text-gray-900">${t('orders.orderProtection')}</h2>
           </div>
 
           <div class="space-y-4 max-sm:space-y-3">
@@ -731,9 +732,9 @@ function renderAllOrders(): string {
                 <path stroke-linecap="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
               </svg>
               <div class="flex-1 min-w-0">
-                <p class="text-sm font-medium text-gray-800 mb-0.5">Güvenli ödemeler</p>
-                <p class="text-xs text-gray-500 leading-relaxed">Ödemeniz iSTOC TradeHub tarafından güvenli bir şekilde korunmaktadır.</p>
-                <a href="#" class="text-xs text-blue-600 hover:underline mt-1 inline-block">Detayları gör</a>
+                <p class="text-sm font-medium text-gray-800 mb-0.5">${t('orders.securePayments')}</p>
+                <p class="text-xs text-gray-500 leading-relaxed">${t('orders.securePaymentsDesc')}</p>
+                <a href="#" class="text-xs text-blue-600 hover:underline mt-1 inline-block">${t('orders.viewDetails')}</a>
               </div>
             </div>
 
@@ -742,13 +743,13 @@ function renderAllOrders(): string {
                 <path stroke-linecap="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
               </svg>
               <div class="flex-1 min-w-0">
-                <p class="text-sm font-medium text-gray-800 mb-0.5">Para iadesi garantisi</p>
-                <p class="text-xs text-gray-500 leading-relaxed">Ürün kalitesi veya teslimat sorunları için para iadesi garantisi sunulmaktadır.</p>
-                <a href="#" class="text-xs text-blue-600 hover:underline mt-1 inline-block">Detayları gör</a>
+                <p class="text-sm font-medium text-gray-800 mb-0.5">${t('orders.refundGuarantee')}</p>
+                <p class="text-xs text-gray-500 leading-relaxed">${t('orders.refundGuaranteeDesc')}</p>
+                <a href="#" class="text-xs text-blue-600 hover:underline mt-1 inline-block">${t('orders.viewDetails')}</a>
               </div>
             </div>
 
-            <p class="text-[11px] text-gray-400 leading-relaxed pl-8 max-sm:pl-7">Trade Assurance, iSTOC TradeHub üzerindeki siparişler için ücretsiz bir koruma hizmetidir.</p>
+            <p class="text-[11px] text-gray-400 leading-relaxed pl-8 max-sm:pl-7">${t('orders.tradeAssuranceNote')}</p>
           </div>
         </div>
 
@@ -1177,19 +1178,19 @@ function renderAllOrders(): string {
 function renderRefunds(): string {
   return `
     <div class="flex items-center justify-between px-7 max-sm:px-3 pt-6 pb-5 border-b border-(--color-border-light,#f0f0f0)">
-      <h1 class="text-[22px] font-bold text-(--color-text-heading,#111827)">Satış sonrası işlemler ve para iadeleri</h1>
+      <h1 class="text-[22px] font-bold text-(--color-text-heading,#111827)">${t('orders.refundsAfterSalesTitle')}</h1>
     </div>
     <div class="os-tabs flex border-b overflow-x-auto scrollbar-hide border-(--color-border-default,#e5e5e5) px-7 max-sm:px-3" data-tabgroup="refunds">
-      <button class="os-tabs__tab os-tabs__tab--active py-3 px-4 text-sm bg-transparent border-none border-b-2 border-b-transparent cursor-pointer whitespace-nowrap transition-colors" data-tab="refund-returns">Para İadeleri</button>
-      <button class="os-tabs__tab py-3 px-4 text-sm bg-transparent border-none border-b-2 border-b-transparent cursor-pointer whitespace-nowrap transition-colors text-(--color-text-muted,#666)" data-tab="refund-tax">Vergi iadeleri</button>
-      <button class="os-tabs__tab py-3 px-4 text-sm bg-transparent border-none border-b-2 border-b-transparent cursor-pointer whitespace-nowrap transition-colors text-(--color-text-muted,#666)" data-tab="refund-after">Satış sonrası hizmetler</button>
+      <button class="os-tabs__tab os-tabs__tab--active py-3 px-4 text-sm bg-transparent border-none border-b-2 border-b-transparent cursor-pointer whitespace-nowrap transition-colors" data-tab="refund-returns">${t('orders.refundsTab')}</button>
+      <button class="os-tabs__tab py-3 px-4 text-sm bg-transparent border-none border-b-2 border-b-transparent cursor-pointer whitespace-nowrap transition-colors text-(--color-text-muted,#666)" data-tab="refund-tax">${t('orders.taxRefundsTab')}</button>
+      <button class="os-tabs__tab py-3 px-4 text-sm bg-transparent border-none border-b-2 border-b-transparent cursor-pointer whitespace-nowrap transition-colors text-(--color-text-muted,#666)" data-tab="refund-after">${t('orders.afterSalesServicesTab')}</button>
     </div>
 
     <!-- Tab: Para İadeleri (empty) -->
     <div class="os-tab-content os-tab-content--active" data-content="refund-returns">
       <div class="flex flex-col items-center justify-center gap-3 px-10 max-sm:px-4 py-20 text-center">
         ${EMPTY_RECEIPT_ICON}
-        <p class="text-sm text-(--color-text-muted,#666)">Şu anda satış sonrası servis talebi yok</p>
+        <p class="text-sm text-(--color-text-muted,#666)">${t('orders.noAfterSalesRequest')}</p>
       </div>
     </div>
 
@@ -1199,19 +1200,19 @@ function renderRefunds(): string {
         <div class="overflow-x-auto"><table class="os-table w-full border-collapse border border-(--color-border-default,#e5e5e5) rounded-md overflow-hidden">
           <thead>
             <tr>
-              <th class="px-4 py-3 text-[13px] font-semibold text-(--color-text-body,#333) bg-(--color-surface-muted,#fafafa) border-b border-(--color-border-default,#e5e5e5) text-left whitespace-nowrap">Sipariş numarası</th>
-              <th class="px-4 py-3 text-[13px] font-semibold text-(--color-text-body,#333) bg-(--color-surface-muted,#fafafa) border-b border-(--color-border-default,#e5e5e5) text-left whitespace-nowrap">Vaka numarası</th>
-              <th class="px-4 py-3 text-[13px] font-semibold text-(--color-text-body,#333) bg-(--color-surface-muted,#fafafa) border-b border-(--color-border-default,#e5e5e5) text-left whitespace-nowrap">Başvuru Tarihi</th>
-              <th class="px-4 py-3 text-[13px] font-semibold text-(--color-text-body,#333) bg-(--color-surface-muted,#fafafa) border-b border-(--color-border-default,#e5e5e5) text-left whitespace-nowrap">Para iadesi tutarı</th>
-              <th class="px-4 py-3 text-[13px] font-semibold text-(--color-text-body,#333) bg-(--color-surface-muted,#fafafa) border-b border-(--color-border-default,#e5e5e5) text-left whitespace-nowrap">Durum</th>
-              <th class="px-4 py-3 text-[13px] font-semibold text-(--color-text-body,#333) bg-(--color-surface-muted,#fafafa) border-b border-(--color-border-default,#e5e5e5) text-left whitespace-nowrap">Banka iade durumu</th>
+              <th class="px-4 py-3 text-[13px] font-semibold text-(--color-text-body,#333) bg-(--color-surface-muted,#fafafa) border-b border-(--color-border-default,#e5e5e5) text-left whitespace-nowrap">${t('orders.orderNumber')}</th>
+              <th class="px-4 py-3 text-[13px] font-semibold text-(--color-text-body,#333) bg-(--color-surface-muted,#fafafa) border-b border-(--color-border-default,#e5e5e5) text-left whitespace-nowrap">${t('orders.caseNumber')}</th>
+              <th class="px-4 py-3 text-[13px] font-semibold text-(--color-text-body,#333) bg-(--color-surface-muted,#fafafa) border-b border-(--color-border-default,#e5e5e5) text-left whitespace-nowrap">${t('orders.applicationDate')}</th>
+              <th class="px-4 py-3 text-[13px] font-semibold text-(--color-text-body,#333) bg-(--color-surface-muted,#fafafa) border-b border-(--color-border-default,#e5e5e5) text-left whitespace-nowrap">${t('orders.refundAmount')}</th>
+              <th class="px-4 py-3 text-[13px] font-semibold text-(--color-text-body,#333) bg-(--color-surface-muted,#fafafa) border-b border-(--color-border-default,#e5e5e5) text-left whitespace-nowrap">${t('orders.status')}</th>
+              <th class="px-4 py-3 text-[13px] font-semibold text-(--color-text-body,#333) bg-(--color-surface-muted,#fafafa) border-b border-(--color-border-default,#e5e5e5) text-left whitespace-nowrap">${t('orders.bankRefundStatus')}</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td colspan="6" class="text-center !py-[60px] px-4">
                 ${EMPTY_RECEIPT_ICON}
-                <p class="text-sm text-(--color-text-muted,#666)">Şu anda satış sonrası servis talebi yok</p>
+                <p class="text-sm text-(--color-text-muted,#666)">${t('orders.noAfterSalesRequest')}</p>
               </td>
             </tr>
           </tbody>
@@ -1223,7 +1224,7 @@ function renderRefunds(): string {
     <div class="os-tab-content" data-content="refund-after">
       <div class="flex flex-col items-center justify-center gap-3 px-10 max-sm:px-4 py-20 text-center">
         ${EMPTY_RECEIPT_ICON}
-        <p class="text-sm text-(--color-text-muted,#666)">Şu anda satış sonrası servis talebi yok</p>
+        <p class="text-sm text-(--color-text-muted,#666)">${t('orders.noAfterSalesRequest')}</p>
       </div>
     </div>
   `;
@@ -1232,23 +1233,23 @@ function renderRefunds(): string {
 function renderReviews(): string {
   return `
     <div class="flex items-center justify-between px-7 max-sm:px-3 pt-6 pb-5 border-b border-(--color-border-light,#f0f0f0)">
-      <h1 class="text-[22px] font-bold text-(--color-text-heading,#111827)">Değerlendirmelerim</h1>
+      <h1 class="text-[22px] font-bold text-(--color-text-heading,#111827)">${t('orders.myReviews')}</h1>
       <div class="flex items-center gap-1">
-        <span class="text-[13px] text-(--color-text-muted,#666)">Puanlama Kuralları</span>
+        <span class="text-[13px] text-(--color-text-muted,#666)">${t('orders.scoringRules')}</span>
         <svg class="w-4 h-4" fill="none" stroke="#999" stroke-width="1.5" viewBox="0 0 24 24">
           <circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 16v-4m0-4h.01"/>
         </svg>
       </div>
     </div>
     <div class="os-tabs flex border-b overflow-x-auto scrollbar-hide border-(--color-border-default,#e5e5e5) px-7 max-sm:px-3" data-tabgroup="reviews">
-      <button class="os-tabs__tab os-tabs__tab--active os-tabs__tab--orange py-3 px-4 text-sm bg-transparent border-none border-b-2 border-b-transparent cursor-pointer whitespace-nowrap transition-colors" data-tab="review-pending">Bekleyen değerlendirmeler (0)</button>
-      <button class="os-tabs__tab py-3 px-4 text-sm bg-transparent border-none border-b-2 border-b-transparent cursor-pointer whitespace-nowrap transition-colors text-(--color-text-muted,#666)" data-tab="review-done">Değerlendirilenler (0)</button>
+      <button class="os-tabs__tab os-tabs__tab--active os-tabs__tab--orange py-3 px-4 text-sm bg-transparent border-none border-b-2 border-b-transparent cursor-pointer whitespace-nowrap transition-colors" data-tab="review-pending">${t('orders.pendingReviews')} (0)</button>
+      <button class="os-tabs__tab py-3 px-4 text-sm bg-transparent border-none border-b-2 border-b-transparent cursor-pointer whitespace-nowrap transition-colors text-(--color-text-muted,#666)" data-tab="review-done">${t('orders.reviewed')} (0)</button>
     </div>
 
     <div class="flex justify-end px-7 max-sm:px-3 py-3">
       <div class="flex border border-(--color-border-medium,#d1d5db) rounded overflow-hidden">
-        <input type="text" placeholder="Sipariş numarası, E-posta, Hesap" class="os-reviews-toolbar__input w-[240px] max-sm:w-[160px] h-8 px-2.5 text-[13px] border-none outline-none text-(--color-text-body,#333)" />
-        <button class="flex items-center justify-center w-8 h-8 border-none border-l border-l-(--color-border-medium,#d1d5db) bg-(--color-surface-muted,#fafafa) text-(--color-text-muted,#666) cursor-pointer hover:bg-(--color-border-light) hover:text-(--color-text-heading,#111827)" aria-label="Ara">
+        <input type="text" placeholder="${t('orders.reviewSearchPlaceholder')}" class="os-reviews-toolbar__input w-[240px] max-sm:w-[160px] h-8 px-2.5 text-[13px] border-none outline-none text-(--color-text-body,#333)" />
+        <button class="flex items-center justify-center w-8 h-8 border-none border-l border-l-(--color-border-medium,#d1d5db) bg-(--color-surface-muted,#fafafa) text-(--color-text-muted,#666) cursor-pointer hover:bg-(--color-border-light) hover:text-(--color-text-heading,#111827)" aria-label="${t('common.search')}">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <circle cx="11" cy="11" r="8"/><path stroke-linecap="round" d="m21 21-4.35-4.35"/>
           </svg>
@@ -1265,14 +1266,14 @@ function renderReviews(): string {
           <circle cx="72" cy="38" r="8" fill="#FBBF24"/>
           <rect x="66" y="48" width="12" height="20" rx="3" fill="#1E3A5F"/>
         </svg>
-        <p class="text-sm text-(--color-text-muted,#666)">Bekleyen yorum yok</p>
+        <p class="text-sm text-(--color-text-muted,#666)">${t('orders.noPendingReviews')}</p>
       </div>
     </div>
 
     <div class="os-tab-content" data-content="review-done">
       <div class="flex flex-col items-center justify-center gap-3 px-10 max-sm:px-4 py-20 text-center">
         ${EMPTY_RECEIPT_ICON}
-        <p class="text-sm text-(--color-text-muted,#666)">Değerlendirme bulunamadı</p>
+        <p class="text-sm text-(--color-text-muted,#666)">${t('orders.noReviewsFound')}</p>
       </div>
     </div>
   `;
@@ -1282,22 +1283,22 @@ function renderCoupons(): string {
   return `
     <div x-data="couponsPageComponent()">
       <div class="flex items-center justify-between px-7 max-sm:px-3 pt-6 pb-5 border-b border-(--color-border-light,#f0f0f0)">
-        <h1 class="text-[22px] font-bold text-(--color-text-heading,#111827)">Kupon ve krediler</h1>
+        <h1 class="text-[22px] font-bold text-(--color-text-heading,#111827)">${t('orders.couponsAndCredits')}</h1>
       </div>
 
       <!-- Tabs -->
       <div class="os-tabs flex border-b overflow-x-auto scrollbar-hide border-(--color-border-default,#e5e5e5) px-7 max-sm:px-3">
         <button @click="switchTab('coupons-list')" class="os-tabs__tab py-3 px-4 text-sm bg-transparent border-none border-b-2 border-b-transparent cursor-pointer whitespace-nowrap transition-colors"
-          :class="activeTab === 'coupons-list' ? 'os-tabs__tab--active' : 'text-(--color-text-muted,#666)'">Kuponlar</button>
+          :class="activeTab === 'coupons-list' ? 'os-tabs__tab--active' : 'text-(--color-text-muted,#666)'">${t('orders.coupons')}</button>
         <button @click="switchTab('coupons-credit')" class="os-tabs__tab py-3 px-4 text-sm bg-transparent border-none border-b-2 border-b-transparent cursor-pointer whitespace-nowrap transition-colors"
-          :class="activeTab === 'coupons-credit' ? 'os-tabs__tab--active' : 'text-(--color-text-muted,#666)'">Kredi</button>
+          :class="activeTab === 'coupons-credit' ? 'os-tabs__tab--active' : 'text-(--color-text-muted,#666)'">${t('orders.credit')}</button>
       </div>
 
       <!-- Tab: Kuponlar -->
       <div x-show="activeTab === 'coupons-list'">
         <!-- Pill filters -->
         <div class="os-pill-filters flex gap-2 px-7 max-sm:px-3 py-4">
-          <template x-for="pill in [{id:'available',label:'Mevcut'},{id:'used',label:'Kullanıldı'},{id:'expired',label:'Süresi doldu'}]" :key="pill.id">
+          <template x-for="pill in [{id:'available',label:'${t('orders.available')}'},{id:'used',label:'${t('orders.used')}'},{id:'expired',label:'${t('orders.expired')}'}]" :key="pill.id">
             <button @click="setPill(pill.id)" class="os-pill px-4 py-1.5 text-[13px] bg-(--color-surface,#fff) border border-(--color-border-medium,#d1d5db) rounded-[20px] cursor-pointer transition-all text-(--color-text-muted,#666)"
               :class="activePill === pill.id ? 'os-pill--active' : ''"
               x-text="pill.label"></button>
@@ -1306,7 +1307,7 @@ function renderCoupons(): string {
 
         <!-- Empty state -->
         <div x-show="filteredCoupons.length === 0" class="flex flex-col items-center justify-center gap-3 px-10 max-sm:px-4 py-[60px] text-center">
-          <p class="text-sm text-(--color-text-muted,#666)">Kupon Yok</p>
+          <p class="text-sm text-(--color-text-muted,#666)">${t('orders.noCoupons')}</p>
         </div>
 
         <!-- Coupon cards -->
@@ -1328,15 +1329,15 @@ function renderCoupons(): string {
                   </div>
                   <p class="text-sm text-(--color-text-body,#333) mb-1" x-text="coupon.description"></p>
                   <div class="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-(--color-text-muted,#666)">
-                    <span x-show="coupon.minOrder > 0" x-text="'Min sipariş: $' + coupon.minOrder"></span>
-                    <span x-text="'Son tarih: ' + formatDate(coupon.expiresAt)"></span>
-                    <span x-show="coupon.usedAt" x-text="'Kullanıldı: ' + formatDate(coupon.usedAt || '')"></span>
+                    <span x-show="coupon.minOrder > 0" x-text="'${t('orders.minOrder')}: $' + coupon.minOrder"></span>
+                    <span x-text="'${t('orders.expiryDate')}: ' + formatDate(coupon.expiresAt)"></span>
+                    <span x-show="coupon.usedAt" x-text="'${t('orders.usedOn')}: ' + formatDate(coupon.usedAt || '')"></span>
                   </div>
                 </div>
                 <!-- Value display -->
                 <div class="flex-shrink-0 text-right">
                   <span class="text-lg font-bold" :class="coupon.status === 'available' ? 'text-(--color-text-heading,#111827)' : 'text-(--color-text-muted,#666)'"
-                    x-text="coupon.type === 'shipping' ? 'Ücretsiz' : (coupon.type === 'percent' ? '%' + coupon.value : '$' + coupon.value)"></span>
+                    x-text="coupon.type === 'shipping' ? '${t('orders.free')}' : (coupon.type === 'percent' ? '%' + coupon.value : '$' + coupon.value)"></span>
                 </div>
               </div>
             </div>
@@ -1347,27 +1348,27 @@ function renderCoupons(): string {
       <!-- Tab: Kredi -->
       <div x-show="activeTab === 'coupons-credit'">
         <div class="mx-7 my-5 p-5 border border-(--color-border-default,#e5e5e5) rounded-lg">
-          <p class="text-sm text-(--color-text-body,#333) mb-2">Toplam kredi bakiyesi</p>
+          <p class="text-sm text-(--color-text-body,#333) mb-2">${t('orders.totalCreditBalance')}</p>
           <p class="text-[28px] font-bold text-(--color-text-heading,#111827) mb-2" x-text="'$' + creditBalance.toFixed(2)"></p>
-          <p class="text-[13px] text-(--color-text-muted,#666)">1 kredi 1 USD'ye eşittir <a href="#terms" class="text-(--color-text-link,#cc9900) hover:text-(--color-text-link-hover,#b38600) underline">Hükümler ve koşullar</a></p>
+          <p class="text-[13px] text-(--color-text-muted,#666)">${t('orders.creditEqualsUsd')} <a href="#terms" class="text-(--color-text-link,#cc9900) hover:text-(--color-text-link-hover,#b38600) underline">${t('orders.termsAndConditions')}</a></p>
         </div>
 
-        <h3 class="text-base font-bold text-(--color-text-heading,#111827) px-7 max-sm:px-3 pt-5 pb-3">Geçmiş</h3>
+        <h3 class="text-base font-bold text-(--color-text-heading,#111827) px-7 max-sm:px-3 pt-5 pb-3">${t('orders.history')}</h3>
         <div class="px-7 max-sm:px-3">
           <div class="overflow-x-auto"><table class="w-full border-collapse border border-(--color-border-default,#e5e5e5) rounded-md overflow-hidden">
             <thead>
               <tr>
-                <th class="px-4 py-3 text-[13px] font-semibold text-(--color-text-body,#333) bg-(--color-surface-muted,#fafafa) border-b border-(--color-border-default,#e5e5e5) text-left whitespace-nowrap">İşlem</th>
-                <th class="px-4 py-3 text-[13px] font-semibold text-(--color-text-body,#333) bg-(--color-surface-muted,#fafafa) border-b border-(--color-border-default,#e5e5e5) text-left whitespace-nowrap">Ayrıntılar</th>
-                <th class="px-4 py-3 text-[13px] font-semibold text-(--color-text-body,#333) bg-(--color-surface-muted,#fafafa) border-b border-(--color-border-default,#e5e5e5) text-left whitespace-nowrap">Tarih (UTC-8)</th>
-                <th class="px-4 py-3 text-[13px] font-semibold text-(--color-text-body,#333) bg-(--color-surface-muted,#fafafa) border-b border-(--color-border-default,#e5e5e5) text-left whitespace-nowrap">Tutar</th>
+                <th class="px-4 py-3 text-[13px] font-semibold text-(--color-text-body,#333) bg-(--color-surface-muted,#fafafa) border-b border-(--color-border-default,#e5e5e5) text-left whitespace-nowrap">${t('orders.transaction')}</th>
+                <th class="px-4 py-3 text-[13px] font-semibold text-(--color-text-body,#333) bg-(--color-surface-muted,#fafafa) border-b border-(--color-border-default,#e5e5e5) text-left whitespace-nowrap">${t('orders.details')}</th>
+                <th class="px-4 py-3 text-[13px] font-semibold text-(--color-text-body,#333) bg-(--color-surface-muted,#fafafa) border-b border-(--color-border-default,#e5e5e5) text-left whitespace-nowrap">${t('orders.dateUtc8')}</th>
+                <th class="px-4 py-3 text-[13px] font-semibold text-(--color-text-body,#333) bg-(--color-surface-muted,#fafafa) border-b border-(--color-border-default,#e5e5e5) text-left whitespace-nowrap">${t('orders.amount')}</th>
               </tr>
             </thead>
             <tbody>
               <!-- Empty state -->
               <template x-if="creditHistory.length === 0">
                 <tr>
-                  <td colspan="4" class="text-center py-10 px-4 text-[13px] text-(--color-text-placeholder,#999)">Henüz bir kayıt yok.</td>
+                  <td colspan="4" class="text-center py-10 px-4 text-[13px] text-(--color-text-placeholder,#999)">${t('orders.noRecordsYet')}</td>
                 </tr>
               </template>
               <!-- Credit rows -->
@@ -1389,7 +1390,7 @@ function renderCoupons(): string {
         </div>
 
         <div class="flex items-center justify-end gap-2 px-7 max-sm:px-3 py-4">
-          <span class="text-[13px] text-(--color-text-muted,#666)" x-text="creditHistory.length + ' kayıt'"></span>
+          <span class="text-[13px] text-(--color-text-muted,#666)" x-text="creditHistory.length + ' ${t('orders.records')}'"></span>
         </div>
       </div>
     </div>
@@ -1399,56 +1400,56 @@ function renderCoupons(): string {
 function renderTaxInfo(): string {
   return `
     <div class="flex items-center justify-between px-7 max-sm:px-3 pt-6 pb-5 border-b border-(--color-border-light,#f0f0f0)">
-      <h1 class="text-[22px] font-bold text-(--color-text-heading,#111827)">Vergi bilgileri</h1>
+      <h1 class="text-[22px] font-bold text-(--color-text-heading,#111827)">${t('orders.taxInformation')}</h1>
     </div>
     <div class="os-tabs flex border-b overflow-x-auto scrollbar-hide border-(--color-border-default,#e5e5e5) px-7 max-sm:px-3" data-tabgroup="tax">
-      <button class="os-tabs__tab os-tabs__tab--active py-3 px-4 text-sm bg-transparent border-none border-b-2 border-b-transparent cursor-pointer whitespace-nowrap transition-colors" data-tab="tax-info-tab">Vergi Bilgileri</button>
-      <button class="os-tabs__tab py-3 px-4 text-sm bg-transparent border-none border-b-2 border-b-transparent cursor-pointer whitespace-nowrap transition-colors text-(--color-text-muted,#666)" data-tab="tax-customs">Gümrük muayenesi bilgileri</button>
+      <button class="os-tabs__tab os-tabs__tab--active py-3 px-4 text-sm bg-transparent border-none border-b-2 border-b-transparent cursor-pointer whitespace-nowrap transition-colors" data-tab="tax-info-tab">${t('orders.taxInfoTab')}</button>
+      <button class="os-tabs__tab py-3 px-4 text-sm bg-transparent border-none border-b-2 border-b-transparent cursor-pointer whitespace-nowrap transition-colors text-(--color-text-muted,#666)" data-tab="tax-customs">${t('orders.customsInspectionInfo')}</button>
     </div>
 
     <!-- Tab: Vergi Bilgileri -->
     <div class="os-tab-content os-tab-content--active" data-content="tax-info-tab">
       <div class="flex items-center justify-between gap-6 px-7 max-sm:px-3 py-5 border-b border-(--color-border-light,#f0f0f0) max-md:flex-col max-md:items-start">
         <div class="flex-1 min-w-0">
-          <h4 class="text-sm font-semibold text-(--color-text-heading,#111827) mb-1.5">KDV muafiyeti için</h4>
-          <p class="text-[13px] text-(--color-text-muted,#666) leading-normal">Yeniden satış veya üretim için ürün satın alıyorsanız doğrulanması için vergi bilgilerinizi gönderin ve TradeHub.com'da vergiden muaf siparişler verin.</p>
+          <h4 class="text-sm font-semibold text-(--color-text-heading,#111827) mb-1.5">${t('orders.vatExemptionFor')}</h4>
+          <p class="text-[13px] text-(--color-text-muted,#666) leading-normal">${t('orders.vatExemptionDesc')}</p>
         </div>
-        <button class="os-info-card__btn px-5 py-2 text-[13px] text-(--color-text-body,#333) bg-(--color-surface,#fff) border border-(--color-border-medium,#d1d5db) rounded-[20px] cursor-pointer whitespace-nowrap shrink-0 transition-colors hover:border-[#999]" data-modal="pst-modal">Vergi muafiyeti ekleyin veya değiştirin</button>
+        <button class="os-info-card__btn px-5 py-2 text-[13px] text-(--color-text-body,#333) bg-(--color-surface,#fff) border border-(--color-border-medium,#d1d5db) rounded-[20px] cursor-pointer whitespace-nowrap shrink-0 transition-colors hover:border-[#999]" data-modal="pst-modal">${t('orders.addOrChangeTaxExemption')}</button>
       </div>
 
       <div class="flex items-center justify-between gap-6 px-7 max-sm:px-3 py-5 border-b border-(--color-border-light,#f0f0f0) max-md:flex-col max-md:items-start">
         <div class="flex-1 min-w-0">
-          <h4 class="text-sm font-semibold text-(--color-text-heading,#111827) mb-1.5">AB/Norveç/Birleşik Krallık/İsviçre veya Avustralya/Yeni Zelanda/Singapur/Şili vergi bilgisi gönderimi</h4>
-          <p class="text-[13px] text-(--color-text-muted,#666) leading-normal">Ticari satın alımlarda, doğrulanması için vergi bilgilerinizi göndererek TradeHub.com'da vergiden muaf siparişler verebilirsiniz.</p>
+          <h4 class="text-sm font-semibold text-(--color-text-heading,#111827) mb-1.5">${t('orders.euNorwayTaxSubmission')}</h4>
+          <p class="text-[13px] text-(--color-text-muted,#666) leading-normal">${t('orders.euNorwayTaxDesc')}</p>
         </div>
-        <button class="os-info-card__btn px-5 py-2 text-[13px] text-(--color-text-body,#333) bg-(--color-surface,#fff) border border-(--color-border-medium,#d1d5db) rounded-[20px] cursor-pointer whitespace-nowrap shrink-0 transition-colors hover:border-[#999]" data-modal="vat-modal">Vergi bilgilerinizi ekleyin</button>
+        <button class="os-info-card__btn px-5 py-2 text-[13px] text-(--color-text-body,#333) bg-(--color-surface,#fff) border border-(--color-border-medium,#d1d5db) rounded-[20px] cursor-pointer whitespace-nowrap shrink-0 transition-colors hover:border-[#999]" data-modal="vat-modal">${t('orders.addTaxInfo')}</button>
       </div>
 
-      <h3 class="text-base font-bold text-(--color-text-heading,#111827) px-7 max-sm:px-3 pt-5 pb-3">Sıkça Sorulan Sorular</h3>
+      <h3 class="text-base font-bold text-(--color-text-heading,#111827) px-7 max-sm:px-3 pt-5 pb-3">${t('orders.faq')}</h3>
 
       <div class="px-7 max-sm:px-3 pb-7">
         <div class="grid grid-cols-3 gap-4 mb-5 max-md:grid-cols-1">
           <div class="p-5 border border-(--color-border-default,#e5e5e5) rounded-lg">
-            <h5 class="text-sm font-semibold text-(--color-text-heading,#111827) mb-2">Vergi bilgilerim yoksa ne yapmalıyım?</h5>
-            <p class="text-[13px] text-(--color-text-muted,#666) leading-normal">Yerel vergi kurumunuzun web sitesini kontrol ederek vergi muafiyeti için uygunluk kriterlerinizi inceleyin.</p>
+            <h5 class="text-sm font-semibold text-(--color-text-heading,#111827) mb-2">${t('orders.faqNoTaxInfo')}</h5>
+            <p class="text-[13px] text-(--color-text-muted,#666) leading-normal">${t('orders.faqNoTaxInfoAnswer')}</p>
           </div>
           <div class="p-5 border border-(--color-border-default,#e5e5e5) rounded-lg">
-            <h5 class="text-sm font-semibold text-(--color-text-heading,#111827) mb-2">Vergi bilgilerim neden onaylanmadı?</h5>
-            <p class="text-[13px] text-(--color-text-muted,#666) leading-normal">Vergi bilgilerinizin süresinin dolup dolmadığını veya yanlış bilgi gönderip göndermediğinizi kontrol edin.</p>
+            <h5 class="text-sm font-semibold text-(--color-text-heading,#111827) mb-2">${t('orders.faqTaxNotApproved')}</h5>
+            <p class="text-[13px] text-(--color-text-muted,#666) leading-normal">${t('orders.faqTaxNotApprovedAnswer')}</p>
           </div>
           <div class="p-5 border border-(--color-border-default,#e5e5e5) rounded-lg">
-            <h5 class="text-sm font-semibold text-(--color-text-heading,#111827) mb-2">Vergi iadesi için nasıl başvurabilirim?</h5>
-            <p class="text-[13px] text-(--color-text-muted,#666) leading-normal">Vergi bilgileriniz gönderilmişse ve siparişiniz kargoya verilmeden önce doğrulanmışsa vergi iadesi alabilirsiniz.</p>
+            <h5 class="text-sm font-semibold text-(--color-text-heading,#111827) mb-2">${t('orders.faqHowToApplyRefund')}</h5>
+            <p class="text-[13px] text-(--color-text-muted,#666) leading-normal">${t('orders.faqHowToApplyRefundAnswer')}</p>
           </div>
         </div>
 
         <details class="os-faq__accordion border-b border-(--color-border-default,#e5e5e5) py-3.5">
-          <summary class="text-sm text-(--color-text-heading,#111827) cursor-pointer list-none flex justify-between items-center">Satış vergisi nedir?</summary>
-          <p class="pt-3 pb-1 text-[13px] text-(--color-text-muted,#666) leading-relaxed">Satış vergisi, mal ve hizmetlerin satışından alınan bir tüketim vergisidir.</p>
+          <summary class="text-sm text-(--color-text-heading,#111827) cursor-pointer list-none flex justify-between items-center">${t('orders.whatIsSalesTax')}</summary>
+          <p class="pt-3 pb-1 text-[13px] text-(--color-text-muted,#666) leading-relaxed">${t('orders.whatIsSalesTaxAnswer')}</p>
         </details>
         <details class="os-faq__accordion border-b border-(--color-border-default,#e5e5e5) py-3.5">
-          <summary class="text-sm text-(--color-text-heading,#111827) cursor-pointer list-none flex justify-between items-center">Katma Değer Vergisi (KDV) nedir?</summary>
-          <p class="pt-3 pb-1 text-[13px] text-(--color-text-muted,#666) leading-relaxed">KDV, üretim ve dağıtım sürecinin her aşamasında eklenen değer üzerinden alınan bir vergidir.</p>
+          <summary class="text-sm text-(--color-text-heading,#111827) cursor-pointer list-none flex justify-between items-center">${t('orders.whatIsVat')}</summary>
+          <p class="pt-3 pb-1 text-[13px] text-(--color-text-muted,#666) leading-relaxed">${t('orders.whatIsVatAnswer')}</p>
         </details>
       </div>
     </div>
@@ -1457,10 +1458,10 @@ function renderTaxInfo(): string {
     <div class="os-tab-content" data-content="tax-customs">
       <div class="flex items-center justify-between gap-6 px-7 max-sm:px-3 py-5 border-b border-(--color-border-light,#f0f0f0) max-md:flex-col max-md:items-start">
         <div class="flex-1 min-w-0">
-          <h4 class="text-sm font-semibold text-(--color-text-heading,#111827) mb-1.5">Gümrük işlemleri (tüm bölgeleri kapsar)</h4>
-          <p class="text-[13px] text-(--color-text-muted,#666) leading-normal">Vergi bilgileriniz gümrük yetkilileri tarafından talep edilmektedir. Bu, bir İşveren Kimlik Numarası veya Sosyal Güvenlik Numarası olabilir.</p>
+          <h4 class="text-sm font-semibold text-(--color-text-heading,#111827) mb-1.5">${t('orders.customsProcessing')}</h4>
+          <p class="text-[13px] text-(--color-text-muted,#666) leading-normal">${t('orders.customsProcessingDesc')}</p>
         </div>
-        <button class="os-info-card__btn px-5 py-2 text-[13px] text-(--color-text-body,#333) bg-(--color-surface,#fff) border border-(--color-border-medium,#d1d5db) rounded-[20px] cursor-pointer whitespace-nowrap shrink-0 transition-colors hover:border-[#999]" data-modal="customs-modal">Gümrük muayenesi bilgileri ekleyin</button>
+        <button class="os-info-card__btn px-5 py-2 text-[13px] text-(--color-text-body,#333) bg-(--color-surface,#fff) border border-(--color-border-medium,#d1d5db) rounded-[20px] cursor-pointer whitespace-nowrap shrink-0 transition-colors hover:border-[#999]" data-modal="customs-modal">${t('orders.addCustomsInspectionInfo')}</button>
       </div>
     </div>
 
@@ -1469,14 +1470,14 @@ function renderTaxInfo(): string {
       <div class="os-modal__overlay absolute inset-0 bg-black/45"></div>
       <div class="os-modal__dialog relative bg-(--color-surface,#fff) rounded-xl w-[480px] max-w-[calc(100vw-32px)] max-h-[calc(100vh-64px)] overflow-y-auto shadow-[0_20px_60px_rgba(0,0,0,0.2)]" style="animation: osModalIn 200ms ease-out">
         <div class="flex items-center justify-between px-6 pt-5 pb-4 border-b border-(--color-border-light,#f0f0f0)">
-          <h3 class="text-base font-semibold text-(--color-text-heading,#111827)">PST bilgileri</h3>
-          <button class="os-modal__close bg-transparent border-none cursor-pointer p-1 rounded flex items-center justify-center transition-colors hover:bg-(--color-surface-raised,#f5f5f5)" aria-label="Kapat">
+          <h3 class="text-base font-semibold text-(--color-text-heading,#111827)">${t('orders.pstInfo')}</h3>
+          <button class="os-modal__close bg-transparent border-none cursor-pointer p-1 rounded flex items-center justify-center transition-colors hover:bg-(--color-surface-raised,#f5f5f5)" aria-label="${t('common.close')}">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M12 4L4 12M4 4l8 8" stroke="#666" stroke-width="1.5" stroke-linecap="round"/></svg>
           </button>
         </div>
         <div class="px-6 py-5">
           <div class="mb-5">
-            <label class="block text-[13px] font-semibold text-(--color-text-body,#333) mb-2">İl <span class="text-[#e53935]">*</span></label>
+            <label class="block text-[13px] font-semibold text-(--color-text-body,#333) mb-2">${t('orders.province')} <span class="text-[#e53935]">*</span></label>
             <div class="flex flex-col gap-2.5">
               <label class="os-modal__radio flex items-center gap-2 text-sm text-(--color-text-body,#333) cursor-pointer">
                 <input type="radio" name="pst-province" value="manitoba" checked class="hidden" />
@@ -1491,12 +1492,12 @@ function renderTaxInfo(): string {
             </div>
           </div>
           <div class="mb-5">
-            <label class="block text-[13px] font-semibold text-(--color-text-body,#333) mb-2">RST numarası <span class="text-[#e53935]">*</span></label>
-            <input type="text" class="os-modal__input w-full py-2.5 px-3 text-sm border border-(--color-border-medium,#d1d5db) rounded-md outline-none text-(--color-text-heading,#111827) transition-colors box-border focus:border-(--color-cta-primary,#cc9900) focus:shadow-[0_0_0_2px_rgba(249,115,22,0.1)]" placeholder="RST numaranızı girin" />
+            <label class="block text-[13px] font-semibold text-(--color-text-body,#333) mb-2">${t('orders.rstNumber')} <span class="text-[#e53935]">*</span></label>
+            <input type="text" class="os-modal__input w-full py-2.5 px-3 text-sm border border-(--color-border-medium,#d1d5db) rounded-md outline-none text-(--color-text-heading,#111827) transition-colors box-border focus:border-(--color-cta-primary,#cc9900) focus:shadow-[0_0_0_2px_rgba(249,115,22,0.1)]" placeholder="${t('orders.enterRstNumber')}" />
           </div>
         </div>
         <div class="px-6 pt-4 pb-5 flex justify-end gap-3 border-t border-(--color-border-light,#f0f0f0)">
-          <button class="os-modal__btn os-modal__btn--primary px-6 py-2.5 text-sm font-medium rounded-[20px] cursor-pointer border-none transition-all bg-(--color-cta-primary,#333333) text-white hover:bg-(--color-cta-primary-hover,#1f1f1f)">Doğrula</button>
+          <button class="os-modal__btn os-modal__btn--primary px-6 py-2.5 text-sm font-medium rounded-[20px] cursor-pointer border-none transition-all bg-(--color-cta-primary,#333333) text-white hover:bg-(--color-cta-primary-hover,#1f1f1f)">${t('orders.verify')}</button>
         </div>
       </div>
     </div>
@@ -1506,45 +1507,45 @@ function renderTaxInfo(): string {
       <div class="os-modal__overlay absolute inset-0 bg-black/45"></div>
       <div class="os-modal__dialog relative bg-(--color-surface,#fff) rounded-xl w-[480px] max-w-[calc(100vw-32px)] max-h-[calc(100vh-64px)] overflow-y-auto shadow-[0_20px_60px_rgba(0,0,0,0.2)]" style="animation: osModalIn 200ms ease-out">
         <div class="flex items-center justify-between px-6 pt-5 pb-4 border-b border-(--color-border-light,#f0f0f0)">
-          <h3 class="text-base font-semibold text-(--color-text-heading,#111827)">KDV/GST Numarası Ekleyin</h3>
-          <button class="os-modal__close bg-transparent border-none cursor-pointer p-1 rounded flex items-center justify-center transition-colors hover:bg-(--color-surface-raised,#f5f5f5)" aria-label="Kapat">
+          <h3 class="text-base font-semibold text-(--color-text-heading,#111827)">${t('orders.addVatGstNumber')}</h3>
+          <button class="os-modal__close bg-transparent border-none cursor-pointer p-1 rounded flex items-center justify-center transition-colors hover:bg-(--color-surface-raised,#f5f5f5)" aria-label="${t('common.close')}">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M12 4L4 12M4 4l8 8" stroke="#666" stroke-width="1.5" stroke-linecap="round"/></svg>
           </button>
         </div>
         <div class="px-6 py-5">
           <div class="mb-5">
-            <label class="block text-[13px] font-semibold text-(--color-text-body,#333) mb-2">Ülke/bölge <span class="text-[#e53935]">*</span></label>
+            <label class="block text-[13px] font-semibold text-(--color-text-body,#333) mb-2">${t('orders.countryRegion')} <span class="text-[#e53935]">*</span></label>
             <div class="relative">
               <select class="os-modal__select w-full py-2.5 pl-3 pr-9 text-sm border border-(--color-border-medium,#d1d5db) rounded-md outline-none text-(--color-text-heading,#111827) bg-(--color-surface,#fff) appearance-none cursor-pointer transition-colors focus:border-(--color-cta-primary,#cc9900) focus:shadow-[0_0_0_2px_rgba(249,115,22,0.1)]">
-                <option value="">Ülke/bölge seçin</option>
-                <option value="TR">Türkiye</option>
-                <option value="DE">Almanya</option>
-                <option value="FR">Fransa</option>
-                <option value="GB">Birleşik Krallık</option>
-                <option value="NL">Hollanda</option>
-                <option value="IT">İtalya</option>
-                <option value="ES">İspanya</option>
-                <option value="NO">Norveç</option>
-                <option value="CH">İsviçre</option>
-                <option value="AU">Avustralya</option>
-                <option value="NZ">Yeni Zelanda</option>
-                <option value="SG">Singapur</option>
-                <option value="CL">Şili</option>
+                <option value="">${t('orders.selectCountryRegion')}</option>
+                <option value="TR">${t('orders.countryTR')}</option>
+                <option value="DE">${t('orders.countryDE')}</option>
+                <option value="FR">${t('orders.countryFR')}</option>
+                <option value="GB">${t('orders.countryGB')}</option>
+                <option value="NL">${t('orders.countryNL')}</option>
+                <option value="IT">${t('orders.countryIT')}</option>
+                <option value="ES">${t('orders.countryES')}</option>
+                <option value="NO">${t('orders.countryNO')}</option>
+                <option value="CH">${t('orders.countryCH')}</option>
+                <option value="AU">${t('orders.countryAU')}</option>
+                <option value="NZ">${t('orders.countryNZ')}</option>
+                <option value="SG">${t('orders.countrySG')}</option>
+                <option value="CL">${t('orders.countryCL')}</option>
               </select>
               <svg class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5l3 3 3-3" stroke="#666" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
           </div>
           <div class="mb-5">
-            <label class="block text-[13px] font-semibold text-(--color-text-body,#333) mb-2">Vergi numarası <span class="text-[#e53935]">*</span></label>
-            <input type="text" class="os-modal__input w-full py-2.5 px-3 text-sm border border-(--color-border-medium,#d1d5db) rounded-md outline-none text-(--color-text-heading,#111827) transition-colors box-border focus:border-(--color-cta-primary,#cc9900) focus:shadow-[0_0_0_2px_rgba(249,115,22,0.1)]" placeholder="Vergi numaranızı girin" />
+            <label class="block text-[13px] font-semibold text-(--color-text-body,#333) mb-2">${t('orders.taxNumber')} <span class="text-[#e53935]">*</span></label>
+            <input type="text" class="os-modal__input w-full py-2.5 px-3 text-sm border border-(--color-border-medium,#d1d5db) rounded-md outline-none text-(--color-text-heading,#111827) transition-colors box-border focus:border-(--color-cta-primary,#cc9900) focus:shadow-[0_0_0_2px_rgba(249,115,22,0.1)]" placeholder="${t('orders.enterTaxNumber')}" />
           </div>
           <div class="mb-5">
-            <label class="block text-[13px] font-semibold text-(--color-text-body,#333) mb-2">Tam kayıt adı <span class="text-[#e53935]">*</span></label>
-            <input type="text" class="os-modal__input w-full py-2.5 px-3 text-sm border border-(--color-border-medium,#d1d5db) rounded-md outline-none text-(--color-text-heading,#111827) transition-colors box-border focus:border-(--color-cta-primary,#cc9900) focus:shadow-[0_0_0_2px_rgba(249,115,22,0.1)]" placeholder="Tam kayıt adınızı girin" />
+            <label class="block text-[13px] font-semibold text-(--color-text-body,#333) mb-2">${t('orders.fullRegistrationName')} <span class="text-[#e53935]">*</span></label>
+            <input type="text" class="os-modal__input w-full py-2.5 px-3 text-sm border border-(--color-border-medium,#d1d5db) rounded-md outline-none text-(--color-text-heading,#111827) transition-colors box-border focus:border-(--color-cta-primary,#cc9900) focus:shadow-[0_0_0_2px_rgba(249,115,22,0.1)]" placeholder="${t('orders.enterFullRegistrationName')}" />
           </div>
         </div>
         <div class="px-6 pt-4 pb-5 flex justify-end gap-3 border-t border-(--color-border-light,#f0f0f0)">
-          <button class="os-modal__btn os-modal__btn--primary px-6 py-2.5 text-sm font-medium rounded-[20px] cursor-pointer border-none transition-all bg-(--color-cta-primary,#333333) text-white hover:bg-(--color-cta-primary-hover,#1f1f1f)">Doğrula</button>
+          <button class="os-modal__btn os-modal__btn--primary px-6 py-2.5 text-sm font-medium rounded-[20px] cursor-pointer border-none transition-all bg-(--color-cta-primary,#333333) text-white hover:bg-(--color-cta-primary-hover,#1f1f1f)">${t('orders.verify')}</button>
         </div>
       </div>
     </div>
@@ -1554,49 +1555,49 @@ function renderTaxInfo(): string {
       <div class="os-modal__overlay absolute inset-0 bg-black/45"></div>
       <div class="os-modal__dialog relative bg-(--color-surface,#fff) rounded-xl w-[480px] max-w-[calc(100vw-32px)] max-h-[calc(100vh-64px)] overflow-y-auto shadow-[0_20px_60px_rgba(0,0,0,0.2)]" style="animation: osModalIn 200ms ease-out">
         <div class="flex items-center justify-between px-6 pt-5 pb-4 border-b border-(--color-border-light,#f0f0f0)">
-          <h3 class="text-base font-semibold text-(--color-text-heading,#111827)">Gümrük muayenesi bilgileri</h3>
-          <button class="os-modal__close bg-transparent border-none cursor-pointer p-1 rounded flex items-center justify-center transition-colors hover:bg-(--color-surface-raised,#f5f5f5)" aria-label="Kapat">
+          <h3 class="text-base font-semibold text-(--color-text-heading,#111827)">${t('orders.customsInspectionInfo')}</h3>
+          <button class="os-modal__close bg-transparent border-none cursor-pointer p-1 rounded flex items-center justify-center transition-colors hover:bg-(--color-surface-raised,#f5f5f5)" aria-label="${t('common.close')}">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M12 4L4 12M4 4l8 8" stroke="#666" stroke-width="1.5" stroke-linecap="round"/></svg>
           </button>
         </div>
         <div class="px-6 py-5">
           <div class="flex items-start gap-2.5 px-3.5 py-3 bg-primary-50 border border-primary-200 rounded-md text-[13px] text-primary-800 leading-normal mb-5">
             <svg class="shrink-0 mt-px" width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="#E8912D" stroke-width="1.5"/><path d="M8 5v3m0 2.5h.01" stroke="#E8912D" stroke-width="1.5" stroke-linecap="round"/></svg>
-            <span>Vergi bilgileriniz, gümrük yetkilileri tarafından talep edilmektedir. Bu bir İşveren Kimlik Numarası (EIN) veya Sosyal Güvenlik Numarası (SSN) olabilir.</span>
+            <span>${t('orders.customsTaxInfoNotice')}</span>
           </div>
 
           <div class="mb-5">
-            <label class="block text-[13px] font-semibold text-(--color-text-body,#333) mb-2">Vergi mükellefi türü <span class="text-[#e53935]">*</span></label>
+            <label class="block text-[13px] font-semibold text-(--color-text-body,#333) mb-2">${t('orders.taxpayerType')} <span class="text-[#e53935]">*</span></label>
             <div class="flex flex-col gap-2.5">
               <label class="os-modal__radio flex items-center gap-2 text-sm text-(--color-text-body,#333) cursor-pointer">
                 <input type="radio" name="customs-type" value="business" checked class="hidden" />
                 <span class="os-modal__radio-custom w-[18px] h-[18px] border-2 border-(--color-border-medium,#d1d5db) rounded-full shrink-0 relative transition-colors"></span>
-                İşletme (Business)
+                ${t('orders.business')}
               </label>
               <label class="os-modal__radio flex items-center gap-2 text-sm text-(--color-text-body,#333) cursor-pointer">
                 <input type="radio" name="customs-type" value="personal" class="hidden" />
                 <span class="os-modal__radio-custom w-[18px] h-[18px] border-2 border-(--color-border-medium,#d1d5db) rounded-full shrink-0 relative transition-colors"></span>
-                Bireysel (Personal)
+                ${t('orders.personal')}
               </label>
             </div>
           </div>
           <div class="mb-5">
-            <label class="block text-[13px] font-semibold text-(--color-text-body,#333) mb-2">İşveren Kimlik Numarası (EIN) <span class="text-[#e53935]">*</span></label>
-            <input type="text" class="os-modal__input w-full py-2.5 px-3 text-sm border border-(--color-border-medium,#d1d5db) rounded-md outline-none text-(--color-text-heading,#111827) transition-colors box-border focus:border-(--color-cta-primary,#cc9900) focus:shadow-[0_0_0_2px_rgba(249,115,22,0.1)]" placeholder="EIN numaranızı girin" />
+            <label class="block text-[13px] font-semibold text-(--color-text-body,#333) mb-2">${t('orders.einLabel')} <span class="text-[#e53935]">*</span></label>
+            <input type="text" class="os-modal__input w-full py-2.5 px-3 text-sm border border-(--color-border-medium,#d1d5db) rounded-md outline-none text-(--color-text-heading,#111827) transition-colors box-border focus:border-(--color-cta-primary,#cc9900) focus:shadow-[0_0_0_2px_rgba(249,115,22,0.1)]" placeholder="${t('orders.enterEin')}" />
           </div>
           <div class="flex items-start gap-1.5 text-xs text-(--color-text-placeholder,#999) leading-normal mb-1">
             <svg class="shrink-0 mt-px" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1a4 4 0 00-4 4v2H2a1 1 0 00-1 1v4a1 1 0 001 1h10a1 1 0 001-1V8a1 1 0 00-1-1h-1V5a4 4 0 00-4-4zm-2 4a2 2 0 114 0v2H5V5z" fill="#999"/></svg>
-            <span>Gizlilik bilgilendirmesi: Bilgileriniz <a href="#" class="text-(--color-cta-primary,#333333) no-underline hover:underline">Gizlilik Politikamız</a> uyarınca korunmaktadır.</span>
+            <span>${t('orders.privacyNotice')} <a href="#" class="text-(--color-cta-primary,#333333) no-underline hover:underline">${t('orders.privacyPolicy')}</a> ${t('orders.privacyNoticeEnd')}</span>
           </div>
           <label class="os-modal__checkbox flex items-start gap-2.5 text-[13px] text-(--color-text-body,#333) leading-normal cursor-pointer mt-4">
             <input type="checkbox" class="hidden" />
             <span class="os-modal__checkbox-custom w-4 h-4 border-2 border-(--color-border-medium,#d1d5db) rounded-[3px] shrink-0 mt-0.5 relative transition-all"></span>
-            <span>Yukarıdaki bilgilerin doğru olduğunu ve vergi bilgilerimin gümrük işlemleri için kullanılabileceğini kabul ediyorum.</span>
+            <span>${t('orders.customsConsentText')}</span>
           </label>
         </div>
         <div class="px-6 pt-4 pb-5 flex justify-end gap-3 border-t border-(--color-border-light,#f0f0f0)">
-          <button class="os-modal__btn os-modal__btn--cancel px-6 py-2.5 text-sm font-medium rounded-[20px] cursor-pointer transition-all bg-(--color-surface,#fff) text-(--color-text-body,#333) border border-(--color-border-medium,#d1d5db) hover:border-[#999]">İptal et</button>
-          <button class="os-modal__btn os-modal__btn--primary px-6 py-2.5 text-sm font-medium rounded-[20px] cursor-pointer border-none transition-all bg-(--color-cta-primary,#333333) text-white hover:bg-(--color-cta-primary-hover,#1f1f1f)">Kaydet</button>
+          <button class="os-modal__btn os-modal__btn--cancel px-6 py-2.5 text-sm font-medium rounded-[20px] cursor-pointer transition-all bg-(--color-surface,#fff) text-(--color-text-body,#333) border border-(--color-border-medium,#d1d5db) hover:border-[#999]">${t('common.cancel')}</button>
+          <button class="os-modal__btn os-modal__btn--primary px-6 py-2.5 text-sm font-medium rounded-[20px] cursor-pointer border-none transition-all bg-(--color-cta-primary,#333333) text-white hover:bg-(--color-cta-primary-hover,#1f1f1f)">${t('common.save')}</button>
         </div>
       </div>
     </div>

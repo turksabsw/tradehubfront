@@ -1,3 +1,4 @@
+import { t } from '../../i18n';
 /**
  * ProductListingGrid Component
  * Alibaba-style product listing grid for products page.
@@ -6,7 +7,7 @@
  */
 
 import type { ProductListingCard, ProductImageKind, ViewMode } from '../../types/productListing';
-import { mockProductListingCards } from '../../data/mockProductListing';
+import { getMockProductListingCards } from '../../data/mockProductListing';
 
 /**
  * Unsplash e-commerce product images per category
@@ -86,7 +87,7 @@ function cameraSearchIcon(): string {
  * - translateX-based horizontal sliding with CSS transition
  * - group/img for hover detection on image area only
  * - Prev/next arrows + dot indicators visible on hover
- * - "Add to compare" checkbox overlay on hover
+ * - "${t('products.addToCompare')}" checkbox overlay on hover
  * - Camera icon at bottom-left
  */
 function renderImageSlider(card: ProductListingCard): string {
@@ -146,12 +147,12 @@ function renderImageSlider(card: ProductListingCard): string {
       ${arrowsHtml}
       ${dotsHtml}
 
-      <!-- Add to compare checkbox (visible on hover) -->
+      <!-- ${t('products.addToCompare')} checkbox (visible on hover) -->
       <label class="absolute top-2 right-2 z-10 flex items-center gap-1.5 px-2 py-1 rounded bg-white/90 shadow-sm text-[11px] text-gray-700 cursor-pointer opacity-0 group-hover/img:opacity-100 transition-opacity"
              onclick="event.preventDefault(); event.stopPropagation();">
         <input type="checkbox" class="w-3.5 h-3.5 rounded border-gray-300 text-orange-500 focus:ring-orange-400"
                data-compare-id="${card.id}" onclick="event.stopPropagation();" />
-        Add to compare
+        ${t('products.addToCompare')}
       </label>
 
       <!-- Camera icon (bottom-left) -->
@@ -214,7 +215,7 @@ function renderProductListingCard(card: ProductListingCard): string {
 
   // MOQ
   const moqHtml = card.moq
-    ? `<div class="text-sm font-normal leading-[18px] text-gray-900">Minimum siparis: ${card.moq}</div>`
+    ? `<div class="text-sm font-normal leading-[18px] text-gray-900">${t('products.minOrder', { moq: card.moq })}</div>`
     : '';
 
   // Sold
@@ -229,7 +230,7 @@ function renderProductListingCard(card: ProductListingCard): string {
 
   // Supplier info: year, country, rating
   const yearCountryParts: string[] = [];
-  if (card.supplierYears) yearCountryParts.push(`<span>${card.supplierYears} yil</span>`);
+  if (card.supplierYears) yearCountryParts.push(`<span>${t('products.yearLabel', { count: String(card.supplierYears) })}</span>`);
   if (card.supplierCountry) yearCountryParts.push(`${countryFlag(card.supplierCountry)} <span>${card.supplierCountry}</span>`);
 
   const yearCountryHtml = yearCountryParts.length > 0
@@ -285,11 +286,11 @@ function renderProductListingCard(card: ProductListingCard): string {
       <div class="action-area-layout flex gap-2 px-1 items-center">
         <button type="button" class="searchx-product-e-abutton flex items-center justify-center h-9 px-2 sm:px-[15px] border border-[#222] rounded-full text-xs sm:text-sm font-medium text-gray-900 bg-transparent cursor-pointer whitespace-nowrap transition-colors hover:bg-gray-100 min-w-0"
                 data-add-to-cart="${card.id}">
-          Sepete ekle
+          ${t('products.addToCart')}
         </button>
         <button type="button" class="searchx-product-e-abutton flex items-center justify-center h-9 px-2 sm:px-[15px] border border-[#222] rounded-full text-xs sm:text-sm font-medium text-gray-900 bg-transparent cursor-pointer whitespace-nowrap transition-colors hover:bg-gray-100 min-w-0"
                 onclick="event.preventDefault(); event.stopPropagation();">
-          Sohbet et
+          ${t('products.chat')}
         </button>
       </div>
     </div>
@@ -316,9 +317,9 @@ function renderNoResults(): string {
           </svg>
         </div>
       </div>
-      <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Sonuc bulunamadi</h3>
+      <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">${t('products.noResults')}</h3>
       <p class="text-sm text-gray-500 dark:text-gray-400 max-w-sm mb-6">
-        Sectiginiz filtrelerle esleesen urun bulunamadi. Filtreleri degistirmeyi veya tumu kaldirmayi deneyin.
+        ${t('products.noResultsDesc')}
       </p>
       <button
         type="button"
@@ -328,7 +329,7 @@ function renderNoResults(): string {
         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182" />
         </svg>
-        Filtreleri Temizle
+        ${t('products.clearFilters')}
       </button>
     </div>
   `;
@@ -454,15 +455,15 @@ export function initProductSliders(): void {
  * - transition-transform duration-500 ease-out
  * - group-hover/product:scale-110 (10% zoom)
  */
-export function ProductListingGrid(products: ProductListingCard[] = mockProductListingCards): string {
+export function ProductListingGrid(products: ProductListingCard[] = getMockProductListingCards()): string {
   if (products.length === 0) {
     return `
-      <section aria-label="Ürün Listesi" class="flex-1">
+      <section aria-label="${t('products.productList')}" class="flex-1">
         <div
           class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 product-grid"
           style="gap: var(--product-grid-gap, 12px);"
           role="list"
-          aria-label="Ürün listesi"
+          aria-label="${t('products.productListLabel')}"
         >
           ${renderNoResults()}
         </div>
@@ -471,12 +472,12 @@ export function ProductListingGrid(products: ProductListingCard[] = mockProductL
   }
 
   return `
-    <section aria-label="Ürün Listesi" class="flex-1">
+    <section aria-label="${t('products.productList')}" class="flex-1">
       <div
         class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 product-grid"
         style="gap: var(--product-grid-gap, 12px);"
         role="list"
-        aria-label="Ürün listesi"
+        aria-label="${t('products.productListLabel')}"
       >
         ${products.map(card => `<div role="listitem" class="flex">${renderProductListingCard(card)}</div>`).join('')}
       </div>

@@ -14,7 +14,7 @@ appEl.classList.add('relative');
 appEl.innerHTML = `
   ${HelpCenterHeader({ activePage: 'terms' })}
   <main>
-    ${LegalPageLayout(termsContent)}
+    ${LegalPageLayout(termsContent())}
   </main>
   ${FloatingPanel()}
 `;

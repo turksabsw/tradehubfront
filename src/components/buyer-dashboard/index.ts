@@ -21,4 +21,4 @@ export type { UserInfoCardProps } from './UserInfoCard';
 export { OtherServicesLayout, initOtherServicesLayout } from './OtherServicesLayout';
 
 // Data
-export { ORDER_TABS, ORDER_FILTERS } from './ordersData';
+export { getOrderTabs, getOrderFilters } from './ordersData';

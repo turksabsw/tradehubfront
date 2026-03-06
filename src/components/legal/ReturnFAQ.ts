@@ -3,20 +3,25 @@
  * FAQ accordion for return policy page
  */
 
-const FAQ_ITEMS = [
-  { q: 'İade süresi ne kadar?', a: 'Ürünü teslim aldığınız tarihten itibaren 14 gün içinde iade talebinde bulunabilirsiniz. Bu süre, tüm ürün kategorileri için geçerlidir.' },
-  { q: 'İade kargo ücreti kim tarafından karşılanır?', a: 'Üretim hatası veya yanlış ürün gönderimi durumunda kargo ücreti tarafımızca karşılanır. Fikir değişikliği nedeniyle yapılan iadelerde kargo ücreti alıcıya aittir.' },
-  { q: 'Hangi ürünler iade edilemez?', a: 'Kişiye özel üretilen ürünler, hijyen ürünleri (açılmış ambalaj), dijital ürünler ve indirimli kampanya ürünleri (belirtilmişse) iade edilemez.' },
-  { q: 'Para iadesi ne zaman yapılır?', a: 'Ürün teslim alınıp onaylandıktan sonra 3-5 iş günü içinde ödemeniz iade edilir. Kredi kartı iadeleri bankanıza bağlı olarak 1-2 ek iş günü sürebilir.' },
-  { q: 'Hasarlı ürün geldi, ne yapmalıyım?', a: 'Teslim sırasında veya sonrasında hasarlı ürün tespit ederseniz, 48 saat içinde fotoğraflı bildirim yapmanız yeterlidir. Hasarlı ürün iadeleri öncelikli olarak işlenir.' },
-  { q: 'Toplu sipariş iadeleri için özel kurallar var mı?', a: 'B2B toplu siparişlerde iade koşulları satıcı ile yapılan sözleşmeye göre belirlenir. Genel iade politikamız bireysel alımlar için geçerlidir.' },
-  { q: 'İade takibimi nasıl yapabilirim?', a: 'Destek Taleplerim sayfasından iade talebinizin durumunu takip edebilirsiniz. Ayrıca her aşamada e-posta bildirimi gönderilir.' },
-];
+import { t } from '../../i18n';
+
+function getFaqItems() {
+  return [
+    { q: t('returnFaq.q1'), a: t('returnFaq.a1') },
+    { q: t('returnFaq.q2'), a: t('returnFaq.a2') },
+    { q: t('returnFaq.q3'), a: t('returnFaq.a3') },
+    { q: t('returnFaq.q4'), a: t('returnFaq.a4') },
+    { q: t('returnFaq.q5'), a: t('returnFaq.a5') },
+    { q: t('returnFaq.q6'), a: t('returnFaq.a6') },
+    { q: t('returnFaq.q7'), a: t('returnFaq.a7') },
+  ];
+}
 
 export function ReturnFAQ(): string {
+  const FAQ_ITEMS = getFaqItems();
   return `
     <div class="mt-10" x-data="{ openFaq: null }">
-      <h3 class="text-lg font-semibold text-gray-900 mb-4">Sık Sorulan Sorular</h3>
+      <h3 class="text-lg font-semibold text-gray-900 mb-4">${t('returnFaq.title')}</h3>
       <div class="space-y-2">
         ${FAQ_ITEMS.map((item, i) => `
           <div class="border border-gray-200 rounded-lg overflow-hidden">

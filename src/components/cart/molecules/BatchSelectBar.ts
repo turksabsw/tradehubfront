@@ -5,6 +5,7 @@
  */
 
 import { Checkbox } from '../atoms/Checkbox';
+import { t } from '../../../i18n';
 
 export interface BatchSelectBarProps {
   totalCount: number;
@@ -19,11 +20,11 @@ export function BatchSelectBar({ totalCount, selectedCount }: BatchSelectBarProp
     <div class="sc-c-batch-select-bar flex items-center justify-between gap-3 px-5 py-4 rounded-3xl border border-border-default bg-surface max-sm:px-3 max-sm:py-3" x-data @checkbox-change="$dispatch('batch-select-toggle', { selectAll: $event.detail.checked })">
       <div class="flex items-center gap-3 min-w-0">
         ${Checkbox({ id: 'batch-select-all', checked: allSelected, indeterminate: someSelected, onChange: 'batch-select-all' })}
-        <p class="text-base text-text-heading truncate">Tüm ürünleri seç <span class="sc-c-batch-count text-text-tertiary">(${totalCount})</span></p>
+        <p class="text-base text-text-heading truncate">${t('cart.selectAll')} <span class="sc-c-batch-count text-text-tertiary">(${totalCount})</span></p>
       </div>
 
       <button type="button" class="sc-c-batch-delete-btn text-sm text-text-tertiary hover:text-error-500 disabled:opacity-40 disabled:cursor-not-allowed" ${selectedCount === 0 ? 'disabled' : ''} @click="$dispatch('batch-delete')">
-        Seçilenleri sil
+        ${t('cart.deleteSelected')}
       </button>
     </div>
   `.trim();

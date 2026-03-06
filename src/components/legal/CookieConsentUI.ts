@@ -3,28 +3,34 @@
  * Cookie category toggles and cookie table
  */
 
+import { t } from '../../i18n';
+
 export function CookieConsentUI(): string {
   const categories = [
-    { id: 'necessary', label: 'Zorunlu Çerezler', desc: 'Web sitesinin temel işlevleri için gereklidir. Bu çerezler devre dışı bırakılamaz.', alwaysOn: true },
-    { id: 'functional', label: 'Fonksiyonel Çerezler', desc: 'Tercihlerinizi hatırlayarak daha iyi bir deneyim sunar.', alwaysOn: false },
-    { id: 'analytics', label: 'Analitik Çerezler', desc: 'Ziyaretçilerin siteyi nasıl kullandığını anlamamıza yardımcı olur.', alwaysOn: false },
-    { id: 'marketing', label: 'Pazarlama Çerezleri', desc: 'Kişiselleştirilmiş reklamlar göstermek için kullanılır.', alwaysOn: false },
+    { id: 'necessary', label: t('cookieConsent.necessaryCookies'), desc: t('cookieConsent.necessaryDesc'), alwaysOn: true },
+    { id: 'functional', label: t('cookieConsent.functionalCookies'), desc: t('cookieConsent.functionalDesc'), alwaysOn: false },
+    { id: 'analytics', label: t('cookieConsent.analyticsCookies'), desc: t('cookieConsent.analyticsDesc'), alwaysOn: false },
+    { id: 'marketing', label: t('cookieConsent.marketingCookies'), desc: t('cookieConsent.marketingDesc'), alwaysOn: false },
   ];
 
   const cookieTable = [
-    { name: '_istoc_session', provider: 'iSTOC', purpose: 'Oturum yönetimi', duration: 'Oturum', type: 'Zorunlu' },
-    { name: '_istoc_csrf', provider: 'iSTOC', purpose: 'CSRF koruması', duration: 'Oturum', type: 'Zorunlu' },
-    { name: '_istoc_prefs', provider: 'iSTOC', purpose: 'Kullanıcı tercihleri', duration: '1 yıl', type: 'Fonksiyonel' },
-    { name: '_istoc_lang', provider: 'iSTOC', purpose: 'Dil tercihi', duration: '1 yıl', type: 'Fonksiyonel' },
-    { name: '_ga', provider: 'Google', purpose: 'Ziyaretçi istatistikleri', duration: '2 yıl', type: 'Analitik' },
-    { name: '_gid', provider: 'Google', purpose: 'Ziyaretçi tanımlama', duration: '24 saat', type: 'Analitik' },
-    { name: '_fbp', provider: 'Facebook', purpose: 'Reklam hedefleme', duration: '3 ay', type: 'Pazarlama' },
-    { name: '_gcl_au', provider: 'Google Ads', purpose: 'Dönüşüm takibi', duration: '3 ay', type: 'Pazarlama' },
+    { name: '_istoc_session', provider: 'iSTOC', purpose: t('cookieConsent.sessionManagement'), duration: t('cookieConsent.session'), type: t('cookieConsent.typeNecessary') },
+    { name: '_istoc_csrf', provider: 'iSTOC', purpose: t('cookieConsent.csrfProtection'), duration: t('cookieConsent.session'), type: t('cookieConsent.typeNecessary') },
+    { name: '_istoc_prefs', provider: 'iSTOC', purpose: t('cookieConsent.userPreferences'), duration: t('cookieConsent.oneYear'), type: t('cookieConsent.typeFunctional') },
+    { name: '_istoc_lang', provider: 'iSTOC', purpose: t('cookieConsent.languagePreference'), duration: t('cookieConsent.oneYear'), type: t('cookieConsent.typeFunctional') },
+    { name: '_ga', provider: 'Google', purpose: t('cookieConsent.visitorStats'), duration: t('cookieConsent.twoYears'), type: t('cookieConsent.typeAnalytics') },
+    { name: '_gid', provider: 'Google', purpose: t('cookieConsent.visitorId'), duration: t('cookieConsent.twentyFourHours'), type: t('cookieConsent.typeAnalytics') },
+    { name: '_fbp', provider: 'Facebook', purpose: t('cookieConsent.adTargeting'), duration: t('cookieConsent.threeMonths'), type: t('cookieConsent.typeMarketing') },
+    { name: '_gcl_au', provider: 'Google Ads', purpose: t('cookieConsent.conversionTracking'), duration: t('cookieConsent.threeMonths'), type: t('cookieConsent.typeMarketing') },
   ];
+
+  const typeNecessary = t('cookieConsent.typeNecessary');
+  const typeFunctional = t('cookieConsent.typeFunctional');
+  const typeAnalytics = t('cookieConsent.typeAnalytics');
 
   return `
     <div class="mt-10 bg-white rounded-lg border border-gray-200 p-6 sm:p-8" x-data="cookieConsent()">
-      <h2 class="text-xl font-semibold text-gray-900 mb-6">Çerez Tercihlerinizi Yönetin</h2>
+      <h2 class="text-xl font-semibold text-gray-900 mb-6">${t('cookieConsent.title')}</h2>
 
       <!-- Category Toggles -->
       <div class="space-y-4 mb-8">
@@ -45,20 +51,20 @@ export function CookieConsentUI(): string {
       </div>
 
       <button @click="savePreferences()" class="th-btn cursor-pointer mb-8">
-        Tercihleri Kaydet
+        ${t('cookieConsent.savePreferences')}
       </button>
 
       <!-- Cookie Table -->
-      <h3 class="text-lg font-semibold text-gray-900 mb-4">Kullanılan Çerezler</h3>
+      <h3 class="text-lg font-semibold text-gray-900 mb-4">${t('cookieConsent.cookiesUsed')}</h3>
       <div class="overflow-x-auto -mx-2 sm:mx-0">
         <table class="w-full text-sm min-w-[600px]">
           <thead class="bg-gray-50">
             <tr>
-              <th class="text-left py-2.5 px-3 font-medium text-gray-700">Çerez Adı</th>
-              <th class="text-left py-2.5 px-3 font-medium text-gray-700">Sağlayıcı</th>
-              <th class="text-left py-2.5 px-3 font-medium text-gray-700">Amaç</th>
-              <th class="text-left py-2.5 px-3 font-medium text-gray-700">Süre</th>
-              <th class="text-left py-2.5 px-3 font-medium text-gray-700">Tip</th>
+              <th class="text-left py-2.5 px-3 font-medium text-gray-700">${t('cookieConsent.thCookieName')}</th>
+              <th class="text-left py-2.5 px-3 font-medium text-gray-700">${t('cookieConsent.thProvider')}</th>
+              <th class="text-left py-2.5 px-3 font-medium text-gray-700">${t('cookieConsent.thPurpose')}</th>
+              <th class="text-left py-2.5 px-3 font-medium text-gray-700">${t('cookieConsent.thDuration')}</th>
+              <th class="text-left py-2.5 px-3 font-medium text-gray-700">${t('cookieConsent.thType')}</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-100">
@@ -68,7 +74,7 @@ export function CookieConsentUI(): string {
                 <td class="py-2.5 px-3 text-gray-600">${c.provider}</td>
                 <td class="py-2.5 px-3 text-gray-600">${c.purpose}</td>
                 <td class="py-2.5 px-3 text-gray-500">${c.duration}</td>
-                <td class="py-2.5 px-3"><span class="text-xs px-2 py-0.5 rounded-full ${c.type === 'Zorunlu' ? 'bg-blue-100 text-blue-700' : c.type === 'Fonksiyonel' ? 'bg-purple-100 text-purple-700' : c.type === 'Analitik' ? 'bg-green-100 text-green-700' : 'bg-orange-100 text-orange-700'}">${c.type}</span></td>
+                <td class="py-2.5 px-3"><span class="text-xs px-2 py-0.5 rounded-full ${c.type === typeNecessary ? 'bg-blue-100 text-blue-700' : c.type === typeFunctional ? 'bg-purple-100 text-purple-700' : c.type === typeAnalytics ? 'bg-green-100 text-green-700' : 'bg-orange-100 text-orange-700'}">${c.type}</span></td>
               </tr>
             `).join('')}
           </tbody>

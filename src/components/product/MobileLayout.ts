@@ -6,10 +6,14 @@
  * with data-attribute-driven JS initialization.
  */
 
-import { mockProduct } from '../../data/mockProduct';
+import { getMockProduct } from '../../data/mockProduct';
+import { t } from '../../i18n';
+import type { ProductVariant } from '../../types/product';
 import { openShippingModal } from './CartDrawer';
 import { openLoginModal } from './LoginModal';
 import { renderStars } from './ProductReviews';
+
+const mockProduct = getMockProduct();
 
 /* ── Reusable SVG fragments ──────────────────────────── */
 
@@ -58,7 +62,7 @@ function bottomSheet(id: string, title: string, bodyHtml: string): string {
         <div class="pdm-sheet-handle"></div>
         <div class="pdm-sheet-header">
           <span>${title}</span>
-          <button type="button" class="pdm-sheet-close" data-pdm-close="${id}" aria-label="Kapat">${closeSvg}</button>
+          <button type="button" class="pdm-sheet-close" data-pdm-close="${id}" aria-label="Close">${closeSvg}</button>
         </div>
         <div class="pdm-sheet-body">${bodyHtml}</div>
       </div>
@@ -68,7 +72,7 @@ function bottomSheet(id: string, title: string, bodyHtml: string): string {
 
 /* ── Variant section renderer ────────────────────────── */
 
-function renderVariantSection(variant: typeof mockProduct.variants[number]): string {
+function renderVariantSection(variant: ProductVariant): string {
   const available = variant.options.filter(o => o.available).length;
 
   if (variant.type === 'color') {
@@ -130,22 +134,22 @@ export function MobileProductLayout(): string {
       </div>
       <!-- Action buttons -->
       <div id="pdm-gallery-actions" class="absolute top-3 right-3 flex flex-col gap-2 z-[6]">
-        <button type="button" class="pdm-gallery-action-btn w-9 h-9 rounded-full bg-white/85 border-none flex items-center justify-center text-text-muted cursor-pointer shadow-[0_1px_3px_rgba(0,0,0,0.12)]" aria-label="Favorilere ekle">
+        <button type="button" class="pdm-gallery-action-btn w-9 h-9 rounded-full bg-white/85 border-none flex items-center justify-center text-text-muted cursor-pointer shadow-[0_1px_3px_rgba(0,0,0,0.12)]" aria-label="${t('product.addToFavorites')}">
           <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
         </button>
-        <button type="button" class="pdm-gallery-action-btn w-9 h-9 rounded-full bg-white/85 border-none flex items-center justify-center text-text-muted cursor-pointer shadow-[0_1px_3px_rgba(0,0,0,0.12)]" aria-label="Görsel ile ara">
+        <button type="button" class="pdm-gallery-action-btn w-9 h-9 rounded-full bg-white/85 border-none flex items-center justify-center text-text-muted cursor-pointer shadow-[0_1px_3px_rgba(0,0,0,0.12)]" aria-label="${t('product.imageSearchLabel')}">
           <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9a2 2 0 012-2h2l1-2h8l1 2h2a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><circle cx="12" cy="13" r="3"/></svg>
         </button>
       </div>
       <!-- Counter pill -->
-      <div id="pdm-gallery-counter" class="absolute bottom-3.5 left-1/2 -translate-x-1/2 bg-surface text-text-body text-xs font-medium py-1 px-3.5 rounded-[14px] pointer-events-none z-5 tracking-wide whitespace-nowrap shadow-[0_1px_4px_rgba(0,0,0,0.15)]">Fotoğraflar <span id="pdm-counter-current">1</span>/${p.images.length}</div>
+      <div id="pdm-gallery-counter" class="absolute bottom-3.5 left-1/2 -translate-x-1/2 bg-surface text-text-body text-xs font-medium py-1 px-3.5 rounded-[14px] pointer-events-none z-5 tracking-wide whitespace-nowrap shadow-[0_1px_4px_rgba(0,0,0,0.15)]">${t('product.mobilePhotosCounter')} <span id="pdm-counter-current">1</span>/${p.images.length}</div>
     </div>
   `;
 
   const badgesSection = `
     <div id="pdm-badges" class="flex gap-2 pt-3 px-4 max-[374px]:pt-2.5 max-[374px]:px-3 bg-surface">
-      <span class="pdm-badge-dark inline-flex items-center text-[11px] font-semibold px-2.5 py-1 rounded bg-[#222] text-white leading-[1.4]">Sevkiyata Hazır</span>
-      <span class="pdm-badge-orange inline-flex items-center text-[11px] font-semibold px-2.5 py-1 rounded border border-cta-primary text-cta-primary bg-transparent leading-[1.4]">Özelleştirilebilir</span>
+      <span class="pdm-badge-dark inline-flex items-center text-[11px] font-semibold px-2.5 py-1 rounded bg-[#222] text-white leading-[1.4]">${t('product.readyToShip')}</span>
+      <span class="pdm-badge-orange inline-flex items-center text-[11px] font-semibold px-2.5 py-1 rounded border border-cta-primary text-cta-primary bg-transparent leading-[1.4]">${t('product.customizable')}</span>
     </div>
   `;
 
@@ -164,8 +168,8 @@ export function MobileProductLayout(): string {
 
   const sampleSection = `
     <div id="pdm-sample-row" class="flex items-center justify-between px-4 py-2.5 max-[374px]:px-3 max-[374px]:py-2 bg-surface text-[13px] max-[374px]:text-xs text-text-body">
-      <span>Numune fiyatı: <strong>$${p.samplePrice?.toFixed(2) ?? '30.00'}</strong></span>
-      <button type="button" data-order-sample="${mockProduct.id}" class="pdm-sample-btn px-[18px] py-1.5 max-[374px]:px-3.5 max-[374px]:py-[5px] border border-[#333] rounded-[20px] text-[13px] max-[374px]:text-xs font-medium bg-surface cursor-pointer text-text-body">Numune Al</button>
+      <span>${t('product.samplePrice')}: <strong>$${p.samplePrice?.toFixed(2) ?? '30.00'}</strong></span>
+      <button type="button" data-order-sample="${mockProduct.id}" class="pdm-sample-btn px-[18px] py-1.5 max-[374px]:px-3.5 max-[374px]:py-[5px] border border-[#333] rounded-[20px] text-[13px] max-[374px]:text-xs font-medium bg-surface cursor-pointer text-text-body">${t('cart.orderSample')}</button>
     </div>
   `;
 
@@ -173,13 +177,13 @@ export function MobileProductLayout(): string {
     <div id="pdm-title-section" class="flex flex-col gap-1 pt-3.5 px-4 pb-1.5 max-[374px]:pt-3 max-[374px]:px-3 max-[374px]:pb-1.5 bg-surface">
       <div id="pdm-title-row" class="flex items-start justify-between gap-3">
         <h1 id="pdm-product-title" class="text-[15px] max-[374px]:text-sm font-semibold leading-[1.45] text-text-heading m-0 flex-1 line-clamp-3">${p.title}</h1>
-        <button type="button" class="pdm-share-btn shrink-0 w-8 h-8 border-none bg-none cursor-pointer text-text-muted p-1 flex items-center justify-center" aria-label="Paylaş">
+        <button type="button" class="pdm-share-btn shrink-0 w-8 h-8 border-none bg-none cursor-pointer text-text-muted p-1 flex items-center justify-center" aria-label="${t('product.share')}">
           <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
         </button>
       </div>
       <div id="pdm-reviews-row" class="flex items-center gap-1.5 px-4 pb-3 text-[13px] max-[374px]:text-xs text-text-muted cursor-pointer">
         <span class="pdm-stars flex gap-0.5 text-[#f5a623]">${renderStars(p.rating)}</span>
-        <span>${p.reviewCount} yorum</span>
+        <span>${t('product.reviewsLabel', { count: String(p.reviewCount) })}</span>
       </div>
     </div>
   `;
@@ -192,15 +196,15 @@ export function MobileProductLayout(): string {
 
   const shippingSection = collapsibleSection({
     id: 'pdm-ship-section',
-    title: 'Kargolama',
+    title: t('product.shippingSection'),
     sectionClass: 'pdm-shipping-section',
     sheetId: 'shipping-modal',  // special: opens existing ShippingModal
     previewHtml: `
       <div id="pdm-ship-preview" class="px-4 pb-3.5 text-[13px] text-text-body leading-[1.6]">
         <div class="pdm-ship-method font-semibold text-text-heading">${p.shipping[0].method}</div>
         <div class="pdm-ship-detail flex gap-4 mt-1">
-          <span class="text-text-muted">Tahmini Maliyet: <strong>${p.shipping[0].cost}</strong></span>
-          <span class="text-text-muted">Süre: <strong>${p.shipping[0].estimatedDays}</strong></span>
+          <span class="text-text-muted">${t('product.estimatedCost')}: <strong>${p.shipping[0].cost}</strong></span>
+          <span class="text-text-muted">${t('product.duration')}: <strong>${p.shipping[0].estimatedDays}</strong></span>
         </div>
       </div>
     `,
@@ -208,7 +212,7 @@ export function MobileProductLayout(): string {
 
   const protectionsSection = collapsibleSection({
     id: 'pdm-protections-section',
-    title: 'Bu ürün için güvenceler',
+    title: t('product.protectionsTitle'),
     sheetId: 'pdm-sheet-protections',
     previewHtml: `
       <div id="pdm-protections-preview" class="px-4 pb-3.5">
@@ -216,17 +220,17 @@ export function MobileProductLayout(): string {
           <div class="pdm-protection-icon shrink-0 w-5 h-5 text-text-muted">
             <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
           </div>
-          <span>Güvenli ödemeler</span>
+          <span>${t('product.securePayments')}</span>
         </div>
         <div class="pdm-protection-item flex items-center gap-2.5 py-1.5 text-[13px] text-text-body">
           <div class="pdm-protection-icon shrink-0 w-5 h-5 text-text-muted">
             <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M9 14l-4-4 4-4"/><path d="M5 10h11a4 4 0 010 8h-1"/></svg>
           </div>
-          <span>Standart iade politikası</span>
+          <span>${t('product.standardReturnPolicy')}</span>
         </div>
         <div class="pdm-trade-badge flex items-center gap-1.5 pt-2 text-[13px] font-semibold text-cta-primary">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="#e85d04"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4" fill="none" stroke="#fff" stroke-width="2"/></svg>
-          Ticaret Güvencesi
+          ${t('product.tradeAssurance')}
         </div>
       </div>
     `,
@@ -234,7 +238,7 @@ export function MobileProductLayout(): string {
 
   const keyAttrsSection = collapsibleSection({
     id: 'pdm-keyattrs-section',
-    title: 'Temel Özellikler',
+    title: t('product.keyAttributes'),
     sheetId: 'pdm-sheet-keyattrs',
     previewHtml: `
       <div id="pdm-keyattrs-preview" class="px-4 pb-3.5">
@@ -252,7 +256,7 @@ export function MobileProductLayout(): string {
 
   const customizationSection = collapsibleSection({
     id: 'pdm-customization-section',
-    title: 'Özelleştirme Seçenekleri',
+    title: t('product.customizationOptions'),
     sheetId: 'pdm-sheet-customization',
     previewHtml: `
       <div id="pdm-custom-preview" class="px-4 pb-3.5">
@@ -277,22 +281,22 @@ export function MobileProductLayout(): string {
         <div>
           <div class="pdm-supplier-name text-sm font-bold text-text-heading leading-[1.3]">${si.name}</div>
           <div class="pdm-supplier-meta text-xs text-text-muted mt-0.5 flex items-center gap-1.5">
-            ${si.yearsInBusiness} yıl <span>&middot;</span> ${si.verified ? 'Doğrulanmış Tedarikçi' : ''}
+            ${t('product.yearsLabel', { count: String(si.yearsInBusiness) })} <span>&middot;</span> ${si.verified ? t('product.verifiedSupplier') : ''}
           </div>
         </div>
       </div>
       <div class="pdm-supplier-stats grid grid-cols-3 border border-border-default rounded-lg my-3 overflow-hidden">
         ${[
-      { val: si.onTimeDelivery, label: 'Zamanında Teslimat' },
-      { val: si.annualRevenue, label: 'Yıllık Gelir' },
-      { val: si.responseTime, label: 'Yanıt Süresi' },
+      { val: si.onTimeDelivery, label: t('product.onTimeDelivery') },
+      { val: si.annualRevenue, label: t('product.annualRevenue') },
+      { val: si.responseTime, label: t('product.responseTime') },
     ].map(s => `
           <div class="pdm-supplier-stat flex flex-col items-center py-2.5 px-1 border-r border-border-default last:border-r-0 text-center"><strong class="text-sm font-bold text-text-heading">${s.val}</strong><span class="text-[11px] text-text-placeholder mt-0.5">${s.label}</span></div>
         `).join('')}
       </div>
       <div class="pdm-supplier-btns grid grid-cols-2 gap-2">
-        <button type="button" class="pdm-supplier-btn py-2.5 px-2 border border-border-medium rounded-[22px] bg-surface text-[13px] font-medium text-text-heading cursor-pointer text-center">Şirket Profili</button>
-        <button type="button" class="pdm-supplier-btn py-2.5 px-2 border border-border-medium rounded-[22px] bg-surface text-[13px] font-medium text-text-heading cursor-pointer text-center">Diğer Ürünler</button>
+        <button type="button" class="pdm-supplier-btn py-2.5 px-2 border border-border-medium rounded-[22px] bg-surface text-[13px] font-medium text-text-heading cursor-pointer text-center">${t('product.companyProfile')}</button>
+        <button type="button" class="pdm-supplier-btn py-2.5 px-2 border border-border-medium rounded-[22px] bg-surface text-[13px] font-medium text-text-heading cursor-pointer text-center">${t('product.otherProducts')}</button>
       </div>
     </div>
   `;
@@ -300,34 +304,34 @@ export function MobileProductLayout(): string {
   // ── Bottom Sheets (all use bottomSheet builder) ──
 
   const sheets = [
-    bottomSheet('pdm-sheet-protections', 'Güvenceler', `
-      <h3 class="pdm-sheet-section-title">Her aşamada koruma</h3>
+    bottomSheet('pdm-sheet-protections', t('product.protectionsTitle'), `
+      <h3 class="pdm-sheet-section-title">${t('product.protectionAtEveryStep')}</h3>
       <div class="pdm-sheet-protection-block">
-        <h4>Güvenli ödemeler</h4>
-        <p>Her işlem korunur. Ödeme bilgileriniz asla tedarikçiyle paylaşılmaz.</p>
+        <h4>${t('product.securePayments')}</h4>
+        <p>${t('product.securePaymentDesc')}</p>
         <div class="pdm-payment-icons">
           ${['VISA', 'MC', 'PayPal', 'T/T', 'L/C'].map(m => `<span class="pdm-payment-icon">${m}</span>`).join('')}
         </div>
       </div>
       <div class="pdm-sheet-protection-block">
-        <h4>İade politikası</h4>
-        <p>30 gün içinde iade başvurusu yapabilirsiniz. Ürünler hasarlı veya tanımlandığı gibi değilse iade kabul edilir.</p>
+        <h4>${t('product.returnPolicy')}</h4>
+        <p>${t('product.returnPolicyDesc')}</p>
       </div>
       <div class="pdm-trade-badge flex items-center gap-1.5 pt-2 text-[13px] font-semibold text-cta-primary">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="#e85d04"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4" fill="none" stroke="#fff" stroke-width="2"/></svg>
-        Ticaret Güvencesi
+        ${t('product.tradeAssurance')}
       </div>
     `),
 
-    bottomSheet('pdm-sheet-keyattrs', 'Temel Özellikler', `
+    bottomSheet('pdm-sheet-keyattrs', t('product.keyAttributes'), `
       <table class="pdm-attrs-table">
         ${p.specs.map(s => `<tr><td>${s.key}</td><td>${s.value}</td></tr>`).join('')}
       </table>
     `),
 
-    bottomSheet('pdm-sheet-customization', 'Özelleştirme Seçenekleri', `
+    bottomSheet('pdm-sheet-customization', t('product.customizationOptions'), `
       <table class="pdm-custom-table">
-        <thead><tr><th>Seçenek</th><th>Min. Sipariş</th><th>Birim Fiyat</th></tr></thead>
+        <thead><tr><th>${t('product.option')}</th><th>${t('product.minOrderLabel')}</th><th>${t('product.unitPriceLabel')}</th></tr></thead>
         <tbody>
           ${p.customizationOptions.map(o => `<tr><td>${o.name}</td><td>${o.minOrder}</td><td>${o.priceAddon}</td></tr>`).join('')}
         </tbody>
@@ -339,9 +343,9 @@ export function MobileProductLayout(): string {
 
   const sectionTabs = `
     <div id="pdm-section-tabs" class="flex items-center gap-0 bg-surface border-b border-border-default sticky top-0 z-30 p-0">
-      <button type="button" class="pdm-section-tab pdm-section-tab-active flex-1 py-3 max-[374px]:py-2.5 text-sm max-[374px]:text-[13px] font-normal text-text-muted bg-transparent border-none border-b-2 border-b-transparent cursor-pointer text-center whitespace-nowrap" data-pdm-tab="pdm-sec-overview">Genel Bakış</button>
-      <button type="button" class="pdm-section-tab flex-1 py-3 max-[374px]:py-2.5 text-sm max-[374px]:text-[13px] font-normal text-text-muted bg-transparent border-none border-b-2 border-b-transparent cursor-pointer text-center whitespace-nowrap" data-pdm-tab="pdm-sec-details">Detaylar</button>
-      <button type="button" class="pdm-section-tab flex-1 py-3 max-[374px]:py-2.5 text-sm max-[374px]:text-[13px] font-normal text-text-muted bg-transparent border-none border-b-2 border-b-transparent cursor-pointer text-center whitespace-nowrap" data-pdm-tab="pdm-sec-supplier">Öneriler</button>
+      <button type="button" class="pdm-section-tab pdm-section-tab-active flex-1 py-3 max-[374px]:py-2.5 text-sm max-[374px]:text-[13px] font-normal text-text-muted bg-transparent border-none border-b-2 border-b-transparent cursor-pointer text-center whitespace-nowrap" data-pdm-tab="pdm-sec-overview">${t('product.overviewTab')}</button>
+      <button type="button" class="pdm-section-tab flex-1 py-3 max-[374px]:py-2.5 text-sm max-[374px]:text-[13px] font-normal text-text-muted bg-transparent border-none border-b-2 border-b-transparent cursor-pointer text-center whitespace-nowrap" data-pdm-tab="pdm-sec-details">${t('product.detailsTab')}</button>
+      <button type="button" class="pdm-section-tab flex-1 py-3 max-[374px]:py-2.5 text-sm max-[374px]:text-[13px] font-normal text-text-muted bg-transparent border-none border-b-2 border-b-transparent cursor-pointer text-center whitespace-nowrap" data-pdm-tab="pdm-sec-supplier">${t('product.recommendationsTab')}</button>
     </div>
   `;
 

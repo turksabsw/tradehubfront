@@ -10,6 +10,7 @@
  */
 
 import { paymentCardStore } from './state/PaymentCardStore';
+import { t } from '../../i18n';
 
 /* ────────────────────────────────────────
    NAV STRUCTURE
@@ -21,24 +22,24 @@ interface PayNavGroup {
 
 const NAV_GROUPS: PayNavGroup[] = [
   {
-    title: 'Özet',
+    title: t('payment.navSummary'),
     items: [
-      { id: 'payment-management', label: 'Ödeme yönetimi' },
-      { id: 'transactions', label: 'İşlemler' },
+      { id: 'payment-management', label: t('payment.paymentManagement') },
+      { id: 'transactions', label: t('payment.transactions') },
     ],
   },
   {
-    title: 'T/T',
+    title: t('payment.navTT'),
     items: [
-      { id: 'tt-accounts', label: 'Havale hesapları' },
-      { id: 'tt-tracking', label: 'Havale Takibi' },
+      { id: 'tt-accounts', label: t('payment.ttAccounts') },
+      { id: 'tt-tracking', label: t('payment.ttTracking') },
     ],
   },
   {
-    title: 'Ek hizmetler',
+    title: t('payment.navAdditionalServices'),
     items: [
-      { id: 'alibaba-card', label: 'Alibaba.com Kartı' },
-      { id: 'pay-later', label: 'Pay Later for Business' },
+      { id: 'alibaba-card', label: t('payment.alibabaCard') },
+      { id: 'pay-later', label: t('payment.payLater') },
     ],
   },
 ];
@@ -67,18 +68,18 @@ function renderPaymentManagement(): string {
           <div class="text-sm font-mono font-bold text-white tracking-widest mb-1 truncate">${c.cardNumber}</div>
           <div class="flex items-center justify-between">
             <div>
-              <div class="text-[9px] text-white/40 uppercase tracking-wide">Isim</div>
+              <div class="text-[9px] text-white/40 uppercase tracking-wide">${t('payment.nameLabel')}</div>
               <div class="text-[11px] text-white font-medium truncate max-w-[110px]">${c.cardholderName}</div>
             </div>
             <div class="text-right">
-              <div class="text-[9px] text-white/40 uppercase tracking-wide">Son K.</div>
+              <div class="text-[9px] text-white/40 uppercase tracking-wide">${t('payment.lastUsedLabel')}</div>
               <div class="text-[11px] text-white font-medium">${c.expiry || '—'}</div>
             </div>
           </div>
         </div>
         <!-- Sil button -->
         <button class="absolute top-2 right-2 w-5 h-5 rounded-full flex items-center justify-center text-white bg-red-500/70 hover:bg-red-500 opacity-0 group-hover:opacity-100 transition-opacity border-none cursor-pointer text-[10px] font-bold"
-                onclick="this.closest('[data-card-id]').remove(); if(window.removeSavedCard) window.removeSavedCard('${c.id}')" title="Sil">
+                onclick="this.closest('[data-card-id]').remove(); if(window.removeSavedCard) window.removeSavedCard('${c.id}')" title="${t('payment.deleteBtn')}">
           &times;
         </button>
       </div>
@@ -92,16 +93,16 @@ function renderPaymentManagement(): string {
          onmouseenter="this.style.borderColor='var(--btn-bg, #ff6600)'; this.style.background='var(--color-primary-50, #fff9f5)';"
          onmouseleave="this.style.borderColor='var(--color-border-strong, #ccc)'; this.style.background='transparent';">
       <span style="font-size: 28px; line-height: 1; color: var(--color-text-secondary, #888);">+</span>
-      <span class="text-xs font-medium text-center px-2" style="color: var(--color-text-primary, #333);">Yeni kart ekle</span>
+      <span class="text-xs font-medium text-center px-2" style="color: var(--color-text-primary, #333);">${t('payment.addNewCard')}</span>
     </div>
   `;
 
   return `
-    <div class="mb-6"><h1 class="text-[22px] font-bold text-text-primary m-0">Ödeme yönetimi</h1></div>
+    <div class="mb-6"><h1 class="text-[22px] font-bold text-text-primary m-0">${t('payment.paymentManagementTitle')}</h1></div>
 
     <!-- Kayıtlı kartlar -->
     <div class="mb-8">
-      <h2 class="text-base font-semibold text-text-primary mb-4">Kayıtlı kartlar ve hesaplar</h2>
+      <h2 class="text-base font-semibold text-text-primary mb-4">${t('payment.savedCardsTitle')}</h2>
       <div class="flex gap-4 overflow-x-auto pb-3" style="scrollbar-width: thin; scrollbar-color: var(--color-border-strong, #ccc) transparent;">
         ${savedCardsHtml}
         ${addCardTile}
@@ -110,21 +111,21 @@ function renderPaymentManagement(): string {
 
     <!-- İşlemler -->
     <div class="mb-8">
-      <h2 class="text-base font-semibold text-text-primary mb-4">İşlemler</h2>
+      <h2 class="text-base font-semibold text-text-primary mb-4">${t('payment.transactionsTitle')}</h2>
       <div class="pay-tabs flex border-b border-border-default overflow-x-auto" data-tabgroup="pay-mgmt">
-        <button class="pay-tabs__tab pay-tabs__tab--active py-3 px-5 text-[13px] font-medium text-text-secondary bg-transparent border-none border-b-2 border-transparent cursor-pointer transition-[color,border-color] duration-150 -mb-px whitespace-nowrap hover:text-text-primary" data-tab="pay-mgmt-payments">Ödemeler</button>
-        <button class="pay-tabs__tab py-3 px-5 text-[13px] font-medium text-text-secondary bg-transparent border-none border-b-2 border-transparent cursor-pointer transition-[color,border-color] duration-150 -mb-px whitespace-nowrap hover:text-text-primary" data-tab="pay-mgmt-refunds">Para iadeleri</button>
+        <button class="pay-tabs__tab pay-tabs__tab--active py-3 px-5 text-[13px] font-medium text-text-secondary bg-transparent border-none border-b-2 border-transparent cursor-pointer transition-[color,border-color] duration-150 -mb-px whitespace-nowrap hover:text-text-primary" data-tab="pay-mgmt-payments">${t('payment.paymentsTab')}</button>
+        <button class="pay-tabs__tab py-3 px-5 text-[13px] font-medium text-text-secondary bg-transparent border-none border-b-2 border-transparent cursor-pointer transition-[color,border-color] duration-150 -mb-px whitespace-nowrap hover:text-text-primary" data-tab="pay-mgmt-refunds">${t('payment.refundsTab')}</button>
       </div>
       <div class="pay-tab-content pay-tab-content--active" data-content="pay-mgmt-payments">
         <div class="pay-empty flex flex-col items-center justify-center py-12 px-6 text-center">
           <div class="opacity-50 mb-4">${RECEIPT_ICON}</div>
-          <p class="text-sm text-text-tertiary m-0">Henüz bir ödeme kaydı bulunmamaktadır</p>
+          <p class="text-sm text-text-tertiary m-0">${t('payment.noPaymentRecord')}</p>
         </div>
       </div>
       <div class="pay-tab-content" data-content="pay-mgmt-refunds">
         <div class="pay-empty flex flex-col items-center justify-center py-12 px-6 text-center">
           <div class="opacity-50 mb-4">${RECEIPT_ICON}</div>
-          <p class="text-sm text-text-tertiary m-0">Henüz bir iade kaydı bulunmamaktadır</p>
+          <p class="text-sm text-text-tertiary m-0">${t('payment.noRefundRecord')}</p>
         </div>
       </div>
     </div>
@@ -134,8 +135,8 @@ function renderPaymentManagement(): string {
       <div class="pay-modal__overlay fixed inset-0 bg-black/45 z-[1]"></div>
       <div class="pay-modal__dialog relative z-[2] bg-surface rounded-xl shadow-[0_20px_60px_rgba(0,0,0,0.15)] w-[90%] max-w-[480px] max-h-[90vh] overflow-y-auto animate-[payModalIn_200ms_ease-out]">
         <div class="flex items-center justify-between px-6 pt-5 pb-4 border-b border-[#f0f0f0]">
-          <h3 class="text-lg font-bold text-text-primary m-0">Yeni bir kart ekle</h3>
-          <button class="pay-modal__close flex items-center justify-center w-8 h-8 bg-transparent border-none rounded-md cursor-pointer transition-[background] duration-150 hover:bg-surface-raised" aria-label="Kapat">
+          <h3 class="text-lg font-bold text-text-primary m-0">${t('payment.addCardModalTitle')}</h3>
+          <button class="pay-modal__close flex items-center justify-center w-8 h-8 bg-transparent border-none rounded-md cursor-pointer transition-[background] duration-150 hover:bg-surface-raised" aria-label="${t('payment.closeBtn')}">
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M14 4L4 14M4 4l10 10" stroke="#333" stroke-width="1.8" stroke-linecap="round"/></svg>
           </button>
         </div>
@@ -171,16 +172,16 @@ function renderPaymentManagement(): string {
             <div class="h-7 px-2 border rounded flex items-center justify-center bg-white transition-opacity text-[10px] font-bold text-[#0e4c96]" :class="brand ? 'opacity-30' : 'opacity-100'" style="border-color: var(--color-border-default, #e5e5e5);">JCB</div>
           </div>
           <div class="mb-4">
-            <input id="pay-card-num" x-ref="numInput" x-model="ccNum" @input="formatCard" type="text" class="w-full py-2.5 px-3.5 text-sm border border-border-strong rounded-lg outline-none text-text-primary transition-[border-color] duration-150 focus:border-[#999]" placeholder="Kart numarası *" maxlength="19" />
+            <input id="pay-card-num" x-ref="numInput" x-model="ccNum" @input="formatCard" type="text" class="w-full py-2.5 px-3.5 text-sm border border-border-strong rounded-lg outline-none text-text-primary transition-[border-color] duration-150 focus:border-[#999]" placeholder="${t('payment.cardNumberPlaceholder')}" maxlength="19" />
           </div>
           <div class="flex gap-3 mb-4">
-            <input id="pay-card-fn" type="text" class="flex-1 py-2.5 px-3.5 text-sm border border-border-strong rounded-lg outline-none text-text-primary transition-[border-color] duration-150 focus:border-[#999]" placeholder="Ad *" />
-            <input id="pay-card-ln" type="text" class="flex-1 py-2.5 px-3.5 text-sm border border-border-strong rounded-lg outline-none text-text-primary transition-[border-color] duration-150 focus:border-[#999]" placeholder="Soyad *" />
+            <input id="pay-card-fn" type="text" class="flex-1 py-2.5 px-3.5 text-sm border border-border-strong rounded-lg outline-none text-text-primary transition-[border-color] duration-150 focus:border-[#999]" placeholder="${t('payment.firstNamePlaceholder')}" />
+            <input id="pay-card-ln" type="text" class="flex-1 py-2.5 px-3.5 text-sm border border-border-strong rounded-lg outline-none text-text-primary transition-[border-color] duration-150 focus:border-[#999]" placeholder="${t('payment.lastNamePlaceholder')}" />
           </div>
           <div class="flex gap-3 mb-4 items-center flex-wrap">
-            <select id="pay-card-month" class="py-2.5 px-3.5 text-sm border border-border-strong rounded-lg outline-none text-text-primary bg-surface cursor-pointer min-w-[80px]"><option value="">Ay *</option>${Array.from({ length: 12 }, (_, i) => `<option value="${String(i + 1).padStart(2, '0')}">${String(i + 1).padStart(2, '0')}</option>`).join('')}</select>
+            <select id="pay-card-month" class="py-2.5 px-3.5 text-sm border border-border-strong rounded-lg outline-none text-text-primary bg-surface cursor-pointer min-w-[80px]"><option value="">${t('payment.monthPlaceholder')}</option>${Array.from({ length: 12 }, (_, i) => `<option value="${String(i + 1).padStart(2, '0')}">${String(i + 1).padStart(2, '0')}</option>`).join('')}</select>
             <span class="text-base text-text-tertiary px-0.5">/</span>
-            <select id="pay-card-year" class="py-2.5 px-3.5 text-sm border border-border-strong rounded-lg outline-none text-text-primary bg-surface cursor-pointer min-w-[90px]"><option value="">Yıl *</option>${Array.from({ length: 10 }, (_, i) => `<option value="${2025 + i}">${2025 + i}</option>`).join('')}</select>
+            <select id="pay-card-year" class="py-2.5 px-3.5 text-sm border border-border-strong rounded-lg outline-none text-text-primary bg-surface cursor-pointer min-w-[90px]"><option value="">${t('payment.yearPlaceholder')}</option>${Array.from({ length: 10 }, (_, i) => `<option value="${2025 + i}">${2025 + i}</option>`).join('')}</select>
             <div class="flex items-center gap-2 ml-auto">
               <input type="text" class="w-[100px] py-2.5 px-3.5 text-sm border border-border-strong rounded-lg outline-none text-text-primary transition-[border-color] duration-150 focus:border-[#999]" placeholder="CVV/CVC *" maxlength="4" />
               <div class="flex gap-1 opacity-60">
@@ -191,7 +192,7 @@ function renderPaymentManagement(): string {
           </div>
         </div>
         <div class="flex justify-end gap-2.5 px-6 pb-5 pt-4 border-t border-[#f0f0f0]">
-          <button class="pay-modal__btn--primary th-btn-dark">Kaydet</button>
+          <button class="pay-modal__btn--primary th-btn-dark">${t('payment.saveBtn')}</button>
         </div>
       </div>
     </div>
@@ -203,23 +204,23 @@ function renderPaymentManagement(): string {
    ──────────────────────────────────────── */
 function renderTransactions(): string {
   return `
-    <div class="text-[13px] text-text-tertiary mb-2">Ödemeler &gt; Tüm İşlemler</div>
-    <div class="mb-6"><h1 class="text-[22px] font-bold text-text-primary m-0">Tüm İşlemler</h1></div>
+    <div class="text-[13px] text-text-tertiary mb-2">${t('payment.breadcrumbTransactions')}</div>
+    <div class="mb-6"><h1 class="text-[22px] font-bold text-text-primary m-0">${t('payment.allTransactions')}</h1></div>
 
     <div class="pay-tabs flex border-b border-border-default overflow-x-auto" data-tabgroup="pay-trans">
-      <button class="pay-tabs__tab pay-tabs__tab--active py-3 px-5 text-[13px] font-medium text-text-secondary bg-transparent border-none border-b-2 border-transparent cursor-pointer transition-[color,border-color] duration-150 -mb-px whitespace-nowrap hover:text-text-primary" data-tab="pay-trans-payments">Ödeme</button>
-      <button class="pay-tabs__tab py-3 px-5 text-[13px] font-medium text-text-secondary bg-transparent border-none border-b-2 border-transparent cursor-pointer transition-[color,border-color] duration-150 -mb-px whitespace-nowrap hover:text-text-primary" data-tab="pay-trans-refunds">Para iadesi</button>
+      <button class="pay-tabs__tab pay-tabs__tab--active py-3 px-5 text-[13px] font-medium text-text-secondary bg-transparent border-none border-b-2 border-transparent cursor-pointer transition-[color,border-color] duration-150 -mb-px whitespace-nowrap hover:text-text-primary" data-tab="pay-trans-payments">${t('payment.paymentTab')}</button>
+      <button class="pay-tabs__tab py-3 px-5 text-[13px] font-medium text-text-secondary bg-transparent border-none border-b-2 border-transparent cursor-pointer transition-[color,border-color] duration-150 -mb-px whitespace-nowrap hover:text-text-primary" data-tab="pay-trans-refunds">${t('payment.refundTab')}</button>
     </div>
 
     <div class="pay-tab-content pay-tab-content--active" data-content="pay-trans-payments">
       <!-- Status pills -->
       <div class="flex items-center gap-3 py-4 flex-wrap">
-        <span class="text-[13px] font-semibold text-text-primary whitespace-nowrap">Durum</span>
+        <span class="text-[13px] font-semibold text-text-primary whitespace-nowrap">${t('payment.statusLabel')}</span>
         <div class="pay-pills flex flex-wrap gap-2">
-          <button class="pay-pill pay-pill--active py-1.5 px-3.5 text-xs rounded-2xl border cursor-pointer whitespace-nowrap transition-all duration-150 text-white bg-[#222] border-[#222]">Tümü</button>
-          <button class="pay-pill py-1.5 px-3.5 text-xs rounded-2xl border cursor-pointer whitespace-nowrap transition-all duration-150 text-text-secondary bg-surface-raised border-border-default hover:border-[#bbb] hover:bg-[#eee]">Ödemeler Henüz Ulaşmadı</button>
-          <button class="pay-pill py-1.5 px-3.5 text-xs rounded-2xl border cursor-pointer whitespace-nowrap transition-all duration-150 text-text-secondary bg-surface-raised border-border-default hover:border-[#bbb] hover:bg-[#eee]">Bekleyen Tedarikçi Eşleşmesi</button>
-          <button class="pay-pill py-1.5 px-3.5 text-xs rounded-2xl border cursor-pointer whitespace-nowrap transition-all duration-150 text-text-secondary bg-surface-raised border-border-default hover:border-[#bbb] hover:bg-[#eee]">Tamamlandı</button>
+          <button class="pay-pill pay-pill--active py-1.5 px-3.5 text-xs rounded-2xl border cursor-pointer whitespace-nowrap transition-all duration-150 text-white bg-[#222] border-[#222]">${t('payment.statusAll')}</button>
+          <button class="pay-pill py-1.5 px-3.5 text-xs rounded-2xl border cursor-pointer whitespace-nowrap transition-all duration-150 text-text-secondary bg-surface-raised border-border-default hover:border-[#bbb] hover:bg-[#eee]">${t('payment.paymentsNotArrived')}</button>
+          <button class="pay-pill py-1.5 px-3.5 text-xs rounded-2xl border cursor-pointer whitespace-nowrap transition-all duration-150 text-text-secondary bg-surface-raised border-border-default hover:border-[#bbb] hover:bg-[#eee]">${t('payment.pendingSupplierMatch')}</button>
+          <button class="pay-pill py-1.5 px-3.5 text-xs rounded-2xl border cursor-pointer whitespace-nowrap transition-all duration-150 text-text-secondary bg-surface-raised border-border-default hover:border-[#bbb] hover:bg-[#eee]">${t('payment.completed')}</button>
         </div>
       </div>
 
@@ -227,16 +228,16 @@ function renderTransactions(): string {
       <div class="flex items-center justify-between gap-3 py-3 flex-wrap max-md:flex-col max-md:items-start">
         <div class="flex items-center gap-2.5 flex-wrap">
           <div class="relative flex items-center gap-1.5">
-            <input type="text" class="py-2 px-3 text-[13px] border border-border-strong rounded-md outline-none text-text-primary min-w-[160px] transition-[border-color] duration-150 pr-8 focus:border-[#999]" placeholder="Saat seçin" readonly />
+            <input type="text" class="py-2 px-3 text-[13px] border border-border-strong rounded-md outline-none text-text-primary min-w-[160px] transition-[border-color] duration-150 pr-8 focus:border-[#999]" placeholder="${t('payment.selectTime')}" readonly />
             <span class="absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none">${CALENDAR_ICON}</span>
           </div>
-          <input type="text" class="py-2 px-3 text-[13px] border border-border-strong rounded-md outline-none text-text-primary min-w-[160px] transition-[border-color] duration-150 focus:border-[#999]" placeholder="Ödeme tutarına göre ara" />
-          <select class="py-2 px-3 text-[13px] border border-border-strong rounded-md outline-none text-text-primary bg-surface cursor-pointer min-w-[120px]"><option>Para birimi</option><option>USD</option><option>EUR</option><option>TRY</option></select>
-          <a href="#" class="text-[13px] text-text-secondary no-underline whitespace-nowrap transition-[color] duration-150 hover:text-text-primary hover:underline">Filtreleri Kaldır</a>
+          <input type="text" class="py-2 px-3 text-[13px] border border-border-strong rounded-md outline-none text-text-primary min-w-[160px] transition-[border-color] duration-150 focus:border-[#999]" placeholder="${t('payment.searchByAmount')}" />
+          <select class="py-2 px-3 text-[13px] border border-border-strong rounded-md outline-none text-text-primary bg-surface cursor-pointer min-w-[120px]"><option>${t('payment.currencyLabel')}</option><option>USD</option><option>EUR</option><option>TRY</option></select>
+          <a href="#" class="text-[13px] text-text-secondary no-underline whitespace-nowrap transition-[color] duration-150 hover:text-text-primary hover:underline">${t('payment.removeFilters')}</a>
         </div>
         <button class="th-btn-dark inline-flex items-center gap-1.5 whitespace-nowrap">
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2v8m0 0l-3-3m3 3l3-3M3 12h10" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          İhracat Ayrıntıları
+          ${t('payment.exportDetails')}
         </button>
       </div>
 
@@ -244,7 +245,7 @@ function renderTransactions(): string {
       <div class="overflow-x-auto mt-2">
         <table class="w-full border-collapse text-[13px]">
           <thead><tr>
-            <th class="text-left py-3 px-4 font-semibold text-text-secondary bg-surface-muted border-b border-border-default whitespace-nowrap">Gönderme saati (PST)</th><th class="text-left py-3 px-4 font-semibold text-text-secondary bg-surface-muted border-b border-border-default whitespace-nowrap">Tedarikçi</th><th class="text-left py-3 px-4 font-semibold text-text-secondary bg-surface-muted border-b border-border-default whitespace-nowrap">Ödeme yöntemi</th><th class="text-left py-3 px-4 font-semibold text-text-secondary bg-surface-muted border-b border-border-default whitespace-nowrap">Tutar</th><th class="text-left py-3 px-4 font-semibold text-text-secondary bg-surface-muted border-b border-border-default whitespace-nowrap">İşlem Ücreti</th><th class="text-left py-3 px-4 font-semibold text-text-secondary bg-surface-muted border-b border-border-default whitespace-nowrap">Durum</th><th class="text-left py-3 px-4 font-semibold text-text-secondary bg-surface-muted border-b border-border-default whitespace-nowrap">İşlemler</th>
+            <th class="text-left py-3 px-4 font-semibold text-text-secondary bg-surface-muted border-b border-border-default whitespace-nowrap">${t('payment.thSendTime')}</th><th class="text-left py-3 px-4 font-semibold text-text-secondary bg-surface-muted border-b border-border-default whitespace-nowrap">${t('payment.thSupplier')}</th><th class="text-left py-3 px-4 font-semibold text-text-secondary bg-surface-muted border-b border-border-default whitespace-nowrap">${t('payment.thPaymentMethod')}</th><th class="text-left py-3 px-4 font-semibold text-text-secondary bg-surface-muted border-b border-border-default whitespace-nowrap">${t('payment.thAmount')}</th><th class="text-left py-3 px-4 font-semibold text-text-secondary bg-surface-muted border-b border-border-default whitespace-nowrap">${t('payment.thTransactionFee')}</th><th class="text-left py-3 px-4 font-semibold text-text-secondary bg-surface-muted border-b border-border-default whitespace-nowrap">${t('payment.thStatus')}</th><th class="text-left py-3 px-4 font-semibold text-text-secondary bg-surface-muted border-b border-border-default whitespace-nowrap">${t('payment.thActions')}</th>
           </tr></thead>
           <tbody><tr><td colspan="7" class="text-center text-text-tertiary !py-12 px-4">Henüz bir ödeme kaydı bulunmamaktadır</td></tr></tbody>
         </table>
@@ -254,7 +255,7 @@ function renderTransactions(): string {
     <div class="pay-tab-content" data-content="pay-trans-refunds">
       <div class="pay-empty flex flex-col items-center justify-center py-12 px-6 text-center">
         <div class="opacity-50 mb-4">${RECEIPT_ICON}</div>
-        <p class="text-sm text-text-tertiary m-0">Henüz bir iade kaydı bulunmamaktadır</p>
+        <p class="text-sm text-text-tertiary m-0">${t('payment.noRefundRecord')}</p>
       </div>
     </div>
   `;
@@ -265,50 +266,50 @@ function renderTransactions(): string {
    ──────────────────────────────────────── */
 function renderTTAccounts(): string {
   return `
-    <div class="text-[13px] text-text-tertiary mb-2">İşlemler &gt; Banka Havalesi Hesapları</div>
+    <div class="text-[13px] text-text-tertiary mb-2">${t('payment.breadcrumbTTAccounts')}</div>
     <div class="flex items-center justify-between flex-wrap gap-3 mb-6 max-md:flex-col max-md:items-start">
-      <h1 class="text-[22px] font-bold text-text-primary m-0">Banka Havalesi Hesapları</h1>
+      <h1 class="text-[22px] font-bold text-text-primary m-0">${t('payment.bankWireTransferAccounts')}</h1>
       <div class="flex items-center gap-2 relative max-md:flex-wrap">
         <button class="inline-flex items-center gap-1.5 py-2 px-4 text-[13px] text-text-primary bg-surface border border-border-strong rounded-full cursor-pointer transition-[border-color,background] duration-150 whitespace-nowrap hover:border-[#999] hover:bg-surface-muted" data-action="open-verify-modal">
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="10" rx="2" stroke="#333" stroke-width="1.2"/><path d="M6 8l2 2 4-4" stroke="#333" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          Tedarikçinin hesabını doğrula
+          ${t('payment.verifySupplierAccount')}
         </button>
         <button class="inline-flex items-center gap-1.5 py-2 px-4 text-[13px] text-text-primary bg-surface border border-border-strong rounded-full cursor-pointer transition-[border-color,background] duration-150 whitespace-nowrap hover:border-[#999] hover:bg-surface-muted" data-action="show-upload">
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="#333" stroke-width="1.2"/><path d="M8 5v6M5 8h6" stroke="#333" stroke-width="1.2" stroke-linecap="round"/></svg>
-          Havale dekontu yükle
+          ${t('payment.uploadWireReceipt')}
         </button>
         <button class="inline-flex items-center justify-center w-8 h-8 bg-transparent border border-border-strong rounded-full cursor-pointer transition-[border-color,background] duration-150 hover:border-[#999] hover:bg-surface-muted" aria-label="Bilgi" data-action="toggle-tooltip">
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="#666" stroke-width="1.2"/><path d="M8 5v3m0 2.5h.01" stroke="#666" stroke-width="1.2" stroke-linecap="round"/></svg>
         </button>
         <div class="pay-tooltip hidden absolute top-full right-0 mt-2 py-3.5 px-4.5 bg-surface border border-border-default rounded-lg shadow-[0_4px_16px_rgba(0,0,0,0.1)] text-[13px] text-text-secondary leading-normal min-w-[280px] max-w-[360px] z-[100] max-md:right-auto max-md:left-0 max-md:min-w-[220px]" id="pay-tt-tooltip">
-          Tedarikçi hesabının resmi Alibaba.com banka hesabı olup olmadığını doğrulayın. Ödemenizin Alibaba.com tarafından korunduğunu doğrulamak için havale dekontu yükleyin.
-          <button class="pay-tooltip__close absolute top-2 right-2.5 bg-transparent border-none text-lg text-text-tertiary cursor-pointer leading-none hover:text-text-primary" aria-label="Kapat">&times;</button>
+          ${t('payment.tooltipVerify')}
+          <button class="pay-tooltip__close absolute top-2 right-2.5 bg-transparent border-none text-lg text-text-tertiary cursor-pointer leading-none hover:text-text-primary" aria-label="${t('payment.closeBtn')}">&times;</button>
         </div>
       </div>
     </div>
 
     <div class="pay-tabs flex border-b border-border-default overflow-x-auto" data-tabgroup="pay-tt">
-      <button class="pay-tabs__tab pay-tabs__tab--active py-3 px-5 text-[13px] font-medium text-text-secondary bg-transparent border-none border-b-2 border-transparent cursor-pointer transition-[color,border-color] duration-150 -mb-px whitespace-nowrap hover:text-text-primary" data-tab="pay-tt-all">Tümü</button>
-      <button class="pay-tabs__tab py-3 px-5 text-[13px] font-medium text-text-secondary bg-transparent border-none border-b-2 border-transparent cursor-pointer transition-[color,border-color] duration-150 -mb-px whitespace-nowrap hover:text-text-primary" data-tab="pay-tt-pending">Bekleyen Tedarikçi Eşleşmesi</button>
-      <button class="pay-tabs__tab py-3 px-5 text-[13px] font-medium text-text-secondary bg-transparent border-none border-b-2 border-transparent cursor-pointer transition-[color,border-color] duration-150 -mb-px whitespace-nowrap hover:text-text-primary" data-tab="pay-tt-matched">Tedarikçi Tarafından Tam Eşleşme</button>
+      <button class="pay-tabs__tab pay-tabs__tab--active py-3 px-5 text-[13px] font-medium text-text-secondary bg-transparent border-none border-b-2 border-transparent cursor-pointer transition-[color,border-color] duration-150 -mb-px whitespace-nowrap hover:text-text-primary" data-tab="pay-tt-all">${t('payment.allTab')}</button>
+      <button class="pay-tabs__tab py-3 px-5 text-[13px] font-medium text-text-secondary bg-transparent border-none border-b-2 border-transparent cursor-pointer transition-[color,border-color] duration-150 -mb-px whitespace-nowrap hover:text-text-primary" data-tab="pay-tt-pending">${t('payment.pendingMatchTab')}</button>
+      <button class="pay-tabs__tab py-3 px-5 text-[13px] font-medium text-text-secondary bg-transparent border-none border-b-2 border-transparent cursor-pointer transition-[color,border-color] duration-150 -mb-px whitespace-nowrap hover:text-text-primary" data-tab="pay-tt-matched">${t('payment.matchedTab')}</button>
     </div>
 
     <!-- Search + Filters -->
     <div class="flex items-center justify-between gap-4 py-4 flex-wrap max-md:flex-col max-md:items-start">
       <div class="flex items-center gap-2.5 flex-wrap">
         <div class="flex items-stretch border border-border-strong rounded-md overflow-hidden">
-          <input type="text" class="py-2 px-3 text-[13px] border-none rounded-none outline-none text-text-primary min-w-[200px]" placeholder="Tedarikçinin e-postasına ..." />
+          <input type="text" class="py-2 px-3 text-[13px] border-none rounded-none outline-none text-text-primary min-w-[200px]" placeholder="${t('payment.searchSupplierEmail')}" />
           <button class="flex items-center justify-center px-2.5 bg-transparent border-none border-l border-border-default cursor-pointer transition-[background] duration-150 hover:bg-surface-raised">${SEARCH_ICON}</button>
         </div>
         <div class="relative flex items-center gap-1.5">
-          <input type="text" class="py-2 px-3 text-[13px] border border-border-strong rounded-md outline-none text-text-primary min-w-[160px] transition-[border-color] duration-150 pr-8 focus:border-[#999]" placeholder="Saat seçin" readonly />
+          <input type="text" class="py-2 px-3 text-[13px] border border-border-strong rounded-md outline-none text-text-primary min-w-[160px] transition-[border-color] duration-150 pr-8 focus:border-[#999]" placeholder="${t('payment.selectTime')}" readonly />
           <span class="absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none">${CALENDAR_ICON}</span>
         </div>
-        <a href="#" class="text-[13px] text-text-secondary no-underline whitespace-nowrap transition-[color] duration-150 hover:text-text-primary hover:underline">Filtreleri Kaldır</a>
+        <a href="#" class="text-[13px] text-text-secondary no-underline whitespace-nowrap transition-[color] duration-150 hover:text-text-primary hover:underline">${t('payment.removeFilters')}</a>
       </div>
       <div class="flex items-center gap-4 flex-wrap">
-        <span class="text-[13px] text-text-secondary whitespace-nowrap">Toplam Havale Miktarı: <strong class="text-text-primary font-semibold">USD 0.00</strong></span>
-        <span class="text-[13px] text-text-secondary whitespace-nowrap">Bekleyen Tedarikçi Eşleşmesi: <strong class="text-text-primary font-semibold">USD 0.00</strong></span>
+        <span class="text-[13px] text-text-secondary whitespace-nowrap">${t('payment.totalWireAmount')}: <strong class="text-text-primary font-semibold">USD 0.00</strong></span>
+        <span class="text-[13px] text-text-secondary whitespace-nowrap">${t('payment.pendingMatchAmount')}: <strong class="text-text-primary font-semibold">USD 0.00</strong></span>
       </div>
     </div>
 
@@ -316,7 +317,7 @@ function renderTTAccounts(): string {
     <div class="overflow-x-auto mt-2">
       <table class="w-full border-collapse text-[13px]">
         <thead><tr>
-          <th class="text-left py-3 px-4 font-semibold text-text-secondary bg-surface-muted border-b border-border-default whitespace-nowrap">Son Ulaşım Saati (PST)</th><th class="text-left py-3 px-4 font-semibold text-text-secondary bg-surface-muted border-b border-border-default whitespace-nowrap">Tedarikçi Bilgileri</th><th class="text-left py-3 px-4 font-semibold text-text-secondary bg-surface-muted border-b border-border-default whitespace-nowrap">Tedarikçi T/T Hesap Numarası</th><th class="text-left py-3 px-4 font-semibold text-text-secondary bg-surface-muted border-b border-border-default whitespace-nowrap">Toplam Havale Tutarı</th><th class="text-left py-3 px-4 font-semibold text-text-secondary bg-surface-muted border-b border-border-default whitespace-nowrap">Durum</th><th class="text-left py-3 px-4 font-semibold text-text-secondary bg-surface-muted border-b border-border-default whitespace-nowrap">İşlemler</th>
+          <th class="text-left py-3 px-4 font-semibold text-text-secondary bg-surface-muted border-b border-border-default whitespace-nowrap">${t('payment.thLastArrivalTime')}</th><th class="text-left py-3 px-4 font-semibold text-text-secondary bg-surface-muted border-b border-border-default whitespace-nowrap">${t('payment.thSupplierInfo')}</th><th class="text-left py-3 px-4 font-semibold text-text-secondary bg-surface-muted border-b border-border-default whitespace-nowrap">${t('payment.thSupplierTTAccount')}</th><th class="text-left py-3 px-4 font-semibold text-text-secondary bg-surface-muted border-b border-border-default whitespace-nowrap">${t('payment.thTotalWireAmount')}</th><th class="text-left py-3 px-4 font-semibold text-text-secondary bg-surface-muted border-b border-border-default whitespace-nowrap">${t('payment.thStatus')}</th><th class="text-left py-3 px-4 font-semibold text-text-secondary bg-surface-muted border-b border-border-default whitespace-nowrap">${t('payment.thActions')}</th>
         </tr></thead>
         <tbody><tr><td colspan="6" class="text-center text-text-tertiary !py-12 px-4">Henüz bir ödeme kaydı bulunmamaktadır</td></tr></tbody>
       </table>
@@ -327,26 +328,26 @@ function renderTTAccounts(): string {
       <div class="pay-modal__overlay fixed inset-0 bg-black/45 z-[1]"></div>
       <div class="pay-modal__dialog relative z-[2] bg-surface rounded-xl shadow-[0_20px_60px_rgba(0,0,0,0.15)] w-[90%] max-w-[480px] max-h-[90vh] overflow-y-auto animate-[payModalIn_200ms_ease-out]">
         <div class="flex items-center justify-between px-6 pt-5 pb-4 border-b border-[#f0f0f0]">
-          <h3 class="text-lg font-bold text-text-primary m-0">Tedarikçinin hesabını doğrula</h3>
-          <button class="pay-modal__close flex items-center justify-center w-8 h-8 bg-transparent border-none rounded-md cursor-pointer transition-[background] duration-150 hover:bg-surface-raised" aria-label="Kapat">
+          <h3 class="text-lg font-bold text-text-primary m-0">${t('payment.verifyModalTitle')}</h3>
+          <button class="pay-modal__close flex items-center justify-center w-8 h-8 bg-transparent border-none rounded-md cursor-pointer transition-[background] duration-150 hover:bg-surface-raised" aria-label="${t('payment.closeBtn')}">
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M14 4L4 14M4 4l10 10" stroke="#333" stroke-width="1.8" stroke-linecap="round"/></svg>
           </button>
         </div>
         <div class="pay-modal__body px-6 py-5">
           <div class="flex items-center gap-2.5 py-3 px-4 bg-[#FEF3C7] rounded-lg text-[13px] text-primary-800 mb-4">
             <span class="w-2 h-2 rounded-full bg-warning-500 shrink-0"></span>
-            <span>Ödeme yapmadan önce daima tedarikçinin banka hesabını doğrulayın</span>
+            <span>${t('payment.verifyWarning')}</span>
           </div>
-          <p class="text-[13px] text-text-secondary leading-relaxed mb-4">Tedarikçiden bir ödeme talimatı aldığınızda, ödeme yapmadan önce hesap numarasının resmi Alibaba.com banka hesabına ait olduğunu doğrulayın. Böylece sipariş korumasından yararlanabilirsiniz.</p>
+          <p class="text-[13px] text-text-secondary leading-relaxed mb-4">${t('payment.verifyDescription')}</p>
           <div class="mb-4">
-            <input type="text" class="w-full py-2.5 px-3.5 text-sm border border-border-strong rounded-lg outline-none text-text-primary transition-[border-color] duration-150 focus:border-[#999]" placeholder="Tedarikçinin banka hesap numarası *" />
+            <input type="text" class="w-full py-2.5 px-3.5 text-sm border border-border-strong rounded-lg outline-none text-text-primary transition-[border-color] duration-150 focus:border-[#999]" placeholder="${t('payment.supplierAccountPlaceholder')}" />
           </div>
         </div>
         <div class="flex justify-between gap-2.5 px-6 pb-5 pt-4 border-t border-[#f0f0f0]">
-          <button class="pay-modal__btn--cancel py-2.5 px-6 text-sm font-medium rounded-lg border border-border-strong bg-surface text-text-secondary cursor-pointer transition-all duration-150 hover:border-[#999] hover:bg-surface-muted">Vazgeç</button>
+          <button class="pay-modal__btn--cancel py-2.5 px-6 text-sm font-medium rounded-lg border border-border-strong bg-surface text-text-secondary cursor-pointer transition-all duration-150 hover:border-[#999] hover:bg-surface-muted">${t('payment.cancelBtn')}</button>
           <button class="pay-modal__btn--primary th-btn-dark inline-flex items-center gap-1.5">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3.5 3.5L13 5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            Doğrula
+            ${t('payment.verifyBtn')}
           </button>
         </div>
       </div>
@@ -359,26 +360,26 @@ function renderTTAccounts(): string {
    ──────────────────────────────────────── */
 function renderTTTracking(): string {
   return `
-    <div class="mb-6"><h1 class="text-[22px] font-bold text-text-primary m-0">Havale Takibi</h1></div>
+    <div class="mb-6"><h1 class="text-[22px] font-bold text-text-primary m-0">${t('payment.ttTrackingTitle')}</h1></div>
     <div class="flex items-center justify-between gap-4 py-4 flex-wrap max-md:flex-col max-md:items-start">
       <div class="flex items-center gap-2.5 flex-wrap">
         <div class="flex items-stretch border border-border-strong rounded-md overflow-hidden">
-          <input type="text" class="py-2 px-3 text-[13px] border-none rounded-none outline-none text-text-primary min-w-[200px]" placeholder="Havale referans numarası..." />
+          <input type="text" class="py-2 px-3 text-[13px] border-none rounded-none outline-none text-text-primary min-w-[200px]" placeholder="${t('payment.searchRefNumber')}" />
           <button class="flex items-center justify-center px-2.5 bg-transparent border-none border-l border-border-default cursor-pointer transition-[background] duration-150 hover:bg-surface-raised">${SEARCH_ICON}</button>
         </div>
         <div class="relative flex items-center gap-1.5">
-          <input type="text" class="py-2 px-3 text-[13px] border border-border-strong rounded-md outline-none text-text-primary min-w-[160px] transition-[border-color] duration-150 pr-8 focus:border-[#999]" placeholder="Saat seçin" readonly />
+          <input type="text" class="py-2 px-3 text-[13px] border border-border-strong rounded-md outline-none text-text-primary min-w-[160px] transition-[border-color] duration-150 pr-8 focus:border-[#999]" placeholder="${t('payment.selectTime')}" readonly />
           <span class="absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none">${CALENDAR_ICON}</span>
         </div>
-        <a href="#" class="text-[13px] text-text-secondary no-underline whitespace-nowrap transition-[color] duration-150 hover:text-text-primary hover:underline">Filtreleri Kaldır</a>
+        <a href="#" class="text-[13px] text-text-secondary no-underline whitespace-nowrap transition-[color] duration-150 hover:text-text-primary hover:underline">${t('payment.removeFilters')}</a>
       </div>
     </div>
     <div class="overflow-x-auto mt-2">
       <table class="w-full border-collapse text-[13px]">
         <thead><tr>
-          <th class="text-left py-3 px-4 font-semibold text-text-secondary bg-surface-muted border-b border-border-default whitespace-nowrap">Referans No</th><th class="text-left py-3 px-4 font-semibold text-text-secondary bg-surface-muted border-b border-border-default whitespace-nowrap">Tedarikçi</th><th class="text-left py-3 px-4 font-semibold text-text-secondary bg-surface-muted border-b border-border-default whitespace-nowrap">Havale Tutarı</th><th class="text-left py-3 px-4 font-semibold text-text-secondary bg-surface-muted border-b border-border-default whitespace-nowrap">Gönderim Tarihi</th><th class="text-left py-3 px-4 font-semibold text-text-secondary bg-surface-muted border-b border-border-default whitespace-nowrap">Durum</th><th class="text-left py-3 px-4 font-semibold text-text-secondary bg-surface-muted border-b border-border-default whitespace-nowrap">İşlemler</th>
+          <th class="text-left py-3 px-4 font-semibold text-text-secondary bg-surface-muted border-b border-border-default whitespace-nowrap">${t('payment.thRefNo')}</th><th class="text-left py-3 px-4 font-semibold text-text-secondary bg-surface-muted border-b border-border-default whitespace-nowrap">${t('payment.thSupplier')}</th><th class="text-left py-3 px-4 font-semibold text-text-secondary bg-surface-muted border-b border-border-default whitespace-nowrap">${t('payment.thWireAmount')}</th><th class="text-left py-3 px-4 font-semibold text-text-secondary bg-surface-muted border-b border-border-default whitespace-nowrap">${t('payment.thSendDate')}</th><th class="text-left py-3 px-4 font-semibold text-text-secondary bg-surface-muted border-b border-border-default whitespace-nowrap">${t('payment.thStatus')}</th><th class="text-left py-3 px-4 font-semibold text-text-secondary bg-surface-muted border-b border-border-default whitespace-nowrap">${t('payment.thActions')}</th>
         </tr></thead>
-        <tbody><tr><td colspan="6" class="text-center text-text-tertiary !py-12 px-4">Henüz bir havale takip kaydı bulunmamaktadır</td></tr></tbody>
+        <tbody><tr><td colspan="6" class="text-center text-text-tertiary !py-12 px-4">${t('payment.noTrackingRecord')}</td></tr></tbody>
       </table>
     </div>
   `;
@@ -389,10 +390,10 @@ function renderTTTracking(): string {
    ──────────────────────────────────────── */
 function renderAlibabaCard(): string {
   return `
-    <div class="mb-6"><h1 class="text-[22px] font-bold text-text-primary m-0">Alibaba.com Kartı</h1></div>
+    <div class="mb-6"><h1 class="text-[22px] font-bold text-text-primary m-0">${t('payment.alibabaCardTitle')}</h1></div>
     <div class="flex flex-col items-center justify-center py-20 px-6 text-center">
       <div class="opacity-50 mb-4">${RECEIPT_ICON}</div>
-      <p class="text-sm text-text-tertiary m-0">Bu hizmet yakında kullanıma sunulacaktır</p>
+      <p class="text-sm text-text-tertiary m-0">${t('payment.comingSoon')}</p>
     </div>
   `;
 }
@@ -402,10 +403,10 @@ function renderAlibabaCard(): string {
    ──────────────────────────────────────── */
 function renderPayLater(): string {
   return `
-    <div class="mb-6"><h1 class="text-[22px] font-bold text-text-primary m-0">Pay Later for Business</h1></div>
+    <div class="mb-6"><h1 class="text-[22px] font-bold text-text-primary m-0">${t('payment.payLaterTitle')}</h1></div>
     <div class="flex flex-col items-center justify-center py-20 px-6 text-center">
       <div class="opacity-50 mb-4">${RECEIPT_ICON}</div>
-      <p class="text-sm text-text-tertiary m-0">Bu hizmet yakında kullanıma sunulacaktır</p>
+      <p class="text-sm text-text-tertiary m-0">${t('payment.comingSoon')}</p>
     </div>
   `;
 }
@@ -415,9 +416,9 @@ function renderPayLater(): string {
    ──────────────────────────────────────── */
 function renderUpload(): string {
   return `
-    <div class="mb-6"><h1 class="text-[22px] font-bold text-text-primary m-0">Havale dekontu yükle</h1></div>
+    <div class="mb-6"><h1 class="text-[22px] font-bold text-text-primary m-0">${t('payment.uploadReceiptTitle')}</h1></div>
     <div class="mt-2">
-      <p class="text-[13px] text-text-secondary leading-normal mb-5"><span class="text-error-500 font-semibold">*</span> Havale dekontunuzu veya MT103 belgenizi yükleyin ya da dosyayı kutuya sürükleyip bırakın. <a href="#" class="text-[#2563eb] no-underline hover:underline">Örnekleri görüntüle</a></p>
+      <p class="text-[13px] text-text-secondary leading-normal mb-5"><span class="text-error-500 font-semibold">*</span> ${t('payment.uploadDescription')} <a href="#" class="text-[#2563eb] no-underline hover:underline">${t('payment.viewExamples')}</a></p>
       <div class="flex gap-8 items-start p-6 border-2 border-dashed border-border-strong rounded-lg bg-surface-muted max-md:flex-col max-md:items-center max-md:text-center">
         <div class="shrink-0">
           <svg width="120" height="160" viewBox="0 0 120 160" fill="none">
@@ -433,13 +434,13 @@ function renderUpload(): string {
           </svg>
         </div>
         <div class="flex-1 text-[13px] text-text-secondary leading-[1.7] [&_p]:m-0 [&_p]:mb-1.5 [&_strong]:text-text-primary">
-          <p><strong>Belgenizin detaylarının net olduğundan emin olun</strong></p>
-          <p>Dosya boyutu: 20 MB altında</p>
-          <p>Desteklenen formatlar: JPG, JPEG, PNG, GIF ve PDF</p>
-          <p>Ayrıca manuel olarak <a href="#" class="text-[#2563eb] no-underline hover:underline">havale bilgilerini girebilirsiniz</a></p>
+          <p><strong>${t('payment.ensureDetails')}</strong></p>
+          <p>${t('payment.fileSizeLimit')}</p>
+          <p>${t('payment.supportedFormats')}</p>
+          <p>Ayrıca manuel olarak <a href="#" class="text-[#2563eb] no-underline hover:underline">${t('payment.manualEntry')}</a></p>
           <button class="th-btn-dark inline-flex items-center gap-2 mt-4">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2v8m0-8l-3 3m3-3l3 3M3 12h10" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            Dosya yükle
+            ${t('payment.uploadFile')}
           </button>
         </div>
       </div>
@@ -493,7 +494,7 @@ export function PaymentLayout(): string {
   return `
     <div class="pay-layout flex bg-surface rounded-lg min-h-[calc(100vh-80px)] overflow-hidden max-md:flex-col">
       <aside class="pay-nav w-[220px] shrink-0 border-r border-[#f0f0f0] py-6 sticky top-0 self-start max-h-[calc(100vh-80px)] overflow-y-auto max-md:w-full max-md:static max-md:max-h-none max-md:border-r-0 max-md:border-b max-md:border-[#f0f0f0] max-md:py-4 max-md:flex max-md:flex-wrap max-md:items-center">
-        <h2 class="text-base font-bold text-text-primary px-5 pb-4 max-md:w-full max-md:px-4 max-md:pb-2">Ödeme</h2>
+        <h2 class="text-base font-bold text-text-primary px-5 pb-4 max-md:w-full max-md:px-4 max-md:pb-2">${t('payment.paymentTitle')}</h2>
         ${renderNav(activeId)}
       </aside>
       <div class="pay-content flex-1 min-w-0 py-6 px-7 max-md:p-4 max-sm:p-3" id="pay-content">
@@ -681,11 +682,11 @@ function initPayModals(): void {
               <div class="text-sm font-mono font-bold text-white tracking-widest mb-1 truncate">${masked}</div>
               <div class="flex items-center justify-between">
                 <div>
-                  <div class="text-[9px] uppercase tracking-wide" style="color: rgba(255,255,255,0.4);">Isim</div>
+                  <div class="text-[9px] uppercase tracking-wide" style="color: rgba(255,255,255,0.4);">${t('payment.nameLabel')}</div>
                   <div class="text-[11px] text-white font-medium truncate max-w-[110px]">${cardholderName}</div>
                 </div>
                 <div class="text-right">
-                  <div class="text-[9px] uppercase tracking-wide" style="color: rgba(255,255,255,0.4);">Son K.</div>
+                  <div class="text-[9px] uppercase tracking-wide" style="color: rgba(255,255,255,0.4);">${t('payment.lastUsedLabel')}</div>
                   <div class="text-[11px] text-white font-medium">${expiry || '—'}</div>
                 </div>
               </div>
@@ -693,7 +694,7 @@ function initPayModals(): void {
             <button class="absolute top-2 right-2 w-5 h-5 rounded-full flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity border-none cursor-pointer text-[10px] font-bold"
                     style="background: rgba(239,68,68,0.7);"
                     onmouseenter="this.style.background='rgb(239,68,68)'" onmouseleave="this.style.background='rgba(239,68,68,0.7)'"
-                    onclick="this.closest('[data-card-id]').remove(); if(window.removeSavedCard) window.removeSavedCard('${savedId}')" title="Sil">
+                    onclick="this.closest('[data-card-id]').remove(); if(window.removeSavedCard) window.removeSavedCard('${savedId}')" title="${t('payment.deleteBtn')}">
               &times;
             </button>
           `;

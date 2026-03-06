@@ -4,6 +4,8 @@
  * navigation links on the right with horizontal scroll on mobile.
  */
 
+import { t } from '../../i18n';
+
 const getBaseUrl = (): string => {
   const viteBase = typeof import.meta !== 'undefined' ? import.meta.env?.BASE_URL : undefined;
   if (viteBase && viteBase !== '/') return viteBase;
@@ -18,11 +20,11 @@ interface HelpCenterHeaderOptions {
 }
 
 const NAV_LINKS: { id: ActivePage; label: string; href: string }[] = [
-  { id: 'home', label: 'HomePage', href: '/pages/help/help-center.html' },
-  { id: 'faq', label: 'FAQ', href: '/pages/help/faq.html' },
-  { id: 'contact', label: 'Bize Ulaşın', href: '/pages/help/contact.html' },
-  { id: 'ticket-new', label: 'Talep Oluştur', href: '/pages/help/help-ticket-new.html' },
-  { id: 'tickets', label: 'Taleplerim', href: '/pages/help/help-tickets.html' },
+  { id: 'home', label: t('helpCenter.navHome'), href: '/pages/help/help-center.html' },
+  { id: 'faq', label: t('helpCenter.navFaq'), href: '/pages/help/faq.html' },
+  { id: 'contact', label: t('helpCenter.navContact'), href: '/pages/help/contact.html' },
+  { id: 'ticket-new', label: t('helpCenter.navNewTicket'), href: '/pages/help/help-ticket-new.html' },
+  { id: 'tickets', label: t('helpCenter.navMyTickets'), href: '/pages/help/help-tickets.html' },
 ];
 
 export function HelpCenterHeader(opts: HelpCenterHeaderOptions = {}): string {
@@ -49,7 +51,7 @@ export function HelpCenterHeader(opts: HelpCenterHeaderOptions = {}): string {
             <svg class="w-4 h-4 text-primary-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 9.75a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375m-13.5 3.01c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.184-4.183a1.14 1.14 0 0 1 .778-.332 48.294 48.294 0 0 0 5.83-.498c1.585-.233 2.708-1.626 2.708-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z"/>
             </svg>
-            Help Center for Buyer
+            ${t('helpCenter.headerTitle')}
           </span>
         </div>
 

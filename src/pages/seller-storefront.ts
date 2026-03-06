@@ -10,6 +10,7 @@ import { startAlpine } from '../alpine';
 
 // Components
 import { TopBar } from '../components/header';
+import { initLanguageSelector } from '../components/header/TopBar'
 import {
   StoreHeader,
   StoreNav,
@@ -18,7 +19,10 @@ import {
 import { CompanyProfileComponent } from '../components/seller/CompanyProfile';
 
 // Mock Data
-import { sellerData, sellerStats, sellerReviews } from '../data/seller/mockData';
+import { getSellerData, getSellerStats, getSellerReviews } from '../data/seller/mockData';
+const sellerData = getSellerData();
+const sellerStats = getSellerStats();
+const sellerReviews = getSellerReviews();
 
 // Interactions
 import { initSellerStorefront } from '../utils/seller/interactions';
@@ -43,11 +47,12 @@ appEl.innerHTML = `
 
   </main>
 
-  <!-- SITE FOOTER BURAYA GELİR -->
+  <!-- SITE FOOTER PLACEHOLDER -->
 `;
 
 // ─── Initialize ─────────────────────────────────────────
 initFlowbite();
+initLanguageSelector();
 initSellerStorefront();
 
 // Start Alpine.js (must be called AFTER innerHTML is set)

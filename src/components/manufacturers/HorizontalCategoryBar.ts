@@ -1,84 +1,99 @@
-const TAB_CATEGORIES = [
-  'Tüm kategoriler',
-  'Valiz & Çanta & Kılıf',
-  'Spor Giyim ve Outdoor Kıyafetleri',
-  'Kişisel Elektronik Cihazlar',
-  'Takı & Gözlük & Saat ve Aksesuarlar',
-  'Anne & Çocuk & Oyuncaklar',
-  'Ayakkabı & Aksesuar',
-];
+import { t } from '../../i18n';
 
-const ALL_CATEGORIES = [
-  // Column 1
-  'Tüm kategoriler',
-  'Takı & Gözlük & Saat ve Aksesuarlar',
-  'Elektrikli Ekipmanlar ve Gereçler',
-  'Gıda & İçecek',
-  'Kimyasallar',
-  'Tıbbi Cihazlar & Medikal Ürünler',
-  'Araç Parçaları ve Aksesuarları',
-  'Kozmetik',
-  'Mobilya',
-  'Malzeme Taşıma',
-  'Kişisel Bakım ve Ev Temizliği',
-  // Column 2
-  'Valiz & Çanta & Kılıf',
-  'Anne & Çocuk & Oyuncaklar',
-  'Ambalaj & Baskı',
-  'Giyim & Aksesuar',
-  'Metal & Alaşımlar',
-  'Spor & Eğlence',
-  'Lambalar & Aydınlatma',
-  'Kauçuk & Plastik Ürünler',
-  'Ticari Ekipman ve Makineler',
-  'Yenilenebilir Enerji',
-  'İnşaat ve Yapı Makineleri',
-  // Column 3
-  'Spor Giyim ve Outdoor Kıyafetleri',
-  'Ayakkabı & Aksesuar',
-  'Ev & Bahçe',
-  'Kumaş & Tekstil Ham Maddeleri',
-  'Çevre',
-  'Okul ve Ofis Malzemeleri',
-  'İmalat Hizmetleri',
-  'Elektronik Parça ve Aksesuarlar & Telekomünikasyon',
-  'Araçlar & Ulaşım',
-  'İş Güvenliği',
-  'Evcil Hayvan Ürünleri',
-  // Column 4
-  'Kişisel Elektronik Cihazlar',
-  'Hediyelik Eşya & Hobi Malzemeleri',
-  'Tarım',
-  'Ev Aletleri',
-  'İnşaat & Gayrimenkul',
-  'Güvenlik',
-  'Endüstriyel Makineler',
-  'El aletleri ve donanım',
-  'Güç Aktarımı',
-  'Test Cihaz ve Ekipmanları',
-];
+function getTabCategories(): string[] {
+  return [
+    t('mfr.allCategories'),
+    t('mfr.cat.luggageBagsCases'),
+    t('mfr.cat.sportswearOutdoor'),
+    t('mfr.cat.personalElectronics'),
+    t('mfr.cat.jewelryEyewearWatches'),
+    t('mfr.cat.motherChildToys'),
+    t('mfr.cat.shoesAccessories'),
+  ];
+}
+
+function getAllCategories(): string[] {
+  return [
+    // Column 1
+    t('mfr.allCategories'),
+    t('mfr.allCat.jewelryEyewearWatches'),
+    t('mfr.allCat.electricalEquipment'),
+    t('mfr.allCat.foodBeverage'),
+    t('mfr.allCat.chemicals'),
+    t('mfr.allCat.medicalDevices'),
+    t('mfr.allCat.vehiclePartsAccessories'),
+    t('mfr.allCat.cosmetics'),
+    t('mfr.allCat.furniture'),
+    t('mfr.allCat.materialHandling'),
+    t('mfr.allCat.personalCareHomeCleaning'),
+    // Column 2
+    t('mfr.allCat.luggageBagsCases'),
+    t('mfr.allCat.motherChildToys'),
+    t('mfr.allCat.packagingPrinting'),
+    t('mfr.allCat.clothingAccessories'),
+    t('mfr.allCat.metalAlloys'),
+    t('mfr.allCat.sportsEntertainment'),
+    t('mfr.allCat.lampsLighting'),
+    t('mfr.allCat.rubberPlastics'),
+    t('mfr.allCat.commercialEquipmentMachinery'),
+    t('mfr.allCat.renewableEnergy'),
+    t('mfr.allCat.constructionBuildingMachinery'),
+    // Column 3
+    t('mfr.allCat.sportswearOutdoor'),
+    t('mfr.allCat.shoesAccessories'),
+    t('mfr.allCat.homeGarden'),
+    t('mfr.allCat.fabricTextileRawMaterials'),
+    t('mfr.allCat.environment'),
+    t('mfr.allCat.schoolOfficeSupplies'),
+    t('mfr.allCat.manufacturingServices'),
+    t('mfr.allCat.electronicPartsTelecom'),
+    t('mfr.allCat.vehiclesTransportation'),
+    t('mfr.allCat.occupationalSafety'),
+    t('mfr.allCat.petProducts'),
+    // Column 4
+    t('mfr.allCat.personalElectronics'),
+    t('mfr.allCat.giftsHobbies'),
+    t('mfr.allCat.agriculture'),
+    t('mfr.allCat.homeAppliances'),
+    t('mfr.allCat.constructionRealEstate'),
+    t('mfr.allCat.security'),
+    t('mfr.allCat.industrialMachinery'),
+    t('mfr.allCat.handToolsHardware'),
+    t('mfr.allCat.powerTransmission'),
+    t('mfr.allCat.testEquipment'),
+  ];
+}
 
 // Column header indices (first item of each column is bold)
 const COLUMN_HEADERS = [0, 11, 22, 33];
 
-const SUB_TAB_FILTERS = [
-  'Düşük MOQ ile özelleştirme',
-  'Numunelerden özelleştirme',
-  'Kalite kontrol sertifikalı',
-  'Küçük özelleştirme',
-];
+function getSubTabFilters(): string[] {
+  return [
+    t('mfr.filter.lowMoqCustomization'),
+    t('mfr.filter.sampleCustomization'),
+    t('mfr.filter.qualityCertified'),
+    t('mfr.filter.smallCustomization'),
+  ];
+}
 
-const SUB_TAB_MORE_FILTERS = [
-  'Düşük MOQ ile özelleştirme',
-  'Numunelerden özelleştirme',
-  'Kalite kontrol sertifikalı',
-  'Küçük özelleştirme',
-  'Tam özelleştirme',
-  'Yüksek Ar-Ge kapasitesi',
-  'Fortune 500 ile İş Birliği',
-];
+function getSubTabMoreFilters(): string[] {
+  return [
+    t('mfr.filter.lowMoqCustomization'),
+    t('mfr.filter.sampleCustomization'),
+    t('mfr.filter.qualityCertified'),
+    t('mfr.filter.smallCustomization'),
+    t('mfr.filter.fullCustomization'),
+    t('mfr.filter.highRdCapacity'),
+    t('mfr.filter.fortune500Collab'),
+  ];
+}
 
 export function HorizontalCategoryBar(): string {
+  const TAB_CATEGORIES = getTabCategories();
+  const ALL_CATEGORIES = getAllCategories();
+  const SUB_TAB_FILTERS = getSubTabFilters();
+  const SUB_TAB_MORE_FILTERS = getSubTabMoreFilters();
+
   return `
     <!-- Desktop layout (Category bar) -->
     <div class="hidden lg:block relative bg-white rounded-md mb-8" data-factory-tab-wrapper>
@@ -95,11 +110,11 @@ export function HorizontalCategoryBar(): string {
           `).join('')}
         </ul>
 
-        <!-- Daha fazlası button (overflow dışında, her zaman görünür) -->
+        <!-- View more button -->
         <div class="flex-shrink-0 flex items-center h-full px-2">
           <button id="hm-view-more" type="button"
                   class="flex items-center gap-2 px-4 py-2 rounded-full border border-[#d8d8d8] text-sm font-medium text-[#222] hover:border-[#999] transition-colors whitespace-nowrap">
-            <span>Daha fazlası</span>
+            <span>${t('mfr.viewMore')}</span>
             <svg class="w-3.5 h-3.5 transition-transform duration-200" id="hm-view-more-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
             </svg>
@@ -131,16 +146,16 @@ export function HorizontalCategoryBar(): string {
             ${filter}
           </li>
         `).join('')}
-        <!-- Sub-tab Daha fazlası (sağa yapışık) -->
+        <!-- Sub-tab view more -->
         <li id="sub-tab-more-btn" class="ml-auto flex-shrink-0 flex items-center gap-1 h-8 px-4 border border-[#d8d8d8] rounded-full text-xs text-[#222] text-center cursor-pointer whitespace-nowrap hover:border-[#999] transition-colors">
-          Daha fazlası
+          ${t('mfr.viewMore')}
           <svg class="w-3 h-3 transition-transform duration-200" id="sub-tab-more-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
           </svg>
         </li>
       </ul>
 
-      <!-- Sub-tab More Dropdown (overlay, sub-tab altında) -->
+      <!-- Sub-tab More Dropdown -->
       <div id="sub-tab-dropdown" class="hidden absolute left-0 right-0 top-[110px] z-50 bg-white rounded-b-lg py-6 px-5" style="box-shadow: rgba(0,0,0,0.12) 0 8px 20px 0">
         <ul class="flex flex-wrap list-none m-0 p-0">
           ${SUB_TAB_MORE_FILTERS.map(filter => `
@@ -161,7 +176,7 @@ export function HorizontalCategoryBar(): string {
         </svg>
       </button>
       <button class="px-3.5 h-[30px] border border-gray-300 rounded-full text-[12px] font-medium whitespace-nowrap text-[#222] hover:bg-gray-50 flex items-center shrink-0">
-        Onaylanmış üreticiler
+        ${t('mfr.verifiedManufacturers')}
       </button>
     </div>
   `;
@@ -189,7 +204,7 @@ export function initHorizontalCategoryBar(): void {
     if (subIcon) subIcon.style.transform = 'rotate(0deg)';
   }
 
-  // Main "Daha fazlası" toggle — close sub when opening
+  // Main "View more" toggle -- close sub when opening
   btn.addEventListener('click', (e) => {
     e.stopPropagation();
     const isHidden = menu.classList.contains('hidden');
@@ -202,7 +217,7 @@ export function initHorizontalCategoryBar(): void {
     }
   });
 
-  // Sub-tab "Daha fazlası" toggle — close main when opening
+  // Sub-tab "View more" toggle -- close main when opening
   if (subBtn && subDropdown) {
     subBtn.addEventListener('click', (e) => {
       e.stopPropagation();
@@ -252,6 +267,7 @@ export function initHorizontalCategoryBar(): void {
       tab.classList.remove('font-normal');
 
       const idx = parseInt(tab.dataset.tabIndex || '0');
+      const TAB_CATEGORIES = getTabCategories();
       syncDropdownActive(TAB_CATEGORIES[idx]);
     });
   });

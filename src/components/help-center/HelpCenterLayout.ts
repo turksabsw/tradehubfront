@@ -5,6 +5,8 @@
  * Built with Tailwind CSS + Alpine.js
  */
 
+import { t } from '../../i18n';
+
 export function HelpCenterLayout(): string {
   return `
     <!-- Help Center page — Alpine.js drives tab state & search -->
@@ -28,10 +30,8 @@ export function HelpCenterLayout(): string {
 
         <!-- Search content -->
         <div class="relative z-10 flex flex-col items-center justify-center h-full px-4 text-center">
-          <h1 class="text-white text-2xl sm:text-3xl font-bold mb-1 drop-shadow-md tracking-tight">
-            iSTOC TradeHub — <span class="text-primary-500">Yardım Merkezi</span>
-          </h1>
-          <p class="text-gray-200 text-sm mb-5 drop-shadow">Alıcılar için 7/24 destek ve kılavuzlar</p>
+          <h1 class="text-white text-2xl sm:text-3xl font-bold mb-1 drop-shadow-md tracking-tight" data-i18n-html="help.title">${t('help.title')}</h1>
+          <p class="text-gray-200 text-sm mb-5 drop-shadow" data-i18n="help.subtitle">${t('help.subtitle')}</p>
 
           <!-- Search bar -->
           <div class="relative w-full max-w-[580px]">
@@ -46,7 +46,7 @@ export function HelpCenterLayout(): string {
                 id="hc-search-input"
                 x-model="searchQuery"
                 type="text"
-                placeholder="Soru veya anahtar kelime girin. Örnek: Ödeme"
+                placeholder="${t('help.searchPlaceholder')}" data-i18n-placeholder="help.searchPlaceholder"
                 class="flex-1 px-3 py-3 text-sm border-0 text-gray-700 outline-none placeholder-gray-400 bg-transparent"
               />
               <button
@@ -55,13 +55,13 @@ export function HelpCenterLayout(): string {
                 class="px-5 py-3 text-sm font-semibold text-white transition-all hover:opacity-90 shrink-0"
                 style="background: linear-gradient(135deg, var(--color-primary-400), var(--color-primary-600))"
               >
-                Ara
+                <span data-i18n="help.searchBtn">${t('help.searchBtn')}</span>
               </button>
             </form>
 
             <!-- Quick search chips -->
             <div class="flex flex-wrap items-center justify-center gap-2 mt-3">
-              <span class="text-xs text-gray-300">Popüler:</span>
+              <span class="text-xs text-gray-300" data-i18n="help.popular">${t('help.popular')}</span>
               <template x-for="chip in popularSearches" :key="chip">
                 <button
                   @click="searchQuery = chip; doSearch()"
@@ -81,12 +81,12 @@ export function HelpCenterLayout(): string {
         <div class="bg-white rounded-xl shadow p-6">
           <div class="flex items-center justify-between mb-4">
             <h2 class="text-lg font-bold text-gray-800">
-              "<span x-text="searchQuery"></span>" için sonuçlar
+              "<span x-text="searchQuery"></span>" ${t('help.searchResultsFor')}
             </h2>
-            <button @click="clearSearch()" class="text-sm text-primary-500 hover:underline">Temizle ×</button>
+            <button @click="clearSearch()" class="text-sm text-primary-500 hover:underline" data-i18n="help.clearBtn">${t('help.clearBtn')}</button>
           </div>
           <template x-if="searchResults.length === 0">
-            <p class="text-gray-500 text-sm">Sonuç bulunamadı. Başka bir kelime deneyin.</p>
+            <p class="text-gray-500 text-sm" data-i18n="help.noResults">${t('help.noResults')}</p>
           </template>
           <ul class="divide-y divide-gray-100">
             <template x-for="(r, i) in searchResults" :key="i">
@@ -112,7 +112,7 @@ export function HelpCenterLayout(): string {
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 px-6 py-7">
           <h2 class="text-[17px] font-bold text-gray-800 mb-6 flex items-center gap-2">
             <span class="w-1 h-5 rounded-full inline-block" style="background: linear-gradient(135deg, var(--color-primary-400), var(--color-primary-600))"></span>
-            Öğrenme Merkezi
+            <span data-i18n="help.learningCenter">${t('help.learningCenter')}</span>
           </h2>
 
           <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
@@ -176,7 +176,7 @@ export function HelpCenterLayout(): string {
                 <!-- View more link -->
                 <div class="mt-5 pt-4 border-t border-gray-100 text-center">
                   <a href="#" class="inline-flex items-center gap-1 text-sm text-primary-500 hover:underline font-medium">
-                    Daha fazla görüntüle
+                    <span data-i18n="help.viewMore">${t('help.viewMore')}</span>
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6"/></svg>
                   </a>
                 </div>
@@ -187,7 +187,7 @@ export function HelpCenterLayout(): string {
 
         <!-- ── Contact Us ───────────────────── -->
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 px-6 py-7">
-          <h2 class="text-[17px] font-bold text-gray-800 mb-5 text-center">Bize Ulaşın</h2>
+          <h2 class="text-[17px] font-bold text-gray-800 mb-5 text-center" data-i18n="help.contactUs">${t('help.contactUs')}</h2>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
             <!-- Online Service -->
@@ -198,8 +198,8 @@ export function HelpCenterLayout(): string {
                 </svg>
               </div>
               <div>
-                <p class="font-semibold text-gray-800 group-hover:text-primary-600 transition-colors">Çevrimiçi Servis</p>
-                <p class="text-[12px] text-gray-500 mt-0.5">Alıcılar için 7/24 Destek</p>
+                <p class="font-semibold text-gray-800 group-hover:text-primary-600 transition-colors" data-i18n="help.onlineService">${t('help.onlineService')}</p>
+                <p class="text-[12px] text-gray-500 mt-0.5" data-i18n="help.onlineServiceDesc">${t('help.onlineServiceDesc')}</p>
               </div>
               <svg class="w-4 h-4 text-gray-300 ml-auto group-hover:text-primary-400 transition-colors" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6"/></svg>
             </a>
@@ -212,8 +212,8 @@ export function HelpCenterLayout(): string {
                 </svg>
               </div>
               <div>
-                <p class="font-semibold text-gray-800 group-hover:text-primary-600 transition-colors">Anket</p>
-                <p class="text-[12px] text-gray-500 mt-0.5">Geri bildirim bırakın</p>
+                <p class="font-semibold text-gray-800 group-hover:text-primary-600 transition-colors" data-i18n="help.survey">${t('help.survey')}</p>
+                <p class="text-[12px] text-gray-500 mt-0.5" data-i18n="help.surveyDesc">${t('help.surveyDesc')}</p>
               </div>
               <svg class="w-4 h-4 text-gray-300 ml-auto group-hover:text-primary-400 transition-colors" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6"/></svg>
             </a>
@@ -226,8 +226,8 @@ export function HelpCenterLayout(): string {
                 </svg>
               </div>
               <div>
-                <p class="font-semibold text-gray-800 group-hover:text-primary-600 transition-colors">Telefon Desteği</p>
-                <p class="text-[12px] text-gray-500 mt-0.5">0800 123 4567 · Ücretsiz</p>
+                <p class="font-semibold text-gray-800 group-hover:text-primary-600 transition-colors" data-i18n="help.phoneSupport">${t('help.phoneSupport')}</p>
+                <p class="text-[12px] text-gray-500 mt-0.5" data-i18n="help.phoneNumber">${t('help.phoneNumber')}</p>
               </div>
               <svg class="w-4 h-4 text-gray-300 ml-auto group-hover:text-primary-400 transition-colors" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6"/></svg>
             </a>
@@ -240,7 +240,7 @@ export function HelpCenterLayout(): string {
                 </svg>
               </div>
               <div>
-                <p class="font-semibold text-gray-800 group-hover:text-primary-600 transition-colors">E-posta Desteği</p>
+                <p class="font-semibold text-gray-800 group-hover:text-primary-600 transition-colors" data-i18n="help.emailSupport">${t('help.emailSupport')}</p>
                 <p class="text-[12px] text-gray-500 mt-0.5">support@istoc.com</p>
               </div>
               <svg class="w-4 h-4 text-gray-300 ml-auto group-hover:text-primary-400 transition-colors" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6"/></svg>
@@ -251,19 +251,19 @@ export function HelpCenterLayout(): string {
         <!-- ── Useful Links Strip ─────────────── -->
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 px-6 py-5">
           <div class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[12px] text-gray-500">
-            <a href="#" class="hover:text-primary-500 transition-colors">Ürün Listeleme Politikası</a>
+            <a href="#" class="hover:text-primary-500 transition-colors" data-i18n="help.productListingPolicy">${t('help.productListingPolicy')}</a>
             <span class="text-gray-200">|</span>
-            <a href="#" class="hover:text-primary-500 transition-colors">Fikri Mülkiyet Koruma</a>
+            <a href="#" class="hover:text-primary-500 transition-colors" data-i18n="help.ipProtection">${t('help.ipProtection')}</a>
             <span class="text-gray-200">|</span>
-            <a href="#" class="hover:text-primary-500 transition-colors">Gizlilik Politikası</a>
+            <a href="#" class="hover:text-primary-500 transition-colors" data-i18n="help.privacyPolicy">${t('help.privacyPolicy')}</a>
             <span class="text-gray-200">|</span>
-            <a href="#" class="hover:text-primary-500 transition-colors">Kullanım Şartları</a>
+            <a href="#" class="hover:text-primary-500 transition-colors" data-i18n="help.termsOfUse">${t('help.termsOfUse')}</a>
             <span class="text-gray-200">|</span>
-            <a href="#" class="hover:text-primary-500 transition-colors">Kullanıcı Bilgileri Yasaları</a>
+            <a href="#" class="hover:text-primary-500 transition-colors" data-i18n="help.userInfoLaws">${t('help.userInfoLaws')}</a>
             <span class="text-gray-200">|</span>
-            <a href="#" class="hover:text-primary-500 transition-colors">İletişim Kılavuzu</a>
+            <a href="#" class="hover:text-primary-500 transition-colors" data-i18n="help.contactGuide">${t('help.contactGuide')}</a>
           </div>
-          <p class="text-center text-[11px] text-gray-400 mt-3">© 2024 iSTOC TradeHub — Tüm hakları saklıdır.</p>
+          <p class="text-center text-[11px] text-gray-400 mt-3" data-i18n="help.copyright">${t('help.copyright')}</p>
         </div>
 
       </div><!-- /main content -->

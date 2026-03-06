@@ -3,6 +3,7 @@
  * Shows error state with retry options.
  */
 import '../style.css';
+import { t } from '../i18n';
 import { initLinkRewriter } from '../utils/url';
 
 initLinkRewriter();
@@ -27,10 +28,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
       <!-- Title & Message -->
       <div>
-        <h1 class="text-2xl md:text-[28px] font-bold text-[#222] mb-3">Payment Failed</h1>
+        <h1 class="text-2xl md:text-[28px] font-bold text-[#222] mb-3"><span data-i18n="paymentStatus.failedTitle">${t('paymentStatus.failedTitle')}</span></h1>
         <p class="text-[#666] text-sm md:text-[15px] max-w-sm mx-auto">
-          Your payment could not be processed. This may be due to insufficient funds,
-          an expired card, or a temporary issue with your bank.
+          <span data-i18n="paymentStatus.failedMessage">${t('paymentStatus.failedMessage')}</span>
         </p>
       </div>
 
@@ -41,11 +41,11 @@ document.addEventListener('DOMContentLoaded', () => {
             <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
           </svg>
           <div class="text-left">
-            <p class="font-medium mb-1">What you can do:</p>
+            <p class="font-medium mb-1"><span data-i18n="paymentStatus.whatYouCanDo">${t('paymentStatus.whatYouCanDo')}</span></p>
             <ul class="text-xs text-[#b91c1c] space-y-1 list-disc list-inside">
-              <li>Check your card details and try again</li>
-              <li>Use a different payment method</li>
-              <li>Contact your bank for more information</li>
+              <li><span data-i18n="paymentStatus.checkCard">${t('paymentStatus.checkCard')}</span></li>
+              <li><span data-i18n="paymentStatus.useDifferent">${t('paymentStatus.useDifferent')}</span></li>
+              <li><span data-i18n="paymentStatus.contactBank">${t('paymentStatus.contactBank')}</span></li>
             </ul>
           </div>
         </div>
@@ -55,15 +55,15 @@ document.addEventListener('DOMContentLoaded', () => {
       <div class="flex flex-col gap-3 w-full max-w-[320px]">
         <a href="/pages/order/checkout.html${retryQuery}"
           class="w-full bg-[#d24600] hover:bg-[#b03b00] text-white font-bold py-3 px-6 rounded-full transition-colors text-[15px] text-center block no-underline">
-          Try again
+          <span data-i18n="paymentStatus.tryAgainBtn">${t('paymentStatus.tryAgainBtn')}</span>
         </a>
         <a href="/pages/order/checkout.html${retryQuery}"
           class="w-full bg-white border border-[#ccc] hover:border-[#999] hover:bg-gray-50 text-[#333] font-bold py-3 px-6 rounded-full transition-all text-center block text-[15px] no-underline">
-          Use a different payment method
+          <span data-i18n="paymentStatus.useDifferentBtn">${t('paymentStatus.useDifferentBtn')}</span>
         </a>
         <a href="/pages/dashboard/orders.html"
           class="w-full text-[#666] hover:text-[#333] font-medium py-2 px-6 text-sm text-center block no-underline transition-colors">
-          View all orders
+          <span data-i18n="paymentStatus.viewAllOrders">${t('paymentStatus.viewAllOrders')}</span>
         </a>
       </div>
     </div>

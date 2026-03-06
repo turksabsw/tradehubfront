@@ -4,6 +4,7 @@
 import '../style.css'
 import { initFlowbite } from 'flowbite'
 import { TopBar, SubHeader, MegaMenu, initMegaMenu, initStickyHeaderSearch, initMobileDrawer } from '../components/header'
+import { initLanguageSelector } from '../components/header/TopBar'
 import { FooterLinks } from '../components/footer'
 import { FloatingPanel } from '../components/floating'
 import { startAlpine } from '../alpine'
@@ -32,4 +33,5 @@ initFlowbite();
 startAlpine();
 initStickyHeaderSearch();
 initMobileDrawer();
+initLanguageSelector();
 initExploreDeals();

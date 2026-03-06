@@ -4,11 +4,14 @@
  */
 
 import topBadgeUrl from '../../assets/images/top.avif';
+import { t } from '../../i18n';
 
 interface TopRankingCard {
   name: string;
+  nameKey: string;
   href: string;
   label: string;
+  labelKey: string;
   imageKind: TopRankingImageKind;
 }
 
@@ -32,50 +35,66 @@ interface TopRankingVisual {
 const topRankingCards: TopRankingCard[] = [
   {
     name: 'Consumer Electronics',
+    nameKey: 'topRanking.consumerElectronics',
     href: '/ranking/consumer-electronics',
     label: 'Hot selling',
+    labelKey: 'topRanking.hotSelling',
     imageKind: 'electronics',
   },
   {
     name: 'Fashion & Apparel',
+    nameKey: 'topRanking.fashionApparel',
     href: '/ranking/fashion-apparel',
     label: 'Hot selling',
+    labelKey: 'topRanking.hotSelling',
     imageKind: 'fashion',
   },
   {
     name: 'Home & Garden',
+    nameKey: 'topRanking.homeGarden',
     href: '/ranking/home-garden',
     label: 'Rising trend',
+    labelKey: 'topRanking.risingTrend',
     imageKind: 'home-garden',
   },
   {
     name: 'Beauty & Health',
+    nameKey: 'topRanking.beautyHealth',
     href: '/ranking/beauty-health',
     label: 'Hot selling',
+    labelKey: 'topRanking.hotSelling',
     imageKind: 'beauty',
   },
   {
     name: 'Auto Parts',
+    nameKey: 'topRanking.autoParts',
     href: '/ranking/automotive',
     label: 'Steady growth',
+    labelKey: 'topRanking.steadyGrowth',
     imageKind: 'automotive',
   },
   {
     name: 'Sports & Outdoors',
+    nameKey: 'topRanking.sportsOutdoors',
     href: '/ranking/sports-outdoors',
     label: 'Hot selling',
+    labelKey: 'topRanking.hotSelling',
     imageKind: 'sports',
   },
   {
     name: 'Industrial Equipment',
+    nameKey: 'topRanking.industrialEquipment',
     href: '/ranking/industrial',
     label: 'Rising trend',
+    labelKey: 'topRanking.risingTrend',
     imageKind: 'industrial',
   },
   {
     name: 'Toys & Hobbies',
+    nameKey: 'topRanking.toysHobbies',
     href: '/ranking/toys-hobbies',
     label: 'Hot selling',
+    labelKey: 'topRanking.hotSelling',
     imageKind: 'toys',
   },
 ];
@@ -187,7 +206,7 @@ function renderRankingCard(card: TopRankingCard): string {
       href="${card.href}"
       class="group/rank relative flex-shrink-0 flex flex-col w-[156px] sm:w-[188px] h-[230px] sm:h-[262px] rounded-md border transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-300 cursor-pointer"
       style="background: var(--topranking-card-bg, #ffffff); border-color: var(--topranking-card-border, #e5e7eb); padding: var(--space-card-padding, 12px);"
-      aria-label="${card.name}"
+      aria-label="${t(card.nameKey)}"
     >
       <!-- Image area with badge -->
       <div class="relative w-full flex-1">
@@ -210,12 +229,12 @@ function renderRankingCard(card: TopRankingCard): string {
         <p
           class="truncate font-semibold leading-tight"
           style="color: var(--topranking-name-color, #222222); font-size: var(--text-product-title, 16px);"
-          title="${card.name}"
-        >${card.name}</p>
+          title="${t(card.nameKey)}"
+        ><span data-i18n="${card.nameKey}">${t(card.nameKey)}</span></p>
         <p
           class="truncate leading-none"
           style="color: var(--topranking-label-color, #666666); margin-top: 2px; font-size: var(--text-product-meta, 14px);"
-        >${card.label}</p>
+        ><span data-i18n="${card.labelKey}">${t(card.labelKey)}</span></p>
       </div>
     </a>
   `;
@@ -238,17 +257,17 @@ export function TopRanking(): string {
                 <h2
                   class="text-[20px] sm:text-[22px] font-bold leading-tight"
                   style="color: var(--topranking-title-color, #111827);"
-                >Top Ranking</h2>
+                ><span data-i18n="topRanking.title">${t('topRanking.title')}</span></h2>
                 <p
                   class="mt-0.5 text-[13px]"
                   style="color: var(--topranking-subtitle-color, #6b7280);"
-                >Navigate trends with data-driven rankings</p>
+                ><span data-i18n="topRanking.subtitle">${t('topRanking.subtitle')}</span></p>
               </div>
               <a
                 href="/ranking"
                 class="flex-shrink-0 text-[13px] font-semibold transition-colors duration-150 hover:underline"
                 style="color: var(--topranking-link-color, #111827);"
-              >View more &gt;</a>
+              ><span data-i18n="common.viewMore">${t('common.viewMore')}</span> &gt;</a>
             </div>
 
             <!-- Scrollable cards -->

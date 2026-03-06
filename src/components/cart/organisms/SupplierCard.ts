@@ -7,6 +7,7 @@
 import type { CartSupplier } from '../../../types/cart';
 import { Checkbox } from '../atoms/Checkbox';
 import { ProductItem } from '../molecules/ProductItem';
+import { t } from '../../../i18n';
 
 export interface SupplierCardProps {
   supplier: CartSupplier;
@@ -50,7 +51,7 @@ export function SupplierCard({ supplier, isSingleSupplier = true }: SupplierCard
             <button type="button" class="sc-c-supplier-checkout-btn px-4 py-1.5 rounded-[var(--radius-button,8px)] transition-colors hover:brightness-95"
                     style="background-color: var(--btn-bg, #FF6600); color: var(--btn-text, #ffffff); font-size: var(--btn-font-size, 0.875rem); font-weight: var(--btn-font-weight, 600); border: var(--btn-border-width, 0) solid var(--btn-border-color, transparent); box-shadow: var(--btn-shadow, none);"
                     @click.stop="$dispatch('checkout-supplier', { supplierId: '${escapeHtml(supplier.id)}' })">
-              Bu satıcıya ödeme yap
+              ${t('cart.payThisSupplier')}
             </button>
           </div>
         </header>

@@ -9,6 +9,7 @@
  */
 
 import type { FooterColumn, SocialLink } from '../../types/navigation';
+import { t } from '../../i18n';
 import { FooterGroup } from './FooterGroup';
 import { FooterPolicy } from './FooterPolicy';
 
@@ -31,57 +32,76 @@ void getBaseUrl;
 
 /**
  * Footer columns configuration — Alibaba-style 5 columns
+ * Now uses i18n translation keys for all labels and titles.
  */
-const footerColumns: FooterColumn[] = [
+interface FooterColumnI18n {
+  titleKey: string;
+  links: { labelKey: string; href: string }[];
+}
+
+const footerColumnsI18n: FooterColumnI18n[] = [
   {
-    title: 'Get support',
+    titleKey: 'footer.getSupport',
     links: [
-      { label: 'Help Center', href: '/pages/help/help-center.html' },
-      { label: 'Live chat', href: '/chat' },
-      { label: 'Check order status', href: '/buyer/orders' },
-      { label: 'Refunds', href: '/help/refunds' },
-      { label: 'Report abuse', href: '/report' },
+      { labelKey: 'footer.helpCenter', href: '/pages/help/help-center.html' },
+      { labelKey: 'footer.liveChat', href: '/chat' },
+      { labelKey: 'footer.checkOrder', href: '/buyer/orders' },
+      { labelKey: 'footer.refunds', href: '/help/refunds' },
+      { labelKey: 'footer.reportAbuse', href: '/report' },
     ],
   },
   {
-    title: 'Payments and protections',
+    titleKey: 'footer.paymentsProtections',
     links: [
-      { label: 'Safe and easy payments', href: '/payments' },
-      { label: 'Money-back policy', href: '/refund-policy' },
-      { label: 'On-time shipping', href: '/shipping-protection' },
-      { label: 'After-sales protections', href: '/after-sales' },
-      { label: 'Product monitoring services', href: '/monitoring' },
+      { labelKey: 'footer.safePayments', href: '/payments' },
+      { labelKey: 'footer.moneyBack', href: '/refund-policy' },
+      { labelKey: 'footer.onTimeShipping', href: '/shipping-protection' },
+      { labelKey: 'footer.afterSales', href: '/after-sales' },
+      { labelKey: 'footer.productMonitoring', href: '/monitoring' },
     ],
   },
   {
-    title: 'Source on iSTOC',
+    titleKey: 'footer.sourceOnIstoc',
     links: [
-      { label: 'Request for Quotation', href: '/rfq' },
-      { label: 'Membership program', href: '/membership' },
-      { label: 'Sales tax and VAT', href: '/tax' },
-      { label: 'iSTOC Reads', href: '/blog' },
+      { labelKey: 'footer.rfq', href: '/rfq' },
+      { labelKey: 'footer.membership', href: '/membership' },
+      { labelKey: 'footer.salesTax', href: '/tax' },
+      { labelKey: 'footer.istocReads', href: '/blog' },
     ],
   },
   {
-    title: 'Sell on iSTOC',
+    titleKey: 'footer.sellOnIstoc',
     links: [
-      { label: 'Start selling', href: '/pages/seller/sell.html' },
-      { label: 'Seller Central', href: '/seller/dashboard' },
-      { label: 'Become a Verified Supplier', href: '/seller/verification' },
-      { label: 'Partnerships', href: '/partnerships' },
-      { label: 'Download the app for suppliers', href: '/seller/app' },
+      { labelKey: 'footer.startSelling', href: '/pages/seller/sell.html' },
+      { labelKey: 'footer.sellerCentral', href: '/seller/dashboard' },
+      { labelKey: 'footer.verifiedSupplier', href: '/seller/verification' },
+      { labelKey: 'footer.partnerships', href: '/partnerships' },
+      { labelKey: 'footer.downloadApp', href: '/seller/app' },
     ],
   },
   {
-    title: 'Get to know us',
+    titleKey: 'footer.getToKnow',
     links: [
-      { label: 'About iSTOC.com', href: '/pages/legal/about.html' },
-      { label: 'Corporate responsibility', href: '/csr' },
-      { label: 'News center', href: '/news' },
-      { label: 'Careers', href: '/careers' },
+      { labelKey: 'footer.aboutIstoc', href: '/pages/legal/about.html' },
+      { labelKey: 'footer.corporateResponsibility', href: '/csr' },
+      { labelKey: 'footer.newsCenter', href: '/news' },
+      { labelKey: 'footer.careers', href: '/careers' },
     ],
   },
 ];
+
+/**
+ * Build footerColumns from i18n config at render time
+ */
+function getFooterColumns(): FooterColumn[] {
+  return footerColumnsI18n.map(col => ({
+    title: t(col.titleKey),
+    links: col.links.map(link => ({
+      label: t(link.labelKey),
+      href: link.href,
+    })),
+  }));
+}
 
 /**
  * Social media links
@@ -144,22 +164,22 @@ function renderSocialIcons(): string {
 }
 
 /**
- * Renders a single column of links
+ * Renders a single column of links with i18n support
  */
-function renderColumn(column: FooterColumn): string {
+function renderColumn(column: FooterColumnI18n): string {
   return `
     <div>
       <h3
         class="text-[13px] font-bold uppercase tracking-wide mb-4"
         style="color: var(--footer-heading-color);"
-      >${column.title}</h3>
+      ><span data-i18n="${column.titleKey}">${t(column.titleKey)}</span></h3>
       <ul class="space-y-2.5">
         ${column.links.map(link => `
           <li>
             <a
               href="${link.href}"
               class="th-footer-link text-[13px] leading-relaxed transition-colors duration-200 block truncate"
-            >${link.label}</a>
+            ><span data-i18n="${link.labelKey}">${t(link.labelKey)}</span></a>
           </li>
         `).join('')}
       </ul>
@@ -168,22 +188,22 @@ function renderColumn(column: FooterColumn): string {
 }
 
 /**
- * Renders the last column with links + "Stay Connected" social icons
+ * Renders the last column with links + "Stay Connected" social icons (with i18n)
  */
-function renderLastColumn(column: FooterColumn): string {
+function renderLastColumn(column: FooterColumnI18n): string {
   return `
     <div>
       <h3
         class="text-[13px] font-bold uppercase tracking-wide mb-4"
         style="color: var(--footer-heading-color);"
-      >${column.title}</h3>
+      ><span data-i18n="${column.titleKey}">${t(column.titleKey)}</span></h3>
       <ul class="space-y-2.5">
         ${column.links.map(link => `
           <li>
             <a
               href="${link.href}"
               class="th-footer-link text-[13px] leading-relaxed transition-colors duration-200 block truncate"
-            >${link.label}</a>
+            ><span data-i18n="${link.labelKey}">${t(link.labelKey)}</span></a>
           </li>
         `).join('')}
       </ul>
@@ -192,7 +212,7 @@ function renderLastColumn(column: FooterColumn): string {
       <h3
         class="text-[13px] font-bold uppercase tracking-wide mt-6 mb-1"
         style="color: var(--footer-heading-color);"
-      >Stay Connected</h3>
+      ><span data-i18n="footer.stayConnected">${t('footer.stayConnected')}</span></h3>
       ${renderSocialIcons()}
     </div>
   `;
@@ -209,8 +229,8 @@ function renderLastColumn(column: FooterColumn): string {
  * - Policy links + copyright bottom bar (via FooterPolicy)
  */
 export function FooterLinks(): string {
-  const regularColumns = footerColumns.slice(0, -1);
-  const lastColumn = footerColumns[footerColumns.length - 1];
+  const regularColumns = footerColumnsI18n.slice(0, -1);
+  const lastColumn = footerColumnsI18n[footerColumnsI18n.length - 1];
 
   return `
     <section
@@ -235,5 +255,5 @@ export function FooterLinks(): string {
  * Get footer columns data for use by other components
  */
 export function getFooterColumnsData(): FooterColumn[] {
-  return footerColumns;
+  return getFooterColumns();
 }

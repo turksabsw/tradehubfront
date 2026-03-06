@@ -7,6 +7,7 @@
 import Swiper from 'swiper';
 import { Navigation } from 'swiper/modules';
 import 'swiper/swiper-bundle.css';
+import { t } from '../../i18n';
 
 interface CollectionProduct {
   name: string;
@@ -16,7 +17,9 @@ interface CollectionProduct {
 
 interface TailoredCollection {
   title: string;
+  titleKey: string;
   views: string;
+  viewsCount: string;
   href: string;
   products: [CollectionProduct, CollectionProduct];
 }
@@ -43,7 +46,9 @@ interface TailoredVisual {
 const tailoredCollections: TailoredCollection[] = [
   {
     title: 'Office Tech Essentials',
+    titleKey: 'tailored.officeTech',
     views: '28K+ views',
+    viewsCount: '28K+',
     href: '/collection/office-tech',
     products: [
       { name: 'Business Laptop', price: '$320.00', imageKind: 'laptop' },
@@ -52,7 +57,9 @@ const tailoredCollections: TailoredCollection[] = [
   },
   {
     title: 'Photography Gear',
+    titleKey: 'tailored.photographyGear',
     views: '15K+ views',
+    viewsCount: '15K+',
     href: '/collection/photography',
     products: [
       { name: 'Mirrorless Camera', price: '$480.00', imageKind: 'camera' },
@@ -61,7 +68,9 @@ const tailoredCollections: TailoredCollection[] = [
   },
   {
     title: 'Fashion Forward',
+    titleKey: 'tailored.fashionForward',
     views: '42K+ views',
+    viewsCount: '42K+',
     href: '/collection/fashion',
     products: [
       { name: 'Winter Jacket', price: '$45.00', imageKind: 'jacket' },
@@ -70,7 +79,9 @@ const tailoredCollections: TailoredCollection[] = [
   },
   {
     title: 'Audio & Sound',
+    titleKey: 'tailored.audioSound',
     views: '31K+ views',
+    viewsCount: '31K+',
     href: '/collection/audio',
     products: [
       { name: 'Wireless Headphones', price: '$28.50', imageKind: 'headphones' },
@@ -79,7 +90,9 @@ const tailoredCollections: TailoredCollection[] = [
   },
   {
     title: 'Smart Accessories',
+    titleKey: 'tailored.smartAccessories',
     views: '56K+ views',
+    viewsCount: '56K+',
     href: '/collection/smart-accessories',
     products: [
       { name: 'Smart Watch', price: '$42.00', imageKind: 'watch' },
@@ -218,19 +231,19 @@ function renderCollectionSlide(collection: TailoredCollection): string {
         href="${collection.href}"
         class="group/col flex flex-col h-full rounded-md overflow-hidden cursor-pointer"
         style="background: var(--tailored-card-bg, #ffffff); padding: var(--space-card-padding, 16px);"
-        aria-label="${collection.title}"
+        aria-label="${t(collection.titleKey)}"
       >
         <!-- Title -->
         <h3
           class="truncate font-bold leading-tight"
           style="color: var(--tailored-collection-title-color, #222222); font-size: var(--text-product-price, 20px);"
-        >${collection.title}</h3>
+        ><span data-i18n="${collection.titleKey}">${t(collection.titleKey)}</span></h3>
 
         <!-- Views subtitle -->
         <p
           class="truncate"
           style="color: var(--tailored-views-color, #767676); font-size: var(--text-product-meta, 16px); margin: 0 0 12px;"
-        >${collection.views}</p>
+        ><span data-i18n="tailored.views" data-i18n-options='${JSON.stringify({ count: collection.viewsCount })}'>${t('tailored.views', { count: collection.viewsCount })}</span></p>
 
         <!-- Product images side by side — 164x164 each -->
         <div class="flex gap-2 flex-1">
@@ -301,13 +314,13 @@ export function TailoredSelections(): string {
               <h2
                 class="text-[20px] sm:text-[22px] font-bold leading-tight"
                 style="color: var(--tailored-title-color, #111827);"
-              >Tailored Selections</h2>
+              ><span data-i18n="tailored.title">${t('tailored.title')}</span></h2>
             </div>
             <a
               href="/collections"
               class="flex-shrink-0 text-[13px] font-semibold transition-colors duration-150 hover:underline"
               style="color: var(--tailored-link-color, #111827);"
-            >View more &gt;</a>
+            ><span data-i18n="common.viewMore">${t('common.viewMore')}</span> &gt;</a>
           </div>
 
           <!-- Swiper slider -->

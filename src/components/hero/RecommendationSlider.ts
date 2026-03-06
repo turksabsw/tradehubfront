@@ -6,6 +6,7 @@
 import Swiper from 'swiper';
 import { Autoplay, Navigation, Pagination } from 'swiper/modules';
 import 'swiper/swiper-bundle.css';
+import { t } from '../../i18n';
 
 type RecommendationImageKind =
   | 'vending-machine'
@@ -19,8 +20,8 @@ type RecommendationImageKind =
   | 'sports-shoes';
 
 interface RecommendationCard {
-  title: string;
-  subtitle?: string;
+  titleKey: string;
+  subtitleKey?: string;
   href: string;
   imageKind: RecommendationImageKind;
   imageAlt: string;
@@ -35,64 +36,64 @@ interface RecommendationVisual {
 
 const recommendationCards: RecommendationCard[] = [
   {
-    title: 'Frequently searched',
-    subtitle: 'Vending Machines',
+    titleKey: 'recommendation.frequentlySearched',
+    subtitleKey: 'recommendation.vendingMachines',
     href: 'products.html?q=vending+machines',
     imageKind: 'vending-machine',
     imageAlt: 'Vending machine product card',
   },
   {
-    title: 'Frequently searched',
-    subtitle: 'Wedding Dresses',
+    titleKey: 'recommendation.frequentlySearched',
+    subtitleKey: 'recommendation.weddingDresses',
     href: 'products.html?q=wedding+dresses',
     imageKind: 'wedding-dress',
     imageAlt: 'Wedding dress product card',
   },
   {
-    title: 'Frequently searched',
-    subtitle: 'Electric Cars',
+    titleKey: 'recommendation.frequentlySearched',
+    subtitleKey: 'recommendation.electricCars',
     href: 'products.html?q=electric+cars',
     imageKind: 'electric-car',
     imageAlt: 'Electric car product card',
   },
   {
-    title: 'Frequently searched',
-    subtitle: 'Portable Air Conditioners',
+    titleKey: 'recommendation.frequentlySearched',
+    subtitleKey: 'recommendation.portableAC',
     href: 'products.html?q=portable+air+conditioners',
     imageKind: 'portable-ac',
     imageAlt: 'Portable air conditioner product card',
   },
   {
-    title: 'Frequently searched',
-    subtitle: 'Office Chairs',
+    titleKey: 'recommendation.frequentlySearched',
+    subtitleKey: 'recommendation.officeChairs',
     href: 'products.html?q=office+chairs',
     imageKind: 'office-chair',
     imageAlt: 'Office chair product card',
   },
   {
-    title: 'Frequently searched',
-    subtitle: 'Set-top Boxes',
+    titleKey: 'recommendation.frequentlySearched',
+    subtitleKey: 'recommendation.setTopBoxes',
     href: 'products.html?q=set-top+box',
     imageKind: 'set-top-box',
     imageAlt: 'Set-top box product card',
   },
   {
-    title: 'Frequently searched',
-    subtitle: 'Jewelry Components',
+    titleKey: 'recommendation.frequentlySearched',
+    subtitleKey: 'recommendation.jewelryComponents',
     href: 'products.html?q=jewelry+components',
     imageKind: 'jewelry-components',
     imageAlt: 'Jewelry components product card',
   },
   {
-    title: 'Frequently searched',
-    subtitle: 'Cargo Services',
+    titleKey: 'recommendation.frequentlySearched',
+    subtitleKey: 'recommendation.cargoServices',
     href: 'products.html?q=cargo+services',
     imageKind: 'cargo-service',
     imageAlt: 'Cargo service product card',
   },
   {
-    title: 'Frequently searched',
-    subtitle: 'Sports Shoes',
+    titleKey: 'recommendation.frequentlySearched',
+    subtitleKey: 'recommendation.sportsShoes',
     href: 'products.html?q=sports+shoes',
     imageKind: 'sports-shoes',
     imageAlt: 'Sports shoes product card',
@@ -215,7 +216,9 @@ function renderPlaceholderVisual(kind: RecommendationImageKind): string {
 }
 
 function renderCard(card: RecommendationCard): string {
-  const cardAriaLabel = card.subtitle ? `${card.title} - ${card.subtitle}` : card.title;
+  const title = t(card.titleKey);
+  const subtitle = card.subtitleKey ? t(card.subtitleKey) : undefined;
+  const cardAriaLabel = subtitle ? `${title} - ${subtitle}` : title;
 
   return `
     <div class="swiper-slide recommendation-slide h-full xl:!w-[240px]">
@@ -227,8 +230,8 @@ function renderCard(card: RecommendationCard): string {
         style="background-color:var(--hero-card-bg);border-color:var(--hero-card-border-color);border-radius:var(--hero-card-radius)"
       >
         <div class="mb-2">
-          <h3 class="text-[14px] sm:text-[16px] font-bold leading-tight truncate dark:text-white" style="color:var(--hero-title-color)">${card.title}</h3>
-          ${card.subtitle ? `<p class="mt-0.5 truncate text-[11px] sm:text-[12px] font-semibold leading-tight text-gray-700 dark:text-gray-300">${card.subtitle}</p>` : ''}
+          <h3 class="text-[14px] sm:text-[16px] font-bold leading-tight truncate dark:text-white" style="color:var(--hero-title-color)" data-i18n="${card.titleKey}">${title}</h3>
+          ${card.subtitleKey ? `<p class="mt-0.5 truncate text-[11px] sm:text-[12px] font-semibold leading-tight text-gray-700 dark:text-gray-300" data-i18n="${card.subtitleKey}">${subtitle}</p>` : ''}
         </div>
         <div class="min-h-0 flex-1">
           ${renderPlaceholderVisual(card.imageKind)}

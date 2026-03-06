@@ -5,7 +5,7 @@
  * responsive breakpoint at 1024px, and 200ms width transition.
  */
 
-import { sidebarSections, discoverItem } from './sidebarData';
+import { getSidebarSections, getDiscoverItem } from './sidebarData';
 import { renderSidebarMenuItem } from './SidebarMenuItem';
 import { renderSidebarFlyout } from './SidebarFlyout';
 import type { SidebarSection } from '../../types/buyerDashboard';
@@ -15,12 +15,37 @@ import type { SidebarSection } from '../../types/buyerDashboard';
    ════════════════════════════════════════════════════ */
 
 /**
+ * Maps a section title string to its i18n key.
+ * Used to attach data-i18n attributes for live language switching.
+ */
+const sectionTitleI18nKeys: Record<string, string> = {
+  onlineTrading: 'dashboard.onlineTrading',
+  valueAddedServices: 'dashboard.valueAddedServices',
+  settings: 'dashboard.settings',
+};
+
+/**
+ * Determines the i18n key for a section based on the items it contains.
+ */
+function getSectionI18nKey(section: SidebarSection): string | undefined {
+  if (!section.title) return undefined;
+  const firstItemId = section.items[0]?.id;
+  if (firstItemId === 'messages') return sectionTitleI18nKeys.onlineTrading;
+  if (firstItemId === 'subscription') return sectionTitleI18nKeys.valueAddedServices;
+  if (firstItemId === 'settings') return sectionTitleI18nKeys.settings;
+  return undefined;
+}
+
+/**
  * Renders a single sidebar section with optional title and items.
  */
 function renderSection(section: SidebarSection, expanded: boolean): string {
-  const title = section.title && expanded
-    ? `<h3 class="sidebar__section-title hidden px-6 pt-4 pb-1 text-xs font-normal uppercase tracking-wider text-gray-400 dark:text-gray-500 xl:block">${section.title}</h3>`
-    : '';
+  let title = '';
+  if (section.title && expanded) {
+    const i18nKey = getSectionI18nKey(section);
+    const i18nAttr = i18nKey ? ` data-i18n="${i18nKey}"` : '';
+    title = `<h3 class="sidebar__section-title hidden px-6 pt-4 pb-1 text-xs font-normal uppercase tracking-wider text-gray-400 dark:text-gray-500 xl:block"${i18nAttr}>${section.title}</h3>`;
+  }
 
   const items = section.items
     .map((item) => {
@@ -47,6 +72,9 @@ function renderSection(section: SidebarSection, expanded: boolean): string {
  * Renders the full sidebar HTML.
  */
 export function renderSidebar(expanded = true): string {
+  const sidebarSections = getSidebarSections();
+  const discoverItem = getDiscoverItem();
+
   const sections = sidebarSections.map((s) => renderSection(s, expanded)).join('');
   const widthClass = expanded ? 'w-[72px] xl:w-[260px]' : 'w-[72px]';
 
@@ -85,7 +113,7 @@ export function renderSidebar(expanded = true): string {
 /**
  * Transitional no-op. Sidebar interactivity is now handled by the Alpine.js
  * 'sidebar' component registered in alpine.ts. All 6 event listeners
- * (4× mouseenter/mouseleave capture, scroll, resize) are replaced by
+ * (4x mouseenter/mouseleave capture, scroll, resize) are replaced by
  * Alpine directives on the <aside x-data="sidebar"> element.
  *
  * Remove this call from page entry files and use startAlpine() instead.

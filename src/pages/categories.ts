@@ -5,9 +5,11 @@
 
 import '../style.css'
 import { initFlowbite } from 'flowbite'
+import { t } from '../i18n'
 
 // Header components
 import { TopBar, initMobileDrawer, SubHeader, initStickyHeaderSearch, MegaMenu, initMegaMenu, initHeaderCart } from '../components/header'
+import { initLanguageSelector } from '../components/header/TopBar'
 
 // Footer components
 import { FooterLinks } from '../components/footer'
@@ -25,7 +27,7 @@ import { Breadcrumb } from '../components/shared/Breadcrumb'
 import { renderCategoryPage, CategoryFilterSidebar, initCategoryFilters } from '../components/categories'
 
 // Category data
-import { categorySections } from '../data/categories'
+import { getCategorySections } from '../data/categories'
 
 // Utilities
 import { initAnimatedPlaceholder } from '../utils/animatedPlaceholder'
@@ -44,24 +46,24 @@ appEl.innerHTML = `
   <main>
     <section class="py-4 lg:py-8" style="background: var(--products-bg, #f9fafb);">
       <div class="container-boxed">
-        ${Breadcrumb([{ label: 'Kategoriler' }])}
+        ${Breadcrumb([{ label: t('drawer.categories') }])}
 
         <!-- Page Header -->
         <div class="mb-4">
-          <h1 class="text-lg sm:text-2xl font-bold text-gray-900">Tüm Kategoriler</h1>
-          <p class="text-xs sm:text-sm text-gray-500 mt-1">Binlerce ürün arasından aradığınızı bulun</p>
+          <h1 class="text-lg sm:text-2xl font-bold text-gray-900" data-i18n="subheader.allCategories">${t('subheader.allCategories')}</h1>
+          <p class="text-xs sm:text-sm text-gray-500 mt-1" data-i18n="drawer.browseCategories">${t('drawer.browseCategories')}</p>
         </div>
 
         <!-- Main layout: Filter Sidebar + Category Grid -->
         <div class="flex flex-col lg:flex-row gap-4 lg:gap-6">
           <!-- Filter Sidebar (hidden on mobile) -->
           <div class="hidden lg:block">
-            ${CategoryFilterSidebar(categorySections)}
+            ${CategoryFilterSidebar(getCategorySections())}
           </div>
 
           <!-- Category Grid -->
           <div class="flex-1 min-w-0">
-            ${renderCategoryPage(categorySections)}
+            ${renderCategoryPage(getCategorySections())}
           </div>
         </div>
       </div>
@@ -84,5 +86,6 @@ startAlpine();
 initStickyHeaderSearch();
 initHeaderCart();
 initMobileDrawer();
+initLanguageSelector();
 initAnimatedPlaceholder('#topbar-compact-search-input');
 initCategoryFilters();

@@ -1,8 +1,10 @@
 import '../style.css'
 import { initFlowbite } from 'flowbite'
+import { t } from '../i18n'
 
 // Header components
 import { TopBar, MobileSearchTabs, initMobileDrawer, SubHeader, initStickyHeaderSearch, MegaMenu, initMegaMenu } from '../components/header'
+import { initLanguageSelector } from '../components/header/TopBar'
 
 // Shared components
 import { Breadcrumb } from '../components/shared/Breadcrumb'
@@ -41,7 +43,7 @@ appEl.innerHTML = `
   <!-- Main Content -->
   <main class="flex-1 min-w-0 bg-[#f0f2f5] dark:bg-gray-900 pb-12">
     <div class="container-boxed">
-      ${Breadcrumb([{ label: 'Üreticiler' }])}
+      ${Breadcrumb([{ label: t('search.manufacturers') }])}
     </div>
     ${ManufacturersLayout()}
   </main>
@@ -67,6 +69,7 @@ startAlpine();
 // Initialize remaining custom behaviors
 initStickyHeaderSearch();
 initMobileDrawer();
+initLanguageSelector();
 initAnimatedPlaceholder('#topbar-compact-search-input');
 
 // Initialize Manufacturers specific behaviors if any

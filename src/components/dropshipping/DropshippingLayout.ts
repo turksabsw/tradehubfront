@@ -3,13 +3,15 @@
  * Hash-based routing between #find-products and #manage-orders sections.
  */
 
+import { t } from '../../i18n';
 import type { ProductListingCard, ProductImageKind } from '../../types/productListing';
+import type { CategoryTag } from '../../data/mockDropshipping';
 import {
-  collectionChips,
-  countryChips,
-  categoryTags,
-  orderTabs,
-  dropshippingProducts,
+  getCollectionChips,
+  getCountryChips,
+  getCategoryTags,
+  getOrderTabs,
+  getDropshippingProducts,
 } from '../../data/mockDropshipping';
 
 // ── Image URLs per category (same as ProductListingGrid) ──────────
@@ -67,7 +69,7 @@ function renderDsCard(card: ProductListingCard): string {
     : '';
 
   const reorderHtml = card.reorderRate
-    ? `<span class="text-xs text-blue-600 font-medium">&#10003; Yeniden sipariş oranı %${card.reorderRate}</span>`
+    ? `<span class="text-xs text-blue-600 font-medium">&#10003; ${t('dropshipping.reorderRate')} %${card.reorderRate}</span>`
     : '';
 
   const verifiedHtml = card.verified && card.supplierYears && card.supplierYears >= 5
@@ -83,22 +85,22 @@ function renderDsCard(card: ProductListingCard): string {
       <div class="ds-card__img relative w-full aspect-square overflow-hidden rounded-lg bg-surface-raised">
         <img src="${imgUrl}" alt="${card.name}" loading="lazy" class="w-full h-full object-contain" />
         <div class="ds-card__img-overlay absolute left-1/2 bottom-2 -translate-x-1/2 h-[42px] flex items-center justify-center opacity-0 transition-opacity pointer-events-none z-[2]">
-          <button class="ds-card__overlay-btn inline-flex items-center gap-1 px-6 h-[42px] bg-white/[0.92] text-gray-800 border border-secondary-200 rounded font-medium text-sm cursor-pointer whitespace-nowrap backdrop-blur-sm transition-colors hover:bg-white" onclick="event.preventDefault();event.stopPropagation();">+ Stoksuz ticaret listesi</button>
+          <button class="ds-card__overlay-btn inline-flex items-center gap-1 px-6 h-[42px] bg-white/[0.92] text-gray-800 border border-secondary-200 rounded font-medium text-sm cursor-pointer whitespace-nowrap backdrop-blur-sm transition-colors hover:bg-white" onclick="event.preventDefault();event.stopPropagation();">${t('dropshipping.addToDropshippingList')}</button>
         </div>
       </div>
       <div class="ds-card__body pt-3 px-0.5 pb-2 flex flex-col gap-1 flex-1">
         <h3 class="ds-card__title text-sm font-normal text-black m-0 leading-[1.4] line-clamp-2 break-words">${card.name}</h3>
-        <div class="text-xs text-secondary-300">${card.stats ? card.stats.replace('satış', 'adet satıldı') : ''}</div>
+        <div class="text-xs text-secondary-300">${card.stats || ''}</div>
         ${discountHtml}
         <div class="flex items-baseline gap-1.5 flex-wrap">
           <span class="text-[15px] font-bold text-gray-800">${card.price}</span>
           ${originalPriceHtml}
         </div>
-        <div class="text-xs text-secondary-400">Minimum sipariş: ${card.moq}</div>
+        <div class="text-xs text-secondary-400">${t('dropshipping.minOrderLabel')} ${card.moq}</div>
         ${reorderHtml}
         <div class="flex items-center gap-1 flex-wrap text-[11px] text-secondary-300 mt-auto pt-1">
           ${verifiedHtml}
-          ${card.supplierYears ? `<span>${card.supplierYears} yıl</span>` : ''}
+          ${card.supplierYears ? `<span>${card.supplierYears} ${t('dropshipping.yearUnit')}</span>` : ''}
           ${flagUrl ? `<img src="${flagUrl}" alt="${card.supplierCountry}" width="16" height="12" class="rounded-[1px] flex-shrink-0" />` : ''}
           ${card.supplierCountry ? `<span>${card.supplierCountry}</span>` : ''}
           ${card.rating ? `<span class="text-secondary-400">${card.rating}/5.0</span>` : ''}
@@ -118,8 +120,8 @@ const SECTIONS: Record<SectionId, () => string> = {
 };
 
 const NAV_ITEMS: { id: SectionId; label: string }[] = [
-  { id: 'find-products', label: 'Ürünleri bulun' },
-  { id: 'manage-orders', label: 'Siparişleri yönet' },
+  { id: 'find-products', label: t('dropshipping.findProducts') },
+  { id: 'manage-orders', label: t('dropshipping.manageOrders') },
 ];
 
 function getActiveSection(): SectionId {
@@ -134,7 +136,7 @@ function renderHeroBanner(): string {
     <div class="ds-hero flex items-start justify-between gap-6 bg-gradient-to-br from-amber-100 via-amber-200 to-amber-300 p-8 max-md:flex-col max-md:p-4 max-md:gap-4 max-[480px]:p-3">
       <div class="flex-1 max-w-[62%] flex flex-col items-start gap-3 max-md:max-w-full">
         <h1 class="inline-flex items-center flex-wrap gap-2 text-2xl font-bold text-gray-800 m-0 leading-[1.4] max-md:text-lg max-[480px]:text-base">
-          Başlangıç <strong class="text-primary-500 font-bold">damla nakliye</strong> bugün mağazanıza
+          ${t('dropshipping.heroTitle')}
           <span class="ds-hero__platforms inline-flex items-center gap-2 ml-1 max-[900px]:gap-1.5 max-[360px]:gap-1">
             <span class="inline-flex items-center justify-center w-[30px] h-[30px] bg-gray-800 rounded-full text-white flex-shrink-0 max-[900px]:w-[26px] max-[900px]:h-[26px] max-[360px]:w-[22px] max-[360px]:h-[22px] [&_svg]:w-4 [&_svg]:h-4 max-[360px]:[&_svg]:w-3 max-[360px]:[&_svg]:h-3" title="Amazon">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M.045 18.02c.07-.116.36-.208.686-.296 1.35-.36 5.37-1.56 7.63-3.33.18-.14.19-.38.04-.54-.66-.71-1.76-1.52-2.58-1.94-.12-.06-.28-.06-.4 0-1.34.76-2.9 1.29-4.3 1.56-.24.05-.43.18-.48.37-.08.28-.18.96-.18 1.56 0 .42.02.72.04.88.02.16.12.3.28.36.16.04.32 0 .44-.12l-.14.01zm14.5-7.5c.34 0 .63.1.87.28.24.18.36.44.36.74 0 .3-.12.56-.36.74-.24.18-.53.28-.87.28-.34 0-.63-.1-.87-.28-.24-.18-.36-.44-.36-.74 0-.3.12-.56.36-.74.24-.18.53-.28.87-.28z"/><path d="M20.2 18.43c-.08-.12-.28-.16-.44-.08-1.56.82-3.28 1.24-5.16 1.24-2.44 0-4.64-.72-6.6-2.16-.14-.1-.32-.08-.42.06-.1.14-.08.34.06.44 2.12 1.56 4.48 2.34 7.08 2.34 1.96 0 3.84-.46 5.56-1.36.16-.1.24-.3.16-.48h-.24z"/></svg>
@@ -153,24 +155,24 @@ function renderHeroBanner(): string {
         <div class="flex items-center gap-5 flex-wrap max-[480px]:flex-col max-[480px]:gap-2">
           <a href="#" class="inline-flex items-center gap-[5px] text-[13px] text-secondary-400 no-underline hover:underline hover:text-secondary-600 [&_svg]:flex-shrink-0 [&_svg]:text-secondary-300">
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="currentColor" stroke-width="1.5"/><path d="M7 4v3.5M7 9.5h.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-            Nasıl çalışır
+            ${t('dropshipping.howItWorks')}
           </a>
           <a href="#" class="inline-flex items-center gap-[5px] text-[13px] text-secondary-400 no-underline hover:underline hover:text-secondary-600 [&_svg]:flex-shrink-0 [&_svg]:text-secondary-300">
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 4l5 3.5L12 4M2 4v6.5h10V4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            Bize geribildirim bırakın
+            ${t('dropshipping.leaveFeedback')}
           </a>
           <a href="#" class="inline-flex items-center gap-[5px] text-[13px] text-secondary-400 no-underline hover:underline hover:text-secondary-600 [&_svg]:flex-shrink-0 [&_svg]:text-secondary-300">
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v4M5 3l2 2 2-2M1 7h12M3 10h8M5 13h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            ABD Satış Vergisi Muafiyeti Programı
+            ${t('dropshipping.usSalesTaxExemption')}
           </a>
         </div>
       </div>
       <div class="ds-hero__search-wrapper flex-shrink-0 min-w-[468px] pt-1 max-md:min-w-full max-md:w-full">
         <div class="flex items-center h-10 bg-white border-2 border-primary-500 rounded-full py-1 pl-5 pr-1 max-md:w-full">
-          <input type="text" class="flex-1 p-0 border-none outline-none text-sm leading-[18px] text-secondary-800 bg-transparent min-w-0 placeholder:text-secondary-300" placeholder="İşletmeniz için mükemmel ürünleri keşfedin" />
+          <input type="text" class="flex-1 p-0 border-none outline-none text-sm leading-[18px] text-secondary-800 bg-transparent min-w-0 placeholder:text-secondary-300" placeholder="${t('dropshipping.searchPlaceholder')}" />
           <button class="inline-flex items-center gap-1.5 px-5 h-8 bg-primary-500 text-white border-none rounded-full text-sm font-semibold cursor-pointer transition-colors whitespace-nowrap flex-shrink-0 hover:bg-primary-600 max-[480px]:px-3.5 max-[480px]:text-[13px]">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="5" stroke="currentColor" stroke-width="2"/><path d="M10.5 10.5L14.5 14.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-            Arama
+            ${t('dropshipping.searchBtn')}
           </button>
         </div>
       </div>
@@ -179,7 +181,7 @@ function renderHeroBanner(): string {
 }
 
 function renderCollectionFilters(): string {
-  const chips = collectionChips
+  const chips = getCollectionChips()
     .map(
       (c) =>
         `<button class="ds-chip max-[480px]:py-1 max-[480px]:px-2.5 max-[480px]:text-xs${c.active ? ' ds-chip--active ds-chip--orange' : ''}" data-chip-id="${c.id}">${c.label}</button>`
@@ -187,14 +189,14 @@ function renderCollectionFilters(): string {
     .join('');
   return `
     <div class="ds-filters__row max-md:flex-col max-md:gap-1.5">
-      <span class="ds-filters__label max-md:w-auto max-md:pt-0">Koleksiyon:</span>
+      <span class="ds-filters__label max-md:w-auto max-md:pt-0">${t('dropshipping.collectionLabel')}</span>
       <div class="ds-filters__chips max-[480px]:gap-1.5">${chips}</div>
     </div>
   `;
 }
 
 function renderCountryFilters(): string {
-  const chips = countryChips
+  const chips = getCountryChips()
     .map(
       (c) =>
         `<button class="ds-chip ds-chip--country max-[480px]:py-1 max-[480px]:px-2.5 max-[480px]:text-xs" data-country="${c.code}">
@@ -205,7 +207,7 @@ function renderCountryFilters(): string {
     .join('');
   return `
     <div class="ds-filters__row max-md:flex-col max-md:gap-1.5">
-      <span class="ds-filters__label max-md:w-auto max-md:pt-0">Gelen nakliye:</span>
+      <span class="ds-filters__label max-md:w-auto max-md:pt-0">${t('dropshipping.shippingLabel')}</span>
       <div class="ds-filters__chips max-[480px]:gap-1.5">${chips}</div>
     </div>
   `;
@@ -214,18 +216,18 @@ function renderCountryFilters(): string {
 function renderDropdownFilters(): string {
   return `
     <div class="ds-filters__row max-md:flex-col max-md:gap-1.5">
-      <span class="ds-filters__label max-md:w-auto max-md:pt-0">Diğer filtre:</span>
+      <span class="ds-filters__label max-md:w-auto max-md:pt-0">${t('dropshipping.otherFilterLabel')}</span>
       <div class="ds-filters__chips max-[480px]:gap-1.5">
-        <select class="ds-select"><option>Tedarikçi ülkesi</option></select>
-        <select class="ds-select"><option>Depo</option></select>
-        <select class="ds-select"><option>Lojistik</option></select>
-        <button class="ds-chip ds-chip--toggle max-[480px]:py-1 max-[480px]:px-2.5 max-[480px]:text-xs" data-toggle="free-shipping">Ücretsiz kargo</button>
+        <select class="ds-select"><option>${t('dropshipping.supplierCountry')}</option></select>
+        <select class="ds-select"><option>${t('dropshipping.warehouse')}</option></select>
+        <select class="ds-select"><option>${t('dropshipping.logistics')}</option></select>
+        <button class="ds-chip ds-chip--toggle max-[480px]:py-1 max-[480px]:px-2.5 max-[480px]:text-xs" data-toggle="free-shipping">${t('dropshipping.freeShipping')}</button>
       </div>
     </div>
   `;
 }
 
-function renderCategoryTag(tag: typeof categoryTags[number], hidden: boolean): string {
+function renderCategoryTag(tag: CategoryTag, hidden: boolean): string {
   return `
     <div class="ds-category-tag${hidden ? ' ds-category-tag--hidden' : ''}" data-cat-id="${tag.id}">
       <span>${tag.label}</span>
@@ -242,17 +244,18 @@ function renderCategoryTag(tag: typeof categoryTags[number], hidden: boolean): s
 
 function renderCategoryFilters(): string {
   const VISIBLE_COUNT = 8;
-  const visible = categoryTags.slice(0, VISIBLE_COUNT);
-  const hidden = categoryTags.slice(VISIBLE_COUNT);
+  const allTags = getCategoryTags();
+  const visible = allTags.slice(0, VISIBLE_COUNT);
+  const hidden = allTags.slice(VISIBLE_COUNT);
 
   return `
     <div class="ds-filters__row ds-category-row max-md:flex-col max-md:gap-1.5">
-      <span class="ds-filters__label max-md:w-auto max-md:pt-0">Kategori:</span>
+      <span class="ds-filters__label max-md:w-auto max-md:pt-0">${t('dropshipping.categoryLabel')}</span>
       <div class="ds-filters__chips max-[480px]:gap-1.5 ds-category-chips max-md:!pr-0">
         ${visible.map((t) => renderCategoryTag(t, false)).join('')}
         ${hidden.map((t) => renderCategoryTag(t, true)).join('')}
         <button class="ds-category-toggle max-md:static" data-expanded="false">
-          Tümünü görüntüle
+          ${t('dropshipping.viewAllCategories')}
           <svg class="ds-category-toggle__icon" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
         </button>
       </div>
@@ -262,14 +265,14 @@ function renderCategoryFilters(): string {
 }
 
 function renderProductGrid(): string {
-  const cards = dropshippingProducts.map((p) => renderDsCard(p)).join('');
+  const cards = getDropshippingProducts().map((p) => renderDsCard(p)).join('');
 
   return `
     <div class="ds-products-bar flex items-center justify-between py-3 px-5 border-b border-secondary-100 max-md:py-2.5 max-md:px-3 max-md:flex-wrap max-md:gap-2">
-      <span class="text-[13px] text-secondary-400">Tüm dropshipping ürünlerini gösterme (${dropshippingProducts.length})</span>
+      <span class="text-[13px] text-secondary-400">${t('dropshipping.showingAllProducts')} (${getDropshippingProducts().length})</span>
       <select class="ds-select">
-        <option>Uygunluk</option>
-        <option>Satışlara Göre - Yüksekten Düşüğe</option>
+        <option>${t('dropshipping.relevance')}</option>
+        <option>${t('dropshipping.salesHighToLow')}</option>
       </select>
     </div>
     <div class="ds-product-grid max-[1200px]:grid-cols-4 max-[1200px]:gap-x-5 max-[1200px]:gap-y-7 max-[1200px]:p-5 max-[900px]:grid-cols-3 max-[900px]:gap-x-4 max-[900px]:gap-y-6 max-[900px]:p-4 max-md:grid-cols-2 max-md:gap-x-3 max-md:gap-y-5 max-md:p-3 max-[480px]:gap-x-2 max-[480px]:gap-y-4 max-[480px]:p-2 max-[360px]:gap-x-1.5 max-[360px]:gap-y-3 max-[360px]:p-1.5">
@@ -296,7 +299,7 @@ function renderFindProducts(): string {
 // ── Manage Orders Section ─────────────────────────────────────────
 
 function renderOrderTabs(): string {
-  const tabs = orderTabs
+  const tabs = getOrderTabs()
     .map(
       (tab, i) =>
         `<button class="ds-orders__tab max-[480px]:py-2.5 max-[480px]:px-3 max-[480px]:text-xs${i === 0 ? ' ds-orders__tab--active' : ''}" data-tab="${tab.id}">
@@ -320,9 +323,9 @@ function renderEmptyState(): string {
           <path d="M54 58L57 61L63 55" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </div>
-      <h3 class="text-base font-semibold text-secondary-600 m-0 mb-2">Henüz sipariş yok</h3>
-      <p class="text-sm text-secondary-300 m-0 mb-5 max-w-[320px]">Tedarik etmeye başlamak için ana sayfaya gidin veya aşağıya tıklayın</p>
-      <a href="/pages/dashboard/dropshipping.html#find-products" class="th-btn th-btn-pill inline-flex no-underline">Tedarik etmeye başla</a>
+      <h3 class="text-base font-semibold text-secondary-600 m-0 mb-2">${t('dropshipping.noOrdersYet')}</h3>
+      <p class="text-sm text-secondary-300 m-0 mb-5 max-w-[320px]">${t('dropshipping.noOrdersDesc')}</p>
+      <a href="/pages/dashboard/dropshipping.html#find-products" class="th-btn th-btn-pill inline-flex no-underline">${t('dropshipping.startSourcing')}</a>
     </div>
   `;
 }
@@ -333,7 +336,7 @@ function renderAutoApprovalModal(): string {
       <div class="ds-modal__overlay"></div>
       <div class="ds-modal__dialog max-[480px]:m-3 max-[480px]:max-w-[calc(100vw-24px)]">
         <div class="flex items-center justify-between py-5 px-6 border-b border-border-default">
-          <h3 class="text-base font-semibold text-gray-800 m-0">Otomatik onay</h3>
+          <h3 class="text-base font-semibold text-gray-800 m-0">${t('dropshipping.autoApprovalTitle')}</h3>
           <button class="ds-modal__close" data-close-modal>&times;</button>
         </div>
         <div class="p-6">
@@ -344,17 +347,17 @@ function renderAutoApprovalModal(): string {
               </div>
             </div>
             <div class="flex-1">
-              <strong class="block text-sm text-gray-800 mb-1">Otomatik onayla sipariş ver</strong>
-              <p class="text-[13px] text-secondary-400 m-0 leading-relaxed">Siparişler otomatik olarak onaylanarak işleme alınır. Bu özellik etkinleştirildiğinde, siparişleriniz manuel onay gerektirmeden doğrudan işlenir.</p>
+              <strong class="block text-sm text-gray-800 mb-1">${t('dropshipping.autoApprovalToggle')}</strong>
+              <p class="text-[13px] text-secondary-400 m-0 leading-relaxed">${t('dropshipping.autoApprovalDesc')}</p>
             </div>
           </div>
           <label class="flex gap-2.5 items-start text-[13px] text-secondary-400 leading-relaxed cursor-pointer">
             <input type="checkbox" id="ds-legal-check" class="mt-[3px] flex-shrink-0 accent-primary-500" />
-            <span>Stoksuz ticaret hizmet şartlarını okudum ve kabul ediyorum. Otomatik sipariş onayı ile ilgili tüm sorumlulukları üstleniyorum.</span>
+            <span>${t('dropshipping.autoApprovalLegal')}</span>
           </label>
         </div>
         <div class="py-4 px-6 border-t border-border-default flex justify-end">
-          <button class="th-btn" id="ds-save-approval">Değişikliği kaydet</button>
+          <button class="th-btn" id="ds-save-approval">${t('dropshipping.saveChanges')}</button>
         </div>
       </div>
     </div>
@@ -365,17 +368,17 @@ function renderManageOrders(): string {
   return `
     <div>
       <div class="ds-orders__header flex items-center justify-between py-5 px-6 border-b border-border-default max-md:flex-col max-md:items-start max-md:gap-3 max-md:p-4">
-        <h2 class="text-lg font-semibold text-gray-800 m-0">Dropshipping siparişleri</h2>
+        <h2 class="text-lg font-semibold text-gray-800 m-0">${t('dropshipping.dropshippingOrders')}</h2>
         <div class="flex items-center gap-2 text-[13px] text-secondary-400">
-          <span>Otomatik onay</span>
-          <button class="ds-orders__badge" id="ds-open-auto-modal">Kapalı</button>
+          <span>${t('dropshipping.autoApproval')}</span>
+          <button class="ds-orders__badge" id="ds-open-auto-modal">${t('dropshipping.autoApprovalOff')}</button>
         </div>
       </div>
       ${renderOrderTabs()}
       <div class="ds-orders__tab-content ds-orders__tab-content--active" data-tab-content="all">
         ${renderEmptyState()}
       </div>
-      ${orderTabs
+      ${getOrderTabs()
         .slice(1)
         .map(
           (tab) => `
@@ -493,7 +496,7 @@ function initCategoryToggle(): void {
     // Replace text content but keep the SVG
     const textNode = toggleBtn.firstChild;
     if (textNode && textNode.nodeType === Node.TEXT_NODE) {
-      textNode.textContent = newExpanded ? 'Daha az görüntüle ' : 'Tümünü görüntüle ';
+      textNode.textContent = newExpanded ? `${t('dropshipping.viewLessCategories')} ` : `${t('dropshipping.viewAllCategories')} `;
     }
 
     document.querySelectorAll('.ds-category-tag--hidden').forEach((tag) => {
@@ -599,7 +602,7 @@ function initAutoApprovalModal(): void {
     const isOn = toggle?.classList.contains('ds-toggle--on');
     const badge = document.getElementById('ds-open-auto-modal');
     if (badge) {
-      badge.textContent = isOn ? 'Açık' : 'Kapalı';
+      badge.textContent = isOn ? t('dropshipping.autoApprovalOn') : t('dropshipping.autoApprovalOff');
       badge.classList.toggle('ds-orders__badge--on', !!isOn);
     }
     modal.classList.remove('ds-modal--open');

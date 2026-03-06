@@ -8,7 +8,8 @@
  * Interactivity powered by Alpine.js (imageGallery component registered in alpine.ts).
  */
 
-import { mockProduct } from '../../data/mockProduct';
+import { getMockProduct } from '../../data/mockProduct';
+import { t } from '../../i18n';
 import { ProductAttributes } from './ProductAttributes';
 
 interface GalleryVisual {
@@ -71,6 +72,7 @@ export const LIGHTBOX_THUMB_SIZE = 76;
 export const LIGHTBOX_THUMB_GAP = 10;
 
 export function ProductImageGallery(): string {
+  const mockProduct = getMockProduct();
   const images = mockProduct.images;
   const needsScroll = images.length > 4;
   const firstImage = images[0];
@@ -93,7 +95,7 @@ export function ProductImageGallery(): string {
       class="gallery-thumb gallery-thumb-attrs"
       :class="{ 'active': currentIndex === ${images.length} }"
       data-index="${images.length}"
-      aria-label="Özellikler"
+      aria-label="${t('product.attributesTab')}"
       @mouseenter="goToSlide(${images.length})"
       @click="goToSlide(${images.length})"
     >
@@ -124,7 +126,7 @@ export function ProductImageGallery(): string {
       <div id="pd-thumb-strip" class="hidden 2xl:flex flex-col items-center shrink-0 w-[68px]">
 
         ${needsScroll ? `
-        <button type="button" id="thumb-scroll-up" class="pd-thumb-arrow flex items-center justify-center w-[56px] h-[28px] rounded-md border cursor-pointer flex-shrink-0 transition-colors" style="background: var(--color-surface, #ffffff); border-color: var(--color-border-default, #e5e5e5); color: var(--color-text-placeholder, #999999);" aria-label="Yukarı kaydır" @click="scrollThumbs(-1)">
+        <button type="button" id="thumb-scroll-up" class="pd-thumb-arrow flex items-center justify-center w-[56px] h-[28px] rounded-md border cursor-pointer flex-shrink-0 transition-colors" style="background: var(--color-surface, #ffffff); border-color: var(--color-border-default, #e5e5e5); color: var(--color-text-placeholder, #999999);" aria-label="${t('product.scrollUp')}" @click="scrollThumbs(-1)">
           <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/></svg>
         </button>
         ` : ''}
@@ -135,7 +137,7 @@ export function ProductImageGallery(): string {
         </div>
 
         ${needsScroll ? `
-        <button type="button" id="thumb-scroll-down" class="pd-thumb-arrow flex items-center justify-center w-[56px] h-[28px] rounded-md border cursor-pointer flex-shrink-0 transition-colors" style="background: var(--color-surface, #ffffff); border-color: var(--color-border-default, #e5e5e5); color: var(--color-text-placeholder, #999999);" aria-label="Aşağı kaydır" @click="scrollThumbs(1)">
+        <button type="button" id="thumb-scroll-down" class="pd-thumb-arrow flex items-center justify-center w-[56px] h-[28px] rounded-md border cursor-pointer flex-shrink-0 transition-colors" style="background: var(--color-surface, #ffffff); border-color: var(--color-border-default, #e5e5e5); color: var(--color-text-placeholder, #999999);" aria-label="${t('product.scrollDown')}" @click="scrollThumbs(1)">
           <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
         </button>
         ` : ''}
@@ -150,26 +152,26 @@ export function ProductImageGallery(): string {
         @pointerleave="resetZoom()"
         @click="currentIndex !== attrsIndex && openLightbox(currentIndex)"
       >
-        ${renderGalleryMedia(firstImage?.src, firstImage?.alt ?? 'Ürün görseli', defaultVisual, 'large')}
+        ${renderGalleryMedia(firstImage?.src, firstImage?.alt ?? t('product.productImage'), defaultVisual, 'large')}
       </div>
 
       <!-- RIGHT: Attributes Card (hidden by default, replaces main image) -->
       ${ProductAttributes()}
 
       <!-- Navigation arrows — always visible on all slides -->
-      <button type="button" id="gallery-prev" class="gallery-nav-btn" aria-label="Önceki" @click.stop="goToSlide(currentIndex - 1)">
+      <button type="button" id="gallery-prev" class="gallery-nav-btn" aria-label="${t('product.previous')}" @click.stop="goToSlide(currentIndex - 1)">
         <svg width="16" height="16" fill="none" stroke="#333" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
       </button>
-      <button type="button" id="gallery-next" class="gallery-nav-btn" aria-label="Sonraki" @click.stop="goToSlide(currentIndex + 1)">
+      <button type="button" id="gallery-next" class="gallery-nav-btn" aria-label="${t('product.nextLabel')}" @click.stop="goToSlide(currentIndex + 1)">
         <svg width="16" height="16" fill="none" stroke="#333" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
       </button>
 
       <!-- Action buttons — always visible -->
       <div class="absolute top-3 right-3 z-5 flex flex-col gap-2">
-        <button type="button" class="gallery-action-btn w-9 h-9 rounded-full flex items-center justify-center border-0 cursor-pointer transition-colors" style="background: var(--color-surface, #ffffff); box-shadow: 0 1px 6px rgba(0,0,0,.12); color: var(--color-text-placeholder, #999999);" aria-label="Favorilere ekle">
+        <button type="button" class="gallery-action-btn w-9 h-9 rounded-full flex items-center justify-center border-0 cursor-pointer transition-colors" style="background: var(--color-surface, #ffffff); box-shadow: 0 1px 6px rgba(0,0,0,.12); color: var(--color-text-placeholder, #999999);" aria-label="${t('product.addToFavorites')}">
           <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
         </button>
-        <button type="button" class="gallery-action-btn w-9 h-9 rounded-full flex items-center justify-center border-0 cursor-pointer transition-colors" style="background: var(--color-surface, #ffffff); box-shadow: 0 1px 6px rgba(0,0,0,.12); color: var(--color-text-placeholder, #999999);" aria-label="Görsel ile ara">
+        <button type="button" class="gallery-action-btn w-9 h-9 rounded-full flex items-center justify-center border-0 cursor-pointer transition-colors" style="background: var(--color-surface, #ffffff); box-shadow: 0 1px 6px rgba(0,0,0,.12); color: var(--color-text-placeholder, #999999);" aria-label="${t('product.imageSearchLabel')}">
           <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9a2 2 0 012-2h2l1-2h8l1 2h2a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><circle cx="12" cy="13" r="3"/></svg>
         </button>
       </div>
@@ -178,8 +180,8 @@ export function ProductImageGallery(): string {
 
     <!-- Photos / Attributes tabs -->
     <div id="pd-gallery-tabs" class="inline-flex gap-0.5 mt-3 rounded-full p-[3px]" style="background: var(--color-border-light);">
-      <button type="button" class="gallery-view-tab" :class="{ 'active': currentIndex !== attrsIndex }" @click="goToSlide(0)">Fotoğraflar</button>
-      <button type="button" class="gallery-view-tab" :class="{ 'active': currentIndex === attrsIndex }" @click="goToSlide(attrsIndex)">Özellikler</button>
+      <button type="button" class="gallery-view-tab" :class="{ 'active': currentIndex !== attrsIndex }" @click="goToSlide(0)">${t('product.photosTab')}</button>
+      <button type="button" class="gallery-view-tab" :class="{ 'active': currentIndex === attrsIndex }" @click="goToSlide(attrsIndex)">${t('product.attributesTab')}</button>
     </div>
 
     <div id="gallery-lightbox" x-show="isLightboxOpen" x-cloak :aria-hidden="(!isLightboxOpen).toString()" @click.self="closeLightbox()" class="max-[960px]:!p-[72px_12px_12px]"
@@ -189,13 +191,13 @@ export function ProductImageGallery(): string {
     >
       <div id="gallery-lightbox-toolbar" class="max-[960px]:!h-[58px] max-[960px]:!px-2.5">
         <div id="gallery-lightbox-actions" class="max-[960px]:!gap-2">
-          <button type="button" class="gallery-lightbox-action-btn max-[960px]:!text-[15px] max-[960px]:!gap-[5px]" aria-label="Favorilere ekle">
+          <button type="button" class="gallery-lightbox-action-btn max-[960px]:!text-[15px] max-[960px]:!gap-[5px]" aria-label="${t('product.addToFavorites')}">
             <svg width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
             </svg>
             <span class="max-[960px]:hidden">Favorite</span>
           </button>
-          <button type="button" class="gallery-lightbox-action-btn max-[960px]:!text-[15px] max-[960px]:!gap-[5px]" aria-label="Benzerini bul">
+          <button type="button" class="gallery-lightbox-action-btn max-[960px]:!text-[15px] max-[960px]:!gap-[5px]" aria-label="${t('product.findSimilar')}">
             <svg width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M3 7.5A2.5 2.5 0 0 1 5.5 5h2A2.5 2.5 0 0 1 10 7.5v2A2.5 2.5 0 0 1 7.5 12h-2A2.5 2.5 0 0 1 3 9.5v-2zm11 0A2.5 2.5 0 0 1 16.5 5h2A2.5 2.5 0 0 1 21 7.5v2a2.5 2.5 0 0 1-2.5 2.5h-2A2.5 2.5 0 0 1 14 9.5v-2zm-11 9A2.5 2.5 0 0 1 5.5 14h2A2.5 2.5 0 0 1 10 16.5v2A2.5 2.5 0 0 1 7.5 21h-2A2.5 2.5 0 0 1 3 18.5v-2zm13.5-2.5a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9zm0 2.5v2l1.6 1"/>
             </svg>
@@ -205,17 +207,17 @@ export function ProductImageGallery(): string {
 
         <div id="gallery-lightbox-count" class="max-[960px]:!text-sm" x-text="(lightboxIndex + 1) + '/${images.length}'">${images.length > 0 ? `1/${images.length}` : '0/0'}</div>
 
-        <button type="button" id="gallery-lightbox-close" class="max-[960px]:!w-[34px] max-[960px]:!h-[34px]" aria-label="Galeriyi kapat" @click="closeLightbox()">
+        <button type="button" id="gallery-lightbox-close" class="max-[960px]:!w-[34px] max-[960px]:!h-[34px]" aria-label="${t('product.closeGallery')}" @click="closeLightbox()">
           <svg class="max-[960px]:!w-[22px] max-[960px]:!h-[22px]" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.1" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6l-12 12"/>
           </svg>
         </button>
       </div>
 
-      <div id="gallery-lightbox-inner" class="max-[960px]:!h-[min(86vh,760px)] max-[960px]:!grid-cols-1 max-[960px]:!grid-rows-[minmax(0,1fr)_82px] max-[960px]:!gap-3" role="dialog" aria-modal="true" aria-label="Ürün görsel galerisi">
+      <div id="gallery-lightbox-inner" class="max-[960px]:!h-[min(86vh,760px)] max-[960px]:!grid-cols-1 max-[960px]:!grid-rows-[minmax(0,1fr)_82px] max-[960px]:!gap-3" role="dialog" aria-modal="true" aria-label="${t('product.productGallery')}">
         <div id="gallery-lightbox-sidebar" class="max-[960px]:!order-2 max-[960px]:!w-full max-[960px]:!h-auto max-[960px]:!min-h-0">
           ${needsLightboxThumbScroll ? `
-          <button type="button" id="gallery-lightbox-thumb-up" class="gallery-lightbox-scroll max-[960px]:!hidden" aria-label="Yukarı kaydır" @click="scrollLightboxThumbs(-1)">
+          <button type="button" id="gallery-lightbox-thumb-up" class="gallery-lightbox-scroll max-[960px]:!hidden" aria-label="${t('product.scrollUp')}" @click="scrollLightboxThumbs(-1)">
             <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/></svg>
           </button>
           ` : ''}
@@ -225,7 +227,7 @@ export function ProductImageGallery(): string {
           </div>
 
           ${needsLightboxThumbScroll ? `
-          <button type="button" id="gallery-lightbox-thumb-down" class="gallery-lightbox-scroll max-[960px]:!hidden" aria-label="Aşağı kaydır" @click="scrollLightboxThumbs(1)">
+          <button type="button" id="gallery-lightbox-thumb-down" class="gallery-lightbox-scroll max-[960px]:!hidden" aria-label="${t('product.scrollDown')}" @click="scrollLightboxThumbs(1)">
             <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
           </button>
           ` : ''}
@@ -233,14 +235,14 @@ export function ProductImageGallery(): string {
 
         <div id="gallery-lightbox-stage">
           <div id="gallery-lightbox-image" x-ref="lightboxImage">
-            ${renderGalleryMedia(firstImage?.src, firstImage?.alt ?? 'Ürün görseli', defaultVisual, 'large')}
+            ${renderGalleryMedia(firstImage?.src, firstImage?.alt ?? t('product.productImage'), defaultVisual, 'large')}
           </div>
 
-          <div id="gallery-lightbox-vertical-nav" class="max-[960px]:!w-10 max-[960px]:!right-2.5" aria-label="Görsel gezinme">
-            <button type="button" id="gallery-lightbox-prev" class="gallery-lightbox-nav-btn max-[960px]:!w-10 max-[960px]:!h-10" aria-label="Önceki görsel" @click="lightboxPrev()">
+          <div id="gallery-lightbox-vertical-nav" class="max-[960px]:!w-10 max-[960px]:!right-2.5" aria-label="${t('product.productGallery')}">
+            <button type="button" id="gallery-lightbox-prev" class="gallery-lightbox-nav-btn max-[960px]:!w-10 max-[960px]:!h-10" aria-label="${t('product.previousImage')}" @click="lightboxPrev()">
               <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7-7-7 7"/></svg>
             </button>
-            <button type="button" id="gallery-lightbox-next" class="gallery-lightbox-nav-btn max-[960px]:!w-10 max-[960px]:!h-10" aria-label="Sonraki görsel" @click="lightboxNext()">
+            <button type="button" id="gallery-lightbox-next" class="gallery-lightbox-nav-btn max-[960px]:!w-10 max-[960px]:!h-10" aria-label="${t('product.nextImage')}" @click="lightboxNext()">
               <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 10l7 7 7-7"/></svg>
             </button>
           </div>

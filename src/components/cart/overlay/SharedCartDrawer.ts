@@ -1,6 +1,7 @@
 import type { ProductImageKind } from '../../../types/productListing';
 import { cartStore } from '../state/CartStore';
 import type { CartSupplier, CartProduct, CartSku } from '../../../types/cart';
+import { t } from '../../../i18n';
 
 export interface CartDrawerTierModel {
   minQty: number;
@@ -218,7 +219,7 @@ function showSampleMaxToast(): void {
     <svg class="shrink-0 mt-0.5" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#e05c25" stroke-width="2">
       <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
     </svg>
-    <span>Bu numunenin maksimum sipariş miktarı 1 adettir</span>
+    <span>${t('cart.sampleMaxQty')}</span>
   `;
   document.body.appendChild(toast);
   setTimeout(() => toast.remove(), 2800);
@@ -229,8 +230,8 @@ function renderPriceSectionHtml(totals: ReturnType<typeof getTotals>): string {
   if (state.mode === 'sample') {
     return `
       <div class="mb-5 pb-5 border-b border-border-default">
-        <p class="text-sm text-text-secondary mb-1">Numuneler için maksimum sipariş miktarı: 1 adet</p>
-        <p class="text-[22px] font-bold text-text-heading">$${(state.item.samplePrice ?? 30).toFixed(2)} <span class="text-base font-normal text-text-tertiary">/adet</span></p>
+        <p class="text-sm text-text-secondary mb-1">${t('cart.sampleMaxNote')}</p>
+        <p class="text-[22px] font-bold text-text-heading">$${(state.item.samplePrice ?? 30).toFixed(2)} <span class="text-base font-normal text-text-tertiary">${t('cart.perUnit')}</span></p>
       </div>
     `;
   }
@@ -260,7 +261,7 @@ function renderDrawerBody(): void {
     ${priceSection}
 
     <div class="mb-5">
-      <h5 class="text-base font-bold text-text-heading mb-3">Renk</h5>
+      <h5 class="text-base font-bold text-text-heading mb-3">${t('cart.colorLabel')}</h5>
       <div class="divide-y divide-border-default">
         ${state.item.colors.map((color) => {
     const qty = state.colorQuantities.get(color.id) ?? 0;
@@ -288,10 +289,10 @@ function renderDrawerBody(): void {
     <div class="mt-5 mb-2 rounded-3xl border border-border-default p-5">
       <div class="flex items-start justify-between gap-3">
         <div>
-          <h5 class="text-base font-bold text-text-heading">Shipping</h5>
-          <p class="mt-2 text-sm text-text-secondary">Shipping fee and delivery date to be negotiated. Chat with supplier now for more details.</p>
+          <h5 class="text-base font-bold text-text-heading">${t('cart.shipping')}</h5>
+          <p class="mt-2 text-sm text-text-secondary">${t('cart.shippingNegotiate')}</p>
         </div>
-        <button type="button" data-shipping-change class="text-base font-semibold text-cta-primary hover:text-cta-primary-hover hover:underline">Change ›</button>
+        <button type="button" data-shipping-change class="text-base font-semibold text-cta-primary hover:text-cta-primary-hover hover:underline">${t('cart.changeShipping')} ›</button>
       </div>
     </div>
   `;
@@ -308,24 +309,24 @@ function renderDrawerFooter(): void {
     ? `
       <div class="mb-4">
         <button type="button" id="shared-cart-footer-toggle" class="w-full flex items-center justify-center gap-1 text-sm font-semibold text-text-heading border-b border-border-default pb-3 mb-3">
-          Fiyat
+          ${t('cart.price')}
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 15-6-6-6 6"/></svg>
         </button>
 
         <div class="space-y-2 text-sm text-text-secondary">
           <div class="flex items-center justify-between">
-            <span>Ürün toplamı (${totals.variationCount} varyasyon ${totals.totalQty} ürün)</span>
+            <span>${t('cart.productTotal')} (${t('cart.variationItems', { variation: String(totals.variationCount), items: String(totals.totalQty) })})</span>
             <strong class="text-text-heading">$${totals.itemSubtotal.toFixed(2)}</strong>
           </div>
           <div class="flex items-center justify-between">
-            <span>Kargo toplamı</span>
+            <span>${t('cart.shippingTotal')}</span>
             <span>${escapeHtml(state.item.shippingOptions[state.selectedShippingIndex]?.costText ?? '$0.00')}</span>
           </div>
           <div class="flex items-center justify-between border-t border-border-default pt-3 mt-3">
-            <strong class="text-text-heading">Ara Toplam</strong>
+            <strong class="text-text-heading">${t('cart.subtotal')}</strong>
             <div class="text-right">
               <strong class="text-base text-cta-primary">$${totals.grandTotal.toFixed(2)}</strong>
-              <p class="text-xs text-text-tertiary">($${perPiece.toFixed(2)}/adet)</p>
+              <p class="text-xs text-text-tertiary">($${perPiece.toFixed(2)}${t('cart.perUnit')})</p>
             </div>
           </div>
         </div>
@@ -333,10 +334,10 @@ function renderDrawerFooter(): void {
     `
     : `
       <button type="button" id="shared-cart-footer-toggle" class="w-full flex items-center justify-between mb-4">
-        <strong class="text-base text-text-heading">Ara Toplam</strong>
+        <strong class="text-base text-text-heading">${t('cart.subtotal')}</strong>
         <span class="flex items-center gap-1.5">
           <strong class="text-[17px] text-cta-primary">$${totals.grandTotal.toFixed(2)}</strong>
-          <span class="text-xs text-text-tertiary">($${perPiece.toFixed(2)}/adet)</span>
+          <span class="text-xs text-text-tertiary">($${perPiece.toFixed(2)}${t('cart.perUnit')})</span>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-text-tertiary"><path d="m6 9 6 6 6-6"/></svg>
         </span>
       </button>
@@ -344,7 +345,7 @@ function renderDrawerFooter(): void {
 
   footer.innerHTML = `
     ${details}
-    <button type="button" id="shared-cart-confirm" class="w-full th-btn-dark th-btn-pill h-12 text-lg">${state.mode === 'sample' ? 'Numune Al' : 'Sepete Ekle'}</button>
+    <button type="button" id="shared-cart-confirm" class="w-full th-btn-dark th-btn-pill h-12 text-lg">${state.mode === 'sample' ? t('cart.orderSample') : t('cart.addToCartBtn')}</button>
   `;
 }
 
@@ -416,7 +417,7 @@ function buildGroupedItemsForEvent(): Array<{ supplierName: string; productTitle
     }
 
     groups.get(supplierKey)!.items.push({
-      label: `${qty} adet, ${memory.item.title.length > 40 ? `${memory.item.title.slice(0, 40)}...` : memory.item.title}`,
+      label: `${qty} ${memory.item.unit}, ${memory.item.title.length > 40 ? `${memory.item.title.slice(0, 40)}...` : memory.item.title}`,
       unitPrice,
       qty,
       colorValue: productVisuals[memory.item.imageKind].stroke,
@@ -453,7 +454,7 @@ function syncToCartStore(item: CartDrawerItemModel, colorQuantities: Map<string,
       title: item.title,
       href: `/product/${productId}`,
       tags: [],
-      moqLabel: `Min. sipariş: ${item.moq} ${item.unit}`,
+      moqLabel: `${t('product.minOrderLabel')}: ${item.moq} ${item.unit}`,
       favoriteIcon: '♡',
       deleteIcon: '🗑',
       skus: [],
@@ -478,7 +479,7 @@ function syncToCartStore(item: CartDrawerItemModel, colorQuantities: Map<string,
       const sku: CartSku = {
         id: skuId,
         skuImage: color.imageUrl || 'https://placehold.co/120x120/f5f5f5/999?text=SKU',
-        variantText: `Renk: ${color.label}`,
+        variantText: `${t('cart.colorLabel')}: ${color.label}`,
         unitPrice,
         currency: '$',
         unit: item.unit,
@@ -546,7 +547,7 @@ function openDrawer(itemId?: string, mode: 'cart' | 'sample' = 'cart'): void {
 
   const heading = document.getElementById('shared-cart-heading');
   if (heading) {
-    heading.textContent = mode === 'sample' ? 'Numune varyasyonları' : 'Varyasyon ve miktar seçin';
+    heading.textContent = mode === 'sample' ? t('cart.sampleVariations') : t('cart.selectVariation');
   }
 
   rerenderDrawer();
@@ -618,7 +619,7 @@ export function SharedCartDrawer(): string {
 
       <aside id="shared-cart-drawer" class="fixed right-0 top-0 h-full w-full sm:w-[500px] lg:w-[600px] max-w-full bg-surface shadow-[-8px_0_30px_rgba(0,0,0,0.18)] xl:rounded-l-2xl xl:border-l xl:border-border-default flex flex-col transition-transform duration-300">
         <div class="flex items-center justify-between px-6 py-4 border-b border-border-default shrink-0 max-md:px-4 max-md:py-3">
-          <h3 id="shared-cart-heading" class="text-lg font-bold text-text-heading">Varyasyon ve miktar seçin</h3>
+          <h3 id="shared-cart-heading" class="text-lg font-bold text-text-heading">${t('cart.selectVariation')}</h3>
           <button type="button" id="shared-cart-close" class="w-8 h-8 rounded-full text-secondary-400 hover:text-secondary-900 hover:bg-surface-raised transition-colors">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 18 18 6M6 6l12 12"/></svg>
           </button>
@@ -636,16 +637,16 @@ export function SharedShippingModal(): string {
     <div id="shared-cart-shipping-modal" class="fixed inset-0 z-[210] bg-black/50 opacity-0 pointer-events-none transition-opacity duration-300">
       <div id="shared-cart-shipping-sheet" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-[45%] w-[min(92vw,760px)] bg-surface rounded-3xl border border-border-default shadow-2xl p-6 translate-y-4 transition-transform duration-300 max-md:w-full max-md:max-w-full max-md:rounded-t-2xl max-md:rounded-b-none max-md:top-auto max-md:bottom-0 max-md:-translate-x-1/2 max-md:-translate-y-0 max-md:p-4">
         <div class="flex items-center justify-between">
-          <h4 class="text-xl font-bold text-text-heading">Kargo servisi seçin</h4>
+          <h4 class="text-xl font-bold text-text-heading">${t('cart.selectShipping')}</h4>
           <button type="button" id="shared-cart-shipping-close" class="w-8 h-8 rounded-full text-secondary-400 hover:text-secondary-900 hover:bg-surface-raised transition-colors">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 18 18 6M6 6l12 12"/></svg>
           </button>
         </div>
 
-        <p class="mt-4 text-base text-text-secondary">Gönderim: <strong>Türkiye</strong> · Miktar: <span id="shared-cart-shipping-qty">1 adet</span></p>
+        <p class="mt-4 text-base text-text-secondary">${t('cart.shippingTo')}: <strong>${t('countries.TR')}</strong> · ${t('cart.shippingQty')}: <span id="shared-cart-shipping-qty">1 ${state.item?.unit ?? 'pc'}</span></p>
         <div id="shared-cart-shipping-options" class="mt-5 space-y-3 max-h-[46vh] overflow-y-auto"></div>
 
-        <button type="button" id="shared-cart-shipping-apply" class="mt-6 w-full th-btn-dark th-btn-pill h-12">Uygula</button>
+        <button type="button" id="shared-cart-shipping-apply" class="mt-6 w-full th-btn-dark th-btn-pill h-12">${t('common.apply')}</button>
       </div>
     </div>
   `;
@@ -784,7 +785,7 @@ export function initSharedCartDrawer(items: CartDrawerItemModel[]): void {
         if (!confirmBtn) return;
 
         const originalText = confirmBtn.textContent;
-        confirmBtn.textContent = 'Lütfen miktar seçin';
+        confirmBtn.textContent = t('cart.pleaseSelectQty');
         confirmBtn.classList.add('bg-error-500');
 
         setTimeout(() => {

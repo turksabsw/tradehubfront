@@ -7,14 +7,17 @@
 import Swiper from 'swiper';
 import { Navigation } from 'swiper/modules';
 import 'swiper/swiper-bundle.css';
+import { t } from '../../i18n';
 
 interface TopDealCard {
   name: string;
   href: string;
   price: string;
   originalPrice: string;
-  moq: string;
+  moqCount: number;
+  moqUnitKey: string;
   badge?: string;
+  badgeKey?: string;
   imageKind: TopDealImageKind;
 }
 
@@ -41,8 +44,10 @@ const topDealCards: TopDealCard[] = [
     href: '/pages/product-detail.html',
     price: '$12.50',
     originalPrice: '$25.00',
-    moq: '2 pieces',
+    moqCount: 2,
+    moqUnitKey: 'topDeals.pieces',
     badge: 'Top picks',
+    badgeKey: 'topDeals.topPicks',
     imageKind: 'headphones',
   },
   {
@@ -50,7 +55,8 @@ const topDealCards: TopDealCard[] = [
     href: '/pages/product-detail.html',
     price: '$8.99',
     originalPrice: '$18.00',
-    moq: '5 pieces',
+    moqCount: 5,
+    moqUnitKey: 'topDeals.pieces',
     imageKind: 'smartwatch',
   },
   {
@@ -58,7 +64,8 @@ const topDealCards: TopDealCard[] = [
     href: '/pages/product-detail.html',
     price: '$6.80',
     originalPrice: '$15.50',
-    moq: '10 pieces',
+    moqCount: 10,
+    moqUnitKey: 'topDeals.pieces',
     imageKind: 'backpack',
   },
   {
@@ -66,7 +73,8 @@ const topDealCards: TopDealCard[] = [
     href: '/pages/product-detail.html',
     price: '$9.20',
     originalPrice: '$22.00',
-    moq: '5 pairs',
+    moqCount: 5,
+    moqUnitKey: 'topDeals.pairs',
     imageKind: 'sneakers',
   },
   {
@@ -74,7 +82,8 @@ const topDealCards: TopDealCard[] = [
     href: '/pages/product-detail.html',
     price: '$3.50',
     originalPrice: '$8.99',
-    moq: '20 pieces',
+    moqCount: 20,
+    moqUnitKey: 'topDeals.pieces',
     imageKind: 'sunglasses',
   },
   {
@@ -82,7 +91,8 @@ const topDealCards: TopDealCard[] = [
     href: '/pages/product-detail.html',
     price: '$7.20',
     originalPrice: '$14.00',
-    moq: '10 pieces',
+    moqCount: 10,
+    moqUnitKey: 'topDeals.pieces',
     imageKind: 'power-bank',
   },
   {
@@ -90,7 +100,8 @@ const topDealCards: TopDealCard[] = [
     href: '/pages/product-detail.html',
     price: '$5.60',
     originalPrice: '$12.00',
-    moq: '10 pieces',
+    moqCount: 10,
+    moqUnitKey: 'topDeals.pieces',
     imageKind: 'bluetooth-speaker',
   },
   {
@@ -98,7 +109,8 @@ const topDealCards: TopDealCard[] = [
     href: '/pages/product-detail.html',
     price: '$1.20',
     originalPrice: '$3.50',
-    moq: '50 pieces',
+    moqCount: 50,
+    moqUnitKey: 'topDeals.pieces',
     imageKind: 'led-bulb',
   },
 ];
@@ -229,11 +241,11 @@ function renderDealSlide(card: TopDealCard): string {
         class="group/deal relative flex flex-col min-w-0"
         aria-label="${card.name}"
       >
-        ${card.badge ? `
+        ${card.badgeKey ? `
           <span
             class="absolute top-2 left-2 z-10 inline-flex items-center rounded-sm text-[10px] font-bold leading-none"
             style="background-color: var(--topdeals-badge-bg, #DE0505); color: var(--topdeals-badge-text, #ffffff); padding: 2px 4px;"
-          >${card.badge}</span>
+          ><span data-i18n="${card.badgeKey}">${t(card.badgeKey)}</span></span>
         ` : ''}
 
         <!-- Square image area -->
@@ -259,7 +271,7 @@ function renderDealSlide(card: TopDealCard): string {
         <p
           class="mt-1.5 font-medium leading-none truncate"
           style="color: var(--topdeals-moq-color, #222222); font-size: var(--text-product-meta, 14px);"
-        >MOQ: ${card.moq}</p>
+        ><span data-i18n="topDeals.moq" data-i18n-options='${JSON.stringify({ count: card.moqCount, unit: t(card.moqUnitKey) })}'>${t('topDeals.moq', { count: card.moqCount, unit: t(card.moqUnitKey) })}</span></p>
       </a>
     </div>
   `;
@@ -316,17 +328,17 @@ export function TopDeals(): string {
             <h2
               class="text-[20px] sm:text-[22px] font-bold leading-tight"
               style="color: var(--topdeals-title-color, #111827);"
-            >Top Deals</h2>
+            ><span data-i18n="topDeals.title">${t('topDeals.title')}</span></h2>
             <p
               class="mt-0.5 text-[13px]"
               style="color: var(--topdeals-subtitle-color, #6b7280);"
-            >Score the lowest prices on Alibaba.com</p>
+            ><span data-i18n="topDeals.subtitle">${t('topDeals.subtitle')}</span></p>
           </div>
           <a
             href="/deals"
             class="flex-shrink-0 text-[13px] font-semibold transition-colors duration-150 hover:underline"
             style="color: var(--topdeals-link-color, #111827);"
-          >View more &gt;</a>
+          ><span data-i18n="common.viewMore">${t('common.viewMore')}</span> &gt;</a>
         </div>
 
         <!-- Swiper slider -->

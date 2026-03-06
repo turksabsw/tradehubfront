@@ -5,14 +5,17 @@
  */
 
 import type { SearchTab } from '../../types/navigation';
+import { t } from '../../i18n';
 
 /** Search tabs configuration */
-const searchTabs: SearchTab[] = [
-  { id: 'ai-mode', label: 'AI Mode', isActive: false },
-  { id: 'products', label: 'Products', isActive: true },
-  { id: 'manufacturers', label: 'Manufacturers', isActive: false },
-  { id: 'worldwide', label: 'Worldwide', isActive: false },
-];
+function getSearchTabs(): SearchTab[] {
+  return [
+    { id: 'ai-mode', label: t('search.aiMode'), isActive: false },
+    { id: 'products', label: t('search.products'), isActive: true },
+    { id: 'manufacturers', label: t('search.manufacturers'), isActive: false },
+    { id: 'worldwide', label: t('search.worldwide'), isActive: false },
+  ];
+}
 
 
 /**
@@ -30,6 +33,14 @@ function renderAIIcon(): string {
  * Desktop search tabs: centered with primary color accents + AI Mode tab
  */
 function renderSearchTabs(): string {
+  const searchTabs = getSearchTabs();
+  const tabI18nKeys: Record<string, string> = {
+    'ai-mode': 'search.aiMode',
+    'products': 'search.products',
+    'manufacturers': 'search.manufacturers',
+    'worldwide': 'search.worldwide',
+  };
+
   return `
     <div class="flex justify-center items-center mb-3 sm:mb-6 overflow-x-auto">
       <ul class="flex items-center gap-0" role="tablist">
@@ -48,7 +59,7 @@ function renderSearchTabs(): string {
       : 'border-transparent dark:text-gray-400 dark:hover:text-gray-300'
     }"
             >
-              ${tab.id === 'ai-mode' ? `${renderAIIcon()}<span>${tab.label}</span><span class="text-red-500 text-xs -mt-2 -ml-0.5">*</span>` : `<span>${tab.label}</span>`}
+              ${tab.id === 'ai-mode' ? `${renderAIIcon()}<span data-i18n="${tabI18nKeys[tab.id]}">${tab.label}</span><span class="text-red-500 text-xs -mt-2 -ml-0.5">*</span>` : `<span data-i18n="${tabI18nKeys[tab.id]}">${tab.label}</span>`}
             </button>
           </li>
         `).join('')}
@@ -76,14 +87,14 @@ function renderDesktopSearchBar(): string {
               name="q"
               class="flex-1 h-full px-2 text-sm sm:text-base bg-transparent border-0 focus:ring-0 focus:outline-none"
               style="color:var(--search-input-text)"
-              placeholder="Tekstil ve Konfeksiyon"
+              placeholder="${t('search.placeholder')}" data-i18n-placeholder="search.placeholder"
               autocomplete="off"
               aria-label="Search products, suppliers, or categories"
             />
 
             <!-- Image Search + Search Button -->
             <div class="flex items-center h-full py-1 gap-1 sm:gap-2 shrink-0">
-              <a href="/image-search" class="th-search-image-link flex items-center justify-center h-full aspect-square transition-colors hover:text-primary-600" style="color:var(--search-image-link-color)" aria-label="Image Search">
+              <a href="/image-search" class="th-search-image-link flex items-center justify-center h-full aspect-square transition-colors hover:text-primary-600" style="color:var(--search-image-link-color)" aria-label="${t('header.imageSearch')}">
                 <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z"/>
                   <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0ZM18.75 10.5h.008v.008h-.008V10.5Z"/>
@@ -96,10 +107,10 @@ function renderDesktopSearchBar(): string {
                 id="search-submit-button"
                 class="flex items-center justify-center h-full gap-1.5 px-4 sm:px-6 text-sm font-semibold text-white rounded-full transition-all hover:shadow-lg"
                 style="background: linear-gradient(135deg, var(--search-btn-gradient-start) 0%, var(--search-btn-gradient-end) 100%);"
-                aria-label="Search"
+                aria-label="${t('common.search')}"
               >
                 ${renderAIIcon()}
-                <span class="hidden sm:inline">Search</span>
+                <span class="hidden sm:inline" data-i18n="common.search">${t('common.search')}</span>
               </button>
             </div>
           </div>
@@ -110,9 +121,9 @@ function renderDesktopSearchBar(): string {
             <div class="flex items-center justify-between mb-2.5">
               <div class="flex items-center gap-2 text-sm" style="color:var(--search-dropdown-text)">
                 <span class="w-2 h-2 rounded-full inline-block flex-shrink-0" style="background-color:var(--search-chip-accent)"></span>
-                <span>Navigate complex requirements with Deep Search</span>
+                <span data-i18n="header.deepSearch">${t('header.deepSearch')}</span>
               </div>
-              <a href="/pages/legal/terms.html" class="text-xs whitespace-nowrap ml-4 transition-colors" style="color:var(--search-dropdown-muted)">Terms of use</a>
+              <a href="/pages/legal/terms.html" class="text-xs whitespace-nowrap ml-4 transition-colors" style="color:var(--search-dropdown-muted)" data-i18n="header.termsOfUse">${t('header.termsOfUse')}</a>
             </div>
             <!-- Suggestion Chips -->
             <div class="flex items-center gap-2 flex-wrap">
@@ -147,7 +158,7 @@ function renderWelcomeRow(): string {
       <div class="container-boxed flex items-center justify-between w-full gap-4">
         <!-- Welcome Text -->
         <h2 class="hidden sm:block text-lg font-bold whitespace-nowrap" style="color:var(--search-welcome-text)">
-          iSTOC'a Hoş Geldiniz
+          <span data-i18n="search.welcomeIstoc">${t('search.welcomeIstoc')}</span>
         </h2>
 
         <!-- Action Links -->
@@ -159,7 +170,7 @@ function renderWelcomeRow(): string {
                 <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
               </svg>
             </span>
-            <span class="text-sm font-medium">Request for Quotation</span>
+            <span class="text-sm font-medium" data-i18n="search.rfq">${t('search.rfq')}</span>
           </a>
 
           <!-- Separator -->
@@ -172,7 +183,7 @@ function renderWelcomeRow(): string {
                 <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 18.75h-9m9 0a3 3 0 0 1 3 3h-15a3 3 0 0 1 3-3m9 0v-3.375c0-.621-.503-1.125-1.125-1.125h-.871M7.5 18.75v-3.375c0-.621.504-1.125 1.125-1.125h.872m5.007 0H9.497m5.007 0a7.454 7.454 0 0 1-.982-3.172M9.497 14.25a7.454 7.454 0 0 0 .981-3.172M5.25 4.236c-.982.143-1.954.317-2.916.52A6.003 6.003 0 0 0 7.73 9.728M5.25 4.236V4.5c0 2.108.966 3.99 2.48 5.228M5.25 4.236V2.721C7.456 2.41 9.71 2.25 12 2.25c2.291 0 4.545.16 6.75.47v1.516M18.75 4.236c.982.143 1.954.317 2.916.52A6.003 6.003 0 0 1 16.27 9.728M18.75 4.236V4.5c0 2.108-.966 3.99-2.48 5.228m0 0a6.023 6.023 0 0 1-2.52.556m0 0a6.023 6.023 0 0 1-2.52-.556" />
               </svg>
             </span>
-            <span class="text-sm font-medium">Top Ranking</span>
+            <span class="text-sm font-medium" data-i18n="search.topRanking">${t('search.topRanking')}</span>
           </a>
 
           <!-- Separator -->
@@ -185,7 +196,7 @@ function renderWelcomeRow(): string {
                 <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456Z" />
               </svg>
             </span>
-            <span class="text-sm font-medium">Fast Customization</span>
+            <span class="text-sm font-medium" data-i18n="search.fastCustomization">${t('search.fastCustomization')}</span>
           </a>
         </div>
       </div>

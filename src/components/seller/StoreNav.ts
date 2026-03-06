@@ -3,6 +3,7 @@
  * Orange sticky nav with dropdowns, search, mobile hamburger
  */
 import type { StoreNavData } from '../../types/seller/types';
+import { t } from '../../i18n';
 
 export function StoreNav(data: StoreNavData): string {
   const menuItems = data.items.map(item => {
@@ -19,12 +20,12 @@ export function StoreNav(data: StoreNavData): string {
           <div class="store-nav__dropdown store-nav__dropdown--products absolute top-full left-0 bg-white shadow-(--shadow-md) rounded-b-(--radius-md) min-w-[280px] max-h-[400px] overflow-y-auto z-(--z-dropdown)"
                x-show="open" x-transition.opacity.duration.200ms style="display: none;"
                role="menu"
-               aria-label="Ürün kategorileri">
+               aria-label="${t('seller.sf.productCategories')}">
             <div class="store-nav__dropdown-header bg-[#f3f4f6] px-4 py-1.5 text-[13px] font-bold text-[#374151]">
-              Products
+              ${t('seller.sf.productsDropdownHeader')}
             </div>
             <a href="#categories" @click.prevent="setTab('categories'); open = false;" class="store-nav__dropdown-link block px-4 py-2 text-[13px] text-(--store-accent) font-medium hover:bg-[#f3f4f6] transition-colors" role="menuitem">
-              See all categories
+              ${t('seller.sf.seeAllCategories')}
             </a>
             ${data.productCategories.map(cat => `
               <a href="#products" @click.prevent="setTab('products'); open = false;" class="store-nav__dropdown-item flex items-center justify-between px-4 py-2 text-[13px] text-[#374151] hover:bg-[#f3f4f6] transition-colors" role="menuitem">
@@ -54,7 +55,7 @@ export function StoreNav(data: StoreNavData): string {
           <div class="store-nav__dropdown store-nav__dropdown--company absolute top-full left-0 bg-white shadow-(--shadow-md) rounded-b-(--radius-md) min-w-[200px] z-(--z-dropdown)"
                x-show="open" x-transition.opacity.duration.200ms style="display: none;"
                role="menu"
-               aria-label="Şirket profili menüsü">
+               aria-label="${t('seller.sf.companyProfileMenu')}">
             ${data.companyProfileLinks.map(link => {
         const tabTarget = link.href.startsWith('#') ? link.href.substring(1) : '';
         const clickAction = tabTarget ? `@click.prevent="setTab('${tabTarget}'); open = false;"` : '';
@@ -96,7 +97,7 @@ export function StoreNav(data: StoreNavData): string {
             </svg>
           </button>
           <div class="store-nav__dropdown store-nav__dropdown--products bg-white/10" x-show="open" x-collapse>
-            <a href="#categories" @click.prevent="setTab('categories'); toggleMobileMenu();" class="block px-10 py-2 text-[14px] text-white/80 hover:text-white hover:bg-white/5 transition-colors">See all categories</a>
+            <a href="#categories" @click.prevent="setTab('categories'); toggleMobileMenu();" class="block px-10 py-2 text-[14px] text-white/80 hover:text-white hover:bg-white/5 transition-colors">${t('seller.sf.seeAllCategories')}</a>
             ${data.productCategories.map(cat => `
               <a href="#products" @click.prevent="setTab('products'); toggleMobileMenu();" class="block px-10 py-2 text-[14px] text-white/80 hover:text-white hover:bg-white/5 transition-colors">${cat.name}</a>
             `).join('')}
@@ -142,13 +143,13 @@ export function StoreNav(data: StoreNavData): string {
   }).join('');
 
   return `
-    <nav id="store-nav" class="store-nav sticky top-0 z-(--z-sticky) bg-(--store-nav-bg) transition-shadow duration-200" aria-label="Mağaza navigasyonu">
+    <nav id="store-nav" class="store-nav sticky top-0 z-(--z-sticky) bg-(--store-nav-bg) transition-shadow duration-200" aria-label="${t('seller.sf.storeNavigation')}">
       <div class="store-nav__container max-w-(--container-lg) mx-auto px-[clamp(0.75rem,0.5rem+1vw,1.5rem)] lg:px-6 xl:px-8 flex items-center justify-between">
 
         <!-- Hamburger (mobile/tablet) -->
         <button class="store-nav__hamburger xl:hidden text-white p-2 bg-transparent border-none cursor-pointer"
                 @click="toggleMobileMenu()"
-                aria-label="Menüyü aç/kapa" :aria-expanded="mobileMenuOpen" aria-controls="store-nav-mobile-menu">
+                aria-label="${t('seller.sf.toggleMenu')}" :aria-expanded="mobileMenuOpen" aria-controls="store-nav-mobile-menu">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
           </svg>
@@ -164,7 +165,7 @@ export function StoreNav(data: StoreNavData): string {
           <input type="text"
                  class="store-nav__search-input bg-gray-50 border border-gray-300 rounded-full px-4 py-1.5 pr-9 text-[13px] text-[#374151] placeholder-gray-400 w-[250px] outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500 transition-colors"
                  placeholder="${data.searchPlaceholder}"
-                 aria-label="Mağaza içi arama" />
+                 aria-label="${t('seller.sf.storeSearch')}" />
           <svg class="store-nav__search-icon absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 cursor-pointer hover:text-primary-500 transition-colors"
                fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <circle cx="11" cy="11" r="8"/>
@@ -181,7 +182,7 @@ export function StoreNav(data: StoreNavData): string {
             <input type="text"
                    class="store-nav__search-input w-full bg-gray-50 border border-gray-300 rounded-full px-4 py-2 pr-9 text-[14px] text-[#374151] placeholder-gray-400 outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500 transition-colors"
                    placeholder="${data.searchPlaceholder}"
-                   aria-label="Mağaza içi arama" />
+                   aria-label="${t('seller.sf.storeSearch')}" />
             <svg class="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400"
                  fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <circle cx="11" cy="11" r="8"/>

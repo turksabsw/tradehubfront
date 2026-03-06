@@ -14,7 +14,7 @@ appEl.classList.add('relative');
 appEl.innerHTML = `
   ${HelpCenterHeader({ activePage: 'cookies' })}
   <main>
-    ${LegalPageLayout(cookiesContent)}
+    ${LegalPageLayout(cookiesContent())}
     <div class="max-w-[1200px] mx-auto px-4 sm:px-6 pb-16">
       ${CookieConsentUI()}
     </div>

@@ -4,9 +4,11 @@
  * company details table, factory capabilities, certifications.
  */
 
-import { mockProduct } from '../../data/mockProduct';
+import { getMockProduct } from '../../data/mockProduct';
+import { t } from '../../i18n';
 
 export function CompanyProfile(): string {
+  const mockProduct = getMockProduct();
   const s = mockProduct.supplier;
 
   return `
@@ -22,9 +24,9 @@ export function CompanyProfile(): string {
               </svg>
             ` : ''}
           </div>
-          <p class="text-[13px] mt-1" style="color: var(--pd-rating-text-color, #6b7280);">Verified Multispecialty Supplier &middot; ${s.yearsInBusiness} yıl &middot; \u{1F1F9}\u{1F1F7} TR</p>
+          <p class="text-[13px] mt-1" style="color: var(--pd-rating-text-color, #6b7280);">Verified Multispecialty Supplier &middot; ${t('product.servingYears', { count: String(s.yearsInBusiness) })} &middot; \u{1F1F9}\u{1F1F7} TR</p>
         </div>
-        <button type="button" class="px-6 py-2.5 rounded-[20px] border text-sm font-semibold whitespace-nowrap cursor-pointer transition-colors hover:bg-(--pd-spec-header-bg,#f9fafb) max-[374px]:px-4 max-[374px]:py-2 max-[374px]:text-[13px] max-[374px]:w-full max-[374px]:text-center" style="border-color: var(--pd-title-color, #111827); background: var(--color-surface, #ffffff); color: var(--pd-title-color, #111827);">İletişime Geç</button>
+        <button type="button" class="px-6 py-2.5 rounded-[20px] border text-sm font-semibold whitespace-nowrap cursor-pointer transition-colors hover:bg-(--pd-spec-header-bg,#f9fafb) max-[374px]:px-4 max-[374px]:py-2 max-[374px]:text-[13px] max-[374px]:w-full max-[374px]:text-center" style="border-color: var(--pd-title-color, #111827); background: var(--color-surface, #ffffff); color: var(--pd-title-color, #111827);">${t('product.contactUs')}</button>
       </div>
 
       <!-- 2. Stat Counters -->
@@ -34,39 +36,39 @@ export function CompanyProfile(): string {
             <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
           </svg>
           <span class="text-xl font-extrabold" style="color: var(--pd-title-color, #111827);">${s.responseTime}</span>
-          <span class="text-xs mt-1" style="color: var(--pd-rating-text-color, #6b7280);">Yanıt Süresi</span>
+          <span class="text-xs mt-1" style="color: var(--pd-rating-text-color, #6b7280);">${t('product.responseTime')}</span>
         </div>
         <div class="flex flex-col items-center text-center p-4 rounded-lg border max-[374px]:p-3 max-[374px]:flex-row max-[374px]:gap-2 max-[374px]:text-left" style="border-color: var(--pd-spec-border, #e5e5e5); background: var(--color-surface, #ffffff);">
           <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="color: var(--pd-rating-text-color, #6b7280); margin-bottom: 6px;">
             <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
           </svg>
           <span class="text-xl font-extrabold" style="color: var(--pd-title-color, #111827);">${s.responseRate}</span>
-          <span class="text-xs mt-1" style="color: var(--pd-rating-text-color, #6b7280);">Yanıt Oranı</span>
+          <span class="text-xs mt-1" style="color: var(--pd-rating-text-color, #6b7280);">${t('product.responseRate')}</span>
         </div>
         <div class="flex flex-col items-center text-center p-4 rounded-lg border max-[374px]:p-3 max-[374px]:flex-row max-[374px]:gap-2 max-[374px]:text-left" style="border-color: var(--pd-spec-border, #e5e5e5); background: var(--color-surface, #ffffff);">
           <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="color: var(--pd-rating-text-color, #6b7280); margin-bottom: 6px;">
             <rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>
           </svg>
           <span class="text-xl font-extrabold" style="color: var(--pd-title-color, #111827);">${s.onTimeDelivery}</span>
-          <span class="text-xs mt-1" style="color: var(--pd-rating-text-color, #6b7280);">Zamanında Teslimat</span>
+          <span class="text-xs mt-1" style="color: var(--pd-rating-text-color, #6b7280);">${t('product.onTimeDelivery')}</span>
         </div>
       </div>
 
       <!-- 3. Company Details Table -->
       <div style="margin-bottom: 24px;">
-        <h3 class="pd-section-heading">Şirket Bilgileri</h3>
+        <h3 class="pd-section-heading">${t('product.companyInfo')}</h3>
         <table class="pd-attrs-table">
           <tbody>
             <tr>
-              <td class="pd-attrs-key">Çalışan Sayısı</td>
+              <td class="pd-attrs-key">${t('product.employees')}</td>
               <td class="pd-attrs-val">${s.employees}</td>
-              <td class="pd-attrs-key">Yıllık Gelir</td>
+              <td class="pd-attrs-key">${t('product.annualRevenue')}</td>
               <td class="pd-attrs-val">${s.annualRevenue}</td>
             </tr>
             <tr>
-              <td class="pd-attrs-key">Faaliyet Süresi</td>
-              <td class="pd-attrs-val">${s.yearsInBusiness} yıl</td>
-              <td class="pd-attrs-key">Ana Ürünler</td>
+              <td class="pd-attrs-key">${t('product.yearsInBusiness')}</td>
+              <td class="pd-attrs-val">${t('product.servingYears', { count: String(s.yearsInBusiness) })}</td>
+              <td class="pd-attrs-key">${t('product.mainProductsLabel')}</td>
               <td class="pd-attrs-val">${s.mainProducts.join(', ')}</td>
             </tr>
           </tbody>
@@ -75,13 +77,13 @@ export function CompanyProfile(): string {
 
       <!-- 4. Factory Capabilities -->
       <div style="margin-bottom: 24px;">
-        <h3 class="pd-section-heading">Fabrika Kapasitesi</h3>
+        <h3 class="pd-section-heading">${t('product.factoryCapability')}</h3>
         <div class="grid grid-cols-4 gap-3 mb-6 max-sm:grid-cols-2 max-[374px]:gap-2">
           ${[
-            { label: 'Üretim Hattı', stroke: '#4a5e9a', icon: '<rect x="3" y="8" width="18" height="12" rx="1"/><path d="M7 8V6a2 2 0 012-2h6a2 2 0 012 2v2"/><path d="M12 12v4"/>' },
-            { label: 'Kalite Kontrol', stroke: '#2d8a5e', icon: '<path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>' },
-            { label: 'Depo', stroke: '#92700c', icon: '<path d="M21 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v3"/><path d="M3 8h18v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8Z"/><path d="M10 12h4"/>' },
-            { label: 'Showroom', stroke: '#7e22ce', icon: '<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9z"/><polyline points="9 22 9 12 15 12 15 22"/>' },
+            { label: t('product.productionLine'), stroke: '#4a5e9a', icon: '<rect x="3" y="8" width="18" height="12" rx="1"/><path d="M7 8V6a2 2 0 012-2h6a2 2 0 012 2v2"/><path d="M12 12v4"/>' },
+            { label: t('product.qualityControl'), stroke: '#2d8a5e', icon: '<path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>' },
+            { label: t('product.warehouse'), stroke: '#92700c', icon: '<path d="M21 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v3"/><path d="M3 8h18v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8Z"/><path d="M10 12h4"/>' },
+            { label: t('product.showroom'), stroke: '#7e22ce', icon: '<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9z"/><polyline points="9 22 9 12 15 12 15 22"/>' },
           ].map(item => `
             <div class="aspect-[4/3] rounded-md overflow-hidden border flex flex-col items-center justify-center gap-1.5 text-[11px]" style="border-color: var(--pd-spec-border, #e5e5e5); background: var(--pd-spec-header-bg, #f9fafb); color: var(--pd-rating-text-color, #6b7280);">
               <svg width="28" height="28" fill="none" stroke-width="1.4" viewBox="0 0 24 24" style="stroke: ${item.stroke};">
@@ -95,7 +97,7 @@ export function CompanyProfile(): string {
 
       <!-- 5. Certifications -->
       <div style="margin-bottom: 24px;">
-        <h3 class="pd-section-heading">Sertifikalar</h3>
+        <h3 class="pd-section-heading">${t('product.certifications')}</h3>
         <div class="flex flex-wrap gap-3 max-[374px]:gap-2">
           ${s.certifications.map(cert => `
             <div class="flex items-center gap-2 px-4 py-3 rounded-md max-[374px]:px-3 max-[374px]:py-2 max-[374px]:w-full" style="border: 1px solid var(--pd-spec-border, #e5e5e5);">

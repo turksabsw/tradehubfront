@@ -11,6 +11,7 @@
  */
 
 import { getBaseUrl } from './AuthLayout';
+import { t } from '../../i18n';
 
 /* ── Types ──────────────────────────────────────────── */
 
@@ -39,7 +40,7 @@ const supportLink = `
     <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
       <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 9.75a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375m-13.5 3.01c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.184-4.183a1.14 1.14 0 0 1 .778-.332 48.294 48.294 0 0 0 5.83-.498c1.585-.233 2.708-1.626 2.708-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z"/>
     </svg>
-    Müşteri hizmetleriyle iletişime geçin
+    <span data-i18n="auth.forgot.contactSupport">${t('auth.forgot.contactSupport')}</span>
   </a>
 `;
 
@@ -56,8 +57,8 @@ function ForgotPasswordHeader(): string {
         </a>
         <div class="relative">
           <select class="text-sm text-gray-600 border border-gray-300 rounded px-2 py-1 bg-white appearance-none pr-6 cursor-pointer auth-input-focus">
-            <option>Türkçe</option>
-            <option>English</option>
+            <option>${t('common.turkish')}</option>
+            <option>${t('common.english')}</option>
           </select>
           <svg class="w-3.5 h-3.5 absolute right-1.5 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m19 9-7 7-7-7"/></svg>
         </div>
@@ -82,19 +83,19 @@ function ForgotPasswordCard(content: string): string {
 function StepFindAccount(): string {
   return `
     <div x-show="step === 'find-account'">
-      <h1 class="text-2xl font-bold text-gray-900 text-center mb-3">Hesabınızı bulun</h1>
-      <p class="text-sm text-gray-500 text-center mb-8">Hesabınızla ilişkili e-postayı veya üye kimliğini girin</p>
+      <h1 class="text-2xl font-bold text-gray-900 text-center mb-3" data-i18n="auth.forgot.findAccount">${t('auth.forgot.findAccount')}</h1>
+      <p class="text-sm text-gray-500 text-center mb-8" data-i18n="auth.forgot.findAccountDesc">${t('auth.forgot.findAccountDesc')}</p>
 
       <form @submit.prevent="submitFindAccount()" class="space-y-5">
         <div>
-          <label for="fp-email" class="sr-only">Kullanıcı Adı veya E-posta Adresi</label>
+          <label for="fp-email" class="sr-only" data-i18n="auth.forgot.usernameOrEmail">${t('auth.forgot.usernameOrEmail')}</label>
           <input
             type="text"
             id="fp-email"
             name="email"
             x-model="email"
             class="w-full h-12 px-4 bg-white border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 auth-input-focus transition-colors"
-            placeholder="Kullanıcı Adı veya E-posta Adresi"
+            placeholder="${t('auth.forgot.usernameOrEmail')}" data-i18n-placeholder="auth.forgot.usernameOrEmail"
             required
             autocomplete="email"
           />
@@ -106,7 +107,7 @@ function StepFindAccount(): string {
           disabled
           class="w-full h-12 th-btn th-btn-pill disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          Devam
+          <span data-i18n="auth.forgot.continue">${t('auth.forgot.continue')}</span>
         </button>
       </form>
 
@@ -134,14 +135,14 @@ function StepVerifyCode(): string {
              transition-all duration-200 outline-none"
       placeholder=""
       autocomplete="one-time-code"
-      aria-label="OTP hanesi ${i + 1}"
+      aria-label="${t('auth.forgot.otpDigitLabel')} ${i + 1}"
     />
   `).join('');
 
   return `
     <div x-show="step === 'verify-code'" x-cloak>
-      <h1 class="text-2xl font-bold text-gray-900 text-center mb-3">Kimliğinizi doğrulayın</h1>
-      <p class="text-sm text-gray-500 text-center mb-1">Şu e-posta adresine gönderdiğimiz doğrulama kodunu girin:</p>
+      <h1 class="text-2xl font-bold text-gray-900 text-center mb-3" data-i18n="auth.forgot.verifyIdentity">${t('auth.forgot.verifyIdentity')}</h1>
+      <p class="text-sm text-gray-500 text-center mb-1" data-i18n="auth.forgot.otpDesc">${t('auth.forgot.otpDesc')}</p>
       <p class="text-sm font-bold text-gray-900 text-center mb-8" x-text="maskedEmail"></p>
 
       <!-- OTP Inputs -->
@@ -154,7 +155,7 @@ function StepVerifyCode(): string {
       </div>
 
       <!-- OTP Error -->
-      <p class="text-sm text-red-600 text-center mb-4" x-show="otpError" x-cloak>Geçersiz kod. Lütfen tekrar deneyin.</p>
+      <p class="text-sm text-red-600 text-center mb-4" x-show="otpError" x-cloak data-i18n="auth.forgot.invalidCode">${t('auth.forgot.invalidCode')}</p>
 
       <!-- Resend -->
       <div class="text-center mb-6">
@@ -164,14 +165,14 @@ function StepVerifyCode(): string {
           @click="resendCode()"
           class="w-full h-12 border border-gray-300 rounded-full text-sm text-gray-500 hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          Kodu tekrar gönder <span x-show="countdown > 0">(<span x-text="countdown"></span> sn)</span>
+          <span data-i18n="auth.forgot.resendCode">${t('auth.forgot.resendCode')}</span> <span x-show="countdown > 0">(<span x-text="countdown"></span> ${t('auth.forgot.secondsAbbr')})</span>
         </button>
       </div>
 
       <!-- ID Verification Link -->
       <div class="text-center mb-12">
         <a href="javascript:void(0)" class="text-sm font-medium text-gray-900 underline hover:no-underline">
-          Kimlik belgesiyle doğrulayın
+          <span data-i18n="auth.forgot.verifyWithId">${t('auth.forgot.verifyWithId')}</span>
         </a>
       </div>
 
@@ -187,12 +188,12 @@ function StepVerifyCode(): string {
 function StepResetPassword(): string {
   return `
     <div x-show="step === 'reset-password'" x-cloak>
-      <h1 class="text-2xl font-bold text-gray-900 text-center mb-8">Şifrenizi yenileyin</h1>
+      <h1 class="text-2xl font-bold text-gray-900 text-center mb-8" data-i18n="auth.forgot.resetPassword">${t('auth.forgot.resetPassword')}</h1>
 
       <form @submit.prevent="submitReset()" class="space-y-5">
         <!-- New Password -->
         <div class="relative">
-          <label for="fp-new-password" class="sr-only">Yeni şifre</label>
+          <label for="fp-new-password" class="sr-only" data-i18n="auth.forgot.newPassword">${t('auth.forgot.newPassword')}</label>
           <input
             :type="showPassword ? 'text' : 'password'"
             id="fp-new-password"
@@ -200,7 +201,7 @@ function StepResetPassword(): string {
             x-ref="newPassword"
             @input="validatePassword()"
             class="w-full h-12 px-4 pr-12 bg-white border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 auth-input-focus transition-colors"
-            placeholder="Yeni şifre"
+            placeholder="${t('auth.forgot.newPassword')}" data-i18n-placeholder="auth.forgot.newPassword"
             required
             autocomplete="new-password"
           />
@@ -208,7 +209,7 @@ function StepResetPassword(): string {
             type="button"
             @click="showPassword = !showPassword"
             class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
-            aria-label="Şifreyi göster/gizle"
+            aria-label="${t('auth.forgot.showHidePassword')}" data-i18n-aria-label="auth.forgot.showHidePassword"
           >
             <!-- Eye closed (password hidden) -->
             <svg x-show="!showPassword" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
@@ -224,9 +225,9 @@ function StepResetPassword(): string {
 
         <!-- Password Requirements -->
         <ul class="space-y-1.5 text-sm text-gray-500 list-disc pl-5">
-          <li :style="reqStyle(reqLength)">Şifreniz 6 ile 20 karakter arasında olmalıdır</li>
-          <li :style="reqStyle(reqChars)">Şifreniz harf, rakam ve özel karakterlerden en az ikisini içermelidir</li>
-          <li :style="reqStyle(reqEmoji)">Şifrenizde emoji ve benzeri semboller olmamalıdır</li>
+          <li :style="reqStyle(reqLength)" data-i18n="auth.forgot.passwordLength">${t('auth.forgot.passwordLength')}</li>
+          <li :style="reqStyle(reqChars)" data-i18n="auth.forgot.passwordComplexity">${t('auth.forgot.passwordComplexity')}</li>
+          <li :style="reqStyle(reqEmoji)" data-i18n="auth.forgot.passwordNoEmoji">${t('auth.forgot.passwordNoEmoji')}</li>
         </ul>
 
         <!-- Submit -->
@@ -236,7 +237,7 @@ function StepResetPassword(): string {
           disabled
           class="w-full h-12 th-btn th-btn-pill disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          Yenile ve giriş yap
+          <span data-i18n="auth.forgot.resetAndLogin">${t('auth.forgot.resetAndLogin')}</span>
         </button>
       </form>
     </div>

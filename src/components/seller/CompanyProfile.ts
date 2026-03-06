@@ -1,4 +1,5 @@
 import type { SellerStorefrontData, SellerProfile, ProductCategory, SimpleProduct, CompanyInfo as CompanyInfoData, Certificate, ContactFormData, CategoryCard } from '../../types/seller/types';
+import { t } from '../../i18n';
 import { CompanyInfoComponent } from './CompanyInfo';
 import { Certificates } from './Certificates';
 import { ContactForm } from './ContactForm';
@@ -18,7 +19,7 @@ function renderSellerProductCard(product: any, index: number = 0): string {
   const nameSafe = product.name.replace(/"/g, '&quot;');
   const link = product.link || '/pages/product-detail.html';
   const soldCount = product.soldCount || 0;
-  const moqText = product.moq ? `${product.moq} ${product.moqUnit}` : '1 Adet';
+  const moqText = product.moq ? `${product.moq} ${product.moqUnit}` : `1 ${t('seller.sf.unitPiece')}`;
 
   // Find discount badge if exists
   const discountBadge = (product.badges || []).find((b: { type: string, label: string }) => b.type === 'discount');
@@ -45,7 +46,7 @@ function renderSellerProductCard(product: any, index: number = 0): string {
           <div
             class="searchx-find-similar searchx-find-similar__icon theme-float"
             role="button"
-            aria-label="Benzer ürünleri bulun"
+            aria-label="${t('seller.sf.findSimilar')}"
             tabindex="0"
           >
             ${lensIcon()}
@@ -73,12 +74,12 @@ function renderSellerProductCard(product: any, index: number = 0): string {
             <!-- MOQ + sold -->
             <div class="iyDLA yUble" style="--lines: 1;">
               <div class="hVMAV z5oZw"><bdi>${moqText}</bdi></div>
-              <span class="mHuc8" title="${soldCount} adet satıldı">${soldCount} adet satıldı</span>
+              <span class="mHuc8" title="${t('seller.sf.soldCount', { count: soldCount })}">${t('seller.sf.soldCount', { count: soldCount })}</span>
             </div>
 
             <!-- Supplier info -->
             <div class="YpiVg">
-              <span class="wELvB">1 yıl</span>
+              <span class="wELvB">${t('seller.sf.year', { count: 1 })}</span>
               <span class="wELvB">CN</span>
             </div>
           </div>
@@ -115,7 +116,7 @@ export interface SellerPerformanceStats {
 function ContactSidebar(seller: SellerProfile): string {
   return `
     <div class="company-profile__sidebar sticky top-[100px] bg-white rounded-(--radius-md) border border-gray-200 p-4 sm:p-6" x-show="activeTab !== 'contact'" x-transition>
-      <h3 class="text-[18px] font-bold text-gray-900 mb-4">Tedarikçiye Ulaşın</h3>
+      <h3 class="text-[18px] font-bold text-gray-900 mb-4">${t('seller.sf.contactSupplier')}</h3>
       
       <div class="flex items-center gap-3 mb-6">
         <div class="w-12 h-12 flex items-center justify-center rounded overflow-hidden shadow-sm border border-gray-100 p-1">
@@ -128,10 +129,10 @@ function ContactSidebar(seller: SellerProfile): string {
 
       <div class="flex flex-col gap-3">
         <button @click="setTab('contact')" class="w-full th-btn th-btn-pill company-profile__contact-btn">
-          Şimdi iletişime geçin
+          ${t('seller.sf.contactNow')}
         </button>
         <button @click="setTab('contact')" class="w-full bg-white hover:bg-gray-50 text-gray-900 border border-gray-300 font-medium py-2.5 px-4 rounded-full transition-colors text-[14px] company-profile__inquiry-btn">
-          Sorgu gönder
+          ${t('seller.sf.sendInquiry')}
         </button>
       </div>
     </div>
@@ -145,7 +146,7 @@ function OverviewTab(stats: SellerPerformanceStats, mainProducts: SimpleProduct[
       
       <!-- Performance Section -->
       <section class="bg-white rounded-(--radius-md) border border-gray-200 p-6 mb-6">
-        <h3 class="text-[18px] font-bold text-gray-900 mb-6">Performans</h3>
+        <h3 class="text-[18px] font-bold text-gray-900 mb-6">${t('seller.sf.performance')}</h3>
         
         <div class="grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-8">
           <!-- Stats -->
@@ -154,26 +155,26 @@ function OverviewTab(stats: SellerPerformanceStats, mainProducts: SimpleProduct[
               <span class="text-[32px] font-bold leading-none text-gray-900">${stats.rating.toFixed(1)}</span>
               <span class="text-[14px] text-gray-500 mb-1">/5</span>
               <div class="ml-2">
-                <span class="block text-[12px] text-gray-900 font-medium">Hoşnut eden</span>
-                <button type="button" @click="setTab('reviews')" class="text-[12px] text-blue-600 hover:underline cursor-pointer">${stats.reviewCount} değerlendirmeler</button>
+                <span class="block text-[12px] text-gray-900 font-medium">${t('seller.sf.satisfactory')}</span>
+                <button type="button" @click="setTab('reviews')" class="text-[12px] text-blue-600 hover:underline cursor-pointer">${stats.reviewCount} ${t('seller.sf.reviews')}</button>
               </div>
             </div>
             
             <ul class="space-y-2 text-[13px] text-gray-900 mb-6 font-medium">
-              <li class="flex items-center gap-2"><span>&le;${stats.responseTime}</span> <span class="text-gray-500 font-normal">Ortalama yanıt süresi</span></li>
-              <li class="flex items-center gap-2"><span>${stats.onTimeDeliveryRate}</span> <span class="text-gray-500 font-normal">Zamanında teslimat oranı</span></li>
-              <li class="flex items-center gap-2"><span>${stats.transactions}+</span> <span class="text-gray-500 font-normal">sipariş</span></li>
+              <li class="flex items-center gap-2"><span>&le;${stats.responseTime}</span> <span class="text-gray-500 font-normal">${t('seller.sf.avgResponseTime')}</span></li>
+              <li class="flex items-center gap-2"><span>${stats.onTimeDeliveryRate}</span> <span class="text-gray-500 font-normal">${t('seller.sf.onTimeDeliveryRate')}</span></li>
+              <li class="flex items-center gap-2"><span>${stats.transactions}+</span> <span class="text-gray-500 font-normal">${t('seller.sf.orders')}</span></li>
             </ul>
 
             <div class="pt-4 border-t border-gray-100">
               <h4 class="text-[13px] font-bold text-gray-900 mb-3 flex items-center gap-2">
-                Tedarikçi kapasitesi <span class="text-[11px] font-normal text-gray-500">Doğrulandı by <strong>Intertek</strong></span>
+                ${t('seller.sf.supplierCapacity')} <span class="text-[11px] font-normal text-gray-500">${t('seller.sf.verifiedBy')} <strong>Intertek</strong></span>
               </h4>
               <ul class="space-y-2 text-[13px] text-gray-600">
-                <li class="flex items-center gap-2"><svg class="w-4 h-4 text-blue-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> Küçük özelleştirme</li>
-                <li class="flex items-center gap-2"><svg class="w-4 h-4 text-blue-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> Çizime göre özelleştirme</li>
-                <li class="flex items-center gap-2"><svg class="w-4 h-4 text-blue-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> Nihai ürün denetimi</li>
-                 <li class="flex items-center gap-2"><svg class="w-4 h-4 text-blue-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> Garanti seçenekleri mevcut</li>
+                <li class="flex items-center gap-2"><svg class="w-4 h-4 text-blue-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> ${t('seller.sf.minorCustomization')}</li>
+                <li class="flex items-center gap-2"><svg class="w-4 h-4 text-blue-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> ${t('seller.sf.drawingCustomization')}</li>
+                <li class="flex items-center gap-2"><svg class="w-4 h-4 text-blue-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> ${t('seller.sf.finalProductInspection')}</li>
+                 <li class="flex items-center gap-2"><svg class="w-4 h-4 text-blue-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> ${t('seller.sf.warrantyOptions')}</li>
               </ul>
             </div>
           </div>
@@ -193,7 +194,7 @@ function OverviewTab(stats: SellerPerformanceStats, mainProducts: SimpleProduct[
 
       <!-- Main Products Section -->
       <section class="bg-white rounded-(--radius-md) border border-gray-200 p-6">
-        <h3 class="text-[18px] font-bold text-gray-900 mb-6 uppercase">ANA ÜRÜNLER</h3>
+        <h3 class="text-[18px] font-bold text-gray-900 mb-6 uppercase">${t('seller.sf.mainProducts')}</h3>
         
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 product-grid">
           ${mainProducts.map((product, idx) => renderSellerProductCard(product, idx)).join('')}
@@ -209,32 +210,32 @@ function ReviewsTab(stats: SellerPerformanceStats, reviews: SellerReview[]): str
   return `
     <div class="company-profile__tab-content" x-show="activeTab === 'reviews'" x-transition.opacity.duration.300ms id="tab-reviews">
       <section class="bg-white rounded-(--radius-md) border border-gray-200 p-6">
-        <h3 class="text-[18px] font-bold text-gray-900 mb-8">Şirket Değerlendirmeleri (${stats.reviewCount})</h3>
+        <h3 class="text-[18px] font-bold text-gray-900 mb-8">${t('seller.sf.companyReviews')} (${stats.reviewCount})</h3>
         
         <!-- Score Breakdown -->
         <div class="flex flex-col md:flex-row gap-12 mb-10 pb-10 border-b border-gray-100">
           <div class="flex flex-col">
             <div class="text-[48px] font-bold text-gray-900 leading-none">${stats.rating.toFixed(1)} <span class="text-[16px] text-gray-500 font-normal">/5</span></div>
-            <div class="text-[14px] text-gray-600 font-medium mt-1">Memnun</div>
+            <div class="text-[14px] text-gray-600 font-medium mt-1">${t('seller.sf.satisfied')}</div>
           </div>
           
           <div class="flex-1 max-w-md space-y-3">
             <div class="flex items-center justify-between text-[13px]">
-              <span class="text-gray-600 w-32">Tedarikçi Hizmeti</span>
+              <span class="text-gray-600 w-32">${t('seller.sf.supplierService')}</span>
               <div class="flex-1 mx-4 h-1.5 bg-gray-100 rounded-full overflow-hidden">
                 <div class="h-full bg-[var(--color-primary-500)] rounded-full" style="width: ${(stats.supplierServiceScore / 5) * 100}%"></div>
               </div>
               <span class="font-bold text-gray-900">${stats.supplierServiceScore.toFixed(1)}</span>
             </div>
             <div class="flex items-center justify-between text-[13px]">
-              <span class="text-gray-600 w-32">Zamanında Sevkiyat</span>
+              <span class="text-gray-600 w-32">${t('seller.sf.onTimeShipment')}</span>
               <div class="flex-1 mx-4 h-1.5 bg-gray-100 rounded-full overflow-hidden">
                 <div class="h-full bg-[var(--color-primary-500)] rounded-full" style="width: ${(stats.onTimeShipmentScore / 5) * 100}%"></div>
               </div>
               <span class="font-bold text-gray-900">${stats.onTimeShipmentScore.toFixed(1)}</span>
             </div>
             <div class="flex items-center justify-between text-[13px]">
-              <span class="text-gray-600 w-32">Ürün Kalitesi</span>
+              <span class="text-gray-600 w-32">${t('seller.sf.productQuality')}</span>
               <div class="flex-1 mx-4 h-1.5 bg-gray-100 rounded-full overflow-hidden">
                 <div class="h-full bg-[var(--color-primary-500)] rounded-full" style="width: ${(stats.productQualityScore / 5) * 100}%"></div>
               </div>
@@ -271,7 +272,7 @@ function ReviewsTab(stats: SellerPerformanceStats, reviews: SellerReview[]): str
         
         <div class="mt-8 text-center">
            <button class="px-6 py-2 border border-gray-300 rounded-full text-[14px] font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900 transition-colors">
-              Tüm değerlendirmelere göz at
+              ${t('seller.sf.browseAllReviews')}
            </button>
         </div>
       </section>
@@ -290,7 +291,7 @@ function ProductsTab(categories: ProductCategory[]): string {
         
         <!-- Category Filter Bar -->
         <div class="flex items-center border-b border-gray-200 mb-6 overflow-x-auto no-scrollbar pb-1">
-          <button class="company-profile__prod-cat active whitespace-nowrap px-4 py-2 text-[14px] font-bold text-gray-900 border-b-2 border-gray-900">Tümü</button>
+          <button class="company-profile__prod-cat active whitespace-nowrap px-4 py-2 text-[14px] font-bold text-gray-900 border-b-2 border-gray-900">${t('seller.sf.all')}</button>
           ${categories.map(cat => `
              <button class="company-profile__prod-cat whitespace-nowrap px-4 py-2 text-[14px] font-medium text-gray-500 hover:text-gray-900 border-b-2 border-transparent transition-colors">${cat.name}</button>
           `).join('')}
@@ -355,17 +356,17 @@ export function CompanyProfileComponent(
   // Need to import mock data dynamically or rely on it passed from seller-storefront.ts
   // For now, assume it's exposed or injected.
   return `
-    <section class="company-profile bg-[#f9fafb] py-8 min-h-screen" aria-label="Satıcı Profili">
+    <section class="company-profile bg-[#f9fafb] py-8 min-h-screen" aria-label="${t('seller.sf.sellerProfile')}">
       <div class="max-w-(--container-xl) mx-auto px-[clamp(0.75rem,0.5rem+1vw,1.5rem)] lg:px-6 xl:px-8">
         
         <!-- Main Navigation Tabs -->
         <div class="bg-white rounded-t-(--radius-md) border-b border-gray-200 px-3 sm:px-6 py-0 flex items-center gap-4 sm:gap-8 mb-6 overflow-x-auto no-scrollbar">
-          <button @click="setTab('overview')" :class="activeTab === 'overview' ? 'active font-bold text-gray-900 border-gray-900 border-b-2' : 'font-medium text-gray-500 hover:text-gray-900 border-transparent border-b-2'" class="company-profile__main-tab py-4 text-[15px] transition-colors whitespace-nowrap">Hesabım</button>
-          <button @click="setTab('reviews')" :class="activeTab === 'reviews' ? 'active font-bold text-gray-900 border-gray-900 border-b-2' : 'font-medium text-gray-500 hover:text-gray-900 border-transparent border-b-2'" class="company-profile__main-tab py-4 text-[15px] transition-colors whitespace-nowrap">Yorumlar</button>
-          <button @click="setTab('products')" :class="activeTab === 'products' ? 'active font-bold text-gray-900 border-gray-900 border-b-2' : 'font-medium text-gray-500 hover:text-gray-900 border-transparent border-b-2'" class="company-profile__main-tab py-4 text-[15px] transition-colors whitespace-nowrap">Ürünler</button>
-          <button @click="setTab('categories')" :class="activeTab === 'categories' ? 'active font-bold text-gray-900 border-gray-900 border-b-2' : 'font-medium text-gray-500 hover:text-gray-900 border-transparent border-b-2'" class="company-profile__main-tab py-4 text-[15px] transition-colors whitespace-nowrap">Kategoriler</button>
-          <button @click="setTab('company')" :class="activeTab === 'company' ? 'active font-bold text-gray-900 border-gray-900 border-b-2' : 'font-medium text-gray-500 hover:text-gray-900 border-transparent border-b-2'" class="company-profile__main-tab py-4 text-[15px] transition-colors whitespace-nowrap">Şirket Profili</button>
-          <button @click="setTab('contact')" :class="activeTab === 'contact' ? 'active font-bold text-gray-900 border-gray-900 border-b-2' : 'font-medium text-gray-500 hover:text-gray-900 border-transparent border-b-2'" class="company-profile__main-tab py-4 text-[15px] transition-colors whitespace-nowrap">İletişim</button>
+          <button @click="setTab('overview')" :class="activeTab === 'overview' ? 'active font-bold text-gray-900 border-gray-900 border-b-2' : 'font-medium text-gray-500 hover:text-gray-900 border-transparent border-b-2'" class="company-profile__main-tab py-4 text-[15px] transition-colors whitespace-nowrap">${t('seller.sf.myAccount')}</button>
+          <button @click="setTab('reviews')" :class="activeTab === 'reviews' ? 'active font-bold text-gray-900 border-gray-900 border-b-2' : 'font-medium text-gray-500 hover:text-gray-900 border-transparent border-b-2'" class="company-profile__main-tab py-4 text-[15px] transition-colors whitespace-nowrap">${t('seller.sf.reviewsTab')}</button>
+          <button @click="setTab('products')" :class="activeTab === 'products' ? 'active font-bold text-gray-900 border-gray-900 border-b-2' : 'font-medium text-gray-500 hover:text-gray-900 border-transparent border-b-2'" class="company-profile__main-tab py-4 text-[15px] transition-colors whitespace-nowrap">${t('seller.sf.productsTab')}</button>
+          <button @click="setTab('categories')" :class="activeTab === 'categories' ? 'active font-bold text-gray-900 border-gray-900 border-b-2' : 'font-medium text-gray-500 hover:text-gray-900 border-transparent border-b-2'" class="company-profile__main-tab py-4 text-[15px] transition-colors whitespace-nowrap">${t('seller.sf.categoriesTab')}</button>
+          <button @click="setTab('company')" :class="activeTab === 'company' ? 'active font-bold text-gray-900 border-gray-900 border-b-2' : 'font-medium text-gray-500 hover:text-gray-900 border-transparent border-b-2'" class="company-profile__main-tab py-4 text-[15px] transition-colors whitespace-nowrap">${t('seller.sf.companyProfile')}</button>
+          <button @click="setTab('contact')" :class="activeTab === 'contact' ? 'active font-bold text-gray-900 border-gray-900 border-b-2' : 'font-medium text-gray-500 hover:text-gray-900 border-transparent border-b-2'" class="company-profile__main-tab py-4 text-[15px] transition-colors whitespace-nowrap">${t('seller.sf.contactTab')}</button>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">

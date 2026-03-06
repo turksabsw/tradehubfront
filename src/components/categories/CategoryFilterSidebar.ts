@@ -4,6 +4,7 @@
  */
 
 import type { CategorySection, FilterGroup } from '../../data/categories';
+import { t } from '../../i18n';
 
 /** Chevron SVG for "Shop All" links */
 const chevronRight = `<svg class="w-3 h-3 inline-block ml-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="m9 5 7 7-7 7"/></svg>`;
@@ -17,7 +18,7 @@ function renderFilterGroup(group: FilterGroup): string {
     .join('');
 
   const shopAll = group.showShopAll
-    ? `<li class="mt-1"><a href="${group.shopAllHref ?? '#'}" class="text-[13px] font-medium text-gray-800 hover:text-(--primary) inline-flex items-center">${chevronRight} Tümünü Gör</a></li>`
+    ? `<li class="mt-1"><a href="${group.shopAllHref ?? '#'}" class="text-[13px] font-medium text-gray-800 hover:text-(--primary) inline-flex items-center">${chevronRight} ${t('categoryPage.shopAll')}</a></li>`
     : '';
 
   return `
@@ -69,7 +70,7 @@ export function CategoryFilterSidebar(sections: CategorySection[]): string {
         <nav class="bg-white rounded-lg border border-gray-200 p-4 max-h-[calc(100vh-120px)] overflow-y-auto">
           <!-- Quick Nav -->
           <div class="border-b border-gray-200 pb-3 mb-4">
-            <h3 class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Kategorilere Git</h3>
+            <h3 class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">${t('categoryPage.quickNav')}</h3>
             <ul class="space-y-1 list-none p-0 m-0">
               ${sections.map((s, i) => `<li><a href="#cat-section-${i}" class="text-[13px] text-gray-600 hover:text-(--primary) hover:underline block py-0.5">${s.title}</a></li>`).join('')}
             </ul>

@@ -5,6 +5,7 @@
  */
 
 import type { CartSupplier, CartSummaryData, AssuranceItem } from '../../../types/cart';
+import { t } from '../../../i18n';
 import { CartHeader } from '../organisms/CartHeader';
 import { BatchSelectBar } from '../molecules/BatchSelectBar';
 import { SupplierCard } from '../organisms/SupplierCard';
@@ -26,10 +27,10 @@ export function CartPage({ suppliers, summary, assuranceItems }: CartPageProps):
             <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
             <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
           </svg>
-          <h2 class="text-2xl font-bold text-text-heading mb-2">Sepetiniz boş</h2>
-          <p class="text-base text-text-secondary mb-8 max-w-md">Henüz sepetinize ürün eklemediniz. Ürünleri keşfedip sepetinize ekleyebilirsiniz.</p>
-          <a href="/pages/products.html" class="inline-flex items-center justify-center th-btn-dark th-btn-pill no-underline">
-            Alışverişe devam et
+          <h2 class="text-2xl font-bold text-text-heading mb-2" data-i18n="cart.empty">${t('cart.empty')}</h2>
+          <p class="text-base text-text-secondary mb-8 max-w-md" data-i18n="cart.emptyDesc">${t('cart.emptyDesc')}</p>
+          <a href="/pages/products.html" class="inline-flex items-center justify-center th-btn-dark th-btn-pill no-underline" data-i18n="cart.continueShopping">
+            ${t('cart.continueShopping')}
           </a>
         </div>
       </div>
@@ -101,7 +102,7 @@ export function showFavoriteToast(): void {
       <svg class="w-4 h-4 text-[#2db744]" viewBox="0 0 1024 1024" fill="currentColor">
         <path d="M512 64a448 448 0 1 1 0 896 448 448 0 0 1 0-896zm-55.8 535.2L292.6 435.6a32 32 0 1 0-45.2 45.3l186 186a32 32 0 0 0 45.2 0l324-324a32 32 0 0 0-45.2-45.3L456.2 599.2z"/>
       </svg>
-      <span>Successfully moved to <a href="/pages/dashboard/favorites.html" class="text-[#333] underline hover:text-[#ff6a00]">Favorites</a></span>
+      <span data-i18n="cart.movedToFavorites">${t('cart.movedToFavorites')}</span> <a href="/pages/dashboard/favorites.html" class="text-[#333] underline hover:text-[#ff6a00]" data-i18n="cart.favorites">${t('cart.favorites')}</a>
     </div>
     <button class="text-[#999] hover:text-[#666] shrink-0" onclick="this.parentElement.remove()">
       <svg class="w-3.5 h-3.5" viewBox="0 0 1024 1024" fill="currentColor">

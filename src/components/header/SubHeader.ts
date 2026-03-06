@@ -4,9 +4,11 @@
  * navigation links (each triggers a different mega menu view), and utility links
  */
 
+import { t } from '../../i18n';
+
 /** Right-side utility links (non-mega-trigger) */
 const utilityLinks = [
-  { label: 'Sell on iSTOC', href: '/pages/seller/sell.html' },
+  { labelKey: 'subheader.sellOnIstoc', href: '/pages/seller/sell.html' },
 ];
 
 /**
@@ -25,7 +27,7 @@ function renderCategoriesTrigger(): string {
       <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
       </svg>
-      <span>All Categories</span>
+      <span data-i18n="subheader.allCategories">${t('subheader.allCategories')}</span>
     </button>
   `;
 }
@@ -41,14 +43,14 @@ function renderNavigationLinks(): string {
         type="button"
         data-mega-target="featured"
       >
-        <span>Featured Selections</span>
+        <span data-i18n="subheader.featuredSelections">${t('subheader.featuredSelections')}</span>
       </button>
       <button
         class="mega-trigger subheader-link th-subheader-link relative flex items-center gap-1.5 px-2 xl:px-3 py-2.5 rounded-md text-sm whitespace-nowrap dark:text-gray-300 dark:hover:text-primary-400 dark:hover:bg-gray-800/60 transition-all"
         type="button"
         data-mega-target="protections"
       >
-        <span>Order Protections</span>
+        <span data-i18n="subheader.orderProtections">${t('subheader.orderProtections')}</span>
       </button>
     </div>
   `;
@@ -65,27 +67,27 @@ function renderUtilityLinks(): string {
         type="button"
         data-mega-target="buyer-central"
       >
-        Buyer Central
+        <span data-i18n="subheader.buyerCentral">${t('subheader.buyerCentral')}</span>
       </button>
       <a
         href="/pages/help/help-center.html"
         class="subheader-link th-subheader-link relative px-2 xl:px-3 py-2.5 rounded-md text-sm whitespace-nowrap dark:text-gray-300 dark:hover:text-primary-400 dark:hover:bg-gray-800/60 transition-all"
       >
-        Help Center
+        <span data-i18n="subheader.helpCenter">${t('subheader.helpCenter')}</span>
       </a>
       <button
         class="mega-trigger subheader-link th-subheader-link relative px-2 xl:px-3 py-2.5 rounded-md text-sm whitespace-nowrap dark:text-gray-300 dark:hover:text-primary-400 dark:hover:bg-gray-800/60 transition-all"
         type="button"
         data-mega-target="app-extension"
       >
-        App &amp; Extension
+        <span data-i18n="subheader.appExtension">${t('subheader.appExtension')}</span>
       </button>
       ${utilityLinks.map(link => `
         <a
           href="${link.href}"
           class="th-subheader-link px-2 xl:px-3 py-2.5 rounded-md text-sm whitespace-nowrap dark:text-gray-300 dark:hover:text-primary-400 dark:hover:bg-gray-800/60 transition-all"
         >
-          ${link.label}
+          <span data-i18n="${link.labelKey}">${t(link.labelKey)}</span>
         </a>
       `).join('')}
     </div>

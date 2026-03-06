@@ -4,13 +4,14 @@
  * Variant B: Scrollable text + Carousel (PRO sellers)
  */
 import type { CompanyInfo as CompanyInfoData, SellerProfile } from '../../types/seller/types';
+import { t } from '../../i18n';
 
 function renderVariantA(data: CompanyInfoData, seller: SellerProfile): string {
   return `
-    <section id="company-info" class="company-info company-info__variant-a py-12" aria-label="Şirket bilgileri">
+    <section id="company-info" class="company-info company-info__variant-a py-12" aria-label="${t('seller.sf.companyInfoLabel')}">
       <div class="max-w-(--container-lg) mx-auto px-[clamp(0.75rem,0.5rem+1vw,1.5rem)] lg:px-6 xl:px-8">
         <h2 class="text-[clamp(1.5rem,1.2rem+1.5vw,3.375rem)] font-black text-[#1e3a5f] dark:text-blue-300 uppercase text-center tracking-tight mb-6 md:mb-8">
-          COMPANY
+          ${t('seller.sf.companyTitle')}
         </h2>
 
         <!-- Verified Banner -->
@@ -18,7 +19,7 @@ function renderVariantA(data: CompanyInfoData, seller: SellerProfile): string {
           <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
           </svg>
-          <span><strong>Verified Supplier</strong> — ${seller.name}</span>
+          <span><strong>${t('seller.sf.verifiedSupplier')}</strong> — ${seller.name}</span>
         </div>
 
         <!-- Content Grid: 55% / 45% -->
@@ -62,7 +63,7 @@ function renderVariantA(data: CompanyInfoData, seller: SellerProfile): string {
 
 function renderVariantB(data: CompanyInfoData, seller: SellerProfile): string {
   return `
-    <section id="company-info" class="company-info company-info__variant-b py-12 bg-[#f5f0e8] dark:bg-gray-800" aria-label="Şirket bilgileri">
+    <section id="company-info" class="company-info company-info__variant-b py-12 bg-[#f5f0e8] dark:bg-gray-800" aria-label="${t('seller.sf.companyInfoLabel')}">
       <div class="max-w-(--container-lg) mx-auto px-[clamp(0.75rem,0.5rem+1vw,1.5rem)] lg:px-6 xl:px-8">
         <h2 class="company-info__title-b text-[28px] font-normal text-[#8b5e3c] dark:text-[#d4a76a] mb-6 italic">
           ${seller.name}
@@ -95,12 +96,12 @@ function renderVariantB(data: CompanyInfoData, seller: SellerProfile): string {
               </div>
             </div>
             <!-- Navigation Arrows -->
-            <button class="company-info__prev absolute left-2 top-1/2 -translate-y-1/2 bg-[#e5e5e5] hover:bg-[#d1d5db] dark:bg-gray-700 dark:hover:bg-gray-600 w-8 h-12 rounded-sm flex items-center justify-center z-10 transition-colors border-none cursor-pointer" aria-label="Önceki">
+            <button class="company-info__prev absolute left-2 top-1/2 -translate-y-1/2 bg-[#e5e5e5] hover:bg-[#d1d5db] dark:bg-gray-700 dark:hover:bg-gray-600 w-8 h-12 rounded-sm flex items-center justify-center z-10 transition-colors border-none cursor-pointer" aria-label="${t('seller.sf.previous')}">
               <svg class="w-4 h-4 text-[#6b7280]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
               </svg>
             </button>
-            <button class="company-info__next absolute right-2 top-1/2 -translate-y-1/2 bg-[#e5e5e5] hover:bg-[#d1d5db] dark:bg-gray-700 dark:hover:bg-gray-600 w-8 h-12 rounded-sm flex items-center justify-center z-10 transition-colors border-none cursor-pointer" aria-label="Sonraki">
+            <button class="company-info__next absolute right-2 top-1/2 -translate-y-1/2 bg-[#e5e5e5] hover:bg-[#d1d5db] dark:bg-gray-700 dark:hover:bg-gray-600 w-8 h-12 rounded-sm flex items-center justify-center z-10 transition-colors border-none cursor-pointer" aria-label="${t('seller.sf.nextSlide')}">
               <svg class="w-4 h-4 text-[#6b7280]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
               </svg>

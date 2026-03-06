@@ -1,3 +1,4 @@
+import { t } from '../../i18n';
 import type { ProductImageKind, ProductListingCard } from '../../types/productListing';
 import {
   SharedCartDrawer,
@@ -117,9 +118,9 @@ const categoryColorMap: Record<ProductImageKind, Array<{ label: string; hex: str
 };
 
 const defaultShipping: CartDrawerShippingOption[] = [
-  { id: 'dhl', method: 'DHL Express', estimatedDays: '5-8 iş günü', cost: 45, costText: '$45.00' },
-  { id: 'air', method: 'Hava Kargo', estimatedDays: '10-15 iş günü', cost: 28, costText: '$28.00' },
-  { id: 'sea', method: 'Deniz Yolu', estimatedDays: '25-35 iş günü', cost: 12, costText: '$12.00' },
+  { id: 'dhl', method: 'DHL Express', estimatedDays: t('products.businessDays', { days: '5-8' }), cost: 45, costText: '$45.00' },
+  { id: 'air', method: t('products.airCargo'), estimatedDays: t('products.businessDays', { days: '10-15' }), cost: 28, costText: '$28.00' },
+  { id: 'sea', method: t('products.seaFreight'), estimatedDays: t('products.businessDays', { days: '25-35' }), cost: 12, costText: '$12.00' },
 ];
 
 function parsePriceRange(priceText: string): { low: number; high: number } {
@@ -187,7 +188,7 @@ function toDrawerItem(product: ProductListingCard): CartDrawerItemModel {
     id: product.id,
     title: product.name,
     supplierName: product.supplierName || 'Supplier',
-    unit: 'adet',
+    unit: t('cart.unit'),
     moq,
     imageKind: product.imageKind,
     priceTiers: buildPriceTiers(product.price, product.moq),

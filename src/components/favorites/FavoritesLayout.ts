@@ -6,6 +6,7 @@
  */
 
 import favEmptySvg from '../../assets/images/O1CN01Bny3KU1Swwfj3Ntma_!!6000000002312-55-tps-222-221.svg';
+import { t } from '../../i18n';
 
 /* ────────────────────────────────────────
    BROWSING HISTORY MOCK DATA
@@ -20,70 +21,70 @@ interface BrowsingProduct {
 const BROWSING_PRODUCTS: BrowsingProduct[] = [
   {
     image: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=300&h=300&fit=crop',
-    title: 'Özel logo profesyonel kalın köpük yastıklı su geçirmez elektrik bas gitar çantası',
-    priceRange: '$15,90-19,90',
-    minOrder: 'Min. sipariş: 3 Adet',
+    title: 'Custom Logo Professional Thick Foam Padded Waterproof Electric Bass Guitar Bag',
+    priceRange: '$15.90-19.90',
+    minOrder: 'Min. order: 3 Pcs',
   },
   {
     image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=300&h=300&fit=crop',
-    title: 'Rusya açık taktik eğitim botları klasik tarzı deri su geçirmez spor dağ yürüyüşü',
-    priceRange: '$14,22-18,81',
-    minOrder: 'Min. sipariş: 2 Adet',
+    title: 'Outdoor Tactical Training Boots Classic Style Leather Waterproof Hiking Shoes',
+    priceRange: '$14.22-18.81',
+    minOrder: 'Min. order: 2 Pcs',
   },
   {
     image: 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=300&h=300&fit=crop',
-    title: 'Özel Logolu Taşınabilir Açık Hava Katlanabilir El Arabası Metal Plaj Arabası',
-    priceRange: '$24,99-26,99',
-    minOrder: 'Min. sipariş: 100 Adet',
+    title: 'Custom Logo Portable Outdoor Foldable Cart Metal Beach Wagon',
+    priceRange: '$24.99-26.99',
+    minOrder: 'Min. order: 100 Pcs',
   },
   {
     image: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=300&h=300&fit=crop',
-    title: 'Özel Logo baskılı eko geri dönüşümlü yeniden kullanılabilir düz pamuklu çanta',
-    priceRange: '$1,20-3,50',
-    minOrder: 'Min. sipariş: 50 Adet',
+    title: 'Custom Logo Printed Eco Recyclable Reusable Plain Cotton Tote Bag',
+    priceRange: '$1.20-3.50',
+    minOrder: 'Min. order: 50 Pcs',
   },
   {
     image: 'https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=300&h=300&fit=crop',
-    title: 'Yeni sıcak satış bayanlar çanta çapraz vücut tasarımcı kadın tote çanta',
-    priceRange: '$8,50-12,90',
-    minOrder: 'Min. sipariş: 1 Adet',
+    title: 'New Hot Sale Ladies Crossbody Designer Women Tote Handbag',
+    priceRange: '$8.50-12.90',
+    minOrder: 'Min. order: 1 Pc',
   },
   {
     image: 'https://images.unsplash.com/photo-1622560480654-d96214fdc887?w=300&h=300&fit=crop',
-    title: 'Sonbahar Kış Kadın Üç Askılı Fermuarlı Büyük Kapasiteli Sınır Ötesi Sırt Çantası',
-    priceRange: '$6,43-6,86',
-    minOrder: 'Min. sipariş: 2 Adet',
+    title: 'Autumn Winter Women Triple Strap Zipper Large Capacity Cross-Border Backpack',
+    priceRange: '$6.43-6.86',
+    minOrder: 'Min. order: 2 Pcs',
   },
   {
     image: 'https://images.unsplash.com/photo-1491637639811-60e2756cc1c7?w=300&h=300&fit=crop',
-    title: "Hong'ao Moda Unisex Günlük Kalın Naylon Fermuarlı Bez Çanta Seyahat Çantası",
+    title: 'Fashion Unisex Casual Thick Nylon Zipper Canvas Bag Travel Bag',
     priceRange: '$4-5',
-    minOrder: 'Min. sipariş: 100 Poşet',
+    minOrder: 'Min. order: 100 Bags',
   },
   {
     image: 'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=300&h=300&fit=crop',
-    title: 'Erkek Nefes Alabilen Boy Uzatıcı Yumuşak Yastıklı Moda Açık Hava Spor Ayakkabı',
-    priceRange: '$14,31-15,90',
-    minOrder: 'Min. sipariş: 12 Çift',
+    title: 'Men Breathable Height Increasing Soft Cushioned Fashion Outdoor Sports Shoes',
+    priceRange: '$14.31-15.90',
+    minOrder: 'Min. order: 12 Pairs',
   },
   {
     image: 'https://images.unsplash.com/photo-1605733513597-a8f8341084e6?w=300&h=300&fit=crop',
-    title: 'Erkek hafif açık ayakkabı deri aşınmaya dayanıklı yürüyüş botları',
-    priceRange: '$15,80-16,90',
-    minOrder: 'Min. sipariş: 2 Çift',
+    title: 'Men Lightweight Outdoor Leather Wear-Resistant Hiking Boots',
+    priceRange: '$15.80-16.90',
+    minOrder: 'Min. order: 2 Pairs',
   },
   {
     image: 'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=300&h=300&fit=crop',
-    title: 'Toptan son tasarım savaş spor ayakkabıları erkek açık spor koşu ayakkabısı',
-    priceRange: '$13,65-15,65',
-    minOrder: 'Min. sipariş: 1 Çift',
+    title: 'Wholesale Latest Design Combat Sports Shoes Men Outdoor Running Shoes',
+    priceRange: '$13.65-15.65',
+    minOrder: 'Min. order: 1 Pair',
   },
 ];
 
 /* ────────────────────────────────────────
    EMPTY STATE ILLUSTRATION
    ──────────────────────────────────────── */
-const FAVORITES_EMPTY_SVG = `<img src="${favEmptySvg}" alt="Favori ürününüz yok" width="160" height="160" />`;
+const FAVORITES_EMPTY_SVG = `<img src="${favEmptySvg}" alt="${t('favorites.noFavorites')}" width="160" height="160" />`;
 
 /* ────────────────────────────────────────
    SECTION RENDERERS
@@ -93,8 +94,8 @@ function renderEmptyState(): string {
   return `
     <div class="flex flex-col items-center text-center py-15 px-5">
       <div class="mb-5">${FAVORITES_EMPTY_SVG}</div>
-      <h3 class="text-base font-bold text-text-primary mb-2.5">Favori ürününüz yok</h3>
-      <p class="text-sm text-text-tertiary leading-relaxed max-w-[380px]">Beğendiğiniz ama satın almaya hazır olmayan bir şey görüyor musunuz?<br/>favorilerinizde sizin için tasarruf edeceğiz</p>
+      <h3 class="text-base font-bold text-text-primary mb-2.5">${t('favorites.noFavorites')}</h3>
+      <p class="text-sm text-text-tertiary leading-relaxed max-w-[380px]">${t('favorites.noFavoritesDesc')}</p>
     </div>
   `;
 }
@@ -102,29 +103,29 @@ function renderEmptyState(): string {
 function renderFavorites(): string {
   return `
     <div class="px-7 pt-6 max-sm:px-3 max-sm:pt-4">
-      <h1 class="text-xl font-bold text-text-primary">Sık kullanılanlar</h1>
+      <h1 class="text-xl font-bold text-text-primary">${t('favorites.title')}</h1>
     </div>
 
     <div class="fav-tabs flex px-7 max-sm:px-3 border-b border-border-default mt-4" data-tabgroup="fav">
-      <button class="fav-tabs__tab fav-tabs__tab--active py-3 px-5 text-sm font-medium text-text-secondary bg-transparent border-none border-b-3 border-transparent cursor-pointer transition-[color,border-color] duration-150 -mb-px hover:text-text-primary" data-tab="fav-products">Ürünler</button>
-      <button class="fav-tabs__tab py-3 px-5 text-sm font-medium text-text-secondary bg-transparent border-none border-b-3 border-transparent cursor-pointer transition-[color,border-color] duration-150 -mb-px hover:text-text-primary" data-tab="fav-suppliers">Tedarikçiler</button>
+      <button class="fav-tabs__tab fav-tabs__tab--active py-3 px-5 text-sm font-medium text-text-secondary bg-transparent border-none border-b-3 border-transparent cursor-pointer transition-[color,border-color] duration-150 -mb-px hover:text-text-primary" data-tab="fav-products">${t('favorites.products')}</button>
+      <button class="fav-tabs__tab py-3 px-5 text-sm font-medium text-text-secondary bg-transparent border-none border-b-3 border-transparent cursor-pointer transition-[color,border-color] duration-150 -mb-px hover:text-text-primary" data-tab="fav-suppliers">${t('favorites.suppliers')}</button>
     </div>
 
     <!-- Tab: Ürünler -->
     <div class="fav-tab-content fav-tab-content--active" data-content="fav-products">
       <div class="fav-products flex min-h-[400px] max-md:flex-col">
         <aside class="fav-products__sidebar w-60 shrink-0 py-5 px-6 border-r border-[#f0f0f0] max-md:w-full max-md:border-r-0 max-md:border-b max-md:border-[#f0f0f0]">
-          <h3 class="text-base font-bold text-text-primary mb-2.5">Listem</h3>
-          <a href="#" class="text-sm text-text-primary font-semibold underline underline-offset-2 hover:text-(--color-cta-primary)" data-action="create-list">Bir liste oluştur</a>
+          <h3 class="text-base font-bold text-text-primary mb-2.5">${t('favorites.myList')}</h3>
+          <a href="#" class="text-sm text-text-primary font-semibold underline underline-offset-2 hover:text-(--color-cta-primary)" data-action="create-list">${t('favorites.createList')}</a>
           <div class="mt-4 flex flex-col gap-0.5" id="fav-list-sidebar">
             <!-- Sidebar counts populated via JS -->
             <div class="fav-products__list-item fav-products__list-item--active p-2.5 px-3 rounded-md cursor-pointer transition-[background] duration-150 bg-surface-raised hover:bg-surface-raised">
               <span class="block text-sm font-semibold text-text-primary">All</span>
-              <span class="block text-xs text-text-tertiary mt-0.5" id="fav-all-count">0 öğeleri</span>
+              <span class="block text-xs text-text-tertiary mt-0.5" id="fav-all-count">${t('favorites.itemCount', { count: 0 })}</span>
             </div>
             <div class="fav-products__list-item p-2.5 px-3 rounded-md cursor-pointer transition-[background] duration-150 hover:bg-surface-raised">
               <span class="block text-sm font-semibold text-text-primary">Ungrouped</span>
-              <span class="block text-xs text-text-tertiary mt-0.5" id="fav-ungrouped-count">0 öğeleri</span>
+              <span class="block text-xs text-text-tertiary mt-0.5" id="fav-ungrouped-count">${t('favorites.itemCount', { count: 0 })}</span>
             </div>
           </div>
         </aside>
@@ -145,20 +146,20 @@ function renderFavorites(): string {
       <div class="fav-modal__overlay absolute inset-0 bg-black/45"></div>
       <div class="relative bg-surface rounded-xl w-[440px] max-w-[calc(100vw-32px)] shadow-[0_20px_60px_rgba(0,0,0,0.2)] animate-[favModalIn_200ms_ease-out]">
         <div class="flex items-center justify-between px-6 pt-5 pb-4">
-          <h3 class="text-lg font-bold text-text-primary">Yeni liste ekle</h3>
-          <button class="fav-modal__close bg-transparent border-none cursor-pointer p-1 rounded flex items-center justify-center transition-[background] duration-150 hover:bg-surface-raised" aria-label="Kapat">
+          <h3 class="text-lg font-bold text-text-primary">${t('favorites.addNewList')}</h3>
+          <button class="fav-modal__close bg-transparent border-none cursor-pointer p-1 rounded flex items-center justify-center transition-[background] duration-150 hover:bg-surface-raised" aria-label="${t('common.close')}">
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M14 4L4 14M4 4l10 10" stroke="#333" stroke-width="1.8" stroke-linecap="round"/></svg>
           </button>
         </div>
         <div class="px-6 pb-5">
           <div class="relative">
-            <input type="text" class="fav-modal__input w-full py-3 pr-[50px] pl-3.5 text-sm border border-border-strong rounded-[20px] outline-none text-text-primary transition-[border-color] duration-150 focus:border-secondary-800 placeholder:text-text-tertiary" placeholder="Giriş adı" maxlength="20" id="fav-list-input" />
+            <input type="text" class="fav-modal__input w-full py-3 pr-[50px] pl-3.5 text-sm border border-border-strong rounded-[20px] outline-none text-text-primary transition-[border-color] duration-150 focus:border-secondary-800 placeholder:text-text-tertiary" placeholder="${t('favorites.enterName')}" maxlength="20" id="fav-list-input" />
             <span class="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs text-text-tertiary"><span id="fav-char-count">0</span>/20</span>
           </div>
         </div>
         <div class="flex justify-center gap-4 px-6 pb-6">
-          <button class="fav-modal__btn--cancel py-2.5 px-8 text-sm font-medium rounded-[20px] cursor-pointer transition-all duration-150 bg-surface text-text-secondary border border-border-strong hover:border-secondary-400">iptal et</button>
-          <button class="fav-modal__btn--save th-btn th-btn-pill" disabled>Kaydet</button>
+          <button class="fav-modal__btn--cancel py-2.5 px-8 text-sm font-medium rounded-[20px] cursor-pointer transition-all duration-150 bg-surface text-text-secondary border border-border-strong hover:border-secondary-400">${t('common.cancel')}</button>
+          <button class="fav-modal__btn--save th-btn th-btn-pill" disabled>${t('common.save')}</button>
         </div>
       </div>
     </div>
@@ -179,8 +180,8 @@ function renderBrowsingHistory(): string {
 
   return `
     <div class="px-7 pt-6 max-sm:px-3 max-sm:pt-4">
-      <h1 class="text-xl font-bold text-text-primary">Göz atma geçmişinizden esinlendik</h1>
-      <p class="text-sm text-text-tertiary mt-1">Son üç aya ait göz atma geçmişiniz</p>
+      <h1 class="text-xl font-bold text-text-primary">${t('favorites.browsingHistoryTitle')}</h1>
+      <p class="text-sm text-text-tertiary mt-1">${t('favorites.browsingHistoryDesc')}</p>
     </div>
     <div class="grid grid-cols-5 gap-4 px-7 py-5 pb-7 max-md:grid-cols-2 max-md:p-4 max-sm:grid-cols-2 max-sm:gap-3 max-sm:p-3 max-lg:min-[769px]:grid-cols-3">
       ${productCards}
@@ -245,7 +246,7 @@ function loadFavoritesData(): void {
     const items = JSON.parse(stored);
 
     // Update counts
-    const countText = `${items.length} öğeleri`;
+    const countText = t('favorites.itemCount', { count: items.length });
     const allCount = document.getElementById('fav-all-count');
     const ungroupedCount = document.getElementById('fav-ungrouped-count');
     if (allCount) allCount.textContent = countText;

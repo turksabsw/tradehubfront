@@ -4,15 +4,16 @@
  * BEM Block: hot-products
  */
 import type { SimpleProduct } from '../../types/seller/types';
+import { t } from '../../i18n';
 
 export function HotProducts(products: SimpleProduct[]): string {
   if (!products.length) return '';
 
   return `
-    <section id="hot-products" class="hot-products py-12" aria-label="Popüler ürünler">
+    <section id="hot-products" class="hot-products py-12" aria-label="${t('seller.sf.popularProducts')}">
       <div class="max-w-(--container-lg) mx-auto px-[clamp(0.75rem,0.5rem+1vw,1.5rem)] lg:px-6 xl:px-8">
         <h2 class="hot-products__title text-[clamp(1.5rem,1.2rem+1.5vw,3.375rem)] font-black text-[var(--color-primary-500)] uppercase text-center tracking-tight mb-6 md:mb-10">
-          HOT PRODUCTS
+          ${t('seller.sf.hotProductsTitle')}
         </h2>
         <div class="hot-products__grid grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-[clamp(0.75rem,0.5rem+0.5vw,1.25rem)]">
           ${products.map(product => `
@@ -23,7 +24,7 @@ export function HotProducts(products: SimpleProduct[]): string {
               </div>
               <h3 class="hot-products__product-name text-[15px] text-[#222222] dark:text-gray-50 font-normal leading-snug mb-3 line-clamp-2">${product.name}</h3>
               <a href="${product.link}" class="hot-products__buy-btn mt-auto th-btn th-btn-sm inline-block">
-                Buy Now
+                ${t('seller.sf.buyNow')}
               </a>
             </div>
           `).join('')}

@@ -4,6 +4,7 @@
  * BEM Block: category-grid
  */
 import type { CategoryCard } from '../../types/seller/types';
+import { t } from '../../i18n';
 
 export function CategoryGrid(cards: CategoryCard[]): string {
   if (!cards || !cards.length) return '';
@@ -13,7 +14,7 @@ export function CategoryGrid(cards: CategoryCard[]): string {
   const bottomRow = cards.slice(3);
 
   return `
-    <section id="category-grid" class="category-grid py-12" aria-label="Ürün kategorileri">
+    <section id="category-grid" class="category-grid py-12" aria-label="${t('seller.sf.productCategoriesLabel')}">
       <div class="max-w-(--container-lg) mx-auto px-[clamp(0.75rem,0.5rem+1vw,1.5rem)] lg:px-6 xl:px-8">
         <!-- Top Row: 3 columns -->
         <div class="category-grid__row-top grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 mb-4">

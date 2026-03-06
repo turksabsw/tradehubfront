@@ -3,9 +3,11 @@
  * Renders product specs as a grid (first 6) + list (remaining).
  */
 
-import { mockProduct } from '../../data/mockProduct';
+import { getMockProduct } from '../../data/mockProduct';
+import { t } from '../../i18n';
 
 export function ProductAttributes(): string {
+  const mockProduct = getMockProduct();
   const specs = mockProduct.specs;
   const gridSpecs = specs.slice(0, 6);
   const listSpecs = specs.slice(6);
@@ -37,7 +39,7 @@ export function ProductAttributes(): string {
 
   return `
     <div id="pd-attributes-card" class="hidden flex-1 min-w-0 overflow-y-auto rounded-lg p-5" style="background: var(--pd-spec-header-bg, #f9fafb); border: 1px solid var(--pd-spec-border, #e5e5e5);">
-      <h3 class="text-lg font-semibold mb-4" style="color: var(--color-text-primary);">Özellikler</h3>
+      <h3 class="text-lg font-semibold mb-4" style="color: var(--color-text-primary);">${t('product.attributes')}</h3>
       <div class="grid grid-cols-1 xl:grid-cols-2 rounded-md overflow-hidden" style="border: 1px solid var(--pd-spec-border, #e5e5e5); background: var(--color-surface, #ffffff);">
         ${gridCells}
       </div>

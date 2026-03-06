@@ -1,4 +1,5 @@
 import { isLoggedIn, getUser } from '../../utils/auth';
+import { t } from '../../i18n';
 
 interface SubcategoryGroup {
   title: string;
@@ -12,261 +13,263 @@ interface SourceCategory {
   subcategoryGroups: SubcategoryGroup[];
 }
 
-const SOURCE_CATEGORIES: SourceCategory[] = [
-  {
-    id: 'valiz-canta',
-    label: 'Valiz & Çanta & Kılıf',
-    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>`,
-    subcategoryGroups: [
-      {
-        title: 'Kadın Çantaları',
-        items: [
-          'El Çantaları',
-          'Kadın Büzgülü Çantalar',
-          'Kadın Çapraz Göğüs Çantalar',
-          'Kadın Kanvas Çantalar',
-          'Kadın Eyer Omuz Çantalar',
-          'Kadın Portföy Çantaları',
-        ],
-      },
-      {
-        title: 'Erkek Çantaları',
-        items: [
-          'Erkek Postacı Çantaları',
-          'Erkek El Çantaları',
-          'Evrak Çantaları',
-          'Erkek Göğüs Çantaları',
-          'Erkek Sırt Çantaları',
-          'Erkek Omuz Çantaları',
-        ],
-      },
-      {
-        title: 'Cüzdanlar ve Kartlıklar',
-        items: [
-          'Ruj Çantaları',
-          'Sertifika Çantaları',
-          'Bozuk Para Cüzdanları',
-          'Cüzdanlar',
-          'Para Klipsleri',
-          'Anahtarlık Cüzdanları',
-        ],
-      },
-      {
-        title: 'Özel Amaçlı Çantalar ve Kılıflar',
-        items: [
-          'Evcil Hayvan Çantaları',
-          'Yanmaz çanta',
-          'Dijital Ekipman ve Kamera Çantaları',
-          'İş Çantaları ve Kılıfları',
-          'Giysi Çantaları',
-          'Cep Telefonu Kılıfları',
-        ],
-      },
-      {
-        title: 'Valiz ve Seyahat Çantaları',
-        items: [
-          'Seyahat Çantaları',
-          'Spor Çantaları',
-          'Valiz Arabaları',
-          'Valiz',
-        ],
-      },
-      {
-        title: 'Bel Çantaları',
-        items: [],
-      },
-    ],
-  },
-  {
-    id: 'spor-giyim',
-    label: 'Spor Giyim ve Outdoor Kıyafetleri',
-    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.38 3.46L16 2a4 4 0 01-8 0L3.62 3.46a2 2 0 00-1.34 2.23l.58 3.57a1 1 0 00.99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 002-2V10h2.15a1 1 0 00.99-.84l.58-3.57a2 2 0 00-1.34-2.23z"/></svg>`,
-    subcategoryGroups: [
-      {
-        title: 'Spor Giyim',
-        items: [
-          'Koşu Kıyafetleri',
-          'Eşofman Takımları',
-          'Spor Taytları',
-          'Fitness Tişörtleri',
-          'Spor Sütyenleri',
-          'Yüzme Kıyafetleri',
-        ],
-      },
-      {
-        title: 'Outdoor Giyim',
-        items: [
-          'Rüzgarlıklar',
-          'Kayak Montları',
-          'Yağmurluklar',
-          'Softshell Ceketler',
-          'Termal İç Giyim',
-          'Polar Ceketler',
-        ],
-      },
-      {
-        title: 'Spor Aksesuarları',
-        items: [
-          'Spor Çorapları',
-          'Kafa Bantları',
-          'Bileklikler',
-          'Spor Çantaları',
-          'Mataralar',
-          'Havlular',
-        ],
-      },
-    ],
-  },
-  {
-    id: 'elektronik',
-    label: 'Kişisel Elektronik Cihazlar',
-    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0118 0v6"/><path d="M21 19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-3a2 2 0 012-2h3zM3 19a2 2 0 002 2h1a2 2 0 002-2v-3a2 2 0 00-2-2H3z"/></svg>`,
-    subcategoryGroups: [
-      {
-        title: 'Akıllı Saatler ve Bileklikler',
-        items: [
-          'Akıllı Saatler',
-          'Fitness Bileklikleri',
-          'Saat Kayışları',
-          'Şarj Kabloları',
-        ],
-      },
-      {
-        title: 'Kulaklıklar',
-        items: [
-          'Kablosuz Kulaklıklar',
-          'Bluetooth Kulaklıklar',
-          'Oyuncu Kulaklıkları',
-          'Kulak İçi Kulaklıklar',
-        ],
-      },
-      {
-        title: 'Taşınabilir Elektronik',
-        items: [
-          'Powerbank',
-          'Bluetooth Hoparlörler',
-          'Aksiyon Kameralar',
-          'Taşınabilir Fanlar',
-        ],
-      },
-    ],
-  },
-  {
-    id: 'taki-gozluk',
-    label: 'Takı & Gözlük & Saat ve Aksesuarlar',
-    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`,
-    subcategoryGroups: [
-      {
-        title: 'Takı',
-        items: [
-          'Yüzükler',
-          'Kolyeler',
-          'Küpeler',
-          'Bilezikler',
-          'Broşlar',
-          'Takı Setleri',
-        ],
-      },
-      {
-        title: 'Gözlük',
-        items: [
-          'Güneş Gözlükleri',
-          'Optik Çerçeveler',
-          'Spor Gözlükleri',
-          'Gözlük Aksesuarları',
-        ],
-      },
-      {
-        title: 'Saat',
-        items: [
-          'Kol Saatleri',
-          'Cep Saatleri',
-          'Saat Kutuları',
-          'Saat Mekanizmaları',
-        ],
-      },
-    ],
-  },
-  {
-    id: 'ayakkabi',
-    label: 'Ayakkabı & Aksesuar',
-    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 18H2a1 1 0 01-1-1v-1c0-1.5 1-2.5 2-3l3-1 5-6h2l2 4 3 1c1 .5 2 1.5 2 3v2a1 1 0 01-1 1z"/></svg>`,
-    subcategoryGroups: [
-      {
-        title: 'Kadın Ayakkabıları',
-        items: [
-          'Topuklu Ayakkabılar',
-          'Babet',
-          'Kadın Botları',
-          'Kadın Spor Ayakkabı',
-          'Sandalet',
-          'Terlik',
-        ],
-      },
-      {
-        title: 'Erkek Ayakkabıları',
-        items: [
-          'Erkek Klasik Ayakkabı',
-          'Erkek Spor Ayakkabı',
-          'Erkek Botları',
-          'Loafer',
-          'Erkek Sandalet',
-        ],
-      },
-      {
-        title: 'Ayakkabı Aksesuarları',
-        items: [
-          'Tabanlıklar',
-          'Ayakkabı Bakım Ürünleri',
-          'Bağcıklar',
-          'Ayakkabı Kalıpları',
-        ],
-      },
-    ],
-  },
-  {
-    id: 'anne-cocuk',
-    label: 'Anne & Çocuk & Oyuncaklar',
-    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="3"/><path d="M12 8c-3 0-6 1.5-6 4v1h12v-1c0-2.5-3-4-6-4z"/><path d="M5 13H3a1 1 0 00-1 1v5a1 1 0 001 1h18a1 1 0 001-1v-5a1 1 0 00-1-1h-2"/></svg>`,
-    subcategoryGroups: [
-      {
-        title: 'Bebek Ürünleri',
-        items: [
-          'Bebek Kıyafetleri',
-          'Bebek Arabaları',
-          'Mama Sandalyeleri',
-          'Bebek Bakım Ürünleri',
-          'Emzirme Ürünleri',
-        ],
-      },
-      {
-        title: 'Çocuk Giyim',
-        items: [
-          'Çocuk Elbiseleri',
-          'Çocuk Ayakkabıları',
-          'Çocuk Aksesuarları',
-          'Okul Çantaları',
-        ],
-      },
-      {
-        title: 'Oyuncaklar',
-        items: [
-          'Eğitici Oyuncaklar',
-          'Peluş Oyuncaklar',
-          'Yapbozlar',
-          'RC Arabalar',
-          'Blok Oyuncaklar',
-        ],
-      },
-    ],
-  },
-  {
-    id: 'tum-kategoriler',
-    label: 'Tüm kategoriler',
-    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>`,
-    subcategoryGroups: [],
-  },
-];
+function getSourceCategories(): SourceCategory[] {
+  return [
+    {
+      id: 'valiz-canta',
+      label: t('mfr.cat.luggageBagsCases'),
+      icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>`,
+      subcategoryGroups: [
+        {
+          title: t('mfr.subcat.womenBags'),
+          items: [
+            t('mfr.item.handbags'),
+            t('mfr.item.womenDrawstringBags'),
+            t('mfr.item.womenCrossbodyBags'),
+            t('mfr.item.womenCanvasBags'),
+            t('mfr.item.womenSaddleShoulderBags'),
+            t('mfr.item.womenClutchBags'),
+          ],
+        },
+        {
+          title: t('mfr.subcat.menBags'),
+          items: [
+            t('mfr.item.menMessengerBags'),
+            t('mfr.item.menHandbags'),
+            t('mfr.item.briefcases'),
+            t('mfr.item.menChestBags'),
+            t('mfr.item.menBackpacks'),
+            t('mfr.item.menShoulderBags'),
+          ],
+        },
+        {
+          title: t('mfr.subcat.walletsCardHolders'),
+          items: [
+            t('mfr.item.lipstickBags'),
+            t('mfr.item.certificateBags'),
+            t('mfr.item.coinPurses'),
+            t('mfr.item.wallets'),
+            t('mfr.item.moneyClips'),
+            t('mfr.item.keychainWallets'),
+          ],
+        },
+        {
+          title: t('mfr.subcat.specialPurposeBagsCases'),
+          items: [
+            t('mfr.item.petBags'),
+            t('mfr.item.fireproofBag'),
+            t('mfr.item.digitalEquipmentCameraBags'),
+            t('mfr.item.businessBagsCases'),
+            t('mfr.item.garmentBags'),
+            t('mfr.item.phoneCases'),
+          ],
+        },
+        {
+          title: t('mfr.subcat.luggageTravelBags'),
+          items: [
+            t('mfr.item.travelBags'),
+            t('mfr.item.sportsBags'),
+            t('mfr.item.luggageCarts'),
+            t('mfr.item.luggage'),
+          ],
+        },
+        {
+          title: t('mfr.subcat.waistBags'),
+          items: [],
+        },
+      ],
+    },
+    {
+      id: 'spor-giyim',
+      label: t('mfr.cat.sportswearOutdoor'),
+      icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.38 3.46L16 2a4 4 0 01-8 0L3.62 3.46a2 2 0 00-1.34 2.23l.58 3.57a1 1 0 00.99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 002-2V10h2.15a1 1 0 00.99-.84l.58-3.57a2 2 0 00-1.34-2.23z"/></svg>`,
+      subcategoryGroups: [
+        {
+          title: t('mfr.subcat.sportswear'),
+          items: [
+            t('mfr.item.runningClothes'),
+            t('mfr.item.tracksuits'),
+            t('mfr.item.sportsLeggings'),
+            t('mfr.item.fitnessTshirts'),
+            t('mfr.item.sportsBras'),
+            t('mfr.item.swimwear'),
+          ],
+        },
+        {
+          title: t('mfr.subcat.outdoorClothing'),
+          items: [
+            t('mfr.item.windbreakers'),
+            t('mfr.item.skiJackets'),
+            t('mfr.item.raincoats'),
+            t('mfr.item.softshellJackets'),
+            t('mfr.item.thermalUnderwear'),
+            t('mfr.item.fleeceJackets'),
+          ],
+        },
+        {
+          title: t('mfr.subcat.sportsAccessories'),
+          items: [
+            t('mfr.item.sportsSocks'),
+            t('mfr.item.headbands'),
+            t('mfr.item.wristbands'),
+            t('mfr.item.sportsBagsAcc'),
+            t('mfr.item.waterBottles'),
+            t('mfr.item.towels'),
+          ],
+        },
+      ],
+    },
+    {
+      id: 'elektronik',
+      label: t('mfr.cat.personalElectronics'),
+      icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0118 0v6"/><path d="M21 19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-3a2 2 0 012-2h3zM3 19a2 2 0 002 2h1a2 2 0 002-2v-3a2 2 0 00-2-2H3z"/></svg>`,
+      subcategoryGroups: [
+        {
+          title: t('mfr.subcat.smartWatchesBracelets'),
+          items: [
+            t('mfr.item.smartWatches'),
+            t('mfr.item.fitnessBracelets'),
+            t('mfr.item.watchBands'),
+            t('mfr.item.chargingCables'),
+          ],
+        },
+        {
+          title: t('mfr.subcat.headphones'),
+          items: [
+            t('mfr.item.wirelessHeadphones'),
+            t('mfr.item.bluetoothHeadphones'),
+            t('mfr.item.gamingHeadphones'),
+            t('mfr.item.inEarHeadphones'),
+          ],
+        },
+        {
+          title: t('mfr.subcat.portableElectronics'),
+          items: [
+            t('mfr.item.powerbank'),
+            t('mfr.item.bluetoothSpeakers'),
+            t('mfr.item.actionCameras'),
+            t('mfr.item.portableFans'),
+          ],
+        },
+      ],
+    },
+    {
+      id: 'taki-gozluk',
+      label: t('mfr.cat.jewelryEyewearWatches'),
+      icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`,
+      subcategoryGroups: [
+        {
+          title: t('mfr.subcat.jewelry'),
+          items: [
+            t('mfr.item.rings'),
+            t('mfr.item.necklaces'),
+            t('mfr.item.earrings'),
+            t('mfr.item.bracelets'),
+            t('mfr.item.brooches'),
+            t('mfr.item.jewelrySets'),
+          ],
+        },
+        {
+          title: t('mfr.subcat.eyewear'),
+          items: [
+            t('mfr.item.sunglasses'),
+            t('mfr.item.opticalFrames'),
+            t('mfr.item.sportsGlasses'),
+            t('mfr.item.eyewearAccessories'),
+          ],
+        },
+        {
+          title: t('mfr.subcat.watches'),
+          items: [
+            t('mfr.item.wristwatches'),
+            t('mfr.item.pocketWatches'),
+            t('mfr.item.watchBoxes'),
+            t('mfr.item.watchMechanisms'),
+          ],
+        },
+      ],
+    },
+    {
+      id: 'ayakkabi',
+      label: t('mfr.cat.shoesAccessories'),
+      icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 18H2a1 1 0 01-1-1v-1c0-1.5 1-2.5 2-3l3-1 5-6h2l2 4 3 1c1 .5 2 1.5 2 3v2a1 1 0 01-1 1z"/></svg>`,
+      subcategoryGroups: [
+        {
+          title: t('mfr.subcat.womenShoes'),
+          items: [
+            t('mfr.item.heels'),
+            t('mfr.item.balletFlats'),
+            t('mfr.item.womenBoots'),
+            t('mfr.item.womenSneakers'),
+            t('mfr.item.sandals'),
+            t('mfr.item.slippers'),
+          ],
+        },
+        {
+          title: t('mfr.subcat.menShoes'),
+          items: [
+            t('mfr.item.menDressShoes'),
+            t('mfr.item.menSneakers'),
+            t('mfr.item.menBoots'),
+            t('mfr.item.loafers'),
+            t('mfr.item.menSandals'),
+          ],
+        },
+        {
+          title: t('mfr.subcat.shoeAccessories'),
+          items: [
+            t('mfr.item.insoles'),
+            t('mfr.item.shoeCareProducts'),
+            t('mfr.item.laces'),
+            t('mfr.item.shoeTrees'),
+          ],
+        },
+      ],
+    },
+    {
+      id: 'anne-cocuk',
+      label: t('mfr.cat.motherChildToys'),
+      icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="3"/><path d="M12 8c-3 0-6 1.5-6 4v1h12v-1c0-2.5-3-4-6-4z"/><path d="M5 13H3a1 1 0 00-1 1v5a1 1 0 001 1h18a1 1 0 001-1v-5a1 1 0 00-1-1h-2"/></svg>`,
+      subcategoryGroups: [
+        {
+          title: t('mfr.subcat.babyProducts'),
+          items: [
+            t('mfr.item.babyClothes'),
+            t('mfr.item.strollers'),
+            t('mfr.item.highChairs'),
+            t('mfr.item.babyCareProducts'),
+            t('mfr.item.nursingProducts'),
+          ],
+        },
+        {
+          title: t('mfr.subcat.childrenClothing'),
+          items: [
+            t('mfr.item.childrenDresses'),
+            t('mfr.item.childrenShoes'),
+            t('mfr.item.childrenAccessories'),
+            t('mfr.item.schoolBags'),
+          ],
+        },
+        {
+          title: t('mfr.subcat.toys'),
+          items: [
+            t('mfr.item.educationalToys'),
+            t('mfr.item.plushToys'),
+            t('mfr.item.puzzles'),
+            t('mfr.item.rcCars'),
+            t('mfr.item.blockToys'),
+          ],
+        },
+      ],
+    },
+    {
+      id: 'tum-kategoriler',
+      label: t('mfr.allCategories'),
+      icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>`,
+      subcategoryGroups: [],
+    },
+  ];
+}
 
 export function ManufacturersHero(): string {
   return `
@@ -295,7 +298,7 @@ export function ManufacturersHero(): string {
 
     <!-- Main Grid: 4 columns (Sidebar) + (Samples/LIVE) + (Top Ranking) + (Profile Box) -->
     <div class="hidden xl:flex flex-row h-[400px] gap-4 mb-4">
-      
+
       <!-- Column 1: Source by category (Sidebar) -->
       ${renderSourceByCategory()}
 
@@ -328,9 +331,9 @@ function renderSubcategoryFlyout(cat: SourceCategory): string {
       style="background-color: var(--mfr-flyout-bg, #f4f4f4); border-radius: var(--mfr-hero-card-radius, 6px); box-shadow: var(--mfr-hero-card-shadow, 0 0 12px rgba(0,0,0,0.05))"
       data-flyout-id="${cat.id}"
       role="region"
-      aria-label="${cat.label} alt kategorileri"
+      aria-label="${cat.label}"
     >
-      <!-- Flyout subcategory grid — 3 columns -->
+      <!-- Flyout subcategory grid -- 3 columns -->
       <div class="grid grid-cols-3 gap-x-0 gap-y-1.5">
         ${visibleGroups.map(group => `
           <div class="flex flex-col">
@@ -353,17 +356,43 @@ function renderSubcategoryFlyout(cat: SourceCategory): string {
   `;
 }
 
+function getAllCategoriesFlyoutRows(): string[][] {
+  return [
+    [t('mfr.allCat.vehiclePartsAccessories'), t('mfr.allCat.vehicleAccessoriesElectronicsTools'), t('mfr.allCat.vehiclesTransportation')],
+    [t('mfr.allCat.industrialMachinery'), t('mfr.allCat.constructionBuildingMachinery')],
+    [t('mfr.allCat.personalElectronics'), t('mfr.allCat.homeAppliances')],
+    [t('mfr.allCat.clothingAccessories'), t('mfr.allCat.jewelryEyewearWatches')],
+    [t('mfr.allCat.lampsLighting'), t('mfr.allCat.constructionRealEstate')],
+    [t('mfr.allCat.homeGarden'), t('mfr.allCat.furniture'), t('mfr.allCat.petProducts'), t('mfr.allCat.giftsHobbies')],
+    [t('mfr.allCat.cosmetics'), t('mfr.allCat.personalCareHomeCleaning'), t('mfr.allCat.healthServices'), t('mfr.allCat.medicalDevices')],
+    [t('mfr.allCat.packagingPrinting'), t('mfr.allCat.schoolOfficeSupplies'), t('mfr.allCat.testEquipment')],
+    [t('mfr.allCat.handToolsHardware'), t('mfr.allCat.security'), t('mfr.allCat.occupationalSafety'), t('mfr.allCat.manufacturingServices')],
+    [t('mfr.allCat.electricalEquipment'), t('mfr.allCat.electronicPartsTelecom')],
+    [t('mfr.allCat.sportsEntertainment'), t('mfr.allCat.motherChildToys'), t('mfr.allCat.sportswearOutdoor')],
+    [t('mfr.allCat.luggageBagsCases'), t('mfr.allCat.shoesAccessories')],
+    [t('mfr.allCat.metalAlloys'), t('mfr.allCat.chemicals'), t('mfr.allCat.rubberPlastics'), t('mfr.allCat.fabricTextileRawMaterials')],
+    [t('mfr.allCat.agriculture'), t('mfr.allCat.foodBeverage')],
+    [t('mfr.allCat.commercialEquipmentMachinery')],
+    [t('mfr.allCat.renewableEnergy'), t('mfr.allCat.environment')],
+    [t('mfr.allCat.powerTransmission'), t('mfr.allCat.materialHandling')],
+  ];
+}
+
 function renderSourceByCategory(): string {
+  const categories = getSourceCategories();
+  // Exclude the last "all categories" item -- it's rendered separately below
+  const mainCategories = categories.filter(c => c.id !== 'tum-kategoriler');
+
   return `
     <!-- Sidebar wrapper: position:relative so flyout can be absolutely positioned to the right -->
     <div class="relative flex-1" data-category-sidebar>
       <div class="p-4 flex flex-col h-full" style="background-color: var(--mfr-sidebar-bg, #ffffff); border-radius: var(--mfr-hero-card-radius, 6px); box-shadow: var(--mfr-hero-card-shadow, 0 0 12px rgba(0,0,0,0.05))">
         <h3 class="text-lg font-bold mb-3" style="color: var(--mfr-sidebar-heading-color, #111827)">
-          Kategoriye göre tedarik edin
+          ${t('mfr.sourceByCategory')}
         </h3>
 
         <ul class="flex-1 flex flex-col" data-category-list>
-          ${SOURCE_CATEGORIES.map(cat => `
+          ${mainCategories.map(cat => `
             <li data-category-id="${cat.id}">
               <a
                 href="#"
@@ -394,12 +423,12 @@ function renderSourceByCategory(): string {
                 </svg>
               </a>
 
-              <!-- Flyout panel — toggled by JS via data-flyout-id / data-category-id -->
+              <!-- Flyout panel -- toggled by JS via data-flyout-id / data-category-id -->
               ${renderSubcategoryFlyout(cat)}
             </li>
           `).join('')}
 
-          <!-- All categories — separated by top border -->
+          <!-- All categories -- separated by top border -->
           <li class="mt-1 pt-2 border-t border-gray-100 dark:border-gray-700" data-category-id="tum-kategoriler">
             <a
               href="#"
@@ -417,7 +446,7 @@ function renderSourceByCategory(): string {
                   ${ALL_CATEGORIES_ICON}
                 </span>
                 <span class="text-sm font-semibold truncate" style="color: var(--mfr-sidebar-heading-color, #111827)">
-                  Tüm kategoriler
+                  ${t('mfr.allCategories')}
                 </span>
               </div>
               <svg
@@ -429,7 +458,7 @@ function renderSourceByCategory(): string {
               </svg>
             </a>
 
-            <!-- Tüm kategoriler flyout -->
+            <!-- All categories flyout -->
             <div
               class="pointer-events-none opacity-0 translate-x-2
                      absolute left-full top-0 z-50 ml-1
@@ -439,28 +468,10 @@ function renderSourceByCategory(): string {
               style="background-color: var(--mfr-flyout-bg, #f4f4f4); border-radius: var(--mfr-hero-card-radius, 6px); box-shadow: var(--mfr-hero-card-shadow, 0 0 12px rgba(0,0,0,0.05))"
               data-flyout-id="tum-kategoriler"
               role="region"
-              aria-label="Tüm kategoriler"
+              aria-label="${t('mfr.allCategories')}"
             >
               <div class="flex flex-wrap gap-y-2.5 leading-5">
-                ${[
-      ['Araç Parçaları ve Aksesuarları', 'Araç Aksesuarları, Elektronik ve Araçlar', 'Araçlar & Ulaşım'],
-      ['Endüstriyel Makineler', 'İnşaat ve Yapı Makineleri'],
-      ['Kişisel Elektronik Cihazlar', 'Ev Aletleri'],
-      ['Giyim & Aksesuar', 'Takı & Gözlük & Saat ve Aksesuarlar'],
-      ['Lambalar & Aydınlatma', 'İnşaat & Gayrimenkul'],
-      ['Ev & Bahçe', 'Mobilya', 'Evcil Hayvan Ürünleri', 'Hediyelik Eşya & Hobi Malzemeleri'],
-      ['Kozmetik', 'Kişisel Bakım ve Ev Temizliği', 'Sağlık Hizmetleri', 'Tıbbi Cihazlar & Medikal Ürünler'],
-      ['Ambalaj & Baskı', 'Okul ve Ofis Malzemeleri', 'Test Cihaz ve Ekipmanları'],
-      ['El aletleri ve donanım', 'Güvenlik', 'İş Güvenliği', 'İmalat Hizmetleri'],
-      ['Elektrikli Ekipmanlar ve Gereçler', 'Elektronik Parça ve Aksesuarlar & Telekomünikasyon'],
-      ['Spor & Eğlence', 'Anne & Çocuk & Oyuncaklar', 'Spor Giyim ve Outdoor Kıyafetleri'],
-      ['Valiz & Çanta & Kılıf', 'Ayakkabı & Aksesuar'],
-      ['Metal & Alaşımlar', 'Kimyasallar', 'Kauçuk & Plastik Ürünler', 'Kumaş & Tekstil Ham Maddeleri'],
-      ['Tarım', 'Gıda & İçecek'],
-      ['Ticari Ekipman ve Makineler'],
-      ['Yenilenebilir Enerji', 'Çevre'],
-      ['Güç Aktarımı', 'Malzeme Taşıma'],
-    ].map(row => `
+                ${getAllCategoriesFlyoutRows().map(row => `
                   <div class="w-full flex flex-wrap items-center">
                     ${row.map((cat, i) => `<a href="#" class="text-xs hover:text-primary-600 hover:underline transition-colors" style="color: var(--mfr-flyout-link-color, #222222)">${cat}</a>${i < row.length - 1 ? '<span class="text-xs text-[#999] mx-2">/</span>' : ''}`).join('')}
                   </div>
@@ -478,40 +489,40 @@ function renderMiddleColumn(): string {
   return `
     <div class="flex-1 flex flex-col h-[400px]">
 
-      <!-- Kart A: Numune alın -->
+      <!-- Card A: Get samples -->
       <div class="h-[192px] mb-4 p-4" style="background-color: var(--mfr-hero-card-bg, #ffffff); border-radius: var(--mfr-hero-card-radius, 6px); box-shadow: var(--mfr-hero-card-shadow, 0 0 12px rgba(0,0,0,0.05))">
-        <h3 class="text-lg font-bold leading-6 mb-2.5" style="color: var(--mfr-sample-heading-color, #222222)" title="Numune alın">Numune alın</h3>
+        <h3 class="text-lg font-bold leading-6 mb-2.5" style="color: var(--mfr-sample-heading-color, #222222)" title="${t('mfr.getSamples')}">${t('mfr.getSamples')}</h3>
         <div class="flex flex-wrap justify-between">
           <a href="#" class="block w-[calc(50%-5.5px)] group">
             <div class="w-full h-[105px] overflow-hidden rounded flex items-center justify-center" style="background-color: var(--mfr-sample-img-bg, #f5f5f5)">
-              <img src="https://picsum.photos/seed/sample1/160/105" alt="Popüler ürünler" class="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-300">
+              <img src="https://picsum.photos/seed/sample1/160/105" alt="${t('mfr.popularProducts')}" class="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-300">
             </div>
-            <p class="w-full h-8 min-h-[32px] mt-1 text-sm leading-4 text-center overflow-hidden text-ellipsis" style="color: var(--mfr-sample-label-color, #666666)" title="Popüler ürünler">Popüler ürünler</p>
+            <p class="w-full h-8 min-h-[32px] mt-1 text-sm leading-4 text-center overflow-hidden text-ellipsis" style="color: var(--mfr-sample-label-color, #666666)" title="${t('mfr.popularProducts')}">${t('mfr.popularProducts')}</p>
           </a>
           <a href="#" class="block w-[calc(50%-5.5px)] group">
             <div class="w-full h-[105px] overflow-hidden rounded flex items-center justify-center" style="background-color: var(--mfr-sample-img-bg, #f5f5f5)">
-              <img src="https://picsum.photos/seed/sample2/160/105" alt="Yeni çıkanlar" class="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-300">
+              <img src="https://picsum.photos/seed/sample2/160/105" alt="${t('mfr.newArrivals')}" class="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-300">
             </div>
-            <p class="w-full h-8 min-h-[32px] mt-1 text-sm leading-4 text-center overflow-hidden text-ellipsis" style="color: var(--mfr-sample-label-color, #666666)" title="Yeni çıkanlar">Yeni çıkanlar</p>
+            <p class="w-full h-8 min-h-[32px] mt-1 text-sm leading-4 text-center overflow-hidden text-ellipsis" style="color: var(--mfr-sample-label-color, #666666)" title="${t('mfr.newArrivals')}">${t('mfr.newArrivals')}</p>
           </a>
         </div>
       </div>
 
-      <!-- Kart B: Numune alın (2) -->
+      <!-- Card B: Get samples (2) -->
       <div class="h-[192px] p-4" style="background-color: var(--mfr-hero-card-bg, #ffffff); border-radius: var(--mfr-hero-card-radius, 6px); box-shadow: var(--mfr-hero-card-shadow, 0 0 12px rgba(0,0,0,0.05))">
-        <h3 class="text-lg font-bold leading-6 mb-2.5" style="color: var(--mfr-sample-heading-color, #222222)" title="Numune alın">Numune alın</h3>
+        <h3 class="text-lg font-bold leading-6 mb-2.5" style="color: var(--mfr-sample-heading-color, #222222)" title="${t('mfr.getSamples')}">${t('mfr.getSamples')}</h3>
         <div class="flex flex-wrap justify-between">
           <a href="#" class="block w-[calc(50%-5.5px)] group">
             <div class="w-full h-[105px] overflow-hidden rounded flex items-center justify-center" style="background-color: var(--mfr-sample-img-bg, #f5f5f5)">
-              <img src="https://picsum.photos/seed/sample3/160/105" alt="Çok satanlar" class="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-300">
+              <img src="https://picsum.photos/seed/sample3/160/105" alt="${t('mfr.bestSellers')}" class="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-300">
             </div>
-            <p class="w-full h-8 min-h-[32px] mt-1 text-sm leading-4 text-center overflow-hidden text-ellipsis" style="color: var(--mfr-sample-label-color, #666666)" title="Çok satanlar">Çok satanlar</p>
+            <p class="w-full h-8 min-h-[32px] mt-1 text-sm leading-4 text-center overflow-hidden text-ellipsis" style="color: var(--mfr-sample-label-color, #666666)" title="${t('mfr.bestSellers')}">${t('mfr.bestSellers')}</p>
           </a>
           <a href="#" class="block w-[calc(50%-5.5px)] group">
             <div class="w-full h-[105px] overflow-hidden rounded flex items-center justify-center" style="background-color: var(--mfr-sample-img-bg, #f5f5f5)">
-              <img src="https://picsum.photos/seed/sample4/160/105" alt="Kampanyalar" class="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-300">
+              <img src="https://picsum.photos/seed/sample4/160/105" alt="${t('mfr.campaigns')}" class="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-300">
             </div>
-            <p class="w-full h-8 min-h-[32px] mt-1 text-sm leading-4 text-center overflow-hidden text-ellipsis" style="color: var(--mfr-sample-label-color, #666666)" title="Kampanyalar">Kampanyalar</p>
+            <p class="w-full h-8 min-h-[32px] mt-1 text-sm leading-4 text-center overflow-hidden text-ellipsis" style="color: var(--mfr-sample-label-color, #666666)" title="${t('mfr.campaigns')}">${t('mfr.campaigns')}</p>
           </a>
         </div>
       </div>
@@ -522,15 +533,15 @@ function renderMiddleColumn(): string {
 
 function renderTopRankingColumn(): string {
   const items = [
-    { img: 'https://picsum.photos/seed/rank1/116/116', label: 'En popüler' },
-    { img: 'https://picsum.photos/seed/rank2/116/116', label: 'En çok satanlar' },
-    { img: 'https://picsum.photos/seed/rank3/116/116', label: 'Lider fabrikalar' },
-    { img: 'https://picsum.photos/seed/rank4/116/116', label: 'Hızlı yanıtlama' },
+    { img: 'https://picsum.photos/seed/rank1/116/116', label: t('mfr.mostPopular') },
+    { img: 'https://picsum.photos/seed/rank2/116/116', label: t('mfr.topSellers') },
+    { img: 'https://picsum.photos/seed/rank3/116/116', label: t('mfr.leadingFactories') },
+    { img: 'https://picsum.photos/seed/rank4/116/116', label: t('mfr.quickResponse') },
   ];
 
   return `
     <div class="top-ranking flex-1 h-[400px] p-4" style="background-color: var(--mfr-hero-card-bg, #ffffff); border-radius: var(--mfr-hero-card-radius, 6px); box-shadow: var(--mfr-hero-card-shadow, 0 0 12px rgba(0,0,0,0.05))">
-      <h3 class="text-lg font-bold leading-6 mb-4" style="color: var(--mfr-ranking-heading-color, #222222)" title="En iyi sıralamalı üreticiler">En iyi sıralamalı üreticiler</h3>
+      <h3 class="text-lg font-bold leading-6 mb-4" style="color: var(--mfr-ranking-heading-color, #222222)" title="${t('mfr.topRankedMfrs')}">${t('mfr.topRankedMfrs')}</h3>
       <div class="products flex flex-wrap justify-between">
         ${items.map(item => `
           <a href="#" class="block w-[calc(50%-5.5px)] h-[156px] mb-4 group" title="${item.label}">
@@ -560,9 +571,9 @@ function renderProfileColumn(): string {
   return `
     <div class="flex-1 h-[400px] overflow-hidden flex flex-col" style="border-radius: var(--mfr-hero-card-radius, 6px)">
 
-      <!-- Üst kart: user-info -->
+      <!-- Top card: user-info -->
       <div class="h-[268px] mb-4 py-3 px-4 flex flex-col" style="background-color: var(--mfr-hero-card-bg, #ffffff); border-radius: var(--mfr-hero-card-radius, 6px); box-shadow: var(--mfr-hero-card-shadow, 0 0 12px rgba(0,0,0,0.05))">
-        <!-- Avatar satırı -->
+        <!-- Avatar row -->
         <div class="flex items-center h-[42px] mb-3">
           <div class="w-10 h-10 rounded-full border mr-3 flex items-center justify-center text-gray-400 flex-shrink-0" style="background-color: var(--mfr-profile-avatar-bg, #dddddd); border-color: var(--mfr-profile-avatar-bg, #dddddd)">
             <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
@@ -571,14 +582,14 @@ function renderProfileColumn(): string {
             ${loggedIn
       ? `<span class="text-xs" style="color: var(--mfr-profile-text-color, #222222)">Welcome back</span>
                  <p class="text-base font-bold leading-6" style="color: var(--mfr-profile-text-color, #222222)">${userName}</p>`
-      : `<span class="text-xs" style="color: var(--mfr-profile-text-color, #222222)">Hoş geldiniz!</span>
+      : `<span class="text-xs" style="color: var(--mfr-profile-text-color, #222222)">${t('mfr.welcome')}</span>
                  <p class="text-base font-bold leading-6" style="color: var(--mfr-profile-text-color, #222222)">Guest</p>`
     }
           </div>
         </div>
 
         ${loggedIn
-      ? `<!-- Favoriler (Logged In) -->
+      ? `<!-- Favorites (Logged In) -->
              <div class="flex items-center justify-center rounded-md p-3 mt-4 mb-4 bg-gray-50 dark:bg-gray-800 border border-transparent">
                <div class="flex-1 text-center border-r border-gray-200 dark:border-gray-700">
                  <div class="flex items-center justify-center gap-1.5">
@@ -593,31 +604,31 @@ function renderProfileColumn(): string {
                  </div>
                </div>
              </div>`
-      : `<!-- Butonlar (Logged Out) -->
+      : `<!-- Buttons (Logged Out) -->
              <div class="flex justify-between mt-6 mb-4">
-               <a href="/login" class="w-[calc(50%-4px)] flex items-center justify-center rounded-full h-10 text-xs font-bold transition-colors" style="background-color: var(--mfr-profile-btn-bg, #cc9900); color: var(--mfr-profile-btn-text, #ffffff)" onmouseover="this.style.backgroundColor='var(--mfr-profile-btn-hover, #8a6800)'" onmouseout="this.style.backgroundColor='var(--mfr-profile-btn-bg, #cc9900)'" data-spm="button_login">Giriş Yap</a>
-               <a href="/register" class="w-[calc(50%-4px)] flex items-center justify-center rounded-full h-10 text-xs font-bold transition-colors" style="background-color: var(--mfr-profile-btn-bg, #cc9900); color: var(--mfr-profile-btn-text, #ffffff)" onmouseover="this.style.backgroundColor='var(--mfr-profile-btn-hover, #8a6800)'" onmouseout="this.style.backgroundColor='var(--mfr-profile-btn-bg, #cc9900)'" data-spm="button_register">Ücretsiz Kaydolun</a>
+               <a href="/login" class="w-[calc(50%-4px)] flex items-center justify-center rounded-full h-10 text-xs font-bold transition-colors" style="background-color: var(--mfr-profile-btn-bg, #cc9900); color: var(--mfr-profile-btn-text, #ffffff)" onmouseover="this.style.backgroundColor='var(--mfr-profile-btn-hover, #8a6800)'" onmouseout="this.style.backgroundColor='var(--mfr-profile-btn-bg, #cc9900)'" data-spm="button_login">${t('auth.login.submit')}</a>
+               <a href="/register" class="w-[calc(50%-4px)] flex items-center justify-center rounded-full h-10 text-xs font-bold transition-colors" style="background-color: var(--mfr-profile-btn-bg, #cc9900); color: var(--mfr-profile-btn-text, #ffffff)" onmouseover="this.style.backgroundColor='var(--mfr-profile-btn-hover, #8a6800)'" onmouseout="this.style.backgroundColor='var(--mfr-profile-btn-bg, #cc9900)'" data-spm="button_register">${t('auth.register.freeSignUp')}</a>
              </div>`
     }
 
-        <!-- Arama geçmişi -->
+        <!-- Search history -->
         <div class="mt-auto">
-          <a href="#" class="block text-base font-bold mb-2 leading-6" style="color: var(--mfr-profile-text-color, #222222)">${loggedIn ? 'Your browsing history' : 'Arama geçmişiniz'}</a>
+          <a href="#" class="block text-base font-bold mb-2 leading-6" style="color: var(--mfr-profile-text-color, #222222)">${loggedIn ? 'Your browsing history' : t('mfr.yourSearchHistory')}</a>
           <div class="grid grid-cols-4 gap-2">
             ${thumbs.map(src => `
               <a href="#" class="aspect-square rounded-md overflow-hidden group">
-                <img src="${src}" alt="Geçmiş" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                <img src="${src}" alt="${t('mfr.history')}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
               </a>
             `).join('')}
           </div>
         </div>
       </div>
 
-      <!-- Alt kart: RFQ -->
+      <!-- Bottom card: RFQ -->
       <div class="flex-1 py-3 px-4 flex flex-col items-center justify-center text-center" style="background-color: var(--mfr-hero-card-bg, #ffffff); border-radius: var(--mfr-hero-card-radius, 6px); box-shadow: var(--mfr-hero-card-shadow, 0 0 12px rgba(0,0,0,0.05))">
-        <p class="text-xs font-semibold mb-4" style="color: var(--mfr-profile-rfq-text, #222222)">Bir istek, birden fazla teklif</p>
-        <a href="/pages/dashboard/rfq.html" class="hover-expand-center w-full h-10 flex items-center justify-center border rounded-full text-xs font-bold transition-colors" style="background-color: var(--mfr-hero-card-bg, #ffffff); border-color: var(--mfr-profile-rfq-border, #222222); color: var(--mfr-profile-rfq-text, #222222)" title="Fiyat Teklifi Talebi (RFQ)">
-          Fiyat Teklifi Talebi (RFQ)
+        <p class="text-xs font-semibold mb-4" style="color: var(--mfr-profile-rfq-text, #222222)">${t('mfr.oneRequestMultipleQuotes')}</p>
+        <a href="/pages/dashboard/rfq.html" class="hover-expand-center w-full h-10 flex items-center justify-center border rounded-full text-xs font-bold transition-colors" style="background-color: var(--mfr-hero-card-bg, #ffffff); border-color: var(--mfr-profile-rfq-border, #222222); color: var(--mfr-profile-rfq-text, #222222)" title="${t('mfr.rfqTitle')}">
+          ${t('mfr.rfqTitle')}
         </a>
       </div>
 
@@ -639,7 +650,7 @@ export function initCategoryFlyout(): void {
   let hideTimeout: ReturnType<typeof setTimeout> | null = null;
   let activeFlyoutId: string | null = null;
 
-  // ── helpers ──────────────────────────────────────────────────────────────
+  // -- helpers --
 
   const ACTIVE_FLYOUT = ['opacity-100', 'pointer-events-auto', 'translate-x-0'];
   const INACTIVE_FLYOUT = ['opacity-0', 'pointer-events-none', 'translate-x-2'];
@@ -687,7 +698,7 @@ export function initCategoryFlyout(): void {
     }, 150);
   }
 
-  // ── category items: event delegation on sidebar ──────────────────────────
+  // -- category items: event delegation on sidebar --
 
   sidebar.addEventListener('mouseenter', (e: MouseEvent) => {
     const li = (e.target as HTMLElement).closest<HTMLElement>('[data-category-id]');
@@ -702,13 +713,13 @@ export function initCategoryFlyout(): void {
     }
   }, true);
 
-  // ── sidebar container: schedule hide when mouse fully leaves ─────────────
+  // -- sidebar container: schedule hide when mouse fully leaves --
 
   sidebar.addEventListener('mouseleave', () => {
     scheduleHide();
   });
 
-  // ── flyout panels: cancel hide while hovering, reschedule on leave ────────
+  // -- flyout panels: cancel hide while hovering, reschedule on leave --
 
   flyoutPanels.forEach(panel => {
     panel.addEventListener('mouseenter', () => {
@@ -721,7 +732,7 @@ export function initCategoryFlyout(): void {
     });
   });
 
-  // ── "Tüm kategoriler" click ──────────────────────────────────────────────
+  // -- "All categories" click --
 
   const allCategoriesLink = sidebar.querySelector<HTMLAnchorElement>('[data-all-categories]');
   allCategoriesLink?.addEventListener('click', (e: MouseEvent) => {

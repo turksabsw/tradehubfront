@@ -5,6 +5,7 @@
 
 import '../style.css'
 import { initFlowbite } from 'flowbite'
+import { t } from '../i18n'
 
 // Auth components
 import { AuthLayout, initAuthLayout, RegisterPage, initRegisterPage, getBaseUrl } from '../components/auth'
@@ -14,7 +15,7 @@ import { startAlpine } from '../alpine'
 
 const appEl = document.querySelector<HTMLDivElement>('#app')!
 appEl.innerHTML = AuthLayout(RegisterPage(), {
-  title: 'Hesap oluştur',
+  title: t('auth.register.title'),
   showBackButton: true,
 })
 

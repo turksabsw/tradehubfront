@@ -1,6 +1,7 @@
 import Swiper from 'swiper';
 import { Navigation } from 'swiper/modules';
 import 'swiper/swiper-bundle.css';
+import { t } from '../../i18n';
 
 export function ManufacturerList(): string {
   const manufacturers = [
@@ -8,19 +9,19 @@ export function ManufacturerList(): string {
       name: "Jingmen Tanmeng Technology Co., Ltd.",
       logo: "https://images.unsplash.com/photo-1549924231-f129b911e442?w=50&h=50&fit=crop",
       verified: true,
-      years: "2 yıl",
-      staff: "100+ personel",
-      area: "10.000+ m²",
+      years: t('mfr.list.years', { count: 2 }),
+      staff: t('mfr.list.staff', { count: '100+' }),
+      area: t('mfr.list.area', { size: '10.000+' }),
       revenue: "$70 B+",
       rating: "4.9",
-      reviews: "90+ değerlendirmeler",
-      capabilities: ["Yanıt süresi ≤1h", "Zamanında teslimat 100.0%"],
+      reviews: t('mfr.list.reviews', { count: '90+' }),
+      capabilities: [t('mfr.list.responseTime', { time: '1h' }), t('mfr.list.onTimeDelivery', { pct: '100.0%' })],
       certifications: ["ISO", "CE", "CPC"],
       products: [
-        { image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&q=80&w=200", price: "$0,66-1,39", moq: "Min. sipariş: 5 Adet" },
-        { image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&q=80&w=200", price: "$0,84-2,68", moq: "Min. sipariş: 10 Adet" },
-        { image: "https://images.unsplash.com/photo-1546435770-a3e426bf472b?auto=format&fit=crop&q=80&w=200", price: "$4,86", moq: "Min. sipariş: 48 Adet" },
-        { image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&q=80&w=200", price: "$0,66-1,39", moq: "Min. sipariş: 5 Adet" }
+        { image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&q=80&w=200", price: "$0,66-1,39", moq: t('common.minOrder', { count: 5 }) },
+        { image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&q=80&w=200", price: "$0,84-2,68", moq: t('common.minOrder', { count: 10 }) },
+        { image: "https://images.unsplash.com/photo-1546435770-a3e426bf472b?auto=format&fit=crop&q=80&w=200", price: "$4,86", moq: t('common.minOrder', { count: 48 }) },
+        { image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&q=80&w=200", price: "$0,66-1,39", moq: t('common.minOrder', { count: 5 }) }
       ],
       factoryImages: [
         "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=600",
@@ -34,19 +35,19 @@ export function ManufacturerList(): string {
       name: "Ganzhou Mingxiang Toys Co., Ltd.",
       logo: "https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=50&h=50&fit=crop",
       verified: true,
-      years: "5 yıl",
-      staff: "200+ personel",
-      area: "3.000+ m²",
+      years: t('mfr.list.years', { count: 5 }),
+      staff: t('mfr.list.staff', { count: '200+' }),
+      area: t('mfr.list.area', { size: '3.000+' }),
       revenue: "$500 B+",
       rating: "4.7",
-      reviews: "120+ değerlendirmeler",
-      capabilities: ["Yanıt süresi ≤2h", "Zamanında teslimat 98.5%"],
+      reviews: t('mfr.list.reviews', { count: '120+' }),
+      capabilities: [t('mfr.list.responseTime', { time: '2h' }), t('mfr.list.onTimeDelivery', { pct: '98.5%' })],
       certifications: ["ISO", "CE"],
       products: [
-        { image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&q=80&w=200", price: "$6,50-7,60", moq: "Min. sipariş: 100 Adet" },
-        { image: "https://images.unsplash.com/photo-1547949003-9792a18a2601?auto=format&fit=crop&q=80&w=200", price: "$7,60-8,80", moq: "Min. sipariş: 100 Adet" },
-        { image: "https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&q=80&w=200", price: "$8,60-10,60", moq: "Min. sipariş: 50 Adet" },
-        { image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&q=80&w=200", price: "$6,50-7,60", moq: "Min. sipariş: 100 Adet" }
+        { image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&q=80&w=200", price: "$6,50-7,60", moq: t('common.minOrder', { count: 100 }) },
+        { image: "https://images.unsplash.com/photo-1547949003-9792a18a2601?auto=format&fit=crop&q=80&w=200", price: "$7,60-8,80", moq: t('common.minOrder', { count: 100 }) },
+        { image: "https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&q=80&w=200", price: "$8,60-10,60", moq: t('common.minOrder', { count: 50 }) },
+        { image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&q=80&w=200", price: "$6,50-7,60", moq: t('common.minOrder', { count: 100 }) }
       ],
       factoryImages: [
         "https://images.unsplash.com/photo-1565514020179-026b92b84bb6?auto=format&fit=crop&q=80&w=600",
@@ -59,19 +60,19 @@ export function ManufacturerList(): string {
       name: "Shenzhen Dingyi Electronics Technology Co., Ltd.",
       logo: "https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=50&h=50&fit=crop",
       verified: true,
-      years: "8 yıl",
-      staff: "500+ personel",
-      area: "20.000+ m²",
+      years: t('mfr.list.years', { count: 8 }),
+      staff: t('mfr.list.staff', { count: '500+' }),
+      area: t('mfr.list.area', { size: '20.000+' }),
       revenue: "$1 T+",
       rating: "4.8",
-      reviews: "250+ değerlendirmeler",
-      capabilities: ["Yanıt süresi ≤1h", "Zamanında teslimat 99.2%"],
+      reviews: t('mfr.list.reviews', { count: '250+' }),
+      capabilities: [t('mfr.list.responseTime', { time: '1h' }), t('mfr.list.onTimeDelivery', { pct: '99.2%' })],
       certifications: ["ISO", "CE", "RoHS", "FCC"],
       products: [
-        { image: "https://images.unsplash.com/photo-1572569511254-d8f925fe2cbb?auto=format&fit=crop&q=80&w=200", price: "$12,00-15,00", moq: "Min. sipariş: 50 Adet" },
-        { image: "https://images.unsplash.com/photo-1583394838336-acd977736f90?auto=format&fit=crop&q=80&w=200", price: "$25,00-30,00", moq: "Min. sipariş: 20 Adet" },
-        { image: "https://images.unsplash.com/photo-1585386959984-a4155224a1ad?auto=format&fit=crop&q=80&w=200", price: "$8,00-10,00", moq: "Min. sipariş: 100 Adet" },
-        { image: "https://images.unsplash.com/photo-1572569511254-d8f925fe2cbb?auto=format&fit=crop&q=80&w=200", price: "$12,00-15,00", moq: "Min. sipariş: 50 Adet" }
+        { image: "https://images.unsplash.com/photo-1572569511254-d8f925fe2cbb?auto=format&fit=crop&q=80&w=200", price: "$12,00-15,00", moq: t('common.minOrder', { count: 50 }) },
+        { image: "https://images.unsplash.com/photo-1583394838336-acd977736f90?auto=format&fit=crop&q=80&w=200", price: "$25,00-30,00", moq: t('common.minOrder', { count: 20 }) },
+        { image: "https://images.unsplash.com/photo-1585386959984-a4155224a1ad?auto=format&fit=crop&q=80&w=200", price: "$8,00-10,00", moq: t('common.minOrder', { count: 100 }) },
+        { image: "https://images.unsplash.com/photo-1572569511254-d8f925fe2cbb?auto=format&fit=crop&q=80&w=200", price: "$12,00-15,00", moq: t('common.minOrder', { count: 50 }) }
       ],
       factoryImages: [
         "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&q=80&w=600",
@@ -107,8 +108,8 @@ export function ManufacturerList(): string {
 
 function renderFactoryCard(mfg: any, cardIndex: number): string {
   const verifiedBadge = mfg.verified ? `
-        <img src="https://img.icons8.com/fluency/16/verified-badge.png" alt="Verified" class="w-4 h-4" />
-        <span class="text-[#1a66ff] font-bold text-[13px]">Doğrulanmış</span>
+        <img src="https://img.icons8.com/fluency/16/verified-badge.png" alt="${t('mfr.list.verified')}" class="w-4 h-4" />
+        <span class="text-[#1a66ff] font-bold text-[13px]">${t('mfr.list.verified')}</span>
     ` : '';
 
   const certBadges = mfg.certifications.map((cert: string) => `
@@ -145,16 +146,16 @@ function renderFactoryCard(mfg: any, cardIndex: number): string {
 
         <!-- Right: Action Buttons -->
         <div class="flex items-center gap-2 xl:gap-5 shrink-0">
-          <button type="button" class="text-gray-400 hover:text-red-500 transition-colors" aria-label="Favorilere ekle">
+          <button type="button" class="text-gray-400 hover:text-red-500 transition-colors" aria-label="${t('mfr.list.addToFavorites')}">
             <svg class="w-[20px] h-[20px] xl:w-[25px] xl:h-[25px]" fill="currentColor" viewBox="0 0 24 24">
               <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
             </svg>
           </button>
           <button type="button" class="h-8 xl:h-10 px-3 xl:px-4 border border-[#222] rounded-full text-[12px] xl:text-[14px] font-bold text-[#222] bg-white hover:bg-gray-50 transition-colors whitespace-nowrap">
-            Hemen sohbet edin
+            ${t('mfr.list.chatNow')}
           </button>
           <button type="button" class="h-8 xl:h-10 px-3 xl:px-4 border border-[#222] rounded-full text-[12px] xl:text-[14px] font-bold text-[#222] bg-white hover:bg-gray-50 transition-colors whitespace-nowrap">
-            Bize Ulaşın
+            ${t('mfr.list.contactUs')}
           </button>
         </div>
       </div>
@@ -163,18 +164,18 @@ function renderFactoryCard(mfg: any, cardIndex: number): string {
       <div class="flex justify-between gap-3 xl:gap-3 2xl:gap-4">
         <!-- Left Column: Info -->
         <div class="w-[180px] xl:w-[244px] shrink-0 pr-1 xl:pr-3">
-          <h4 class="text-[12px] xl:text-[14px] font-normal text-[#222] mb-1">Sıralama ve değerlendirmeler</h4>
+          <h4 class="text-[12px] xl:text-[14px] font-normal text-[#222] mb-1">${t('mfr.list.rankingsAndReviews')}</h4>
           <div class="mb-4 xl:mb-6 text-[12px] xl:text-[14px]">
             <strong class="text-[#222]">${mfg.rating}</strong><span class="text-[#222]">/5</span>
             <a href="#" class="underline text-[#222] hover:text-[#1a66ff] ml-1">(${mfg.reviews})</a>
           </div>
-          <h4 class="text-[12px] xl:text-[14px] font-normal text-[#222] mb-2">Fabrika kapasitesi</h4>
+          <h4 class="text-[12px] xl:text-[14px] font-normal text-[#222] mb-2">${t('mfr.list.factoryCapacity')}</h4>
           <ul class="space-y-0.5">
             ${mfg.capabilities.map((cap: string) => `
               <li class="text-[12px] xl:text-[14px] leading-[20px] xl:leading-[25px] font-bold text-[#222] truncate">· ${cap}</li>
             `).join('')}
             <li class="text-[12px] xl:text-[14px] leading-[20px] xl:leading-[25px] font-bold text-[#222] flex items-center gap-1 xl:gap-1.5 flex-wrap">
-              · Sertifikalar: ${certBadges}
+              · ${t('mfr.list.certifications')}: ${certBadges}
             </li>
           </ul>
         </div>
@@ -184,7 +185,7 @@ function renderFactoryCard(mfg: any, cardIndex: number): string {
           ${mfg.products.map((prod: any) => `
             <a href="#" class="flex flex-col group flex-1 min-w-0">
               <div class="w-full aspect-[1/1] rounded-lg overflow-hidden bg-gray-100 shrink-0">
-                <img src="${prod.image}" alt="Ürün" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                <img src="${prod.image}" alt="${t('mfr.list.product')}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
               </div>
               <p class="text-[13px] xl:text-[16px] font-bold text-[#222] mt-2 xl:mt-3 truncate">${prod.price}</p>
               <p class="text-[11px] xl:text-[14px] text-[#222] mt-0.5 xl:mt-1 truncate">${prod.moq}</p>
@@ -198,19 +199,19 @@ function renderFactoryCard(mfg: any, cardIndex: number): string {
             <div class="swiper-wrapper">
               ${mfg.factoryImages.map((img: string, i: number) => `
                 <div class="swiper-slide">
-                  <img src="${img}" alt="Fabrika görünümü ${i + 1}" class="w-full h-full object-cover cursor-pointer" data-slider-img="${cardIndex}" />
+                  <img src="${img}" alt="${t('mfr.list.factoryView')} ${i + 1}" class="w-full h-full object-cover cursor-pointer" data-slider-img="${cardIndex}" />
                 </div>
               `).join('')}
             </div>
           </div>
 
           <!-- Left Arrow -->
-          <button type="button" class="factory-prev-${cardIndex} absolute left-0 top-1/2 -translate-y-1/2 w-[24px] h-[48px] xl:w-[28px] xl:h-[56px] bg-black/50 hover:bg-black/70 text-white flex items-center justify-center transition-colors duration-100 z-10" aria-label="Önceki">
+          <button type="button" class="factory-prev-${cardIndex} absolute left-0 top-1/2 -translate-y-1/2 w-[24px] h-[48px] xl:w-[28px] xl:h-[56px] bg-black/50 hover:bg-black/70 text-white flex items-center justify-center transition-colors duration-100 z-10" aria-label="${t('mfr.list.previous')}">
             <svg class="w-[20px] h-[20px] xl:w-[24px] xl:h-[24px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
           </button>
 
           <!-- Right Arrow -->
-          <button type="button" class="factory-next-${cardIndex} absolute right-0 top-1/2 -translate-y-1/2 w-[24px] h-[48px] xl:w-[28px] xl:h-[56px] bg-black/50 hover:bg-black/70 text-white flex items-center justify-center transition-colors duration-100 z-10" aria-label="Sonraki">
+          <button type="button" class="factory-next-${cardIndex} absolute right-0 top-1/2 -translate-y-1/2 w-[24px] h-[48px] xl:w-[28px] xl:h-[56px] bg-black/50 hover:bg-black/70 text-white flex items-center justify-center transition-colors duration-100 z-10" aria-label="${t('mfr.list.next')}">
             <svg class="w-[20px] h-[20px] xl:w-[24px] xl:h-[24px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
           </button>
 
@@ -231,18 +232,18 @@ function renderFactoryCard(mfg: any, cardIndex: number): string {
           <h3 class="text-[14px] font-bold text-[#222] truncate">${mfg.name}</h3>
           <span class="text-[12px] text-gray-400 shrink-0 ml-auto">${mfg.years}</span>
         </div>
-        
+
         <!-- Stats -->
         <div class="text-[11px] text-[#222] mb-1.5 truncate flex items-center">
-          <span class="font-bold">${mfg.capabilities.find((c: string) => c.includes('Zamanında')) || 'Zamanında teslimat %100'}</span>
+          <span class="font-bold">${mfg.capabilities.find((c: string) => c.includes(t('mfr.list.onTimeDeliveryShort'))) || t('mfr.list.onTimeDelivery', { pct: '100%' })}</span>
           <span class="mx-1.5 text-gray-300">|</span>
-          <span>${mfg.capabilities.find((c: string) => c.includes('Yanıt'))?.replace('Yanıt süresi', 'Yanıtlama süresi') || 'Yanıtlama süresi ≤1h'}</span>
+          <span>${mfg.capabilities.find((c: string) => c.includes(t('mfr.list.responseTimeShort')))?.replace(t('mfr.list.responseTimeShort'), t('mfr.list.responseTimeLong')) || t('mfr.list.responseTimeLong') + ' ≤1h'}</span>
         </div>
 
-        <!-- Missing Tags logic: some suppliers could have ODM etc.-->
+        <!-- Tags -->
         <div class="flex gap-1.5 mb-2.5 flex-wrap">
-            <span class="bg-[#f5f5f5] text-[#222] text-[11px] px-2 py-0.5 rounded-sm font-medium">ODM hizmeti olanağı</span>
-            <span class="bg-[#f5f5f5] text-[#222] text-[11px] px-2 py-0.5 rounded-sm font-medium">Tam özelleştirme</span>
+            <span class="bg-[#f5f5f5] text-[#222] text-[11px] px-2 py-0.5 rounded-sm font-medium">${t('mfr.list.odmService')}</span>
+            <span class="bg-[#f5f5f5] text-[#222] text-[11px] px-2 py-0.5 rounded-sm font-medium">${t('mfr.filter.fullCustomization')}</span>
         </div>
 
         <!-- Products Grid (4 items) -->
@@ -323,7 +324,7 @@ export function initFactorySliders(): void {
     lightboxTitle.textContent = name;
     lightboxBody.innerHTML = images.map(img => `
             <div class="flex justify-center mb-4">
-              <img src="${img}" alt="Fabrika" class="max-w-[800px] w-full object-contain" />
+              <img src="${img}" alt="${t('mfr.list.factory')}" class="max-w-[800px] w-full object-contain" />
             </div>
         `).join('');
     lightbox.classList.remove('hidden');

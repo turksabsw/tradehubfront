@@ -3,6 +3,8 @@
  * Third-party account linking.
  */
 
+import { t } from '../../i18n';
+
 export interface LinkedAccount {
   name: string;
   icon: string;
@@ -17,18 +19,20 @@ const SOCIAL_ICONS = {
   twitter: `<svg width="32" height="32" viewBox="0 0 32 32"><rect width="32" height="32" rx="4" fill="#1DA1F2"/><path d="M24 11.5c-.6.3-1.2.5-1.8.6.7-.4 1.2-1 1.4-1.8-.6.4-1.3.6-2 .8a3.2 3.2 0 00-5.5 2.9A9.1 9.1 0 019.4 10a3.2 3.2 0 001 4.3c-.5 0-1-.2-1.4-.4 0 1.6 1.1 2.9 2.6 3.2-.5.1-1 .2-1.4.1.4 1.2 1.5 2 2.8 2A6.4 6.4 0 019 20.8 9.1 9.1 0 0024 11.5z" fill="#fff"/></svg>`,
 };
 
-const defaultAccounts: LinkedAccount[] = [
-  { name: 'facebook', icon: SOCIAL_ICONS.facebook, connected: false },
-  { name: 'linkedin', icon: SOCIAL_ICONS.linkedin, connected: false },
-  { name: 'google', icon: SOCIAL_ICONS.google, connected: true, connectedLabel: 'Bağlı Hesaplar' },
-  { name: 'twitter', icon: SOCIAL_ICONS.twitter, connected: false },
-];
+function getDefaultAccounts(): LinkedAccount[] {
+  return [
+    { name: 'facebook', icon: SOCIAL_ICONS.facebook, connected: false },
+    { name: 'linkedin', icon: SOCIAL_ICONS.linkedin, connected: false },
+    { name: 'google', icon: SOCIAL_ICONS.google, connected: true, connectedLabel: t('settings.linkedAccounts') },
+    { name: 'twitter', icon: SOCIAL_ICONS.twitter, connected: false },
+  ];
+}
 
 function renderAccountRow(account: LinkedAccount): string {
   const statusHtml = account.connected
-    ? `<span class="text-[13px]" style="color:var(--color-text-muted, #666666)">${account.connectedLabel || 'Bağlı'}</span>
-       <a href="#" class="linked-acc__remove text-[13px] font-medium no-underline hover:underline" style="color:var(--color-cta-primary, #333333)">Kaldır</a>`
-    : `<span class="text-[13px]" style="color:var(--color-text-placeholder, #999999)">Bağlı değil</span>`;
+    ? `<span class="text-[13px]" style="color:var(--color-text-muted, #666666)">${account.connectedLabel || t('settings.linkedConnected')}</span>
+       <a href="#" class="linked-acc__remove text-[13px] font-medium no-underline hover:underline" style="color:var(--color-cta-primary, #333333)">${t('settings.linkedRemove')}</a>`
+    : `<span class="text-[13px]" style="color:var(--color-text-placeholder, #999999)">${t('settings.linkedNotConnected')}</span>`;
 
   return `
     <div class="linked-acc__row flex items-center justify-between py-4 px-6 border-b border-border-default last:border-b-0 max-sm:px-4 max-sm:py-3">
@@ -44,11 +48,11 @@ function renderAccountRow(account: LinkedAccount): string {
 }
 
 export function SettingsLinkedAccounts(accounts?: LinkedAccount[]): string {
-  const items = accounts || defaultAccounts;
+  const items = accounts || getDefaultAccounts();
 
   return `
     <div class="bg-white rounded-lg p-8 max-sm:p-5">
-      <h2 class="text-lg font-semibold mb-5 m-0" style="color:var(--color-text-heading, #111827)">Üçlü uygulama bağlantısı</h2>
+      <h2 class="text-lg font-semibold mb-5 m-0" style="color:var(--color-text-heading, #111827)">${t('settings.linkedAccountsTitle')}</h2>
       <div class="border border-border-default rounded-lg overflow-hidden">
         ${items.map(renderAccountRow).join('')}
       </div>
@@ -64,7 +68,7 @@ export function initSettingsLinkedAccounts(): void {
       if (row) {
         const right = row.querySelector('.linked-acc__right');
         if (right) {
-          right.innerHTML = `<span class="text-[13px]" style="color:var(--color-text-placeholder, #999999)">Bağlı değil</span>`;
+          right.innerHTML = `<span class="text-[13px]" style="color:var(--color-text-placeholder, #999999)">${t('settings.linkedNotConnected')}</span>`;
         }
       }
     });

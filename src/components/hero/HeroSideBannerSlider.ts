@@ -6,46 +6,47 @@
 import Swiper from 'swiper';
 import { Autoplay, Navigation, Pagination } from 'swiper/modules';
 import 'swiper/swiper-bundle.css';
+import { t } from '../../i18n';
 
 interface HeroSideBannerSlide {
-  label: string;
-  title: string;
-  description: string;
-  cta: string;
+  labelKey: string;
+  titleKey: string;
+  descriptionKey: string;
+  ctaKey: string;
   href: string;
   background: string;
 }
 
 const sideBannerSlides: HeroSideBannerSlide[] = [
   {
-    label: 'New suppliers',
-    title: 'Discover fresh production partners',
-    description: 'Find verified factories, compare offers, and source faster from one place.',
-    cta: 'See more',
+    labelKey: 'heroBanner.newSuppliers',
+    titleKey: 'heroBanner.newSuppliersDesc',
+    descriptionKey: 'heroBanner.newSuppliersText',
+    ctaKey: 'heroBanner.seeMore',
     href: '/suppliers/new',
     background: 'linear-gradient(135deg, #8cc9f7 0%, #6aa8de 45%, #74b8e9 100%)',
   },
   {
-    label: 'Trend alert',
-    title: 'Top-picked seasonal products',
-    description: 'Browse trending categories and connect with suppliers ready to ship today.',
-    cta: 'Explore now',
+    labelKey: 'heroBanner.trendAlert',
+    titleKey: 'heroBanner.topPicked',
+    descriptionKey: 'heroBanner.topPickedText',
+    ctaKey: 'heroBanner.exploreNow',
     href: '/trending',
     background: 'linear-gradient(135deg, #87d4b4 0%, #56b08b 42%, #69be9a 100%)',
   },
   {
-    label: 'Fast customization',
-    title: 'Launch your private label line',
-    description: 'Send your logo and packaging brief to producers with low MOQ options.',
-    cta: 'Start request',
+    labelKey: 'heroBanner.fastCustomization',
+    titleKey: 'heroBanner.privateLabelDesc',
+    descriptionKey: 'heroBanner.privateLabelText',
+    ctaKey: 'heroBanner.startRequest',
     href: '/customization',
     background: 'linear-gradient(135deg, #9faef8 0%, #778be8 45%, #8598ef 100%)',
   },
   {
-    label: 'RFQ spotlight',
-    title: 'Get multiple quotes in minutes',
-    description: 'Post one RFQ and receive matched supplier offers for your next purchase.',
-    cta: 'Create RFQ',
+    labelKey: 'heroBanner.rfqSpotlight',
+    titleKey: 'heroBanner.rfqDesc',
+    descriptionKey: 'heroBanner.rfqText',
+    ctaKey: 'heroBanner.createRfq',
     href: '/rfq/create',
     background: 'linear-gradient(135deg, #f8b58a 0%, #f28e63 44%, #f3a075 100%)',
   },
@@ -61,14 +62,14 @@ function renderSlide(slide: HeroSideBannerSlide): string {
 
         <div class="relative z-10 flex h-full flex-col justify-between p-4 text-white">
           <div>
-            <p class="text-[10px] uppercase tracking-[0.11em] text-white/80 font-medium">${slide.label}</p>
-            <h3 class="mt-1.5 text-[22px] leading-[1.2] font-extrabold max-w-[220px]">${slide.title}</h3>
-            <p class="mt-2 text-xs leading-snug text-white/90 max-w-[220px]">${slide.description}</p>
+            <p class="text-[10px] uppercase tracking-[0.11em] text-white/80 font-medium" data-i18n="${slide.labelKey}">${t(slide.labelKey)}</p>
+            <h3 class="mt-1.5 text-[22px] leading-[1.2] font-extrabold max-w-[220px]" data-i18n="${slide.titleKey}">${t(slide.titleKey)}</h3>
+            <p class="mt-2 text-xs leading-snug text-white/90 max-w-[220px]" data-i18n="${slide.descriptionKey}">${t(slide.descriptionKey)}</p>
           </div>
 
           <div class="flex justify-center pb-10">
-            <span class="inline-flex items-center justify-center rounded-full bg-[#0c2e61] px-5 py-2 text-sm font-semibold shadow-lg transition-transform group-hover:scale-[1.02]">
-              ${slide.cta}
+            <span class="inline-flex items-center justify-center rounded-full bg-[#0c2e61] px-5 py-2 text-sm font-semibold shadow-lg transition-transform group-hover:scale-[1.02]" data-i18n="${slide.ctaKey}">
+              ${t(slide.ctaKey)}
             </span>
           </div>
         </div>

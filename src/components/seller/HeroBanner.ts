@@ -4,6 +4,7 @@
  * BEM Block: store-hero
  */
 import type { HeroBannerData, HeroSlide } from '../../types/seller/types';
+import { t } from '../../i18n';
 
 function renderSlide(slide: HeroSlide): string {
   const hasText = !!slide.title;
@@ -65,7 +66,7 @@ export function HeroBanner(data: HeroBannerData): string {
   if (!data.slides.length) return '';
 
   return `
-    <section id="store-hero" class="store-hero" aria-label="Mağaza hero banner">
+    <section id="store-hero" class="store-hero" aria-label="${t('seller.sf.storeHeroBanner')}">
       <div class="store-hero__swiper swiper w-full">
         <div class="swiper-wrapper">
           ${data.slides.map(slide => renderSlide(slide)).join('')}

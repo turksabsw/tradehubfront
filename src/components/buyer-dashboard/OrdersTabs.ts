@@ -7,6 +7,7 @@
  */
 
 import type { OrdersTabItem, OrdersFilterItem } from '../../types/buyerDashboard';
+import { t } from '../../i18n';
 
 export interface OrdersTabsProps {
   tabs: OrdersTabItem[];
@@ -74,10 +75,10 @@ export function OrdersTabs({ tabs, filters, activeTabId, selectedFilterId, dropd
 
   return `
     <div class="orders__tabs-wrapper relative px-5 max-sm:px-3" @click.outside="dropdownOpen = false">
-      <div class="orders__tabs flex gap-2 flex-wrap max-sm:flex-nowrap max-sm:overflow-x-auto max-sm:scrollbar-none max-md:px-3 max-md:snap-x max-md:snap-mandatory" role="tablist" aria-label="Sipariş filtreleri">
+      <div class="orders__tabs flex gap-2 flex-wrap max-sm:flex-nowrap max-sm:overflow-x-auto max-sm:scrollbar-none max-md:px-3 max-md:snap-x max-md:snap-mandatory" role="tablist" aria-label="${t('ordersTabs.ariaOrderFilters')}">
         ${tabsHtml}
       </div>
-      <div class="orders__dropdown ${dropdownVisibility}" :class="{ 'orders__dropdown--open': dropdownOpen }" role="menu" aria-label="Sipariş durumu filtresi">
+      <div class="orders__dropdown ${dropdownVisibility}" :class="{ 'orders__dropdown--open': dropdownOpen }" role="menu" aria-label="${t('ordersTabs.ariaOrderStatusFilter')}">
         ${filtersHtml}
       </div>
     </div>

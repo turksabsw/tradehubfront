@@ -4,6 +4,8 @@
  * Each card shows an icon, label, and description with visual selection state.
  */
 
+import { t } from '../../i18n';
+
 /* ── Types ──────────────────────────────────────────── */
 
 export type AccountType = 'buyer' | 'supplier';
@@ -43,8 +45,8 @@ export function AccountTypeSelector(defaultType: AccountType = 'buyer'): string 
           </svg>
         </div>
         <div class="auth-account-type-content flex flex-col gap-0.5 flex-1 min-w-0">
-          <span class="auth-account-type-label text-[15px] font-semibold leading-tight">Alıcı</span>
-          <span class="auth-account-type-desc text-[13px] leading-snug">Ürün satın almak istiyorum</span>
+          <span class="auth-account-type-label text-[15px] font-semibold leading-tight">${t('auth.buyer')}</span>
+          <span class="auth-account-type-desc text-[13px] leading-snug">${t('auth.buyerDesc')}</span>
         </div>
       </button>
 
@@ -62,8 +64,8 @@ export function AccountTypeSelector(defaultType: AccountType = 'buyer'): string 
           </svg>
         </div>
         <div class="auth-account-type-content flex flex-col gap-0.5 flex-1 min-w-0">
-          <span class="auth-account-type-label text-[15px] font-semibold leading-tight">Tedarikçi</span>
-          <span class="auth-account-type-desc text-[13px] leading-snug">Ürün satmak istiyorum</span>
+          <span class="auth-account-type-label text-[15px] font-semibold leading-tight">${t('auth.supplier')}</span>
+          <span class="auth-account-type-desc text-[13px] leading-snug">${t('auth.supplierDesc')}</span>
         </div>
       </button>
     </div>

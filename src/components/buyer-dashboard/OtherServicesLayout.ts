@@ -5,6 +5,8 @@
  * - Ürün denetimi
  */
 
+import { t } from '../../i18n';
+
 type ServiceId = 'payment-terms' | 'product-inspection';
 
 interface ServiceNavItem {
@@ -12,10 +14,12 @@ interface ServiceNavItem {
   label: string;
 }
 
-const SERVICE_NAV: ServiceNavItem[] = [
-  { id: 'payment-terms', label: 'Esnek ödeme koşulları: 30/60 gün' },
-  { id: 'product-inspection', label: 'Ürün denetimi' },
-];
+function getServiceNav(): ServiceNavItem[] {
+  return [
+    { id: 'payment-terms', label: t('otherServices.paymentTermsNav') },
+    { id: 'product-inspection', label: t('otherServices.productInspectionNav') },
+  ];
+}
 
 function getActiveService(): ServiceId {
   const hash = window.location.hash.replace('#', '') as ServiceId;
@@ -24,7 +28,7 @@ function getActiveService(): ServiceId {
 }
 
 function renderServiceNav(activeId: ServiceId): string {
-  const items = SERVICE_NAV.map(
+  const items = getServiceNav().map(
     (item) => {
       const isActive = item.id === activeId;
       const activeClasses = isActive
@@ -36,7 +40,7 @@ function renderServiceNav(activeId: ServiceId): string {
 
   return `
     <div class="w-60 flex-shrink-0 bg-white rounded-lg overflow-hidden max-md:w-full max-md:flex max-md:flex-wrap max-md:items-center">
-      <h3 class="text-[15px] font-bold text-gray-800 py-4 px-4 pb-3 m-0 max-md:w-full max-md:py-3 max-md:pb-2">Diğer hizmetlerim</h3>
+      <h3 class="text-[15px] font-bold text-gray-800 py-4 px-4 pb-3 m-0 max-md:w-full max-md:py-3 max-md:pb-2">${t('otherServices.title')}</h3>
       ${items}
     </div>
   `;
@@ -57,30 +61,25 @@ function renderPaymentTerms(): string {
             <path d="M34.5 18v-2M37.5 18v-2" stroke="#6B7280" stroke-width="1.5" stroke-linecap="round"/>
           </svg>
         </div>
-        <h1 class="text-xl font-bold text-gray-800 mb-2">Ödeme Koşulları Hizmeti Sonlandırma Bildirimi</h1>
-        <p class="text-sm mb-8" style="color:var(--color-text-muted, #666666)">Sonlandırma tarihi: <strong class="text-gray-800">30 Aralık 2025</strong> (Pekin saati)</p>
+        <h1 class="text-xl font-bold text-gray-800 mb-2">${t('otherServices.paymentTermsTitle')}</h1>
+        <p class="text-sm mb-8" style="color:var(--color-text-muted, #666666)">${t('otherServices.terminationDate')} <strong class="text-gray-800">${t('otherServices.terminationDateValue')}</strong> ${t('otherServices.terminationDateNote')}</p>
 
         <div class="max-w-[760px] mx-auto text-left bg-white border border-gray-200 rounded-lg p-8 max-md:p-5">
-          <p class="text-sm mb-4" style="color:var(--color-text-body, #333333)">Sayın alıcılar,</p>
+          <p class="text-sm mb-4" style="color:var(--color-text-body, #333333)">${t('otherServices.ptDearBuyers')}</p>
 
           <p class="text-sm leading-[1.7] mb-4" style="color:var(--color-text-body, #333333)">
-            Devam eden ürün güncellemelerimizin bir parçası olarak Ödeme Koşulları hizmeti, Pekin saatiyle
-            <strong class="text-gray-900 font-bold">30 Aralık 2025</strong> tarihinden itibaren resmi olarak sonlandırılacaktır.
-            <strong class="text-gray-900 font-bold">Devam eden Ödeme Koşulları siparişleriniz varsa ödemelerinizi zamanında yapmanız gerekir.</strong>
+            ${t('otherServices.ptParagraph1')}
           </p>
 
           <p class="text-sm leading-[1.7] mb-4" style="color:var(--color-text-body, #333333)">
-            Yaşanan herhangi bir aksaklıktan dolayı içtenlikle özür dileriz ve daha iyi çözümler sunmak için
-            çalışırken gösterdiğiniz anlayış için minnettarız. Hâlâ ödeme çözümü hizmetlerine ihtiyacınız varsa
-            <strong class="text-gray-900 font-bold">Buy Now Pay Later</strong> veya <strong class="text-gray-900 font-bold">Pay Later for Business</strong> ödeme seçeneklerini
-            değerlendirebilirsiniz. Daha fazla bilgi edinmek için <a href="/pages/dashboard/payment.html#pay-later" class="text-blue-600 underline underline-offset-2 font-medium hover:text-blue-700">buraya</a> tıklayın.
+            ${t('otherServices.ptParagraph2')}
           </p>
 
-          <p class="text-sm leading-[1.7] mb-4" style="color:var(--color-text-body, #333333)">Sürekli desteğiniz için teşekkür ederiz!</p>
+          <p class="text-sm leading-[1.7] mb-4" style="color:var(--color-text-body, #333333)">${t('otherServices.ptParagraph3')}</p>
 
           <div class="mt-6 text-sm leading-relaxed" style="color:var(--color-text-body, #333333)">
-            <p class="m-0">Saygılarımızla,</p>
-            <p class="m-0">Alibaba.com Ödeme Koşulları Ekibi</p>
+            <p class="m-0">${t('otherServices.ptRegards')}</p>
+            <p class="m-0">${t('otherServices.ptTeam')}</p>
           </div>
         </div>
       </div>
@@ -100,21 +99,20 @@ function renderProductInspection(): string {
             <path d="M33 36l2 2 4-4" stroke="#22C55E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </div>
-        <h1 class="text-xl font-bold text-gray-800 mb-2">Ürün Denetimi Hizmeti</h1>
-        <p class="text-sm mb-8" style="color:var(--color-text-muted, #666666)">Tedarikçi ürünlerinizi profesyonel olarak denetletin</p>
+        <h1 class="text-xl font-bold text-gray-800 mb-2">${t('otherServices.piTitle')}</h1>
+        <p class="text-sm mb-8" style="color:var(--color-text-muted, #666666)">${t('otherServices.piSubtitle')}</p>
 
         <div class="max-w-[760px] mx-auto text-left bg-white border border-gray-200 rounded-lg p-8 max-md:p-5">
-          <p class="text-sm mb-4" style="color:var(--color-text-body, #333333)">Sayın alıcılar,</p>
+          <p class="text-sm mb-4" style="color:var(--color-text-body, #333333)">${t('otherServices.piDearBuyers')}</p>
           <p class="text-sm leading-[1.7] mb-4" style="color:var(--color-text-body, #333333)">
-            Ürün denetimi hizmetimiz ile siparişlerinizin kalitesini sevkiyat öncesinde profesyonel denetçiler
-            aracılığıyla kontrol ettirebilirsiniz. Bu hizmet şu anda yapılandırılmaktadır.
+            ${t('otherServices.piParagraph1')}
           </p>
           <p class="text-sm leading-[1.7] mb-4" style="color:var(--color-text-body, #333333)">
-            Denetim hizmeti hakkında daha fazla bilgi almak için müşteri hizmetlerimize başvurabilirsiniz.
+            ${t('otherServices.piParagraph2')}
           </p>
           <div class="mt-6 text-sm leading-relaxed" style="color:var(--color-text-body, #333333)">
-            <p class="m-0">Saygılarımızla,</p>
-            <p class="m-0">Alibaba.com Kalite Denetim Ekibi</p>
+            <p class="m-0">${t('otherServices.piRegards')}</p>
+            <p class="m-0">${t('otherServices.piTeam')}</p>
           </div>
         </div>
       </div>

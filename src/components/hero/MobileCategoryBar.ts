@@ -6,6 +6,7 @@
  */
 
 import { megaCategories } from '../header';
+import { t } from '../../i18n';
 
 /* ──── Bottom Sheet ──── */
 
@@ -23,12 +24,12 @@ function renderBottomSheet(): string {
             <div class="w-9 h-1 rounded-full bg-gray-300 dark:bg-gray-600"></div>
           </div>
           <div class="flex items-center px-5 border-b border-gray-100 dark:border-gray-700/50">
-            <span class="text-[15px] font-bold text-gray-900 dark:text-white">Categories</span>
+            <span class="text-[15px] font-bold text-gray-900 dark:text-white" data-i18n="categoryBrowse.title">${t('categoryBrowse.title')}</span>
             <button
               type="button"
               id="mcb-sheet-close"
               class="ml-auto p-1.5 -mr-1.5 text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors"
-              aria-label="Close"
+              aria-label="${t('common.close')}" data-i18n-aria-label="common.close"
             >
               <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/>
@@ -87,7 +88,7 @@ export function MobileCategoryBar(): string {
           type="button"
           id="mcb-dropdown-btn"
           class="absolute right-0 top-0 bottom-0 w-9 flex items-center justify-center text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800"
-          aria-label="All categories"
+          aria-label="${t('mobileCategory.allCategories')}" data-i18n-aria-label="mobileCategory.allCategories"
         >
           <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/>

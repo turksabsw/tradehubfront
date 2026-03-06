@@ -3,12 +3,14 @@
  * Description tab content: rich HTML description + specs table + packaging info.
  */
 
-import { mockProduct } from '../../data/mockProduct';
+import { getMockProduct } from '../../data/mockProduct';
+import { t } from '../../i18n';
 
 function renderSpecsTable(): string {
+  const mockProduct = getMockProduct();
   return `
     <div class="mt-6">
-      <h3 class="text-base font-semibold mb-3" style="color: var(--pd-title-color, #111827);">Teknik Özellikler</h3>
+      <h3 class="text-base font-semibold mb-3" style="color: var(--pd-title-color, #111827);">${t('product.technicalSpecs')}</h3>
       <table class="w-full text-sm">
         <tbody>
           ${mockProduct.specs.map((spec, i) => `
@@ -24,15 +26,17 @@ function renderSpecsTable(): string {
 }
 
 function renderPackaging(): string {
+  const mockProduct = getMockProduct();
   return `
     <div class="mt-6">
-      <h3 class="text-base font-semibold mb-3" style="color: var(--pd-title-color, #111827);">Paketleme ve Teslimat</h3>
+      <h3 class="text-base font-semibold mb-3" style="color: var(--pd-title-color, #111827);">${t('product.packagingDelivery')}</h3>
       ${mockProduct.packaging}
     </div>
   `;
 }
 
 export function ProductDescription(): string {
+  const mockProduct = getMockProduct();
   return `
     <div class="py-6">
       <!-- Rich Description Content -->

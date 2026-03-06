@@ -3,9 +3,10 @@
  * Horizontal breadcrumb navigation for product detail page.
  */
 
-import { mockProduct } from '../../data/mockProduct';
+import { getMockProduct } from '../../data/mockProduct';
 
 export function Breadcrumb(): string {
+  const mockProduct = getMockProduct();
   const items = mockProduct.category;
   const crumbs = items.map((label, i) => {
     const isLast = i === items.length - 1;

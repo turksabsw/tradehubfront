@@ -8,7 +8,7 @@ import { SectionCard } from '../shared/SectionCard';
 import { SectionHeader } from '../shared/SectionHeader';
 import { PromotionBanner } from '../shared/PromotionBanner';
 import { DotIndicator } from '../shared/DotIndicator';
-import { promotionConfig } from './rightPanelData';
+import { getPromotionConfig } from './rightPanelData';
 
 /**
  * Chunk promotions into slides of 2 banners each.
@@ -44,7 +44,7 @@ export function PromotionSection(promotions: PromotionBannerData[]): string {
 
   return SectionCard({
     children: `
-      ${SectionHeader({ title: promotionConfig.title })}
+      ${SectionHeader({ title: getPromotionConfig().title })}
       <div class="promotion-carousel" data-promotion-carousel>
         ${slidesHtml}
       </div>

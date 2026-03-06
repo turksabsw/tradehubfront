@@ -1,7 +1,9 @@
 import type { OrderSummary as OrderSummaryData, OrderSummaryThumbnail } from '../../types/checkout';
+import { t } from '../../i18n';
 
 export interface ProtectionSummaryItem {
   icon: string;
+  key?: 'secure' | 'dispatch' | 'refund';
   title: string;
   description: string;
 }
@@ -17,11 +19,11 @@ const secureIcon = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" 
 const truckIcon = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="text-[#008a00] shrink-0 mt-[2px]"><rect x="1" y="3" width="15" height="13" stroke="currentColor" stroke-width="2"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8" stroke="currentColor" stroke-width="2"/><circle cx="5.5" cy="18.5" r="2.5" stroke="currentColor" stroke-width="2"/><circle cx="18.5" cy="18.5" r="2.5" stroke="currentColor" stroke-width="2"/></svg>`;
 const refundIcon = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="text-[#008a00] shrink-0 mt-[2px]"><rect x="2" y="5" width="20" height="14" rx="2" stroke="currentColor" stroke-width="2"/><path d="M2 10h20" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="15" r="2" stroke="currentColor" stroke-width="2"/></svg>`;
 
-function getIconForTitle(title: string): string {
-  if (title.includes('Secure')) return secureIcon;
-  if (title.includes('Dispatch')) return truckIcon;
-  if (title.includes('Money')) return refundIcon;
-  return `<span class="text-[16px]">${title.charAt(0)}</span>`; // Fallback
+function getIconForItem(item: ProtectionSummaryItem): string {
+  if (item.key === 'secure') return secureIcon;
+  if (item.key === 'dispatch') return truckIcon;
+  if (item.key === 'refund') return refundIcon;
+  return `<span class="text-[16px]">${item.title.charAt(0)}</span>`; // Fallback
 }
 
 function renderThumbnailGrid(thumbnails: OrderSummaryThumbnail[], itemCount: number): string {
@@ -56,7 +58,7 @@ export function OrderSummary({ data, protectionItems, tradeAssuranceText }: Orde
   // The protection items rendering
   const protectionRows = protectionItems.map(item => `
     <li class="flex items-start gap-2 mb-3">
-      ${getIconForTitle(item.title)}
+      ${getIconForItem(item)}
       <div class="flex flex-col">
         <span class="text-[14px] font-bold text-[#222222] leading-5">${item.title}</span>
         <span class="text-[14px] text-[#444444] leading-5 mt-[2px]">${item.description}</span>
@@ -71,7 +73,7 @@ export function OrderSummary({ data, protectionItems, tradeAssuranceText }: Orde
     >
       <!-- Title -->
       <div class="text-[20px] font-bold leading-7 text-[#222222] mb-5 font-inter">
-        Order summary (${data.itemCount} items)
+        <span data-i18n="checkout.orderSummary">${t('checkout.orderSummary')}</span> (${data.itemCount} <span data-i18n="common.items">${t('common.items')}</span>)
       </div>
 
       <!-- Thumbnail Grid -->
@@ -80,11 +82,11 @@ export function OrderSummary({ data, protectionItems, tradeAssuranceText }: Orde
       <!-- Price Breakdown -->
       <div class="flex flex-col summary-amounts-layout-row">
         <div class="flex justify-between items-center py-[6px] text-[14px] leading-5 text-[#222222]">
-          <span>Item subtotal</span>
+          <span data-i18n="checkout.itemSubtotal">${t('checkout.itemSubtotal')}</span>
           <span x-text="formatMoney(itemSubtotal)">${subtotalStr}</span>
         </div>
         <div class="flex justify-between items-center py-[6px] text-[14px] leading-5 text-[#222222]">
-          <span>Estimated shipping fee</span>
+          <span data-i18n="checkout.estimatedShipping">${t('checkout.estimatedShipping')}</span>
           <span x-text="formatMoney(shippingFee)">${shippingStr}</span>
         </div>
       </div>
@@ -98,14 +100,14 @@ export function OrderSummary({ data, protectionItems, tradeAssuranceText }: Orde
               type="text"
               x-model="couponCode"
               @keydown.enter="applyCoupon()"
-              placeholder="Enter coupon code"
+              placeholder="${t('checkout.couponPlaceholder')}" data-i18n-placeholder="checkout.couponPlaceholder"
               class="flex-1 h-[38px] px-3 text-[14px] border border-[#d1d5db] rounded-lg focus:outline-none focus:border-[#e87400] focus:ring-1 focus:ring-[#e87400] transition-colors"
             />
             <button
               type="button"
               @click="applyCoupon()"
               class="h-[38px] px-4 text-[14px] font-semibold bg-[#f5f5f5] border border-[#d1d5db] rounded-lg hover:bg-[#e8e8e8] transition-colors cursor-pointer"
-            >Apply</button>
+            ><span data-i18n="common.apply">${t('common.apply')}</span></button>
           </div>
         </template>
         <!-- Applied coupon badge -->
@@ -130,27 +132,25 @@ export function OrderSummary({ data, protectionItems, tradeAssuranceText }: Orde
       <!-- Coupon discount row -->
       <template x-if="couponDiscount > 0">
         <div class="flex justify-between items-center py-[6px] text-[14px] leading-5">
-          <span class="text-[#16a34a]">Coupon discount</span>
+          <span class="text-[#16a34a]" data-i18n="checkout.couponDiscount">${t('checkout.couponDiscount')}</span>
           <span class="text-[#16a34a] font-semibold" x-text="'- ' + formatMoney(couponDiscount)"></span>
         </div>
       </template>
 
       <!-- Total -->
       <div class="flex justify-between items-center mt-[10px] pt-[16px] border-t border-[#e5e5e5] summary-amounts-total-block text-[20px] font-bold text-[#222222]">
-        <span>Total</span>
+        <span data-i18n="checkout.total">${t('checkout.total')}</span>
         <span x-text="formatMoney(total)">${totalStr}</span>
       </div>
 
       <!-- Place Order Button -->
       <button type="button" class="w-full mt-[20px] mb-[12px] flex items-center justify-center th-btn-dark th-btn-pill leading-none" id="summary-place-order-btn">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" class="mr-2 shrink-0"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Place order
+        <span data-i18n="checkout.placeOrder">${t('checkout.placeOrder')}</span>
       </button>
 
       <!-- Terms & Privacy -->
-      <p class="text-[12px] leading-snug text-[#767676] mb-[20px]">
-        By clicking the above, you agree to Alibaba.com's <a href="#" class="underline hover:text-[#333]">Terms of Use</a> and <a href="#" class="underline hover:text-[#333]">Privacy Policy</a>
-      </p>
+      <p class="text-[12px] leading-snug text-[#767676] mb-[20px]" data-i18n-html="checkout.orderTerms">${t('checkout.orderTerms')}</p>
 
       <!-- Order Protection Link -->
       <button type="button" class="flex items-center justify-between w-full mb-3 cursor-pointer bg-transparent text-left hover:opacity-80 transition-opacity" data-modal-target="order-protection-modal" data-modal-toggle="order-protection-modal">

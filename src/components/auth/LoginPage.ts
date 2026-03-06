@@ -8,6 +8,7 @@
 import { SocialLoginButtons, initSocialLoginButtons, type LoginProvider } from './SocialLoginButtons';
 import { getBaseUrl } from './AuthLayout';
 import { login } from '../../utils/auth';
+import { t } from '../../i18n';
 
 /* ── Types ──────────────────────────────────────────── */
 
@@ -27,7 +28,7 @@ export function LoginPage(): string {
     <div id="login-page" class="w-full">
       <!-- Header Area -->
       <div class="mb-8 relative">
-        <h1 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Giriş Yap</h1>
+        <h1 class="text-2xl font-bold text-gray-900 dark:text-white mb-2" data-i18n="auth.login.title">${t('auth.login.title')}</h1>
         
         <!-- Sign in with code link (Absolute positioned on desktop, relative on mobile) -->
         <a 
@@ -37,7 +38,7 @@ export function LoginPage(): string {
           <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
           </svg>
-          Mobil kod ile giriş yap
+          <span data-i18n="auth.login.mobileCode">${t('auth.login.mobileCode')}</span>
         </a>
       </div>
 
@@ -46,26 +47,26 @@ export function LoginPage(): string {
         
         <!-- Email Input -->
         <div>
-          <label for="email" class="sr-only">E-posta adresi</label>
+          <label for="email" class="sr-only" data-i18n="auth.login.email">${t('auth.login.email')}</label>
           <input 
             type="email" 
             id="email" 
             name="email"
             class="w-full h-12 px-4 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded text-gray-900 dark:text-white placeholder-gray-500 auth-input-focus transition-colors"
-            placeholder="E-posta adresi"
+            placeholder="${t('auth.login.email')}" data-i18n-placeholder="auth.login.email"
             required
           >
         </div>
 
         <!-- Password Input -->
         <div class="relative">
-          <label for="password" class="sr-only">Şifre</label>
+          <label for="password" class="sr-only" data-i18n="auth.login.password">${t('auth.login.password')}</label>
           <input 
             type="password" 
             id="password" 
             name="password"
             class="w-full h-12 px-4 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded text-gray-900 dark:text-white placeholder-gray-500 auth-input-focus transition-colors"
-            placeholder="Şifre"
+            placeholder="${t('auth.login.password')}" data-i18n-placeholder="auth.login.password"
             required
           >
           <button 
@@ -82,7 +83,7 @@ export function LoginPage(): string {
         <!-- Forgot Password -->
         <div class="text-right">
           <a href="${baseUrl}pages/auth/forgot-password.html" class="text-sm font-medium text-gray-900 dark:text-gray-300 hover:underline">
-            Şifremi unuttum?
+            <span data-i18n="auth.login.forgotPassword">${t('auth.login.forgotPassword')}</span>
           </a>
         </div>
 
@@ -91,7 +92,7 @@ export function LoginPage(): string {
           type="submit" 
           class="w-full h-12 th-btn th-btn-pill"
         >
-          Devam Et
+          <span data-i18n="auth.login.continue">${t('auth.login.continue')}</span>
         </button>
 
       </form>
@@ -101,7 +102,7 @@ export function LoginPage(): string {
         <div class="absolute inset-0 flex items-center">
           <div class="w-full border-t border-gray-200 dark:border-gray-700"></div>
         </div>
-        <span class="relative px-4 bg-white dark:bg-gray-900 text-sm text-gray-500 dark:text-gray-400 uppercase">VEYA</span>
+        <span class="relative px-4 bg-white dark:bg-gray-900 text-sm text-gray-500 dark:text-gray-400 uppercase" data-i18n="auth.login.or">${t('auth.login.or')}</span>
       </div>
 
       <!-- Social Login Buttons (Icons Mode) -->
@@ -110,13 +111,13 @@ export function LoginPage(): string {
       <!-- Create Account Link -->
       <div class="mt-8 text-center">
         <p class="text-sm text-gray-600 dark:text-gray-400">
-          TradeHub'da yeni misiniz? 
+          <span data-i18n="auth.login.newUser">${t('auth.login.newUser')}</span>
           <a
             href="${baseUrl}pages/auth/register.html"
             id="login-create-account-link"
             class="font-medium text-gray-900 dark:text-white hover:underline ml-1"
           >
-            Hesap oluştur
+            <span data-i18n="auth.login.createAccount">${t('auth.login.createAccount')}</span>
           </a>
         </p>
       </div>
@@ -131,7 +132,7 @@ export function LoginPage(): string {
           <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/>
           </svg>
-          QR kod ile giriş yap
+          <span data-i18n="auth.login.qrLogin">${t('auth.login.qrLogin')}</span>
         </a>
       </div>
     </div>

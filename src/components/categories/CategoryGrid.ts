@@ -5,6 +5,7 @@
  */
 
 import type { CategorySection as CategorySectionType } from '../../data/categories';
+import { t } from '../../i18n';
 
 /** Render a single category item as circular thumbnail + label */
 function CategoryItem(cat: { name: string; href: string; image: string }): string {
@@ -36,7 +37,7 @@ function SeeAllItem(sectionTitle: string): string {
         </svg>
       </div>
       <span class="text-sm font-medium text-gray-500 group-hover:text-(--primary) transition-colors duration-200 leading-tight">
-        Tümünü gör
+        ${t('categoryPage.seeAll')}
       </span>
     </a>
   `;

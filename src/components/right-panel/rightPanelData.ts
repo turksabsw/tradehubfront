@@ -1,7 +1,10 @@
 /**
  * Right Panel Data — Static Configuration
  * Section layout config, empty state text/icons for the right panel.
+ * Wrapped in getter functions so t() is called at render time.
  */
+
+import { t } from '../../i18n';
 
 export interface RightPanelSectionConfig {
   id: string;
@@ -27,26 +30,34 @@ const favoritesEmptyIcon = `
   </svg>
 `;
 
-export const favoritesConfig: RightPanelSectionConfig = {
-  id: 'favorites',
-  title: 'Favoriler',
-};
+export function getFavoritesConfig(): RightPanelSectionConfig {
+  return {
+    id: 'favorites',
+    title: t('dashboard.favorites'),
+  };
+}
 
-export const favoritesEmptyState: FavoritesEmptyConfig = {
-  icon: favoritesEmptyIcon,
-  text: 'Henüz favoriniz yok',
-  linkText: 'Keşfedin',
-  linkHref: '/products',
-};
+export function getFavoritesEmptyState(): FavoritesEmptyConfig {
+  return {
+    icon: favoritesEmptyIcon,
+    text: t('dashboard.noFavorites'),
+    linkText: t('dashboard.explore'),
+    linkHref: '/products',
+  };
+}
 
-export const browsingHistoryConfig: RightPanelSectionConfig = {
-  id: 'browsing-history',
-  title: 'Göz atma geçmişi',
-  actionText: 'Tümünü görüntüle >',
-  actionHref: '/browsing-history',
-};
+export function getBrowsingHistoryConfig(): RightPanelSectionConfig {
+  return {
+    id: 'browsing-history',
+    title: t('dashboard.browsingHistoryTitle'),
+    actionText: t('dashboard.viewAllHistory'),
+    actionHref: '/browsing-history',
+  };
+}
 
-export const promotionConfig: RightPanelSectionConfig = {
-  id: 'promotions',
-  title: 'Promosyon',
-};
+export function getPromotionConfig(): RightPanelSectionConfig {
+  return {
+    id: 'promotions',
+    title: t('dashboard.promotionTitle'),
+  };
+}

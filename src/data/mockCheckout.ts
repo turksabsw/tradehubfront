@@ -3,6 +3,7 @@
  * Static data for the checkout page — Alibaba B2B style.
  */
 
+import { t } from '../i18n';
 import type {
   Country,
   Province,
@@ -277,7 +278,7 @@ export const paymentIcons: PaymentIcon[] = [
 
 // 7. Saved Address (1 entry for autocomplete popup)
 export const savedAddress: SavedAddress = {
-  label: 'Ev Adresi',
+  label: 'Home Address',
   fullAddress: 'Gulbahar Mah. Cemal Sururi Sk. No:12, Sisli, Istanbul 34394, Turkey',
   country: 'TR',
   countryName: 'Turkey/Turkiye',
@@ -305,18 +306,21 @@ export const geolocationMockAddress = {
 export const protectionSummaryItems = [
   {
     icon: '✅',
+    key: 'secure' as const,
     title: 'Secure payments',
     description:
       'Every payment you make on Alibaba.com is secured with strict SSL encryption and PCI DSS data protection protocols.',
   },
   {
     icon: '🚚',
+    key: 'dispatch' as const,
     title: 'On-time Dispatch Guarantee',
     description:
       'Dispatched within 7 days of payment or receive a 10% delay compensation.',
   },
   {
     icon: '💰',
+    key: 'refund' as const,
     title: 'Money-back protection',
     description:
       'Claim a refund if your order doesn\'t ship, is missing, or arrives with product issues.',
@@ -365,20 +369,23 @@ export interface CouponData {
   usedAt?: string;
 }
 
-export const mockCoupons: CouponData[] = [
-  // 3 available
-  { code: 'WELCOME10', type: 'percent', value: 10, minOrder: 50, description: 'İlk siparişinize %10 indirim', status: 'available', expiresAt: '2026-06-30T23:59:59Z' },
-  { code: 'SAVE20', type: 'fixed', value: 20, minOrder: 100, description: '$20 indirim kuponu', status: 'available', expiresAt: '2026-05-15T23:59:59Z' },
-  { code: 'FREESHIP', type: 'shipping', value: 0, minOrder: 0, description: 'Ücretsiz kargo', status: 'available', expiresAt: '2026-04-30T23:59:59Z' },
-  // 3 used
-  { code: 'SUMMER15', type: 'percent', value: 15, minOrder: 75, description: 'Yaz kampanyası %15 indirim', status: 'used', expiresAt: '2026-02-28T23:59:59Z', usedAt: '2026-02-10T14:30:00Z' },
-  { code: 'FLAT50', type: 'fixed', value: 50, minOrder: 250, description: '$50 indirim kuponu', status: 'used', expiresAt: '2026-03-01T23:59:59Z', usedAt: '2026-02-25T09:15:00Z' },
-  { code: 'SHIPFREE2', type: 'shipping', value: 0, minOrder: 30, description: 'Ücretsiz kargo (min $30)', status: 'used', expiresAt: '2026-02-15T23:59:59Z', usedAt: '2026-02-12T18:00:00Z' },
-  // 3 expired
-  { code: 'NEWYEAR25', type: 'percent', value: 25, minOrder: 100, description: 'Yılbaşı özel %25 indirim', status: 'expired', expiresAt: '2026-01-15T23:59:59Z' },
-  { code: 'FLASH10', type: 'fixed', value: 10, minOrder: 40, description: '$10 flash indirim', status: 'expired', expiresAt: '2026-01-31T23:59:59Z' },
-  { code: 'XMASSHIP', type: 'shipping', value: 0, minOrder: 0, description: 'Noel ücretsiz kargo', status: 'expired', expiresAt: '2025-12-31T23:59:59Z' },
-];
+export function getMockCoupons(): CouponData[] {
+  return [
+    // 3 available
+    { code: 'WELCOME10', type: 'percent', value: 10, minOrder: 50, description: t('coupons.welcome10Desc'), status: 'available', expiresAt: '2026-06-30T23:59:59Z' },
+    { code: 'SAVE20', type: 'fixed', value: 20, minOrder: 100, description: t('coupons.save20Desc'), status: 'available', expiresAt: '2026-05-15T23:59:59Z' },
+    { code: 'FREESHIP', type: 'shipping', value: 0, minOrder: 0, description: t('coupons.freeShippingDesc'), status: 'available', expiresAt: '2026-04-30T23:59:59Z' },
+    // 3 used
+    { code: 'SUMMER15', type: 'percent', value: 15, minOrder: 75, description: t('coupons.summer15Desc'), status: 'used', expiresAt: '2026-02-28T23:59:59Z', usedAt: '2026-02-10T14:30:00Z' },
+    { code: 'FLAT50', type: 'fixed', value: 50, minOrder: 250, description: t('coupons.flat50Desc'), status: 'used', expiresAt: '2026-03-01T23:59:59Z', usedAt: '2026-02-25T09:15:00Z' },
+    { code: 'SHIPFREE2', type: 'shipping', value: 0, minOrder: 30, description: t('coupons.shipfree2Desc'), status: 'used', expiresAt: '2026-02-15T23:59:59Z', usedAt: '2026-02-12T18:00:00Z' },
+    // 3 expired
+    { code: 'NEWYEAR25', type: 'percent', value: 25, minOrder: 100, description: t('coupons.newyear25Desc'), status: 'expired', expiresAt: '2026-01-15T23:59:59Z' },
+    { code: 'FLASH10', type: 'fixed', value: 10, minOrder: 40, description: t('coupons.flash10Desc'), status: 'expired', expiresAt: '2026-01-31T23:59:59Z' },
+    { code: 'XMASSHIP', type: 'shipping', value: 0, minOrder: 0, description: t('coupons.xmasshipDesc'), status: 'expired', expiresAt: '2025-12-31T23:59:59Z' },
+  ];
+}
+export const mockCoupons: CouponData[] = getMockCoupons();
 
 // 13. Mock Credit History
 export interface CreditHistoryEntry {
@@ -389,12 +396,15 @@ export interface CreditHistoryEntry {
   amount: number;
 }
 
-export const mockCreditHistory: CreditHistoryEntry[] = [
-  { id: 'cr-1', type: 'earned', description: 'Hoş geldin bonusu', date: '2026-01-15T10:00:00Z', amount: 25.00 },
-  { id: 'cr-2', type: 'spent', description: 'Sipariş #29303B587501 — Kredi kullanımı', date: '2026-02-01T14:30:00Z', amount: -10.00 },
-  { id: 'cr-3', type: 'refund', description: 'Sipariş #29303B591501 — İade kredisi', date: '2026-02-10T09:00:00Z', amount: 15.00 },
-  { id: 'cr-4', type: 'earned', description: 'Değerlendirme ödülü', date: '2026-02-20T11:00:00Z', amount: 5.00 },
-  { id: 'cr-5', type: 'spent', description: 'Sipariş #29303B602501 — Kredi kullanımı', date: '2026-03-01T16:45:00Z', amount: -8.50 },
-];
+export function getMockCreditHistory(): CreditHistoryEntry[] {
+  return [
+    { id: 'cr-1', type: 'earned', description: t('coupons.welcomeBonus'), date: '2026-01-15T10:00:00Z', amount: 25.00 },
+    { id: 'cr-2', type: 'spent', description: t('coupons.creditUsage', { orderNum: '#29303B587501' }), date: '2026-02-01T14:30:00Z', amount: -10.00 },
+    { id: 'cr-3', type: 'refund', description: t('coupons.refundCredit', { orderNum: '#29303B591501' }), date: '2026-02-10T09:00:00Z', amount: 15.00 },
+    { id: 'cr-4', type: 'earned', description: t('coupons.reviewReward'), date: '2026-02-20T11:00:00Z', amount: 5.00 },
+    { id: 'cr-5', type: 'spent', description: t('coupons.creditUsage', { orderNum: '#29303B602501' }), date: '2026-03-01T16:45:00Z', amount: -8.50 },
+  ];
+}
+export const mockCreditHistory: CreditHistoryEntry[] = getMockCreditHistory();
 
 export const mockCreditBalance = 26.50;

@@ -3,6 +3,7 @@
  * Simulates 3D Secure / OTP verification before redirecting to success or failed.
  */
 import '../style.css';
+import { t } from '../i18n';
 import { getBaseUrl, initLinkRewriter } from '../utils/url';
 
 initLinkRewriter();
@@ -37,8 +38,8 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
 
           <div>
-            <h1 class="text-xl font-bold text-[#222] mb-2">Processing your payment...</h1>
-            <p class="text-sm text-[#666]">Please do not close or refresh this page</p>
+            <h1 class="text-xl font-bold text-[#222] mb-2"><span data-i18n="paymentStatus.processingTitle">${t('paymentStatus.processingTitle')}</span></h1>
+            <p class="text-sm text-[#666]"><span data-i18n="paymentStatus.doNotClose">${t('paymentStatus.doNotClose')}</span></p>
           </div>
 
           <div class="bg-[#fff8f0] border border-[#f0d9b5] rounded-lg p-4 w-full max-w-sm">
@@ -46,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M12 9v4m0 4h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
               </svg>
-              <span>Your bank may request additional verification</span>
+              <span data-i18n="paymentStatus.bankVerification">${t('paymentStatus.bankVerification')}</span>
             </div>
           </div>
         </div>
@@ -62,9 +63,9 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
 
           <div>
-            <h1 class="text-xl font-bold text-[#222] mb-1">3D Secure Verification</h1>
-            <p class="text-sm text-[#666] mb-1">Enter the code sent to your phone</p>
-            <p class="text-xs text-[#999]">(Demo: code is <strong class="text-[#333]">${otpCode}</strong>)</p>
+            <h1 class="text-xl font-bold text-[#222] mb-1"><span data-i18n="paymentStatus.secureVerification">${t('paymentStatus.secureVerification')}</span></h1>
+            <p class="text-sm text-[#666] mb-1"><span data-i18n="paymentStatus.enterCode">${t('paymentStatus.enterCode')}</span></p>
+            <p class="text-xs text-[#999]">(<span data-i18n="paymentStatus.demoCode">${t('paymentStatus.demoCode')}</span> <strong class="text-[#333]">${otpCode}</strong>)</p>
           </div>
 
           <div class="w-full max-w-[240px]">
@@ -74,15 +75,15 @@ document.addEventListener('DOMContentLoaded', () => {
               <input type="text" maxlength="1" class="w-12 h-14 text-center text-xl font-bold border-2 border-gray-300 rounded-lg focus:border-[#3b82f6] focus:outline-none transition-colors" data-otp-index="2" inputmode="numeric" />
               <input type="text" maxlength="1" class="w-12 h-14 text-center text-xl font-bold border-2 border-gray-300 rounded-lg focus:border-[#3b82f6] focus:outline-none transition-colors" data-otp-index="3" inputmode="numeric" />
             </div>
-            <p class="text-xs text-red-500 hidden mb-3" id="otp-error">Incorrect code. Please try again.</p>
+            <p class="text-xs text-red-500 hidden mb-3" id="otp-error"><span data-i18n="paymentStatus.incorrectCode">${t('paymentStatus.incorrectCode')}</span></p>
             <button id="otp-verify-btn" class="w-full bg-[#3b82f6] hover:bg-[#2563eb] text-white font-bold py-3 px-6 rounded-full transition-colors text-sm disabled:opacity-50 disabled:cursor-not-allowed" disabled>
-              Verify
+              <span data-i18n="paymentStatus.verify">${t('paymentStatus.verify')}</span>
             </button>
           </div>
 
           <p class="text-xs text-[#999]">
             <svg class="inline w-3 h-3 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-            Secure connection — SSL encrypted
+            <span data-i18n="paymentStatus.secureConnection">${t('paymentStatus.secureConnection')}</span>
           </p>
         </div>
       `;
@@ -95,8 +96,8 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="absolute inset-0 rounded-full border-4 border-t-[#16a34a] animate-spin"></div>
           </div>
           <div>
-            <h1 class="text-xl font-bold text-[#222] mb-2">Verifying payment...</h1>
-            <p class="text-sm text-[#666]">Almost done, please wait</p>
+            <h1 class="text-xl font-bold text-[#222] mb-2"><span data-i18n="paymentStatus.verifyingPayment">${t('paymentStatus.verifyingPayment')}</span></h1>
+            <p class="text-sm text-[#666]"><span data-i18n="paymentStatus.almostDone">${t('paymentStatus.almostDone')}</span></p>
           </div>
         </div>
       `;

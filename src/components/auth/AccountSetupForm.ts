@@ -5,6 +5,8 @@
  * Used after email verification in the registration flow.
  */
 
+import { t } from '../../i18n';
+
 /* ── Types ──────────────────────────────────────────── */
 
 export interface CountryOption {
@@ -56,36 +58,55 @@ export interface PasswordRequirements {
 
 /* ── Country Options ────────────────────────────────── */
 
-/** Default country options for the registration form */
-export const countryOptions: CountryOption[] = [
-  { code: 'TR', name: 'Türkiye', flag: '🇹🇷' },
-  { code: 'US', name: 'ABD', flag: '🇺🇸' },
-  { code: 'DE', name: 'Almanya', flag: '🇩🇪' },
-  { code: 'GB', name: 'İngiltere', flag: '🇬🇧' },
-  { code: 'FR', name: 'Fransa', flag: '🇫🇷' },
-  { code: 'IT', name: 'İtalya', flag: '🇮🇹' },
-  { code: 'ES', name: 'İspanya', flag: '🇪🇸' },
-  { code: 'NL', name: 'Hollanda', flag: '🇳🇱' },
-  { code: 'BE', name: 'Belçika', flag: '🇧🇪' },
-  { code: 'AT', name: 'Avusturya', flag: '🇦🇹' },
-  { code: 'CH', name: 'İsviçre', flag: '🇨🇭' },
-  { code: 'PL', name: 'Polonya', flag: '🇵🇱' },
-  { code: 'SE', name: 'İsveç', flag: '🇸🇪' },
-  { code: 'NO', name: 'Norveç', flag: '🇳🇴' },
-  { code: 'DK', name: 'Danimarka', flag: '🇩🇰' },
-  { code: 'FI', name: 'Finlandiya', flag: '🇫🇮' },
-  { code: 'RU', name: 'Rusya', flag: '🇷🇺' },
-  { code: 'CN', name: 'Çin', flag: '🇨🇳' },
-  { code: 'JP', name: 'Japonya', flag: '🇯🇵' },
-  { code: 'KR', name: 'Güney Kore', flag: '🇰🇷' },
-  { code: 'IN', name: 'Hindistan', flag: '🇮🇳' },
-  { code: 'AE', name: 'BAE', flag: '🇦🇪' },
-  { code: 'SA', name: 'Suudi Arabistan', flag: '🇸🇦' },
-  { code: 'AU', name: 'Avustralya', flag: '🇦🇺' },
-  { code: 'CA', name: 'Kanada', flag: '🇨🇦' },
-  { code: 'BR', name: 'Brezilya', flag: '🇧🇷' },
-  { code: 'MX', name: 'Meksika', flag: '🇲🇽' },
+/** Country code + flag pairs (name is resolved via i18n at render time) */
+const countryEntries: { code: string; flag: string }[] = [
+  { code: 'TR', flag: '🇹🇷' },
+  { code: 'US', flag: '🇺🇸' },
+  { code: 'DE', flag: '🇩🇪' },
+  { code: 'GB', flag: '🇬🇧' },
+  { code: 'FR', flag: '🇫🇷' },
+  { code: 'IT', flag: '🇮🇹' },
+  { code: 'ES', flag: '🇪🇸' },
+  { code: 'NL', flag: '🇳🇱' },
+  { code: 'BE', flag: '🇧🇪' },
+  { code: 'AT', flag: '🇦🇹' },
+  { code: 'CH', flag: '🇨🇭' },
+  { code: 'PL', flag: '🇵🇱' },
+  { code: 'SE', flag: '🇸🇪' },
+  { code: 'NO', flag: '🇳🇴' },
+  { code: 'DK', flag: '🇩🇰' },
+  { code: 'FI', flag: '🇫🇮' },
+  { code: 'RU', flag: '🇷🇺' },
+  { code: 'CN', flag: '🇨🇳' },
+  { code: 'JP', flag: '🇯🇵' },
+  { code: 'KR', flag: '🇰🇷' },
+  { code: 'IN', flag: '🇮🇳' },
+  { code: 'AE', flag: '🇦🇪' },
+  { code: 'SA', flag: '🇸🇦' },
+  { code: 'AU', flag: '🇦🇺' },
+  { code: 'CA', flag: '🇨🇦' },
+  { code: 'BR', flag: '🇧🇷' },
+  { code: 'MX', flag: '🇲🇽' },
 ];
+
+/** Build country options with i18n-resolved names (call at render time for correct locale) */
+export function getCountryOptions(): CountryOption[] {
+  return countryEntries.map(({ code, flag }) => ({
+    code,
+    name: t(`countries.${code}`),
+    flag,
+  }));
+}
+
+/**
+ * @deprecated Use getCountryOptions() instead. Kept for backward-compat;
+ * evaluates once at import time so the name reflects the language active at that moment.
+ */
+export const countryOptions: CountryOption[] = countryEntries.map(({ code, flag }) => ({
+  code,
+  name: t(`countries.${code}`),
+  flag,
+}));
 
 /* ── Component HTML ─────────────────────────────────── */
 
@@ -104,18 +125,18 @@ export function AccountSetupForm(defaultCountry: string = 'TR'): string {
       <!-- Header -->
       <div class="mb-6 text-center lg:text-left">
         <h1 class="text-xl lg:text-2xl font-bold text-gray-900 dark:text-white mb-2">
-          Hesabınızı oluşturun
+          ${t('auth.setupTitle')}
         </h1>
         <p class="text-sm text-gray-500 dark:text-gray-400">
-          Bilgilerinizi girerek kaydınızı tamamlayın
+          ${t('auth.setupSubtitle')}
         </p>
       </div>
 
       <form id="account-setup-form-element" class="space-y-5" novalidate>
         <!-- Country/Region Dropdown -->
         <div class="auth-form-field relative">
-          <label for="country-select" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
-            Ülke / Bölge
+          <label for="country-select" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5" data-i18n="auth.setup.countryRegion">
+            ${t('auth.setup.countryRegion')}
           </label>
           <div class="relative">
             <button
@@ -141,7 +162,7 @@ export function AccountSetupForm(defaultCountry: string = 'TR'): string {
               id="country-dropdown"
               class="absolute z-50 hidden w-full mt-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-md shadow-lg max-h-60 overflow-y-auto"
               role="listbox"
-              aria-label="Ülke seçin"
+              aria-label="${t('auth.setup.selectCountry')}" data-i18n-aria-label="auth.setup.selectCountry"
             >
               ${renderCountryOptions(selectedCountry.code)}
             </div>
@@ -152,14 +173,14 @@ export function AccountSetupForm(defaultCountry: string = 'TR'): string {
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <!-- First Name -->
           <div class="auth-form-field relative">
-            <label for="first-name-input" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
-              Ad
+            <label for="first-name-input" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5" data-i18n="auth.setup.firstName">
+              ${t('auth.setup.firstName')}
             </label>
             <input
               type="text"
               id="first-name-input"
               name="firstName"
-              placeholder="Adınız"
+              placeholder="${t('auth.setup.firstNamePlaceholder')}" data-i18n-placeholder="auth.setup.firstNamePlaceholder"
               autocomplete="given-name"
               class="w-full px-4 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-md text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 dark:focus:border-orange-400 transition-all"
               required
@@ -168,14 +189,14 @@ export function AccountSetupForm(defaultCountry: string = 'TR'): string {
 
           <!-- Last Name -->
           <div class="auth-form-field relative">
-            <label for="last-name-input" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
-              Soyad
+            <label for="last-name-input" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5" data-i18n="auth.setup.lastName">
+              ${t('auth.setup.lastName')}
             </label>
             <input
               type="text"
               id="last-name-input"
               name="lastName"
-              placeholder="Soyadınız"
+              placeholder="${t('auth.setup.lastNamePlaceholder')}" data-i18n-placeholder="auth.setup.lastNamePlaceholder"
               autocomplete="family-name"
               class="w-full px-4 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-md text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 dark:focus:border-orange-400 transition-all"
               required
@@ -185,15 +206,15 @@ export function AccountSetupForm(defaultCountry: string = 'TR'): string {
 
         <!-- Password Field -->
         <div class="auth-form-field relative">
-          <label for="password-input" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
-            Şifre
+          <label for="password-input" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5" data-i18n="auth.setup.password">
+            ${t('auth.setup.password')}
           </label>
           <div class="relative">
             <input
               type="password"
               id="password-input"
               name="password"
-              placeholder="Şifrenizi oluşturun"
+              placeholder="${t('auth.setup.passwordPlaceholder')}" data-i18n-placeholder="auth.setup.passwordPlaceholder"
               autocomplete="new-password"
               class="w-full px-4 py-3 pr-12 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-md text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 dark:focus:border-orange-400 transition-all"
               required
@@ -202,7 +223,7 @@ export function AccountSetupForm(defaultCountry: string = 'TR'): string {
               type="button"
               id="password-toggle-btn"
               class="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
-              aria-label="Şifreyi göster/gizle"
+              aria-label="${t('auth.forgot.showHidePassword')}" data-i18n-aria-label="auth.forgot.showHidePassword"
             >
               <!-- Eye icon (show) -->
               <svg id="password-eye-show" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -222,25 +243,25 @@ export function AccountSetupForm(defaultCountry: string = 'TR'): string {
               <svg class="auth-password-req-icon shrink-0 w-2 h-2 transition-all" viewBox="0 0 16 16" fill="currentColor">
                 <circle cx="8" cy="8" r="3"/>
               </svg>
-              <span>En az 8 karakter</span>
+              <span data-i18n="auth.setup.minChars">${t('auth.setup.minChars')}</span>
             </div>
             <div class="auth-password-req-item flex items-center gap-2 text-[13px] transition-colors" data-requirement="hasUppercase">
               <svg class="auth-password-req-icon shrink-0 w-2 h-2 transition-all" viewBox="0 0 16 16" fill="currentColor">
                 <circle cx="8" cy="8" r="3"/>
               </svg>
-              <span>En az 1 büyük harf (A-Z)</span>
+              <span data-i18n="auth.setup.uppercase">${t('auth.setup.uppercase')}</span>
             </div>
             <div class="auth-password-req-item flex items-center gap-2 text-[13px] transition-colors" data-requirement="hasLowercase">
               <svg class="auth-password-req-icon shrink-0 w-2 h-2 transition-all" viewBox="0 0 16 16" fill="currentColor">
                 <circle cx="8" cy="8" r="3"/>
               </svg>
-              <span>En az 1 küçük harf (a-z)</span>
+              <span data-i18n="auth.setup.lowercase">${t('auth.setup.lowercase')}</span>
             </div>
             <div class="auth-password-req-item flex items-center gap-2 text-[13px] transition-colors" data-requirement="hasNumber">
               <svg class="auth-password-req-icon shrink-0 w-2 h-2 transition-all" viewBox="0 0 16 16" fill="currentColor">
                 <circle cx="8" cy="8" r="3"/>
               </svg>
-              <span>En az 1 rakam (0-9)</span>
+              <span data-i18n="auth.setup.number">${t('auth.setup.number')}</span>
             </div>
           </div>
         </div>
@@ -255,8 +276,8 @@ export function AccountSetupForm(defaultCountry: string = 'TR'): string {
             required
           />
           <label for="terms-checkbox" class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
-            <a href="/pages/legal/terms.html" class="text-orange-600 dark:text-orange-400 hover:underline">Kullanım Koşulları</a> ve
-            <a href="/pages/legal/privacy.html" class="text-orange-600 dark:text-orange-400 hover:underline">Gizlilik Politikası</a>'nı okudum ve kabul ediyorum.
+            <a href="/pages/legal/terms.html" class="text-orange-600 dark:text-orange-400 hover:underline" data-i18n="auth.setup.termsOfUse">${t('auth.setup.termsOfUse')}</a> ${t('auth.and')}
+            <a href="/pages/legal/privacy.html" class="text-orange-600 dark:text-orange-400 hover:underline" data-i18n="auth.setup.privacyPolicy">${t('auth.setup.privacyPolicy')}</a><span data-i18n="auth.setup.agreeTerms">${t('auth.setup.agreeTerms')}</span>
           </label>
         </div>
 
@@ -267,15 +288,15 @@ export function AccountSetupForm(defaultCountry: string = 'TR'): string {
           class="th-btn th-btn-pill w-full py-3 text-base font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed mt-6"
           disabled
         >
-          Hesap Oluştur
+          <span data-i18n="auth.setup.createAccount">${t('auth.setup.createAccount')}</span>
         </button>
       </form>
 
       <!-- Login Link -->
       <div class="mt-6 text-center text-sm text-gray-500 dark:text-gray-400">
-        Zaten hesabınız var mı?
+        <span data-i18n="auth.register.alreadyHave">${t('auth.register.alreadyHave')}</span>
         <a href="/pages/auth/login.html" class="ml-1 font-medium text-orange-600 dark:text-orange-400 hover:underline">
-          Giriş yapın
+          <span data-i18n="auth.register.signIn">${t('auth.register.signIn')}</span>
         </a>
       </div>
     </div>

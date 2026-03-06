@@ -14,7 +14,7 @@ appEl.classList.add('relative');
 appEl.innerHTML = `
   ${HelpCenterHeader({ activePage: 'privacy' })}
   <main>
-    ${LegalPageLayout(privacyContent)}
+    ${LegalPageLayout(privacyContent())}
   </main>
   ${FloatingPanel()}
 `;

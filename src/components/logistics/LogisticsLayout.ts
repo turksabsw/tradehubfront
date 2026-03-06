@@ -1,3 +1,5 @@
+import { t } from '../../i18n';
+
 /**
  * LogisticsLayout Component
  * Two hash-based views: #orders (default) and #reviews.
@@ -15,17 +17,21 @@ const EMPTY_ENVELOPE_ICON = `
   <rect x="18" y="8" width="28" height="14" rx="3" fill="#E5E7EB" stroke="#D1D5DB" stroke-width="1"/>
 </svg>`;
 
-const INFO_BANNER_ORDERS = `
+function getInfoBannerOrders(): string {
+  return `
 <div class="flex items-start gap-2.5 px-6 py-3.5 bg-[#EFF6FF] text-[13px] text-gray-700 leading-normal rounded-t-lg">
   <svg class="shrink-0 mt-px" width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="#3B82F6" stroke-width="1.3"/><path d="M8 5v3m0 2.5h.01" stroke="#3B82F6" stroke-width="1.3" stroke-linecap="round"/></svg>
-  <span>Uyarı: lojistik pazar yeri siparişleri artık ticaret güvence emirlerine yükseltildi. Ticaret güvence siparişlerinizi alibaba> sipariş menüsünde yönetebilirsiniz.</span>
+  <span>${t('logistics.ordersBannerInfo')}</span>
 </div>`;
+}
 
-const INFO_BANNER_REVIEWS = `
+function getInfoBannerReviews(): string {
+  return `
 <div class="flex items-start gap-2.5 px-6 py-3.5 bg-[#EFF6FF] text-[13px] text-gray-700 leading-normal rounded-t-lg">
   <svg class="shrink-0 mt-px" width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="#3B82F6" stroke-width="1.3"/><path d="M8 5v3m0 2.5h.01" stroke="#3B82F6" stroke-width="1.3" stroke-linecap="round"/></svg>
-  <span>Uyarı: lojistik pazar yeri siparişleri, yaklaşık 20 şubat tarihinden itibaren ticaret güvence siparişlerine yükseltilecektir.</span>
+  <span>${t('logistics.reviewsBannerInfo')}</span>
 </div>`;
+}
 
 /* ────────────────────────────────────────
    SEARCH ICON
@@ -33,28 +39,30 @@ const INFO_BANNER_REVIEWS = `
 const SEARCH_ICON = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="5.5" stroke="#666" stroke-width="1.3"/><path d="M11 11l3 3" stroke="#666" stroke-width="1.3" stroke-linecap="round"/></svg>`;
 
 /* ────────────────────────────────────────
-   SECTION: Lojistik Siparişlerim
+   SECTION: Logistics Orders
    ──────────────────────────────────────── */
-const ORDER_TABS = [
-  'All (0)',
-  "Waiting for forwarder's quote (0)",
-  'Ödenmemiş (0)',
-  'To be shipped (0)',
-  'To be received (0)',
-  'In dispute (0)',
-  'Tamamlandı/Kapatıldı (0)',
-];
+function getOrderTabs(): string[] {
+  return [
+    `${t('logistics.tabAll')} (0)`,
+    `${t('logistics.tabWaitingForwarder')} (0)`,
+    `${t('logistics.unpaid')} (0)`,
+    `${t('logistics.tabToBeShipped')} (0)`,
+    `${t('logistics.tabToBeReceived')} (0)`,
+    `${t('logistics.tabInDispute')} (0)`,
+    `${t('logistics.completedClosed')} (0)`,
+  ];
+}
 
 function renderOrders(): string {
-  const tabs = ORDER_TABS.map((t, i) =>
-    `<button class="log-tabs__tab px-4 py-3 text-[13px] font-medium text-gray-500 bg-transparent border-none border-b-2 border-b-transparent cursor-pointer transition-colors whitespace-nowrap -mb-px hover:text-gray-900${i === 0 ? ' log-tabs__tab--active !text-gray-900 !font-semibold !border-b-[#222]' : ''}" data-tab="log-order-${i}">${t}</button>`
+  const tabs = getOrderTabs().map((label, i) =>
+    `<button class="log-tabs__tab px-4 py-3 text-[13px] font-medium text-gray-500 bg-transparent border-none border-b-2 border-b-transparent cursor-pointer transition-colors whitespace-nowrap -mb-px hover:text-gray-900${i === 0 ? ' log-tabs__tab--active !text-gray-900 !font-semibold !border-b-[#222]' : ''}" data-tab="log-order-${i}">${label}</button>`
   ).join('');
 
   return `
-    ${INFO_BANNER_ORDERS}
+    ${getInfoBannerOrders()}
 
     <div class="px-7 max-sm:px-3 pt-6">
-      <h1 class="text-[22px] font-bold text-gray-900">Lojistik siparişlerini yönet</h1>
+      <h1 class="text-[22px] font-bold text-gray-900">${t('logistics.manageOrders')}</h1>
     </div>
 
     <div class="flex px-7 max-md:px-4 border-b border-border-default mt-4 overflow-x-auto" data-tabgroup="log-orders">
@@ -65,34 +73,34 @@ function renderOrders(): string {
     <div class="px-7 max-sm:px-3 py-5">
       <div class="flex items-center gap-4 mb-4">
         <div class="flex-1 flex border border-border-default rounded-md overflow-hidden">
-          <input type="text" class="flex-1 px-3.5 py-2.5 text-[14px] border-none outline-none text-gray-900 placeholder:text-gray-400" placeholder="Sipariş numarasına göre ara" />
-          <button class="flex items-center gap-1.5 px-5 py-2.5 text-[14px] text-gray-700 bg-white border-none border-l border-l-border-default cursor-pointer whitespace-nowrap hover:bg-gray-100 transition-colors">${SEARCH_ICON} Arama</button>
+          <input type="text" class="flex-1 px-3.5 py-2.5 text-[14px] border-none outline-none text-gray-900 placeholder:text-gray-400" placeholder="${t('logistics.searchByOrderNo')}" />
+          <button class="flex items-center gap-1.5 px-5 py-2.5 text-[14px] text-gray-700 bg-white border-none border-l border-l-border-default cursor-pointer whitespace-nowrap hover:bg-gray-100 transition-colors">${SEARCH_ICON} ${t('logistics.searchBtn')}</button>
         </div>
-        <a href="#" class="text-[13px] text-primary-500 no-underline whitespace-nowrap hover:underline">Hepsini sıfırla</a>
+        <a href="#" class="text-[13px] text-primary-500 no-underline whitespace-nowrap hover:underline">${t('logistics.resetAll')}</a>
       </div>
       <div class="grid grid-cols-3 max-md:grid-cols-1 gap-4">
         <div class="relative">
-          <input type="text" class="w-full py-2.5 pl-3.5 pr-9 text-[14px] border border-border-default rounded-md outline-none text-gray-900 bg-white cursor-pointer box-border" placeholder="Sipariş verildi" readonly />
+          <input type="text" class="w-full py-2.5 pl-3.5 pr-9 text-[14px] border border-border-default rounded-md outline-none text-gray-900 bg-white cursor-pointer box-border" placeholder="${t('logistics.orderPlaced')}" readonly />
           <svg class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="11" rx="2" stroke="#999" stroke-width="1.2"/><path d="M2 6h12M5 1v3M11 1v3" stroke="#999" stroke-width="1.2" stroke-linecap="round"/></svg>
         </div>
         <div class="relative">
-          <label class="absolute left-3 top-1/2 -translate-y-1/2 text-[13px] text-gray-500 pointer-events-none">Hizmet türü</label>
+          <label class="absolute left-3 top-1/2 -translate-y-1/2 text-[13px] text-gray-500 pointer-events-none">${t('logistics.serviceType')}</label>
           <select class="w-full py-2.5 pl-[110px] pr-3 text-[14px] border border-border-default rounded-md outline-none text-gray-900 bg-white appearance-none cursor-pointer box-border">
-            <option>Seçin</option>
-            <option>Deniz yolu</option>
-            <option>Hava yolu</option>
-            <option>Kara yolu</option>
-            <option>Ekspres</option>
+            <option>${t('logistics.selectOption')}</option>
+            <option>${t('logistics.seaFreight')}</option>
+            <option>${t('logistics.airFreight')}</option>
+            <option>${t('logistics.landFreight')}</option>
+            <option>${t('logistics.express')}</option>
           </select>
         </div>
         <div class="relative">
-          <label class="absolute left-3 top-1/2 -translate-y-1/2 text-[13px] text-gray-500 pointer-events-none">Gönderi durumu</label>
+          <label class="absolute left-3 top-1/2 -translate-y-1/2 text-[13px] text-gray-500 pointer-events-none">${t('logistics.shipmentStatus')}</label>
           <select class="w-full py-2.5 pl-[110px] pr-3 text-[14px] border border-border-default rounded-md outline-none text-gray-900 bg-white appearance-none cursor-pointer box-border">
-            <option>Seçin</option>
-            <option>Beklemede</option>
-            <option>Transitte</option>
-            <option>Teslim edildi</option>
-            <option>İptal edildi</option>
+            <option>${t('logistics.selectOption')}</option>
+            <option>${t('logistics.pending')}</option>
+            <option>${t('logistics.inTransit')}</option>
+            <option>${t('logistics.delivered')}</option>
+            <option>${t('logistics.cancelled')}</option>
           </select>
         </div>
       </div>
@@ -103,19 +111,19 @@ function renderOrders(): string {
       <table class="w-full border-collapse">
         <thead>
           <tr>
-            <th class="text-left text-[13px] font-semibold text-gray-500 px-3 py-3 border-b border-border-default bg-surface-muted">Servis tipi ve taşıyıcı</th>
-            <th class="text-left text-[13px] font-semibold text-gray-500 px-3 py-3 border-b border-border-default bg-surface-muted">Menşe ve varış yeri</th>
-            <th class="text-left text-[13px] font-semibold text-gray-500 px-3 py-3 border-b border-border-default bg-surface-muted">Ürün bilgileri</th>
-            <th class="text-left text-[13px] font-semibold text-gray-500 px-3 py-3 border-b border-border-default bg-surface-muted">Gönderi durumu</th>
-            <th class="text-left text-[13px] font-semibold text-gray-500 px-3 py-3 border-b border-border-default bg-surface-muted">Miktar</th>
-            <th class="text-left text-[13px] font-semibold text-gray-500 px-3 py-3 border-b border-border-default bg-surface-muted">Eylem</th>
+            <th class="text-left text-[13px] font-semibold text-gray-500 px-3 py-3 border-b border-border-default bg-surface-muted">${t('logistics.thServiceCarrier')}</th>
+            <th class="text-left text-[13px] font-semibold text-gray-500 px-3 py-3 border-b border-border-default bg-surface-muted">${t('logistics.thOriginDest')}</th>
+            <th class="text-left text-[13px] font-semibold text-gray-500 px-3 py-3 border-b border-border-default bg-surface-muted">${t('logistics.thProductInfo')}</th>
+            <th class="text-left text-[13px] font-semibold text-gray-500 px-3 py-3 border-b border-border-default bg-surface-muted">${t('logistics.thShipmentStatus')}</th>
+            <th class="text-left text-[13px] font-semibold text-gray-500 px-3 py-3 border-b border-border-default bg-surface-muted">${t('logistics.thQuantity')}</th>
+            <th class="text-left text-[13px] font-semibold text-gray-500 px-3 py-3 border-b border-border-default bg-surface-muted">${t('logistics.thAction')}</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td colspan="6" class="text-center py-20 px-4 text-gray-400 text-[14px]">
               <div class="flex justify-center mb-3">${EMPTY_ENVELOPE_ICON}</div>
-              <p class="m-0">Sonuç bulunamadı</p>
+              <p class="m-0">${t('logistics.noResults')}</p>
             </td>
           </tr>
         </tbody>
@@ -125,27 +133,27 @@ function renderOrders(): string {
 }
 
 /* ────────────────────────────────────────
-   SECTION: Lojistik Siparişi Değerlendirmelerim
+   SECTION: Logistics Order Reviews
    ──────────────────────────────────────── */
 function renderReviews(): string {
   return `
-    ${INFO_BANNER_REVIEWS}
+    ${getInfoBannerReviews()}
 
     <div class="px-7 max-sm:px-3 pt-6 flex items-baseline gap-3 flex-wrap max-md:flex-col max-md:gap-1">
-      <h1 class="text-[22px] font-bold text-gray-900">Değerlendirmelerim</h1>
-      <p class="text-[14px] text-gray-400 m-0">Siparişiniz tamamlandıktan sonraki 90 gün içinde deneyiminizi puanlayın ve siparişinizle ilgili bir yorum bırakın</p>
+      <h1 class="text-[22px] font-bold text-gray-900">${t('logistics.myReviews')}</h1>
+      <p class="text-[14px] text-gray-400 m-0">${t('logistics.reviewsDesc')}</p>
     </div>
 
     <div class="flex px-7 max-md:px-4 border-b border-border-default mt-4 overflow-x-auto" data-tabgroup="log-reviews">
-      <button class="log-tabs__tab log-tabs__tab--active px-4 py-3 text-[13px] font-semibold text-gray-900 bg-transparent border-none border-b-2 border-b-[#222] cursor-pointer whitespace-nowrap -mb-px" data-tab="log-review-pending">Değerlendirilecek (0)</button>
-      <button class="log-tabs__tab px-4 py-3 text-[13px] font-medium text-gray-500 bg-transparent border-none border-b-2 border-b-transparent cursor-pointer whitespace-nowrap -mb-px hover:text-gray-900" data-tab="log-review-done">Değerlendirildi (0)</button>
+      <button class="log-tabs__tab log-tabs__tab--active px-4 py-3 text-[13px] font-semibold text-gray-900 bg-transparent border-none border-b-2 border-b-[#222] cursor-pointer whitespace-nowrap -mb-px" data-tab="log-review-pending">${t('logistics.toBeReviewed')} (0)</button>
+      <button class="log-tabs__tab px-4 py-3 text-[13px] font-medium text-gray-500 bg-transparent border-none border-b-2 border-b-transparent cursor-pointer whitespace-nowrap -mb-px hover:text-gray-900" data-tab="log-review-done">${t('logistics.reviewed')} (0)</button>
     </div>
 
     <!-- Search -->
     <div class="px-7 max-sm:px-3 py-5">
       <div class="flex border border-border-default rounded-md overflow-hidden max-w-[500px]">
         <input type="text" class="flex-1 px-3.5 py-2.5 text-[14px] border-none outline-none text-gray-900" placeholder="" />
-        <button class="flex items-center gap-1.5 px-5 py-2.5 text-[14px] text-gray-700 bg-white border-none border-l border-l-border-default cursor-pointer whitespace-nowrap hover:bg-gray-100 transition-colors">${SEARCH_ICON} Arama</button>
+        <button class="flex items-center gap-1.5 px-5 py-2.5 text-[14px] text-gray-700 bg-white border-none border-l border-l-border-default cursor-pointer whitespace-nowrap hover:bg-gray-100 transition-colors">${SEARCH_ICON} ${t('logistics.searchBtn')}</button>
       </div>
     </div>
 
@@ -154,19 +162,19 @@ function renderReviews(): string {
       <table class="w-full border-collapse">
         <thead>
           <tr>
-            <th class="text-left text-[13px] font-semibold text-gray-500 px-3 py-3 border-b border-border-default bg-surface-muted">Nakliye komisyoncusu</th>
-            <th class="text-left text-[13px] font-semibold text-gray-500 px-3 py-3 border-b border-border-default bg-surface-muted">Hizmet türü</th>
-            <th class="text-left text-[13px] font-semibold text-gray-500 px-3 py-3 border-b border-border-default bg-surface-muted">Menşe ve varış yeri</th>
-            <th class="text-left text-[13px] font-semibold text-gray-500 px-3 py-3 border-b border-border-default bg-surface-muted">Ürün bilgileri</th>
-            <th class="text-left text-[13px] font-semibold text-gray-500 px-3 py-3 border-b border-border-default bg-surface-muted">Durum</th>
-            <th class="text-left text-[13px] font-semibold text-gray-500 px-3 py-3 border-b border-border-default bg-surface-muted">Eylem</th>
+            <th class="text-left text-[13px] font-semibold text-gray-500 px-3 py-3 border-b border-border-default bg-surface-muted">${t('logistics.thFreightForwarder')}</th>
+            <th class="text-left text-[13px] font-semibold text-gray-500 px-3 py-3 border-b border-border-default bg-surface-muted">${t('logistics.thReviewServiceType')}</th>
+            <th class="text-left text-[13px] font-semibold text-gray-500 px-3 py-3 border-b border-border-default bg-surface-muted">${t('logistics.thReviewOriginDest')}</th>
+            <th class="text-left text-[13px] font-semibold text-gray-500 px-3 py-3 border-b border-border-default bg-surface-muted">${t('logistics.thReviewProductInfo')}</th>
+            <th class="text-left text-[13px] font-semibold text-gray-500 px-3 py-3 border-b border-border-default bg-surface-muted">${t('logistics.thReviewStatus')}</th>
+            <th class="text-left text-[13px] font-semibold text-gray-500 px-3 py-3 border-b border-border-default bg-surface-muted">${t('logistics.thReviewAction')}</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td colspan="6" class="text-center py-20 px-4 text-gray-400 text-[14px]">
               <div class="flex justify-center mb-3">${EMPTY_ENVELOPE_ICON}</div>
-              <p class="m-0">Sonuç bulunamadı</p>
+              <p class="m-0">${t('logistics.noResults')}</p>
             </td>
           </tr>
         </tbody>
@@ -225,9 +233,9 @@ function initLogTabs(): void {
     const parent = tab.parentElement;
     if (!parent) return;
     tab.addEventListener('click', () => {
-      parent.querySelectorAll<HTMLButtonElement>('.log-tabs__tab').forEach(t => {
-        t.classList.remove('log-tabs__tab--active', '!text-gray-900', '!font-semibold', '!border-b-[#222]');
-        t.classList.add('text-gray-500');
+      parent.querySelectorAll<HTMLButtonElement>('.log-tabs__tab').forEach(btn => {
+        btn.classList.remove('log-tabs__tab--active', '!text-gray-900', '!font-semibold', '!border-b-[#222]');
+        btn.classList.add('text-gray-500');
       });
       tab.classList.add('log-tabs__tab--active', '!text-gray-900', '!font-semibold', '!border-b-[#222]');
       tab.classList.remove('text-gray-500');

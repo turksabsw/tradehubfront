@@ -1,4 +1,5 @@
-import { mockProduct } from '../../data/mockProduct';
+import { getMockProduct } from '../../data/mockProduct';
+const mockProduct = getMockProduct();
 import type { ProductDetail } from '../../types/product';
 import {
   SharedCartDrawer,

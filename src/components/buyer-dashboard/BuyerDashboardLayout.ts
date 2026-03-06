@@ -5,6 +5,7 @@
  */
 
 import type { BuyerDashboardData } from '../../types/buyerDashboard';
+import { t } from '../../i18n';
 import { NewBuyerInfo, initNewBuyerInfo } from './NewBuyerInfo';
 import { OrdersSection, initOrdersSection } from './OrdersSection';
 import { initOperationSlider } from './OperationSlider';
@@ -23,8 +24,8 @@ export function BuyerDashboardLayout({ data, emailVerified = true }: BuyerDashbo
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" class="flex-shrink-0">
           <path d="M10 2a8 8 0 100 16 8 8 0 000-16zm0 11a1 1 0 110-2 1 1 0 010 2zm1-4H9V6h2v3z" fill="#E65100"/>
         </svg>
-        <span>E-posta adresinizi doğrulayın. Hesabınızın güvenliği için e-posta doğrulaması gereklidir.</span>
-        <a href="/verify-email" class="ml-auto text-[#E65100] font-semibold hover:underline whitespace-nowrap">Doğrula</a>
+        <span>${t('dashboard.emailVerification')}</span>
+        <a href="/verify-email" class="ml-auto text-[#E65100] font-semibold hover:underline whitespace-nowrap">${t('dashboard.verify')}</a>
       </div>`
     : '';
 

@@ -4,6 +4,8 @@
  * localStorage CRUD: tradehub_ad_preferences
  */
 
+import { t } from '../../i18n';
+
 const STORAGE_KEY = 'tradehub_ad_preferences';
 
 export interface AdPreference {
@@ -13,30 +15,33 @@ export interface AdPreference {
   enabled: boolean;
 }
 
-const defaultPreferences: AdPreference[] = [
-  {
-    id: 'personalized_ads',
-    title: 'Tüm kişiselleştirilmiş reklamlar',
-    description: 'Kişiselleştirilmiş reklamlar açıkken, size özel öneriler gösterilir. Kapatırsanız yine de reklam görürsünüz, ancak ilgi alanlarınıza göre özelleştirilmez.',
-    enabled: false,
-  },
-  {
-    id: 'personalized_recommendations',
-    title: 'Tüm kişiselleştirilmiş öneriler',
-    description: 'İlginizi çekebilecek ürünleri göstermek için öneriler kullanıyoruz. Öneri ayarlarınızı değiştirerek önerilerinizi etkileyin.',
-    enabled: false,
-  },
-];
+function getDefaultPreferences(): AdPreference[] {
+  return [
+    {
+      id: 'personalized_ads',
+      title: t('settings.adAllPersonalizedAds'),
+      description: t('settings.adAllPersonalizedAdsDesc'),
+      enabled: false,
+    },
+    {
+      id: 'personalized_recommendations',
+      title: t('settings.adAllPersonalizedRecs'),
+      description: t('settings.adAllPersonalizedRecsDesc'),
+      enabled: false,
+    },
+  ];
+}
 
 function readPreferences(): AdPreference[] {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (raw) {
       const saved: Record<string, boolean> = JSON.parse(raw);
-      return defaultPreferences.map(p => ({ ...p, enabled: saved[p.id] ?? p.enabled }));
+      const defaults = getDefaultPreferences();
+      return defaults.map(p => ({ ...p, enabled: saved[p.id] ?? p.enabled }));
     }
   } catch { /* ignore */ }
-  return defaultPreferences.map(p => ({ ...p }));
+  return getDefaultPreferences().map(p => ({ ...p }));
 }
 
 function savePreferences(prefs: Record<string, boolean>): void {
@@ -62,12 +67,12 @@ export function SettingsAdPreferences(): string {
   const prefs = readPreferences();
   return `
     <div class="bg-white rounded-lg p-8 max-md:p-5">
-      <h2 class="text-xl font-bold mb-6 m-0" style="color:var(--color-text-heading, #111827)">Veri tercihleri</h2>
+      <h2 class="text-xl font-bold mb-6 m-0" style="color:var(--color-text-heading, #111827)">${t('settings.dataPreferences')}</h2>
       <div class="flex flex-col">
         ${prefs.map(renderToggle).join('')}
       </div>
       <div class="mt-12 flex justify-center">
-        <a href="#" class="ad-pref__back-btn inline-flex items-center justify-center py-3 px-20 border border-gray-300 rounded-3xl text-sm font-medium no-underline transition-all hover:bg-surface-raised hover:border-gray-400" style="color:var(--color-text-heading, #111827)">Geri</a>
+        <a href="#" class="ad-pref__back-btn inline-flex items-center justify-center py-3 px-20 border border-gray-300 rounded-3xl text-sm font-medium no-underline transition-all hover:bg-surface-raised hover:border-gray-400" style="color:var(--color-text-heading, #111827)">${t('settings.adBack')}</a>
       </div>
     </div>
   `;

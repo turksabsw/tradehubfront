@@ -2,16 +2,18 @@
  * ProductGrid Component
  * Snapshot-matched Alibaba card structure (hFR19 / card2.md) with dynamic content.
  */
+import { t } from '../../i18n';
 
 interface ProductCard {
   name: string;
   href: string;
   price: string;
-  discount?: string;
-  moq: string;
-  sold: string;
+  discountPercent?: number;
+  moqCount: number;
+  moqUnit: 'pcs' | 'kg';
+  soldCount: string;
   imageSrc: string;
-  supplierYears?: string;
+  supplierYearCount?: number;
   supplierCountry?: string;
 }
 
@@ -20,127 +22,139 @@ const productCardSeed: ProductCard[] = [
     name: "Custom Beanie Patch Hat | Leather Patch Winter Beanie ADD YOUR LOGO Company Employee...",
     href: '/pages/product-detail.html',
     price: '$1.28-2.99',
-    discount: '%15 indirim',
-    moq: '10 Adet',
-    sold: '19,070 adet satıldı',
+    discountPercent: 15,
+    moqCount: 10,
+    moqUnit: 'pcs',
+    soldCount: '19,070',
     imageSrc: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=600&h=600&q=80',
-    supplierYears: '5 yıl',
+    supplierYearCount: 5,
     supplierCountry: 'CN',
   },
   {
     name: 'New Wireless TWS M10 Mini Black Earbuds Earphone Headphone Power Bank In-ear...',
     href: '/pages/product-detail.html',
     price: '$1.30-1.99',
-    discount: '%10 indirim',
-    moq: '1 Adet',
-    sold: '341 adet satıldı',
+    discountPercent: 10,
+    moqCount: 1,
+    moqUnit: 'pcs',
+    soldCount: '341',
     imageSrc: 'https://images.unsplash.com/photo-1588423771073-b8903fbb85b5?auto=format&fit=crop&w=600&h=600&q=80',
-    supplierYears: '1 yıl',
+    supplierYearCount: 1,
     supplierCountry: 'CN',
   },
   {
     name: "Hot Sale 125ml High Quality Men's Perfume Floral Fragrance Light and Long Lasting Factory...",
     href: '/pages/product-detail.html',
     price: '$6.02-7.02',
-    moq: '10 Adet',
-    sold: '490 adet satıldı',
+    moqCount: 10,
+    moqUnit: 'pcs',
+    soldCount: '490',
     imageSrc: 'https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=600&h=600&q=80',
-    supplierYears: '1 yıl',
+    supplierYearCount: 1,
     supplierCountry: 'CN',
   },
   {
     name: 'Free to Door DHL FEDEX UPS Express Sea Railway Air Shipping Agent China to Egypt Freight...',
     href: '/pages/product-detail.html',
     price: '$0.50-1',
-    discount: '%5 indirim',
-    moq: '1 Kilogram',
-    sold: '880 adet satıldı',
+    discountPercent: 5,
+    moqCount: 1,
+    moqUnit: 'kg',
+    soldCount: '880',
     imageSrc: 'https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?auto=format&fit=crop&w=600&h=600&q=80',
-    supplierYears: '1 yıl',
+    supplierYearCount: 1,
     supplierCountry: 'CN',
   },
   {
     name: 'Cross-Border New Style Cat-Eye Glasses Frame Fashion Eyewear...',
     href: '/pages/product-detail.html',
     price: '$1.53-1.62',
-    discount: '%8 indirim',
-    moq: '5 Adet',
-    sold: '649 adet satıldı',
+    discountPercent: 8,
+    moqCount: 5,
+    moqUnit: 'pcs',
+    soldCount: '649',
     imageSrc: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=600&h=600&q=80',
-    supplierYears: '1 yıl',
+    supplierYearCount: 1,
     supplierCountry: 'CN',
   },
   {
     name: "MORESE 2085 Men's Optical Eyeglasses Frame Full Rim...",
     href: '/pages/product-detail.html',
     price: '$3.65-4.05',
-    moq: '2 Adet',
-    sold: '228 adet satıldı',
+    moqCount: 2,
+    moqUnit: 'pcs',
+    soldCount: '228',
     imageSrc: 'https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=format&fit=crop&w=600&h=600&q=80',
-    supplierYears: '7 yıl',
+    supplierYearCount: 7,
     supplierCountry: 'CN',
   },
   {
     name: '2026 New Smart Fitness Watch Waterproof Touch Screen Men Women...',
     href: '/pages/product-detail.html',
     price: '$4.10-5.90',
-    discount: '%12 indirim',
-    moq: '2 Adet',
-    sold: '1,102 adet satıldı',
+    discountPercent: 12,
+    moqCount: 2,
+    moqUnit: 'pcs',
+    soldCount: '1,102',
     imageSrc: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=600&h=600&q=80',
-    supplierYears: '3 yıl',
+    supplierYearCount: 3,
     supplierCountry: 'CN',
   },
   {
     name: 'Wholesale Mini Crossbody Bag PU Leather Casual Fashion Design...',
     href: '/pages/product-detail.html',
     price: '$2.10-3.40',
-    moq: '20 Adet',
-    sold: '2,345 adet satıldı',
+    moqCount: 20,
+    moqUnit: 'pcs',
+    soldCount: '2,345',
     imageSrc: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=600&h=600&q=80',
-    supplierYears: '2 yıl',
+    supplierYearCount: 2,
     supplierCountry: 'CN',
   },
   {
     name: 'Oversized Cotton Streetwear Blank T-Shirt Custom Logo Printing...',
     href: '/pages/product-detail.html',
     price: '$2.60-3.20',
-    discount: '%10 indirim',
-    moq: '30 Adet',
-    sold: '978 adet satıldı',
+    discountPercent: 10,
+    moqCount: 30,
+    moqUnit: 'pcs',
+    soldCount: '978',
     imageSrc: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=600&h=600&q=80',
-    supplierYears: '4 yıl',
+    supplierYearCount: 4,
     supplierCountry: 'CN',
   },
   {
     name: 'Wireless Bluetooth Stereo Headphones Foldable Deep Bass Sound...',
     href: '/pages/product-detail.html',
     price: '$5.30-7.20',
-    moq: '5 Adet',
-    sold: '413 adet satıldı',
+    moqCount: 5,
+    moqUnit: 'pcs',
+    soldCount: '413',
     imageSrc: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=600&h=600&q=80',
-    supplierYears: '1 yıl',
+    supplierYearCount: 1,
     supplierCountry: 'CN',
   },
   {
     name: 'Private Label Skincare Moisturizing Essence Serum Set OEM...',
     href: '/pages/product-detail.html',
     price: '$3.90-6.50',
-    discount: '%20 indirim',
-    moq: '12 Adet',
-    sold: '752 adet satıldı',
+    discountPercent: 20,
+    moqCount: 12,
+    moqUnit: 'pcs',
+    soldCount: '752',
     imageSrc: 'https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=600&h=600&q=80',
-    supplierYears: '2 yıl',
+    supplierYearCount: 2,
     supplierCountry: 'CN',
   },
   {
     name: 'Premium Optical Frames With Case Lightweight Business Style...',
     href: '/pages/product-detail.html',
     price: '$2.95-3.88',
-    moq: '6 Adet',
-    sold: '529 adet satıldı',
+    moqCount: 6,
+    moqUnit: 'pcs',
+    soldCount: '529',
     imageSrc: 'https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=format&fit=crop&w=600&h=600&q=80',
-    supplierYears: '5 yıl',
+    supplierYearCount: 5,
     supplierCountry: 'CN',
   },
 ];
@@ -156,6 +170,15 @@ function lensIcon(): string {
 
 function renderProductCard(card: ProductCard, index: number): string {
   const safeName = card.name.replace(/"/g, '&quot;');
+  const unitLabel = card.moqUnit === 'kg' ? t('productGrid.kg') : t('productGrid.pcs');
+  const moqText = `${card.moqCount} ${unitLabel}`;
+  const soldText = t('productGrid.unitsSold', { count: card.soldCount });
+  const discountText = card.discountPercent
+    ? t('productGrid.discount', { percent: card.discountPercent })
+    : '';
+  const supplierYearsText = card.supplierYearCount
+    ? `${card.supplierYearCount} ${t('productGrid.yr')}`
+    : '';
 
   return `
     <a
@@ -182,7 +205,8 @@ function renderProductCard(card: ProductCard, index: number): string {
           <div
             class="searchx-find-similar searchx-find-similar__icon theme-float"
             role="button"
-            aria-label="Benzer ürünleri bulun"
+            aria-label="${t('productGrid.findSimilar')}"
+            data-i18n-aria-label="productGrid.findSimilar"
             tabindex="0"
           >
             ${lensIcon()}
@@ -204,18 +228,18 @@ function renderProductCard(card: ProductCard, index: number): string {
             <!-- Price + discount -->
             <div class="XBlq6 e9DGa">
               <div class="R3Kcz eg6xk">${card.price}</div>
-              ${card.discount ? `<div class="YGd3t vE7bg">${card.discount}</div>` : ''}
+              ${discountText ? `<div class="YGd3t vE7bg">${discountText}</div>` : ''}
             </div>
 
             <!-- MOQ + sold -->
             <div class="iyDLA yUble" style="--lines: 1;">
-              <div class="hVMAV z5oZw"><bdi>${card.moq}</bdi></div>
-              <span class="mHuc8" title="${card.sold}">${card.sold}</span>
+              <div class="hVMAV z5oZw"><bdi>${moqText}</bdi></div>
+              <span class="mHuc8" title="${soldText}">${soldText}</span>
             </div>
 
             <!-- Supplier info -->
             <div class="YpiVg">
-              ${card.supplierYears ? `<span class="wELvB">${card.supplierYears}</span>` : ''}
+              ${supplierYearsText ? `<span class="wELvB">${supplierYearsText}</span>` : ''}
               ${card.supplierCountry ? `<span class="wELvB">${card.supplierCountry}</span>` : ''}
             </div>
           </div>

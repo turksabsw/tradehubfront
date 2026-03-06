@@ -4,6 +4,7 @@
  */
 
 import '../style.css'
+import { t } from '../i18n'
 import { initFlowbite } from 'flowbite'
 import Swiper from 'swiper'
 import { Autoplay, Pagination, EffectFade } from 'swiper/modules'
@@ -15,6 +16,7 @@ import rfqVideoUrl from '../assets/images/rfqvidehero.mp4'
 
 // Header & Footer components
 import { TopBar, MobileSearchTabs, initMobileDrawer, SubHeader, initStickyHeaderSearch, MegaMenu, initMegaMenu } from '../components/header'
+import { initLanguageSelector } from '../components/header/TopBar'
 import { FooterLinks } from '../components/footer'
 
 // Shared components
@@ -27,7 +29,10 @@ import aiIconUrl from '../assets/images/O1CN01WQ8Lqg1SIdpcL5OHE_!!6000000002224-
 import { initAnimatedPlaceholder } from '../utils/animatedPlaceholder'
 
 // Mock data
-import { selectedProducts, customProducts, testimonials } from '../data/rfq-mock-data'
+import { getSelectedProducts, getCustomProducts, getTestimonials } from '../data/rfq-mock-data'
+const selectedProducts = getSelectedProducts();
+const customProducts = getCustomProducts();
+const testimonials = getTestimonials();
 
 // Types
 import type { Product, RFQFormData } from '../types/rfq'
@@ -47,7 +52,7 @@ function renderProductCard(product: Product): string {
         />
       </div>
       <div class="p-3 sm:p-4">
-        <p class="text-xs text-text-tertiary">${product.supplierCount} tedarikçi sağlıyor</p>
+        <p class="text-xs text-text-tertiary">${product.supplierCount} ${t('rfq.suppliersProvide')}</p>
         <h3 class="my-1 mb-3 line-clamp-2 text-sm text-text-heading">${product.name}</h3>
         <a href="#" class="inline-block text-sm text-text-heading underline transition-colors duration-200 hover:text-primary-600">${product.ctaText}</a>
       </div>
@@ -73,11 +78,11 @@ appEl.innerHTML = `
   <!-- Main Content -->
   <main class="bg-(--color-surface-muted)">
     <div class="container-boxed pt-2 sm:pt-3">
-      ${Breadcrumb([{ label: 'Teklif İste' }])}
+      ${Breadcrumb([{ label: t('rfq.requestQuote') }])}
     </div>
 
     <!-- Section 1: Hero Banner -->
-    <section id="rfq-hero" class="relative min-h-[240px] overflow-hidden bg-[linear-gradient(90deg,#231d68_0%,#262772_70%,#242570_71%,#24256b_100%)] sm:min-h-[320px] lg:min-h-[360px]" aria-label="RFQ fiyat teklifi talebi">
+    <section id="rfq-hero" class="relative min-h-[240px] overflow-hidden bg-[linear-gradient(90deg,#231d68_0%,#262772_70%,#242570_71%,#24256b_100%)] sm:min-h-[320px] lg:min-h-[360px]" aria-label="${t('rfq.heroAriaLabel')}">
       <div class="pointer-events-none absolute inset-y-0 left-0 hidden w-[42%] bg-[linear-gradient(180deg,rgba(34,37,132,0.85)_0%,rgba(34,37,132,0)_100%)] xl:block"></div>
 
       <!-- Video Background -->
@@ -86,15 +91,15 @@ appEl.innerHTML = `
       <div class="container-boxed relative z-10 flex min-h-[240px] items-center pt-8 pb-14 sm:min-h-[320px] sm:pt-10 sm:pb-16 lg:min-h-[360px] lg:py-12">
         <div class="w-full max-w-2xl text-center xl:text-left">
             <span class="inline-block rounded-full bg-primary-500 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white">RFQ</span>
-            <h1 class="mt-3 mb-2 text-2xl leading-tight font-bold text-white sm:mt-4 sm:text-4xl">
-              Fiyat Teklifi Talebi Oluşturun
+            <h1 class="mt-3 mb-2 text-2xl leading-tight font-bold text-white sm:mt-4 sm:text-4xl" data-i18n="rfq.createRfqTitle">
+              ${t('rfq.createRfqTitle')}
             </h1>
-            <p class="mx-auto max-w-xl text-sm text-white/85 sm:text-base xl:mx-0">
-              Binlerce tedarikçiden anında fiyat teklifi alın. Ürünlerinizi özelleştirin, en iyi fiyatları karşılaştırın.
+            <p class="mx-auto max-w-xl text-sm text-white/85 sm:text-base xl:mx-0" data-i18n="rfq.createRfqDesc">
+              ${t('rfq.createRfqDesc')}
             </p>
             <div class="mt-5 flex items-center justify-center xl:justify-start">
               <a href="#" class="inline-flex items-center gap-2 rounded-full border-2 border-white/60 px-5 py-2 text-sm font-medium text-white transition-all duration-200 hover:border-white hover:bg-white/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#262772] sm:px-6 sm:py-2.5 sm:text-base">
-                Nasıl çalışır?
+                <span data-i18n="rfq.howItWorks">${t('rfq.howItWorks')}</span>
               </a>
             </div>
           </div>
@@ -102,10 +107,10 @@ appEl.innerHTML = `
     </section>
 
     <!-- Section 2: RFQ Form Card (overlapping hero) -->
-    <section id="rfq-form" class="relative z-20 mt-3 md:-mt-10" aria-label="Fiyat teklifi formu">
+    <section id="rfq-form" class="relative z-20 mt-3 md:-mt-10" aria-label="${t('rfq.formAriaLabel')}">
       <div class="container-boxed">
         <div class="mx-auto w-full max-w-[1200px] rounded-2xl border border-border-default bg-white p-4 shadow-md sm:p-6 lg:p-7">
-          <h2 class="mb-4 text-lg font-bold text-text-heading sm:mb-5 sm:text-xl">Talebinizin detaylarını yazın</h2>
+          <h2 class="mb-4 text-lg font-bold text-text-heading sm:mb-5 sm:text-xl" data-i18n="rfq.writeDetails">${t('rfq.writeDetails')}</h2>
           <form id="rfq-form-element" class="w-full" novalidate>
             <div id="rfq-textarea-container" class="min-h-[136px] overflow-hidden rounded-lg border border-[#e5e5e5] bg-[#f8f8f8] p-3 transition-colors duration-200 hover:border-primary-500 sm:p-4">
               
@@ -121,7 +126,7 @@ appEl.innerHTML = `
                   <svg class="w-4 h-4 mr-1.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
                   </svg>
-                  Dosya yükle
+                  <span data-i18n="rfq.uploadFile">${t('rfq.uploadFile')}</span>
                 </button>
                 <input
                   type="file"
@@ -135,7 +140,7 @@ appEl.innerHTML = `
               <textarea
                 id="rfq-details"
                 class="min-h-[72px] w-full resize-none border-none bg-transparent p-0 text-sm text-text-heading placeholder:text-[#999999] outline-none focus:ring-0"
-                placeholder="Bir görsel, dosya ekleyin veya anahtar kelimeler yazın. Örneğin: &quot;Eklediğim tasarıma göre 100 adet oyuncak ayı&quot;"
+                placeholder="${t('rfq.textareaPlaceholder')}"
                 rows="3"
               ></textarea>
             </div>
@@ -145,7 +150,7 @@ appEl.innerHTML = `
               <div class="flex flex-wrap items-center gap-3">
                 <!-- Flowbite Tooltip -->
                 <div id="upload-tooltip" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-xs opacity-0 tooltip dark:bg-gray-700">
-                  En fazla ${FILE_UPLOAD_CONFIG.maxFiles} dosya. Desteklenen: ${FILE_UPLOAD_CONFIG.allowedFormatsDisplay}
+                  ${t('rfq.maxFilesTooltip', { max: FILE_UPLOAD_CONFIG.maxFiles, formats: FILE_UPLOAD_CONFIG.allowedFormatsDisplay })}
                   <div class="tooltip-arrow" data-popper-arrow></div>
                 </div>
 
@@ -159,7 +164,7 @@ appEl.innerHTML = `
                   />
                   <div class="flex flex-wrap items-center text-xs text-[#666666] sm:text-sm">
                     <img src="${aiIconUrl}" alt="AI" class="mr-1 h-4 w-4 shrink-0 object-contain" />
-                    <span>Yapay Zeka ile kolayca RFQ oluşturun</span>
+                    <span data-i18n="rfq.aiCreateRfq">${t('rfq.aiCreateRfq')}</span>
                     <svg class="w-3.5 h-3.5 ml-1 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                   </div>
                 </label>
@@ -167,7 +172,7 @@ appEl.innerHTML = `
 
               <!-- Submit CTA (Dynamic Color) -->
               <button type="submit" class="th-btn th-btn-pill w-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2 sm:min-w-[260px] sm:w-auto">
-                RFQ detaylarını yaz
+                <span data-i18n="rfq.writeRfqDetails">${t('rfq.writeRfqDetails')}</span>
               </button>
             </div>
           </form>
@@ -176,9 +181,9 @@ appEl.innerHTML = `
     </section>
 
     <!-- Section 3: Selected Products -->
-    <section id="rfq-selected-products" class="bg-(--color-surface-muted) py-8 sm:py-10 lg:py-12" aria-label="Seçili ürünler">
+    <section id="rfq-selected-products" class="bg-(--color-surface-muted) py-8 sm:py-10 lg:py-12" aria-label="${t('rfq.selectedProducts')}">
       <div class="container-boxed">
-        <h2 class="mb-4 text-lg font-bold text-text-heading sm:mb-6 sm:text-xl">Seçili Ürünler</h2>
+        <h2 class="mb-4 text-lg font-bold text-text-heading sm:mb-6 sm:text-xl" data-i18n="rfq.selectedProducts">${t('rfq.selectedProducts')}</h2>
         <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-5 xl:grid-cols-6">
           ${selectedProducts.map(p => renderProductCard(p)).join('')}
         </div>
@@ -186,9 +191,9 @@ appEl.innerHTML = `
     </section>
 
     <!-- Section 4: Custom Products -->
-    <section id="rfq-custom-products" class="bg-(--color-surface) py-8 sm:py-10 lg:py-12" aria-label="Özel ürünler">
+    <section id="rfq-custom-products" class="bg-(--color-surface) py-8 sm:py-10 lg:py-12" aria-label="${t('rfq.customProducts')}">
       <div class="container-boxed">
-        <h2 class="mb-4 text-lg font-bold text-text-heading sm:mb-6 sm:text-xl">Özel Ürünler</h2>
+        <h2 class="mb-4 text-lg font-bold text-text-heading sm:mb-6 sm:text-xl" data-i18n="rfq.customProducts">${t('rfq.customProducts')}</h2>
         <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-5 xl:grid-cols-6">
           ${customProducts.map(p => renderProductCard(p)).join('')}
         </div>
@@ -196,28 +201,28 @@ appEl.innerHTML = `
     </section>
 
     <!-- Section 5: Testimonials -->
-    <section id="rfq-testimonials" class="bg-gradient-to-br from-[#1f1f1f] to-[#0a0a0a] py-10 sm:py-16 [&_.swiper-pagination-bullet]:!bg-white/40 [&_.swiper-pagination-bullet]:!opacity-100 [&_.swiper-pagination-bullet-active]:!bg-primary-500" aria-label="Müşteri yorumları">
+    <section id="rfq-testimonials" class="bg-gradient-to-br from-[#1f1f1f] to-[#0a0a0a] py-10 sm:py-16 [&_.swiper-pagination-bullet]:!bg-white/40 [&_.swiper-pagination-bullet]:!opacity-100 [&_.swiper-pagination-bullet-active]:!bg-primary-500" aria-label="${t('rfq.customerTestimonials')}">
       <div class="container-boxed mx-auto max-w-3xl px-4 text-center sm:px-6">
-        <h2 class="mb-6 text-lg font-bold text-white sm:mb-8 sm:text-xl">Müşterilerimiz Ne Diyor?</h2>
+        <h2 class="mb-6 text-lg font-bold text-white sm:mb-8 sm:text-xl">${t('rfq.customerTestimonials')}</h2>
         <div class="swiper">
           <div class="swiper-wrapper">
-            ${testimonials.map(t => `
-              <div class="swiper-slide" data-testimonial-id="${t.id}">
+            ${testimonials.map(item => `
+              <div class="swiper-slide" data-testimonial-id="${item.id}">
                 <blockquote class="text-center text-base leading-relaxed text-white italic sm:text-xl">
-                  "${t.quote}"
+                  "${item.quote}"
                 </blockquote>
                 <div class="flex flex-col items-center mt-6">
                   <div class="h-16 w-16 overflow-hidden rounded-full border-[3px] border-white/30">
                     <img
-                      src="${t.avatar || ''}"
-                      alt="${t.name}"
+                      src="${item.avatar || ''}"
+                      alt="${item.name}"
                       loading="lazy"
                       class="h-full w-full object-cover"
                       onerror="this.style.display='none';"
                     />
                   </div>
-                  <p class="font-bold text-white">${t.name}</p>
-                  <p class="text-white/60 text-sm">${t.title}, ${t.company}</p>
+                  <p class="font-bold text-white">${item.name}</p>
+                  <p class="text-white/60 text-sm">${item.title}, ${item.company}</p>
                 </div>
               </div>
             `).join('')}
@@ -239,6 +244,7 @@ initMegaMenu();
 initFlowbite();
 initStickyHeaderSearch();
 initMobileDrawer();
+initLanguageSelector();
 initAnimatedPlaceholder('#topbar-compact-search-input');
 
 // Start Alpine.js (must be called AFTER innerHTML is set)
@@ -271,7 +277,7 @@ uploadBtn.addEventListener('click', () => {
 
 function validateFiles(files: FileList): boolean {
   if (files.length > FILE_UPLOAD_CONFIG.maxFiles) {
-    alert('En fazla 6 dosya ekleyebilirsiniz.');
+    alert(t('rfq.maxFilesAlert'));
     fileInput.value = '';
     return false;
   }
@@ -280,7 +286,7 @@ function validateFiles(files: FileList): boolean {
     const fileName = files[i].name;
     const ext = ('.' + fileName.split('.').pop()!.toLowerCase()) as string;
     if (!FILE_UPLOAD_CONFIG.allowedExtensions.includes(ext as any)) {
-      alert(`Desteklenmeyen dosya formatı: ${fileName}`);
+      alert(t('rfq.unsupportedFormat', { fileName }));
       fileInput.value = '';
       return false;
     }

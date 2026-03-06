@@ -7,7 +7,8 @@ import { FloatingPanel } from '../components/floating'
 import { startAlpine } from '../alpine'
 import { HelpCenterHeader } from '../components/help-center'
 import { TicketsListLayout } from '../components/help-center/TicketsListLayout'
-import { mockTickets } from '../data/mockTickets'
+import { getMockTickets } from '../data/mockTickets'
+const mockTickets = getMockTickets();
 
 // Make tickets available to Alpine
 (window as any).__mockTickets = mockTickets;

@@ -9,6 +9,7 @@ import { Checkbox } from '../atoms/Checkbox';
 import { SkuRow } from './SkuRow';
 import trashIcon from '../../../assets/images/trash.png';
 import favIcon from '../../../assets/images/fav.png';
+import { t } from '../../../i18n';
 
 export interface ProductItemProps {
   product: CartProduct;
@@ -44,21 +45,21 @@ export function ProductItem({ product }: ProductItemProps): string {
 
         <div class="shrink-0 flex items-center gap-1">
           <div class="relative group">
-            <button type="button" class="sc-c-spu-favorite-btn w-8 h-8 inline-flex items-center justify-center rounded-full text-text-tertiary hover:bg-black transition-colors" data-product-id="${escapeHtml(product.id)}" @click="$dispatch('product-favorite', { productId: '${escapeHtml(product.id)}' })" aria-label="Favori">
-              <img src="${favIcon}" class="w-[20px] h-[20px] object-contain group-hover:invert transition-all" alt="Favori" />
+            <button type="button" class="sc-c-spu-favorite-btn w-8 h-8 inline-flex items-center justify-center rounded-full text-text-tertiary hover:bg-black transition-colors" data-product-id="${escapeHtml(product.id)}" @click="$dispatch('product-favorite', { productId: '${escapeHtml(product.id)}' })" aria-label="${t('cart.favorite')}">
+              <img src="${favIcon}" class="w-[20px] h-[20px] object-contain group-hover:invert transition-all" alt="${t('cart.favorite')}" />
             </button>
             <div class="absolute right-0 top-full mt-2 w-max px-3 py-2 bg-black text-white text-xs font-medium rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
-              Move to favorites
+              ${t('cart.moveToFavorites')}
               <!-- Tooltip stem -->
               <div class="absolute -top-1 right-3 w-2 h-2 bg-black rotate-45"></div>
             </div>
           </div>
           <div class="relative group">
-            <button type="button" class="sc-c-spu-delete-btn w-8 h-8 inline-flex items-center justify-center rounded-full text-text-tertiary hover:bg-black transition-colors" data-product-id="${escapeHtml(product.id)}" @click="$dispatch('product-delete', { productId: '${escapeHtml(product.id)}' })" aria-label="Ürünü sil">
-              <img src="${trashIcon}" class="w-[18px] h-[18px] object-contain group-hover:invert transition-all" alt="Sil" />
+            <button type="button" class="sc-c-spu-delete-btn w-8 h-8 inline-flex items-center justify-center rounded-full text-text-tertiary hover:bg-black transition-colors" data-product-id="${escapeHtml(product.id)}" @click="$dispatch('product-delete', { productId: '${escapeHtml(product.id)}' })" aria-label="${t('cart.removeProduct')}">
+              <img src="${trashIcon}" class="w-[18px] h-[18px] object-contain group-hover:invert transition-all" alt="${t('cart.removeProduct')}" />
             </button>
             <div class="absolute right-0 top-full mt-2 w-max px-3 py-2 bg-black text-white text-xs font-medium rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
-              Remove this product
+              ${t('cart.removeProduct')}
               <!-- Tooltip stem -->
               <div class="absolute -top-1 right-3 w-2 h-2 bg-black rotate-45"></div>
             </div>

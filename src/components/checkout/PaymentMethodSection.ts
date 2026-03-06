@@ -7,6 +7,7 @@
  */
 
 import type { CartSupplier } from '../../types/cart';
+import { t } from '../../i18n';
 import '../payment/state/PaymentCardStore';
 
 export interface PaymentMethodSectionProps {
@@ -20,14 +21,14 @@ export function PaymentMethodSection({ initialExpanded = false, suppliers }: Pay
 
   const renderPaymentMethods = () => {
     if (!suppliers || suppliers.length === 0) {
-      return `<p class="text-[#6b7280] text-base p-6">Ödeme yöntemleri teslimat adresi girildikten sonra görünecektir.</p>`;
+      return `<p class="text-[#6b7280] text-base p-6" data-i18n="checkout.paymentMethodsAfterAddress">${t('checkout.paymentMethodsAfterAddress')}</p>`;
     }
 
     if (suppliers.length > 1) {
       const supplierNames = suppliers.map(s => s.name).join(', ');
       return `
         <div class="p-6 bg-[#fafafa]" x-data="{ selectedMethod: 'kredi_karti' }">
-          <h3 class="text-sm font-semibold text-[#111827] mb-4">${supplierNames} için Ödeme Yöntemi</h3>
+          <h3 class="text-sm font-semibold text-[#111827] mb-4" data-i18n="checkout.paymentMethodFor" data-i18n-options='{"name":"${supplierNames}"}'>${t('checkout.paymentMethodFor', { name: supplierNames })}</h3>
           <div class="flex flex-col gap-3">
             <!-- Option 1: Kredi veya Banka Kartı -->
             <div class="border rounded-lg transition-colors"
@@ -35,10 +36,10 @@ export function PaymentMethodSection({ initialExpanded = false, suppliers }: Pay
               <label class="flex items-start gap-3 p-4 cursor-pointer relative">
                 <input type="radio" name="payment_method" value="kredi_karti" x-model="selectedMethod" class="mt-1" style="accent-color: var(--btn-bg, #ff6600);">
                 <div class="w-full">
-                  <span class="block text-sm font-bold text-[#111827]">Kredi veya Banka Kartı</span>
-                  <span class="block text-xs text-[#6b7280] mt-1">Sistem üzerinden güvenli bir şekilde kartınızla ödeme yapın.</span>
+                  <span class="block text-sm font-bold text-[#111827]" data-i18n="checkout.creditDebitCard">${t('checkout.creditDebitCard')}</span>
+                  <span class="block text-xs text-[#6b7280] mt-1" data-i18n="checkout.creditCardDesc">${t('checkout.creditCardDesc')}</span>
                 </div>
-                <span class="absolute top-4 right-4 text-xs font-bold px-2 py-1 rounded" style="color: var(--btn-bg, #ff6600); background-color: var(--color-primary-100, #ffeedd);">Önerilen</span>
+                <span class="absolute top-4 right-4 text-xs font-bold px-2 py-1 rounded" style="color: var(--btn-bg, #ff6600); background-color: var(--color-primary-100, #ffeedd);" data-i18n="common.recommended">${t('common.recommended')}</span>
               </label>
 
               <div x-show="selectedMethod === 'kredi_karti'" x-cloak style="display: none;" class="px-4 pb-4">
@@ -69,12 +70,12 @@ export function PaymentMethodSection({ initialExpanded = false, suppliers }: Pay
                         <div class="text-xs" style="color: var(--color-text-secondary, #6b7280);" x-text="selectedCard.name || ''"></div>
                       </div>
                       <button type="button" class="text-xs font-semibold underline bg-transparent border-none cursor-pointer" style="color: var(--btn-bg, #ff6600);"
-                              @click="cardSaved = false; showForm = savedCards.length === 0;">Değiştir</button>
+                              @click="cardSaved = false; showForm = savedCards.length === 0;"><span data-i18n="common.change">${t('common.change')}</span></button>
                     </div>
 
                     <!-- Kayıtlı kartlar carousel -->
                     <div x-show="!cardSaved && savedCards.length > 0" x-cloak>
-                      <p class="text-xs text-[#6b7280] mb-3">Kayıtlı kartlarınızdan birini seçin:</p>
+                      <p class="text-xs text-[#6b7280] mb-3" data-i18n="checkout.selectSavedCard">${t('checkout.selectSavedCard')}</p>
                       <div class="flex gap-3 overflow-x-auto pb-2" style="scrollbar-width: thin; scrollbar-color: #ccc transparent;">
                         <template x-for="c in savedCards" :key="c.id">
                           <div class="relative shrink-0 w-[175px] h-[105px] rounded-xl p-3 flex flex-col justify-between cursor-pointer group ring-0 transition-all hover:scale-[1.03]"
@@ -100,7 +101,7 @@ export function PaymentMethodSection({ initialExpanded = false, suppliers }: Pay
                              onmouseleave="this.style.borderColor='#ccc'; this.style.background='transparent';"
                              @click="showForm = true;">
                           <span style="font-size: 22px; color: #888;">+</span>
-                          <span class="text-[11px] font-medium text-center px-2" style="color: #555;">Yeni kart ile öde</span>
+                          <span class="text-[11px] font-medium text-center px-2" style="color: #555;" data-i18n="checkout.payWithNewCard">${t('checkout.payWithNewCard')}</span>
                         </div>
                       </div>
                     </div>
@@ -109,25 +110,25 @@ export function PaymentMethodSection({ initialExpanded = false, suppliers }: Pay
                     <div x-show="!cardSaved && showForm" x-cloak class="space-y-4 max-w-md mt-3">
                       <template x-if="savedCards.length > 0">
                         <button type="button" class="text-xs underline bg-transparent border-none cursor-pointer mb-1" style="color: var(--btn-bg, #ff6600);"
-                                @click="showForm = false;">&larr; Kayıtlı kartlara dön</button>
+                                @click="showForm = false;"><span data-i18n="checkout.backToSavedCards">${t('checkout.backToSavedCards')}</span></button>
                       </template>
                       <div>
-                        <label class="block text-xs font-medium text-[#374151] mb-1">Kart Numarası</label>
-                        <input type="text" x-model="ccNum" class="w-full px-3 py-2 border border-[#e5e5e5] rounded-md focus:outline-none focus:border-[#ff6600]" placeholder="0000 0000 0000 0000">
+                        <label class="block text-xs font-medium text-[#374151] mb-1" data-i18n="checkout.cardNumber">${t('checkout.cardNumber')}</label>
+                        <input type="text" x-model="ccNum" class="w-full px-3 py-2 border border-[#e5e5e5] rounded-md focus:outline-none focus:border-[#ff6600]" placeholder="${t('checkout.cardNumberPlaceholder')}" data-i18n-placeholder="checkout.cardNumberPlaceholder">
                       </div>
                       <div class="grid grid-cols-2 gap-4">
                         <div>
-                          <label class="block text-xs font-medium text-[#374151] mb-1">Son Kullanma Tarihi</label>
-                          <input type="text" x-model="ccExpiry" class="w-full px-3 py-2 border border-[#e5e5e5] rounded-md focus:outline-none focus:border-[#ff6600]" placeholder="AA/YY">
+                          <label class="block text-xs font-medium text-[#374151] mb-1" data-i18n="checkout.expiryDate">${t('checkout.expiryDate')}</label>
+                          <input type="text" x-model="ccExpiry" class="w-full px-3 py-2 border border-[#e5e5e5] rounded-md focus:outline-none focus:border-[#ff6600]" placeholder="${t('checkout.expiryPlaceholder')}" data-i18n-placeholder="checkout.expiryPlaceholder">
                         </div>
                         <div>
-                          <label class="block text-xs font-medium text-[#374151] mb-1">CVV</label>
-                          <input type="text" class="w-full px-3 py-2 border border-[#e5e5e5] rounded-md focus:outline-none focus:border-[#ff6600]" placeholder="123">
+                          <label class="block text-xs font-medium text-[#374151] mb-1" data-i18n="checkout.cvv">${t('checkout.cvv')}</label>
+                          <input type="text" class="w-full px-3 py-2 border border-[#e5e5e5] rounded-md focus:outline-none focus:border-[#ff6600]" placeholder="${t('checkout.cvvPlaceholder')}" data-i18n-placeholder="checkout.cvvPlaceholder">
                         </div>
                       </div>
                       <div>
-                        <label class="block text-xs font-medium text-[#374151] mb-1">Kart Üzerindeki İsim</label>
-                        <input type="text" x-model="ccName" class="w-full px-3 py-2 border border-[#e5e5e5] rounded-md focus:outline-none focus:border-[#ff6600]" placeholder="Ad Soyad">
+                        <label class="block text-xs font-medium text-[#374151] mb-1" data-i18n="checkout.cardholderName">${t('checkout.cardholderName')}</label>
+                        <input type="text" x-model="ccName" class="w-full px-3 py-2 border border-[#e5e5e5] rounded-md focus:outline-none focus:border-[#ff6600]" placeholder="${t('checkout.namePlaceholder')}" data-i18n-placeholder="checkout.namePlaceholder">
                       </div>
                       <div class="flex items-center gap-3">
                          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/1280px-Mastercard-logo.svg.png" class="h-6 object-contain" alt="Mastercard" />
@@ -136,7 +137,7 @@ export function PaymentMethodSection({ initialExpanded = false, suppliers }: Pay
                       <div class="pt-4 border-t" style="border-color: var(--color-border-default, #e5e5e5);">
                         <label class="flex items-center gap-2 cursor-pointer mb-4">
                           <input type="checkbox" x-model="saveCard" class="w-4 h-4 rounded" style="accent-color: var(--btn-bg, #ff6600);">
-                          <span class="text-sm font-medium" style="color: var(--color-text-primary, #111827);">Bu kartı sonraki alışverişlerim için kaydet</span>
+                          <span class="text-sm font-medium" style="color: var(--color-text-primary, #111827);" data-i18n="checkout.saveCard">${t('checkout.saveCard')}</span>
                         </label>
                         <button type="button" class="w-full py-3 rounded-md font-bold text-center transition-colors hover:brightness-95"
                                 style="background-color: var(--btn-bg, #ff6600); color: var(--btn-text, #ffffff);"
@@ -151,7 +152,7 @@ export function PaymentMethodSection({ initialExpanded = false, suppliers }: Pay
                                   if(saveCard && window.addSavedCard) { window.addSavedCard({cardNumber: ccNum, expiry: ccExpiry, cardholderName: ccName, brand}); };
                                   expanded = false
                                 ">
-                          Kaydet ve Devam Et
+                          <span data-i18n="checkout.saveAndContinue">${t('checkout.saveAndContinue')}</span>
                         </button>
                       </div>
                     </div>
@@ -165,8 +166,8 @@ export function PaymentMethodSection({ initialExpanded = false, suppliers }: Pay
                    :style="selectedMethod === 'anlasmali' ? 'border-color: var(--btn-bg, #ff6600); background-color: var(--color-primary-50, #fff9f5);' : 'border-color: var(--color-border-default, #e5e5e5); background-color: var(--color-surface, #ffffff);'">
               <input type="radio" name="payment_method" value="anlasmali" x-model="selectedMethod" class="mt-1" style="accent-color: var(--btn-bg, #ff6600);">
               <div>
-                <span class="block text-sm font-semibold" :style="selectedMethod === 'anlasmali' ? 'color: var(--btn-bg, #ff6600);' : 'color: var(--color-text-primary, #111827);'">Satıcı ile Anlaşmalı</span>
-                <span class="block text-xs text-[#6b7280] mt-1">Sohbet üzerinden anlaştığınız şartlara göre ödemeyi gerçekleştirin.</span>
+                <span class="block text-sm font-semibold" :style="selectedMethod === 'anlasmali' ? 'color: var(--btn-bg, #ff6600);' : 'color: var(--color-text-primary, #111827);'" data-i18n="checkout.negotiatedWithSupplier">${t('checkout.negotiatedWithSupplier')}</span>
+                <span class="block text-xs text-[#6b7280] mt-1" data-i18n="checkout.negotiatedDesc">${t('checkout.negotiatedDesc')}</span>
               </div>
             </label>
 
@@ -175,8 +176,8 @@ export function PaymentMethodSection({ initialExpanded = false, suppliers }: Pay
                    :style="selectedMethod === 'cek_senet' ? 'border-color: var(--btn-bg, #ff6600); background-color: var(--color-primary-50, #fff9f5);' : 'border-color: var(--color-border-default, #e5e5e5); background-color: var(--color-surface, #ffffff);'">
               <input type="radio" name="payment_method" value="cek_senet" x-model="selectedMethod" class="mt-1" style="accent-color: var(--btn-bg, #ff6600);">
               <div>
-                <span class="block text-sm font-semibold" :style="selectedMethod === 'cek_senet' ? 'color: var(--btn-bg, #ff6600);' : 'color: var(--color-text-primary, #111827);'">Çek / Senet</span>
-                <span class="block text-xs text-[#6b7280] mt-1">Çek veya senet ile vadeli ödeme yapın. Satıcı ile vade koşullarını belirleyin.</span>
+                <span class="block text-sm font-semibold" :style="selectedMethod === 'cek_senet' ? 'color: var(--btn-bg, #ff6600);' : 'color: var(--color-text-primary, #111827);'" data-i18n="checkout.checkDraft">${t('checkout.checkDraft')}</span>
+                <span class="block text-xs text-[#6b7280] mt-1" data-i18n="checkout.checkDraftDesc">${t('checkout.checkDraftDesc')}</span>
               </div>
             </label>
           </div>
@@ -188,17 +189,17 @@ export function PaymentMethodSection({ initialExpanded = false, suppliers }: Pay
     const supplier = suppliers[0];
     return `
       <div class="p-6 bg-[#fafafa]" x-data="{ selectedMethod: 'elden' }">
-        <h3 class="text-sm font-semibold text-[#111827] mb-4">${supplier.name} için Ödeme Yöntemi</h3>
+        <h3 class="text-sm font-semibold text-[#111827] mb-4" data-i18n="checkout.paymentMethodFor" data-i18n-options='{"name":"${supplier.name}"}'>${t('checkout.paymentMethodFor', { name: supplier.name })}</h3>
         <div class="flex flex-col gap-3">
           <!-- Option 1: Elden Taksit -->
           <label class="flex items-start gap-3 p-4 border rounded-lg cursor-pointer transition-colors relative"
                  :style="selectedMethod === 'elden' ? 'border-color: var(--btn-bg, #ff6600); background-color: var(--color-primary-50, #fff9f5);' : 'border-color: var(--color-border-default, #e5e5e5); background-color: var(--color-surface, #ffffff);'">
             <input type="radio" name="payment_method" value="elden" x-model="selectedMethod" class="mt-1" :style="'color: var(--btn-bg, #ff6600); outline-color: var(--btn-bg, #ff6600)'" style="accent-color: var(--btn-bg, #ff6600);">
             <div>
-              <span class="block text-sm font-bold text-[#111827]">Elden Taksit</span>
-              <span class="block text-xs text-[#6b7280] mt-1">Satıcının sunduğu elden taksit imkanı ile ödeme yapın.</span>
+              <span class="block text-sm font-bold text-[#111827]" data-i18n="checkout.handInstallment">${t('checkout.handInstallment')}</span>
+              <span class="block text-xs text-[#6b7280] mt-1" data-i18n="checkout.handInstallmentDesc">${t('checkout.handInstallmentDesc')}</span>
             </div>
-            <span class="absolute top-4 right-4 text-xs font-bold px-2 py-1 rounded" style="color: var(--btn-bg, #ff6600); background-color: var(--color-primary-100, #ffeedd);">Önerilen</span>
+            <span class="absolute top-4 right-4 text-xs font-bold px-2 py-1 rounded" style="color: var(--btn-bg, #ff6600); background-color: var(--color-primary-100, #ffeedd);" data-i18n="common.recommended">${t('common.recommended')}</span>
           </label>
           
           <!-- Option 2: Satıcı ile Anlaşmalı -->
@@ -206,8 +207,8 @@ export function PaymentMethodSection({ initialExpanded = false, suppliers }: Pay
                  :style="selectedMethod === 'anlasmali' ? 'border-color: var(--btn-bg, #ff6600); background-color: var(--color-primary-50, #fff9f5);' : 'border-color: var(--color-border-default, #e5e5e5); background-color: var(--color-surface, #ffffff);'">
             <input type="radio" name="payment_method" value="anlasmali" x-model="selectedMethod" class="mt-1" :style="'color: var(--btn-bg, #ff6600); outline-color: var(--btn-bg, #ff6600)'" style="accent-color: var(--btn-bg, #ff6600);">
             <div>
-              <span class="block text-sm font-semibold" :style="selectedMethod === 'anlasmali' ? 'color: var(--btn-bg, #ff6600);' : 'color: var(--color-text-primary, #111827);'">Satıcı ile Anlaşmalı</span>
-              <span class="block text-xs text-[#6b7280] mt-1">Sohbet üzerinden anlaştığınız şartlara göre ödemeyi gerçekleştirin.</span>
+              <span class="block text-sm font-semibold" :style="selectedMethod === 'anlasmali' ? 'color: var(--btn-bg, #ff6600);' : 'color: var(--color-text-primary, #111827);'" data-i18n="checkout.negotiatedWithSupplier">${t('checkout.negotiatedWithSupplier')}</span>
+              <span class="block text-xs text-[#6b7280] mt-1" data-i18n="checkout.negotiatedDesc">${t('checkout.negotiatedDesc')}</span>
             </div>
           </label>
 
@@ -217,8 +218,8 @@ export function PaymentMethodSection({ initialExpanded = false, suppliers }: Pay
             <label class="flex items-start gap-3 p-4 cursor-pointer">
               <input type="radio" name="payment_method" value="kredi_karti" x-model="selectedMethod" class="mt-1" :style="'color: var(--btn-bg, #ff6600); outline-color: var(--btn-bg, #ff6600)'" style="accent-color: var(--btn-bg, #ff6600);">
               <div class="w-full">
-                <span class="block text-sm font-semibold" :style="selectedMethod === 'kredi_karti' ? 'color: var(--btn-bg, #ff6600);' : 'color: var(--color-text-primary, #111827);'">Kredi veya Banka Kartı</span>
-                <span class="block text-xs text-[#6b7280] mt-1">Sistem üzerinden güvenli bir şekilde kartınızla ödeme yapın.</span>
+                <span class="block text-sm font-semibold" :style="selectedMethod === 'kredi_karti' ? 'color: var(--btn-bg, #ff6600);' : 'color: var(--color-text-primary, #111827);'" data-i18n="checkout.creditDebitCard">${t('checkout.creditDebitCard')}</span>
+                <span class="block text-xs text-[#6b7280] mt-1" data-i18n="checkout.creditCardDesc">${t('checkout.creditCardDesc')}</span>
               </div>
             </label>
             
@@ -250,12 +251,12 @@ export function PaymentMethodSection({ initialExpanded = false, suppliers }: Pay
                       <div class="text-xs" style="color: var(--color-text-secondary, #6b7280);" x-text="selectedCard.name || ''"></div>
                     </div>
                     <button type="button" class="text-xs font-semibold underline bg-transparent border-none cursor-pointer" style="color: var(--btn-bg, #ff6600);"
-                            @click="cardSaved = false; showForm = savedCards.length === 0;">Değiştir</button>
+                            @click="cardSaved = false; showForm = savedCards.length === 0;"><span data-i18n="common.change">${t('common.change')}</span></button>
                   </div>
 
                   <!-- Kayıtlı kartlar carousel -->
                   <div x-show="!cardSaved && savedCards.length > 0" x-cloak>
-                    <p class="text-xs text-[#6b7280] mb-2">Kayıtlı kartlarınızdan birini seçin:</p>
+                    <p class="text-xs text-[#6b7280] mb-2" data-i18n="checkout.selectSavedCard">${t('checkout.selectSavedCard')}</p>
                     <div class="flex gap-3 overflow-x-auto pb-2" style="scrollbar-width: thin; scrollbar-color: #ccc transparent;">
                       <template x-for="c in savedCards" :key="c.id">
                         <div class="relative shrink-0 w-[160px] h-[96px] rounded-xl p-3 flex flex-col justify-between cursor-pointer group transition-all hover:scale-[1.03]"
@@ -282,7 +283,7 @@ export function PaymentMethodSection({ initialExpanded = false, suppliers }: Pay
                            onmouseleave="this.style.borderColor='#ccc'; this.style.background='transparent';"
                            @click="showForm = true;">
                         <span style="font-size: 20px; color: #888;">+</span>
-                        <span class="text-[10px] font-medium text-center px-2" style="color: #555;">Yeni kart ile öde</span>
+                        <span class="text-[10px] font-medium text-center px-2" style="color: #555;" data-i18n="checkout.payWithNewCard">${t('checkout.payWithNewCard')}</span>
                       </div>
                     </div>
                   </div>
@@ -291,25 +292,25 @@ export function PaymentMethodSection({ initialExpanded = false, suppliers }: Pay
                   <div x-show="!cardSaved && showForm" x-cloak>
                     <template x-if="savedCards.length > 0">
                       <button type="button" class="text-xs underline bg-transparent border-none cursor-pointer mb-2" style="color: var(--btn-bg, #ff6600);"
-                              @click="showForm = false;">&larr; Kayıtlı kartlara dön</button>
+                              @click="showForm = false;"><span data-i18n="checkout.backToSavedCards">${t('checkout.backToSavedCards')}</span></button>
                     </template>
                     <div class="mb-3">
-                      <label class="block text-xs font-medium text-[#374151] mb-1">Kart Numarası</label>
-                      <input type="text" x-model="ccNum" class="w-full px-3 py-2 border rounded-md focus:outline-none" style="border-color: var(--color-border-default, #e5e5e5);" placeholder="0000 0000 0000 0000" x-on:focus="$el.style.borderColor='var(--btn-bg, #ff6600)'" x-on:blur="$el.style.borderColor='var(--color-border-default, #e5e5e5)'">
+                      <label class="block text-xs font-medium text-[#374151] mb-1" data-i18n="checkout.cardNumber">${t('checkout.cardNumber')}</label>
+                      <input type="text" x-model="ccNum" class="w-full px-3 py-2 border rounded-md focus:outline-none" style="border-color: var(--color-border-default, #e5e5e5);" placeholder="${t('checkout.cardNumberPlaceholder')}" data-i18n-placeholder="checkout.cardNumberPlaceholder" x-on:focus="$el.style.borderColor='var(--btn-bg, #ff6600)'" x-on:blur="$el.style.borderColor='var(--color-border-default, #e5e5e5)'">
                     </div>
                     <div class="grid grid-cols-2 gap-3 mb-3">
                       <div>
-                        <label class="block text-xs font-medium text-[#374151] mb-1">Son Kullanma</label>
-                        <input type="text" x-model="ccExpiry" class="w-full px-3 py-2 border rounded-md focus:outline-none" style="border-color: var(--color-border-default, #e5e5e5);" placeholder="AA/YY" x-on:focus="$el.style.borderColor='var(--btn-bg, #ff6600)'" x-on:blur="$el.style.borderColor='var(--color-border-default, #e5e5e5)'">
+                        <label class="block text-xs font-medium text-[#374151] mb-1" data-i18n="checkout.expiryDateShort">${t('checkout.expiryDateShort')}</label>
+                        <input type="text" x-model="ccExpiry" class="w-full px-3 py-2 border rounded-md focus:outline-none" style="border-color: var(--color-border-default, #e5e5e5);" placeholder="${t('checkout.expiryPlaceholder')}" data-i18n-placeholder="checkout.expiryPlaceholder" x-on:focus="$el.style.borderColor='var(--btn-bg, #ff6600)'" x-on:blur="$el.style.borderColor='var(--color-border-default, #e5e5e5)'">
                       </div>
                       <div>
-                        <label class="block text-xs font-medium text-[#374151] mb-1">CVV</label>
-                        <input type="text" class="w-full px-3 py-2 border rounded-md focus:outline-none" style="border-color: var(--color-border-default, #e5e5e5);" placeholder="123" x-on:focus="$el.style.borderColor='var(--btn-bg, #ff6600)'" x-on:blur="$el.style.borderColor='var(--color-border-default, #e5e5e5)'">
+                        <label class="block text-xs font-medium text-[#374151] mb-1" data-i18n="checkout.cvv">${t('checkout.cvv')}</label>
+                        <input type="text" class="w-full px-3 py-2 border rounded-md focus:outline-none" style="border-color: var(--color-border-default, #e5e5e5);" placeholder="${t('checkout.cvvPlaceholder')}" data-i18n-placeholder="checkout.cvvPlaceholder" x-on:focus="$el.style.borderColor='var(--btn-bg, #ff6600)'" x-on:blur="$el.style.borderColor='var(--color-border-default, #e5e5e5)'">
                       </div>
                     </div>
                     <div class="mb-3">
-                      <label class="block text-xs font-medium text-[#374151] mb-1">Kart Üzerindeki İsim</label>
-                      <input type="text" x-model="ccName" class="w-full px-3 py-2 border rounded-md focus:outline-none" style="border-color: var(--color-border-default, #e5e5e5);" placeholder="Ad Soyad" x-on:focus="$el.style.borderColor='var(--btn-bg, #ff6600)'" x-on:blur="$el.style.borderColor='var(--color-border-default, #e5e5e5)'">
+                      <label class="block text-xs font-medium text-[#374151] mb-1" data-i18n="checkout.cardholderName">${t('checkout.cardholderName')}</label>
+                      <input type="text" x-model="ccName" class="w-full px-3 py-2 border rounded-md focus:outline-none" style="border-color: var(--color-border-default, #e5e5e5);" placeholder="${t('checkout.namePlaceholder')}" data-i18n-placeholder="checkout.namePlaceholder" x-on:focus="$el.style.borderColor='var(--btn-bg, #ff6600)'" x-on:blur="$el.style.borderColor='var(--color-border-default, #e5e5e5)'">
                     </div>
                     <div class="flex items-center gap-3 mb-3">
                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/1280px-Mastercard-logo.svg.png" class="h-5 object-contain" alt="Mastercard" />
@@ -318,7 +319,7 @@ export function PaymentMethodSection({ initialExpanded = false, suppliers }: Pay
                     <div class="pt-3 border-t" style="border-color: var(--color-border-default, #e5e5e5);">
                       <label class="flex items-center gap-2 cursor-pointer mb-3">
                         <input type="checkbox" x-model="saveCard" class="w-4 h-4 rounded" style="accent-color: var(--btn-bg, #ff6600);">
-                        <span class="text-xs font-medium" style="color: var(--color-text-primary, #111827);">Bu kartı sonraki alışverişlerim için kaydet</span>
+                        <span class="text-xs font-medium" style="color: var(--color-text-primary, #111827);" data-i18n="checkout.saveCard">${t('checkout.saveCard')}</span>
                       </label>
                       <button type="button" class="w-full py-3 rounded-md font-bold text-center transition-colors hover:brightness-95"
                               style="background-color: var(--btn-bg, #ff6600); color: var(--btn-text, #ffffff);"
@@ -333,7 +334,7 @@ export function PaymentMethodSection({ initialExpanded = false, suppliers }: Pay
                                 if(saveCard && window.addSavedCard) { window.addSavedCard({cardNumber: ccNum, expiry: ccExpiry, cardholderName: ccName, brand}); };
                                 expanded = false
                               ">
-                        Kaydet ve Devam Et
+                        <span data-i18n="checkout.saveAndContinue">${t('checkout.saveAndContinue')}</span>
                       </button>
                     </div>
                   </div>
@@ -347,8 +348,8 @@ export function PaymentMethodSection({ initialExpanded = false, suppliers }: Pay
                  :style="selectedMethod === 'cek_senet' ? 'border-color: var(--btn-bg, #ff6600); background-color: var(--color-primary-50, #fff9f5);' : 'border-color: var(--color-border-default, #e5e5e5); background-color: var(--color-surface, #ffffff);'">
             <input type="radio" name="payment_method" value="cek_senet" x-model="selectedMethod" class="mt-1" :style="'color: var(--btn-bg, #ff6600); outline-color: var(--btn-bg, #ff6600)'" style="accent-color: var(--btn-bg, #ff6600);">
             <div>
-              <span class="block text-sm font-semibold" :style="selectedMethod === 'cek_senet' ? 'color: var(--btn-bg, #ff6600);' : 'color: var(--color-text-primary, #111827);'">Çek / Senet</span>
-              <span class="block text-xs text-[#6b7280] mt-1">Çek veya senet ile vadeli ödeme yapın. Satıcı ile vade koşullarını belirleyin.</span>
+              <span class="block text-sm font-semibold" :style="selectedMethod === 'cek_senet' ? 'color: var(--btn-bg, #ff6600);' : 'color: var(--color-text-primary, #111827);'" data-i18n="checkout.checkDraft">${t('checkout.checkDraft')}</span>
+              <span class="block text-xs text-[#6b7280] mt-1" data-i18n="checkout.checkDraftDesc">${t('checkout.checkDraftDesc')}</span>
             </div>
           </label>
         </div>
@@ -375,7 +376,7 @@ export function PaymentMethodSection({ initialExpanded = false, suppliers }: Pay
           <circle cx="12" cy="12" r="10" />
           <path d="M12 6v12M9 9.5c0-1.1.9-2 2-2h2a2 2 0 010 4h-2a2 2 0 000 4h2a2 2 0 002-2" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
-        <h2 class="checkout-section__title text-lg font-bold text-[#111827] flex-1 text-left">Payment method</h2>
+        <h2 class="checkout-section__title text-lg font-bold text-[#111827] flex-1 text-left" data-i18n="checkout.paymentMethod">${t('checkout.paymentMethod')}</h2>
         <svg class="checkout-section__chevron w-5 h-5 text-[#6b7280] transition-transform duration-300 ${chevronRotate}" :class="{ 'rotate-180': expanded }" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round" />
         </svg>

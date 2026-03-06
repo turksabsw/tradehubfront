@@ -10,6 +10,7 @@ import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import 'swiper/swiper-bundle.css';
 
 import type { NotificationSlide } from '../../types/buyerDashboard';
+import { t } from '../../i18n';
 
 export interface OperationSliderProps {
   notifications: NotificationSlide[];
@@ -36,7 +37,7 @@ export function OperationSlider(props: OperationSliderProps): string {
   const hasMultiple = notifications.length > 1;
 
   return `
-    <div class="operation-slider group/opslider px-3 pb-3" aria-label="Bildirimler">
+    <div class="operation-slider group/opslider px-3 pb-3" aria-label="${t('dashboard.notifications')}">
       <div class="relative overflow-hidden bg-(--color-surface-raised,#f5f5f5) rounded-lg">
         <div class="swiper operation-slider__swiper overflow-hidden">
           <div class="swiper-wrapper">
@@ -47,7 +48,7 @@ export function OperationSlider(props: OperationSliderProps): string {
         ${hasMultiple ? `
           <!-- Custom Navigation Arrows -->
           <button
-            aria-label="Önceki bildirim"
+            aria-label="${t('dashboard.prevNotification')}"
             class="operation-slider__prev absolute top-1/2 -translate-y-1/2 left-1 z-10 w-6 h-6 flex items-center justify-center bg-white rounded-full shadow-sm border-none text-(--color-text-muted,#666666) cursor-pointer opacity-0 pointer-events-none transition-all duration-200 group-hover/opslider:opacity-100 group-hover/opslider:pointer-events-auto hover:text-(--color-text-heading,#111827)"
           >
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
@@ -55,7 +56,7 @@ export function OperationSlider(props: OperationSliderProps): string {
             </svg>
           </button>
           <button
-            aria-label="Sonraki bildirim"
+            aria-label="${t('dashboard.nextNotification')}"
             class="operation-slider__next absolute top-1/2 -translate-y-1/2 right-1 z-10 w-6 h-6 flex items-center justify-center bg-white rounded-full shadow-sm border-none text-(--color-text-muted,#666666) cursor-pointer opacity-0 pointer-events-none transition-all duration-200 group-hover/opslider:opacity-100 group-hover/opslider:pointer-events-auto hover:text-(--color-text-heading,#111827)"
           >
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">

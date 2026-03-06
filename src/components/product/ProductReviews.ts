@@ -4,7 +4,8 @@
  * filter/mention pills, review cards with badges & supplier replies.
  */
 
-import { mockProduct } from '../../data/mockProduct';
+import { getMockProduct } from '../../data/mockProduct';
+import { t } from '../../i18n';
 import type { ProductReview } from '../../types/product';
 import { openLoginModal } from './LoginModal';
 
@@ -58,11 +59,11 @@ function avatarColor(name: string): string {
 }
 
 function satisfactionLabel(score: number): string {
-  if (score >= 4.5) return 'Çok Memnun';
-  if (score >= 3.5) return 'Memnun';
-  if (score >= 2.5) return 'Orta';
-  if (score >= 1.5) return 'Memnun Değil';
-  return 'Çok Memnun Değil';
+  if (score >= 4.5) return t('product.verySatisfied');
+  if (score >= 3.5) return t('product.satisfied');
+  if (score >= 2.5) return t('product.neutral');
+  if (score >= 1.5) return t('product.dissatisfied');
+  return t('product.veryDissatisfied');
 }
 
 /* ── Review card renderer ────────────────────────────── */
@@ -70,27 +71,27 @@ function satisfactionLabel(score: number): string {
 export function renderReviewCard(review: ProductReview, showProductThumb = false): string {
   const badges: string[] = [];
   if (review.verified) {
-    badges.push('<span class="rv-badge rv-badge-verified">Doğrulanmış Satın Alma</span>');
+    badges.push(`<span class="rv-badge rv-badge-verified">${t('product.verifiedPurchase')}</span>`);
   }
   if (review.repeatBuyer) {
-    badges.push('<span class="rv-badge rv-badge-repeat">Tekrar Alıcı</span>');
+    badges.push(`<span class="rv-badge rv-badge-repeat">${t('product.repeatBuyer')}</span>`);
   }
 
   const supplierReplyHtml = review.supplierReply
     ? `<div class="rv-supplier-reply">
-        <div class="rv-supplier-reply-label">Tedarikçi yanıtı:</div>
+        <div class="rv-supplier-reply-label">${t('product.supplierReply')}</div>
         <div class="rv-supplier-reply-text">${review.supplierReply}</div>
       </div>`
     : '';
 
   const productThumbHtml = showProductThumb && review.productTitle
     ? `<div class="rv-product-card flex items-center gap-3 rounded-lg p-3 mt-3">
-        <img class="rv-product-card-img w-12 h-12 rounded object-cover shrink-0" src="${review.productImage || ''}" alt="Ürün görseli">
+        <img class="rv-product-card-img w-12 h-12 rounded object-cover shrink-0" src="${review.productImage || ''}" alt="${t('product.productImage')}">
         <div class="flex-1 min-w-0">
           <span class="rv-product-card-title">${review.productTitle}</span>
           <span class="rv-product-card-price">${review.productPrice || ''}</span>
         </div>
-        <a class="rv-product-card-link" href="javascript:void(0)">Ürün detaylarını gör ›</a>
+        <a class="rv-product-card-link" href="javascript:void(0)">${t('product.viewProductDetails')} ›</a>
       </div>`
     : '';
 
@@ -115,12 +116,12 @@ export function renderReviewCard(review: ProductReview, showProductThumb = false
       <div class="rv-card-comment max-[374px]:text-[13px] max-[374px]:leading-[1.5]">${review.comment}</div>
       ${supplierReplyHtml}
       ${productThumbHtml}
-      <button type="button" class="rv-hidden-reviews-link">Gizli yorumları göster</button>
+      <button type="button" class="rv-hidden-reviews-link">${t('product.showHiddenReviews')}</button>
       <button type="button" class="rv-helpful-btn" data-review-id="${review.id}">
         <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"/>
         </svg>
-        Faydalı (${review.helpful})
+        ${t('product.helpful', { count: String(review.helpful) })}
       </button>
     </div>
   `;
@@ -132,16 +133,16 @@ function ratingDropdownHtml(idPrefix: string): string {
   return `
     <div class="rv-rating-dropdown" id="${idPrefix}-rating-dropdown">
       <button type="button" class="rv-rating-dropdown-trigger">
-        Puan
+        ${t('product.ratingLabel')}
         <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
       </button>
       <div class="rv-rating-dropdown-panel max-sm:!min-w-[160px]">
-        <button type="button" class="rv-rating-dropdown-item active" data-rv-rating="all">Tüm Puanlar</button>
-        <button type="button" class="rv-rating-dropdown-item" data-rv-rating="5">${renderStars(5, true)} 5 Yıldız</button>
-        <button type="button" class="rv-rating-dropdown-item" data-rv-rating="4">${renderStars(4, true)} 4 Yıldız</button>
-        <button type="button" class="rv-rating-dropdown-item" data-rv-rating="3">${renderStars(3, true)} 3 Yıldız</button>
-        <button type="button" class="rv-rating-dropdown-item" data-rv-rating="2">${renderStars(2, true)} 2 Yıldız</button>
-        <button type="button" class="rv-rating-dropdown-item" data-rv-rating="1">${renderStars(1, true)} 1 Yıldız</button>
+        <button type="button" class="rv-rating-dropdown-item active" data-rv-rating="all">${t('product.allRatings')}</button>
+        <button type="button" class="rv-rating-dropdown-item" data-rv-rating="5">${renderStars(5, true)} ${t('product.starLabel', { count: '5' })}</button>
+        <button type="button" class="rv-rating-dropdown-item" data-rv-rating="4">${renderStars(4, true)} ${t('product.starLabel', { count: '4' })}</button>
+        <button type="button" class="rv-rating-dropdown-item" data-rv-rating="3">${renderStars(3, true)} ${t('product.starLabel', { count: '3' })}</button>
+        <button type="button" class="rv-rating-dropdown-item" data-rv-rating="2">${renderStars(2, true)} ${t('product.starLabel', { count: '2' })}</button>
+        <button type="button" class="rv-rating-dropdown-item" data-rv-rating="1">${renderStars(1, true)} ${t('product.starLabel', { count: '1' })}</button>
       </div>
     </div>`;
 }
@@ -150,12 +151,12 @@ function sortDropdownHtml(idPrefix: string): string {
   return `
     <div class="rv-sort-dropdown max-sm:!ml-0 max-sm:!w-full" id="${idPrefix}-sort-dropdown">
       <button type="button" class="rv-sort-dropdown-trigger max-sm:!w-full max-sm:!justify-between">
-        Sırala: En alakalı
+        ${t('product.sortLabel')}: ${t('product.sortRelevant')}
         <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
       </button>
       <div class="rv-sort-dropdown-panel max-sm:!left-0 max-sm:!right-0">
-        <button type="button" class="rv-sort-dropdown-item active" data-rv-sort="relevant">En alakalı</button>
-        <button type="button" class="rv-sort-dropdown-item" data-rv-sort="newest">En yeni</button>
+        <button type="button" class="rv-sort-dropdown-item active" data-rv-sort="relevant">${t('product.sortRelevant')}</button>
+        <button type="button" class="rv-sort-dropdown-item" data-rv-sort="newest">${t('product.sortNewest')}</button>
       </div>
     </div>`;
 }
@@ -164,14 +165,15 @@ function langToggleHtml(): string {
   return `
     <div class="rv-lang-row flex items-center gap-2 mt-2">
       <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM4.332 8.027a6.012 6.012 0 011.912-2.706C6.512 5.73 6.974 6 7.5 6A1.5 1.5 0 019 7.5V8a2 2 0 004 0 2 2 0 011.523-1.943A5.977 5.977 0 0116 10c0 .34-.028.675-.083 1H15a2 2 0 00-2 2v2.197A5.973 5.973 0 0110 16v-2a2 2 0 00-2-2 2 2 0 01-2-2 2 2 0 00-1.668-1.973z" clip-rule="evenodd"/></svg>
-      <span class="text-[13px]">Seçtiğiniz dilde tüm yorumlar gösteriliyor.</span>
-      <a class="rv-lang-toggle-link" href="javascript:void(0)">Orijinalini Göster</a>
+      <span class="text-[13px]">${t('product.langNote')}</span>
+      <a class="rv-lang-toggle-link" href="javascript:void(0)">${t('product.showOriginal')}</a>
     </div>`;
 }
 
 /* ── Main component ──────────────────────────────────── */
 
 export function ProductReviews(): string {
+  const mockProduct = getMockProduct();
   const p = mockProduct;
   const photoReviewCount = p.reviews.filter(r => r.images && r.images.length > 0).length;
 
@@ -179,20 +181,20 @@ export function ProductReviews(): string {
     <div class="py-6 max-[374px]:py-4">
       <!-- Sub-tabs -->
       <div class="rv-sub-tabs flex border-b-2 border-border-default mb-6 max-[374px]:mb-4">
-        <button type="button" class="rv-sub-tab max-[374px]:text-[13px] max-[374px]:px-2 max-[374px]:py-2 active" data-rv-panel="rv-product-panel">Ürün Yorumları (${p.reviewCount})</button>
-        <button type="button" class="rv-sub-tab max-[374px]:text-[13px] max-[374px]:px-2 max-[374px]:py-2" data-rv-panel="rv-store-panel">Mağaza Yorumları (${p.storeReviewCount})</button>
+        <button type="button" class="rv-sub-tab max-[374px]:text-[13px] max-[374px]:px-2 max-[374px]:py-2 active" data-rv-panel="rv-product-panel">${t('product.productReviewsTab', { count: String(p.reviewCount) })}</button>
+        <button type="button" class="rv-sub-tab max-[374px]:text-[13px] max-[374px]:px-2 max-[374px]:py-2" data-rv-panel="rv-store-panel">${t('product.storeReviewsTab', { count: String(p.storeReviewCount) })}</button>
       </div>
 
       <!-- Product Reviews Panel -->
       <div id="rv-product-panel">
         <!-- Info text -->
         <p style="font-size: 13px; color: var(--pd-rating-text-color, #6b7280); padding: 16px 0 12px; border-bottom: 1px solid var(--pd-spec-border, #e5e5e5); margin-bottom: 16px;">
-          Bu ürün için son bir yılda yeni puan yok. Bunun yerine önceki puanlar ve yorumlar gösteriliyor.
+          ${t('product.noRatingNote')}
         </p>
 
         <!-- Filter Row -->
         <div class="rv-filter-row flex items-center gap-2 flex-wrap mb-4">
-          <button type="button" class="rv-filter-pill active" data-rv-filter="all">Tümü</button>
+          <button type="button" class="rv-filter-pill active" data-rv-filter="all">${t('product.allFilter')}</button>
           ${ratingDropdownHtml('rv-product')}
           ${sortDropdownHtml('rv-product')}
         </div>
@@ -212,7 +214,7 @@ export function ProductReviews(): string {
             <span class="rv-rating-number">${p.rating}</span>
             <div class="flex items-center gap-0.5 mt-1">${renderStars(p.rating)}</div>
             <span class="rv-rating-label">${satisfactionLabel(p.rating)}</span>
-            <span class="rv-rating-subtitle">${p.storeReviewCount} doğrulanmış alışveriş yorumuna dayalı</span>
+            <span class="rv-rating-subtitle">${t('product.basedOnReviews', { count: String(p.storeReviewCount) })}</span>
           </div>
           <div class="flex-1 flex flex-col gap-2.5 justify-center">
             ${p.reviewCategoryRatings.map(cat => `
@@ -229,15 +231,15 @@ export function ProductReviews(): string {
 
         <!-- Filter Row -->
         <div class="rv-filter-row flex items-center gap-2 flex-wrap mb-4">
-          <button type="button" class="rv-filter-pill active" data-rv-filter="all">Tümü</button>
-          <button type="button" class="rv-filter-pill" data-rv-filter="photo">Fotoğraflı/Videolu (${photoReviewCount})</button>
+          <button type="button" class="rv-filter-pill active" data-rv-filter="all">${t('product.allFilter')}</button>
+          <button type="button" class="rv-filter-pill" data-rv-filter="photo">${t('product.withPhotos', { count: String(photoReviewCount) })}</button>
           ${ratingDropdownHtml('rv-store')}
           ${sortDropdownHtml('rv-store')}
         </div>
 
         <!-- Mention Tags -->
         <div class="flex gap-2 flex-wrap mb-5">
-          <span style="font-size: 12px; color: var(--pd-rating-text-color, #6b7280); align-self: center;">Sık bahsedilenler:</span>
+          <span style="font-size: 12px; color: var(--pd-rating-text-color, #6b7280); align-self: center;">${t('product.frequentMentions')}</span>
           ${p.reviewMentionTags.map(tag => `
             <button type="button" class="rv-mention-tag" data-rv-mention="${tag.label}">${tag.label} (${tag.count})</button>
           `).join('')}
@@ -250,7 +252,7 @@ export function ProductReviews(): string {
         ${p.reviews.map(r => renderReviewCard(r, true)).join('')}
 
         <!-- Show All Button -->
-        <button type="button" class="rv-show-all-btn">Tümünü Göster</button>
+        <button type="button" class="rv-show-all-btn">${t('product.showAll')}</button>
       </div>
     </div>
   `;
@@ -271,13 +273,14 @@ export interface ReviewFilterState {
 }
 
 export const SORT_LABELS: Record<SortMode, string> = {
-  relevant: 'En alakalı',
-  newest: 'En yeni',
-  highest: 'En yüksek puan',
-  lowest: 'En düşük puan',
+  relevant: t('product.sortRelevant'),
+  newest: t('product.sortNewest'),
+  highest: t('product.sortHighest'),
+  lowest: t('product.sortLowest'),
 };
 
 export function filterAndSortReviews(state: ReviewFilterState): ProductReview[] {
+  const mockProduct = getMockProduct();
   let results = [...mockProduct.reviews];
 
   // Filter by photo/video
@@ -338,7 +341,7 @@ export function bindHelpfulButtons(container: HTMLElement): void {
           <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"/>
           </svg>
-          Faydalı (${count})
+          ${t('product.helpful', { count: String(count) })}
         `;
       }
     });
@@ -390,7 +393,7 @@ function initScopedReviewPanel(
     if (filtered.length === 0) {
       cardsContainer.innerHTML = `
         <div style="text-align: center; padding: 40px 0; color: var(--pd-rating-text-color, #6b7280); font-size: 14px;">
-          Bu filtrelere uygun yorum bulunamadı.
+          ${t('product.noReviewsForFilter')}
         </div>
       `;
     } else {
@@ -437,7 +440,7 @@ function initScopedReviewPanel(
         state.ratingFilter = rating === 'all' ? 'all' : parseInt(rating || '0', 10);
 
         if (trigger) {
-          const label = rating === 'all' ? 'Puan' : `${rating} Yıldız`;
+          const label = rating === 'all' ? t('product.ratingLabel') : `${rating} ${t('product.starSuffix')}`;
           trigger.innerHTML = `${label} <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>`;
           trigger.classList.toggle('active', rating !== 'all');
         }
@@ -471,7 +474,7 @@ function initScopedReviewPanel(
         }
 
         if (trigger) {
-          trigger.innerHTML = `Sırala: ${SORT_LABELS[state.sortBy]} <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>`;
+          trigger.innerHTML = `${t('product.sortLabel')}: ${SORT_LABELS[state.sortBy]} <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>`;
         }
         renderFilteredReviews();
       });

@@ -9,6 +9,8 @@
 
 /* ── Types ──────────────────────────────────────────── */
 
+import { t } from '../../i18n';
+
 export interface AuthLayoutOptions {
   /** Page title for mobile header */
   title?: string;
@@ -43,7 +45,7 @@ export const getBaseUrl = (): string => {
  * Renders the mobile header bar with optional back button and title
  */
 function renderMobileHeader(options: AuthLayoutOptions = {}): string {
-  const { title = 'Giriş yap veya hesap oluştur', showBackButton = true } = options;
+  const { title = t('auth.mobileHeaderTitle'), showBackButton = true } = options;
   const baseUrl = getBaseUrl();
 
   return `
@@ -53,7 +55,7 @@ function renderMobileHeader(options: AuthLayoutOptions = {}): string {
           type="button"
           id="auth-mobile-back"
           class="flex items-center justify-center w-10 h-10 -ml-2 rounded-full text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-          aria-label="Geri"
+          aria-label="${t('auth.mobileBackLabel')}"
         >
           <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/>

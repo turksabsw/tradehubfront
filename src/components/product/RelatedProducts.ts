@@ -7,6 +7,7 @@
 import Swiper from 'swiper';
 import { Navigation } from 'swiper/modules';
 import 'swiper/swiper-bundle.css';
+import { t } from '../../i18n';
 
 interface RelatedProduct {
   name: string;
@@ -62,14 +63,14 @@ const relatedVisuals: Record<RelatedImageKind, RelatedVisual> = {
 };
 
 const relatedProducts: RelatedProduct[] = [
-  { name: 'Titanyum Çelik Küba Zincir Bileklik Erkek', href: '#', price: '$2.10-3.60', moq: '10 adet', stats: '3,580 satış', imageKind: 'jewelry', verified: true, supplierYears: 4 },
-  { name: 'Gümüş Kübik Zirkon Küpe Set Kadın', href: '#', price: '$0.90-1.60', moq: '20 adet', stats: '8,950 satış', imageKind: 'jewelry', verified: true, supplierYears: 6 },
-  { name: 'Deri Minimalist Kartlık Cüzdan RFID', href: '#', price: '$1.50-2.20', moq: '50 adet', stats: '6,730 satış', imageKind: 'accessory', verified: true, supplierYears: 5 },
-  { name: 'El Yapımı Reçine Telefon Kılıfı Kalıp Seti', href: '#', price: '$2.40-3.80', moq: '20 adet', stats: '890 satış', imageKind: 'crafts', verified: false, supplierYears: 2 },
-  { name: 'Akıllı WiFi Güvenlik Kamerası 1080P', href: '#', price: '$8.50-12', moq: '10 adet', stats: '1,280 satış', imageKind: 'electronics', verified: true, supplierYears: 7 },
-  { name: 'Oversize Pamuk Vintage Baskılı Tişört', href: '#', price: '$3.20-4.50', moq: '30 adet', stats: '9,450 satış', imageKind: 'clothing', verified: true, supplierYears: 4 },
-  { name: 'Polarize UV400 Aviator Güneş Gözlüğü', href: '#', price: '$1.20-2.40', moq: '50 adet', stats: '14,200 satış', imageKind: 'accessory', verified: true, supplierYears: 3 },
-  { name: 'Elmas Boyama Kiti 5D DIY Hobi Set', href: '#', price: '$1.20-2.80', moq: '10 adet', stats: '7,890 satış', imageKind: 'crafts', verified: true, supplierYears: 3 },
+  { name: t('relatedProducts.product1'), href: '#', price: '$2.10-3.60', moq: `10 ${t('product.unit')}`, stats: `3,580 ${t('product.sales')}`, imageKind: 'jewelry', verified: true, supplierYears: 4 },
+  { name: t('relatedProducts.product2'), href: '#', price: '$0.90-1.60', moq: `20 ${t('product.unit')}`, stats: `8,950 ${t('product.sales')}`, imageKind: 'jewelry', verified: true, supplierYears: 6 },
+  { name: t('relatedProducts.product3'), href: '#', price: '$1.50-2.20', moq: `50 ${t('product.unit')}`, stats: `6,730 ${t('product.sales')}`, imageKind: 'accessory', verified: true, supplierYears: 5 },
+  { name: t('relatedProducts.product4'), href: '#', price: '$2.40-3.80', moq: `20 ${t('product.unit')}`, stats: `890 ${t('product.sales')}`, imageKind: 'crafts', verified: false, supplierYears: 2 },
+  { name: t('relatedProducts.product5'), href: '#', price: '$8.50-12', moq: `10 ${t('product.unit')}`, stats: `1,280 ${t('product.sales')}`, imageKind: 'electronics', verified: true, supplierYears: 7 },
+  { name: t('relatedProducts.product6'), href: '#', price: '$3.20-4.50', moq: `30 ${t('product.unit')}`, stats: `9,450 ${t('product.sales')}`, imageKind: 'clothing', verified: true, supplierYears: 4 },
+  { name: t('relatedProducts.product7'), href: '#', price: '$1.20-2.40', moq: `50 ${t('product.unit')}`, stats: `14,200 ${t('product.sales')}`, imageKind: 'accessory', verified: true, supplierYears: 3 },
+  { name: t('relatedProducts.product8'), href: '#', price: '$1.20-2.80', moq: `10 ${t('product.unit')}`, stats: `7,890 ${t('product.sales')}`, imageKind: 'crafts', verified: true, supplierYears: 3 },
 ];
 
 function renderPlaceholder(kind: RelatedImageKind): string {
@@ -112,7 +113,7 @@ function renderRelatedSlide(card: RelatedProduct): string {
               <div class="flex items-center gap-1 text-xs font-medium" style="color: var(--product-verified-color, #cc9900);">
                 ${verifiedIcon()}
                 <span>Verified</span>
-                ${card.supplierYears ? `<span class="opacity-60">·</span><span>${card.supplierYears} yrs</span>` : ''}
+                ${card.supplierYears ? `<span class="opacity-60">·</span><span>${t('product.yearsLabel', { count: String(card.supplierYears) })}</span>` : ''}
               </div>
             ` : ''}
           </div>
@@ -126,8 +127,8 @@ export function RelatedProducts(): string {
   return `
     <section class="related-products-section max-[374px]:px-3 max-[374px]:py-4" style="background: var(--pd-related-bg, #f8f8f8);">
         <div class="flex items-center justify-between mb-4 max-[374px]:mb-3">
-          <h2 class="text-lg font-bold max-[374px]:text-base" style="color: var(--pd-title-color, #111827);">Benzer Ürünler</h2>
-          <a href="#" class="text-sm font-medium hover:underline max-[374px]:text-xs" style="color: var(--pd-breadcrumb-link-color, #cc9900);">Tümünü Gör →</a>
+          <h2 class="text-lg font-bold max-[374px]:text-base" style="color: var(--pd-title-color, #111827);">${t('product.similarProducts')}</h2>
+          <a href="#" class="text-sm font-medium hover:underline max-[374px]:text-xs" style="color: var(--pd-breadcrumb-link-color, #cc9900);">${t('product.viewAllProducts')} →</a>
         </div>
 
         <div class="group/related-slider relative">
@@ -139,7 +140,7 @@ export function RelatedProducts(): string {
 
           <!-- Navigation Arrows -->
           <button
-            aria-label="Önceki ürünler"
+            aria-label="${t('product.previousProducts')}"
             class="related-prev absolute left-0 top-[40%] z-10 hidden h-10 w-10 -translate-x-1/2 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-500 shadow-lg transition-all duration-200 hover:text-gray-900 opacity-0 pointer-events-none md:flex group-hover/related-slider:opacity-100 group-hover/related-slider:pointer-events-auto disabled:opacity-0 disabled:pointer-events-none"
           >
             <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -147,7 +148,7 @@ export function RelatedProducts(): string {
             </svg>
           </button>
           <button
-            aria-label="Sonraki ürünler"
+            aria-label="${t('product.nextProducts')}"
             class="related-next absolute right-0 top-[40%] z-10 hidden h-10 w-10 translate-x-1/2 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-500 shadow-lg transition-all duration-200 hover:text-gray-900 opacity-0 pointer-events-none md:flex group-hover/related-slider:opacity-100 group-hover/related-slider:pointer-events-auto disabled:opacity-0 disabled:pointer-events-none"
           >
             <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

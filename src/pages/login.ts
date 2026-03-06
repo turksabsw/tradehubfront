@@ -6,6 +6,7 @@
 import '../style.css'
 import { initFlowbite } from 'flowbite'
 import { startAlpine } from '../alpine'
+import { t } from '../i18n'
 
 // Auth components
 import { AuthLayout, initAuthLayout, LoginPage, initLoginPage } from '../components/auth'
@@ -14,7 +15,7 @@ import { AuthLayout, initAuthLayout, LoginPage, initLoginPage } from '../compone
 
 const appEl = document.querySelector<HTMLDivElement>('#app')!
 appEl.innerHTML = AuthLayout(LoginPage(), {
-  title: 'Giriş yap veya hesap oluştur',
+  title: t('auth.login.title'),
   showBackButton: true,
 })
 

@@ -7,18 +7,20 @@ import { AttributesTabContent } from './AttributesTabContent';
 import { ProductReviews } from './ProductReviews';
 import { CompanyProfile } from './CompanyProfile';
 import { ProductDescription } from './ProductDescription';
+import { t } from '../../i18n';
 
 interface TabConfig {
   id: string;
   label: string;
+  i18nKey: string;
   content: () => string;
 }
 
 const tabs: TabConfig[] = [
-  { id: 'attributes', label: 'Özellikler', content: AttributesTabContent },
-  { id: 'reviews', label: 'Yorumlar', content: ProductReviews },
-  { id: 'company', label: 'Tedarikçi', content: CompanyProfile },
-  { id: 'description', label: 'Açıklama', content: ProductDescription },
+  { id: 'attributes', label: t('product.attributes'), i18nKey: 'product.attributes', content: AttributesTabContent },
+  { id: 'reviews', label: t('product.reviews'), i18nKey: 'product.reviews', content: ProductReviews },
+  { id: 'company', label: t('product.supplier'), i18nKey: 'product.supplier', content: CompanyProfile },
+  { id: 'description', label: t('product.description'), i18nKey: 'product.description', content: ProductDescription },
 ];
 
 export function ProductTabs(): string {
@@ -42,7 +44,7 @@ export function ProductTabs(): string {
             aria-controls="tab-content-${tab.id}"
             @click="activeTab = '${tab.id}'"
           >
-            ${tab.label}
+            <span data-i18n="${tab.i18nKey}">${tab.label}</span>
             <span
               class="absolute bottom-0 left-0 right-0 h-0.5 transition-all"
               :style="activeTab === '${tab.id}' ? 'background: var(--pd-tab-active-border, #cc9900)' : 'background: transparent'"

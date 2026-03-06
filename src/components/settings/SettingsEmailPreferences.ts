@@ -4,6 +4,8 @@
  * localStorage CRUD: tradehub_email_preferences
  */
 
+import { t } from '../../i18n';
+
 const STORAGE_KEY = 'tradehub_email_preferences';
 
 export interface EmailCategory {
@@ -21,48 +23,50 @@ export interface EmailItem {
   checked: boolean;
 }
 
-const defaultCategories: EmailCategory[] = [
-  {
-    id: 'notification',
-    title: 'Tüm bildirim e-postaları',
-    description: 'Alibaba.Com\'da önemli hesap güncellemeleri ve etkinlikleri hakkında sizi bilgilendiren e-postalar',
-    enabled: true,
-    items: [
-      {
-        id: 'general_notification',
-        title: 'Genel bildirim e-postaları',
-        description: 'Hesaplarınız, iletişimleriniz, siparişleriniz, gönderilerinize ilgili güncellemeler dahil olmak üzere platformdaki faaliyetleriniz tarafından tetiklenen e-postalar.',
-        checked: true,
-      },
-      {
-        id: 'dispute_updates',
-        title: 'Anlaşmazlık güncellemeleri',
-        description: 'Taraf olduğunuz herhangi bir anlaşmazlık olması durumunda (sizin tarafınız tarafından başlatılmış olsun ya da olmasın), sizi bilgilendirecek ve ilerlemesi konusunda sizi bilgilendireceğiz.',
-        checked: true,
-      },
-    ],
-  },
-  {
-    id: 'marketing',
-    title: 'Tüm pazarlama e-postaları',
-    description: 'Alibaba.Com\'da ürünler ve hizmetler hakkında tanıtım mesajları içeren e-postalar',
-    enabled: true,
-    items: [
-      {
-        id: 'general_marketing',
-        title: 'Genel pazarlama e-postaları',
-        description: 'İşletmenize fayda sağlayabilecek ürün indirimleri, özel teklifler, etkinlikler ve hizmet teklifleri dahil olmak üzere fırsatlar, etkinlikler ve hizmet güncellemeleri hakkında sizi bilgilendirmek için e-postalar.',
-        checked: true,
-      },
-      {
-        id: 'surveys',
-        title: 'Anketler',
-        description: 'Size daha iyi hizmet verebilmek için tekliflerimizi geliştirebilmemiz için sizi geri bildirim sağlamaya davet eden e-postalar.',
-        checked: true,
-      },
-    ],
-  },
-];
+function getDefaultCategories(): EmailCategory[] {
+  return [
+    {
+      id: 'notification',
+      title: t('settings.allNotificationEmails'),
+      description: t('settings.notificationEmailsDesc'),
+      enabled: true,
+      items: [
+        {
+          id: 'general_notification',
+          title: t('settings.generalNotificationEmails'),
+          description: t('settings.generalNotificationEmailsDesc'),
+          checked: true,
+        },
+        {
+          id: 'dispute_updates',
+          title: t('settings.disputeUpdates'),
+          description: t('settings.disputeUpdatesDesc'),
+          checked: true,
+        },
+      ],
+    },
+    {
+      id: 'marketing',
+      title: t('settings.allMarketingEmails'),
+      description: t('settings.marketingEmailsDesc'),
+      enabled: true,
+      items: [
+        {
+          id: 'general_marketing',
+          title: t('settings.generalMarketingEmails'),
+          description: t('settings.generalMarketingEmailsDesc'),
+          checked: true,
+        },
+        {
+          id: 'surveys',
+          title: t('settings.surveys'),
+          description: t('settings.surveysDesc'),
+          checked: true,
+        },
+      ],
+    },
+  ];
+}
 
 // ── CRUD ─────────────────────────────────────────────────────────
 
@@ -76,7 +80,8 @@ function readEmailPrefs(): EmailCategory[] {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (raw) {
       const saved: SavedEmailPrefs = JSON.parse(raw);
-      return defaultCategories.map(cat => ({
+      const defaults = getDefaultCategories();
+      return defaults.map(cat => ({
         ...cat,
         enabled: saved.toggles[cat.id] ?? cat.enabled,
         items: cat.items.map(item => ({
@@ -86,7 +91,7 @@ function readEmailPrefs(): EmailCategory[] {
       }));
     }
   } catch { /* ignore */ }
-  return defaultCategories.map(cat => ({ ...cat, items: cat.items.map(i => ({ ...i })) }));
+  return getDefaultCategories().map(cat => ({ ...cat, items: cat.items.map(i => ({ ...i })) }));
 }
 
 function saveEmailPrefs(): void {
@@ -144,15 +149,15 @@ export function SettingsEmailPreferences(): string {
   const categories = readEmailPrefs();
   return `
     <div class="bg-white rounded-lg p-8 max-md:p-5">
-      <p class="text-[13px] mb-2 m-0" style="color:var(--color-text-muted, #666666)">E-posta Hizmetleri</p>
-      <h2 class="text-2xl font-bold mb-2 m-0" style="color:var(--color-text-heading, #111827)">E-posta tercihleri</h2>
-      <p class="text-sm mb-4 m-0" style="color:var(--color-text-placeholder, #999999)">Almak istediğiniz e-posta türlerini seçin.</p>
-      <p class="text-sm mb-6 m-0" style="color:var(--color-text-heading, #111827)">E-posta tercihleri için <strong>met***@gmail.com</strong></p>
+      <p class="text-[13px] mb-2 m-0" style="color:var(--color-text-muted, #666666)">${t('settings.emailServices')}</p>
+      <h2 class="text-2xl font-bold mb-2 m-0" style="color:var(--color-text-heading, #111827)">${t('settings.emailPreferences')}</h2>
+      <p class="text-sm mb-4 m-0" style="color:var(--color-text-placeholder, #999999)">${t('settings.emailPreferencesDesc')}</p>
+      <p class="text-sm mb-6 m-0" style="color:var(--color-text-heading, #111827)">${t('settings.emailPreferencesFor')} <strong>met***@gmail.com</strong></p>
       <div class="flex flex-col">
         ${categories.map(renderCategory).join('')}
       </div>
       <div class="mt-5">
-        <a href="#" class="text-[13px] text-blue-600 no-underline hover:underline">Tüm abonelikten çıkın</a>
+        <a href="#" class="text-[13px] text-blue-600 no-underline hover:underline">${t('settings.unsubscribeAll')}</a>
       </div>
     </div>
   `;

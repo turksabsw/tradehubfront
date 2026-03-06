@@ -9,6 +9,8 @@
  * Fixed position overlay below SubHeader nav
  */
 
+import { t } from '../../i18n';
+
 /* ════════════════════════════════════════════════════
    DATA
    ════════════════════════════════════════════════════ */
@@ -181,49 +183,49 @@ export const megaCategories: MegaMenuCategory[] = [
 
 const featureCards = [
   {
-    title: 'Top ranking',
+    titleKey: 'mega.topRanking',
     href: '/top-ranking',
     icon: `<svg class="w-10 h-10" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="14" stroke="#222" stroke-width="1.5"/><circle cx="20" cy="20" r="7" stroke="#222" stroke-width="1.5"/><circle cx="20" cy="20" r="2" fill="#222"/><line x1="20" y1="2" x2="20" y2="8" stroke="#222" stroke-width="1.5"/><line x1="20" y1="32" x2="20" y2="38" stroke="#222" stroke-width="1.5"/><line x1="2" y1="20" x2="8" y2="20" stroke="#222" stroke-width="1.5"/><line x1="32" y1="20" x2="38" y2="20" stroke="#222" stroke-width="1.5"/></svg>`,
   },
   {
-    title: 'New arrivals',
+    titleKey: 'mega.newArrivals',
     href: '/new-arrivals',
     icon: `<svg class="w-10 h-10" viewBox="0 0 40 40" fill="none"><rect x="4" y="8" width="32" height="24" rx="3" stroke="#222" stroke-width="1.5"/><rect x="8" y="13" width="24" height="14" rx="1.5" stroke="#222" stroke-width="1"/><text x="20" y="24" text-anchor="middle" font-size="10" font-weight="700" fill="#222" font-family="sans-serif">NEW</text></svg>`,
   },
   {
-    title: 'Top deals',
+    titleKey: 'mega.topDeals',
     href: '/top-deals',
     icon: `<svg class="w-10 h-10" viewBox="0 0 40 40" fill="none"><path d="M17 5h-7a4 4 0 0 0-4 4v7.17a4 4 0 0 0 1.17 2.83l13.66 13.66a4 4 0 0 0 5.66 0l7.17-7.17a4 4 0 0 0 0-5.66L19.83 6.17A4 4 0 0 0 17 5Z" stroke="#222" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12.5" cy="12.5" r="2" fill="#222"/></svg>`,
   },
 ];
 
 const quickLinks = [
-  { label: 'Dropshipping center', href: '/dropshipping', icon: `<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 0 1-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 0 0-3.213-9.193 2.056 2.056 0 0 0-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 0 0-10.026 0 1.106 1.106 0 0 0-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12"/></svg>` },
-  { label: 'Sample center', href: '/samples', icon: `<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z"/></svg>` },
-  { label: 'Fast customization', href: '/customization', icon: `<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09Z"/></svg>` },
-  { label: 'Online Trade Show', href: '/trade-show', icon: `<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0 1 12 16.5a17.92 17.92 0 0 1-8.716-2.247m0 0A8.966 8.966 0 0 1 3 12c0-1.264.26-2.466.73-3.558"/></svg>` },
+  { labelKey: 'mega.dropshippingCenter', href: '/dropshipping', icon: `<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 0 1-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 0 0-3.213-9.193 2.056 2.056 0 0 0-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 0 0-10.026 0 1.106 1.106 0 0 0-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12"/></svg>` },
+  { labelKey: 'mega.sampleCenter', href: '/samples', icon: `<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z"/></svg>` },
+  { labelKey: 'mega.fastCustomization', href: '/customization', icon: `<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09Z"/></svg>` },
+  { labelKey: 'mega.onlineTradeShow', href: '/trade-show', icon: `<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0 1 12 16.5a17.92 17.92 0 0 1-8.716-2.247m0 0A8.966 8.966 0 0 1 3 12c0-1.264.26-2.466.73-3.558"/></svg>` },
 ];
 
 /* ──── Order Protections data ──── */
 
 const protectionCards = [
   {
-    title: 'Safe & easy payments',
+    titleKey: 'mega.safePayments',
     href: '/order-protections/payments',
     icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z"/></svg>`,
   },
   {
-    title: 'Money-back policy',
+    titleKey: 'mega.moneyBack',
     href: '/order-protections/refund',
     icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg>`,
   },
   {
-    title: 'Shipping & logistics services',
+    titleKey: 'mega.shippingLogistics',
     href: '/order-protections/shipping',
     icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 0 1-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 0 0-3.213-9.193 2.056 2.056 0 0 0-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 0 0-10.026 0 1.106 1.106 0 0 0-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12"/></svg>`,
   },
   {
-    title: 'After-sales protections',
+    titleKey: 'mega.afterSales',
     href: '/order-protections/after-sales',
     icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17 17.25 21A2.652 2.652 0 0 0 21 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 1 1-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 0 0 4.486-6.336l-3.276 3.277a3.004 3.004 0 0 1-2.25-2.25l3.276-3.276a4.5 4.5 0 0 0-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437 1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008Z"/></svg>`,
   },
@@ -330,7 +332,7 @@ function renderFeaturedView(): string {
             <span class="transition-colors" style="color:var(--mega-icon-color)">
               ${card.icon}
             </span>
-            <span class="text-sm font-semibold transition-colors" style="color:var(--mega-heading-color)">${card.title}</span>
+            <span class="text-sm font-semibold transition-colors" style="color:var(--mega-heading-color)" data-i18n="${card.titleKey}">${t(card.titleKey)}</span>
           </a>
         `).join('')}
         <!-- Right: Quick links -->
@@ -340,7 +342,7 @@ function renderFeaturedView(): string {
               <li>
                 <a href="${link.href}" class="th-mega-link flex items-center gap-2.5 text-sm transition-colors">
                   <span style="color:var(--mega-icon-color)">${link.icon}</span>
-                  ${link.label}
+                  <span data-i18n="${link.labelKey}">${t(link.labelKey)}</span>
                 </a>
               </li>
             `).join('')}
@@ -368,8 +370,8 @@ function renderProtectionsView(): string {
             <h3 class="text-lg font-bold" style="color:var(--mega-heading-color)">Trade Assurance</h3>
           </div>
           <p class="text-xl font-semibold leading-snug mb-6" style="color:var(--mega-heading-color)">Enjoy protection from payment to delivery</p>
-          <a href="/order-protections" class="th-btn th-btn-pill inline-block px-6 py-2.5 transition-colors">
-            Learn more
+          <a href="/order-protections" class="th-btn th-btn-pill inline-block px-6 py-2.5 transition-colors" data-i18n="common.learnMore">
+            ${t('common.learnMore')}
           </a>
         </div>
         <!-- Right: 2x2 protection cards -->
@@ -379,7 +381,7 @@ function renderProtectionsView(): string {
               <span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full" style="background-color:var(--mega-accent-bg)">
                 <span style="color:var(--mega-accent-color)">${card.icon}</span>
               </span>
-              <span class="flex-1 text-sm font-semibold transition-colors" style="color:var(--mega-heading-color)">${card.title}</span>
+              <span class="flex-1 text-sm font-semibold transition-colors" style="color:var(--mega-heading-color)" data-i18n="${card.titleKey}">${t(card.titleKey)}</span>
               <svg class="w-5 h-5 transition-colors flex-shrink-0" style="color:var(--mega-icon-color)" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
             </a>
           `).join('')}
@@ -394,49 +396,49 @@ function renderProtectionsView(): string {
    ════════════════════════════════════════════════════ */
 
 interface BuyerCentralColumn {
-  title: string;
-  links: { label: string; href: string }[];
+  titleKey: string;
+  links: { labelKey: string; href: string }[];
 }
 
 const buyerCentralColumns: BuyerCentralColumn[] = [
   {
-    title: 'Get started',
+    titleKey: 'mega.getStarted',
     links: [
-      { label: 'What is iSTOC', href: '/pages/legal/about.html' },
+      { labelKey: 'mega.whatIsIstoc', href: '/pages/legal/about.html' },
     ],
   },
   {
-    title: 'Why iSTOC',
+    titleKey: 'mega.whyIstoc',
     links: [
-      { label: 'How sourcing works', href: '/how-sourcing-works' },
-      { label: 'Membership program', href: '/membership' },
+      { labelKey: 'mega.howSourcingWorks', href: '/how-sourcing-works' },
+      { labelKey: 'mega.membershipProgram', href: '/membership' },
     ],
   },
   {
-    title: 'Trade services',
+    titleKey: 'mega.tradeServices',
     links: [
-      { label: 'Order protections', href: '/order-protections' },
-      { label: 'Letter of Credit', href: '/letter-of-credit' },
-      { label: 'Production monitoring & inspection services', href: '/inspection' },
-      { label: 'Tax Compliance Program', href: '/tax-compliance' },
+      { labelKey: 'mega.orderProtections', href: '/order-protections' },
+      { labelKey: 'mega.letterOfCredit', href: '/letter-of-credit' },
+      { labelKey: 'mega.productionMonitoring', href: '/inspection' },
+      { labelKey: 'mega.taxCompliance', href: '/tax-compliance' },
     ],
   },
   {
-    title: 'Resources',
+    titleKey: 'mega.resources',
     links: [
-      { label: 'Success stories', href: '/success-stories' },
-      { label: 'Blogs', href: '/blogs' },
-      { label: 'Industry reports', href: '/reports' },
-      { label: 'Help Center', href: '/pages/help/help-center.html' },
+      { labelKey: 'mega.successStories', href: '/success-stories' },
+      { labelKey: 'mega.blogs', href: '/blogs' },
+      { labelKey: 'mega.industryReports', href: '/reports' },
+      { labelKey: 'mega.helpCenter', href: '/pages/help/help-center.html' },
     ],
   },
   {
-    title: 'Webinars',
+    titleKey: 'mega.webinars',
     links: [
-      { label: 'Overview', href: '/webinars' },
-      { label: 'Meet the peers', href: '/webinars/peers' },
-      { label: 'Ecommerce Academy', href: '/ecommerce-academy' },
-      { label: 'How to source on iSTOC', href: '/how-to-source' },
+      { labelKey: 'mega.overview', href: '/webinars' },
+      { labelKey: 'mega.meetThePeers', href: '/webinars/peers' },
+      { labelKey: 'mega.ecommerceAcademy', href: '/ecommerce-academy' },
+      { labelKey: 'mega.howToSource', href: '/how-to-source' },
     ],
   },
 ];
@@ -447,12 +449,12 @@ function renderBuyerCentralView(): string {
       <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-8">
         ${buyerCentralColumns.map(col => `
           <div>
-            <h4 class="text-sm font-bold mb-4" style="color:var(--mega-heading-color)">${col.title}</h4>
+            <h4 class="text-sm font-bold mb-4" style="color:var(--mega-heading-color)" data-i18n="${col.titleKey}">${t(col.titleKey)}</h4>
             <ul class="space-y-3">
               ${col.links.map(link => `
                 <li>
-                  <a href="${link.href}" class="th-mega-link text-sm">
-                    ${link.label}
+                  <a href="${link.href}" class="th-mega-link text-sm" data-i18n="${link.labelKey}">
+                    ${t(link.labelKey)}
                   </a>
                 </li>
               `).join('')}
@@ -480,7 +482,7 @@ function renderHelpCenterView(): string {
                 <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"/>
               </svg>
             </span>
-            <span class="text-sm font-semibold transition-colors" style="color:var(--mega-heading-color)">For buyers</span>
+            <span class="text-sm font-semibold transition-colors" style="color:var(--mega-heading-color)" data-i18n="mega.forBuyers">${t('mega.forBuyers')}</span>
           </a>
           <a href="/help/suppliers" class="flex-1 flex flex-col items-center justify-center gap-4 border border-dashed rounded-md p-8 transition-all group" style="border-color:var(--mega-border-color)">
             <span class="flex items-center justify-center w-14 h-14 rounded-full transition-colors" style="background-color:var(--mega-icon-bg)">
@@ -488,25 +490,25 @@ function renderHelpCenterView(): string {
                 <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 21v-7.5a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 .75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349M3.75 21V9.349m0 0a3.001 3.001 0 0 0 3.75-.615A2.993 2.993 0 0 0 9.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 0 0 2.25 1.016c.896 0 1.7-.393 2.25-1.015a3.001 3.001 0 0 0 3.75.614m-16.5 0a3.004 3.004 0 0 1-.621-4.72l1.189-1.19A1.5 1.5 0 0 1 5.378 3h13.243a1.5 1.5 0 0 1 1.06.44l1.19 1.189a3 3 0 0 1-.621 4.72M6.75 18h3.75a.75.75 0 0 0 .75-.75V13.5a.75.75 0 0 0-.75-.75H6.75a.75.75 0 0 0-.75.75v3.75c0 .414.336.75.75.75Z"/>
               </svg>
             </span>
-            <span class="text-sm font-semibold transition-colors" style="color:var(--mega-heading-color)">For suppliers</span>
+            <span class="text-sm font-semibold transition-colors" style="color:var(--mega-heading-color)" data-i18n="mega.forSuppliers">${t('mega.forSuppliers')}</span>
           </a>
         </div>
         <!-- Right: Links -->
         <div class="w-full md:w-56 flex flex-col justify-center">
           <ul class="space-y-4">
             <li>
-              <a href="/help/dispute" class="th-mega-link text-sm">
-                Open a dispute
+              <a href="/help/dispute" class="th-mega-link text-sm" data-i18n="mega.openDispute">
+                ${t('mega.openDispute')}
               </a>
             </li>
             <li>
-              <a href="/help/ipr" class="th-mega-link text-sm">
-                Report IPR infringement
+              <a href="/help/ipr" class="th-mega-link text-sm" data-i18n="mega.reportIpr">
+                ${t('mega.reportIpr')}
               </a>
             </li>
             <li>
-              <a href="/help/abuse" class="th-mega-link text-sm">
-                Report abuse
+              <a href="/help/abuse" class="th-mega-link text-sm" data-i18n="mega.reportAbuse">
+                ${t('mega.reportAbuse')}
               </a>
             </li>
           </ul>
@@ -526,23 +528,23 @@ function renderAppExtensionView(): string {
       <div class="flex flex-col md:flex-row">
         <!-- Left: Get the app -->
         <div class="flex-1 md:pr-10">
-          <h4 class="text-lg font-bold mb-2" style="color:var(--mega-heading-color)">Get the iSTOC app</h4>
-          <p class="text-sm mb-5 max-w-sm" style="color:var(--mega-body-text)">Find products, communicate with suppliers, and manage and pay for your orders with the iSTOC app anytime, anywhere.</p>
+          <h4 class="text-lg font-bold mb-2" style="color:var(--mega-heading-color)" data-i18n="mega.getApp">${t('mega.getApp')}</h4>
+          <p class="text-sm mb-5 max-w-sm" style="color:var(--mega-body-text)" data-i18n="mega.appDesc">${t('mega.appDesc')}</p>
           <div class="flex items-center gap-5">
             <!-- App badges -->
             <div class="flex flex-col gap-2.5">
               <a href="/app/ios" class="inline-flex items-center gap-2 bg-black text-white rounded-md px-4 py-2 hover:bg-gray-800 transition-colors">
                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11Z"/></svg>
                 <div class="flex flex-col">
-                  <span class="text-[10px] leading-none opacity-80">Download on the</span>
-                  <span class="text-sm font-semibold leading-tight">App Store</span>
+                  <span class="text-[10px] leading-none opacity-80" data-i18n="mega.downloadOn">${t('mega.downloadOn')}</span>
+                  <span class="text-sm font-semibold leading-tight" data-i18n="mega.appStore">${t('mega.appStore')}</span>
                 </div>
               </a>
               <a href="/app/android" class="inline-flex items-center gap-2 bg-black text-white rounded-md px-4 py-2 hover:bg-gray-800 transition-colors">
                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="m3.18 23.96.02.02c.04-.06.06-.12.09-.19l4.58-9.81a.3.3 0 0 0-.13-.39L.56 9.42a.3.3 0 0 0-.41.13L.02 9.8A11.94 11.94 0 0 0 0 12.09c0 4.5 2.04 7.6 3.18 11.87Z"/><path d="m8.44 12.96-.37.79-4.58 9.81c-.02.05-.04.11-.07.16l.02.02c3.71-2.2 13.08-7.74 22.54-13.25a.1.1 0 0 0 .02-.17l-4.09-3.55a.3.3 0 0 0-.33-.04l-13.14 6.23Z"/><path d="M8.07 11.03 21.21 4.8a.3.3 0 0 0 .05-.51L17.54 1.3a.3.3 0 0 0-.27-.05L3.4.01A.3.3 0 0 0 3.12.2l-.1.2a.3.3 0 0 0 .05.31l4.66 4.69.12.13.21.24 4.59 4.87a.3.3 0 0 1-.58.39Z"/></svg>
                 <div class="flex flex-col">
-                  <span class="text-[10px] leading-none opacity-80">GET IT ON</span>
-                  <span class="text-sm font-semibold leading-tight">Google Play</span>
+                  <span class="text-[10px] leading-none opacity-80" data-i18n="mega.getItOn">${t('mega.getItOn')}</span>
+                  <span class="text-sm font-semibold leading-tight" data-i18n="mega.googlePlay">${t('mega.googlePlay')}</span>
                 </div>
               </a>
             </div>
@@ -557,15 +559,15 @@ function renderAppExtensionView(): string {
         </div>
         <!-- Right: Discover Lens -->
         <div class="flex-1 pt-6 md:pt-0 md:pl-10 border-t md:border-t-0 md:border-l" style="border-color:var(--mega-border-color)">
-          <h4 class="text-lg font-bold mb-2" style="color:var(--mega-heading-color)">Discover iSTOC Lens</h4>
-          <p class="text-sm mb-5 max-w-md" style="color:var(--mega-body-text)">Use this image search extension to find and compare similar products with wholesale prices and customization options anywhere online.</p>
+          <h4 class="text-lg font-bold mb-2" style="color:var(--mega-heading-color)" data-i18n="mega.discoverLens">${t('mega.discoverLens')}</h4>
+          <p class="text-sm mb-5 max-w-md" style="color:var(--mega-body-text)" data-i18n="mega.lensDesc">${t('mega.lensDesc')}</p>
           <div class="flex flex-col items-start gap-3">
-            <a href="/lens" class="th-mega-link text-sm underline underline-offset-2">
-              Learn more
+            <a href="/lens" class="th-mega-link text-sm underline underline-offset-2" data-i18n="common.learnMore">
+              ${t('common.learnMore')}
             </a>
             <a href="/lens/chrome" class="th-btn th-btn-pill inline-flex items-center gap-2 px-6 py-2.5 transition-colors">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0 1 12 16.5a17.92 17.92 0 0 1-8.716-2.247m0 0A8.966 8.966 0 0 1 3 12c0-1.264.26-2.466.73-3.558"/></svg>
-              Add to Chrome
+              <span data-i18n="mega.addToChrome">${t('mega.addToChrome')}</span>
             </a>
           </div>
         </div>

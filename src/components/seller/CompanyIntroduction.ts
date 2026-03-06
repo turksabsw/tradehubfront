@@ -4,6 +4,7 @@
  * BEM Block: company-intro
  */
 import type { CompanyInfoCell, CompanyPhoto, SellerProfile } from '../../types/seller/types';
+import { t } from '../../i18n';
 
 function getInfoIconSvg(iconName: string): string {
   const icons: Record<string, string> = {
@@ -25,18 +26,18 @@ export function CompanyIntroduction(
   if (!cells || !cells.length) return '';
 
   return `
-    <section id="company-introduction" class="company-intro py-12" aria-label="Şirket tanıtımı">
+    <section id="company-introduction" class="company-intro py-12" aria-label="${t('seller.sf.companyIntroLabel')}">
       <div class="max-w-(--container-lg) mx-auto px-[clamp(0.75rem,0.5rem+1vw,1.5rem)] lg:px-6 xl:px-8">
         <div class="company-intro__card bg-white dark:bg-gray-800 border border-(--card-border-color) rounded-(--radius-lg) shadow-md dark:shadow-lg p-4 sm:p-6 lg:p-10">
 
           <!-- Title -->
           <h2 class="company-intro__title text-[24px] font-bold text-[#1e3a5f] dark:text-blue-300 uppercase text-center mb-6">
-            Company Introduction
+            ${t('seller.sf.companyIntroTitle')}
           </h2>
 
           <!-- Verification Line -->
           <div class="company-intro__verification flex items-center justify-center flex-wrap gap-3 mb-8">
-            <span class="text-[13px] text-[#6b7280] dark:text-gray-400">Verification Type:</span>
+            <span class="text-[13px] text-[#6b7280] dark:text-gray-400">${t('seller.sf.verificationType')}</span>
             <span class="inline-flex items-center gap-1 bg-[#eff6ff] dark:bg-blue-900 text-[#1e40af] dark:text-blue-300 text-[13px] font-medium px-2.5 py-1 rounded-sm">
               <svg class="w-4 h-4" viewBox="0 0 16 16" fill="none">
                 <circle cx="8" cy="8" r="7" fill="currentColor" opacity="0.2"/>
@@ -44,7 +45,7 @@ export function CompanyIntroduction(
               </svg>
               ${seller.verificationType}
             </span>
-            <span class="text-[13px] text-[#374151] dark:text-gray-300">Supplier Assessment</span>
+            <span class="text-[13px] text-[#374151] dark:text-gray-300">${t('seller.sf.supplierAssessment')}</span>
             ${seller.verificationBadgeType === 'pro' ? `
               <span class="inline-flex items-center bg-(--store-accent) text-white text-[11px] font-semibold px-2 py-0.5 rounded-sm uppercase">PRO</span>
             ` : ''}
@@ -67,7 +68,7 @@ export function CompanyIntroduction(
                       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                       </svg>
-                      Doğrulandı
+                      ${t('seller.sf.verified')}
                     </span>
                   ` : ''}
                 </div>
@@ -82,7 +83,7 @@ export function CompanyIntroduction(
                 <div class="relative rounded-(--radius-md) overflow-hidden aspect-[4/3]">
                   <img src="${photo.image}" alt="${photo.caption}" class="w-full h-full object-cover" loading="lazy" />
                   ${photo.hasVideo ? `
-                    <button class="absolute inset-0 flex items-center justify-center" aria-label="Video oynat">
+                    <button class="absolute inset-0 flex items-center justify-center" aria-label="${t('seller.sf.playVideo')}">
                       <div class="w-14 h-14 bg-black/50 hover:bg-black/70 rounded-full flex items-center justify-center transition-colors cursor-pointer">
                         <svg class="w-6 h-6 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
                           <path d="M8 5v14l11-7z"/>
@@ -105,13 +106,13 @@ export function CompanyIntroduction(
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
               </svg>
-              Contact Supplier
+              ${t('seller.sf.contactSupplier')}
             </button>
             <button class="th-btn-outline">
-              Start Order
+              ${t('seller.sf.startOrder')}
             </button>
             <a href="#company-info" class="text-[var(--color-primary-500)] font-medium text-[14px] hover:underline flex items-center gap-1 focus:ring-2 focus:ring-[var(--color-primary-500)] focus:ring-offset-2 rounded">
-              Learn more
+              ${t('seller.sf.learnMore')}
               <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
               </svg>

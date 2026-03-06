@@ -1,6 +1,9 @@
 import './style.css'
 import { initFlowbite } from 'flowbite'
 
+// i18n
+import { initLanguageSelector } from './components/header/TopBar'
+
 // Header components
 import { TopBar, MobileSearchTabs, initMobileDrawer, SubHeader, initStickyHeaderSearch, MegaMenu, initMegaMenu } from './components/header'
 
@@ -118,4 +121,5 @@ initTailoredSelections();
 initProductGrid();
 
 initMobileDrawer();
+initLanguageSelector();
 initAnimatedPlaceholder('#topbar-compact-search-input');

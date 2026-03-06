@@ -15,6 +15,7 @@ import { AccountTypeSelector, type AccountType } from './AccountTypeSelector';
 import { type EmailVerificationState } from './EmailVerification';
 import { type AccountSetupFormData } from './AccountSetupForm';
 import { getBaseUrl } from './AuthLayout';
+import { t } from '../../i18n';
 
 /* ── Helpers ────────────────────────────────────────── */
 
@@ -86,11 +87,11 @@ export function RegisterPage(initialStep: RegisterStep = 'account-type'): string
         x-show="currentStep === 'account-type'"${initialStep !== 'account-type' ? ' x-cloak' : ''}>
         <!-- Header -->
         <div class="mb-6 text-center lg:text-left">
-          <h1 class="text-xl lg:text-2xl font-bold text-gray-900 dark:text-white mb-2">
-            Hesap Oluştur
+          <h1 class="text-xl lg:text-2xl font-bold text-gray-900 dark:text-white mb-2" data-i18n="auth.register.title">
+            ${t('auth.register.title')}
           </h1>
-          <p class="text-sm text-gray-500 dark:text-gray-400">
-            Hesap türünüzü seçin
+          <p class="text-sm text-gray-500 dark:text-gray-400" data-i18n="auth.register.selectType">
+            ${t('auth.register.selectType')}
           </p>
         </div>
 
@@ -104,14 +105,14 @@ export function RegisterPage(initialStep: RegisterStep = 'account-type'): string
           @click="goToStep('email')"
           class="th-btn th-btn-pill w-full py-3 text-base font-semibold transition-all mt-6"
         >
-          Devam Et
+          <span data-i18n="auth.register.continue">${t('auth.register.continue')}</span>
         </button>
 
         <!-- Login Link -->
         <div class="mt-6 text-center text-sm text-gray-500 dark:text-gray-400">
-          Zaten hesabınız var mı?
+          <span data-i18n="auth.register.alreadyHave">${t('auth.register.alreadyHave')}</span>
           <a href="${baseUrl}pages/auth/login.html" id="register-login-link" class="ml-1 font-medium text-orange-600 dark:text-orange-400 hover:underline">
-            Giriş yapın
+            <span data-i18n="auth.register.signIn">${t('auth.register.signIn')}</span>
           </a>
         </div>
       </div>
@@ -121,33 +122,33 @@ export function RegisterPage(initialStep: RegisterStep = 'account-type'): string
         x-show="currentStep === 'email'"${initialStep !== 'email' ? ' x-cloak' : ''}>
         <!-- Header -->
         <div class="mb-6 text-center lg:text-left">
-          <h1 class="text-xl lg:text-2xl font-bold text-gray-900 dark:text-white mb-2">
-            E-posta Adresiniz
+          <h1 class="text-xl lg:text-2xl font-bold text-gray-900 dark:text-white mb-2" data-i18n="auth.register.emailTitle">
+            ${t('auth.register.emailTitle')}
           </h1>
-          <p class="text-sm text-gray-500 dark:text-gray-400">
-            Doğrulama kodu göndereceğiz
+          <p class="text-sm text-gray-500 dark:text-gray-400" data-i18n="auth.register.emailDesc">
+            ${t('auth.register.emailDesc')}
           </p>
         </div>
 
         <!-- Email Input Form -->
         <form id="register-email-form" @submit.prevent="submitEmail()" class="space-y-4" novalidate>
           <div class="auth-form-field relative">
-            <label for="register-email-input" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
-              E-posta
+            <label for="register-email-input" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5" data-i18n="auth.register.emailLabel">
+              ${t('auth.register.emailLabel')}
             </label>
             <input
               type="email"
               id="register-email-input"
               name="email"
               x-ref="emailInput"
-              placeholder="ornek@email.com"
+              placeholder="${t('auth.register.emailPlaceholder')}" data-i18n-placeholder="auth.register.emailPlaceholder"
               autocomplete="email"
               @input="validateEmail()"
               class="w-full px-4 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-md text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 dark:focus:border-orange-400 transition-all"
               required
             />
-            <p id="register-email-error" x-show="emailError" x-cloak class="mt-1 text-sm text-red-500">
-              Geçerli bir e-posta adresi girin
+            <p id="register-email-error" x-show="emailError" x-cloak class="mt-1 text-sm text-red-500" data-i18n="auth.register.emailError">
+              ${t('auth.register.emailError')}
             </p>
           </div>
 
@@ -159,7 +160,7 @@ export function RegisterPage(initialStep: RegisterStep = 'account-type'): string
             disabled
             class="th-btn th-btn-pill w-full py-3 text-base font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Doğrulama Kodu Gönder
+            <span data-i18n="auth.register.sendCode">${t('auth.register.sendCode')}</span>
           </button>
         </form>
 
@@ -171,7 +172,7 @@ export function RegisterPage(initialStep: RegisterStep = 'account-type'): string
             @click="goToStep('account-type')"
             class="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:underline transition-colors"
           >
-            ← Hesap türü seçimine dön
+            <span data-i18n="auth.register.backToType">${t('auth.register.backToType')}</span>
           </button>
         </div>
       </div>

@@ -3,6 +3,7 @@
  * 3-column photo grid with hover overlay (gradient + caption slide-up + image zoom)
  */
 import type { GalleryPhoto } from '../../types/seller/types';
+import { t } from '../../i18n';
 
 export function Gallery(photos: GalleryPhoto[], title?: string): string {
   if (!photos || !photos.length) return '';
@@ -10,7 +11,7 @@ export function Gallery(photos: GalleryPhoto[], title?: string): string {
   const sectionTitle = title || 'MORE';
 
   return `
-    <section id="gallery" class="gallery py-12" aria-label="Fabrika fotoğrafları">
+    <section id="gallery" class="gallery py-12" aria-label="${t('seller.sf.factoryPhotos')}">
       <div class="max-w-(--container-lg) mx-auto px-8 lg:px-6 md:px-4">
         <h2 class="gallery__title text-[28px] md:text-[24px] font-bold text-[#1e3a5f] dark:text-blue-300 uppercase text-center mb-8">
           ${sectionTitle}
@@ -20,7 +21,7 @@ export function Gallery(photos: GalleryPhoto[], title?: string): string {
             <div class="gallery__item relative rounded-(--radius-md) overflow-hidden aspect-[4/3] group cursor-pointer hover:shadow-md transition-shadow duration-300 focus-visible:ring-2 focus-visible:ring-[#cc9900] focus-visible:ring-offset-2 outline-none"
                  tabindex="0"
                  role="button"
-                 aria-label="${photo.caption || 'Fabrika fotoğrafı'}">
+                 aria-label="${photo.caption || t('seller.sf.factoryPhoto')}">
               <img src="${photo.image}" alt="${photo.caption || ''}"
                    class="gallery__image w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                    loading="lazy"

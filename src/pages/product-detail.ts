@@ -8,6 +8,7 @@ import { initFlowbite } from 'flowbite'
 
 // Header components (reuse from main page)
 import { TopBar, initMobileDrawer, SubHeader, MegaMenu, initMegaMenu, initHeaderCart } from '../components/header'
+import { initLanguageSelector } from '../components/header/TopBar'
 
 // Footer components
 import { FooterLinks } from '../components/footer'
@@ -43,10 +44,12 @@ import {
   initCartDrawer,
 } from '../components/product'
 // Product mock data (for breadcrumb)
-import { mockProduct } from '../data/mockProduct'
+import { getMockProduct } from '../data/mockProduct'
+const mockProduct = getMockProduct();
 
 // Utilities
 import { initAnimatedPlaceholder } from '../utils/animatedPlaceholder'
+import { t } from '../i18n'
 
 // Build breadcrumb from product category data (skip first "Ana Sayfa" since Breadcrumb adds it)
 const pdCrumbs = mockProduct.category.slice(1).map((label, i, arr) => ({
@@ -116,8 +119,8 @@ appEl.innerHTML = `
     <button type="button" id="pdm-bar-chat" class="pdm-bar-chat-btn w-12 h-11 border border-border-medium rounded-[22px] bg-surface flex items-center justify-center cursor-pointer text-text-body p-0" aria-label="Sohbet">
       <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
     </button>
-    <button type="button" id="pdm-bar-cart" data-add-to-cart="${mockProduct.id}" class="pdm-bar-cart-btn h-11 border border-[#222] rounded-[22px] bg-surface text-sm font-semibold text-text-heading cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis min-w-0">Sepete Ekle</button>
-    <button type="button" id="pdm-bar-order" class="pdm-bar-order-btn th-btn-dark th-btn-pill h-11 whitespace-nowrap overflow-hidden text-ellipsis min-w-0">Sipariş Başlat</button>
+    <button type="button" id="pdm-bar-cart" data-add-to-cart="${mockProduct.id}" class="pdm-bar-cart-btn h-11 border border-[#222] rounded-[22px] bg-surface text-sm font-semibold text-text-heading cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis min-w-0" data-i18n="product.addToCart">${t('product.addToCart')}</button>
+    <button type="button" id="pdm-bar-order" class="pdm-bar-order-btn th-btn-dark th-btn-pill h-11 whitespace-nowrap overflow-hidden text-ellipsis min-w-0" data-i18n="product.startOrder">${t('product.startOrder')}</button>
   </div>
 `;
 
@@ -126,6 +129,7 @@ initMegaMenu();
 initFlowbite();
 initHeaderCart();
 initMobileDrawer();
+initLanguageSelector();
 initAnimatedPlaceholder('#topbar-compact-search-input');
 
 // Product-specific inits

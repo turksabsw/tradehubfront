@@ -7,6 +7,7 @@ import '../style.css'
 import { initFlowbite } from 'flowbite'
 
 import { TopBar, initMobileDrawer, initHeaderCart } from '../components/header'
+import { initLanguageSelector } from '../components/header/TopBar'
 import { FloatingPanel } from '../components/floating'
 import { startAlpine } from '../alpine'
 import { renderSidebar } from '../components/sidebar'
@@ -45,4 +46,5 @@ initFlowbite();
 startAlpine();
 initHeaderCart();
 initMobileDrawer();
+initLanguageSelector();
 initLogisticsLayout();

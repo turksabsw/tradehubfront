@@ -7,9 +7,10 @@ import type { BrowsingHistoryProduct } from '../../types/buyerDashboard';
 import { SectionCard } from '../shared/SectionCard';
 import { SectionHeader } from '../shared/SectionHeader';
 import { ProductCard } from '../shared/ProductCard';
-import { browsingHistoryConfig } from './rightPanelData';
+import { getBrowsingHistoryConfig } from './rightPanelData';
 
 export function BrowsingHistorySection(products: BrowsingHistoryProduct[]): string {
+  const browsingHistoryConfig = getBrowsingHistoryConfig();
   const cards = products.map((p) =>
     ProductCard({
       image: p.image,

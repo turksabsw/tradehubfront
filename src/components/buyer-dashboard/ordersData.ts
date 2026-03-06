@@ -1,22 +1,28 @@
 /**
  * Orders Section — Static Data Configuration
- * Tab items and dropdown filter items with Turkish labels.
+ * Tab items and dropdown filter items with translated labels.
+ * Wrapped in getter functions so t() is called at render time.
  */
 
 import type { OrdersTabItem, OrdersFilterItem } from '../../types/buyerDashboard';
+import { t } from '../../i18n';
 
-export const ORDER_TABS: OrdersTabItem[] = [
-  { id: 'delivery', label: 'Teslimat sürecinde' },
-  { id: 'refunds', label: 'Para iadeleri ve satış sonrası' },
-  { id: 'completed', label: 'Tamamlandı ve değerlendiriliyor', hasDropdown: true },
-];
+export function getOrderTabs(): OrdersTabItem[] {
+  return [
+    { id: 'delivery', label: t('dashboard.orderTabs.delivery') },
+    { id: 'refunds', label: t('dashboard.orderTabs.refunds') },
+    { id: 'completed', label: t('dashboard.orderTabs.completedReview'), hasDropdown: true },
+  ];
+}
 
-export const ORDER_FILTERS: OrdersFilterItem[] = [
-  { id: 'all', label: 'Tümü', selected: true },
-  { id: 'pending-review', label: 'Değerlendirme bekliyor' },
-  { id: 'reviewed', label: 'Değerlendirildi' },
-  { id: 'completed', label: 'Tamamlandı' },
-  { id: 'cancelled', label: 'İptal edildi' },
-  { id: 'closed', label: 'Kapatıldı' },
-  { id: 'archived', label: 'Arşivlendi' },
-];
+export function getOrderFilters(): OrdersFilterItem[] {
+  return [
+    { id: 'all', label: t('dashboard.orderFilters.all'), selected: true },
+    { id: 'pending-review', label: t('dashboard.orderFilters.pendingReview') },
+    { id: 'reviewed', label: t('dashboard.orderFilters.reviewed') },
+    { id: 'completed', label: t('dashboard.orderFilters.completed') },
+    { id: 'cancelled', label: t('dashboard.orderFilters.cancelled') },
+    { id: 'closed', label: t('dashboard.orderFilters.closed') },
+    { id: 'archived', label: t('dashboard.orderFilters.archived') },
+  ];
+}

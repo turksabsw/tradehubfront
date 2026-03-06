@@ -4,6 +4,7 @@
  * Mobile bottom bar transformation via CSS (see seller-storefront.css)
  */
 import type { FloatingActionsData } from '../../types/seller/types';
+import { t } from '../../i18n';
 
 /**
  * Renders floating action buttons (Contact Supplier + Chat Now)
@@ -15,7 +16,7 @@ export function FloatingActions(data: FloatingActionsData): string {
   return `
     <div id="floating-actions"
          class="floating-actions fixed right-0 top-[40%] z-(--z-fixed) flex flex-col"
-         aria-label="Hızlı erişim butonları"
+         aria-label="${t('seller.sf.quickAccessButtons')}"
          role="group">
       ${data.buttons.map((btn, index) => {
         const isFirst = index === 0;

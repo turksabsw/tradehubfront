@@ -9,6 +9,7 @@ import { initStickyHeights } from '../utils/stickyHeights'
 
 // Header components (reuse from main page)
 import { TopBar, initMobileDrawer, SubHeader, MegaMenu, initMegaMenu, initHeaderCart } from '../components/header'
+import { initLanguageSelector } from '../components/header/TopBar'
 
 // Shared components
 import { Breadcrumb } from '../components/shared/Breadcrumb'
@@ -25,7 +26,10 @@ import { startAlpine } from '../alpine'
 // Cart components
 import { CartPage, initCartPage } from '../components/cart/page/CartPage'
 import { cartStore } from '../components/cart/state/CartStore'
-import { mockCartSuppliers, mockCartSummary, mockAssuranceItems } from '../data/mockCart'
+import { getMockCartSuppliers, getMockCartSummary, getMockAssuranceItems } from '../data/mockCart'
+const mockCartSuppliers = getMockCartSuppliers();
+const mockCartSummary = getMockCartSummary();
+const mockAssuranceItems = getMockAssuranceItems();
 
 // localStorage'dan sepet verisini yükle, yoksa mock verisini kullan
 if (!cartStore.load()) {
@@ -76,6 +80,7 @@ appEl.innerHTML = `
 initMegaMenu();
 initFlowbite();
 initMobileDrawer();
+initLanguageSelector();
 
 // Initialize cart page logic (store zaten load() ile yüklendi)
 initCartPage();

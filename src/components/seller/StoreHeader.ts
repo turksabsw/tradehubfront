@@ -4,6 +4,7 @@
  * Variants: Standard (Verified) and PRO (Verified+PRO pill+email)
  */
 import type { SellerProfile } from '../../types/seller/types';
+import { t } from '../../i18n';
 
 export function StoreHeader(seller: SellerProfile): string {
   const verifiedBadge = `
@@ -46,7 +47,7 @@ export function StoreHeader(seller: SellerProfile): string {
   ` : '';
 
   return `
-    <section id="store-header" class="store-header bg-white dark:bg-gray-800 border-b border-(--color-border-default) dark:border-gray-700 transition-opacity duration-200" aria-label="Mağaza profil başlığı">
+    <section id="store-header" class="store-header bg-white dark:bg-gray-800 border-b border-(--color-border-default) dark:border-gray-700 transition-opacity duration-200" aria-label="${t('seller.sf.storeProfileHeader')}">
       <div class="store-header__container max-w-(--container-lg) mx-auto px-[clamp(0.75rem,0.5rem+1vw,1.5rem)] py-4 lg:px-6 lg:py-5 xl:px-8 xl:py-5 flex flex-col lg:flex-row lg:justify-between lg:items-start gap-4 overflow-hidden">
 
         <!-- Left: Logo + Info -->
@@ -86,7 +87,7 @@ export function StoreHeader(seller: SellerProfile): string {
 
             <!-- Main Categories -->
             <p class="store-header__categories text-[13px] text-(--color-text-tertiary) dark:text-gray-400 break-words">
-              Main categories: ${seller.mainCategories.join(', ')}
+              ${t('seller.sf.mainCategoriesLabel')} ${seller.mainCategories.join(', ')}
             </p>
 
             <!-- Email (Optional — PRO only) -->
@@ -104,7 +105,7 @@ export function StoreHeader(seller: SellerProfile): string {
               <span class="inline-block ml-1 cursor-help" data-tooltip-target="tuv-tooltip" data-tooltip-placement="top">&oplus;</span>
             </p>
             <div id="tuv-tooltip" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-xs opacity-0 tooltip">
-              TÜV Rheinland tarafından doğrulanmış tedarikçi
+              ${t('seller.sf.verifiedByTuv')}
               <div class="tooltip-arrow" data-popper-arrow></div>
             </div>
           </div>
@@ -114,10 +115,10 @@ export function StoreHeader(seller: SellerProfile): string {
         <div class="store-header__actions flex flex-col w-full gap-2 mt-3 lg:flex-row lg:w-auto lg:gap-3 lg:mt-0 flex-shrink-0">
           <button class="store-header__contact-btn w-full lg:w-auto th-btn"
                   onclick="document.getElementById('contact-form')?.scrollIntoView({behavior:'smooth'})">
-            Contact supplier
+            ${t('seller.sf.contactSupplierBtn')}
           </button>
           <button class="store-header__chat-btn w-full lg:w-auto th-btn-outline">
-            Chat now
+            ${t('seller.sf.chatNow')}
           </button>
         </div>
 

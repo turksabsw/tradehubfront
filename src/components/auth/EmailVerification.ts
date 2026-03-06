@@ -5,6 +5,8 @@
  * Used in registration flow after email submission.
  */
 
+import { t } from '../../i18n';
+
 /* ── Types ──────────────────────────────────────────── */
 
 export interface EmailVerificationOptions {
@@ -47,10 +49,10 @@ export function EmailVerification(email: string = ''): string {
       <!-- Header -->
       <div class="mb-6 text-center lg:text-left">
         <h1 class="text-xl lg:text-2xl font-bold text-gray-900 dark:text-white mb-2">
-          E-postanızı doğrulayın
+          ${t('auth.verifyEmail')}
         </h1>
         <p class="text-sm text-gray-500 dark:text-gray-400">
-          <span id="verification-email-display">${maskedEmail || 'E-posta adresinize'}</span> gönderilen 6 haneli kodu girin
+          <span id="verification-email-display">${maskedEmail || t('auth.otpSentFallback')}</span> ${t('auth.otpSentTo')}
         </p>
       </div>
 
@@ -62,21 +64,21 @@ export function EmailVerification(email: string = ''): string {
 
         <!-- Error message (hidden by default) -->
         <p id="otp-error" class="mt-3 text-sm text-red-600 dark:text-red-400 text-center lg:text-left hidden">
-          Geçersiz kod. Lütfen tekrar deneyin.
+          ${t('auth.otpInvalidCode')}
         </p>
       </div>
 
       <!-- Resend Section -->
       <div class="mb-6 text-center lg:text-left">
         <p class="text-sm text-gray-500 dark:text-gray-400">
-          Kod almadınız mı?
+          ${t('auth.otpDidntReceive')}
           <button
             type="button"
             id="otp-resend-btn"
             class="ml-1 font-medium text-orange-600 hover:text-orange-700 dark:text-orange-400 dark:hover:text-orange-300 hover:underline transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:no-underline"
             disabled
           >
-            <span id="otp-resend-text">Tekrar gönder</span>
+            <span id="otp-resend-text">${t('auth.otpResend')}</span>
             <span id="otp-countdown" class="text-gray-400 dark:text-gray-500">(60s)</span>
           </button>
         </p>
@@ -89,7 +91,7 @@ export function EmailVerification(email: string = ''): string {
         class="th-btn th-btn-pill w-full py-3 text-base font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed"
         disabled
       >
-        Doğrula ve Devam Et
+        ${t('auth.otpVerifyAndContinue')}
       </button>
 
       <!-- Back/Change Email Link -->
@@ -99,7 +101,7 @@ export function EmailVerification(email: string = ''): string {
           id="otp-back-btn"
           class="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:underline transition-colors"
         >
-          ← E-posta adresini değiştir
+          ${t('auth.otpChangeEmail')}
         </button>
       </div>
     </div>

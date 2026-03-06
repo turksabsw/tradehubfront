@@ -1,4 +1,5 @@
 import Alpine from 'alpinejs'
+import { t, getCurrentLang } from './i18n'
 import { initLinkRewriter } from './utils/url'
 import {
   filterAndSortReviews,
@@ -16,7 +17,8 @@ import {
   LIGHTBOX_THUMB_SIZE,
   LIGHTBOX_THUMB_GAP,
 } from './components/product/ProductImageGallery';
-import { mockProduct } from './data/mockProduct';
+import { getMockProduct } from './data/mockProduct';
+const mockProduct = getMockProduct();
 import { cartStore } from './components/cart/state/CartStore';
 import { showFavoriteToast } from './components/cart/page/CartPage';
 import {
@@ -51,7 +53,7 @@ import {
 } from './data/mockCheckout';
 import type { SavedAddress } from './types/checkout';
 import { getUser, isLoggedIn } from './utils/auth';
-import { ORDER_TABS, ORDER_FILTERS } from './components/buyer-dashboard/ordersData';
+import { getOrderTabs, getOrderFilters } from './components/buyer-dashboard/ordersData';
 import { orderStore } from './components/orders/state/OrderStore';
 import { couponStore } from './components/orders/state/CouponStore';
 import type { CouponData, CreditHistoryEntry } from './data/mockCheckout';
@@ -150,18 +152,18 @@ Alpine.data('ordersListComponent', () => ({
   },
 
   get dateFilterLabel() {
-    if (this.dateFilter === 'custom') return 'Özel tarih';
-    if (this.dateFilter === '7d') return 'Son 7 gün';
-    if (this.dateFilter === '30d') return 'Son 30 gün';
-    if (this.dateFilter === '90d') return 'Son 90 gün';
-    return 'Sipariş tarihi';
+    if (this.dateFilter === 'custom') return t('orders.customDate');
+    if (this.dateFilter === '7d') return t('orders.last7Days');
+    if (this.dateFilter === '30d') return t('orders.last30Days');
+    if (this.dateFilter === '90d') return t('orders.last90Days');
+    return t('orders.orderDate');
   },
 
   get timeRangeLabel() {
     if (this.dateFilter === 'custom' && (this.dateFrom || this.dateTo)) {
       return `${this.dateFrom || '...'} / ${this.dateTo || '...'}`;
     }
-    return 'Zaman seçin';
+    return t('orders.selectTime');
   },
 
   setDateFilter(val: string) {
@@ -263,7 +265,8 @@ Alpine.data('couponsPageComponent', () => ({
   formatDate(iso: string): string {
     if (!iso) return '-';
     const d = new Date(iso);
-    return d.toLocaleDateString('tr-TR', { day: '2-digit', month: 'short', year: 'numeric' });
+    const locale = getCurrentLang() === 'tr' ? 'tr-TR' : 'en-US';
+    return d.toLocaleDateString(locale, { day: '2-digit', month: 'short', year: 'numeric' });
   },
 
   couponTypeBadge(type: string): string {
@@ -273,9 +276,9 @@ Alpine.data('couponsPageComponent', () => ({
   },
 
   couponTypeLabel(type: string): string {
-    if (type === 'percent') return 'Yüzde İndirim';
-    if (type === 'fixed') return 'Sabit İndirim';
-    return 'Ücretsiz Kargo';
+    if (type === 'percent') return t('coupons.percentDiscount');
+    if (type === 'fixed') return t('coupons.fixedDiscount');
+    return t('coupons.freeShipping');
   },
 
   couponBadgeClass(type: string): string {
@@ -285,9 +288,9 @@ Alpine.data('couponsPageComponent', () => ({
   },
 
   creditTypeLabel(type: string): string {
-    if (type === 'earned') return 'Kazanıldı';
-    if (type === 'spent') return 'Harcandı';
-    return 'İade';
+    if (type === 'earned') return t('coupons.earned');
+    if (type === 'spent') return t('coupons.spent');
+    return t('coupons.refund');
   },
 
   creditBadgeClass(type: string): string {
@@ -342,7 +345,7 @@ Alpine.data('reviewsModal', () => ({
   },
 
   ratingLabel(): string {
-    return this.ratingFilter === 'all' ? 'Puan' : `${this.ratingFilter} Yıldız`;
+    return this.ratingFilter === 'all' ? t('reviews.rating') : t('reviews.stars', { count: this.ratingFilter });
   },
 
   sortLabel(): string {
@@ -393,7 +396,7 @@ Alpine.data('reviewsModal', () => ({
     if (filtered.length === 0) {
       container.innerHTML = `
         <div style="text-align: center; padding: 40px 0; color: var(--pd-rating-text-color, #6b7280); font-size: 14px;">
-          Bu filtrelere uygun yorum bulunamadı.
+          ${t('reviews.noReviews')}
         </div>
       `;
     } else {
@@ -563,7 +566,7 @@ Alpine.data('imageGallery', () => ({
         const image = mockProduct.images[index];
         mainImage.innerHTML = renderGalleryMedia(
           image?.src,
-          image?.alt ?? `Ürün görünümü ${index + 1}`,
+          image?.alt ?? `Product view ${index + 1}`,
           defaultVisual,
           'large',
         );
@@ -594,7 +597,7 @@ Alpine.data('imageGallery', () => ({
       const image = mockProduct.images[index];
       lightboxImage.innerHTML = renderGalleryMedia(
         image?.src,
-        image?.alt ?? `Ürün görünümü ${index + 1}`,
+        image?.alt ?? `Product view ${index + 1}`,
         defaultVisual,
         'large',
       );
@@ -1099,10 +1102,10 @@ Alpine.data('cartPage', () => ({
 
     if (checkoutWarning) {
       if (violations.length > 0) {
-        checkoutWarning.textContent = 'Minimum sipariş adedi eksik ürünler var. "Add all" ile tamamlayın.';
+        checkoutWarning.textContent = t('cart.moqWarning');
         checkoutWarning.classList.remove('hidden');
       } else if (summary.selectedCount === 0) {
-        checkoutWarning.textContent = 'Checkout için en az 1 ürün seçin.';
+        checkoutWarning.textContent = t('cart.selectAtLeastOne');
         checkoutWarning.classList.remove('hidden');
       } else {
         checkoutWarning.textContent = '';
@@ -1131,7 +1134,7 @@ Alpine.data('cartPage', () => ({
       if (discountEl) discountEl.textContent = formatted;
       if (banner) {
         banner.classList.remove('hidden');
-        banner.innerHTML = `Siparişinizde <strong>$${summary.discount.toFixed(2).replace('.', ',')}</strong> tasarruf edildi`;
+        banner.innerHTML = t('cart.youSaved', { amount: `<strong>$${summary.discount.toFixed(2).replace('.', ',')}</strong>` });
       }
     } else {
       discountRow?.classList.add('hidden');
@@ -1253,10 +1256,10 @@ Alpine.data('cartPage', () => ({
           <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
           <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
         </svg>
-        <h2 class="text-2xl font-bold text-text-heading mb-2">Sepetiniz boş</h2>
-        <p class="text-base text-text-secondary mb-8 max-w-md">Henüz sepetinize ürün eklemediniz. Ürünleri keşfedip sepetinize ekleyebilirsiniz.</p>
+        <h2 class="text-2xl font-bold text-text-heading mb-2">${t('cart.empty')}</h2>
+        <p class="text-base text-text-secondary mb-8 max-w-md">${t('cart.emptyDesc')}</p>
         <a href="/pages/products.html" class="inline-flex items-center justify-center th-btn-dark th-btn-pill no-underline">
-          Alışverişe devam et
+          ${t('cart.continueShopping')}
         </a>
       </div>
     `;
@@ -1274,8 +1277,8 @@ Alpine.data('settingsLayout', () => ({
     navigator.clipboard.writeText('tr29243492599miuy').then(() => {
       const btn = (this.$refs as Record<string, HTMLElement>).copyBtn;
       if (btn) {
-        btn.title = 'Kopyalandı!';
-        setTimeout(() => { btn.title = 'Kopyala'; }, 2000);
+        btn.title = t('orders.copied');
+        setTimeout(() => { btn.title = t('orders.copy'); }, 2000);
       }
     });
   },
@@ -1347,7 +1350,7 @@ Alpine.data('settingsChangeEmail', () => ({
     const val = input?.value.trim() || '';
 
     if (!val || !val.includes('@')) {
-      this.error = 'Geçerli bir e-posta adresi girin.';
+      this.error = t('auth.register.emailError');
       return;
     }
 
@@ -1417,11 +1420,11 @@ Alpine.data('settingsChangePassword', () => ({
     const confirmPw = (this.$refs as Record<string, HTMLInputElement>).pwConfirm.value;
 
     if (newPw.length < 8) {
-      this.error = 'Parola en az 8 karakter olmalıdır.';
+      this.error = t('settings.passwordMinLength');
       return;
     }
     if (newPw !== confirmPw) {
-      this.error = 'Parolalar eşleşmiyor.';
+      this.error = t('settings.passwordsMismatch');
       return;
     }
 
@@ -1449,7 +1452,7 @@ Alpine.data('settingsChangePhone', () => ({
   sendCode() {
     const num = this.phoneNumber.trim();
     if (!num || num.length < 7) {
-      this.phoneError = 'Geçerli bir telefon numarası girin.';
+      this.phoneError = t('settings.invalidPhone');
       return;
     }
     this.phoneError = '';
@@ -1473,7 +1476,7 @@ Alpine.data('settingsChangePhone', () => ({
     const codeInput = (this.$refs as Record<string, HTMLInputElement>).phoneVerifyCode;
     const code = codeInput?.value.trim() || '';
     if (!code || code.length < 6) {
-      this.verifyError = 'Geçerli bir doğrulama kodu girin.';
+      this.verifyError = t('settings.invalidVerifyCode');
       return;
     }
     if (this._timerInterval) {
@@ -1514,7 +1517,7 @@ Alpine.data('settingsDeleteAccount', () => ({
 
   continueToVerify() {
     if (!this.reason) {
-      this.error1 = 'Lütfen bir ayrılma nedeni seçin.';
+      this.error1 = t('settings.selectReason');
       return;
     }
     this.error1 = '';
@@ -1538,7 +1541,7 @@ Alpine.data('settingsDeleteAccount', () => ({
     const codeInput = (this.$refs as Record<string, HTMLInputElement>).delVerifyCode;
     const code = codeInput?.value.trim() || '';
     if (!code || code.length < 6) {
-      this.error2 = 'Geçerli bir doğrulama kodu girin.';
+      this.error2 = t('settings.invalidVerifyCode');
       return;
     }
     if (this._timerInterval) {
@@ -1867,7 +1870,7 @@ Alpine.data('forgotPasswordPage', () => ({
   submitReset() {
     if (!this.passwordValid) return;
     const baseUrl = getBaseUrl();
-    alert('Şifreniz başarıyla güncellendi!');
+    alert(t('auth.forgot.passwordUpdated'));
     window.location.href = `${baseUrl}pages/auth/login.html`;
   },
 
@@ -2915,8 +2918,8 @@ Alpine.data('shippingForm', () => ({
 }));
 
 Alpine.data('ordersSection', () => ({
-  activeTabId: ORDER_TABS[0].id,
-  selectedFilterId: ORDER_FILTERS[0].id as string | null,
+  activeTabId: getOrderTabs()[0].id,
+  selectedFilterId: getOrderFilters()[0].id as string | null,
   dropdownOpen: false,
 
   selectTab(tabId: string, hasDropdown: boolean) {
@@ -3197,68 +3200,82 @@ Alpine.data('messagesComponent', () => ({
   filterType: 'all',
   feedbackVisible: true,
 
-  categories: [
-    { id: 'all', label: 'Tümü', icon: 'chat' },
-    { id: 'unread', label: 'Okunmamış', icon: 'eye' },
-  ],
+  get categories() {
+    return [
+      { id: 'all', label: t('messages.allMessages'), icon: 'chat' },
+      { id: 'unread', label: t('messages.unread'), icon: 'eye' },
+    ];
+  },
 
-  conversations: [
-    {
-      id: 'conv-001',
-      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face',
-      name: 'Robert Song',
-      company: 'Ningbo Happiness Statio...',
-      preview: '[Fiyat teklifi] Tedarikçi RFQ\'nuza yanıt verdi',
-      date: '2026-2-19',
-      unreadCount: 2,
-      messages: [
-        { id: 'm1', sender: 'Robert Song', text: 'Merhaba, RFQ talebinize yanıt vermek istiyorum. Ürünlerimiz hakkında detaylı bilgi paylaşabilirim.', time: '09:15', isMe: false },
-        { id: 'm2', sender: 'Ben', text: 'Merhaba Robert, fiyat teklifinizi bekliyorum. Minimum sipariş miktarı nedir?', time: '09:30', isMe: true },
-        { id: 'm3', sender: 'Robert Song', text: 'Minimum sipariş miktarımız 500 adet. Birim fiyat $2.50\'dir. Toplu alımlarda %15\'e kadar indirim yapabiliriz.', time: '10:05', isMe: false },
-        { id: 'm4', sender: 'Ben', text: '1000 adet için özel fiyat teklifi alabilir miyim?', time: '10:20', isMe: true },
-        { id: 'm5', sender: 'Robert Song', text: '1000 adet için birim fiyat $2.15 olarak teklif edebilirim. Kargo dahil değildir. Teslimat süresi 15-20 iş günüdür.', time: '11:00', isMe: false },
-      ],
-    },
-    {
-      id: 'conv-002',
-      avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&fit=crop&crop=face',
-      name: 'Leo',
-      company: 'Dg Excelpro Rubber Co., L...',
-      preview: '[Fiyat teklifi] Tedarikçi RFQ\'nuza yanıt verdi',
-      date: '2026-2-19',
-      unreadCount: 2,
-      messages: [
-        { id: 'm1', sender: 'Leo', text: 'RFQ talebiniz için teşekkürler. Kauçuk ürünlerimiz hakkında detaylı katalog gönderebilirim.', time: '14:00', isMe: false },
-        { id: 'm2', sender: 'Ben', text: 'Katalog gönderirseniz sevinirim. Özellikle silikon ürünlerle ilgileniyorum.', time: '14:15', isMe: true },
-        { id: 'm3', sender: 'Leo', text: 'Tabii, silikon ürün katalogumuzu ekte bulabilirsiniz. Herhangi bir sorunuz olursa çekinmeden sorun.', time: '14:45', isMe: false },
-      ],
-    },
-    {
-      id: 'conv-003',
-      avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop&crop=face',
-      name: 'Yue Luo',
-      company: 'Sichuan Wang Zhihao Tra...',
-      preview: '[Fiyat teklifi] Tedarikçi RFQ\'nuza yanıt verdi',
-      date: '2026-2-19',
-      unreadCount: 2,
-      messages: [
-        { id: 'm1', sender: 'Yue Luo', text: 'Merhaba, tekstil ürünlerimiz hakkında bilgi almak ister misiniz?', time: '16:00', isMe: false },
-        { id: 'm2', sender: 'Ben', text: 'Evet, pamuklu kumaş fiyatları hakkında bilgi alabilir miyim?', time: '16:10', isMe: true },
-      ],
-    },
-    {
-      id: 'conv-004',
-      avatar: '',
-      name: 'TradeHub.com',
-      company: '',
-      preview: 'Yeni mi? TradeHub.com İleri düzey tedarikçi hizmetlerimizi keşfedin',
-      date: '2026-2-19',
-      unreadCount: 1,
-      messages: [
-        { id: 'm1', sender: 'TradeHub.com', text: 'TradeHub.com\'a hoş geldiniz! İleri düzey tedarikçi hizmetlerimizi keşfedin. Trade Assurance ile güvenli ticaret yapın.', time: '08:00', isMe: false },
-      ],
-    },
-  ],
+  conversations: [] as any[],
+
+  _buildConversations() {
+    return [
+      {
+        id: 'conv-001',
+        avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face',
+        name: 'Robert Song',
+        company: 'Ningbo Happiness Statio...',
+        preview: t('messages.previewRfqReply'),
+        date: '2026-2-19',
+        unreadCount: 2,
+        messages: [
+          { id: 'm1', sender: 'Robert Song', text: t('messages.conv1m1'), time: '09:15', isMe: false },
+          { id: 'm2', sender: t('messages.me'), text: t('messages.conv1m2'), time: '09:30', isMe: true },
+          { id: 'm3', sender: 'Robert Song', text: t('messages.conv1m3'), time: '10:05', isMe: false },
+          { id: 'm4', sender: t('messages.me'), text: t('messages.conv1m4'), time: '10:20', isMe: true },
+          { id: 'm5', sender: 'Robert Song', text: t('messages.conv1m5'), time: '11:00', isMe: false },
+        ],
+      },
+      {
+        id: 'conv-002',
+        avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&fit=crop&crop=face',
+        name: 'Leo',
+        company: 'Dg Excelpro Rubber Co., L...',
+        preview: t('messages.previewRfqReply'),
+        date: '2026-2-19',
+        unreadCount: 2,
+        messages: [
+          { id: 'm1', sender: 'Leo', text: t('messages.conv2m1'), time: '14:00', isMe: false },
+          { id: 'm2', sender: t('messages.me'), text: t('messages.conv2m2'), time: '14:15', isMe: true },
+          { id: 'm3', sender: 'Leo', text: t('messages.conv2m3'), time: '14:45', isMe: false },
+        ],
+      },
+      {
+        id: 'conv-003',
+        avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop&crop=face',
+        name: 'Yue Luo',
+        company: 'Sichuan Wang Zhihao Tra...',
+        preview: t('messages.previewRfqReply'),
+        date: '2026-2-19',
+        unreadCount: 2,
+        messages: [
+          { id: 'm1', sender: 'Yue Luo', text: t('messages.conv3m1'), time: '16:00', isMe: false },
+          { id: 'm2', sender: t('messages.me'), text: t('messages.conv3m2'), time: '16:10', isMe: true },
+        ],
+      },
+      {
+        id: 'conv-004',
+        avatar: '',
+        name: 'TradeHub.com',
+        company: '',
+        preview: t('messages.previewWelcome'),
+        date: '2026-2-19',
+        unreadCount: 1,
+        messages: [
+          { id: 'm1', sender: 'TradeHub.com', text: t('messages.conv4m1'), time: '08:00', isMe: false },
+        ],
+      },
+    ];
+  },
+
+  init() {
+    this.conversations = this._buildConversations();
+    window.addEventListener('languageChanged', () => {
+      this.conversations = this._buildConversations();
+      this.selectedConversation = null;
+    });
+  },
 
   getUnreadTotal(): number {
     return this.conversations.reduce((sum: number, c: any) => sum + c.unreadCount, 0);
@@ -3312,7 +3329,7 @@ Alpine.data('messagesComponent', () => ({
     const timeStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
     const msg = {
       id: 'm' + Date.now(),
-      sender: 'Ben',
+      sender: 'Me',
       text: this.newMessage.trim(),
       time: timeStr,
       isMe: true,
@@ -3348,144 +3365,150 @@ Alpine.data('helpCenter', () => ({
   activeTab: 'account',
   activeLearningCard: '' as string,
 
-  popularSearches: ['Şifremi unuttum', 'Sipariş iptali', 'Kargo takibi', 'İade'],
+  get popularSearches() {
+    return [t('helpCenter.search1'), t('helpCenter.search2'), t('helpCenter.search3'), t('helpCenter.search4')];
+  },
 
-  learningCards: [
-    {
-      id: 'sourcing',
-      icon: `<svg xmlns="http://www.w3.org/2000/svg" class="w-9 h-9" viewBox="0 0 64 64" fill="none">
+  get learningCards() {
+    return [
+      {
+        id: 'sourcing',
+        icon: `<svg xmlns="http://www.w3.org/2000/svg" class="w-9 h-9" viewBox="0 0 64 64" fill="none">
         <circle cx="26" cy="26" r="18" stroke="#FF8C00" stroke-width="4" fill="#FFF3E0"/>
         <path d="M39 39 L54 54" stroke="#FF8C00" stroke-width="5" stroke-linecap="round"/>
         <path d="M20 26 L26 32 L34 22" stroke="#FF8C00" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>`,
-      title: 'Kaynak Bulmak',
-      subtitle: 'Tedarik, Sipariş ve Kargo',
-    },
-    {
-      id: 'assurance',
-      icon: `<svg xmlns="http://www.w3.org/2000/svg" class="w-9 h-9" viewBox="0 0 64 64" fill="none">
+        title: t('helpCenter.sourcing'),
+        subtitle: t('helpCenter.sourcingDesc'),
+      },
+      {
+        id: 'assurance',
+        icon: `<svg xmlns="http://www.w3.org/2000/svg" class="w-9 h-9" viewBox="0 0 64 64" fill="none">
         <path d="M32 6L10 16v16c0 12 9.8 22.4 22 25 12.2-2.6 22-13 22-25V16L32 6z" fill="#FFF3E0" stroke="#FF8C00" stroke-width="4"/>
         <circle cx="32" cy="30" r="8" fill="#FF8C00" opacity="0.3"/>
         <path d="M26 30l4 4 8-8" stroke="#FF8C00" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
         <path d="M28 18h8M28 42h8" stroke="#FF8C00" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
       </svg>`,
-      title: 'Ticaret Güvencesi',
-      subtitle: 'iSTOC Siparişlerinizi Koruyun',
-    },
-    {
-      id: 'app',
-      icon: `<svg xmlns="http://www.w3.org/2000/svg" class="w-9 h-9" viewBox="0 0 64 64" fill="none">
+        title: t('helpCenter.tradeAssurance'),
+        subtitle: t('helpCenter.tradeAssuranceDesc'),
+      },
+      {
+        id: 'app',
+        icon: `<svg xmlns="http://www.w3.org/2000/svg" class="w-9 h-9" viewBox="0 0 64 64" fill="none">
         <rect x="18" y="6" width="28" height="52" rx="5" fill="#FFF3E0" stroke="#FF8C00" stroke-width="4"/>
         <rect x="24" y="14" width="16" height="10" rx="2" fill="#FF8C00" opacity="0.3"/>
         <circle cx="32" cy="50" r="3" fill="#FF8C00"/>
         <path d="M26 30h12M26 38h8" stroke="#FF8C00" stroke-width="2.5" stroke-linecap="round"/>
       </svg>`,
-      title: 'Mobil Uygulamayı İndir',
-      subtitle: 'iSTOC TradeHub Uygulaması',
-    },
-    {
-      id: 'logistics',
-      icon: `<svg xmlns="http://www.w3.org/2000/svg" class="w-9 h-9" viewBox="0 0 64 64" fill="none">
+        title: t('helpCenter.downloadApp'),
+        subtitle: t('helpCenter.downloadAppDesc'),
+      },
+      {
+        id: 'logistics',
+        icon: `<svg xmlns="http://www.w3.org/2000/svg" class="w-9 h-9" viewBox="0 0 64 64" fill="none">
         <rect x="6" y="20" width="36" height="26" rx="3" fill="#FFF3E0" stroke="#FF8C00" stroke-width="3.5"/>
         <path d="M42 30h10l6 10v10H42V30z" fill="#FFF3E0" stroke="#FF8C00" stroke-width="3.5"/>
         <circle cx="16" cy="50" r="5" fill="#FF8C00"/>
         <circle cx="48" cy="50" r="5" fill="#FF8C00"/>
         <path d="M10 20V14a4 4 0 0 1 4-4h16a4 4 0 0 1 4 4v6" stroke="#FF8C00" stroke-width="3" stroke-linecap="round"/>
       </svg>`,
-      title: 'iSTOC Lojistik',
-      subtitle: 'Akıllı lojistik hizmetleri',
-    },
-  ],
+        title: t('helpCenter.logistics'),
+        subtitle: t('helpCenter.logisticsDesc'),
+      },
+    ];
+  },
 
-  tabs: [
-    {
-      id: 'account',
-      label: 'Hesabım',
-      icon: `<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"/></svg>`,
-      questions: [
-        'Şifremi unutursam ne yapmalıyım?',
-        'iSTOC\'ta nasıl hesap açabilirim?',
-        'E-posta doğrulama kodunu neden alamıyorum?',
-        'SMS doğrulama kodu neden gelmiyor?',
-        'Hesabım neden devre dışı bırakıldı?',
-        'Şikayet portalına nasıl ulaşırım?',
-        'Hesap bilgilerimi nasıl güncellerim?',
-        'İki faktörlü kimlik doğrulama nedir?',
-        'Hesabımı nasıl silerim?',
-      ],
-    },
-    {
-      id: 'sourcing',
-      label: 'Kaynak Bulmak',
-      icon: `<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m21 21-4.35-4.35m1.6-5.15a6.75 6.75 0 1 1-13.5 0 6.75 6.75 0 0 1 13.5 0Z"/></svg>`,
-      questions: [
-        'iSTOC\'ta nasıl alışveriş yapabilirim?',
-        'iSTOC\'ta ürünleri nasıl arayabilirim?',
-        'Favorilerime nasıl ürün eklerim?',
-        'Ürün fiyatı, MOQ, kargo masrafı gibi bilgiler nasıl öğrenirim?',
-        'Tedarikçinin iletişim bilgilerine nasıl ulaşırım?',
-        'RFQ talebi nasıl oluşturum?',
-        'Toplu sipariş indirimi var mı?',
-        'Numune sipariş edebilir miyim?',
-        'Tedarikçiyle nasıl iletişim kurabilirim?',
-      ],
-    },
-    {
-      id: 'negotiation',
-      label: 'Müzakere',
-      icon: `<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.625 9.75a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375m-13.5 3.01c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.184-4.183a1.14 1.14 0 0 1 .778-.332 48.294 48.294 0 0 0 5.83-.498c1.585-.233 2.708-1.626 2.708-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z"/></svg>`,
-      questions: [
-        'Tedarikçiyle nasıl fiyat pazarlığı yapabilirim?',
-        'Sipariş öncesi sözleşme şartları nasıl belirlenir?',
-        'Tedarikçiyle mesajlaşma nasıl çalışır?',
-        'Teklif (Quotation) talebinde nasıl bulunurum?',
-        'Pazarlık süreci ne kadar sürer?',
-        'Çoklu tedarikçilerle aynı anda nasıl müzakere edebilirim?',
-      ],
-    },
-    {
-      id: 'payment',
-      label: 'Sipariş & Ödeme',
-      icon: `<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Z"/></svg>`,
-      questions: [
-        'Hangi ödeme yöntemlerini kullanabilirim?',
-        'Ödeme işlemim neden tamamlanmadı?',
-        'Fatura veya makbuzuma nasıl ulaşırım?',
-        'Siparişimi nasıl iptal edebilirim?',
-        'Para iadesi ne zaman hesabıma geçer?',
-        'Taksitli ödeme mevcut mu?',
-        'Döviz kuru fiyatı nasıl hesaplanır?',
-        'Kısmi ödeme yapabilir miyim?',
-        'Ödeme sonrası siparişimi nasıl takip edebilirim?',
-      ],
-    },
-    {
-      id: 'after-sales',
-      label: 'Satış Sonrası',
-      icon: `<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z"/></svg>`,
-      questions: [
-        'Ürünüm hasarlı geldi, ne yapmalıyım?',
-        'İade ve değişim süreci nasıl işliyor?',
-        'Anlaşmazlık durumunda nasıl destek alabilirim?',
-        'Garanti kapsamındaki ürünler için ne yapabilirim?',
-        'Teslimat süresi aşıldığında ne yapabilirim?',
-        'Ticaret Güvencesi nedir?',
-      ],
-    },
-    {
-      id: 'self-service',
-      label: 'Self-Servis',
-      icon: `<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17 17.25 21A2.652 2.652 0 0 0 21 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 1 1-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 0 0 4.486-6.336l-3.276 3.277a3.004 3.004 0 0 1-2.25-2.25l3.276-3.276a4.5 4.5 0 0 0-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437 1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008Z"/></svg>`,
-      questions: [
-        'Kendi kendime sorun nasıl çözebilirim?',
-        'Video rehberler nerede bulunur?',
-        'Kontrol panelimdeki araçları nasıl kullanırım?',
-        'Rapor ve analizlere nasıl erişirim?',
-        'Toplu sipariş araçlarını nasıl kullanırım?',
-        'API entegrasyonu mevcut mu?',
-      ],
-    },
-  ],
+  get tabs() {
+    return [
+      {
+        id: 'account',
+        label: t('helpCenter.tabAccount'),
+        icon: `<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"/></svg>`,
+        questions: [
+          t('helpCenter.q_account_1'),
+          t('helpCenter.q_account_2'),
+          t('helpCenter.q_account_3'),
+          t('helpCenter.q_account_4'),
+          t('helpCenter.q_account_5'),
+          t('helpCenter.q_account_6'),
+          t('helpCenter.q_account_7'),
+          t('helpCenter.q_account_8'),
+          t('helpCenter.q_account_9'),
+        ],
+      },
+      {
+        id: 'sourcing',
+        label: t('helpCenter.tabSourcing'),
+        icon: `<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m21 21-4.35-4.35m1.6-5.15a6.75 6.75 0 1 1-13.5 0 6.75 6.75 0 0 1 13.5 0Z"/></svg>`,
+        questions: [
+          t('helpCenter.q_sourcing_1'),
+          t('helpCenter.q_sourcing_2'),
+          t('helpCenter.q_sourcing_3'),
+          t('helpCenter.q_sourcing_4'),
+          t('helpCenter.q_sourcing_5'),
+          t('helpCenter.q_sourcing_6'),
+          t('helpCenter.q_sourcing_7'),
+          t('helpCenter.q_sourcing_8'),
+          t('helpCenter.q_sourcing_9'),
+        ],
+      },
+      {
+        id: 'negotiation',
+        label: t('helpCenter.tabNegotiation'),
+        icon: `<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.625 9.75a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375m-13.5 3.01c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.184-4.183a1.14 1.14 0 0 1 .778-.332 48.294 48.294 0 0 0 5.83-.498c1.585-.233 2.708-1.626 2.708-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z"/></svg>`,
+        questions: [
+          t('helpCenter.q_negotiation_1'),
+          t('helpCenter.q_negotiation_2'),
+          t('helpCenter.q_negotiation_3'),
+          t('helpCenter.q_negotiation_4'),
+          t('helpCenter.q_negotiation_5'),
+          t('helpCenter.q_negotiation_6'),
+        ],
+      },
+      {
+        id: 'payment',
+        label: t('helpCenter.tabPayment'),
+        icon: `<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Z"/></svg>`,
+        questions: [
+          t('helpCenter.q_payment_1'),
+          t('helpCenter.q_payment_2'),
+          t('helpCenter.q_payment_3'),
+          t('helpCenter.q_payment_4'),
+          t('helpCenter.q_payment_5'),
+          t('helpCenter.q_payment_6'),
+          t('helpCenter.q_payment_7'),
+          t('helpCenter.q_payment_8'),
+          t('helpCenter.q_payment_9'),
+        ],
+      },
+      {
+        id: 'after-sales',
+        label: t('helpCenter.tabAfterSales'),
+        icon: `<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z"/></svg>`,
+        questions: [
+          t('helpCenter.q_aftersales_1'),
+          t('helpCenter.q_aftersales_2'),
+          t('helpCenter.q_aftersales_3'),
+          t('helpCenter.q_aftersales_4'),
+          t('helpCenter.q_aftersales_5'),
+          t('helpCenter.q_aftersales_6'),
+        ],
+      },
+      {
+        id: 'self-service',
+        label: t('helpCenter.tabSelfService'),
+        icon: `<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17 17.25 21A2.652 2.652 0 0 0 21 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 1 1-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 0 0 4.486-6.336l-3.276 3.277a3.004 3.004 0 0 1-2.25-2.25l3.276-3.276a4.5 4.5 0 0 0-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437 1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008Z"/></svg>`,
+        questions: [
+          t('helpCenter.q_selfservice_1'),
+          t('helpCenter.q_selfservice_2'),
+          t('helpCenter.q_selfservice_3'),
+          t('helpCenter.q_selfservice_4'),
+          t('helpCenter.q_selfservice_5'),
+          t('helpCenter.q_selfservice_6'),
+        ],
+      },
+    ];
+  },
 
   init() {
     // Initialize with first learning card active
@@ -3523,188 +3546,192 @@ Alpine.data('faqPage', () => ({
   searchQuery: '',
   activeCategory: 'all',
 
-  categories: [
-    { id: 'all', label: 'All categories' },
-    { id: 'intro', label: 'İSTOC Giriş' },
-    { id: 'account', label: 'Hesap Yönetimi' },
-    { id: 'sourcing', label: 'Kaynak Bulma' },
-    { id: 'negotiation', label: 'Ticari Müzakere' },
-    { id: 'place-order', label: 'Sipariş Ver' },
-    { id: 'payment', label: 'Sipariş Ödemesi' },
-    { id: 'tax', label: 'Vergi Yönetimi' },
-    { id: 'shipping', label: 'Kargo' },
-    { id: 'receipt', label: 'Sipariş Alımı' },
-    { id: 'inspection', label: 'Denetim & Üretim' },
-    { id: 'after-sales', label: 'Satış Sonrası Servis' },
-    { id: 'feedback', label: 'Sipariş Geri Bildirimi' },
-    { id: 'security', label: 'Güvenlik & Kurallar' },
-    { id: 'others', label: 'Diğerleri' },
-    { id: 'promotions', label: 'Promosyonlar & Alışveriş' },
-    { id: 'guaranteed', label: 'iSTOC Garantisi' },
-    { id: 'app-settings', label: 'Uygulama Ayarları' },
-    { id: 'localization', label: 'Dil ve Yerelleştirme' },
-  ],
+  get categories() {
+    return [
+      { id: 'all', label: t('faq.allCategories') },
+      { id: 'intro', label: t('faq.intro') },
+      { id: 'account', label: t('faq.account') },
+      { id: 'sourcing', label: t('faq.sourcing') },
+      { id: 'negotiation', label: t('faq.negotiation') },
+      { id: 'place-order', label: t('faq.placeOrder') },
+      { id: 'payment', label: t('faq.payment') },
+      { id: 'tax', label: t('faq.tax') },
+      { id: 'shipping', label: t('faq.shipping') },
+      { id: 'receipt', label: t('faq.receipt') },
+      { id: 'inspection', label: t('faq.inspection') },
+      { id: 'after-sales', label: t('faq.afterSales') },
+      { id: 'feedback', label: t('faq.feedback') },
+      { id: 'security', label: t('faq.security') },
+      { id: 'others', label: t('faq.others') },
+      { id: 'promotions', label: t('faq.promotions') },
+      { id: 'guaranteed', label: t('faq.guaranteed') },
+      { id: 'app-settings', label: t('faq.appSettings') },
+      { id: 'localization', label: t('faq.localization') },
+    ];
+  },
 
-  allCategoryCards: [
-    {
-      id: 'intro', label: 'iSTOC Giriş',
-      subs: [
-        { label: 'iSTOC Tanıtımı' },
-        { label: 'iSTOC Üyeliği', highlight: true },
-      ],
-    },
-    {
-      id: 'account', label: 'Hesap Yönetimi',
-      subs: [
-        { label: 'Hesap Ayarları' },
-        { label: 'İptal & Yeniden Etkinleştirme' },
-        { label: 'Giriş', highlight: true },
-        { label: 'Kayıt' },
-        { label: 'Satıcı Ol' },
-      ],
-    },
-    {
-      id: 'sourcing', label: 'Kaynak Bulma',
-      subs: [
-        { label: 'Arama' },
-        { label: 'Tedarikçi Değerlendirme' },
-        { label: 'Ticaret Bilgisi', highlight: true },
-        { label: 'Öneren', highlight: true },
-        { label: 'AI Uygulaması' },
-        { label: 'Kaynak Bulma' },
-      ],
-    },
-    {
-      id: 'negotiation', label: 'Ticari Müzakere',
-      subs: [
-        { label: 'RFQ' },
-        { label: 'Mesajlar' },
-        { label: 'Diğer İletişim Sorunları', highlight: true },
-      ],
-    },
-    {
-      id: 'place-order', label: 'Sipariş Ver',
-      subs: [
-        { label: 'Ticaret Güvencesi Tanıtımı' },
-        { label: 'Sipariş Ver' },
-        { label: 'Siparişi Onayla' },
-        { label: 'Sipariş Yönetimi' },
-      ],
-    },
-    {
-      id: 'payment', label: 'Sipariş Ödemesi',
-      subs: [
-        { label: 'Sipariş Ödemesi', highlight: true },
-        { label: 'Ödeme Makbuzu' },
-        { label: 'Finansal' },
-        { label: 'Ödeme' },
-        { label: 'Ödeme Türleri' },
-      ],
-    },
-    {
-      id: 'tax', label: 'Vergi Yönetimi',
-      subs: [
-        { label: 'Vergi Bilgisi Gönder' },
-        { label: 'Vergi Türleri' },
-        { label: 'Vergi Faturası' },
-        { label: 'Vergi Bilgisini Doğrula' },
-        { label: 'Vergi Sipariş Yönetimi' },
-        { label: 'Vergi İadesi', highlight: true },
-      ],
-    },
-    {
-      id: 'shipping', label: 'Kargo',
-      subs: [
-        { label: 'Kargo' },
-        { label: 'iSTOC Lojistik Hizmetleri', highlight: true },
-        { label: 'MSK Kargo Hizmetleri (Maersk)' },
-        { label: 'İthalat Ücretleri' },
-      ],
-    },
-    {
-      id: 'receipt', label: 'Sipariş Alımı',
-      subs: [
-        { label: 'Sipariş Teslimatı' },
-        { label: 'Sipariş Tamamlanma' },
-      ],
-    },
-    {
-      id: 'inspection', label: 'Denetim & Üretim İzleme',
-      subs: [
-        { label: 'Denetim Hizmetleri', highlight: true },
-        { label: 'Üretim İzleme Hizmetleri' },
-      ],
-    },
-    {
-      id: 'after-sales', label: 'Satış Sonrası Servis',
-      subs: [
-        { label: 'Sipariş Anlaşmazlığı' },
-        { label: 'Sipariş İadesi', highlight: true },
-        { label: 'Anlaşmazlık Süreci' },
-        { label: 'Mal Sorunu' },
-        { label: 'Anlaşmazlık Kuralları' },
-        { label: 'Geri Ödeme' },
-      ],
-    },
-    {
-      id: 'feedback', label: 'Sipariş Geri Bildirimi',
-      subs: [
-        { label: 'Geri Bildirim Yönetimi', highlight: true },
-        { label: 'Geri Bildirim Kuralları' },
-      ],
-    },
-    {
-      id: 'security', label: 'Güvenlik & iSTOC Kuralları',
-      subs: [
-        { label: 'Dolandırıcılık/Sahte E-posta' },
-        { label: 'IPR Şikayeti' },
-      ],
-    },
-    {
-      id: 'others', label: 'Diğerleri',
-      subs: [
-        { label: 'Müşteri Hizmetleri Operasyonları' },
-        { label: 'Belirsiz Endişe' },
-        { label: 'Çevrimdışı Hizmet' },
-      ],
-    },
-    {
-      id: 'promotions', label: 'Promosyonlar & Alışveriş Rehberi',
-      subs: [
-        { label: 'Alışveriş Rehberi' },
-        { label: 'Senaryolu Promosyon', highlight: true },
-        { label: 'Süper Promosyon', highlight: true },
-        { label: 'Ödeme Promosyonları' },
-        { label: 'Diğer Promosyon Sorunları' },
-      ],
-    },
-    {
-      id: 'guaranteed', label: 'iSTOC Garantisi',
-      subs: [
-        { label: 'Garantili Kargo', highlight: true },
-        { label: 'Garantili Satış Sonrası' },
-        { label: 'Garantili Ön Satış', highlight: true },
-        { label: 'Garantili Sipariş Verme' },
-        { label: 'Denizaşırı Doğrulanmış Depo' },
-      ],
-    },
-    {
-      id: 'app-settings', label: 'iSTOC Uygulama Ayarları',
-      subs: [
-        { label: 'iSTOC Uygulama Ayarları' },
-      ],
-    },
-    {
-      id: 'localization', label: 'Dil ve Yerelleştirme',
-      subs: [
-        { label: 'iSTOC Dil Ayarları', highlight: true },
-      ],
-    },
-  ],
+  get allCategoryCards() {
+    return [
+      {
+        id: 'intro', label: t('faq.intro'),
+        subs: [
+          { label: t('faq.introDesc') },
+          { label: t('faq.introMembership'), highlight: true },
+        ],
+      },
+      {
+        id: 'account', label: t('faq.account'),
+        subs: [
+          { label: t('faq.accountSettings') },
+          { label: t('faq.accountCancelReactivate') },
+          { label: t('faq.accountLogin'), highlight: true },
+          { label: t('faq.accountRegister') },
+          { label: t('faq.accountBecomeSeller') },
+        ],
+      },
+      {
+        id: 'sourcing', label: t('faq.sourcing'),
+        subs: [
+          { label: t('faq.sourcingSearch') },
+          { label: t('faq.sourcingSupplierEval') },
+          { label: t('faq.sourcingTradeInfo'), highlight: true },
+          { label: t('faq.sourcingRecommender'), highlight: true },
+          { label: t('faq.sourcingAiApp') },
+          { label: t('faq.sourcingSourcing') },
+        ],
+      },
+      {
+        id: 'negotiation', label: t('faq.negotiation'),
+        subs: [
+          { label: t('faq.negotiationRfq') },
+          { label: t('faq.negotiationMessages') },
+          { label: t('faq.negotiationOtherIssues'), highlight: true },
+        ],
+      },
+      {
+        id: 'place-order', label: t('faq.placeOrder'),
+        subs: [
+          { label: t('faq.placeOrderTradeAssurance') },
+          { label: t('faq.placeOrderPlace') },
+          { label: t('faq.placeOrderConfirm') },
+          { label: t('faq.placeOrderManage') },
+        ],
+      },
+      {
+        id: 'payment', label: t('faq.payment'),
+        subs: [
+          { label: t('faq.paymentOrderPayment'), highlight: true },
+          { label: t('faq.paymentReceipt') },
+          { label: t('faq.paymentFinancial') },
+          { label: t('faq.paymentPayment') },
+          { label: t('faq.paymentTypes') },
+        ],
+      },
+      {
+        id: 'tax', label: t('faq.tax'),
+        subs: [
+          { label: t('faq.taxSubmitInfo') },
+          { label: t('faq.taxTypes') },
+          { label: t('faq.taxInvoice') },
+          { label: t('faq.taxVerifyInfo') },
+          { label: t('faq.taxOrderManage') },
+          { label: t('faq.taxRefund'), highlight: true },
+        ],
+      },
+      {
+        id: 'shipping', label: t('faq.shipping'),
+        subs: [
+          { label: t('faq.shippingShipping') },
+          { label: t('faq.shippingLogistics'), highlight: true },
+          { label: t('faq.shippingMaersk') },
+          { label: t('faq.shippingImportFees') },
+        ],
+      },
+      {
+        id: 'receipt', label: t('faq.receipt'),
+        subs: [
+          { label: t('faq.receiptDelivery') },
+          { label: t('faq.receiptCompletion') },
+        ],
+      },
+      {
+        id: 'inspection', label: t('faq.inspection'),
+        subs: [
+          { label: t('faq.inspectionServices'), highlight: true },
+          { label: t('faq.inspectionMonitoring') },
+        ],
+      },
+      {
+        id: 'after-sales', label: t('faq.afterSales'),
+        subs: [
+          { label: t('faq.afterSalesDispute') },
+          { label: t('faq.afterSalesReturn'), highlight: true },
+          { label: t('faq.afterSalesDisputeProcess') },
+          { label: t('faq.afterSalesGoodsIssue') },
+          { label: t('faq.afterSalesDisputeRules') },
+          { label: t('faq.afterSalesRefund') },
+        ],
+      },
+      {
+        id: 'feedback', label: t('faq.feedback'),
+        subs: [
+          { label: t('faq.feedbackManagement'), highlight: true },
+          { label: t('faq.feedbackRules') },
+        ],
+      },
+      {
+        id: 'security', label: t('faq.security'),
+        subs: [
+          { label: t('faq.securityFraud') },
+          { label: t('faq.securityIpr') },
+        ],
+      },
+      {
+        id: 'others', label: t('faq.others'),
+        subs: [
+          { label: t('faq.othersCustomerService') },
+          { label: t('faq.othersUnclearConcern') },
+          { label: t('faq.othersOfflineService') },
+        ],
+      },
+      {
+        id: 'promotions', label: t('faq.promotions'),
+        subs: [
+          { label: t('faq.promotionsShoppingGuide') },
+          { label: t('faq.promotionsScenario'), highlight: true },
+          { label: t('faq.promotionsSuper'), highlight: true },
+          { label: t('faq.promotionsPayment') },
+          { label: t('faq.promotionsOtherIssues') },
+        ],
+      },
+      {
+        id: 'guaranteed', label: t('faq.guaranteed'),
+        subs: [
+          { label: t('faq.guaranteedShipping'), highlight: true },
+          { label: t('faq.guaranteedAfterSales') },
+          { label: t('faq.guaranteedPreSales'), highlight: true },
+          { label: t('faq.guaranteedPlaceOrder') },
+          { label: t('faq.guaranteedOverseasWarehouse') },
+        ],
+      },
+      {
+        id: 'app-settings', label: t('faq.appSettings'),
+        subs: [
+          { label: t('faq.appSettingsLabel') },
+        ],
+      },
+      {
+        id: 'localization', label: t('faq.localization'),
+        subs: [
+          { label: t('faq.localizationSettings'), highlight: true },
+        ],
+      },
+    ];
+  },
 
   get activeCategoryLabel(): string {
     const cat = (this.categories as any[]).find((c: any) => c.id === this.activeCategory);
-    return cat ? cat.label : 'All categories';
+    return cat ? cat.label : t('faq.allCategories');
   },
 
   get visibleCategories(): any[] {
@@ -3838,15 +3865,24 @@ Alpine.data('contactPage', () => ({
   formSubmitted: false,
   errors: {} as Record<string, string>,
 
-  subjectOptions: ['Sipariş', 'Ödeme', 'Kargo', 'Hesap', 'Ürün Kalitesi', 'Diğer'],
+  get subjectOptions() {
+    return [
+      t('contactForm.subjectOrder'),
+      t('contactForm.subjectPayment'),
+      t('contactForm.subjectShipping'),
+      t('contactForm.subjectAccount'),
+      t('contactForm.subjectProductQuality'),
+      t('contactForm.subjectOther'),
+    ];
+  },
 
   validateForm(): boolean {
     this.errors = {};
-    if (!this.name.trim()) this.errors.name = 'Ad soyad gerekli';
-    if (!this.email.trim()) this.errors.email = 'E-posta gerekli';
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.email)) this.errors.email = 'Geçerli bir e-posta girin';
-    if (!this.subject) this.errors.subject = 'Konu seçiniz';
-    if (!this.message.trim()) this.errors.message = 'Mesaj gerekli';
+    if (!this.name.trim()) this.errors.name = t('contactForm.nameRequired');
+    if (!this.email.trim()) this.errors.email = t('contactForm.emailRequired');
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.email)) this.errors.email = t('contactForm.emailInvalid');
+    if (!this.subject) this.errors.subject = t('contactForm.subjectRequired');
+    if (!this.message.trim()) this.errors.message = t('contactForm.messageRequired');
     return Object.keys(this.errors).length === 0;
   },
 
@@ -3883,14 +3919,16 @@ Alpine.data('ticketForm', () => ({
   errors: {} as Record<string, string>,
   submitted: false,
 
-  categories: [
-    { id: 'siparis', label: 'Sipariş', subs: ['Teslimat gecikmesi', 'Yanlış ürün', 'Eksik ürün', 'İptal talebi'] },
-    { id: 'odeme', label: 'Ödeme', subs: ['Çift çekim', 'İade gecikmesi', 'Fatura hatası', 'Kupon sorunu'] },
-    { id: 'kargo', label: 'Kargo', subs: ['Hasarlı paket', 'Kayıp kargo', 'Adres değişikliği', 'Takip sorunu'] },
-    { id: 'hesap', label: 'Hesap', subs: ['Şifre sorunu', 'E-posta değişikliği', 'Hesap doğrulama', 'Hesap silme'] },
-    { id: 'urun', label: 'Ürün Kalitesi', subs: ['Açıklama uyumsuzluğu', 'Kalite sorunu', 'Sahte ürün şüphesi'] },
-    { id: 'diger', label: 'Diğer', subs: ['Öneri', 'Şikayet', 'Genel soru'] },
-  ],
+  get categories() {
+    return [
+      { id: 'siparis', label: t('ticketForm.catOrder'), subs: t('ticketForm.catOrderSubs', { returnObjects: true }) as unknown as string[] },
+      { id: 'odeme', label: t('ticketForm.catPayment'), subs: t('ticketForm.catPaymentSubs', { returnObjects: true }) as unknown as string[] },
+      { id: 'kargo', label: t('ticketForm.catShipping'), subs: t('ticketForm.catShippingSubs', { returnObjects: true }) as unknown as string[] },
+      { id: 'hesap', label: t('ticketForm.catAccount'), subs: t('ticketForm.catAccountSubs', { returnObjects: true }) as unknown as string[] },
+      { id: 'urun', label: t('ticketForm.catProductQuality'), subs: t('ticketForm.catProductQualitySubs', { returnObjects: true }) as unknown as string[] },
+      { id: 'diger', label: t('ticketForm.catOther'), subs: t('ticketForm.catOtherSubs', { returnObjects: true }) as unknown as string[] },
+    ];
+  },
 
   get subCategories(): string[] {
     const cat = this.categories.find((c: any) => c.id === this.category);
@@ -3919,11 +3957,11 @@ Alpine.data('ticketForm', () => ({
   validateStep(step: number): boolean {
     this.errors = {};
     if (step === 1) {
-      if (!this.category) this.errors.category = 'Kategori seçiniz';
-      if (!this.subject.trim()) this.errors.subject = 'Konu giriniz';
+      if (!this.category) this.errors.category = t('ticketForm.categoryRequired');
+      if (!this.subject.trim()) this.errors.subject = t('ticketForm.subjectRequired');
     } else if (step === 2) {
-      if (!this.description.trim()) this.errors.description = 'Açıklama giriniz';
-      if (this.description.length < 20) this.errors.description = 'En az 20 karakter giriniz';
+      if (!this.description.trim()) this.errors.description = t('ticketForm.descriptionRequired');
+      if (this.description.length < 20) this.errors.description = t('ticketForm.descriptionMinLength');
     }
     return Object.keys(this.errors).length === 0;
   },
@@ -4041,24 +4079,24 @@ Alpine.data('sellPage', () => ({
   formErrors: {} as Record<string, string>,
   submitted: false,
 
-  businessTypes: ['Üretici', 'Toptancı', 'Distribütör', 'Perakendeci', 'İthalatçı/İhracatçı'],
-  categoryOptions: ['Tekstil & Giyim', 'Elektronik', 'Gıda & İçecek', 'Otomotiv', 'Makine & Ekipman', 'İnşaat & Yapı', 'Kozmetik', 'Mobilya', 'Tarım', 'Diğer'],
+  get businessTypes() { return t('sellerForm.businessTypes', { returnObjects: true }) as unknown as string[]; },
+  get categoryOptions() { return t('sellerForm.categoryOptions', { returnObjects: true }) as unknown as string[]; },
 
   validateStep(step: number): boolean {
     this.formErrors = {};
     if (step === 1) {
-      if (!this.formData.companyName.trim()) this.formErrors.companyName = 'Firma adı gerekli';
-      if (!this.formData.businessType) this.formErrors.businessType = 'İş tipi seçiniz';
-      if (!this.formData.taxNumber.trim()) this.formErrors.taxNumber = 'Vergi numarası gerekli';
+      if (!this.formData.companyName.trim()) this.formErrors.companyName = t('sellerForm.companyNameRequired');
+      if (!this.formData.businessType) this.formErrors.businessType = t('sellerForm.businessTypeRequired');
+      if (!this.formData.taxNumber.trim()) this.formErrors.taxNumber = t('sellerForm.taxNumberRequired');
     } else if (step === 2) {
-      if (!this.formData.contactName.trim()) this.formErrors.contactName = 'İletişim adı gerekli';
-      if (!this.formData.email.trim()) this.formErrors.email = 'E-posta gerekli';
-      else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.formData.email)) this.formErrors.email = 'Geçerli e-posta girin';
-      if (!this.formData.phone.trim()) this.formErrors.phone = 'Telefon gerekli';
+      if (!this.formData.contactName.trim()) this.formErrors.contactName = t('sellerForm.contactNameRequired');
+      if (!this.formData.email.trim()) this.formErrors.email = t('sellerForm.emailRequired');
+      else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.formData.email)) this.formErrors.email = t('sellerForm.emailInvalid');
+      if (!this.formData.phone.trim()) this.formErrors.phone = t('sellerForm.phoneRequired');
     } else if (step === 3) {
-      if (this.formData.mainCategories.length === 0) this.formErrors.mainCategories = 'En az 1 kategori seçin';
+      if (this.formData.mainCategories.length === 0) this.formErrors.mainCategories = t('sellerForm.categoryMinOne');
     } else if (step === 4) {
-      if (!this.formData.termsAccepted) this.formErrors.termsAccepted = 'Koşulları kabul etmelisiniz';
+      if (!this.formData.termsAccepted) this.formErrors.termsAccepted = t('sellerForm.termsRequired');
     }
     return Object.keys(this.formErrors).length === 0;
   },
@@ -4086,17 +4124,20 @@ Alpine.data('sellPage', () => ({
 // ─── Sell Pricing ──────────────────────────────────────────────────────
 Alpine.data('sellPricing', () => ({
   billingPeriod: 'monthly' as 'monthly' | 'yearly',
-  faqItems: [
-    { question: 'Ücretsiz plan ne kadar süre kullanılabilir?', answer: 'Ücretsiz plan süresiz olarak kullanılabilir. Ancak listeleme sayısı ve bazı özellikler sınırlıdır.', open: false },
-    { question: 'Plan yükseltme veya düşürme yapabilir miyim?', answer: 'Evet, dilediğiniz zaman planınızı değiştirebilirsiniz. Yükseltme anında, düşürme ise mevcut dönem sonunda uygulanır.', open: false },
-    { question: 'Yıllık planda erken iptal yaparsam ne olur?', answer: 'Kalan süre için kısmi iade yapılır. İptal talebi sonrası mevcut dönem sonuna kadar Gold/Verified özellikleri aktif kalır.', open: false },
-    { question: 'Verified satıcı avantajları nelerdir?', answer: 'Verified rozeti, öncelikli arama sıralaması, özel hesap yöneticisi, genişletilmiş analitik ve sınırsız ürün listeleme gibi avantajlar sunar.', open: false },
-    { question: 'Ödeme yöntemleri nelerdir?', answer: 'Kredi kartı, banka kartı ve havale/EFT ile ödeme yapabilirsiniz. Yıllık planlarda fatura düzenlenir.', open: false },
-  ],
+  faqOpen: [false, false, false, false, false] as boolean[],
+  get faqItems() {
+    return [
+      { question: t('pricingFaq.q1'), answer: t('pricingFaq.a1'), open: this.faqOpen[0] },
+      { question: t('pricingFaq.q2'), answer: t('pricingFaq.a2'), open: this.faqOpen[1] },
+      { question: t('pricingFaq.q3'), answer: t('pricingFaq.a3'), open: this.faqOpen[2] },
+      { question: t('pricingFaq.q4'), answer: t('pricingFaq.a4'), open: this.faqOpen[3] },
+      { question: t('pricingFaq.q5'), answer: t('pricingFaq.a5'), open: this.faqOpen[4] },
+    ];
+  },
   selectedPlan: '',
 
   toggleFaq(index: number) {
-    this.faqItems[index].open = !this.faqItems[index].open;
+    this.faqOpen[index] = !this.faqOpen[index];
   },
 
   selectPlan(name: string) {

@@ -5,10 +5,12 @@
 
 import '../style.css'
 import { initFlowbite } from 'flowbite'
+import { t } from '../i18n'
 import { getBaseUrl } from '../utils/url'
 
 // Header components (reuse from main page)
 import { TopBar, initMobileDrawer, SubHeader, initStickyHeaderSearch, MegaMenu, initMegaMenu, initHeaderCart } from '../components/header'
+import { initLanguageSelector } from '../components/header/TopBar'
 
 // Shared components
 import { Breadcrumb } from '../components/shared/Breadcrumb'
@@ -168,7 +170,7 @@ appEl.innerHTML = `
   <!-- Main Content -->
   <main>
     <div class="container-boxed">
-      ${Breadcrumb([{ label: 'Sepetim', href: '/pages/cart.html' }, { label: 'Ödeme' }])}
+      ${Breadcrumb([{ label: t('cart.title'), href: '/pages/cart.html' }, { label: t('checkout.paymentMethod') }])}
     </div>
     ${CheckoutLayout({
   leftContent: `
@@ -204,6 +206,7 @@ initFlowbite();
 startAlpine();
 initStickyHeaderSearch();
 initMobileDrawer();
+initLanguageSelector();
 initHeaderCart();
 initStickyHeights();
 
@@ -298,16 +301,16 @@ function gatherReviewData() {
   const shippingAddress = addrParts.length > 0 ? addrParts.join(', ') : 'Not provided';
 
   // Payment method
-  let paymentLabel = 'Kredi veya Banka Kartı';
+  let paymentLabel = t('checkout.creditDebitCard');
   const selected = document.querySelector<HTMLInputElement>('input[name="payment_method"]:checked');
   if (selected) {
     switch (selected.value) {
       case 'elden': paymentLabel = 'Elden Taksit'; break;
-      case 'anlasmali': paymentLabel = 'Satıcı ile Anlaşmalı'; break;
-      case 'kredi_karti': paymentLabel = 'Kredi veya Banka Kartı'; break;
+      case 'anlasmali': paymentLabel = t('checkout.negotiatedWithSupplier'); break;
+      case 'kredi_karti': paymentLabel = t('checkout.creditDebitCard'); break;
       case 'banka_havale': paymentLabel = 'Bank Transfer / EFT'; break;
-      case 'cek_senet': paymentLabel = 'Çek / Senet'; break;
-      default: paymentLabel = 'Kredi veya Banka Kartı';
+      case 'cek_senet': paymentLabel = t('checkout.checkDraft'); break;
+      default: paymentLabel = t('checkout.creditDebitCard');
     }
   }
 

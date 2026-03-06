@@ -1,148 +1,158 @@
 /**
  * RFQ Page Mock Data
- * Turkish mock data for all RFQ page sections — B2B marketplace style.
+ * Internationalized mock data for all RFQ page sections — B2B marketplace style.
  */
 
+import { t } from '../i18n';
 import type { CustomizationCard, Product, Testimonial } from '../types/rfq';
 
-export const customizationCards: CustomizationCard[] = [
-  {
-    id: 'card-1',
-    title: 'Tasarım',
-    subtitle: 'Ürününüzü özelleştirin',
-    icon: '🎨',
-    position: 1,
-  },
-  {
-    id: 'card-2',
-    title: 'Logo',
-    subtitle: 'Markanızı ekleyin',
-    icon: '🏷️',
-    position: 2,
-  },
-  {
-    id: 'card-3',
-    title: 'Paketleme',
-    subtitle: 'Özel paket tasarımı',
-    icon: '📦',
-    position: 3,
-  },
-  {
-    id: 'card-4',
-    title: 'Ambalajlama',
-    subtitle: 'Profesyonel ambalaj',
-    icon: '🎁',
-    position: 4,
-  },
-];
+export function getCustomizationCards(): CustomizationCard[] {
+  return [
+    {
+      id: 'card-1',
+      title: t('mockData.rfqData.custCard1Title'),
+      subtitle: t('mockData.rfqData.custCard1Subtitle'),
+      icon: '🎨',
+      position: 1,
+    },
+    {
+      id: 'card-2',
+      title: t('mockData.rfqData.custCard2Title'),
+      subtitle: t('mockData.rfqData.custCard2Subtitle'),
+      icon: '🏷️',
+      position: 2,
+    },
+    {
+      id: 'card-3',
+      title: t('mockData.rfqData.custCard3Title'),
+      subtitle: t('mockData.rfqData.custCard3Subtitle'),
+      icon: '📦',
+      position: 3,
+    },
+    {
+      id: 'card-4',
+      title: t('mockData.rfqData.custCard4Title'),
+      subtitle: t('mockData.rfqData.custCard4Subtitle'),
+      icon: '🎁',
+      position: 4,
+    },
+  ];
+}
 
-export const selectedProducts: Product[] = [
-  {
-    id: 'sp-1',
-    name: 'Paslanmaz Çelik Termos Bardak Özel Logo Baskılı 500ml',
-    image: '',
-    supplierCount: 128,
-    ctaText: 'Anında fiyat teklifi al',
-  },
-  {
-    id: 'sp-2',
-    name: 'Organik Pamuk Promosyon T-Shirt Toptan Baskılı',
-    image: '',
-    supplierCount: 256,
-    ctaText: 'Anında fiyat teklifi al',
-  },
-  {
-    id: 'sp-3',
-    name: 'Kraft Karton Ambalaj Kutusu Özel Boyut Baskılı',
-    image: '',
-    supplierCount: 89,
-    ctaText: 'Anında fiyat teklifi al',
-  },
-  {
-    id: 'sp-4',
-    name: 'Bambu Kapaklı Cam Kavanoz Bal Ambalajı 250ml',
-    image: '',
-    supplierCount: 67,
-    ctaText: 'Anında fiyat teklifi al',
-  },
-  {
-    id: 'sp-5',
-    name: 'LED Masa Lambası USB Şarjlı Kablosuz Toptan',
-    image: '',
-    supplierCount: 194,
-    ctaText: 'Anında fiyat teklifi al',
-  },
-  {
-    id: 'sp-6',
-    name: 'Silikon Telefon Kılıfı Özel Tasarım Toptan Üretim',
-    image: '',
-    supplierCount: 312,
-    ctaText: 'Anında fiyat teklifi al',
-  },
-];
+export function getSelectedProducts(): Product[] {
+  return [
+    {
+      id: 'sp-1',
+      name: t('mockData.rfqData.sp1Name'),
+      image: '',
+      supplierCount: 128,
+      ctaText: t('mockData.rfqData.spCta'),
+    },
+    {
+      id: 'sp-2',
+      name: t('mockData.rfqData.sp2Name'),
+      image: '',
+      supplierCount: 256,
+      ctaText: t('mockData.rfqData.spCta'),
+    },
+    {
+      id: 'sp-3',
+      name: t('mockData.rfqData.sp3Name'),
+      image: '',
+      supplierCount: 89,
+      ctaText: t('mockData.rfqData.spCta'),
+    },
+    {
+      id: 'sp-4',
+      name: t('mockData.rfqData.sp4Name'),
+      image: '',
+      supplierCount: 67,
+      ctaText: t('mockData.rfqData.spCta'),
+    },
+    {
+      id: 'sp-5',
+      name: t('mockData.rfqData.sp5Name'),
+      image: '',
+      supplierCount: 194,
+      ctaText: t('mockData.rfqData.spCta'),
+    },
+    {
+      id: 'sp-6',
+      name: t('mockData.rfqData.sp6Name'),
+      image: '',
+      supplierCount: 312,
+      ctaText: t('mockData.rfqData.spCta'),
+    },
+  ];
+}
 
-export const customProducts: Product[] = [
-  { id: 'cp-1', name: 'Endüstriyel Dişli Pompa Paslanmaz Çelik Gıda Sınıfı', image: '', supplierCount: 45, ctaText: 'Hemen fiyat teklifi al' },
-  { id: 'cp-2', name: 'Otomatik Paketleme Makinesi Dikey Form Dolum', image: '', supplierCount: 32, ctaText: 'Hemen fiyat teklifi al' },
-  { id: 'cp-3', name: 'CNC Torna Tezgahı Hassas İşleme Metal Parça', image: '', supplierCount: 78, ctaText: 'Hemen fiyat teklifi al' },
-  { id: 'cp-4', name: 'Güneş Paneli Monokristal 550W Endüstriyel Çatı', image: '', supplierCount: 156, ctaText: 'Hemen fiyat teklifi al' },
-  { id: 'cp-5', name: 'Hidrolik Pres 100 Ton Otomasyon Sistemli', image: '', supplierCount: 23, ctaText: 'Hemen fiyat teklifi al' },
-  { id: 'cp-6', name: 'Elektrik Motoru 3 Fazlı Asenkron 7.5kW', image: '', supplierCount: 89, ctaText: 'Hemen fiyat teklifi al' },
-  { id: 'cp-7', name: 'Tekstil Kumaş Polyester Örme Toptan Metre', image: '', supplierCount: 234, ctaText: 'Hemen fiyat teklifi al' },
-  { id: 'cp-8', name: 'Deri Cüzdan Erkek Hakiki Deri El Yapımı Toptan', image: '', supplierCount: 112, ctaText: 'Hemen fiyat teklifi al' },
-  { id: 'cp-9', name: 'Seramik Karo 60x60 Mat Granit Görünümlü Toptan', image: '', supplierCount: 67, ctaText: 'Hemen fiyat teklifi al' },
-  { id: 'cp-10', name: 'Alüminyum Profil Doğrama Sistemi 6063 T5', image: '', supplierCount: 145, ctaText: 'Hemen fiyat teklifi al' },
-  { id: 'cp-11', name: 'Plastik Enjeksiyon Kalıp Özel Tasarım Üretim', image: '', supplierCount: 56, ctaText: 'Hemen fiyat teklifi al' },
-  { id: 'cp-12', name: 'Paslanmaz Çelik Boru 304 Dikişsiz Endüstriyel', image: '', supplierCount: 98, ctaText: 'Hemen fiyat teklifi al' },
-  { id: 'cp-13', name: 'Organik Zeytinyağı Soğuk Sıkım 5L Teneke Toptan', image: '', supplierCount: 43, ctaText: 'Hemen fiyat teklifi al' },
-  { id: 'cp-14', name: 'Endüstriyel Hava Kompresörü Vidalı 50HP', image: '', supplierCount: 34, ctaText: 'Hemen fiyat teklifi al' },
-  { id: 'cp-15', name: 'Bebek Tekstil Seti Organik Pamuk 5 Parça Toptan', image: '', supplierCount: 178, ctaText: 'Hemen fiyat teklifi al' },
-  { id: 'cp-16', name: 'LED Endüstriyel Aydınlatma Armatür IP65 150W', image: '', supplierCount: 201, ctaText: 'Hemen fiyat teklifi al' },
-  { id: 'cp-17', name: 'Kauçuk Conta O-Ring NBR Endüstriyel Sızdırmazlık', image: '', supplierCount: 89, ctaText: 'Hemen fiyat teklifi al' },
-  { id: 'cp-18', name: 'Ahşap Palet Euro Standart 120x80cm Toptan', image: '', supplierCount: 67, ctaText: 'Hemen fiyat teklifi al' },
-  { id: 'cp-19', name: 'Kimyasal Ham Madde Polietilen Granül HDPE', image: '', supplierCount: 34, ctaText: 'Hemen fiyat teklifi al' },
-  { id: 'cp-20', name: 'Otomotiv Yedek Parça Fren Balatası Seramik OEM', image: '', supplierCount: 156, ctaText: 'Hemen fiyat teklifi al' },
-  { id: 'cp-21', name: 'Medikal Tek Kullanımlık Eldiven Nitril Pudrasız', image: '', supplierCount: 278, ctaText: 'Hemen fiyat teklifi al' },
-  { id: 'cp-22', name: 'Tarım İlacı Herbisit Konsantre 20L Bidon Toptan', image: '', supplierCount: 23, ctaText: 'Hemen fiyat teklifi al' },
-  { id: 'cp-23', name: 'Spor Ayakkabı Erkek Koşu Hafif Taban Toptan', image: '', supplierCount: 345, ctaText: 'Hemen fiyat teklifi al' },
-  { id: 'cp-24', name: 'Çelik Konstrüksiyon Prefabrik Depo Hangar', image: '', supplierCount: 45, ctaText: 'Hemen fiyat teklifi al' },
-  { id: 'cp-25', name: 'Cam Şişe Amber 500ml Vida Kapaklı İlaç Ambalaj', image: '', supplierCount: 78, ctaText: 'Hemen fiyat teklifi al' },
-  { id: 'cp-26', name: 'Elektrikli Forklift 3 Ton Lityum Batarya Depo', image: '', supplierCount: 19, ctaText: 'Hemen fiyat teklifi al' },
-  { id: 'cp-27', name: 'Gıda Ambalaj Filmi Streç PVC 30cm Toptan Rulo', image: '', supplierCount: 123, ctaText: 'Hemen fiyat teklifi al' },
-  { id: 'cp-28', name: 'Güvenlik Kamerası IP PoE 4MP Gece Görüşlü', image: '', supplierCount: 267, ctaText: 'Hemen fiyat teklifi al' },
-  { id: 'cp-29', name: 'Mutfak Robotu Endüstriyel Paslanmaz Çelik 10L', image: '', supplierCount: 56, ctaText: 'Hemen fiyat teklifi al' },
-  { id: 'cp-30', name: 'Beton Mikser Kamyon 8m³ Özel İmalat Araç Üstü', image: '', supplierCount: 12, ctaText: 'Hemen fiyat teklifi al' },
-  { id: 'cp-31', name: 'Halı Makine Dokuma Polipropilen 200x300cm Toptan', image: '', supplierCount: 89, ctaText: 'Hemen fiyat teklifi al' },
-  { id: 'cp-32', name: 'Transformatör Kuru Tip 1000kVA Enerji Dağıtım', image: '', supplierCount: 15, ctaText: 'Hemen fiyat teklifi al' },
-  { id: 'cp-33', name: 'Pet Mama Kuru Köpek Yetişkin 15kg Çuval Toptan', image: '', supplierCount: 67, ctaText: 'Hemen fiyat teklifi al' },
-  { id: 'cp-34', name: 'Kozmetik Ambalaj Airless Pompa Şişe 50ml Toptan', image: '', supplierCount: 134, ctaText: 'Hemen fiyat teklifi al' },
-  { id: 'cp-35', name: 'İnşaat Demiri Nervürlü 12mm B420C Toptan Demir', image: '', supplierCount: 45, ctaText: 'Hemen fiyat teklifi al' },
-  { id: 'cp-36', name: 'Ofis Mobilya Ergonomik Çalışma Koltuğu Toptan', image: '', supplierCount: 198, ctaText: 'Hemen fiyat teklifi al' },
-];
+export function getCustomProducts(): Product[] {
+  const cpCta = t('mockData.rfqData.cpCta');
+  return [
+    { id: 'cp-1', name: t('mockData.rfqData.cp1Name'), image: '', supplierCount: 45, ctaText: cpCta },
+    { id: 'cp-2', name: t('mockData.rfqData.cp2Name'), image: '', supplierCount: 32, ctaText: cpCta },
+    { id: 'cp-3', name: t('mockData.rfqData.cp3Name'), image: '', supplierCount: 78, ctaText: cpCta },
+    { id: 'cp-4', name: t('mockData.rfqData.cp4Name'), image: '', supplierCount: 156, ctaText: cpCta },
+    { id: 'cp-5', name: t('mockData.rfqData.cp5Name'), image: '', supplierCount: 23, ctaText: cpCta },
+    { id: 'cp-6', name: t('mockData.rfqData.cp6Name'), image: '', supplierCount: 89, ctaText: cpCta },
+    { id: 'cp-7', name: t('mockData.rfqData.cp7Name'), image: '', supplierCount: 234, ctaText: cpCta },
+    { id: 'cp-8', name: t('mockData.rfqData.cp8Name'), image: '', supplierCount: 112, ctaText: cpCta },
+    { id: 'cp-9', name: t('mockData.rfqData.cp9Name'), image: '', supplierCount: 67, ctaText: cpCta },
+    { id: 'cp-10', name: t('mockData.rfqData.cp10Name'), image: '', supplierCount: 145, ctaText: cpCta },
+    { id: 'cp-11', name: t('mockData.rfqData.cp11Name'), image: '', supplierCount: 56, ctaText: cpCta },
+    { id: 'cp-12', name: t('mockData.rfqData.cp12Name'), image: '', supplierCount: 98, ctaText: cpCta },
+    { id: 'cp-13', name: t('mockData.rfqData.cp13Name'), image: '', supplierCount: 43, ctaText: cpCta },
+    { id: 'cp-14', name: t('mockData.rfqData.cp14Name'), image: '', supplierCount: 34, ctaText: cpCta },
+    { id: 'cp-15', name: t('mockData.rfqData.cp15Name'), image: '', supplierCount: 178, ctaText: cpCta },
+    { id: 'cp-16', name: t('mockData.rfqData.cp16Name'), image: '', supplierCount: 201, ctaText: cpCta },
+    { id: 'cp-17', name: t('mockData.rfqData.cp17Name'), image: '', supplierCount: 89, ctaText: cpCta },
+    { id: 'cp-18', name: t('mockData.rfqData.cp18Name'), image: '', supplierCount: 67, ctaText: cpCta },
+    { id: 'cp-19', name: t('mockData.rfqData.cp19Name'), image: '', supplierCount: 34, ctaText: cpCta },
+    { id: 'cp-20', name: t('mockData.rfqData.cp20Name'), image: '', supplierCount: 156, ctaText: cpCta },
+    { id: 'cp-21', name: t('mockData.rfqData.cp21Name'), image: '', supplierCount: 278, ctaText: cpCta },
+    { id: 'cp-22', name: t('mockData.rfqData.cp22Name'), image: '', supplierCount: 23, ctaText: cpCta },
+    { id: 'cp-23', name: t('mockData.rfqData.cp23Name'), image: '', supplierCount: 345, ctaText: cpCta },
+    { id: 'cp-24', name: t('mockData.rfqData.cp24Name'), image: '', supplierCount: 45, ctaText: cpCta },
+    { id: 'cp-25', name: t('mockData.rfqData.cp25Name'), image: '', supplierCount: 78, ctaText: cpCta },
+    { id: 'cp-26', name: t('mockData.rfqData.cp26Name'), image: '', supplierCount: 19, ctaText: cpCta },
+    { id: 'cp-27', name: t('mockData.rfqData.cp27Name'), image: '', supplierCount: 123, ctaText: cpCta },
+    { id: 'cp-28', name: t('mockData.rfqData.cp28Name'), image: '', supplierCount: 267, ctaText: cpCta },
+    { id: 'cp-29', name: t('mockData.rfqData.cp29Name'), image: '', supplierCount: 56, ctaText: cpCta },
+    { id: 'cp-30', name: t('mockData.rfqData.cp30Name'), image: '', supplierCount: 12, ctaText: cpCta },
+    { id: 'cp-31', name: t('mockData.rfqData.cp31Name'), image: '', supplierCount: 89, ctaText: cpCta },
+    { id: 'cp-32', name: t('mockData.rfqData.cp32Name'), image: '', supplierCount: 15, ctaText: cpCta },
+    { id: 'cp-33', name: t('mockData.rfqData.cp33Name'), image: '', supplierCount: 67, ctaText: cpCta },
+    { id: 'cp-34', name: t('mockData.rfqData.cp34Name'), image: '', supplierCount: 134, ctaText: cpCta },
+    { id: 'cp-35', name: t('mockData.rfqData.cp35Name'), image: '', supplierCount: 45, ctaText: cpCta },
+    { id: 'cp-36', name: t('mockData.rfqData.cp36Name'), image: '', supplierCount: 198, ctaText: cpCta },
+  ];
+}
 
-export const testimonials: Testimonial[] = [
-  {
-    id: 'testimonial-1',
-    quote: 'iSTOC TradeHub sayesinde tedarikçi bulma sürecimiz yarıya indi. Özellikle fiyat teklifi sistemi çok hızlı ve pratik. 3 ayda 12 yeni tedarikçi ile anlaşma sağladık.',
-    avatar: '',
-    name: 'Mehmet Kaya',
-    title: 'Satın Alma Müdürü',
-    company: 'Anadolu Tekstil A.Ş.',
-  },
-  {
-    id: 'testimonial-2',
-    quote: 'Platformdaki AI destekli eşleştirme özelliği tam ihtiyacımız olan tedarikçileri öneriyor. İlk siparişimizden itibaren kaliteden memnunuz. Kesinlikle tavsiye ederim.',
-    avatar: '',
-    name: 'Ayşe Demir',
-    title: 'Genel Müdür',
-    company: 'Demir Gıda San. Tic. Ltd. Şti.',
-  },
-  {
-    id: 'testimonial-3',
-    quote: 'Yurt dışı tedarikçilerle iletişim kurmak hiç bu kadar kolay olmamıştı. Güvenli ödeme sistemi ve şeffaf süreç yönetimi ile toptan alımlarımızı büyük ölçüde kolaylaştırdık.',
-    avatar: '',
-    name: 'Ali Yılmaz',
-    title: 'Kurumsal Satış Direktörü',
-    company: 'Yılmaz Makine Sanayi A.Ş.',
-  },
-];
+export function getTestimonials(): Testimonial[] {
+  return [
+    {
+      id: 'testimonial-1',
+      quote: t('mockData.rfqData.testimonial1Quote'),
+      avatar: '',
+      name: t('mockData.rfqData.testimonial1Name'),
+      title: t('mockData.rfqData.testimonial1Title'),
+      company: t('mockData.rfqData.testimonial1Company'),
+    },
+    {
+      id: 'testimonial-2',
+      quote: t('mockData.rfqData.testimonial2Quote'),
+      avatar: '',
+      name: t('mockData.rfqData.testimonial2Name'),
+      title: t('mockData.rfqData.testimonial2Title'),
+      company: t('mockData.rfqData.testimonial2Company'),
+    },
+    {
+      id: 'testimonial-3',
+      quote: t('mockData.rfqData.testimonial3Quote'),
+      avatar: '',
+      name: t('mockData.rfqData.testimonial3Name'),
+      title: t('mockData.rfqData.testimonial3Title'),
+      company: t('mockData.rfqData.testimonial3Company'),
+    },
+  ];
+}

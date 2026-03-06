@@ -6,6 +6,7 @@
  *   #profilim, #vergi, #bagli-hesaplar, #gizlilik, #reklam, #eposta, #sifre, #eposta-degistir, #telefon
  */
 
+import { t } from '../../i18n';
 import { SettingsAccountEdit, initSettingsAccountEdit } from './SettingsAccountEdit';
 import { SettingsTaxInfo, initSettingsTaxInfo } from './SettingsTaxInfo';
 import { SettingsLinkedAccounts, initSettingsLinkedAccounts } from './SettingsLinkedAccounts';
@@ -91,27 +92,27 @@ function renderProfileHeader(): string {
           <div class="w-[72px] h-[72px] rounded-full flex items-center justify-center border-3 border-primary-200" style="background:linear-gradient(135deg, var(--color-primary-400, #e6b212) 0%, var(--color-primary-500, #cc9900) 100%)">
             <span class="text-[32px] font-bold text-white lowercase leading-none">m</span>
           </div>
-          <button class="absolute -bottom-0.5 -left-0.5 w-7 h-7 rounded-full bg-white border border-border-default flex items-center justify-center cursor-pointer transition-all hover:bg-surface-raised" style="color:var(--color-text-muted, #666666)" title="Fotoğraf değiştir">
+          <button class="absolute -bottom-0.5 -left-0.5 w-7 h-7 rounded-full bg-white border border-border-default flex items-center justify-center cursor-pointer transition-all hover:bg-surface-raised" style="color:var(--color-text-muted, #666666)" title="${t('settings.changePhoto')}">
             ${ICONS.camera}
           </button>
         </div>
         <div class="flex flex-col gap-1">
           <h2 class="text-lg font-bold mb-1 m-0" style="color:var(--color-text-heading, #111827)">Metin K.</h2>
           <div class="flex items-center gap-2 text-[13px]">
-            <span class="max-sm:min-w-0" style="color:var(--color-text-placeholder, #999999); min-width:110px">E-posta</span>
+            <span class="max-sm:min-w-0" style="color:var(--color-text-placeholder, #999999); min-width:110px">${t('settings.emailLayoutLabel')}</span>
             <span class="font-mono max-sm:text-[12px] max-sm:break-all" style="color:var(--color-text-body, #333333)">met***@gmail.com</span>
-            <button class="inline-flex items-center justify-center w-6 h-6 border-none bg-none rounded cursor-pointer transition-all hover:bg-surface-raised" style="color:var(--color-text-placeholder, #999999)" title="E-postayı düzenle">${ICONS.edit}</button>
+            <button class="inline-flex items-center justify-center w-6 h-6 border-none bg-none rounded cursor-pointer transition-all hover:bg-surface-raised" style="color:var(--color-text-placeholder, #999999)" title="${t('settings.changeEmailNav')}">${ICONS.edit}</button>
           </div>
           <div class="flex items-center gap-2 text-[13px]">
-            <span class="max-sm:min-w-0" style="color:var(--color-text-placeholder, #999999); min-width:110px">Üyelik numarası</span>
+            <span class="max-sm:min-w-0" style="color:var(--color-text-placeholder, #999999); min-width:110px">${t('settings.membershipNumber')}</span>
             <span class="font-mono max-sm:text-[12px] max-sm:break-all" style="color:var(--color-text-body, #333333)">tr29243492599miuy</span>
-            <button x-ref="copyBtn" @click="copyMemberId()" class="inline-flex items-center justify-center w-6 h-6 border-none bg-none rounded cursor-pointer transition-all hover:bg-surface-raised" style="color:var(--color-text-placeholder, #999999)" title="Kopyala">${ICONS.copy}</button>
+            <button x-ref="copyBtn" @click="copyMemberId()" class="inline-flex items-center justify-center w-6 h-6 border-none bg-none rounded cursor-pointer transition-all hover:bg-surface-raised" style="color:var(--color-text-placeholder, #999999)" title="${t('settings.copyTooltip')}">${ICONS.copy}</button>
           </div>
         </div>
       </div>
       <div class="flex items-center gap-4 flex-shrink-0 max-md:w-full">
-        <a href="#profilim" class="inline-flex items-center justify-center px-6 max-sm:px-3 h-10 rounded-full text-sm max-sm:text-[13px] font-semibold no-underline transition-all whitespace-nowrap text-white max-md:flex-1 max-md:text-center" style="background:var(--color-text-heading)">Profilimi düzenle</a>
-        <a href="/pages/auth/login.html" class="inline-flex items-center justify-center px-6 max-sm:px-3 h-10 rounded-full text-sm max-sm:text-[13px] font-semibold no-underline transition-all whitespace-nowrap bg-none hover:underline max-md:flex-1 max-md:text-center" style="color:var(--color-text-body, #333333)">Çıkış yap</a>
+        <a href="#profilim" class="inline-flex items-center justify-center px-6 max-sm:px-3 h-10 rounded-full text-sm max-sm:text-[13px] font-semibold no-underline transition-all whitespace-nowrap text-white max-md:flex-1 max-md:text-center" style="background:var(--color-text-heading)">${t('settings.editProfile')}</a>
+        <a href="/pages/auth/login.html" class="inline-flex items-center justify-center px-6 max-sm:px-3 h-10 rounded-full text-sm max-sm:text-[13px] font-semibold no-underline transition-all whitespace-nowrap bg-none hover:underline max-md:flex-1 max-md:text-center" style="color:var(--color-text-body, #333333)">${t('settings.signOut')}</a>
       </div>
     </div>
   `;
@@ -119,37 +120,43 @@ function renderProfileHeader(): string {
 
 // ── Card Data ────────────────────────────────────────────────────
 
-const accountInfoCard: SettingsCard = {
-  icon: ICONS.accountInfo,
-  title: 'Hesap bilgileri',
-  items: [
-    { label: 'Profilim', href: '#profilim' },
-    { label: 'Üyelik hesabım', href: '#' },
-    { label: 'Bağlı hesaplar', href: '#bagli-hesaplar', rightIcon: ICONS.google },
-    { label: 'Vergi bilgileri', href: '#vergi' },
-  ],
-};
+function getAccountInfoCard(): SettingsCard {
+  return {
+    icon: ICONS.accountInfo,
+    title: t('settings.accountInfoCardTitle'),
+    items: [
+      { label: t('settings.myProfile'), href: '#profilim' },
+      { label: t('settings.myMembership'), href: '#' },
+      { label: t('settings.linkedAccountsNav'), href: '#bagli-hesaplar', rightIcon: ICONS.google },
+      { label: t('settings.taxInfoNav'), href: '#vergi' },
+    ],
+  };
+}
 
-const securityCard: SettingsCard = {
-  icon: ICONS.security,
-  title: 'Hesap güvenliği',
-  items: [
-    { label: 'Şifreyi değiştir', href: '#sifre' },
-    { label: 'E-postayı değiştir', href: '#eposta-degistir', rightText: 'met***@gmail.com' },
-    { label: 'Telefon numarasını değiştir', href: '#telefon' },
-    { label: 'Hesabı sil', href: '#hesabi-sil' },
-  ],
-};
+function getSecurityCard(): SettingsCard {
+  return {
+    icon: ICONS.security,
+    title: t('settings.accountSecurityTitle'),
+    items: [
+      { label: t('settings.changePasswordNav'), href: '#sifre' },
+      { label: t('settings.changeEmailNav'), href: '#eposta-degistir', rightText: 'met***@gmail.com' },
+      { label: t('settings.changePhoneNav'), href: '#telefon' },
+      { label: t('settings.deleteAccountNav'), href: '#hesabi-sil' },
+    ],
+  };
+}
 
-const preferencesCard: SettingsCard = {
-  icon: ICONS.preferences,
-  title: 'Tercihler',
-  items: [
-    { label: 'Gizlilik ayarları', href: '#gizlilik' },
-    { label: 'E-posta tercihleri', href: '#eposta' },
-    { label: 'Reklam tercihleri', href: '#reklam' },
-  ],
-};
+function getPreferencesCard(): SettingsCard {
+  return {
+    icon: ICONS.preferences,
+    title: t('settings.preferencesCardTitle'),
+    items: [
+      { label: t('settings.privacySettingsNav'), href: '#gizlilik' },
+      { label: t('settings.emailPreferencesNav'), href: '#eposta' },
+      { label: t('settings.adPreferencesNav'), href: '#reklam' },
+    ],
+  };
+}
 
 // ── Sub-section back header ──────────────────────────────────────
 
@@ -157,7 +164,7 @@ function renderBackHeader(): string {
   return `
     <a href="#" class="inline-flex items-center gap-1.5 text-[13px] text-blue-600 no-underline font-medium mb-4 transition-colors hover:text-blue-700">
       ${ICONS.back}
-      <span>Hesap ayarlarına dön</span>
+      <span>${t('settings.backToAccountSettings')}</span>
     </a>
   `;
 }
@@ -169,11 +176,11 @@ function renderDefaultView(): string {
     ${renderProfileHeader()}
     <div class="flex gap-5 items-start max-md:flex-col">
       <div class="flex-1 min-w-0 flex flex-col gap-5">
-        ${renderSettingsCard(accountInfoCard)}
-        ${renderSettingsCard(preferencesCard)}
+        ${renderSettingsCard(getAccountInfoCard())}
+        ${renderSettingsCard(getPreferencesCard())}
       </div>
       <div class="flex-1 min-w-0">
-        ${renderSettingsCard(securityCard)}
+        ${renderSettingsCard(getSecurityCard())}
       </div>
     </div>
   `;
@@ -181,18 +188,20 @@ function renderDefaultView(): string {
 
 // ── Hash-section mapping ─────────────────────────────────────────
 
-const SECTION_MAP: Record<string, { title: string; render: () => string }> = {
-  '#profilim': { title: 'Profilim', render: () => SettingsAccountEdit() },
-  '#vergi': { title: 'Vergi bilgileri', render: () => SettingsTaxInfo() },
-  '#bagli-hesaplar': { title: 'Bağlı hesaplar', render: () => SettingsLinkedAccounts() },
-  '#gizlilik': { title: 'Gizlilik ayarları', render: () => SettingsPrivacy() },
-  '#reklam': { title: 'Reklam tercihleri', render: () => SettingsAdPreferences() },
-  '#eposta': { title: 'E-posta tercihleri', render: () => SettingsEmailPreferences() },
-  '#sifre': { title: 'Şifreyi değiştir', render: () => SettingsChangePassword() },
-  '#eposta-degistir': { title: 'E-postayı değiştir', render: () => SettingsChangeEmail() },
-  '#telefon': { title: 'Telefon numarasını değiştir', render: () => SettingsChangePhone() },
-  '#hesabi-sil': { title: 'Hesabı sil', render: () => SettingsDeleteAccount() },
-};
+function getSectionMap(): Record<string, { title: string; render: () => string }> {
+  return {
+    '#profilim': { title: t('settings.myProfile'), render: () => SettingsAccountEdit() },
+    '#vergi': { title: t('settings.taxInfoNav'), render: () => SettingsTaxInfo() },
+    '#bagli-hesaplar': { title: t('settings.linkedAccountsNav'), render: () => SettingsLinkedAccounts() },
+    '#gizlilik': { title: t('settings.privacySettingsNav'), render: () => SettingsPrivacy() },
+    '#reklam': { title: t('settings.adPreferencesNav'), render: () => SettingsAdPreferences() },
+    '#eposta': { title: t('settings.emailPreferencesNav'), render: () => SettingsEmailPreferences() },
+    '#sifre': { title: t('settings.changePasswordNav'), render: () => SettingsChangePassword() },
+    '#eposta-degistir': { title: t('settings.changeEmailNav'), render: () => SettingsChangeEmail() },
+    '#telefon': { title: t('settings.changePhoneNav'), render: () => SettingsChangePhone() },
+    '#hesabi-sil': { title: t('settings.deleteAccountNav'), render: () => SettingsDeleteAccount() },
+  };
+}
 
 const INIT_MAP: Record<string, () => void> = {
   '#profilim': initSettingsAccountEdit,
@@ -210,10 +219,11 @@ const INIT_MAP: Record<string, () => void> = {
 // ── Main Layout ──────────────────────────────────────────────────
 
 export function SettingsLayout(): string {
-  const sectionEntries = Object.entries(SECTION_MAP);
-  const validHashes = Object.keys(SECTION_MAP).map(s => `'${s}'`).join(',');
+  const sectionMap = getSectionMap();
+  const sectionEntries = Object.entries(sectionMap);
+  const validHashes = Object.keys(sectionMap).map(s => `'${s}'`).join(',');
   const currentHash = window.location.hash;
-  const hasSubSection = Object.keys(SECTION_MAP).includes(currentHash);
+  const hasSubSection = Object.keys(sectionMap).includes(currentHash);
 
   return `
     <div class="flex flex-col gap-5 py-4" id="settings-root"

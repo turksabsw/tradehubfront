@@ -6,9 +6,12 @@
 import { SectionCard } from '../shared/SectionCard';
 import { SectionHeader } from '../shared/SectionHeader';
 import { EmptyState } from '../shared/EmptyState';
-import { favoritesConfig, favoritesEmptyState } from './rightPanelData';
+import { getFavoritesConfig, getFavoritesEmptyState } from './rightPanelData';
 
 export function FavoritesSection(): string {
+  const favoritesConfig = getFavoritesConfig();
+  const favoritesEmptyState = getFavoritesEmptyState();
+
   return SectionCard({
     children: `
       ${SectionHeader({ title: favoritesConfig.title })}

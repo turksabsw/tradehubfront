@@ -4,7 +4,8 @@
  * Contains: product title (h1), rating/review/order line, supplier company bar.
  */
 
-import { mockProduct } from '../../data/mockProduct';
+import { getMockProduct } from '../../data/mockProduct';
+import { t } from '../../i18n';
 
 function starIcon(filled: boolean): string {
   return filled
@@ -21,6 +22,7 @@ function renderStars(rating: number): string {
 }
 
 export function ProductTitleBar(): string {
+  const mockProduct = getMockProduct();
   const p = mockProduct;
   const s = p.supplier;
 
@@ -35,9 +37,9 @@ export function ProductTitleBar(): string {
           ${renderStars(p.rating)}
         </div>
         <span class="font-semibold" style="color: var(--pd-title-color, #222222);">${p.rating}</span>
-        <span style="color: var(--pd-rating-text-color, #6b7280);">${p.reviewCount} yorum</span>
+        <span style="color: var(--pd-rating-text-color, #6b7280);">${t('product.reviewsLabel', { count: String(p.reviewCount) })}</span>
         <span style="color: var(--pd-rating-text-color, #d1d5db);">·</span>
-        <span style="color: var(--pd-rating-text-color, #6b7280);">${p.orderCount}+ sipariş</span>
+        <span style="color: var(--pd-rating-text-color, #6b7280);">${t('product.ordersLabel', { count: String(p.orderCount) })}</span>
       </div>
 
       <!-- Supplier Company Bar -->
@@ -53,7 +55,7 @@ export function ProductTitleBar(): string {
           <span class="truncate">Verified Multispecialty Supplier</span>
         </span>
         <span class="shrink-0" style="color: #d1d5db;">·</span>
-        <span class="shrink-0">${s.yearsInBusiness} yıl</span>
+        <span class="shrink-0">${t('product.yearsLabel', { count: String(s.yearsInBusiness) })}</span>
         <span class="shrink-0" style="color: #d1d5db;">·</span>
         <span class="shrink-0">🇹🇷 TR</span>
       </div>
