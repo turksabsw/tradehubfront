@@ -340,6 +340,23 @@ function gatherReviewData() {
 const placeOrderBtn = document.getElementById('summary-place-order-btn');
 if (placeOrderBtn) {
   placeOrderBtn.addEventListener('click', () => {
+    // Validate shipping address before opening review
+    const shippingSection = document.getElementById('shipping-address-section');
+    if (shippingSection) {
+      const alpineData = ((shippingSection as any)._x_dataStack as Record<string, unknown>[] | undefined)?.[0] as any;
+      if (alpineData) {
+        if (alpineData.showAddressForm) {
+          alpineData.handleSubmit();
+          if (Object.values(alpineData.errors || {}).some(e => e)) {
+            return;
+          }
+        } else if (!alpineData.selectedAddressId) {
+          alpineData.showAddressForm = true;
+          return;
+        }
+      }
+    }
+
     const reviewData = gatherReviewData();
     window.dispatchEvent(new CustomEvent('checkout:open-review', { detail: reviewData }));
   });

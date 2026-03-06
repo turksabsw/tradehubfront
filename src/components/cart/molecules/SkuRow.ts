@@ -24,7 +24,7 @@ function escapeHtml(value: string): string {
 
 export function SkuRow({ sku }: SkuRowProps): string {
   return `
-    <article class="sc-c-sku-container-new rounded-xl grid grid-cols-[auto_92px_minmax(0,1fr)] gap-3 items-start py-4 border-t border-[#f2f2f2] first:border-t-0 max-sm:grid-cols-[auto_72px_minmax(0,1fr)] max-sm:gap-2 transition-colors" data-sku-id="${escapeHtml(sku.id)}" x-data>
+    <article class="sc-c-sku-container-new rounded-xl grid grid-cols-[auto_92px_minmax(0,1fr)] gap-3 items-start p-3 max-sm:p-2 max-sm:grid-cols-[auto_72px_minmax(0,1fr)] max-sm:gap-2 transition-colors" data-sku-id="${escapeHtml(sku.id)}" x-data>
       <div class="pt-9 max-sm:pt-7">
         ${Checkbox({ id: `sku-checkbox-${sku.id}`, checked: sku.selected, onChange: `sku-select-${sku.id}` })}
       </div>

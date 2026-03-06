@@ -5,7 +5,7 @@ import { initFlowbite } from 'flowbite'
 import { initLanguageSelector } from './components/header/TopBar'
 
 // Header components
-import { TopBar, MobileSearchTabs, initMobileDrawer, SubHeader, initStickyHeaderSearch, MegaMenu, initMegaMenu } from './components/header'
+import { TopBar, MobileSearchTabs, initMobileDrawer, SubHeader, initStickyHeaderSearch, MegaMenu, initMegaMenu, initHeaderCart } from './components/header'
 
 // Hero components
 import {
@@ -121,5 +121,6 @@ initTailoredSelections();
 initProductGrid();
 
 initMobileDrawer();
+initHeaderCart();
 initLanguageSelector();
 initAnimatedPlaceholder('#topbar-compact-search-input');

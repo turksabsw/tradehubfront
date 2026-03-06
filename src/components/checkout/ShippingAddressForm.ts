@@ -378,14 +378,31 @@ export function ShippingAddressForm(props: ShippingAddressFormProps = {}): strin
                 )}
               </div>
 
-              ${dropdownField(
-                'city-dropdown',
-                'city',
-                'City',
-                '',
-                '',
-                { openProp: 'cityOpen', selectFn: 'selectCityItem($event)', displayProp: 'cityDisplay' }
-              )}
+              <div class="relative mb-4 group checkout-dropdown-container" data-field="city" data-dropdown="city-dropdown" x-bind:data-open="cityOpen" x-bind:data-error="errors.city" @click.outside="cityOpen = false">
+                <button
+                  type="button"
+                  class="w-full h-[48px] flex items-center justify-between pt-[18px] px-3 pb-0 text-[14px] text-[var(--color-text-primary)] border border-[var(--color-border-medium)] rounded-lg bg-[var(--color-surface)] cursor-pointer outline-none transition-colors focus:border-[var(--color-primary-500)] group-data-[error=true]:border-[var(--color-error-500)] dropdown-trigger"
+                  id="city-dropdown"
+                  aria-haspopup="listbox"
+                  @click.prevent="toggleDropdown('city')"
+                  x-bind:aria-expanded="cityOpen"
+                >
+                  <span class="text-left truncate pb-[6px]" data-display x-text="cityDisplay"></span>
+                  <span class="pb-[6px]">${ChevronDown}</span>
+                </button>
+                <label class="absolute left-3 top-[12px] -translate-y-1/2 text-[12px] text-[#767676] transition-all duration-200 ease-in-out pointer-events-none group-data-[error=true]:text-[var(--color-error-500)] dropdown-label">
+                  City <span class="text-[var(--color-error-500)]">*</span>
+                </label>
+                <ul class="absolute top-full left-0 right-0 z-50 max-h-[260px] overflow-y-auto bg-[var(--color-surface)] border border-[var(--color-border-medium)] rounded-lg shadow-lg mt-1 hidden group-data-[open=true]:block" role="listbox" data-list @click="selectCityItem($event)">
+                  <template x-for="city in cityOptions" :key="city">
+                    <li class="px-3 py-2 text-[14px] text-[var(--color-text-primary)] cursor-pointer hover:bg-[#f5f5f5] transition-colors" role="option" :data-value="city" x-text="city"></li>
+                  </template>
+                  <li x-show="cityOptions.length === 0" class="px-3 py-2 text-[13px] text-[#9ca3af] cursor-not-allowed" role="option" data-disabled="true">
+                    Once state / province secin
+                  </li>
+                </ul>
+                <div class="hidden text-[12px] text-[var(--color-error-500)] mt-1 group-data-[error=true]:block">${pageContent.requiredFieldError}</div>
+              </div>
 
               ${floatField('postal-code', 'postalCode', 'Postal code', true, 'text')}
             </div>

@@ -67,7 +67,7 @@ export function ProductItem({ product }: ProductItemProps): string {
         </div>
       </div>
 
-      <div class="mt-3 space-y-0">${skus}</div>
+      <div class="mt-4 space-y-3">${skus}</div>
     </section>
   `.trim();
 }

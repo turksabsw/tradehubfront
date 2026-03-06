@@ -28,24 +28,24 @@ function renderSellerProductCard(product: any, index: number = 0): string {
 
   return `
     <a
-      class="hFR19 animate-fade-slide-up"
+      class="product-card flex flex-col relative w-full gap-2 overflow-hidden text-sm leading-[18px] text-start no-underline animate-fade-slide-up"
       style="animation-delay: ${Math.min(index * 60, 600)}ms;"
       href="${link}"
       aria-label="${nameSafe}"
     >
       <!-- Image area -->
-      <div class="uE82p">
-        <div class="rcEIR gT6Yt aspect-square bg-gray-50 relative overflow-hidden w-full rounded-t-lg">
+      <div class="product-card__image-area relative">
+        <div class="product-card__image-wrap relative w-full h-full min-w-0 min-h-0 overflow-hidden leading-[0]">
           <img
-            class="kRa33 absolute inset-0 w-full h-full object-cover"
+            class="product-card__img block w-full max-w-full h-full object-cover origin-center"
             src="${product.image}"
             alt="${nameSafe}"
             loading="lazy"
           />
         </div>
-        <div class="searchx-find-similar__wrapper ya497">
+        <div class="product-card__lens-wrap absolute">
           <div
-            class="searchx-find-similar searchx-find-similar__icon theme-float"
+            class="product-card__lens flex relative items-center justify-center w-full h-full rounded-full"
             role="button"
             aria-label="${t('seller.sf.findSimilar')}"
             tabindex="0"
@@ -56,32 +56,32 @@ function renderSellerProductCard(product: any, index: number = 0): string {
       </div>
 
       <!-- Content area -->
-      <div class="sZpNS">
-        <div class="th-hfr19-stack">
+      <div class="flex flex-col gap-2 w-full min-h-[126px]">
+        <div class="flex flex-col gap-2">
           <!-- Title (3 lines) -->
-          <div class="u1SHv Cye1T">
-            <div class="iyDLA" style="--lines: 3;">
+          <div class="product-card__title-wrap h-[54px] overflow-hidden">
+            <div class="product-card__title line-clamp-3 h-[54px]">
               <span title="${nameSafe}">${product.name}</span>
             </div>
           </div>
 
-          <div class="th-hfr19-stack-compact">
+          <div class="flex flex-col gap-px">
             <!-- Price + discount -->
-            <div class="XBlq6 e9DGa">
-              <div class="R3Kcz eg6xk">${price}</div>
-              ${discountText ? `<div class="YGd3t vE7bg">${discountText}</div>` : ''}
+            <div class="flex flex-wrap items-center gap-1 min-h-[26px] overflow-hidden">
+              <div class="product-card__price overflow-hidden">${price}</div>
+              ${discountText ? `<div class="product-card__discount">${discountText}</div>` : ''}
             </div>
 
             <!-- MOQ + sold -->
-            <div class="iyDLA yUble" style="--lines: 1;">
-              <div class="hVMAV z5oZw"><bdi>${moqText}</bdi></div>
-              <span class="mHuc8" title="${t('seller.sf.soldCount', { count: soldCount })}">${t('seller.sf.soldCount', { count: soldCount })}</span>
+            <div class="product-card__moq-line overflow-hidden h-[18px] leading-[18px]">
+              <div class="product-card__moq inline mr-1"><bdi>${moqText}</bdi></div>
+              <span class="product-card__stats" title="${t('seller.sf.soldCount', { count: soldCount })}">${t('seller.sf.soldCount', { count: soldCount })}</span>
             </div>
 
             <!-- Supplier info -->
-            <div class="YpiVg">
-              <span class="wELvB">${t('seller.sf.year', { count: 1 })}</span>
-              <span class="wELvB">CN</span>
+            <div class="product-card__supplier flex items-center min-h-[18px] pt-0.5 leading-4">
+              <span class="product-card__supplier-text block overflow-hidden text-ellipsis">${t('seller.sf.year', { count: 1 })}</span>
+              <span class="product-card__supplier-text block overflow-hidden text-ellipsis">CN</span>
             </div>
           </div>
         </div>

@@ -2373,6 +2373,7 @@ Alpine.data('shippingForm', () => ({
   countryDisplay: `${defaultShippingCountry.flag} ${defaultShippingCountry.name}`,
   stateDisplay: '',
   cityDisplay: '',
+  cityOptions: [] as string[],
   phonePrefix: defaultShippingCountry.phonePrefix,
   errors: {} as Record<string, boolean>,
 
@@ -2750,27 +2751,12 @@ Alpine.data('shippingForm', () => ({
     const normalizedState = normalizeProvinceName(stateName);
     this.cityDisplay = '';
 
-    const el = this.$el as HTMLElement;
-    const cityList = el.querySelector('[data-dropdown="city-dropdown"] [data-list]');
-    if (!cityList) return;
-
     if (!normalizedState) {
-      cityList.innerHTML = `
-        <li
-          class="px-3 py-2 text-[13px] text-[#9ca3af] cursor-not-allowed"
-          role="option"
-          data-disabled="true"
-        >
-          Once state / province secin
-        </li>
-      `;
+      this.cityOptions = [];
       return;
     }
 
-    const districts = DISTRICTS_BY_PROVINCE_NORMALIZED[normalizedState] ?? FALLBACK_CITY_OPTIONS;
-    cityList.innerHTML = districts.map(district =>
-      `<li class="px-3 py-2 text-[14px] text-[var(--color-text-primary)] cursor-pointer hover:bg-[#f5f5f5] transition-colors" role="option" data-value="${district}">${district}</li>`
-    ).join('');
+    this.cityOptions = DISTRICTS_BY_PROVINCE_NORMALIZED[normalizedState] ?? FALLBACK_CITY_OPTIONS;
   },
 
   clearError(fieldName: string) {
