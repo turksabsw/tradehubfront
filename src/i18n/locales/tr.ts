@@ -815,7 +815,7 @@ const tr = {
       startSourcing: 'Tedarik etmeye başla',
       startSourcingDesc: 'Ürün tedarik edin ve sipariş verin',
       ordersCount: '{{count}} sipariş',
-      resultsFound: '{{count}} sonuç bulundu',
+      resultsFound: 'sonuç bulundu',
       searchFor: 'Sipariş ara...',
       clearFilters: 'Filtreleri temizle',
       clearAllFilters: 'Tüm filtreleri temizle',

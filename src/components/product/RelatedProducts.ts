@@ -1,7 +1,7 @@
 /**
  * RelatedProducts Component
  * Horizontal Swiper slider of related product cards.
- * Reuses ProductGrid card rendering pattern with SVG placeholders.
+ * Uses Tailwind utility classes for card styling.
  */
 
 import Swiper from 'swiper';
@@ -14,109 +14,163 @@ interface RelatedProduct {
   name: string;
   href: string;
   price: string;
-  moq: string;
-  stats: string;
-  imageKind: RelatedImageKind;
-  verified?: boolean;
-  supplierYears?: number;
+  discountPercent?: number;
+  moqCount: number;
+  moqUnit: 'pcs' | 'kg';
+  soldCount: string;
+  imageSrc: string;
+  supplierYearCount?: number;
+  supplierCountry?: string;
 }
-
-type RelatedImageKind = 'jewelry' | 'accessory' | 'crafts' | 'electronics' | 'clothing';
-
-interface RelatedVisual {
-  background: string;
-  accent: string;
-  stroke: string;
-  icon: string;
-}
-
-const relatedVisuals: Record<RelatedImageKind, RelatedVisual> = {
-  jewelry: {
-    background: 'linear-gradient(180deg, #fef9e7 0%, #fdf0c3 100%)',
-    accent: 'rgba(230, 178, 18, 0.3)',
-    stroke: '#8a6800',
-    icon: `<path d="M12 2l2.5 5.5L20 9l-4 4 1 5.5L12 16l-5 2.5 1-5.5-4-4 5.5-1.5Z"/><circle cx="12" cy="10" r="2"/>`,
-  },
-  accessory: {
-    background: 'linear-gradient(180deg, #fff7ed 0%, #ffedd5 100%)',
-    accent: 'rgba(251, 146, 60, 0.3)',
-    stroke: '#b45309',
-    icon: `<rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V6a4 4 0 0 1 8 0v4"/><path d="M4 14h16"/>`,
-  },
-  crafts: {
-    background: 'linear-gradient(180deg, #fdf4ff 0%, #fae8ff 100%)',
-    accent: 'rgba(192, 132, 252, 0.3)',
-    stroke: '#7e22ce',
-    icon: `<path d="M12 2C8.5 2 6 4.5 6 7c0 3 6 8 6 8s6-5 6-8c0-2.5-2.5-5-6-5Z"/><path d="M8 18h8M9 21h6"/>`,
-  },
-  electronics: {
-    background: 'linear-gradient(180deg, #eef2ff 0%, #dbeafe 100%)',
-    accent: 'rgba(129, 140, 248, 0.3)',
-    stroke: '#4f5fb3',
-    icon: `<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M7 20h10M12 16v4"/><circle cx="12" cy="10" r="2"/>`,
-  },
-  clothing: {
-    background: 'linear-gradient(180deg, #fdf2f8 0%, #fce7f3 100%)',
-    accent: 'rgba(244, 114, 182, 0.3)',
-    stroke: '#a3456e',
-    icon: `<path d="M8 3h8l2 6v12H6V9l2-6Z"/><path d="M12 3v8M8 3 6 9M16 3l2 6"/>`,
-  },
-};
 
 const relatedProducts: RelatedProduct[] = [
-  { name: t('relatedProducts.product1'), href: '#', price: '$2.10-3.60', moq: `10 ${t('product.unit')}`, stats: `3,580 ${t('product.sales')}`, imageKind: 'jewelry', verified: true, supplierYears: 4 },
-  { name: t('relatedProducts.product2'), href: '#', price: '$0.90-1.60', moq: `20 ${t('product.unit')}`, stats: `8,950 ${t('product.sales')}`, imageKind: 'jewelry', verified: true, supplierYears: 6 },
-  { name: t('relatedProducts.product3'), href: '#', price: '$1.50-2.20', moq: `50 ${t('product.unit')}`, stats: `6,730 ${t('product.sales')}`, imageKind: 'accessory', verified: true, supplierYears: 5 },
-  { name: t('relatedProducts.product4'), href: '#', price: '$2.40-3.80', moq: `20 ${t('product.unit')}`, stats: `890 ${t('product.sales')}`, imageKind: 'crafts', verified: false, supplierYears: 2 },
-  { name: t('relatedProducts.product5'), href: '#', price: '$8.50-12', moq: `10 ${t('product.unit')}`, stats: `1,280 ${t('product.sales')}`, imageKind: 'electronics', verified: true, supplierYears: 7 },
-  { name: t('relatedProducts.product6'), href: '#', price: '$3.20-4.50', moq: `30 ${t('product.unit')}`, stats: `9,450 ${t('product.sales')}`, imageKind: 'clothing', verified: true, supplierYears: 4 },
-  { name: t('relatedProducts.product7'), href: '#', price: '$1.20-2.40', moq: `50 ${t('product.unit')}`, stats: `14,200 ${t('product.sales')}`, imageKind: 'accessory', verified: true, supplierYears: 3 },
-  { name: t('relatedProducts.product8'), href: '#', price: '$1.20-2.80', moq: `10 ${t('product.unit')}`, stats: `7,890 ${t('product.sales')}`, imageKind: 'crafts', verified: true, supplierYears: 3 },
+  {
+    name: 'Stainless Steel Minimalist Chain Bracelet Unisex Adjustable...',
+    href: '/pages/product-detail.html',
+    price: '$2.10-3.60',
+    discountPercent: 10,
+    moqCount: 10,
+    moqUnit: 'pcs',
+    soldCount: '3,580',
+    imageSrc: 'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=600&h=600&q=80',
+    supplierYearCount: 4,
+    supplierCountry: 'CN',
+  },
+  {
+    name: '18K Gold Plated Crystal Pendant Necklace Women Fashion Jewelry...',
+    href: '/pages/product-detail.html',
+    price: '$0.90-1.60',
+    moqCount: 20,
+    moqUnit: 'pcs',
+    soldCount: '8,950',
+    imageSrc: 'https://images.unsplash.com/photo-1515562141589-67f0d569b6fc?auto=format&fit=crop&w=600&h=600&q=80',
+    supplierYearCount: 6,
+    supplierCountry: 'CN',
+  },
+  {
+    name: 'Genuine Leather Minimalist Card Holder RFID Blocking Slim Wallet...',
+    href: '/pages/product-detail.html',
+    price: '$1.50-2.20',
+    discountPercent: 15,
+    moqCount: 50,
+    moqUnit: 'pcs',
+    soldCount: '6,730',
+    imageSrc: 'https://images.unsplash.com/photo-1627123424574-724758594e93?auto=format&fit=crop&w=600&h=600&q=80',
+    supplierYearCount: 5,
+    supplierCountry: 'CN',
+  },
+  {
+    name: 'Handmade Resin Phone Case Mold Kit DIY Craft Silicone Set...',
+    href: '/pages/product-detail.html',
+    price: '$2.40-3.80',
+    moqCount: 20,
+    moqUnit: 'pcs',
+    soldCount: '890',
+    imageSrc: 'https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?auto=format&fit=crop&w=600&h=600&q=80',
+    supplierYearCount: 2,
+    supplierCountry: 'CN',
+  },
+  {
+    name: 'Smart WiFi Security Camera 1080P Indoor Wireless Surveillance...',
+    href: '/pages/product-detail.html',
+    price: '$8.50-12',
+    discountPercent: 8,
+    moqCount: 10,
+    moqUnit: 'pcs',
+    soldCount: '1,280',
+    imageSrc: 'https://images.unsplash.com/photo-1585771724684-38269d6639fd?auto=format&fit=crop&w=600&h=600&q=80',
+    supplierYearCount: 7,
+    supplierCountry: 'CN',
+  },
+  {
+    name: 'Oversize Cotton Vintage Print T-Shirt Streetwear Graphic Tee...',
+    href: '/pages/product-detail.html',
+    price: '$3.20-4.50',
+    discountPercent: 10,
+    moqCount: 30,
+    moqUnit: 'pcs',
+    soldCount: '9,450',
+    imageSrc: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=600&h=600&q=80',
+    supplierYearCount: 4,
+    supplierCountry: 'CN',
+  },
+  {
+    name: 'PU Leather Crossbody Mini Bag Women Casual Fashion Design...',
+    href: '/pages/product-detail.html',
+    price: '$1.20-2.40',
+    moqCount: 50,
+    moqUnit: 'pcs',
+    soldCount: '14,200',
+    imageSrc: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=600&h=600&q=80',
+    supplierYearCount: 3,
+    supplierCountry: 'CN',
+  },
+  {
+    name: 'Natural Gemstone Beaded Bracelet Healing Crystal Chakra Set...',
+    href: '/pages/product-detail.html',
+    price: '$1.20-2.80',
+    discountPercent: 12,
+    moqCount: 10,
+    moqUnit: 'pcs',
+    soldCount: '7,890',
+    imageSrc: 'https://images.unsplash.com/photo-1573408301185-9146fe634ad0?auto=format&fit=crop&w=600&h=600&q=80',
+    supplierYearCount: 3,
+    supplierCountry: 'CN',
+  },
 ];
 
-function renderPlaceholder(kind: RelatedImageKind): string {
-  const v = relatedVisuals[kind];
-  return `
-    <div class="relative w-full h-full overflow-hidden" style="background: ${v.background};" aria-hidden="true">
-      <div class="absolute -right-4 -top-4 h-12 w-12 rounded-full opacity-50" style="background: ${v.accent};"></div>
-      <div class="absolute -left-3 bottom-1 h-10 w-10 rounded-full opacity-40" style="background: ${v.accent};"></div>
-      <div class="absolute inset-0 flex items-center justify-center">
-        <svg class="h-12 w-12" fill="none" stroke-width="1.4" viewBox="0 0 24 24" style="stroke: ${v.stroke};">
-          ${v.icon}
-        </svg>
-      </div>
-    </div>
-  `;
-}
-
-function verifiedIcon(): string {
-  return `<svg class="h-3.5 w-3.5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm3.857-9.809a.75.75 0 0 0-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 1 0-1.06 1.061l2.5 2.5a.75.75 0 0 0 1.137-.089l4-5.5Z" clip-rule="evenodd"/></svg>`;
-}
-
 function renderRelatedSlide(card: RelatedProduct): string {
+  const safeName = card.name.replace(/"/g, '&quot;');
+  const unitLabel = card.moqUnit === 'kg' ? t('productGrid.kg') : t('productGrid.pcs');
+  const moqText = `${card.moqCount} ${unitLabel}`;
+  const soldText = t('productGrid.unitsSold', { count: card.soldCount });
+  const discountText = card.discountPercent
+    ? t('productGrid.discount', { percent: card.discountPercent })
+    : '';
+  const supplierYearsText = card.supplierYearCount
+    ? `${card.supplierYearCount} ${t('productGrid.yr')}`
+    : '';
+
   return `
     <div class="swiper-slide">
       <a
+        class="flex flex-col h-full rounded-lg overflow-hidden bg-white border border-gray-100 transition-shadow hover:shadow-md"
         href="${card.href}"
-        class="group/related flex flex-col h-full border rounded-md overflow-hidden transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md"
-        style="background: var(--card-bg, #ffffff); border-color: var(--card-border-color, #e5e5e5);"
-        aria-label="${card.name}"
+        aria-label="${safeName}"
       >
-        <div class="aspect-square w-full flex-shrink-0">
-          ${renderPlaceholder(card.imageKind)}
+        <!-- Image -->
+        <div class="relative">
+          <div class="aspect-square w-full overflow-hidden bg-gray-50">
+            <img
+              class="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+              src="${card.imageSrc}"
+              alt="${safeName}"
+              loading="lazy"
+            />
+          </div>
         </div>
-        <div class="flex flex-1 flex-col p-3 max-[374px]:p-2">
-          <h4 class="text-xs font-medium leading-tight line-clamp-2 max-[374px]:text-[11px]" style="color: var(--product-title-color, #111827); height: 2.4em;">${card.name}</h4>
-          <p class="mt-2 text-sm font-bold max-[374px]:text-[13px] max-[374px]:mt-1.5" style="color: var(--product-price-color, #111827);">${formatPrice(card.price)}</p>
-          <p class="mt-1 text-xs max-[374px]:text-[11px]" style="color: var(--product-moq-color, #6b7280);">MOQ: ${card.moq}</p>
-          <div class="mt-auto pt-2">
-            ${card.verified ? `
-              <div class="flex items-center gap-1 text-xs font-medium" style="color: var(--product-verified-color, #cc9900);">
-                ${verifiedIcon()}
-                <span>Verified</span>
-                ${card.supplierYears ? `<span class="opacity-60">·</span><span>${t('product.yearsLabel', { count: String(card.supplierYears) })}</span>` : ''}
-              </div>
-            ` : ''}
+
+        <!-- Content -->
+        <div class="flex flex-col flex-1 gap-1.5 p-3">
+          <!-- Title -->
+          <p class="text-[13px] leading-[1.4] line-clamp-3 text-gray-800" title="${safeName}">${card.name}</p>
+
+          <!-- Price + discount -->
+          <div class="flex flex-wrap items-baseline gap-x-2">
+            <span class="text-sm font-bold text-gray-900">${formatPrice(card.price)}</span>
+            ${discountText ? `<span class="text-xs font-medium text-red-500">${discountText}</span>` : ''}
+          </div>
+
+          <!-- MOQ + sold -->
+          <div class="text-xs text-gray-500 truncate">
+            <span class="mr-1.5 font-medium text-gray-600">${moqText}</span>
+            <span>${soldText}</span>
+          </div>
+
+          <!-- Supplier info -->
+          <div class="mt-auto flex items-center gap-1.5 text-xs text-gray-400">
+            ${supplierYearsText ? `<span class="rounded bg-gray-100 px-1.5 py-0.5 text-[11px] text-gray-500">${supplierYearsText}</span>` : ''}
+            ${card.supplierCountry ? `<span class="rounded bg-gray-100 px-1.5 py-0.5 text-[11px] text-gray-500">${card.supplierCountry}</span>` : ''}
           </div>
         </div>
       </a>
@@ -142,7 +196,7 @@ export function RelatedProducts(): string {
           <!-- Navigation Arrows -->
           <button
             aria-label="${t('product.previousProducts')}"
-            class="related-prev absolute left-0 top-[40%] z-10 hidden h-10 w-10 -translate-x-1/2 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-500 shadow-lg transition-all duration-200 hover:text-gray-900 opacity-0 pointer-events-none md:flex group-hover/related-slider:opacity-100 group-hover/related-slider:pointer-events-auto disabled:opacity-0 disabled:pointer-events-none"
+            class="related-prev absolute left-0 top-[35%] z-10 hidden h-10 w-10 -translate-x-1/2 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-500 shadow-lg transition-all duration-200 hover:text-gray-900 opacity-0 pointer-events-none md:flex group-hover/related-slider:opacity-100 group-hover/related-slider:pointer-events-auto disabled:opacity-0 disabled:pointer-events-none"
           >
             <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
@@ -150,7 +204,7 @@ export function RelatedProducts(): string {
           </button>
           <button
             aria-label="${t('product.nextProducts')}"
-            class="related-next absolute right-0 top-[40%] z-10 hidden h-10 w-10 translate-x-1/2 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-500 shadow-lg transition-all duration-200 hover:text-gray-900 opacity-0 pointer-events-none md:flex group-hover/related-slider:opacity-100 group-hover/related-slider:pointer-events-auto disabled:opacity-0 disabled:pointer-events-none"
+            class="related-next absolute right-0 top-[35%] z-10 hidden h-10 w-10 translate-x-1/2 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-500 shadow-lg transition-all duration-200 hover:text-gray-900 opacity-0 pointer-events-none md:flex group-hover/related-slider:opacity-100 group-hover/related-slider:pointer-events-auto disabled:opacity-0 disabled:pointer-events-none"
           >
             <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>

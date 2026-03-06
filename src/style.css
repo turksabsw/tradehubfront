@@ -1364,8 +1364,7 @@
 
     .hFR19 .uE82p {
         position: relative;
-        width: min(100%, var(--product-image-size, 209px));
-        margin: 0 auto;
+        width: 100%;
         aspect-ratio: var(--product-image-ratio, 1 / 1);
     }
 
@@ -4276,13 +4275,13 @@ footer {
     width: 40px;
     height: 40px;
     padding: 0;
-    margin: 2px auto;
+    margin: 3px auto;
     gap: 0;
 }
 
 .ds-sidebar-col #buyer-sidebar .sidebar-item--expanded>span:first-child {
-    width: 20px;
-    height: 20px;
+    width: 16px;
+    height: 16px;
     flex-shrink: 0;
 }
 
@@ -4304,8 +4303,8 @@ footer {
     height: auto;
     min-height: 40px;
     justify-content: flex-start;
-    padding: 8px 16px;
-    margin: 0 8px;
+    padding: 8px;
+    margin: 0 20px 8px;
     gap: 12px;
 }
 

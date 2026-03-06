@@ -54,17 +54,17 @@ export function renderSidebarMenuItem({ item, expanded }: SidebarMenuItemProps):
   const i18nKey = itemI18nKeys[item.id] ?? '';
 
   const activeClasses = item.active
-    ? 'bg-white text-gray-900 shadow-sm dark:bg-gray-800 dark:text-white'
-    : 'text-gray-700 dark:text-gray-300';
+    ? 'bg-gray-200 text-[#222] dark:bg-gray-700 dark:text-white'
+    : 'text-[#222] dark:text-gray-300';
 
-  const hoverClasses = 'hover:bg-white hover:shadow-sm dark:hover:bg-gray-800';
+  const hoverClasses = 'hover:bg-gray-200 dark:hover:bg-gray-700';
 
   if (!expanded) {
     /* ──── Collapsed mode: icon only ──── */
     return `
       <a
         href="${item.href}"
-        class="sidebar-item sidebar-item--collapsed group relative flex items-center justify-center w-11 h-11 xs:w-10 xs:h-10 mx-auto rounded-lg ${item.active ? 'bg-green-50 text-green-600 dark:bg-green-900/20 dark:text-green-400' : 'text-gray-500 dark:text-gray-400'} ${hoverClasses} transition-colors"
+        class="sidebar-item sidebar-item--collapsed group relative flex items-center justify-center w-10 h-10 mx-auto rounded-[8px] ${item.active ? 'bg-gray-200 text-[#222] dark:bg-gray-700 dark:text-gray-400' : 'text-gray-500 dark:text-gray-400'} ${hoverClasses} transition-colors"
         data-sidebar-item="${item.id}"
         data-tooltip-target="tooltip-sidebar-${item.id}"
         data-tooltip-placement="right"
@@ -72,7 +72,7 @@ export function renderSidebarMenuItem({ item, expanded }: SidebarMenuItemProps):
         aria-label="${item.label}"
         ${i18nKey ? `data-i18n-aria-label="${i18nKey}"` : ''}
       >
-        <span class="w-5 h-5 flex-shrink-0">${icon}</span>
+        <span class="w-4 h-4 flex-shrink-0">${icon}</span>
         ${item.badge ? `<span class="absolute -top-1 -right-1 inline-flex items-center justify-center w-4 h-4 text-[9px] font-bold text-white bg-red-500 rounded-full">${item.badge}</span>` : ''}
       </a>
       <div id="tooltip-sidebar-${item.id}" role="tooltip" class="absolute z-50 invisible inline-block px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
@@ -86,7 +86,7 @@ export function renderSidebarMenuItem({ item, expanded }: SidebarMenuItemProps):
   return `
     <a
       href="${item.href}"
-      class="sidebar-item sidebar-item--expanded group relative mx-auto flex h-11 w-11 cursor-pointer items-center justify-center rounded-lg ${activeClasses} ${hoverClasses} transition-all xl:mx-2 xl:h-10 xl:w-auto xl:justify-start xl:gap-3 xl:px-4"
+      class="sidebar-item sidebar-item--expanded group relative mx-auto flex h-11 w-11 cursor-pointer items-center justify-center rounded-[8px] ${activeClasses} ${hoverClasses} transition-colors xl:mx-5 xl:mb-2 xl:h-auto xl:min-h-[40px] xl:w-auto xl:justify-start xl:gap-3 xl:p-2"
       data-sidebar-item="${item.id}"
       role="menuitem"
       aria-label="${item.label}"
@@ -94,8 +94,8 @@ export function renderSidebarMenuItem({ item, expanded }: SidebarMenuItemProps):
       ${i18nKey ? `data-i18n-aria-label="${i18nKey}" data-i18n-title="${i18nKey}"` : ''}
       ${hasSubmenu ? 'aria-haspopup="true" aria-expanded="false"' : ''}
     >
-      <span class="w-5 h-5 flex-shrink-0">${icon}</span>
-      <span class="sidebar-item-label hidden flex-1 truncate text-sm font-normal text-gray-900 dark:text-gray-200 xl:block"${i18nKey ? ` data-i18n="${i18nKey}"` : ''}>${item.label}</span>
+      <span class="w-4 h-4 flex-shrink-0">${icon}</span>
+      <span class="sidebar-item-label hidden flex-1 truncate text-[14px] font-normal text-[#222] dark:text-gray-200 xl:block"${i18nKey ? ` data-i18n="${i18nKey}"` : ''}>${item.label}</span>
       ${item.badge ? `<span class="sidebar-item-badge hidden items-center rounded-full bg-red-500 px-1.5 py-0.5 text-[10px] leading-none font-semibold text-white xl:inline-flex">${item.badge}</span>` : ''}
       ${hasSubmenu ? `<span class="sidebar-item-chevron hidden h-4 w-4 flex-shrink-0 text-gray-400 transition-transform dark:text-gray-500 xl:block">${chevron}</span>` : ''}
     </a>

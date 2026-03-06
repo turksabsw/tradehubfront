@@ -44,7 +44,7 @@ function renderSection(section: SidebarSection, expanded: boolean): string {
   if (section.title && expanded) {
     const i18nKey = getSectionI18nKey(section);
     const i18nAttr = i18nKey ? ` data-i18n="${i18nKey}"` : '';
-    title = `<h3 class="sidebar__section-title hidden px-6 pt-4 pb-1 text-xs font-normal uppercase tracking-wider text-gray-400 dark:text-gray-500 xl:block"${i18nAttr}>${section.title}</h3>`;
+    title = `<h3 class="sidebar__section-title hidden px-7 pt-5 pb-2 text-xs font-normal uppercase tracking-wider text-gray-400 dark:text-gray-500 xl:block"${i18nAttr}>${section.title}</h3>`;
   }
 
   const items = section.items
@@ -98,7 +98,7 @@ export function renderSidebar(expanded = true): string {
       role="navigation"
       aria-label="Buyer dashboard sidebar"
     >
-      <div class="sidebar__menu flex-1 py-2">
+      <div class="sidebar__menu flex-1 py-3">
         ${sections}
       </div>
       ${discoverLink}

@@ -147,7 +147,7 @@ function renderCompactStickySearch(): string {
         class="absolute left-0 right-0 top-[7px] z-[50] w-full border border-gray-300 bg-white shadow-sm transition-all duration-300 ease-in-out overflow-hidden dark:border-gray-600 dark:bg-gray-800"
         :class="expanded ? 'rounded-2xl shadow-md h-[100px] pt-1.5' : 'rounded-full h-[42px]'"
       >
-        <div id="topbar-compact-primary-row" class="flex items-center gap-1.5 transition-all duration-300 ease-in-out shrink-0" :class="expanded ? 'px-3 h-[42px] w-full' : 'px-1.5 h-[42px]'">
+        <div id="topbar-compact-primary-row" class="flex items-center gap-1.5 transition-all duration-300 ease-in-out shrink-0" :class="expanded ? 'px-3 h-[40px] w-full' : 'px-1.5 h-[40px]'">
           <div class="relative min-w-0 flex-1 h-full">
             <input
               id="topbar-compact-search-input"
@@ -187,7 +187,7 @@ function renderCompactStickySearch(): string {
             type="submit"
             tabindex="-1"
             class="th-btn inline-flex items-center justify-center gap-1.5 font-semibold transition-all duration-300 ease-in-out shrink-0"
-            :class="expanded ? 'px-6 py-2 text-base absolute right-4 bottom-2 th-btn-pill' : 'px-5 h-[36px] text-[13px] rounded-full ml-1'"
+            :class="expanded ? 'px-6 py-2 text-base absolute right-4 bottom-2 th-btn-pill' : 'px-5 h-[32px] text-[13px] rounded-full ml-1'"
             style="background: linear-gradient(135deg, var(--search-btn-gradient-start) 0%, var(--search-btn-gradient-end) 100%); color: white; border: none;"
           >
             <span x-show="!expanded" data-i18n="common.search">${t('common.search')}</span>
@@ -1039,15 +1039,17 @@ export function initMobileDrawer(): void {
  * Mobile Search Tabs (Products | Manufacturers | Worldwide)
  * Rendered outside the sticky header as a separate non-sticky section.
  */
-export function MobileSearchTabs(activeTab: 'products' | 'manufacturers' | 'country' = 'products'): string {
+export function MobileSearchTabs(activeTab: 'products' | 'manufacturers' | 'country' = 'products', options?: { hideWorldwide?: boolean }): string {
   const activeClass = "topbar-search-tab relative py-2 text-[13px] font-semibold text-gray-900 dark:text-white whitespace-nowrap after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-gray-900 after:dark:bg-white after:rounded-full";
   const inactiveClass = "topbar-search-tab relative py-2 text-[13px] font-normal text-gray-400 dark:text-gray-500 whitespace-nowrap after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-transparent after:rounded-full";
+
+  const worldwideTab = options?.hideWorldwide ? '' : `
+      <a href="#" class="${activeTab === 'country' ? activeClass : inactiveClass}" data-search-tab="country"><span data-i18n="search.worldwide">${t('search.worldwide')}</span></a>`;
 
   return `
     <div class="lg:hidden flex items-center gap-3 sm:gap-6 px-2 sm:px-4 border-b border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-900 overflow-x-auto no-scrollbar scroll-smooth">
       <a href="/" class="${activeTab === 'products' ? activeClass : inactiveClass}" data-search-tab="products"><span data-i18n="search.products">${t('search.products')}</span></a>
-      <a href="/pages/manufacturers.html" class="${activeTab === 'manufacturers' ? activeClass : inactiveClass}" data-search-tab="manufacturers"><span data-i18n="search.manufacturers">${t('search.manufacturers')}</span></a>
-      <a href="#" class="${activeTab === 'country' ? activeClass : inactiveClass}" data-search-tab="country"><span data-i18n="search.worldwide">${t('search.worldwide')}</span></a>
+      <a href="/pages/manufacturers.html" class="${activeTab === 'manufacturers' ? activeClass : inactiveClass}" data-search-tab="manufacturers"><span data-i18n="search.manufacturers">${t('search.manufacturers')}</span></a>${worldwideTab}
     </div>
   `;
 }

@@ -99,7 +99,7 @@ function renderUtilityLinks(): string {
  */
 export function SubHeader(): string {
   return `
-    <nav class="hidden md:block dark:bg-gray-900 dark:border-gray-700" style="background-color:var(--subheader-bg);border-bottom:1px solid var(--subheader-border-color)" aria-label="Secondary navigation">
+    <nav class="hidden lg:block dark:bg-gray-900 dark:border-gray-700" style="background-color:var(--subheader-bg);border-bottom:1px solid var(--subheader-border-color)" aria-label="Secondary navigation">
       <div class="container-boxed px-3 sm:px-4 lg:px-6">
         <div class="flex items-center justify-between min-w-0">
           <!-- Left Side: Categories Trigger + Navigation Links -->

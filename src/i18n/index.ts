@@ -8,9 +8,17 @@ export type SupportedLang = (typeof SUPPORTED_LANGS)[number];
 
 const LANG_STORAGE_KEY = 'i18nextLng';
 
+// Merge namespace-level objects (mockProduct, dropshipping, sellerMock)
+// into the translation namespace so t('mockProduct.title') works correctly.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function mergeIntoTranslation(resource: any): any {
+  const { translation, ...rest } = resource;
+  return { translation: { ...translation, ...rest } };
+}
+
 // Initialize i18next
 i18next.use(LanguageDetector).init({
-  resources: { en, tr },
+  resources: { en: mergeIntoTranslation(en), tr: mergeIntoTranslation(tr) },
   fallbackLng: 'en',
   defaultNS: 'translation',
   interpolation: { escapeValue: false },

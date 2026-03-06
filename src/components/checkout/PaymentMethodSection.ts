@@ -13,9 +13,10 @@ import '../payment/state/PaymentCardStore';
 export interface PaymentMethodSectionProps {
   initialExpanded?: boolean;
   suppliers: CartSupplier[];
+  isSupplierCheckout?: boolean;
 }
 
-export function PaymentMethodSection({ initialExpanded = false, suppliers }: PaymentMethodSectionProps): string {
+export function PaymentMethodSection({ initialExpanded = false, suppliers, isSupplierCheckout = false }: PaymentMethodSectionProps): string {
   const chevronRotate = initialExpanded ? 'rotate-180' : '';
   const contentStyle = initialExpanded ? '' : 'height: 0; overflow: hidden;';
 
@@ -25,7 +26,7 @@ export function PaymentMethodSection({ initialExpanded = false, suppliers }: Pay
     }
 
     if (suppliers.length > 1) {
-      const supplierNames = suppliers.map(s => s.name).join(', ');
+      const supplierNames = isSupplierCheckout ? suppliers.map(s => s.name).join(', ') : 'iSTOC';
       return `
         <div class="p-6 bg-[#fafafa]" x-data="{ selectedMethod: 'kredi_karti' }">
           <h3 class="text-sm font-semibold text-[#111827] mb-4" data-i18n="checkout.paymentMethodFor" data-i18n-options='{"name":"${supplierNames}"}'>${t('checkout.paymentMethodFor', { name: supplierNames })}</h3>
@@ -187,9 +188,10 @@ export function PaymentMethodSection({ initialExpanded = false, suppliers }: Pay
 
     // Single-seller checkout implies negotiated payment options
     const supplier = suppliers[0];
+    const paymentName = isSupplierCheckout ? supplier.name : 'iSTOC';
     return `
       <div class="p-6 bg-[#fafafa]" x-data="{ selectedMethod: 'elden' }">
-        <h3 class="text-sm font-semibold text-[#111827] mb-4" data-i18n="checkout.paymentMethodFor" data-i18n-options='{"name":"${supplier.name}"}'>${t('checkout.paymentMethodFor', { name: supplier.name })}</h3>
+        <h3 class="text-sm font-semibold text-[#111827] mb-4" data-i18n="checkout.paymentMethodFor" data-i18n-options='{"name":"${paymentName}"}'>${t('checkout.paymentMethodFor', { name: paymentName })}</h3>
         <div class="flex flex-col gap-3">
           <!-- Option 1: Elden Taksit -->
           <label class="flex items-start gap-3 p-4 border rounded-lg cursor-pointer transition-colors relative"

@@ -13,7 +13,7 @@ import { formatPrice } from '../../utils/currency';
 interface CollectionProduct {
   name: string;
   price: string;
-  imageKind: TailoredImageKind;
+  imageSrc: string;
 }
 
 interface TailoredCollection {
@@ -25,35 +25,16 @@ interface TailoredCollection {
   products: [CollectionProduct, CollectionProduct];
 }
 
-type TailoredImageKind =
-  | 'laptop'
-  | 'tablet'
-  | 'camera'
-  | 'drone'
-  | 'jacket'
-  | 'handbag'
-  | 'headphones'
-  | 'watch'
-  | 'speaker'
-  | 'sneakers';
-
-interface TailoredVisual {
-  background: string;
-  accent: string;
-  stroke: string;
-  icon: string;
-}
-
 const tailoredCollections: TailoredCollection[] = [
   {
     title: 'Office Tech Essentials',
     titleKey: 'tailored.officeTech',
     views: '28K+ views',
     viewsCount: '28K+',
-    href: '/collection/office-tech',
+    href: '/pages/product-detail.html',
     products: [
-      { name: 'Business Laptop', price: '$320.00', imageKind: 'laptop' },
-      { name: 'Drawing Tablet', price: '$85.00', imageKind: 'tablet' },
+      { name: 'Business Laptop', price: '$320.00', imageSrc: 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=400&h=400&q=80' },
+      { name: 'Drawing Tablet', price: '$85.00', imageSrc: 'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?auto=format&fit=crop&w=400&h=400&q=80' },
     ],
   },
   {
@@ -61,10 +42,10 @@ const tailoredCollections: TailoredCollection[] = [
     titleKey: 'tailored.photographyGear',
     views: '15K+ views',
     viewsCount: '15K+',
-    href: '/collection/photography',
+    href: '/pages/product-detail.html',
     products: [
-      { name: 'Mirrorless Camera', price: '$480.00', imageKind: 'camera' },
-      { name: 'FPV Drone', price: '$260.00', imageKind: 'drone' },
+      { name: 'Mirrorless Camera', price: '$480.00', imageSrc: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=400&h=400&q=80' },
+      { name: 'FPV Drone', price: '$260.00', imageSrc: 'https://images.unsplash.com/photo-1507582020474-9a35b7d455d9?auto=format&fit=crop&w=400&h=400&q=80' },
     ],
   },
   {
@@ -72,10 +53,10 @@ const tailoredCollections: TailoredCollection[] = [
     titleKey: 'tailored.fashionForward',
     views: '42K+ views',
     viewsCount: '42K+',
-    href: '/collection/fashion',
+    href: '/pages/product-detail.html',
     products: [
-      { name: 'Winter Jacket', price: '$45.00', imageKind: 'jacket' },
-      { name: 'Leather Handbag', price: '$32.00', imageKind: 'handbag' },
+      { name: 'Winter Jacket', price: '$45.00', imageSrc: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=400&h=400&q=80' },
+      { name: 'Leather Handbag', price: '$32.00', imageSrc: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=400&h=400&q=80' },
     ],
   },
   {
@@ -83,10 +64,10 @@ const tailoredCollections: TailoredCollection[] = [
     titleKey: 'tailored.audioSound',
     views: '31K+ views',
     viewsCount: '31K+',
-    href: '/collection/audio',
+    href: '/pages/product-detail.html',
     products: [
-      { name: 'Wireless Headphones', price: '$28.50', imageKind: 'headphones' },
-      { name: 'Bluetooth Speaker', price: '$19.00', imageKind: 'speaker' },
+      { name: 'Wireless Headphones', price: '$28.50', imageSrc: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=400&h=400&q=80' },
+      { name: 'Bluetooth Speaker', price: '$19.00', imageSrc: 'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?auto=format&fit=crop&w=400&h=400&q=80' },
     ],
   },
   {
@@ -94,132 +75,23 @@ const tailoredCollections: TailoredCollection[] = [
     titleKey: 'tailored.smartAccessories',
     views: '56K+ views',
     viewsCount: '56K+',
-    href: '/collection/smart-accessories',
+    href: '/pages/product-detail.html',
     products: [
-      { name: 'Smart Watch', price: '$42.00', imageKind: 'watch' },
-      { name: 'Sport Sneakers', price: '$35.00', imageKind: 'sneakers' },
+      { name: 'Smart Watch', price: '$42.00', imageSrc: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=400&h=400&q=80' },
+      { name: 'Sport Sneakers', price: '$35.00', imageSrc: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=400&h=400&q=80' },
     ],
   },
 ];
 
-const tailoredVisuals: Record<TailoredImageKind, TailoredVisual> = {
-  laptop: {
-    background: 'linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%)',
-    accent: 'rgba(129, 140, 248, 0.3)',
-    stroke: '#4f5fb3',
-    icon: `
-      <rect x="3" y="4" width="18" height="13" rx="2" />
-      <path d="M2 20h20M8 17h8" />
-    `,
-  },
-  tablet: {
-    background: 'linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%)',
-    accent: 'rgba(74, 222, 128, 0.3)',
-    stroke: '#2d8a5e',
-    icon: `
-      <rect x="5" y="2" width="14" height="20" rx="2" />
-      <path d="M10 18h4" />
-    `,
-  },
-  camera: {
-    background: 'linear-gradient(135deg, #fef3c7 0%, #fde68a 100%)',
-    accent: 'rgba(251, 191, 36, 0.3)',
-    stroke: '#92700c',
-    icon: `
-      <path d="M3 9a2 2 0 0 1 2-2h2l1-2h8l1 2h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9Z" />
-      <circle cx="12" cy="13" r="3.5" />
-    `,
-  },
-  drone: {
-    background: 'linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%)',
-    accent: 'rgba(148, 163, 184, 0.3)',
-    stroke: '#475569',
-    icon: `
-      <rect x="9" y="9" width="6" height="6" rx="1" />
-      <circle cx="5" cy="5" r="2" />
-      <circle cx="19" cy="5" r="2" />
-      <circle cx="5" cy="19" r="2" />
-      <circle cx="19" cy="19" r="2" />
-      <path d="M7 7l2 2M15 7l2-2M7 17l2-2M15 17l2 2" />
-    `,
-  },
-  jacket: {
-    background: 'linear-gradient(135deg, #fdf2f8 0%, #fce7f3 100%)',
-    accent: 'rgba(244, 114, 182, 0.3)',
-    stroke: '#a3456e',
-    icon: `
-      <path d="M8 3h8l2 6v12H6V9l2-6Z" />
-      <path d="M12 3v8M8 3 6 9M16 3l2 6" />
-    `,
-  },
-  handbag: {
-    background: 'linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%)',
-    accent: 'rgba(251, 146, 60, 0.3)',
-    stroke: '#b45309',
-    icon: `
-      <rect x="4" y="10" width="16" height="10" rx="2" />
-      <path d="M8 10V6a4 4 0 0 1 8 0v4" />
-      <path d="M4 14h16" />
-    `,
-  },
-  headphones: {
-    background: 'linear-gradient(135deg, #f0f4ff 0%, #e4ecff 100%)',
-    accent: 'rgba(147, 170, 255, 0.3)',
-    stroke: '#4a5e9a',
-    icon: `
-      <path d="M5 12.5V12a7 7 0 0 1 14 0v.5" />
-      <path d="M3 14a2 2 0 0 1 2-2h1v5H5a2 2 0 0 1-2-2v-1ZM18 12h1a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2h-1v-5Z" />
-    `,
-  },
-  watch: {
-    background: 'linear-gradient(135deg, #f2fdf6 0%, #e2f8ec 100%)',
-    accent: 'rgba(134, 224, 170, 0.3)',
-    stroke: '#3a7a54',
-    icon: `
-      <rect x="7" y="3" width="10" height="18" rx="2" />
-      <circle cx="12" cy="12" r="3.5" />
-      <path d="M12 10v2l1.5 1" />
-    `,
-  },
-  speaker: {
-    background: 'linear-gradient(135deg, #f5f0ff 0%, #ebe0ff 100%)',
-    accent: 'rgba(170, 140, 255, 0.3)',
-    stroke: '#5a40a0',
-    icon: `
-      <rect x="6" y="4" width="12" height="16" rx="3" />
-      <circle cx="12" cy="10" r="3" />
-      <circle cx="12" cy="16" r="1.5" />
-    `,
-  },
-  sneakers: {
-    background: 'linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%)',
-    accent: 'rgba(251, 146, 60, 0.3)',
-    stroke: '#b45309',
-    icon: `
-      <path d="M3 16h18v2H3z" />
-      <path d="M4 16c0-4 2-6 5-7l2 2h5c2 0 4 1.5 4 5" />
-      <circle cx="7" cy="13" r="0.8" />
-      <circle cx="10" cy="11.5" r="0.8" />
-    `,
-  },
-};
-
-function renderProductPlaceholder(kind: TailoredImageKind): string {
-  const visual = tailoredVisuals[kind];
+function renderProductImage(product: CollectionProduct): string {
   return `
-    <div class="relative h-full w-full overflow-hidden rounded-md" style="background: ${visual.background};" aria-hidden="true">
-      <div class="absolute -right-3 -top-3 h-8 w-8 rounded-full opacity-50" style="background: ${visual.accent};"></div>
-      <div class="absolute inset-0 flex items-center justify-center">
-        <svg
-          class="h-10 w-10"
-          fill="none"
-          stroke-width="1.3"
-          viewBox="0 0 24 24"
-          style="stroke: ${visual.stroke};"
-        >
-          ${visual.icon}
-        </svg>
-      </div>
+    <div class="relative h-full w-full overflow-hidden rounded-md bg-gray-100" aria-hidden="true">
+      <img
+        src="${product.imageSrc}"
+        alt="${product.name}"
+        loading="lazy"
+        class="w-full h-full object-cover"
+      />
     </div>
   `;
 }
@@ -250,7 +122,7 @@ function renderCollectionSlide(collection: TailoredCollection): string {
         <div class="flex gap-2 flex-1">
           <div class="flex-1 flex flex-col">
             <div class="aspect-square w-full">
-              ${renderProductPlaceholder(product1.imageKind)}
+              ${renderProductImage(product1)}
             </div>
             <p
               class="font-bold leading-none truncate"
@@ -259,7 +131,7 @@ function renderCollectionSlide(collection: TailoredCollection): string {
           </div>
           <div class="flex-1 flex flex-col">
             <div class="aspect-square w-full">
-              ${renderProductPlaceholder(product2.imageKind)}
+              ${renderProductImage(product2)}
             </div>
             <p
               class="font-bold leading-none truncate"

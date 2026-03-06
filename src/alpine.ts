@@ -1005,8 +1005,8 @@ Alpine.data('cartPage', () => ({
     // Then, select only the specific supplier
     cartStore.toggleSupplierSelection(supplierId, true);
 
-    // Finally, redirect to checkout
-    window.location.href = `${getBaseUrl()}pages/order/checkout.html`;
+    // Finally, redirect to checkout with supplier flag
+    window.location.href = `${getBaseUrl()}pages/order/checkout.html?supplier=1`;
   },
 
   updateParentCheckboxStates(skuRow: Element) {

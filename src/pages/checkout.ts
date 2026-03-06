@@ -176,7 +176,7 @@ appEl.innerHTML = `
   leftContent: `
         ${CheckoutHeader()}
         ${ShippingAddressForm()}
-        ${PaymentMethodSection({ suppliers: cartStore.getSuppliers().filter(s => s.products.some(p => p.skus.some(sku => sku.selected))) })}
+        ${PaymentMethodSection({ suppliers: cartStore.getSuppliers().filter(s => s.products.some(p => p.skus.some(sku => sku.selected))), isSupplierCheckout: new URLSearchParams(window.location.search).has('supplier') })}
         ${ItemsDeliverySection({ orders: checkoutDeliveryOrders })}
       `,
   rightContent: `

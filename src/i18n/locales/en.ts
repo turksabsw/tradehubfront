@@ -816,7 +816,7 @@ const en = {
       startSourcing: 'Start sourcing',
       startSourcingDesc: 'Start sourcing products and place orders',
       ordersCount: '{{count}} orders',
-      resultsFound: '{{count}} results found',
+      resultsFound: 'results found',
       searchFor: 'Search for orders...',
       clearFilters: 'Clear filters',
       clearAllFilters: 'Clear all filters',

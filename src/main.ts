@@ -48,8 +48,8 @@ appEl.innerHTML = `
     ${SubHeader()}
   </div>
 
-  <!-- Mobile Search Tabs (Products | Manufacturers | Worldwide) — non-sticky -->
-  ${MobileSearchTabs('products')}
+  <!-- Mobile Search Tabs (Products | Manufacturers) — non-sticky -->
+  ${MobileSearchTabs('products', { hideWorldwide: true })}
 
   <!-- Mobile Category Bar (Alibaba-style, mobile/tablet only) -->
   ${MobileCategoryBar()}

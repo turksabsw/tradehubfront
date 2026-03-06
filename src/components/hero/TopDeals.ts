@@ -19,24 +19,7 @@ interface TopDealCard {
   moqUnitKey: string;
   badge?: string;
   badgeKey?: string;
-  imageKind: TopDealImageKind;
-}
-
-type TopDealImageKind =
-  | 'headphones'
-  | 'smartwatch'
-  | 'backpack'
-  | 'sneakers'
-  | 'sunglasses'
-  | 'power-bank'
-  | 'bluetooth-speaker'
-  | 'led-bulb';
-
-interface TopDealVisual {
-  background: string;
-  accent: string;
-  stroke: string;
-  icon: string;
+  imageSrc: string;
 }
 
 const topDealCards: TopDealCard[] = [
@@ -49,7 +32,7 @@ const topDealCards: TopDealCard[] = [
     moqUnitKey: 'topDeals.pieces',
     badge: 'Top picks',
     badgeKey: 'topDeals.topPicks',
-    imageKind: 'headphones',
+    imageSrc: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=400&h=400&q=80',
   },
   {
     name: 'Smart Fitness Watch',
@@ -58,7 +41,7 @@ const topDealCards: TopDealCard[] = [
     originalPrice: '$18.00',
     moqCount: 5,
     moqUnitKey: 'topDeals.pieces',
-    imageKind: 'smartwatch',
+    imageSrc: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=400&h=400&q=80',
   },
   {
     name: 'Waterproof Travel Backpack',
@@ -67,7 +50,7 @@ const topDealCards: TopDealCard[] = [
     originalPrice: '$15.50',
     moqCount: 10,
     moqUnitKey: 'topDeals.pieces',
-    imageKind: 'backpack',
+    imageSrc: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=400&h=400&q=80',
   },
   {
     name: 'Running Sports Sneakers',
@@ -76,7 +59,7 @@ const topDealCards: TopDealCard[] = [
     originalPrice: '$22.00',
     moqCount: 5,
     moqUnitKey: 'topDeals.pairs',
-    imageKind: 'sneakers',
+    imageSrc: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=400&h=400&q=80',
   },
   {
     name: 'Polarized UV Sunglasses',
@@ -85,7 +68,7 @@ const topDealCards: TopDealCard[] = [
     originalPrice: '$8.99',
     moqCount: 20,
     moqUnitKey: 'topDeals.pieces',
-    imageKind: 'sunglasses',
+    imageSrc: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=400&h=400&q=80',
   },
   {
     name: '10000mAh Power Bank',
@@ -94,7 +77,7 @@ const topDealCards: TopDealCard[] = [
     originalPrice: '$14.00',
     moqCount: 10,
     moqUnitKey: 'topDeals.pieces',
-    imageKind: 'power-bank',
+    imageSrc: 'https://images.unsplash.com/photo-1585386959984-a4155224a1ad?auto=format&fit=crop&w=400&h=400&q=80',
   },
   {
     name: 'Portable Bluetooth Speaker',
@@ -103,7 +86,7 @@ const topDealCards: TopDealCard[] = [
     originalPrice: '$12.00',
     moqCount: 10,
     moqUnitKey: 'topDeals.pieces',
-    imageKind: 'bluetooth-speaker',
+    imageSrc: 'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?auto=format&fit=crop&w=400&h=400&q=80',
   },
   {
     name: 'Energy Saving LED Bulb',
@@ -112,110 +95,19 @@ const topDealCards: TopDealCard[] = [
     originalPrice: '$3.50',
     moqCount: 50,
     moqUnitKey: 'topDeals.pieces',
-    imageKind: 'led-bulb',
+    imageSrc: 'https://images.unsplash.com/photo-1572569511254-d8f925fe2cbb?auto=format&fit=crop&w=400&h=400&q=80',
   },
 ];
 
-const topDealVisuals: Record<TopDealImageKind, TopDealVisual> = {
-  headphones: {
-    background: 'linear-gradient(180deg, #f0f4ff 0%, #e4ecff 100%)',
-    accent: 'rgba(147, 170, 255, 0.35)',
-    stroke: '#4a5e9a',
-    icon: `
-      <path d="M5 12.5V12a7 7 0 0 1 14 0v.5" />
-      <path d="M3 14a2 2 0 0 1 2-2h1v5H5a2 2 0 0 1-2-2v-1ZM18 12h1a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2h-1v-5Z" />
-    `,
-  },
-  smartwatch: {
-    background: 'linear-gradient(180deg, #f2fdf6 0%, #e2f8ec 100%)',
-    accent: 'rgba(134, 224, 170, 0.35)',
-    stroke: '#3a7a54',
-    icon: `
-      <rect x="7" y="3" width="10" height="18" rx="2" />
-      <circle cx="12" cy="12" r="3.5" />
-      <path d="M12 10v2l1.5 1" />
-    `,
-  },
-  backpack: {
-    background: 'linear-gradient(180deg, #fef8f0 0%, #fdefd8 100%)',
-    accent: 'rgba(240, 196, 120, 0.35)',
-    stroke: '#8a6930',
-    icon: `
-      <path d="M9 5a3 3 0 0 1 6 0" />
-      <rect x="5" y="7" width="14" height="14" rx="2" />
-      <path d="M9 7v4h6V7" />
-    `,
-  },
-  sneakers: {
-    background: 'linear-gradient(180deg, #f8f0fe 0%, #efe0fd 100%)',
-    accent: 'rgba(192, 150, 240, 0.35)',
-    stroke: '#6a4a9a',
-    icon: `
-      <path d="M3 16h18v2H3z" />
-      <path d="M4 16c0-4 2-6 5-7l2 2h5c2 0 4 1.5 4 5" />
-      <circle cx="7" cy="13" r="0.8" />
-      <circle cx="10" cy="11.5" r="0.8" />
-    `,
-  },
-  sunglasses: {
-    background: 'linear-gradient(180deg, #fff5f0 0%, #ffe8db 100%)',
-    accent: 'rgba(255, 170, 120, 0.35)',
-    stroke: '#a05a30',
-    icon: `
-      <circle cx="7.5" cy="13" r="3.5" />
-      <circle cx="16.5" cy="13" r="3.5" />
-      <path d="M11 13h2M4 13l-1-2M20 13l1-2" />
-    `,
-  },
-  'power-bank': {
-    background: 'linear-gradient(180deg, #f0f8ff 0%, #dceeff 100%)',
-    accent: 'rgba(130, 190, 255, 0.35)',
-    stroke: '#3570a0',
-    icon: `
-      <rect x="4" y="6" width="16" height="12" rx="2" />
-      <path d="M12 9v6M9 12h6" />
-      <path d="M7 9h2M7 12h.01M7 15h2" />
-    `,
-  },
-  'bluetooth-speaker': {
-    background: 'linear-gradient(180deg, #f5f0ff 0%, #ebe0ff 100%)',
-    accent: 'rgba(170, 140, 255, 0.35)',
-    stroke: '#5a40a0',
-    icon: `
-      <rect x="6" y="4" width="12" height="16" rx="3" />
-      <circle cx="12" cy="10" r="3" />
-      <circle cx="12" cy="16" r="1.5" />
-    `,
-  },
-  'led-bulb': {
-    background: 'linear-gradient(180deg, #fffce8 0%, #fff5c0 100%)',
-    accent: 'rgba(255, 220, 80, 0.35)',
-    stroke: '#9a8020',
-    icon: `
-      <path d="M9 18h6M10 21h4" />
-      <path d="M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2Z" />
-      <path d="M10 14h4" />
-    `,
-  },
-};
-
-function renderDealPlaceholder(kind: TopDealImageKind): string {
-  const visual = topDealVisuals[kind];
+function renderDealImage(card: TopDealCard): string {
   return `
-    <div class="relative w-full h-full overflow-hidden rounded-md" style="background: ${visual.background};" aria-hidden="true">
-      <div class="absolute -right-4 -top-4 h-12 w-12 rounded-full opacity-60" style="background: ${visual.accent};"></div>
-      <div class="absolute -left-3 bottom-0 h-10 w-10 rounded-full opacity-50" style="background: ${visual.accent};"></div>
-      <div class="absolute inset-0 flex items-center justify-center">
-        <svg
-          class="h-16 w-16 transition-transform duration-300 group-hover/deal:scale-110"
-          fill="none"
-          stroke-width="1.4"
-          viewBox="0 0 24 24"
-          style="stroke: ${visual.stroke};"
-        >
-          ${visual.icon}
-        </svg>
-      </div>
+    <div class="relative w-full h-full overflow-hidden rounded-md bg-gray-100" aria-hidden="true">
+      <img
+        src="${card.imageSrc}"
+        alt="${card.name}"
+        loading="lazy"
+        class="w-full h-full object-cover transition-transform duration-300 group-hover/deal:scale-110"
+      />
     </div>
   `;
 }
@@ -251,7 +143,7 @@ function renderDealSlide(card: TopDealCard): string {
 
         <!-- Square image area -->
         <div class="aspect-square w-full mb-3 flex-shrink-0">
-          ${renderDealPlaceholder(card.imageKind)}
+          ${renderDealImage(card)}
         </div>
 
         <!-- Price row -->
