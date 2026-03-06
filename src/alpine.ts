@@ -4132,6 +4132,20 @@ Alpine.data('sellPricing', () => ({
   },
 }));
 
+Alpine.data('sellerStorefront', () => ({
+  activeTab: 'overview' as string,
+  mobileMenuOpen: false,
+
+  setTab(tab: string) {
+    this.activeTab = tab;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  },
+
+  toggleMobileMenu() {
+    this.mobileMenuOpen = !this.mobileMenuOpen;
+  },
+}));
+
 
 window.Alpine = Alpine;
 

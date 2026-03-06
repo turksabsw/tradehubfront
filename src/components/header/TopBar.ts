@@ -600,6 +600,7 @@ function renderCartButton(itemCount: number = 0): string {
  * Shows person icon + "Sign in" text; dropdown has sign-in CTA, social logins, and nav links
  */
 function renderAuthButtons(): string {
+  const baseUrl = getBaseUrl();
   return `
     <div class="relative">
       <button
@@ -624,7 +625,7 @@ function renderAuthButtons(): string {
         <div class="px-5 pb-3">
           <p class="text-[15px] font-semibold text-[#222] mb-3"><span data-i18n="header.signBackIn">${t('header.signBackIn')}</span></p>
           <a
-            href="/login"
+            href="${baseUrl}pages/auth/login.html"
             class="block w-full text-center th-btn th-btn-pill"
           >
             <span data-i18n="header.signIn">${t('header.signIn')}</span>
@@ -651,19 +652,6 @@ function renderAuthButtons(): string {
             <a href="#" class="underline"><span data-i18n="header.privacyPolicy">${t('header.privacyPolicy')}</span></a>.
           </p>
         </div>
-
-        <!-- Divider -->
-        <div class="border-t border-gray-200 my-1"></div>
-
-        <!-- Navigation Links -->
-        <ul class="py-1">
-          <li><a href="/pages/dashboard/buyer-dashboard.html" class="block px-5 py-2 text-[13px] text-[#222] hover:bg-gray-50 transition-colors"><span data-i18n="header.myDashboard">${t('header.myDashboard')}</span></a></li>
-          <li><a href="/pages/dashboard/orders.html" class="block px-5 py-2 text-[13px] text-[#222] hover:bg-gray-50 transition-colors"><span data-i18n="header.myOrders">${t('header.myOrders')}</span></a></li>
-          <li><a href="/pages/dashboard/messages.html" class="block px-5 py-2 text-[13px] text-[#222] hover:bg-gray-50 transition-colors"><span data-i18n="header.myMessages">${t('header.myMessages')}</span></a></li>
-          <li><a href="/pages/dashboard/rfq.html" class="block px-5 py-2 text-[13px] text-[#222] hover:bg-gray-50 transition-colors"><span data-i18n="header.myRfq">${t('header.myRfq')}</span></a></li>
-          <li><a href="/pages/dashboard/favorites.html" class="block px-5 py-2 text-[13px] text-[#222] hover:bg-gray-50 transition-colors"><span data-i18n="header.myFavorites">${t('header.myFavorites')}</span></a></li>
-          <li><a href="/pages/dashboard/settings.html" class="block px-5 py-2 text-[13px] text-[#222] hover:bg-gray-50 transition-colors"><span data-i18n="header.accountSettings">${t('header.accountSettings')}</span></a></li>
-        </ul>
       </div>
     </div>
   `;
@@ -717,9 +705,9 @@ function renderMobileDrawer(): string {
             </div>
             <div>
               <div class="flex items-center gap-1 text-sm">
-                <a href="/login" class="font-medium text-primary-600 hover:underline dark:text-primary-400"><span data-i18n="header.signIn">${t('header.signIn')}</span></a>
+                <a href="${baseUrl}pages/auth/login.html" class="font-medium text-primary-600 hover:underline dark:text-primary-400"><span data-i18n="header.signIn">${t('header.signIn')}</span></a>
                 <span class="text-gray-400 dark:text-gray-500">|</span>
-                <a href="/register" class="font-medium text-primary-600 hover:underline dark:text-primary-400"><span data-i18n="header.joinFree">${t('header.joinFree')}</span></a>
+                <a href="${baseUrl}pages/auth/register.html" class="font-medium text-primary-600 hover:underline dark:text-primary-400"><span data-i18n="header.joinFree">${t('header.joinFree')}</span></a>
               </div>
               <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5"><span data-i18n="header.startShopping">${t('header.startShopping')}</span></p>
             </div>

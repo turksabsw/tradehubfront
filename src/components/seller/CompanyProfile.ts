@@ -143,7 +143,7 @@ function ContactSidebar(seller: SellerProfile): string {
 // ─── Overview Tab (Genel Bakış) ────────────────────────────────
 function OverviewTab(stats: SellerPerformanceStats, mainProducts: SimpleProduct[]): string {
   return `
-    <div class="company-profile__tab-content" x-show="activeTab === 'overview'" style="display: none;" x-transition.opacity.duration.300ms id="tab-overview">
+    <div class="company-profile__tab-content" x-show="activeTab === 'overview'" x-transition.opacity.duration.300ms id="tab-overview">
       
       <!-- Performance Section -->
       <section class="bg-white rounded-(--radius-md) border border-gray-200 p-6 mb-6">
