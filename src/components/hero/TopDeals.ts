@@ -8,6 +8,7 @@ import Swiper from 'swiper';
 import { Navigation } from 'swiper/modules';
 import 'swiper/swiper-bundle.css';
 import { t } from '../../i18n';
+import { formatPrice } from '../../utils/currency';
 
 interface TopDealCard {
   name: string;
@@ -263,7 +264,7 @@ function renderDealSlide(card: TopDealCard): string {
             <span
               class="text-(length:--text-product-price) font-bold leading-none"
               style="color: var(--topdeals-price-color, #dc2626); font-size: var(--text-product-price, 15px);"
-            >${card.price}</span>
+            >${formatPrice(card.price)}</span>
           </span>
         </div>
 

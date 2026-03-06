@@ -1,6 +1,7 @@
 import Swiper from 'swiper';
 import { Navigation } from 'swiper/modules';
 import 'swiper/swiper-bundle.css';
+import { formatPrice } from '../../utils/currency';
 import { t } from '../../i18n';
 
 export function ManufacturerList(): string {
@@ -187,7 +188,7 @@ function renderFactoryCard(mfg: any, cardIndex: number): string {
               <div class="w-full aspect-[1/1] rounded-lg overflow-hidden bg-gray-100 shrink-0">
                 <img src="${prod.image}" alt="${t('mfr.list.product')}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
               </div>
-              <p class="text-[13px] xl:text-[16px] font-bold text-[#222] mt-2 xl:mt-3 truncate">${prod.price}</p>
+              <p class="text-[13px] xl:text-[16px] font-bold text-[#222] mt-2 xl:mt-3 truncate">${formatPrice(prod.price)}</p>
               <p class="text-[11px] xl:text-[14px] text-[#222] mt-0.5 xl:mt-1 truncate">${prod.moq}</p>
             </a>
           `).join('')}
@@ -253,7 +254,7 @@ function renderFactoryCard(mfg: any, cardIndex: number): string {
                 <img src="${prod.image}" class="w-full h-full object-cover mix-blend-multiply" />
                 <!-- Price Overlay at Bottom -->
                 <div class="absolute bottom-0 inset-x-0 w-full bg-gradient-to-t from-black/70 to-transparent pt-4 pb-1 px-1 flex justify-center">
-                  <span class="text-white font-bold text-[13px] tracking-tight">${prod.price.split('-')[0]}</span>
+                  <span class="text-white font-bold text-[13px] tracking-tight">${formatPrice(prod.price.split('-')[0])}</span>
                 </div>
               </div>
             `).join('')}

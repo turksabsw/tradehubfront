@@ -8,6 +8,7 @@ import Swiper from 'swiper';
 import { Navigation } from 'swiper/modules';
 import 'swiper/swiper-bundle.css';
 import { t } from '../../i18n';
+import { formatPrice } from '../../utils/currency';
 
 interface RelatedProduct {
   name: string;
@@ -106,7 +107,7 @@ function renderRelatedSlide(card: RelatedProduct): string {
         </div>
         <div class="flex flex-1 flex-col p-3 max-[374px]:p-2">
           <h4 class="text-xs font-medium leading-tight line-clamp-2 max-[374px]:text-[11px]" style="color: var(--product-title-color, #111827); height: 2.4em;">${card.name}</h4>
-          <p class="mt-2 text-sm font-bold max-[374px]:text-[13px] max-[374px]:mt-1.5" style="color: var(--product-price-color, #111827);">${card.price}</p>
+          <p class="mt-2 text-sm font-bold max-[374px]:text-[13px] max-[374px]:mt-1.5" style="color: var(--product-price-color, #111827);">${formatPrice(card.price)}</p>
           <p class="mt-1 text-xs max-[374px]:text-[11px]" style="color: var(--product-moq-color, #6b7280);">MOQ: ${card.moq}</p>
           <div class="mt-auto pt-2">
             ${card.verified ? `

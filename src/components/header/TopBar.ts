@@ -10,8 +10,9 @@ import { megaCategories } from './MegaMenu';
 import { cartStore } from '../cart/state/CartStore';
 import { isLoggedIn, getUser, logout } from '../../utils/auth';
 import { mockConversations } from '../../data/mockMessages';
-import { t, changeLanguage, getCurrentLang } from '../../i18n';
+import { t, getCurrentLang, updatePageTranslations } from '../../i18n';
 import type { SupportedLang } from '../../i18n';
+import { getSelectedCurrency, setSelectedCurrency } from '../../utils/currency';
 
 /** Default country options for the delivery selector */
 const countryOptions: LocaleOption[] = [
@@ -29,12 +30,14 @@ const languageOptions: LocaleOption[] = [
   { code: 'DE', name: 'Deutsch', flag: '🇩🇪' },
 ];
 
-/** Default currency options */
-const currencyOptions: CurrencyOption[] = [
-  { code: 'TRY', symbol: '₺', name: 'Turkish Lira' },
-  { code: 'USD', symbol: '$', name: 'US Dollar' },
-  { code: 'EUR', symbol: '€', name: 'Euro' },
-];
+/** Default currency options (names resolved via i18n) */
+function getCurrencyOptions(): CurrencyOption[] {
+  return [
+    { code: 'TRY', symbol: '₺', name: t('header.currencyTRY') },
+    { code: 'USD', symbol: '$', name: t('header.currencyUSD') },
+    { code: 'EUR', symbol: '€', name: t('header.currencyEUR') },
+  ];
+}
 
 /**
  * Get base URL for assets (handles GitHub Pages subdirectory)
@@ -344,8 +347,8 @@ function renderLanguageCurrencySelector(): string {
       class="absolute z-50 invisible inline-block w-96 bg-white border border-gray-200 rounded-md shadow-lg opacity-0 transition-opacity duration-300 dark:bg-gray-800 dark:border-gray-700"
     >
       <div class="p-5">
-        <h3 class="text-base font-bold text-gray-900 dark:text-white mb-1"><span data-i18n="header.setLangCurrency">${t('header.setLangCurrency')}</span></h3>
-        <p class="text-sm text-gray-500 dark:text-gray-400 mb-5"><span data-i18n="header.setLangCurrencyDesc">${t('header.setLangCurrencyDesc')}</span></p>
+        <h3 class="text-base font-bold text-gray-900 dark:text-white mb-1"><span data-i18n="header.langCurrency">${t('header.langCurrency')}</span></h3>
+        <p class="text-sm text-gray-500 dark:text-gray-400 mb-5"><span data-i18n="header.langCurrencyDesc">${t('header.langCurrencyDesc')}</span></p>
 
         <!-- Language Select -->
         <div class="mb-4">
@@ -361,7 +364,7 @@ function renderLanguageCurrencySelector(): string {
         <div class="mb-5">
           <label class="block text-sm font-medium text-gray-900 dark:text-white mb-2" data-i18n="header.currency">${t('header.currency')}</label>
           <select id="currency-select" class="th-input w-full px-3 py-2.5 text-sm bg-white border border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white appearance-none cursor-pointer">
-            ${currencyOptions.map(currency => `
+            ${getCurrencyOptions().map(currency => `
               <option value="${currency.code}">${currency.code} - ${currency.name}</option>
             `).join('')}
           </select>
@@ -811,7 +814,7 @@ function renderMobileDrawer(): string {
             </div>
             <!-- Currency pills -->
             <div class="flex flex-wrap gap-2">
-              ${currencyOptions.map((currency, i) => `
+              ${getCurrencyOptions().map((currency, i) => `
                 <button type="button" class="px-3 py-1.5 text-xs font-medium rounded-full border transition-colors ${i === 0 ? 'border-primary-500 text-primary-600 bg-primary-50 dark:border-primary-400 dark:text-primary-400 dark:bg-primary-900/20' : 'border-gray-300 text-gray-600 dark:border-gray-600 dark:text-gray-400 hover:border-gray-400 dark:hover:border-gray-500'}">
                   ${currency.code === 'TRY' ? 'TL' : currency.symbol}
                 </button>
@@ -1463,35 +1466,46 @@ document.addEventListener('click', (e) => {
  * Wires up the language <select> in the header popover to change the app language.
  */
 export function initLanguageSelector(): void {
+  // Run initial translation update for all data-i18n elements
+  updatePageTranslations();
+
   const langSelect = document.getElementById('lang-select') as HTMLSelectElement | null;
+  const currencySelect = document.getElementById('currency-select') as HTMLSelectElement | null;
+  const langMap: Record<string, SupportedLang> = { TR: 'tr', EN: 'en', DE: 'en' };
+
   if (langSelect) {
-    // Set current value
     const currentLang = getCurrentLang();
     langSelect.value = currentLang === 'tr' ? 'TR' : 'EN';
+  }
 
-    langSelect.addEventListener('change', () => {
-      const val = langSelect.value;
-      const langMap: Record<string, SupportedLang> = { TR: 'tr', EN: 'en', DE: 'en' };
-      const lang = langMap[val] || 'en';
-      changeLanguage(lang);
+  if (currencySelect) {
+    currencySelect.value = getSelectedCurrency().code;
+  }
+
+  // Desktop popover "Save" button — applies language + currency, then refreshes
+  const popover = document.getElementById('popover-language-currency');
+  const saveBtn = popover?.querySelector<HTMLButtonElement>('.th-btn');
+  if (saveBtn) {
+    saveBtn.addEventListener('click', () => {
+      const selectedLangCode = langSelect?.value || (getCurrentLang() === 'tr' ? 'TR' : 'EN');
+      const lang = langMap[selectedLangCode] || 'en';
+      localStorage.setItem('i18nextLng', lang);
+
+      if (currencySelect) {
+        setSelectedCurrency(currencySelect.value);
+      }
+
+      window.location.reload();
     });
   }
 
-  // Mobile language pills
+  // Mobile language pills — save + refresh on click
   document.querySelectorAll<HTMLButtonElement>('[data-lang-pill]').forEach(btn => {
     btn.addEventListener('click', () => {
       const val = btn.getAttribute('data-lang-pill');
-      const langMap: Record<string, SupportedLang> = { TR: 'tr', EN: 'en', DE: 'en' };
       const lang = langMap[val || ''] || 'en';
-      changeLanguage(lang);
-
-      // Update pill active states
-      document.querySelectorAll<HTMLButtonElement>('[data-lang-pill]').forEach(p => {
-        p.classList.remove('border-primary-500', 'text-primary-600', 'bg-primary-50', 'dark:border-primary-400', 'dark:text-primary-400', 'dark:bg-primary-900/20');
-        p.classList.add('border-gray-300', 'text-gray-600', 'dark:border-gray-600', 'dark:text-gray-400');
-      });
-      btn.classList.remove('border-gray-300', 'text-gray-600', 'dark:border-gray-600', 'dark:text-gray-400');
-      btn.classList.add('border-primary-500', 'text-primary-600', 'bg-primary-50', 'dark:border-primary-400', 'dark:text-primary-400', 'dark:bg-primary-900/20');
+      localStorage.setItem('i18nextLng', lang);
+      window.location.reload();
     });
   });
 }

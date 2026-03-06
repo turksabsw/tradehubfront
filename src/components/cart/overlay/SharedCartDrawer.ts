@@ -2,6 +2,7 @@ import type { ProductImageKind } from '../../../types/productListing';
 import { cartStore } from '../state/CartStore';
 import type { CartSupplier, CartProduct, CartSku } from '../../../types/cart';
 import { t } from '../../../i18n';
+import { formatPrice } from '../../../utils/currency';
 
 export interface CartDrawerTierModel {
   minQty: number;
@@ -231,7 +232,7 @@ function renderPriceSectionHtml(totals: ReturnType<typeof getTotals>): string {
     return `
       <div class="mb-5 pb-5 border-b border-border-default">
         <p class="text-sm text-text-secondary mb-1">${t('cart.sampleMaxNote')}</p>
-        <p class="text-[22px] font-bold text-text-heading">$${(state.item.samplePrice ?? 30).toFixed(2)} <span class="text-base font-normal text-text-tertiary">${t('cart.perUnit')}</span></p>
+        <p class="text-[22px] font-bold text-text-heading">${formatPrice('$' + (state.item.samplePrice ?? 30).toFixed(2))} <span class="text-base font-normal text-text-tertiary">${t('cart.perUnit')}</span></p>
       </div>
     `;
   }
@@ -241,7 +242,7 @@ function renderPriceSectionHtml(totals: ReturnType<typeof getTotals>): string {
     const activeClass = index === totals.tierIndex ? 'text-error-500' : 'text-text-heading';
     return `<div class="cart-tier-item" data-tier-index="${index}">
           <p class="text-sm text-text-tertiary">${formatTierLabel(tier, state.item!.unit)}</p>
-          <p class="mt-1 text-[22px] font-bold ${activeClass}">$${tier.price.toFixed(2)}</p>
+          <p class="mt-1 text-[22px] font-bold ${activeClass}">${formatPrice('$' + tier.price.toFixed(2))}</p>
         </div>`;
   }).join('')}
     </div>
@@ -274,7 +275,7 @@ function renderDrawerBody(): void {
               <div class="flex-1 min-w-0">
                 <p class="text-base font-semibold text-text-heading truncate">${escapeHtml(color.label)}</p>
               </div>
-              <span class="text-[15px] font-semibold text-text-heading whitespace-nowrap">$${totals.activePrice.toFixed(2)}</span>
+              <span class="text-[15px] font-semibold text-text-heading whitespace-nowrap">${formatPrice('$' + totals.activePrice.toFixed(2))}</span>
               <div class="inline-flex items-center border border-border-default rounded-full overflow-hidden shrink-0">
                 <button type="button" data-qty-action="minus" data-qty-color="${escapeHtml(color.id)}" class="w-9 h-9 bg-surface text-text-secondary hover:bg-surface-raised transition-colors">−</button>
                 <input type="number" data-qty-input="${escapeHtml(color.id)}" value="${qty}" min="0" class="w-11 h-9 text-center border-x border-border-default bg-surface text-sm font-semibold text-text-heading [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none" />
@@ -316,7 +317,7 @@ function renderDrawerFooter(): void {
         <div class="space-y-2 text-sm text-text-secondary">
           <div class="flex items-center justify-between">
             <span>${t('cart.productTotal')} (${t('cart.variationItems', { variation: String(totals.variationCount), items: String(totals.totalQty) })})</span>
-            <strong class="text-text-heading">$${totals.itemSubtotal.toFixed(2)}</strong>
+            <strong class="text-text-heading">${formatPrice('$' + totals.itemSubtotal.toFixed(2))}</strong>
           </div>
           <div class="flex items-center justify-between">
             <span>${t('cart.shippingTotal')}</span>
@@ -325,8 +326,8 @@ function renderDrawerFooter(): void {
           <div class="flex items-center justify-between border-t border-border-default pt-3 mt-3">
             <strong class="text-text-heading">${t('cart.subtotal')}</strong>
             <div class="text-right">
-              <strong class="text-base text-cta-primary">$${totals.grandTotal.toFixed(2)}</strong>
-              <p class="text-xs text-text-tertiary">($${perPiece.toFixed(2)}${t('cart.perUnit')})</p>
+              <strong class="text-base text-cta-primary">${formatPrice('$' + totals.grandTotal.toFixed(2))}</strong>
+              <p class="text-xs text-text-tertiary">(${formatPrice('$' + perPiece.toFixed(2))}${t('cart.perUnit')})</p>
             </div>
           </div>
         </div>
@@ -336,8 +337,8 @@ function renderDrawerFooter(): void {
       <button type="button" id="shared-cart-footer-toggle" class="w-full flex items-center justify-between mb-4">
         <strong class="text-base text-text-heading">${t('cart.subtotal')}</strong>
         <span class="flex items-center gap-1.5">
-          <strong class="text-[17px] text-cta-primary">$${totals.grandTotal.toFixed(2)}</strong>
-          <span class="text-xs text-text-tertiary">($${perPiece.toFixed(2)}${t('cart.perUnit')})</span>
+          <strong class="text-[17px] text-cta-primary">${formatPrice('$' + totals.grandTotal.toFixed(2))}</strong>
+          <span class="text-xs text-text-tertiary">(${formatPrice('$' + perPiece.toFixed(2))}${t('cart.perUnit')})</span>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-text-tertiary"><path d="m6 9 6 6 6-6"/></svg>
         </span>
       </button>

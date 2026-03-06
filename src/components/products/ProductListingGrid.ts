@@ -1,4 +1,5 @@
 import { t } from '../../i18n';
+import { formatPrice } from '../../utils/currency';
 /**
  * ProductListingGrid Component
  * Alibaba-style product listing grid for products page.
@@ -268,7 +269,7 @@ function renderProductListingCard(card: ProductListingCard): string {
 
         <!-- Price area -->
         <div class="px-1 mt-1">
-          <div class="text-xl font-semibold leading-[26px] text-gray-900">${card.price}</div>
+          <div class="text-xl font-semibold leading-[26px] text-gray-900">${formatPrice(card.price)}</div>
           <div class="flex gap-1.5 flex-wrap mt-0.5">
             ${moqHtml}
             ${soldHtml}

@@ -3,6 +3,7 @@
  * Snapshot-matched Alibaba card structure (hFR19 / card2.md) with dynamic content.
  */
 import { t } from '../../i18n';
+import { formatPrice } from '../../utils/currency';
 
 interface ProductCard {
   name: string;
@@ -227,7 +228,7 @@ function renderProductCard(card: ProductCard, index: number): string {
           <div class="th-hfr19-stack-compact">
             <!-- Price + discount -->
             <div class="XBlq6 e9DGa">
-              <div class="R3Kcz eg6xk">${card.price}</div>
+              <div class="R3Kcz eg6xk">${formatPrice(card.price)}</div>
               ${discountText ? `<div class="YGd3t vE7bg">${discountText}</div>` : ''}
             </div>
 

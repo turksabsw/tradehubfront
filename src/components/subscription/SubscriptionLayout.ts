@@ -4,6 +4,7 @@
  * and plan selection (pricing cards + FAQ).
  */
 
+import { formatPrice } from '../../utils/currency';
 import { t } from '../../i18n';
 
 /* ────────────────────────────────────────
@@ -187,7 +188,7 @@ function renderPlanCard(plan: Plan, isYearly: boolean): string {
           ${popularBadge}
         </div>
         <div class="mb-1">
-          <span class="text-[28px] font-bold text-gray-900">${price}</span>
+          <span class="text-[28px] font-bold text-gray-900">${formatPrice(price)}</span>
           <span class="text-[14px] text-gray-400 ml-0.5">${t('subscription.perMonth')}</span>
         </div>
         ${billing ? `<p class="text-[13px] text-gray-400 m-0">${billing}</p>` : ''}

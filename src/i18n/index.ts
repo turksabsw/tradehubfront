@@ -14,6 +14,7 @@ i18next.use(LanguageDetector).init({
   fallbackLng: 'en',
   defaultNS: 'translation',
   interpolation: { escapeValue: false },
+  initImmediate: false,
   detection: {
     order: ['localStorage', 'navigator'],
     caches: ['localStorage'],

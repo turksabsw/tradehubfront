@@ -3,6 +3,8 @@
  * Seller-based order list and delivery option selection.
  */
 
+import { getCurrencyCode } from '../../utils/currency';
+
 export interface CheckoutDeliveryMethod {
   id: string;
   etaLabel: string;
@@ -53,7 +55,7 @@ function escapeJsSingleQuoted(value: string): string {
 }
 
 function formatUsd(value: number): string {
-  return `USD ${value.toFixed(2)}`;
+  return `${getCurrencyCode()} ${value.toFixed(2)}`;
 }
 
 function renderMethodOption(order: CheckoutDeliveryOrderGroup, method: CheckoutDeliveryMethod): string {

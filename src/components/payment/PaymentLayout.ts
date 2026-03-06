@@ -10,6 +10,7 @@
  */
 
 import { paymentCardStore } from './state/PaymentCardStore';
+import { getCurrencyCode } from '../../utils/currency';
 import { t } from '../../i18n';
 
 /* ────────────────────────────────────────
@@ -308,8 +309,8 @@ function renderTTAccounts(): string {
         <a href="#" class="text-[13px] text-text-secondary no-underline whitespace-nowrap transition-[color] duration-150 hover:text-text-primary hover:underline">${t('payment.removeFilters')}</a>
       </div>
       <div class="flex items-center gap-4 flex-wrap">
-        <span class="text-[13px] text-text-secondary whitespace-nowrap">${t('payment.totalWireAmount')}: <strong class="text-text-primary font-semibold">USD 0.00</strong></span>
-        <span class="text-[13px] text-text-secondary whitespace-nowrap">${t('payment.pendingMatchAmount')}: <strong class="text-text-primary font-semibold">USD 0.00</strong></span>
+        <span class="text-[13px] text-text-secondary whitespace-nowrap">${t('payment.totalWireAmount')}: <strong class="text-text-primary font-semibold">${getCurrencyCode()} 0.00</strong></span>
+        <span class="text-[13px] text-text-secondary whitespace-nowrap">${t('payment.pendingMatchAmount')}: <strong class="text-text-primary font-semibold">${getCurrencyCode()} 0.00</strong></span>
       </div>
     </div>
 

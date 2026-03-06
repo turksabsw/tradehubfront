@@ -7,6 +7,7 @@
 
 import favEmptySvg from '../../assets/images/O1CN01Bny3KU1Swwfj3Ntma_!!6000000002312-55-tps-222-221.svg';
 import { t } from '../../i18n';
+import { formatPrice } from '../../utils/currency';
 
 /* ────────────────────────────────────────
    BROWSING HISTORY MOCK DATA
@@ -120,11 +121,11 @@ function renderFavorites(): string {
           <div class="mt-4 flex flex-col gap-0.5" id="fav-list-sidebar">
             <!-- Sidebar counts populated via JS -->
             <div class="fav-products__list-item fav-products__list-item--active p-2.5 px-3 rounded-md cursor-pointer transition-[background] duration-150 bg-surface-raised hover:bg-surface-raised">
-              <span class="block text-sm font-semibold text-text-primary">All</span>
+              <span class="block text-sm font-semibold text-text-primary">${t('favorites.listAll')}</span>
               <span class="block text-xs text-text-tertiary mt-0.5" id="fav-all-count">${t('favorites.itemCount', { count: 0 })}</span>
             </div>
             <div class="fav-products__list-item p-2.5 px-3 rounded-md cursor-pointer transition-[background] duration-150 hover:bg-surface-raised">
-              <span class="block text-sm font-semibold text-text-primary">Ungrouped</span>
+              <span class="block text-sm font-semibold text-text-primary">${t('favorites.ungrouped')}</span>
               <span class="block text-xs text-text-tertiary mt-0.5" id="fav-ungrouped-count">${t('favorites.itemCount', { count: 0 })}</span>
             </div>
           </div>
@@ -173,7 +174,7 @@ function renderBrowsingHistory(): string {
         <img src="${p.image}" alt="${p.title}" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.04]" loading="lazy" />
       </div>
       <h4 class="text-[13px] text-text-secondary leading-[1.4] line-clamp-2 mb-1.5" title="${p.title}">${p.title}</h4>
-      <p class="text-sm font-bold text-text-primary mb-0.5">${p.priceRange}</p>
+      <p class="text-sm font-bold text-text-primary mb-0.5">${formatPrice(p.priceRange)}</p>
       <p class="text-xs text-text-tertiary">${p.minOrder}</p>
     </a>
   `).join('');
@@ -269,12 +270,12 @@ function loadFavoritesData(): void {
             </div>
             <h4 class="text-[13px] font-normal text-[#333] leading-[18px] line-clamp-2 mb-2 group-hover:text-[#F60] transition-colors">${p.title}</h4>
             <div class="flex items-baseline gap-1 mb-1">
-              <span class="text-[16px] font-[700] text-[#111] leading-none">${p.priceRange}</span>
+              <span class="text-[16px] font-[700] text-[#111] leading-none">${formatPrice(p.priceRange)}</span>
             </div>
             <p class="text-[12px] text-[#999] opacity-80">${p.minOrder}</p>
           </a>
           <div class="mt-4 flex gap-2 w-full pt-3 border-t border-[#f2f2f2] opacity-0 group-hover:opacity-100 transition-opacity">
-            <button class="flex-1 th-btn th-btn-pill th-btn-sm">Order now</button>
+            <button class="flex-1 th-btn th-btn-pill th-btn-sm">${t('favorites.orderNow')}</button>
             <button class="w-8 h-8 rounded-full border border-[#e5e7eb] flex items-center justify-center text-[#666] hover:text-[#333] hover:border-[#d1d5db] transition-colors">
                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
             </button>
@@ -285,9 +286,9 @@ function loadFavoritesData(): void {
       container.innerHTML = `
         <div class="px-7 pt-5 pb-7 max-sm:px-3">
           <div class="flex items-center justify-between mb-4">
-               <h2 class="text-[18px] font-bold text-text-primary">Products</h2>
+               <h2 class="text-[18px] font-bold text-text-primary">${t('favorites.products')}</h2>
                <div class="flex items-center gap-2">
-                 <button class="px-3 py-1 bg-surface-raised border border-border-default rounded text-[13px] text-text-secondary hover:bg-[#f0f0f0]">Sort by</button>
+                 <button class="px-3 py-1 bg-surface-raised border border-border-default rounded text-[13px] text-text-secondary hover:bg-[#f0f0f0]">${t('favorites.sortBy')}</button>
                  <button class="w-8 h-8 rounded bg-surface-raised border border-border-default flex items-center justify-center hover:bg-[#f0f0f0]">
                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/></svg>
                  </button>

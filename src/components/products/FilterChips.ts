@@ -6,6 +6,7 @@
  */
 
 import type { FilterState } from './filterEngine';
+import { getCurrencySymbol } from '../../utils/currency';
 
 /**
  * Create a single chip HTML
@@ -44,7 +45,7 @@ export function renderFilterChips(state: FilterState): string {
   if (state.verifiedPro) chips.push(makeChip('Verified PRO', 'supplier-features', 'verified-pro'));
   if (state.minRating !== null) chips.push(makeChip(`${state.minRating}\u2605 & up`, 'store-reviews', String(state.minRating)));
   if (state.priceMin !== null || state.priceMax !== null) {
-    const label = `$${state.priceMin ?? '0'} \u2013 $${state.priceMax ?? '\u221E'}`;
+    const label = `${getCurrencySymbol()}${state.priceMin ?? '0'} \u2013 ${getCurrencySymbol()}${state.priceMax ?? '\u221E'}`;
     chips.push(makeChip(label, 'price', 'range'));
   }
   if (state.minOrder !== null) chips.push(makeChip(`MOQ \u2264 ${state.minOrder}`, 'min-order', String(state.minOrder)));

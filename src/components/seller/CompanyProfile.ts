@@ -1,4 +1,5 @@
 import type { SellerStorefrontData, SellerProfile, ProductCategory, SimpleProduct, CompanyInfo as CompanyInfoData, Certificate, ContactFormData, CategoryCard } from '../../types/seller/types';
+import { formatPrice } from '../../utils/currency';
 import { t } from '../../i18n';
 import { CompanyInfoComponent } from './CompanyInfo';
 import { Certificates } from './Certificates';
@@ -15,7 +16,7 @@ function lensIcon(): string {
 }
 
 function renderSellerProductCard(product: any, index: number = 0): string {
-  const price = typeof product.priceMin === 'number' ? `$${product.priceMin.toFixed(2)}` : '$25.40';
+  const price = typeof product.priceMin === 'number' ? formatPrice('$' + product.priceMin.toFixed(2)) : formatPrice('$25.40');
   const nameSafe = product.name.replace(/"/g, '&quot;');
   const link = product.link || '/pages/product-detail.html';
   const soldCount = product.soldCount || 0;
@@ -262,7 +263,7 @@ function ReviewsTab(stats: SellerPerformanceStats, reviews: SellerReview[]): str
                   <img src="${review.productImage}" alt="${review.productName}" class="w-12 h-12 object-cover rounded bg-white border border-gray-200">
                   <div>
                     <a href="#" class="text-[12px] text-gray-600 hover:text-[var(--color-primary-500)] line-clamp-2 transition-colors">${review.productName}</a>
-                    <div class="text-[13px] font-medium text-gray-900 mt-1">${review.productPrice}</div>
+                    <div class="text-[13px] font-medium text-gray-900 mt-1">${formatPrice(review.productPrice)}</div>
                   </div>
                 </div>
               </div>

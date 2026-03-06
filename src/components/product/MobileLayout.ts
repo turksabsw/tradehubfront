@@ -8,6 +8,7 @@
 
 import { getMockProduct } from '../../data/mockProduct';
 import { t } from '../../i18n';
+import { formatPrice } from '../../utils/currency';
 import type { ProductVariant } from '../../types/product';
 import { openShippingModal } from './CartDrawer';
 import { openLoginModal } from './LoginModal';
@@ -157,7 +158,7 @@ export function MobileProductLayout(): string {
     <div id="pdm-price-tiers" class="grid grid-cols-3 bg-surface-raised rounded-lg mx-4 mt-3 py-3.5 max-[374px]:mx-3 max-[374px]:mt-2.5">
       ${p.priceTiers.map(tier => `
         <div class="pdm-tier-col flex flex-col items-center px-3 border-r border-border-default last:border-r-0">
-          <span class="pdm-tier-price text-lg max-[374px]:text-[15px] font-bold text-[#111] leading-[1.3]">$${tier.price.toFixed(2)}</span>
+          <span class="pdm-tier-price text-lg max-[374px]:text-[15px] font-bold text-[#111] leading-[1.3]">${formatPrice('$' + tier.price.toFixed(2))}</span>
           <span class="pdm-tier-qty text-[11px] max-[374px]:text-[10px] text-text-placeholder mt-[3px] text-center">${tier.maxQty !== null
       ? `${tier.minQty} - ${tier.maxQty} ${p.unit}`
       : `>= ${tier.minQty} ${p.unit}`}</span>
@@ -168,7 +169,7 @@ export function MobileProductLayout(): string {
 
   const sampleSection = `
     <div id="pdm-sample-row" class="flex items-center justify-between px-4 py-2.5 max-[374px]:px-3 max-[374px]:py-2 bg-surface text-[13px] max-[374px]:text-xs text-text-body">
-      <span>${t('product.samplePrice')}: <strong>$${p.samplePrice?.toFixed(2) ?? '30.00'}</strong></span>
+      <span>${t('product.samplePrice')}: <strong>${formatPrice('$' + (p.samplePrice?.toFixed(2) ?? '30.00'))}</strong></span>
       <button type="button" data-order-sample="${mockProduct.id}" class="pdm-sample-btn px-[18px] py-1.5 max-[374px]:px-3.5 max-[374px]:py-[5px] border border-[#333] rounded-[20px] text-[13px] max-[374px]:text-xs font-medium bg-surface cursor-pointer text-text-body">${t('cart.orderSample')}</button>
     </div>
   `;

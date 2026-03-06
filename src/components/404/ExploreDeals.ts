@@ -7,6 +7,7 @@
 import Swiper from 'swiper';
 import { Navigation } from 'swiper/modules';
 import 'swiper/swiper-bundle.css';
+import { formatPrice } from '../../utils/currency';
 
 interface DealProduct {
   name: string;
@@ -144,7 +145,7 @@ function renderProductCard(p: DealProduct): string {
         <div class="aspect-square w-full mb-2 flex-shrink-0">
           ${renderProductPlaceholder(p.image)}
         </div>
-        <p class="text-sm sm:text-[15px] font-bold leading-tight truncate" style="color:var(--color-error-600, #dc2626)">${p.price}</p>
+        <p class="text-sm sm:text-[15px] font-bold leading-tight truncate" style="color:var(--color-error-600, #dc2626)">${formatPrice(p.price)}</p>
         <p class="mt-1 text-xs sm:text-[13px] font-medium leading-none truncate text-secondary-700 dark:text-secondary-300">MOQ: ${p.moq}</p>
       </a>
     </div>

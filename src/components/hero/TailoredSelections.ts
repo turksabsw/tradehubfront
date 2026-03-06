@@ -8,6 +8,7 @@ import Swiper from 'swiper';
 import { Navigation } from 'swiper/modules';
 import 'swiper/swiper-bundle.css';
 import { t } from '../../i18n';
+import { formatPrice } from '../../utils/currency';
 
 interface CollectionProduct {
   name: string;
@@ -254,7 +255,7 @@ function renderCollectionSlide(collection: TailoredCollection): string {
             <p
               class="font-bold leading-none truncate"
               style="color: var(--tailored-price-color, #222222); font-size: var(--text-product-price, 20px); margin-top: 8px;"
-            >${product1.price}</p>
+            >${formatPrice(product1.price)}</p>
           </div>
           <div class="flex-1 flex flex-col">
             <div class="aspect-square w-full">
@@ -263,7 +264,7 @@ function renderCollectionSlide(collection: TailoredCollection): string {
             <p
               class="font-bold leading-none truncate"
               style="color: var(--tailored-price-color, #222222); font-size: var(--text-product-price, 20px); margin-top: 8px;"
-            >${product2.price}</p>
+            >${formatPrice(product2.price)}</p>
           </div>
         </div>
       </a>

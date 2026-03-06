@@ -4,6 +4,7 @@
  * BEM Block: category-listing
  */
 import type { ProductCategory, DetailedProduct } from '../../types/seller/types';
+import { formatPrice } from '../../utils/currency';
 import { t } from '../../i18n';
 
 function getBadgeClasses(type: string): string {
@@ -52,7 +53,7 @@ function renderProductCard(product: DetailedProduct): string {
 
       <!-- Price -->
       <p class="category-listing__price text-[16px] text-[#111827] dark:text-gray-50 font-bold">
-        $${product.priceMin.toFixed(2)}-$${product.priceMax.toFixed(2)}
+        ${formatPrice('$' + product.priceMin.toFixed(2))}-${formatPrice('$' + product.priceMax.toFixed(2))}
       </p>
 
       <!-- MOQ -->

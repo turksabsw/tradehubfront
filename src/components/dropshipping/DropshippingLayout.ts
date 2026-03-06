@@ -4,6 +4,7 @@
  */
 
 import { t } from '../../i18n';
+import { formatPrice } from '../../utils/currency';
 import type { ProductListingCard, ProductImageKind } from '../../types/productListing';
 import type { CategoryTag } from '../../data/mockDropshipping';
 import {
@@ -65,7 +66,7 @@ function renderDsCard(card: ProductListingCard): string {
     : '';
 
   const originalPriceHtml = card.originalPrice
-    ? `<span class="text-xs text-secondary-300 line-through">${card.originalPrice}</span>`
+    ? `<span class="text-xs text-secondary-300 line-through">${formatPrice(card.originalPrice)}</span>`
     : '';
 
   const reorderHtml = card.reorderRate
@@ -73,7 +74,7 @@ function renderDsCard(card: ProductListingCard): string {
     : '';
 
   const verifiedHtml = card.verified && card.supplierYears && card.supplierYears >= 5
-    ? `<span class="inline-flex px-1.5 py-px bg-sky-50 text-sky-700 border border-sky-200 rounded-[3px] text-[10px] font-semibold uppercase tracking-wide">Verified</span>`
+    ? `<span class="inline-flex px-1.5 py-px bg-sky-50 text-sky-700 border border-sky-200 rounded-[3px] text-[10px] font-semibold uppercase tracking-wide">${t('dropshipping.verified')}</span>`
     : '';
 
   const flagUrl = card.supplierCountry
@@ -93,7 +94,7 @@ function renderDsCard(card: ProductListingCard): string {
         <div class="text-xs text-secondary-300">${card.stats || ''}</div>
         ${discountHtml}
         <div class="flex items-baseline gap-1.5 flex-wrap">
-          <span class="text-[15px] font-bold text-gray-800">${card.price}</span>
+          <span class="text-[15px] font-bold text-gray-800">${formatPrice(card.price)}</span>
           ${originalPriceHtml}
         </div>
         <div class="text-xs text-secondary-400">${t('dropshipping.minOrderLabel')} ${card.moq}</div>
