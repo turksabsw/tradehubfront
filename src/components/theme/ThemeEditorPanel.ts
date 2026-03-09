@@ -50,10 +50,7 @@ export function initThemeEditorPanel(): void {
 
   const triggerBtn = document.getElementById('theme-editor-trigger');
 
-  if (!triggerBtn) {
-    console.warn('[ThemeEditorPanel] Trigger button not found');
-    return;
-  }
+  if (!triggerBtn) return;
 
   // Open drawer on trigger click
   triggerBtn.addEventListener('click', () => {
@@ -211,7 +208,6 @@ function renderTokenControl(sectionId: string, index: number, token: TokenContro
 function openThemeEditorDrawer(): void {
   // Prevent duplicate drawers
   if (document.getElementById('theme-editor-drawer')) {
-    console.log('[ThemeEditorPanel] Drawer already open');
     return;
   }
 

@@ -1,5 +1,6 @@
 import Alpine from 'alpinejs'
 import { t, getCurrentLang } from './i18n'
+import { showToast } from './utils/toast'
 import { initLinkRewriter } from './utils/url'
 import {
   filterAndSortReviews,
@@ -790,25 +791,59 @@ Alpine.data('cartPage', () => ({
 
     // Thumbnail slider for summary section
     this.initThumbnailSlider();
+
+    // View All modal
+    this.initViewAllModal();
   },
 
   /**
    * Sync a checkbox's DOM state and Alpine Checkbox component state.
-   * Updates both input.checked/indeterminate and the Alpine :class binding
-   * via _x_dataStack to prevent stale visual state.
+   * Directly manipulates DOM elements for reliable visual updates instead of
+   * relying solely on Alpine reactivity (_x_dataStack may not trigger re-render).
    */
   syncCheckbox(input: HTMLInputElement, checked: boolean, indeterminate: boolean = false) {
     input.checked = checked;
     input.indeterminate = indeterminate;
 
-    // Update Alpine Checkbox component reactive state so :class bindings stay correct
     const wrapper = input.closest<HTMLElement>('.next-checkbox-wrapper');
-    if (wrapper) {
-      const dataStack = (wrapper as any)._x_dataStack; // eslint-disable-line @typescript-eslint/no-explicit-any
-      if (dataStack?.[0]) {
-        dataStack[0].checked = checked;
-        dataStack[0].indeterminate = indeterminate;
+    if (!wrapper) return;
+
+    // Update Alpine reactive state
+    const dataStack = (wrapper as any)._x_dataStack; // eslint-disable-line @typescript-eslint/no-explicit-any
+    if (dataStack?.[0]) {
+      dataStack[0].checked = checked;
+      dataStack[0].indeterminate = indeterminate;
+    }
+
+    // Direct DOM update for reliable visual state (Alpine may not re-render immediately)
+    const boxSpan = wrapper.querySelector<HTMLElement>('.next-checkbox');
+    const checkSvg = wrapper.querySelector<HTMLElement>('.next-checkbox-check');
+    const dashSpan = wrapper.querySelector<HTMLElement>('.next-checkbox-dash');
+
+    if (boxSpan) {
+      if (checked || indeterminate) {
+        boxSpan.classList.add('bg-cta-primary', 'border-transparent', 'text-white');
+        boxSpan.classList.remove('bg-surface', 'border-border-strong', 'text-transparent');
+        boxSpan.style.backgroundColor = '';
+        boxSpan.style.borderColor = '';
+        boxSpan.style.color = '';
+      } else {
+        boxSpan.classList.remove('bg-cta-primary', 'border-transparent', 'text-white');
+        boxSpan.classList.add('bg-surface', 'border-border-strong', 'text-transparent');
+        boxSpan.style.backgroundColor = '';
+        boxSpan.style.borderColor = '';
+        boxSpan.style.color = '';
       }
+    }
+
+    if (checkSvg) {
+      checkSvg.classList.toggle('block', checked);
+      checkSvg.classList.toggle('hidden', !checked);
+    }
+
+    if (dashSpan) {
+      dashSpan.classList.toggle('block', indeterminate && !checked);
+      dashSpan.classList.toggle('hidden', !(indeterminate && !checked));
     }
   },
 
@@ -1244,6 +1279,109 @@ Alpine.data('cartPage', () => ({
     track.addEventListener('scroll', updateVisibility, { passive: true });
     window.addEventListener('resize', updateVisibility, { passive: true });
     updateVisibility();
+  },
+
+  initViewAllModal() {
+    const viewAllBtn = document.querySelector<HTMLButtonElement>('.sc-view-all-items');
+    if (!viewAllBtn) return;
+
+    // Modal'ı body'ye ekle (sticky parent fixed positioning'i bozuyor)
+    let modal = document.getElementById('cart-view-all-modal');
+    if (!modal) {
+      modal = document.createElement('div');
+      modal.id = 'cart-view-all-modal';
+      modal.className = 'fixed inset-0 z-[9999] hidden items-center justify-center';
+      modal.innerHTML = `
+        <div class="absolute inset-0 bg-black/40 backdrop-blur-[2px] transition-opacity" data-modal-backdrop></div>
+        <div class="relative bg-white rounded-xl shadow-2xl w-[90vw] max-w-[480px] max-h-[80vh] flex flex-col overflow-hidden" style="animation: modalSlideUp 0.25s ease-out;">
+          <div class="flex items-center justify-between px-5 py-4 border-b border-[#e5e5e5]">
+            <h3 class="text-base font-bold text-[#222]"><span>${t('cart.orderSummary')}</span> — <span class="sc-modal-item-count text-[#f59e0b]"></span></h3>
+            <button type="button" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-[#f5f5f5] transition-colors" data-close-view-all aria-label="${t('common.close')}">
+              <svg class="w-5 h-5 text-[#666]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+          </div>
+          <div class="overflow-y-auto p-5 flex-1 sc-modal-suppliers-content"></div>
+        </div>`;
+      document.body.appendChild(modal);
+    }
+
+    const openModal = () => {
+      this.updateViewAllModal();
+      modal!.classList.remove('hidden');
+      modal!.classList.add('flex');
+      document.body.style.overflow = 'hidden';
+    };
+
+    const closeModal = () => {
+      modal!.classList.add('hidden');
+      modal!.classList.remove('flex');
+      document.body.style.overflow = '';
+    };
+
+    viewAllBtn.addEventListener('click', openModal);
+
+    modal.querySelector('[data-modal-backdrop]')?.addEventListener('click', closeModal);
+    modal.querySelector('[data-close-view-all]')?.addEventListener('click', closeModal);
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !modal!.classList.contains('hidden')) closeModal();
+    });
+  },
+
+  updateViewAllModal() {
+    const modal = document.getElementById('cart-view-all-modal');
+    if (!modal) return;
+
+    const suppliers = cartStore.getSuppliers();
+    const summary = cartStore.getSummary();
+
+    const countEl = modal.querySelector<HTMLElement>('.sc-modal-item-count');
+    if (countEl) countEl.textContent = `${summary.selectedCount} ${t('common.item')}`;
+
+    const content = modal.querySelector<HTMLElement>('.sc-modal-suppliers-content');
+    if (!content) return;
+
+    const sections = suppliers
+      .filter((s) => s.products.some((p) => p.skus.some((sk) => sk.selected)))
+      .map((supplier) => {
+        const selectedSkus = supplier.products.flatMap((p) =>
+          p.skus.filter((sk) => sk.selected).map((sk) => ({
+            image: sk.skuImage,
+            quantity: sk.quantity,
+            price: sk.unitPrice,
+            currency: sk.currency,
+          }))
+        );
+        if (selectedSkus.length === 0) return '';
+
+        const skuCards = selectedSkus
+          .map(
+            (sk) => `
+            <div class="flex flex-col items-center gap-1.5 w-[72px] flex-shrink-0">
+              <div class="relative w-[72px] h-[72px] rounded-lg overflow-hidden border border-[#e5e5e5]">
+                <img src="${sk.image}" alt="" class="w-full h-full object-cover" />
+                <span class="absolute bottom-0 right-0 bg-black/60 text-white rounded-tl text-[11px] font-bold leading-4 px-1 py-px">${sk.quantity}</span>
+              </div>
+              <span class="text-[11px] leading-[14px] text-[#666] text-center line-clamp-2 w-full">${sk.currency}${sk.price.toFixed(2)}</span>
+            </div>`
+          )
+          .join('');
+
+        return `
+          <div class="mb-4 last:mb-0">
+            <div class="flex items-center gap-2 mb-3">
+              <div class="w-5 h-5 rounded-full bg-[#f59e0b]/10 flex items-center justify-center flex-shrink-0">
+                <svg class="w-3 h-3 text-[#f59e0b]" fill="currentColor" viewBox="0 0 20 20"><path d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V4z"/></svg>
+              </div>
+              <span class="text-[13px] font-semibold text-[#222] truncate">${supplier.name}</span>
+              <span class="text-[11px] text-[#999] flex-shrink-0">(${selectedSkus.length})</span>
+            </div>
+            <div class="flex gap-2.5 overflow-x-auto pb-2 scrollbar-hide">${skuCards}</div>
+          </div>`;
+      })
+      .join('');
+
+    content.innerHTML = sections || `<p class="text-sm text-[#999] text-center py-8">${t('cart.selectAtLeastOne')}</p>`;
   },
 
   checkEmptyCart() {
@@ -1870,8 +2008,10 @@ Alpine.data('forgotPasswordPage', () => ({
   submitReset() {
     if (!this.passwordValid) return;
     const baseUrl = getBaseUrl();
-    alert(t('auth.forgot.passwordUpdated'));
-    window.location.href = `${baseUrl}pages/auth/login.html`;
+    showToast({ message: t('auth.forgot.passwordUpdated'), type: 'success' });
+    setTimeout(() => {
+      window.location.href = `${baseUrl}pages/auth/login.html`;
+    }, 1500);
   },
 
   destroy() {

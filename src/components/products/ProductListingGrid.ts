@@ -269,8 +269,8 @@ function renderProductListingCard(card: ProductListingCard): string {
 
         <!-- Price area -->
         <div class="px-1 mt-1">
-          <div class="text-xl font-semibold leading-[26px] text-gray-900">${formatPrice(card.price)}</div>
-          <div class="flex gap-1.5 flex-wrap mt-0.5">
+          <div class="fy26-price text-xl font-semibold leading-[26px] text-gray-900">${formatPrice(card.price)}</div>
+          <div class="fy26-moq-stats flex gap-1.5 flex-wrap mt-0.5">
             ${moqHtml}
             ${soldHtml}
           </div>
@@ -494,8 +494,8 @@ export function rerenderProductGrid(products: ProductListingCard[]): void {
   const grid = document.querySelector<HTMLElement>('.product-grid');
   if (!grid) return;
 
-  // Preserve the current view mode (if it has !grid-cols-1, it means 'list' mode is active)
-  const isListView = grid.classList.contains('!grid-cols-1');
+  // Preserve the current view mode
+  const isListView = grid.classList.contains('product-list-mode');
 
   if (products.length === 0) {
     grid.innerHTML = renderNoResults();
@@ -526,48 +526,6 @@ export function setGridViewMode(mode: ViewMode): void {
   const grid = document.querySelector<HTMLElement>('.product-grid');
   if (!grid) return;
 
-  const isList = mode === 'list';
-
-  // Grid container
-  grid.classList.toggle('!grid-cols-1', isList);
-  grid.classList.toggle('!gap-3', isList);
-
-  // Card wrappers
-  grid.querySelectorAll<HTMLElement>('.fy26-product-card-wrapper').forEach(card => {
-    card.classList.toggle('!flex-row', isList);
-    card.classList.toggle('!items-start', isList);
-    card.classList.toggle('!p-3', isList);
-    card.classList.toggle('!gap-4', isList);
-    card.classList.toggle('!border', isList);
-    card.classList.toggle('!border-gray-200', isList);
-    card.classList.toggle('!rounded-lg', isList);
-  });
-
-  // Image areas
-  grid.querySelectorAll<HTMLElement>('.searchx-img-area').forEach(img => {
-    img.classList.toggle('!w-[200px]', isList);
-    img.classList.toggle('xl:!w-[240px]', isList);
-    img.classList.toggle('!shrink-0', isList);
-    img.classList.toggle('!mb-0', isList);
-  });
-
-  // Content areas
-  grid.querySelectorAll<HTMLElement>('.fy26-product-card-content').forEach(content => {
-    content.classList.toggle('!flex-1', isList);
-    content.classList.toggle('!min-w-0', isList);
-  });
-
-  // Title
-  grid.querySelectorAll<HTMLElement>('.searchx-product-e-title').forEach(title => {
-    title.classList.toggle('!h-auto', isList);
-    title.classList.toggle('!line-clamp-2', isList);
-    title.classList.toggle('!text-base', isList);
-    title.classList.toggle('!leading-[22px]', isList);
-  });
-
-  // Action buttons area
-  grid.querySelectorAll<HTMLElement>('.action-area-layout').forEach(action => {
-    action.classList.toggle('!p-0', isList);
-    action.classList.toggle('!mt-2', isList);
-  });
+  // Single class controls entire list layout via CSS (see style.css)
+  grid.classList.toggle('product-list-mode', mode === 'list');
 }

@@ -86,7 +86,7 @@ export function ReviewsModal(): string {
             <!-- Sort Dropdown -->
             <div class="rv-sort-dropdown max-sm:!ml-0 max-sm:!w-full" id="rv-modal-sort-dropdown" :class="{ open: sortOpen }" @click.outside="sortOpen = false">
               <button type="button" class="rv-sort-dropdown-trigger max-sm:!w-full max-sm:!justify-between" @click.stop="sortOpen = !sortOpen; ratingOpen = false">
-                <span x-text="t('product.sortLabel') + ': ' + sortLabel()"></span>
+                <span x-text="'${t('product.sortLabel')}: ' + sortLabel()"></span>
                 <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
               </button>
               <div class="rv-sort-dropdown-panel max-sm:!left-0 max-sm:!right-0">

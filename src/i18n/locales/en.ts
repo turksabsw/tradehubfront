@@ -511,6 +511,7 @@ const en = {
       previous: 'Previous',
       nextLabel: 'Next',
       addToFavorites: 'Add to favorites',
+      removedFromFavorites: 'Removed from favorites',
       imageSearchLabel: 'Image search',
       productGallery: 'Product image gallery',
       closeGallery: 'Close gallery',
@@ -4031,6 +4032,108 @@ const en = {
     review1Price: '$18.50-24.00 / pc',
     review2Product: 'Ultrasonic Water Meter DN15 LoRa',
     review2Price: '$42.00-58.00 / pc',
+  },
+
+  // ============================================================
+  // TOP DEALS PAGE
+  // ============================================================
+  topDealsPage: {
+    heroTitle: 'Top Deals',
+    heroSubtitle: 'Score the lowest prices on iSTOC',
+    promoShipping: 'FREE shipping capped at $20',
+    promoDays: '3 days',
+    tabAll: 'All',
+    tabFreeShipping: 'FREE shipping',
+    tabJewelry: 'Jewelry, Eyewear, Watches & Accessories',
+    tabElectronics: 'Consumer Electronics',
+    tabBags: 'Luggage, Bags & Cases',
+    tabClothing: 'Apparel & Textile',
+    tabCrafts: 'Gifts & Crafts',
+    tabHome: 'Home & Garden',
+    tabTools: 'Tools & Hardware',
+    filterAll: 'All',
+    badgeMatch: 'Match',
+    lowerPriced: 'Lower priced than similar',
+    lowestPrices: '180-day lowest prices',
+    soldCount: '{{count}} sold',
+    offPercent: '{{percent}}% off',
+    loadMore: 'Load more',
+    breadcrumb: 'Top Deals',
+  },
+
+  // ============================================================
+  // TOP RANKING PAGE
+  // ============================================================
+  topRankingPage: {
+    heroTitle: 'Top Ranking',
+    heroSubtitle: 'Navigate trends with data-driven rankings',
+    breadcrumb: 'Top Ranking',
+
+    // Region options
+    regionGlobal: 'Global rankings',
+    regionUS: 'US rankings',
+    regionEurope: 'Europe rankings',
+
+    // General
+    allCategories: 'All categories',
+    apply: 'Apply',
+    back: 'Back',
+    loadMore: 'Load more',
+
+    // Tabs
+    tabAll: 'All',
+    tabLuggageBags: 'Luggage, Bags & Cases',
+    tabJewelryEyewear: 'Jewelry, Eyewear & Accessories',
+    tabConsumerElectronics: 'Consumer Electronics',
+    tabHomeGarden: 'Home & Garden',
+    tabGiftsCrafts: 'Gifts & Crafts',
+    tabSportsEntertainment: 'Sports & Entertainment',
+
+    // Sort pills
+    sortHotSelling: 'Hot selling',
+    sortMostPopular: 'Most popular',
+    sortBestReviewed: 'Best reviewed',
+
+    // Main categories (dropdown)
+    catConsumerElectronics: 'Consumer Electronics',
+    catJewelryEyewear: 'Jewelry & Eyewear',
+    catLuggageBags: 'Luggage, Bags & Cases',
+    catHomeGarden: 'Home & Garden',
+    catGiftsCrafts: 'Gifts & Crafts',
+    catSportsEntertainment: 'Sports & Entertainment',
+
+    // Sub-categories
+    catPhones: 'Mobile Phones',
+    catAudio: 'Audio & Speakers',
+    catComputers: 'Computers & Laptops',
+    catNetworking: 'Networking & Routers',
+    catBracelets: 'Bracelets',
+    catBrooches: 'Brooches & Pins',
+    catCapsHats: 'Caps & Hats',
+    catLabels: 'Labels & Tags',
+    catNails: 'Nail Art',
+    catSkincare: 'Skin Care',
+    catHockey: 'Hockey',
+
+    // Group names
+    groupGamingPhones: 'Gaming Mobile Phones',
+    groupGamingSpeakers: 'Gaming Speakers',
+    groupElectronicSigns: 'Electronic Signs',
+    groupCharmBracelets: 'Fashion Charm Bracelets',
+    groupBrooches: 'Fashion Brooches',
+    groupPackagingLabels: 'Packaging Labels',
+    groupBaseballCaps: 'Baseball Caps',
+    groupGarmentLabels: 'Garment Labels',
+    groupHockey: 'Ice Hockey & Field Hockey',
+    groupLedTailLights: 'LED Tail Lights',
+    groupHomeTheater: 'Home Theater Systems',
+    groupFingernails: 'Artificial Fingernails',
+    groupSkinCareSerum: 'Skin Care Serum',
+    groupMiniPCs: 'Mini PCs',
+    groupStudentLaptops: 'Student Laptops',
+    groupRouters: 'Routers',
+    groupPowerBanks: 'Power Banks',
+    groupMedicalInstruments: 'Medical Instruments',
   },
 };
 

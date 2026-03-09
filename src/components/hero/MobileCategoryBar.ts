@@ -2,7 +2,7 @@
  * MobileCategoryBar Component
  * Alibaba-style horizontal scrollable category tabs + product thumbnails
  * Bottom sheet drawer for category selection
- * Visible only on mobile/tablet (lg:hidden)
+ * Visible only on mobile/tablet (xl:hidden)
  */
 
 import { megaCategories } from '../header';
@@ -13,10 +13,10 @@ import { t } from '../../i18n';
 function renderBottomSheet(): string {
   return `
     <!-- Bottom Sheet Overlay -->
-    <div id="mcb-sheet-overlay" class="fixed inset-0 z-(--z-backdrop) bg-black/50 opacity-0 pointer-events-none transition-opacity duration-300 lg:hidden"></div>
+    <div id="mcb-sheet-overlay" class="fixed inset-0 z-(--z-backdrop) bg-black/50 opacity-0 pointer-events-none transition-opacity duration-300 xl:hidden"></div>
 
     <!-- Bottom Sheet Panel -->
-    <div id="mcb-sheet-panel" class="fixed inset-x-0 bottom-0 z-(--z-modal) transition-transform duration-300 ease-out lg:hidden" style="transform: translateY(100%)">
+    <div id="mcb-sheet-panel" class="fixed inset-x-0 bottom-0 z-(--z-modal) transition-transform duration-300 ease-out xl:hidden" style="transform: translateY(100%)">
       <div class="bg-white dark:bg-gray-800 rounded-t-md max-h-[85vh] flex flex-col shadow-2xl">
         <!-- Drag Handle + Title (swipe-to-dismiss target) -->
         <div id="mcb-sheet-drag-handle" class="flex-shrink-0">
@@ -64,7 +64,7 @@ export function MobileCategoryBar(): string {
   const firstCat = megaCategories[0];
 
   return `
-    <div id="mobile-category-bar" class="lg:hidden bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+    <div id="mobile-category-bar" class="xl:hidden bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
       <!-- Row 1: Category Tabs -->
       <div class="relative">
         <div id="mcb-tabs" class="flex overflow-x-auto scrollbar-hide gap-0.5 pr-10">

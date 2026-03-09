@@ -26,6 +26,10 @@ export function SupplierCard({ supplier, isSingleSupplier = true }: SupplierCard
   const products = supplier.products.map((product) => ProductItem({ product })).join('');
   const isOpen = isSingleSupplier;
 
+  const totalSupplierSkus = supplier.products.reduce((acc, p) => acc + p.skus.length, 0);
+  const selectedSupplierSkus = supplier.products.reduce((acc, p) => acc + p.skus.filter((s) => s.selected).length, 0);
+  const supplierIndeterminate = selectedSupplierSkus > 0 && selectedSupplierSkus < totalSupplierSkus;
+
   return `
     <section class="sc-c-supplier-container rounded-3xl border border-border-default bg-surface overflow-hidden"
       data-supplier-id="${escapeHtml(supplier.id)}"
@@ -35,7 +39,7 @@ export function SupplierCard({ supplier, isSingleSupplier = true }: SupplierCard
         @click="expanded = !expanded">
         <div class="flex items-center gap-3 w-full lg:w-auto overflow-hidden">
           <div onclick="event.stopPropagation()">
-            ${Checkbox({ id: `supplier-checkbox-${supplier.id}`, checked: supplier.selected, onChange: `supplier-select-${supplier.id}` })}
+            ${Checkbox({ id: `supplier-checkbox-${supplier.id}`, checked: supplier.selected, indeterminate: supplierIndeterminate, onChange: `supplier-select-${supplier.id}` })}
           </div>
           <a href="${escapeHtml(supplier.href)}" onclick="event.stopPropagation()" class="text-lg font-semibold text-text-heading hover:text-cta-primary hover:underline truncate">${escapeHtml(supplier.name)}</a>
           <svg class="sc-c-supplier-chevron w-5 h-5 text-text-tertiary transition-transform duration-300 ml-1 shrink-0 ${isOpen ? 'rotate-180' : ''}"

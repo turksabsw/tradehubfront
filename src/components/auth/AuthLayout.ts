@@ -75,60 +75,103 @@ function renderMobileHeader(options: AuthLayoutOptions = {}): string {
  */
 function renderPromoBanner(): string {
   return `
-    <div class="auth-promo-banner flex flex-col items-center justify-center px-12 py-12 text-center text-white h-full relative overflow-hidden auth-accent-bg">
-      <!-- Background Pattern/Effect -->
-      <div class="absolute inset-0 opacity-10">
-         <svg class="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-           <path d="M0 100 C 20 0 50 0 100 100 Z" fill="white" />
-         </svg>
-      </div>
+    <div class="auth-promo-banner flex flex-col items-center justify-center px-10 py-12 text-center text-white h-full relative overflow-hidden bg-[linear-gradient(145deg,var(--color-primary-400)_0%,var(--color-primary-500)_45%,var(--color-primary-700)_100%)] w-full">
+
+      <!-- Decorative background rings -->
+      <div class="absolute -top-24 -right-24 w-80 h-80 rounded-full bg-white/5"></div>
+      <div class="absolute -bottom-32 -left-24 w-96 h-96 rounded-full bg-white/5"></div>
+      <div class="absolute inset-0 bg-gradient-to-b from-black/10 to-transparent pointer-events-none"></div>
 
       <!-- Content -->
-      <div class="relative z-10 w-full max-w-lg">
-        <h1 class="text-3xl lg:text-4xl font-bold mb-6 leading-tight">
-          Global B2B sourcing with<br/>
-          <span class="text-orange-100">order protection and great savings</span>
-        </h1>
-        
-        <!-- Illustration Area -->
-        <div class="mt-12 relative w-full aspect-square max-w-sm mx-auto">
-           <!-- Placeholder for the globe/illustration from the screenshot -->
-           <div class="absolute inset-0 flex items-center justify-center">
-             <!-- Globe -->
-             <div class="w-48 h-48 rounded-full bg-orange-400/30 backdrop-blur-sm border border-white/20 flex items-center justify-center relative">
-               <div class="w-40 h-40 rounded-full bg-orange-300/30 border border-white/20 flex items-center justify-center">
-                 <svg class="w-24 h-24 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                 </svg>
-               </div>
-               <!-- Pin Location -->
-               <div class="absolute -top-6 right-8 text-red-500 drop-shadow-lg animate-bounce">
-                  <svg class="w-12 h-12 fill-current" viewBox="0 0 24 24">
-                     <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                  </svg>
-               </div>
-               <!-- Box -->
-               <div class="absolute -bottom-2 -left-4 bg-orange-600 p-2 rounded shadow-lg transform rotate-12">
-                   <svg class="w-8 h-8 text-yellow-300" viewBox="0 0 24 24" fill="currentColor">
-                       <path d="M21 16.532l-9-5.195-9 5.195v-7.15l9-5.196 9 5.196v7.15zm-9-12.87l-10 5.772v8.667l10 5.773 10-5.773v-8.667l-10-5.773z"/>
-                   </svg>
-               </div>
-             </div>
-             
-             <!-- Floating Truck -->
-             <div class="absolute bottom-4 right-0 transform translate-x-4 bg-yellow-400 p-2 rounded-md shadow-xl">
-                 <svg class="w-8 h-8 text-gray-800" fill="currentColor" viewBox="0 0 24 24">
-                   <path d="M20 8h-3V4H3v14h1v2h2v-2h10v2h2v-2h2.2l1.8-6v-4zM5 16H4V5h14v11H5zm14-4h-2v-2h2v2zm0-3h-2V7h2v2z"/>
-                 </svg>
-             </div>
-           </div>
+      <div class="relative z-10 w-full max-w-sm">
+
+        <!-- Brand badge -->
+        <div class="flex justify-center mb-8">
+          <div class="flex items-center gap-2 bg-white/10 rounded-full px-4 py-2 border border-white/20 backdrop-blur-sm">
+            <svg class="w-4 h-4 text-yellow-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span class="text-white text-sm font-semibold tracking-wide">TradeHub B2B</span>
+          </div>
         </div>
+
+        <!-- Headline -->
+        <h1 class="text-3xl lg:text-4xl font-bold leading-tight text-white mb-3">
+          Global B2B<br/>Sourcing Platform
+        </h1>
+        <p class="text-sm text-orange-100/80 leading-relaxed mb-8">
+          Order protection, verified suppliers<br/>and great savings — all in one place.
+        </p>
+
+        <!-- Stats row -->
+        <div class="flex justify-center items-center gap-0 mb-10 rounded-2xl bg-white/10 border border-white/15 overflow-hidden">
+          <div class="flex-1 py-4 px-2 text-center">
+            <div class="text-xl font-bold text-white">200K+</div>
+            <div class="text-xs text-orange-100/70 mt-0.5">Suppliers</div>
+          </div>
+          <div class="w-px h-10 bg-white/20"></div>
+          <div class="flex-1 py-4 px-2 text-center">
+            <div class="text-xl font-bold text-white">50M+</div>
+            <div class="text-xs text-orange-100/70 mt-0.5">Products</div>
+          </div>
+          <div class="w-px h-10 bg-white/20"></div>
+          <div class="flex-1 py-4 px-2 text-center">
+            <div class="text-xl font-bold text-white">190+</div>
+            <div class="text-xs text-orange-100/70 mt-0.5">Countries</div>
+          </div>
+        </div>
+
+        <!-- Illustration: Globe with floating badges -->
+        <div class="relative h-52 w-full flex items-center justify-center mb-6">
+          <!-- Outer ring -->
+          <div class="w-44 h-44 rounded-full bg-white/8 border border-white/15 flex items-center justify-center relative">
+            <!-- Inner ring -->
+            <div class="w-32 h-32 rounded-full bg-white/10 border border-white/20 flex items-center justify-center">
+              <svg class="w-16 h-16 text-white/90" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+
+            <!-- Bouncing pin -->
+            <div class="absolute -top-5 right-6 text-red-400 animate-bounce drop-shadow-lg">
+              <svg class="w-7 h-7 fill-current" viewBox="0 0 24 24">
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+              </svg>
+            </div>
+
+            <!-- Badge: Verified -->
+            <div class="absolute -left-16 top-6 flex items-center gap-1.5 bg-white/15 border border-white/20 backdrop-blur-sm rounded-lg px-2.5 py-1.5 shadow-lg">
+              <svg class="w-3.5 h-3.5 text-green-300 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+              </svg>
+              <span class="text-white text-xs font-medium whitespace-nowrap">Verified</span>
+            </div>
+
+            <!-- Badge: Fast -->
+            <div class="absolute -right-16 bottom-6 flex items-center gap-1.5 bg-white/15 border border-white/20 backdrop-blur-sm rounded-lg px-2.5 py-1.5 shadow-lg">
+              <svg class="w-3.5 h-3.5 text-yellow-300 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+              <span class="text-white text-xs font-medium whitespace-nowrap">Fast Ship</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Trust bar -->
+        <div class="flex items-center justify-center gap-2 text-xs text-orange-100/60">
+          <svg class="w-3.5 h-3.5 shrink-0 text-orange-100/50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+          </svg>
+          <span>SSL Encrypted · Trade Assurance · 24/7 Support</span>
+        </div>
+
       </div>
     </div>
   `;
 }
 
-/* ── Main Component ──────────────────────────────────── */
+
+/* ── Main Component ──────────────────────────────────────── */
 
 /**
  * AuthLayout Component
@@ -148,15 +191,15 @@ export function AuthLayout(content: string, options: AuthLayoutOptions = {}): st
       <div class="flex min-h-screen">
 
         <!-- Left: Promo Banner (Desktop only) -->
-        <div class="hidden lg:flex lg:w-[45%] xl:w-[50%] auth-accent-bg">
+        <div class="hidden lg:flex lg:w-[45%] xl:w-[50%] bg-[linear-gradient(145deg,var(--color-primary-400)_0%,var(--color-primary-500)_45%,var(--color-primary-700)_100%)]">
           ${renderPromoBanner()}
         </div>
 
         <!-- Right: Form Content Area -->
         <div class="flex-1 lg:w-[55%] xl:w-[50%] relative bg-white dark:bg-gray-900">
 
-          <!-- Mobile: Full-height orange background -->
-          <div class="lg:hidden absolute inset-0 auth-accent-bg"></div>
+          <!-- Mobile: Full-height accent background -->
+          <div class="lg:hidden absolute inset-0 bg-[linear-gradient(145deg,var(--color-primary-400)_0%,var(--color-primary-500)_45%,var(--color-primary-700)_100%)]"></div>
 
           <!-- Responsive content wrapper -->
           <div class="relative z-10 w-full min-h-screen flex flex-col lg:items-center lg:justify-center">
@@ -165,12 +208,12 @@ export function AuthLayout(content: string, options: AuthLayoutOptions = {}): st
               <div class="h-14"></div>
               <div class="px-6 pt-6 pb-8 text-white text-center">
                 <h2 class="text-xl font-bold mb-1">Global B2B sourcing</h2>
-                <p class="text-sm opacity-90">Order protection and great savings</p>
+                <p class="text-sm opacity-80">Order protection and great savings</p>
               </div>
             </div>
 
-            <!-- Single content area (mobile: white card, desktop: transparent) -->
-            <div class="bg-white dark:bg-gray-900 mx-2 sm:mx-4 mb-8 px-4 sm:px-6 py-6 sm:py-8 rounded-md shadow-lg lg:bg-transparent lg:dark:bg-transparent lg:mx-0 lg:mb-0 lg:px-8 lg:py-0 lg:rounded-none lg:shadow-none">
+            <!-- Single content area (mobile: white card, desktop: clean white) -->
+            <div class="bg-white dark:bg-gray-900 mx-2 sm:mx-4 mb-8 px-6 sm:px-8 py-8 rounded-2xl shadow-xl lg:mx-0 lg:mb-0 lg:px-20 lg:py-0 lg:rounded-none lg:shadow-none lg:bg-white lg:dark:bg-gray-900 lg:h-full lg:min-h-screen lg:flex lg:items-center">
               <div class="w-full max-w-md mx-auto">
                 ${content}
               </div>
@@ -182,6 +225,7 @@ export function AuthLayout(content: string, options: AuthLayoutOptions = {}): st
     </div>
   `;
 }
+
 
 /* ── Init Logic ──────────────────────────────────────── */
 

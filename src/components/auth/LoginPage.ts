@@ -1,11 +1,9 @@
 /**
  * LoginPage Component
- * Login page content with social login options (Google, Facebook, LinkedIn, Email),
- * and 'Create account' link.
+ * Login page content with email/password login and 'Create account' link.
  * Used within AuthLayout for both desktop and mobile views.
  */
 
-import { SocialLoginButtons, initSocialLoginButtons, type LoginProvider } from './SocialLoginButtons';
 import { getBaseUrl } from './AuthLayout';
 import { login } from '../../utils/auth';
 import { t } from '../../i18n';
@@ -13,8 +11,6 @@ import { t } from '../../i18n';
 /* ── Types ──────────────────────────────────────────── */
 
 export interface LoginPageOptions {
-  /** Callback when a social provider is selected */
-  onProviderSelect?: (provider: LoginProvider) => void;
   /** Callback when 'Create account' is clicked */
   onCreateAccount?: () => void;
 }
@@ -27,19 +23,8 @@ export function LoginPage(): string {
   return `
     <div id="login-page" class="w-full">
       <!-- Header Area -->
-      <div class="mb-8 relative">
+      <div class="mb-8">
         <h1 class="text-2xl font-bold text-gray-900 dark:text-white mb-2" data-i18n="auth.login.title">${t('auth.login.title')}</h1>
-        
-        <!-- Sign in with code link (Absolute positioned on desktop, relative on mobile) -->
-        <a 
-          href="javascript:void(0)" 
-          class="lg:absolute lg:top-1 lg:right-0 text-sm text-gray-500 auth-link-hover dark:text-gray-400 dark:auth-link-hover transition-colors flex items-center gap-1"
-        >
-          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
-          </svg>
-          <span data-i18n="auth.login.mobileCode">${t('auth.login.mobileCode')}</span>
-        </a>
       </div>
 
       <!-- Login Form -->
@@ -97,16 +82,6 @@ export function LoginPage(): string {
 
       </form>
 
-      <!-- Divider -->
-      <div class="relative my-8 text-center">
-        <div class="absolute inset-0 flex items-center">
-          <div class="w-full border-t border-gray-200 dark:border-gray-700"></div>
-        </div>
-        <span class="relative px-4 bg-white dark:bg-gray-900 text-sm text-gray-500 dark:text-gray-400 uppercase" data-i18n="auth.login.or">${t('auth.login.or')}</span>
-      </div>
-
-      <!-- Social Login Buttons (Icons Mode) -->
-      ${SocialLoginButtons({ mode: 'icons' })}
 
       <!-- Create Account Link -->
       <div class="mt-8 text-center">
@@ -122,19 +97,6 @@ export function LoginPage(): string {
         </p>
       </div>
 
-      <!-- QR Code Link (Bottom) -->
-      <div class="mt-12 flex justify-end">
-        <a
-          href="javascript:void(0)"
-          id="login-qr-link-bottom"
-          class="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors"
-        >
-          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/>
-          </svg>
-          <span data-i18n="auth.login.qrLogin">${t('auth.login.qrLogin')}</span>
-        </a>
-      </div>
     </div>
   `;
 }
@@ -148,20 +110,6 @@ export function LoginPage(): string {
 export function initLoginPage(options: LoginPageOptions = {}): void {
   const loginPage = document.getElementById('login-page');
   if (!loginPage) return;
-
-  // Initialize social login buttons
-  initSocialLoginButtons({
-    mode: 'icons',
-    onProviderSelect: (provider) => {
-      // Call custom handler if provided
-      if (options.onProviderSelect) {
-        options.onProviderSelect(provider);
-      }
-
-      // Default behavior: redirect based on provider
-      handleProviderLogin(provider);
-    }
-  });
 
   // Handle 'Create account' link
   const createAccountLink = document.getElementById('login-create-account-link');
@@ -184,22 +132,4 @@ export function initLoginPage(options: LoginPageOptions = {}): void {
       }
     });
   }
-}
-
-/* ── Helper Functions ────────────────────────────────── */
-
-/**
- * Handle provider login selection (UI-only, no actual auth)
- * In production, this would redirect to OAuth flow
- */
-function handleProviderLogin(provider: LoginProvider): void {
-  // For now, just dispatch a custom event for analytics/tracking
-  const event = new CustomEvent('login-provider-selected', {
-    bubbles: true,
-    detail: { provider, timestamp: Date.now() }
-  });
-  document.dispatchEvent(event);
-
-  // TODO: When backend is ready, redirect to OAuth flow:
-  // window.location.href = `/api/auth/${provider}`;
 }

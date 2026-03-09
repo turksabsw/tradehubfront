@@ -104,7 +104,7 @@ function renderCategoryPopup(): string {
 
 export function CategoryBrowse(): string {
   return `
-        <div class="th-card relative h-[300px] w-full flex-shrink-0 overflow-hidden group/panel lg:w-[300px] dark:bg-gray-800 dark:border-gray-700" style="background-color:var(--hero-card-bg);border-color:var(--hero-card-border-color);border-radius:var(--hero-card-radius)">
+        <div class="th-card relative h-[300px] w-full flex-shrink-0 overflow-hidden group/panel xl:w-[300px] dark:bg-gray-800 dark:border-gray-700" style="background-color:var(--hero-card-bg);border-color:var(--hero-card-border-color);border-radius:var(--hero-card-radius)">
           <!-- Category List -->
           <ul class="h-full overflow-y-auto pb-12">
             ${megaCategories.map(cat => `

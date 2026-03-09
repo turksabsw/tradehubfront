@@ -19,7 +19,7 @@ export function Checkbox({ id, checked, indeterminate = false, onChange }: Check
   // Pre-Alpine visual fallback classes (Alpine takes over via :class once initialized)
   const active = checked || indeterminate;
   const boxDynamic = active
-    ? 'border-transparent bg-text-primary text-white'
+    ? 'border-transparent bg-cta-primary text-white'
     : 'border-border-strong bg-surface text-transparent';
   const checkVisible = checked ? 'block' : 'hidden';
   const dashVisible = indeterminate && !checked ? 'block' : 'hidden';
@@ -41,7 +41,7 @@ export function Checkbox({ id, checked, indeterminate = false, onChange }: Check
         :aria-checked="indeterminate ? 'mixed' : String(checked)"
       />
       <span class="next-checkbox relative inline-flex w-5 h-5 rounded-[4px] border transition-colors duration-150 ${boxDynamic}"
-        :class="(checked || indeterminate) ? 'border-transparent bg-text-primary text-white' : 'border-border-strong bg-surface text-transparent'">
+        :class="(checked || indeterminate) ? 'border-transparent bg-cta-primary text-white' : 'border-border-strong bg-surface text-transparent'">
         <svg class="next-checkbox-check absolute inset-0 m-auto ${checkVisible}"
           :class="checked ? 'block' : 'hidden'"
           width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">

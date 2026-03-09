@@ -35,10 +35,7 @@ export function SkuRow({ sku }: SkuRowProps): string {
 
       <div class="min-w-0">
         <div class="flex items-start justify-between gap-2">
-          <button type="button" class="inline-flex items-center max-w-full rounded-full bg-surface-raised px-3 py-1 text-sm text-text-body hover:bg-secondary-100 transition-colors">
-            <span class="truncate">${escapeHtml(sku.variantText)}</span>
-            <span class="ml-1 text-xs text-text-tertiary">▼</span>
-          </button>
+          <span class="text-sm text-text-body truncate">${escapeHtml(sku.variantText)}</span>
 
           <div class="relative group">
             <button type="button" class="sc-c-sku-delete-btn w-8 h-8 inline-flex items-center justify-center rounded-full text-text-tertiary hover:bg-black transition-colors" data-sku-id="${escapeHtml(sku.id)}" @click="$dispatch('sku-delete', { skuId: '${escapeHtml(sku.id)}' })" aria-label="SKU sil">

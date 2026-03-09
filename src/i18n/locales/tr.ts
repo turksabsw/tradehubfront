@@ -511,6 +511,7 @@ const tr = {
       previous: 'Önceki',
       nextLabel: 'Sonraki',
       addToFavorites: 'Favorilere ekle',
+      removedFromFavorites: 'Favorilerden çıkarıldı',
       imageSearchLabel: 'Görsel ile ara',
       productGallery: 'Ürün görsel galerisi',
       closeGallery: 'Galeriyi kapat',
@@ -4022,6 +4023,108 @@ const tr = {
     review1Price: '18,50-24,00$ / adet',
     review2Product: 'Ultrasonik Su Sayacı DN15 LoRa',
     review2Price: '42,00-58,00$ / adet',
+  },
+
+  // ============================================================
+  // TOP DEALS PAGE
+  // ============================================================
+  topDealsPage: {
+    heroTitle: 'En İyi Fırsatlar',
+    heroSubtitle: 'iSTOC\'ta en düşük fiyatları yakalayın',
+    promoShipping: 'Ücretsiz kargo $20\'ye kadar',
+    promoDays: '3 gün',
+    tabAll: 'Tümü',
+    tabFreeShipping: 'Ücretsiz Kargo',
+    tabJewelry: 'Mücevher, Gözlük, Saat & Aksesuar',
+    tabElectronics: 'Tüketici Elektroniği',
+    tabBags: 'Bavul, Çanta & Kılıf',
+    tabClothing: 'Giyim & Tekstil',
+    tabCrafts: 'Hediye & El Sanatları',
+    tabHome: 'Ev & Bahçe',
+    tabTools: 'Alet & Hırdavat',
+    filterAll: 'Tümü',
+    badgeMatch: 'Eşleşme',
+    lowerPriced: 'Benzerlerinden daha uygun',
+    lowestPrices: '180 günün en düşük fiyatı',
+    soldCount: '{{count}} satıldı',
+    offPercent: '%{{percent}} indirim',
+    loadMore: 'Daha fazla yükle',
+    breadcrumb: 'En İyi Fırsatlar',
+  },
+
+  // ============================================================
+  // TOP RANKING PAGE
+  // ============================================================
+  topRankingPage: {
+    heroTitle: 'En Çok Satanlar',
+    heroSubtitle: 'Veri odaklı sıralamalarla trendleri keşfedin',
+    breadcrumb: 'En Çok Satanlar',
+
+    // Region options
+    regionGlobal: 'Küresel sıralama',
+    regionUS: 'ABD sıralaması',
+    regionEurope: 'Avrupa sıralaması',
+
+    // General
+    allCategories: 'Tüm kategoriler',
+    apply: 'Uygula',
+    back: 'Geri',
+    loadMore: 'Daha fazla yükle',
+
+    // Tabs
+    tabAll: 'Tümü',
+    tabLuggageBags: 'Bavul, Çanta & Kılıf',
+    tabJewelryEyewear: 'Takı, Gözlük & Aksesuar',
+    tabConsumerElectronics: 'Tüketici Elektroniği',
+    tabHomeGarden: 'Ev & Bahçe',
+    tabGiftsCrafts: 'Hediye & El Sanatları',
+    tabSportsEntertainment: 'Spor & Eğlence',
+
+    // Sort pills
+    sortHotSelling: 'Çok satan',
+    sortMostPopular: 'En popüler',
+    sortBestReviewed: 'En çok değerlendirilen',
+
+    // Main categories (dropdown)
+    catConsumerElectronics: 'Tüketici Elektroniği',
+    catJewelryEyewear: 'Takı & Gözlük',
+    catLuggageBags: 'Bavul, Çanta & Kılıf',
+    catHomeGarden: 'Ev & Bahçe',
+    catGiftsCrafts: 'Hediye & El Sanatları',
+    catSportsEntertainment: 'Spor & Eğlence',
+
+    // Sub-categories
+    catPhones: 'Cep Telefonları',
+    catAudio: 'Ses & Hoparlör',
+    catComputers: 'Bilgisayar & Laptop',
+    catNetworking: 'Ağ & Router',
+    catBracelets: 'Bileklik',
+    catBrooches: 'Broş & Rozet',
+    catCapsHats: 'Şapka & Bere',
+    catLabels: 'Etiket',
+    catNails: 'Tırnak Sanatı',
+    catSkincare: 'Cilt Bakımı',
+    catHockey: 'Hokey',
+
+    // Group names
+    groupGamingPhones: 'Oyuncu Cep Telefonları',
+    groupGamingSpeakers: 'Oyuncu Hoparlörleri',
+    groupElectronicSigns: 'Elektronik Tabelalar',
+    groupCharmBracelets: 'Moda Charm Bileklikler',
+    groupBrooches: 'Moda Broşlar',
+    groupPackagingLabels: 'Ambalaj Etiketleri',
+    groupBaseballCaps: 'Beyzbol Şapkaları',
+    groupGarmentLabels: 'Giysi Etiketleri',
+    groupHockey: 'Buz Hokeyi & Çim Hokeyi',
+    groupLedTailLights: 'LED Arka Lambalar',
+    groupHomeTheater: 'Ev Sinema Sistemleri',
+    groupFingernails: 'Yapay Tırnaklar',
+    groupSkinCareSerum: 'Cilt Bakım Serumu',
+    groupMiniPCs: 'Mini Bilgisayarlar',
+    groupStudentLaptops: 'Öğrenci Laptopları',
+    groupRouters: 'Routerlar',
+    groupPowerBanks: 'Taşınabilir Şarj Cihazları',
+    groupMedicalInstruments: 'Tıbbi Cihazlar',
   },
 };
 

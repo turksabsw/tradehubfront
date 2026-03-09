@@ -585,6 +585,14 @@
     --topdeals-price-bg: #FFEDED;
     --topdeals-badge-text: var(--color-surface);
 
+    /* --- Top Deals Page --- */
+    --topdeals-page-hero-gradient: linear-gradient(135deg, #ff6b35 0%, #ee2737 50%, #c41442 100%);
+    --topdeals-page-tab-active-border: var(--color-text-heading);
+    --topdeals-page-tab-text: #6b7280;
+    --topdeals-page-pill-bg: #f3f4f6;
+    --topdeals-page-pill-active-bg: var(--color-surface);
+    --topdeals-page-pill-active-border: var(--color-text-heading);
+
     /* --- Top Ranking Section --- */
     --topranking-bg: #F5F5F5;
     --topranking-title-color: var(--color-text-heading);
@@ -1442,7 +1450,7 @@
         font-weight: var(--product-meta-weight, 400);
     }
 
-    .product-card__supplier-text + .product-card__supplier-text::before {
+    .product-card__supplier-text+.product-card__supplier-text::before {
         content: '·';
         display: inline-block;
         margin: 0 4px;
@@ -1459,8 +1467,119 @@
     /* searchx-*, fy26-*, price-area-center, action-area-layout migrated to Tailwind */
 
     /* Responsive grid columns migrated to Tailwind classes in templates */
+}
 
-    /* List view mode: handled entirely via Tailwind classes in setGridViewMode() */
+/* ── Product List View Mode ─────────────────────────────────── */
+/* Single class on .product-grid controls the entire list layout */
+
+/* List mode: single column grid */
+.product-grid.product-list-mode {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+}
+
+/* ≤479px: list mode falls back to vertical card (no horizontal override) */
+
+/* 480px–1199px: 2-column grid — image left, content+buttons right */
+@media (min-width: 480px) {
+    .product-grid.product-list-mode>[role="listitem"] .fy26-product-card-wrapper {
+        display: grid;
+        grid-template-columns: 200px 1fr;
+        grid-template-rows: 1fr auto;
+        gap: 0 16px;
+        padding: 12px;
+        border: 1px solid var(--product-card-border, #e5e7eb);
+        border-radius: 8px;
+        overflow: visible;
+    }
+
+    .product-grid.product-list-mode .searchx-img-area {
+        grid-row: 1 / -1;
+        grid-column: 1;
+        margin-bottom: 0;
+        width: 100%;
+    }
+
+    .product-grid.product-list-mode .fy26-product-card-content {
+        grid-column: 2;
+        grid-row: 1;
+        min-width: 0;
+    }
+
+    .product-grid.product-list-mode .fy26-product-card-content .px-1 {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .product-grid.product-list-mode .action-area-layout {
+        grid-column: 2;
+        grid-row: 2;
+        padding: 0;
+        margin-top: 8px;
+    }
+
+    .product-grid.product-list-mode .searchx-product-e-title {
+        height: auto !important;
+        -webkit-line-clamp: 2;
+        font-size: 1rem;
+        line-height: 22px;
+    }
+}
+
+/* ≥1200px: flex-row layout — image, content, buttons side by side */
+@media (min-width: 1200px) {
+    .product-grid.product-list-mode>[role="listitem"] .fy26-product-card-wrapper {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 16px;
+    }
+
+    .product-grid.product-list-mode .searchx-img-area {
+        width: 240px;
+        flex-shrink: 0;
+        margin-bottom: 0;
+    }
+
+    .product-grid.product-list-mode .fy26-product-card-content {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .product-grid.product-list-mode .action-area-layout {
+        flex-shrink: 0;
+        margin-top: 0;
+    }
+}
+
+/* ── Product Card: compact fonts for tight grid (3-4 cols with sidebar) ── */
+
+/* 1024px–1599px: sidebar visible, 3-4 columns → cards ~220-300px wide */
+@media (min-width: 1024px) and (max-width: 1599px) {
+    .product-grid:not(.product-list-mode) .searchx-product-e-title {
+        font-size: 13px;
+        line-height: 17px;
+        height: 51px;
+        /* 3 lines × 17px */
+    }
+
+    .product-grid:not(.product-list-mode) .fy26-price {
+        font-size: 1rem;
+        line-height: 1.375rem;
+    }
+
+    .product-grid:not(.product-list-mode) .fy26-moq-stats,
+    .product-grid:not(.product-list-mode) .fy26-moq-stats .text-sm {
+        font-size: 12px;
+        line-height: 16px;
+    }
+
+    .product-grid:not(.product-list-mode) .searchx-product-e-abutton {
+        font-size: 12px;
+        padding-left: 8px;
+        padding-right: 8px;
+        height: 2rem;
+    }
 }
 
 .hero-side-slider .swiper-slide {
@@ -1683,6 +1802,7 @@
 .gallery-nav-btn:hover {
     box-shadow: 0 2px 10px rgba(0, 0, 0, .18);
 }
+
 
 #gallery-prev {
     left: 10px;
@@ -3646,7 +3766,18 @@ footer {
 
 /* Checkbox hover border */
 .next-checkbox-wrapper:hover .next-checkbox {
-    border-color: #222;
+    border-color: var(--color-cta-primary, #cc9900);
+}
+
+/* Cart checkbox: seçili/indeterminate durumda altın sarısı */
+.next-checkbox-wrapper .next-checkbox.bg-text-primary {
+    background-color: var(--color-cta-primary, #cc9900) !important;
+    border-color: transparent !important;
+}
+
+/* Utility: cta-primary background (not in Tailwind config) */
+.bg-cta-primary {
+    background-color: var(--color-cta-primary, #cc9900);
 }
 
 /* Icon pseudo-elements */
@@ -4108,6 +4239,18 @@ footer {
 /* ─── Layout ─── */
 /* ─── Payment: minimal CSS kept for JS-toggled states & animation ─── */
 @keyframes payModalIn {
+    from {
+        opacity: 0;
+        transform: translateY(16px) scale(0.97);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes modalSlideUp {
     from {
         opacity: 0;
         transform: translateY(16px) scale(0.97);
@@ -4672,33 +4815,42 @@ footer {
    PRINT STYLES
    ============================================================ */
 @media print {
-  header, footer, nav,
-  .floating-panel, [data-floating-panel],
-  #sticky-header,
-  .scrollbar-hide,
-  button:not([type="submit"]) {
-    display: none !important;
-  }
-  main {
-    padding: 0 !important;
-    margin: 0 !important;
-  }
-  body {
-    font-size: 12pt;
-    line-height: 1.5;
-    color: #000;
-    background: #fff;
-  }
-  a {
-    color: #000;
-    text-decoration: underline;
-  }
-  .max-w-\[1200px\] {
-    max-width: 100% !important;
-  }
-  aside {
-    display: none !important;
-  }
+
+    header,
+    footer,
+    nav,
+    .floating-panel,
+    [data-floating-panel],
+    #sticky-header,
+    .scrollbar-hide,
+    button:not([type="submit"]) {
+        display: none !important;
+    }
+
+    main {
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    body {
+        font-size: 12pt;
+        line-height: 1.5;
+        color: #000;
+        background: #fff;
+    }
+
+    a {
+        color: #000;
+        text-decoration: underline;
+    }
+
+    .max-w-\[1200px\] {
+        max-width: 100% !important;
+    }
+
+    aside {
+        display: none !important;
+    }
 }
 
 /* ============================================================

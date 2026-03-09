@@ -30,11 +30,15 @@ function renderTag(tag: CartProductTag): string {
 export function ProductItem({ product }: ProductItemProps): string {
   const skus = product.skus.map((sku) => SkuRow({ sku })).join('');
 
+  const selectedSkuCount = product.skus.filter((s) => s.selected).length;
+  const totalSkuCount = product.skus.length;
+  const productIndeterminate = selectedSkuCount > 0 && selectedSkuCount < totalSkuCount;
+
   return `
     <section class="sc-c-spu-container-new py-5 border-b border-border-light last:border-b-0" data-product-id="${escapeHtml(product.id)}" x-data>
       <div class="flex items-start gap-3">
         <div class="pt-1 shrink-0">
-          ${Checkbox({ id: `product-checkbox-${product.id}`, checked: product.selected, onChange: `product-select-${product.id}` })}
+          ${Checkbox({ id: `product-checkbox-${product.id}`, checked: product.selected, indeterminate: productIndeterminate, onChange: `product-select-${product.id}` })}
         </div>
 
         <div class="flex-1 min-w-0">

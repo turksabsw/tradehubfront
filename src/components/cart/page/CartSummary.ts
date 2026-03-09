@@ -82,11 +82,16 @@ export function CartSummary(
   data: CartSummaryData,
   assuranceItems: AssuranceItem[] = getDefaultAssuranceItems()
 ): string {
+  const viewAllLink = data.items.length > 0
+    ? `<div class="flex justify-end -mt-2 mb-3"><button type="button" class="sc-view-all-items text-[13px] font-medium text-[#f59e0b] hover:text-[#d97706] hover:underline transition-colors cursor-pointer bg-transparent border-0 p-0" data-i18n="common.viewAll">${t('common.viewAll')}</button></div>`
+    : '';
+
   return `
     <div class="sc-shopping-cart-summary-container w-full lg:w-[425px] max-h-[calc(100vh-120px)] p-4 sm:p-5 lg:p-8 bg-white border border-[#e5e5e5] rounded-lg overflow-y-auto [&::-webkit-scrollbar]:w-[6px] [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-black/20 hover:[&::-webkit-scrollbar-thumb]:bg-black/30 [&::-webkit-scrollbar-thumb]:rounded-full">
       <div class="block text-base sm:text-lg lg:text-xl font-bold leading-7 text-[#222] mb-3 sm:mb-4 lg:mb-5"><span data-i18n="cart.orderSummary">${t('cart.orderSummary')}</span> (<span class="sc-summary-selected-count">${data.selectedCount}</span> ${t('common.item')})</div>
 
       ${renderThumbnailGrid(data.items)}
+      ${viewAllLink}
 
       <div class="flex flex-col gap-3">
         <div class="flex justify-between items-center text-sm leading-5 text-[#333]">

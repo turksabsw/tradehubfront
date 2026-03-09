@@ -5,6 +5,7 @@
 
 import '../style.css'
 import { t } from '../i18n'
+import { showToast } from '../utils/toast'
 import { initFlowbite } from 'flowbite'
 import Swiper from 'swiper'
 import { Autoplay, Pagination, EffectFade } from 'swiper/modules'
@@ -277,7 +278,7 @@ uploadBtn.addEventListener('click', () => {
 
 function validateFiles(files: FileList): boolean {
   if (files.length > FILE_UPLOAD_CONFIG.maxFiles) {
-    alert(t('rfq.maxFilesAlert'));
+    showToast({ message: t('rfq.maxFilesAlert'), type: 'warning' });
     fileInput.value = '';
     return false;
   }
@@ -286,7 +287,7 @@ function validateFiles(files: FileList): boolean {
     const fileName = files[i].name;
     const ext = ('.' + fileName.split('.').pop()!.toLowerCase()) as string;
     if (!FILE_UPLOAD_CONFIG.allowedExtensions.includes(ext as any)) {
-      alert(t('rfq.unsupportedFormat', { fileName }));
+      showToast({ message: t('rfq.unsupportedFormat', { fileName }), type: 'error' });
       fileInput.value = '';
       return false;
     }
@@ -346,6 +347,6 @@ form.addEventListener('submit', (e) => {
     aiEnabled: aiCheckbox.checked,
   };
 
-  // eslint-disable-next-line no-console
-  console.log('RFQFormData:', formData);
+  // TODO: send formData to API
+  void formData;
 });

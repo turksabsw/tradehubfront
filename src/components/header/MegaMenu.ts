@@ -194,7 +194,7 @@ const featureCards = [
   },
   {
     titleKey: 'mega.topDeals',
-    href: '/top-deals',
+    href: '/pages/top-deals.html',
     icon: `<svg class="w-10 h-10" viewBox="0 0 40 40" fill="none"><path d="M17 5h-7a4 4 0 0 0-4 4v7.17a4 4 0 0 0 1.17 2.83l13.66 13.66a4 4 0 0 0 5.66 0l7.17-7.17a4 4 0 0 0 0-5.66L19.83 6.17A4 4 0 0 0 17 5Z" stroke="#222" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12.5" cy="12.5" r="2" fill="#222"/></svg>`,
   },
 ];
@@ -611,10 +611,7 @@ export function initMegaMenu(): void {
   const triggers = document.querySelectorAll<HTMLElement>('.mega-trigger');
   const views = megaMenu?.querySelectorAll<HTMLElement>('[data-mega-view]');
 
-  if (!megaMenu || triggers.length === 0 || !views) {
-    console.warn('[MegaMenu] Elements not found');
-    return;
-  }
+  if (!megaMenu || triggers.length === 0 || !views) return;
 
   let isOpen = false;
   let closeTimer: number | null = null;

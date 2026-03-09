@@ -5,6 +5,7 @@
 import Swiper from 'swiper';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import 'swiper/swiper-bundle.css';
+import { showToast } from '../toast';
 
 // ═══════════════════════════════════════════════════════════
 // Swiper Initialization
@@ -294,7 +295,7 @@ export function initContactForm(): void {
       return;
     }
     textarea.classList.remove('border-[#ef4444]', 'focus:ring-[#ef4444]/20');
-    alert('Mesajınız başarıyla gönderildi!');
+    showToast({ message: 'Mesajınız başarıyla gönderildi!', type: 'success' });
     textarea.value = '';
     counter.textContent = '0/8000';
     counter.className = 'contact-form__counter absolute right-3 bottom-3 text-[12px] text-[#9ca3af]';

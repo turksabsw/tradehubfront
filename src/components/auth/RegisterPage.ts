@@ -111,7 +111,7 @@ export function RegisterPage(initialStep: RegisterStep = 'account-type'): string
         <!-- Login Link -->
         <div class="mt-6 text-center text-sm text-gray-500 dark:text-gray-400">
           <span data-i18n="auth.register.alreadyHave">${t('auth.register.alreadyHave')}</span>
-          <a href="${baseUrl}pages/auth/login.html" id="register-login-link" class="ml-1 font-medium text-orange-600 dark:text-orange-400 hover:underline">
+          <a href="${baseUrl}pages/auth/login.html" id="register-login-link" class="ml-1 font-medium text-gray-900 dark:text-white hover:underline">
             <span data-i18n="auth.register.signIn">${t('auth.register.signIn')}</span>
           </a>
         </div>
@@ -144,7 +144,7 @@ export function RegisterPage(initialStep: RegisterStep = 'account-type'): string
               placeholder="${t('auth.register.emailPlaceholder')}" data-i18n-placeholder="auth.register.emailPlaceholder"
               autocomplete="email"
               @input="validateEmail()"
-              class="w-full px-4 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-md text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 dark:focus:border-orange-400 transition-all"
+              class="w-full px-4 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-md text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 auth-input-focus transition-all"
               required
             />
             <p id="register-email-error" x-show="emailError" x-cloak class="mt-1 text-sm text-red-500" data-i18n="auth.register.emailError">

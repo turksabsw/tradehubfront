@@ -123,7 +123,7 @@ function renderCard(card: RecommendationCard): string {
 
 export function RecommendationSlider(): string {
   return `
-    <div class="group/recommendation relative recommendation-slider-wrapper h-[200px] sm:h-[260px] lg:h-[300px] px-2 sm:px-4 lg:px-0">
+    <div class="group/recommendation relative recommendation-slider-wrapper h-[200px] sm:h-[260px] xl:h-[300px] px-2 sm:px-4 xl:px-0">
       <div class="swiper recommendation-swiper h-full" aria-label="Frequently searched product slider">
         <div class="swiper-wrapper h-full">
           ${recommendationCards.map(card => renderCard(card)).join('')}

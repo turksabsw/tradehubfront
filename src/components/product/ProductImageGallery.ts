@@ -168,7 +168,7 @@ export function ProductImageGallery(): string {
 
       <!-- Action buttons — always visible -->
       <div class="absolute top-3 right-3 z-5 flex flex-col gap-2">
-        <button type="button" class="gallery-action-btn w-9 h-9 rounded-full flex items-center justify-center border-0 cursor-pointer transition-colors" style="background: var(--color-surface, #ffffff); box-shadow: 0 1px 6px rgba(0,0,0,.12); color: var(--color-text-placeholder, #999999);" aria-label="${t('product.addToFavorites')}">
+        <button type="button" data-favorite-btn class="gallery-action-btn w-9 h-9 rounded-full flex items-center justify-center border-0 cursor-pointer transition-colors" style="background: var(--color-surface, #ffffff); box-shadow: 0 1px 6px rgba(0,0,0,.12); color: var(--color-text-placeholder, #999999);" aria-label="${t('product.addToFavorites')}">
           <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
         </button>
         <button type="button" class="gallery-action-btn w-9 h-9 rounded-full flex items-center justify-center border-0 cursor-pointer transition-colors" style="background: var(--color-surface, #ffffff); box-shadow: 0 1px 6px rgba(0,0,0,.12); color: var(--color-text-placeholder, #999999);" aria-label="${t('product.imageSearchLabel')}">
@@ -191,7 +191,7 @@ export function ProductImageGallery(): string {
     >
       <div id="gallery-lightbox-toolbar" class="max-[960px]:!h-[58px] max-[960px]:!px-2.5">
         <div id="gallery-lightbox-actions" class="max-[960px]:!gap-2">
-          <button type="button" class="gallery-lightbox-action-btn max-[960px]:!text-[15px] max-[960px]:!gap-[5px]" aria-label="${t('product.addToFavorites')}">
+          <button type="button" data-favorite-btn class="gallery-lightbox-action-btn max-[960px]:!text-[15px] max-[960px]:!gap-[5px]" aria-label="${t('product.addToFavorites')}">
             <svg width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
             </svg>

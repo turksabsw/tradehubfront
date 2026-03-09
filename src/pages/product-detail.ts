@@ -35,7 +35,7 @@ import {
   initRelatedProducts,
   initAttributesTab,
   ReviewsModal,
-  LoginModal,
+  LoginModal, showLoginModal,
   ShippingModal,
   initShippingModal,
   MobileProductLayout,
@@ -50,6 +50,8 @@ const mockProduct = getMockProduct();
 // Utilities
 import { initAnimatedPlaceholder } from '../utils/animatedPlaceholder'
 import { t } from '../i18n'
+import { isLoggedIn } from '../utils/auth'
+import { showToast } from '../utils/toast'
 
 // Build breadcrumb from product category data (skip first "Ana Sayfa" since Breadcrumb adds it)
 const pdCrumbs = mockProduct.category.slice(1).map((label, i, arr) => ({
@@ -144,5 +146,88 @@ initShippingModal();
 initRelatedProducts();
 initMobileLayout();
 
+// Favorites
+initFavorites();
+
 // Start Alpine LAST — after innerHTML is set so it can find all x-data directives in the DOM
 startAlpine();
+
+/* ── Favorites logic ── */
+function initFavorites(): void {
+  const STORAGE_KEY = 'tradehub-favorites';
+  const productId = mockProduct.id;
+
+  // Check if already favorited
+  function isFavorited(): boolean {
+    try {
+      const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      return stored.some((f: { id: string }) => f.id === productId);
+    } catch { return false; }
+  }
+
+  // Update all favorite button visuals
+  function updateButtons(active: boolean): void {
+    document.querySelectorAll<HTMLButtonElement>('[data-favorite-btn]').forEach(btn => {
+      const svg = btn.querySelector('svg');
+      if (!svg) return;
+      if (active) {
+        svg.setAttribute('fill', '#ef4444');
+        svg.setAttribute('stroke', '#ef4444');
+        btn.style.color = '#ef4444';
+      } else {
+        svg.setAttribute('fill', 'none');
+        svg.setAttribute('stroke', 'currentColor');
+        btn.style.color = '';
+      }
+    });
+  }
+
+  // Set initial state
+  updateButtons(isFavorited());
+
+  // Toggle favorite
+  function toggleFavorite(): void {
+    if (!isLoggedIn()) {
+      showLoginModal();
+      return;
+    }
+
+    try {
+      const stored: { id: string }[] = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      const index = stored.findIndex(f => f.id === productId);
+
+      if (index >= 0) {
+        // Remove from favorites
+        stored.splice(index, 1);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(stored));
+        updateButtons(false);
+        showToast({ message: t('product.removedFromFavorites'), type: 'info' });
+      } else {
+        // Add to favorites
+        stored.push({
+          id: productId,
+          image: mockProduct.images[0]?.src || '',
+          title: mockProduct.title,
+          priceRange: `$${mockProduct.priceTiers[0]?.price || 0}`,
+          minOrder: `Min. order: ${mockProduct.moq} ${mockProduct.unit}`,
+        } as any);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(stored));
+        updateButtons(true);
+        showToast({
+          message: t('cart.movedToFavorites'),
+          type: 'success',
+          link: { text: t('cart.favorites'), href: '/pages/dashboard/favorites.html' },
+        });
+      }
+    } catch { /* ignore storage errors */ }
+  }
+
+  // Wire up click handlers
+  document.querySelectorAll<HTMLButtonElement>('[data-favorite-btn]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      toggleFavorite();
+    });
+  });
+}
