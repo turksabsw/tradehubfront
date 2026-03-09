@@ -75,8 +75,8 @@ function renderMethodOption(order: CheckoutDeliveryOrderGroup, method: CheckoutD
         :checked="isMethodSelected('${safeOrderId}', '${safeMethodId}')"
         @change="selectMethod('${safeOrderId}', '${safeMethodId}')"
       />
-      <span class="text-[18px] font-semibold text-[#111827] leading-tight">${method.etaLabel}</span>
-      <span class="ml-auto text-[18px] text-[#374151] border-l border-[#d1d5db] pl-3">Shipping fee: <strong>${formatUsd(method.shippingFee)}</strong></span>
+      <span class="text-sm sm:text-[18px] font-semibold text-[#111827] leading-tight">${method.etaLabel}</span>
+      <span class="ml-auto text-sm sm:text-[18px] text-[#374151] border-l border-[#d1d5db] pl-2 sm:pl-3">Shipping fee: <strong>${formatUsd(method.shippingFee)}</strong></span>
     </label>
   `;
 }
@@ -84,14 +84,18 @@ function renderMethodOption(order: CheckoutDeliveryOrderGroup, method: CheckoutD
 function renderSkuLine(sku: CheckoutDeliverySkuLine): string {
   const total = sku.unitPrice * sku.quantity;
   return `
-    <div class="grid grid-cols-[56px_1fr_auto_auto] gap-4 items-center rounded-lg bg-[#f3f4f6] px-4 py-3">
-      <img src="${sku.image}" alt="" class="w-14 h-14 rounded object-cover border border-[#e5e7eb]" />
+    <div class="grid grid-cols-[48px_1fr] sm:grid-cols-[56px_1fr_auto_auto] gap-2 sm:gap-4 items-center rounded-lg bg-[#f3f4f6] px-3 py-2 sm:px-4 sm:py-3">
+      <img src="${sku.image}" alt="" class="w-12 h-12 sm:w-14 sm:h-14 rounded object-cover border border-[#e5e7eb]" />
       <div>
-        <p class="text-[16px] text-[#111827]">${sku.variantText}</p>
-        <p class="text-[17px] font-semibold text-[#111827]">${formatUsd(sku.unitPrice)} <span class="font-normal text-[#4b5563]">/piece</span></p>
+        <p class="text-sm sm:text-[16px] text-[#111827]">${sku.variantText}</p>
+        <p class="text-sm sm:text-[17px] font-semibold text-[#111827]">${formatUsd(sku.unitPrice)} <span class="font-normal text-[#4b5563]">/piece</span></p>
+        <p class="flex gap-3 sm:hidden text-sm font-semibold text-[#111827] mt-1">
+          <span>x ${sku.quantity}</span>
+          <span>${formatUsd(total)}</span>
+        </p>
       </div>
-      <span class="text-[17px] font-semibold text-[#111827]">x ${sku.quantity}</span>
-      <span class="text-[17px] font-semibold text-[#111827]">${formatUsd(total)}</span>
+      <span class="hidden sm:inline text-[17px] font-semibold text-[#111827]">x ${sku.quantity}</span>
+      <span class="hidden sm:inline text-[17px] font-semibold text-[#111827]">${formatUsd(total)}</span>
     </div>
   `;
 }
@@ -101,7 +105,7 @@ function renderProductCard(product: CheckoutDeliveryProductCard): string {
   return `
     <div class="mt-4">
       <div class="flex items-start gap-4">
-        <img src="${product.image}" alt="" class="w-24 h-24 rounded object-cover border border-[#e5e7eb]" />
+        <img src="${product.image}" alt="" class="w-16 h-16 sm:w-24 sm:h-24 rounded object-cover border border-[#e5e7eb]" />
         <div class="flex-1">
           <h4 class="text-[18px] leading-7 font-semibold text-[#111827]">${product.title}</h4>
           <p class="text-[15px] text-[#6b7280] mt-1">${product.moqLabel}</p>
@@ -184,18 +188,18 @@ function renderSupplierNoteModal(): string {
       @keydown.escape.window="closeNoteModal()"
     >
       <div class="w-full max-w-[760px] rounded-xl bg-white shadow-xl">
-        <div class="flex items-center justify-between px-6 py-5">
-          <h3 class="text-[32px] font-bold leading-tight text-[#111827]">Note to the supplier</h3>
+        <div class="flex items-center justify-between px-4 py-4 sm:px-6 sm:py-5">
+          <h3 class="text-xl sm:text-2xl xl:text-[32px] font-bold leading-tight text-[#111827]">Note to the supplier</h3>
           <button type="button" class="text-[#111827] hover:opacity-70" @click="closeNoteModal()">
             <svg class="h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
               <path d="M18 6L6 18M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
           </button>
         </div>
-        <div class="px-6 pb-6">
+        <div class="px-4 pb-4 sm:px-6 sm:pb-6">
           <div class="relative">
             <textarea
-              class="h-[160px] w-full resize-none rounded-md border border-[#d1d5db] p-4 text-[16px] text-[#111827] outline-none transition-colors focus:border-[#111827]"
+              class="h-[160px] w-full resize-none rounded-md border border-[#d1d5db] p-3 sm:p-4 text-sm sm:text-[16px] text-[#111827] outline-none transition-colors focus:border-[#111827]"
               placeholder="Please fill in"
               maxlength="2000"
               x-model="noteDraft"
@@ -207,14 +211,14 @@ function renderSupplierNoteModal(): string {
           <div class="mt-6 flex items-center justify-center gap-3">
             <button
               type="button"
-              class="min-w-[200px] th-btn th-btn-pill"
+              class="min-w-0 w-full sm:min-w-[200px] sm:w-auto th-btn th-btn-pill"
               @click="saveNote()"
             >
               Confirm
             </button>
             <button
               type="button"
-              class="min-w-[200px] th-btn-outline th-btn-pill"
+              class="min-w-0 w-full sm:min-w-[200px] sm:w-auto th-btn-outline th-btn-pill"
               @click="closeNoteModal()"
             >
               Cancel
@@ -242,13 +246,13 @@ export function ItemsDeliverySection({
       x-data="checkoutItemsDelivery"
       data-delivery-orders="${encodedOrders}"
     >
-      <div class="checkout-section__header w-full flex items-center gap-3 py-5 px-6">
+      <div class="checkout-section__header w-full flex items-center gap-3 py-4 px-4 sm:py-5 sm:px-6">
         <svg class="checkout-section__icon w-6 h-6 min-w-[24px] text-[#6b7280]" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
           <path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
         <h2 class="checkout-section__title text-lg font-bold text-[#111827] flex-1 text-left">Items and delivery options</h2>
       </div>
-      <div class="checkout-section__content px-6 pb-6 space-y-6">
+      <div class="checkout-section__content px-4 pb-4 sm:px-6 sm:pb-6 space-y-6">
         ${ordersHtml}
       </div>
       ${renderSupplierNoteModal()}

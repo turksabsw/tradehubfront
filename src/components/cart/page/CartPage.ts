@@ -60,8 +60,8 @@ export function CartPage({ suppliers, summary, assuranceItems }: CartPageProps):
       @batch-delete="handleBatchDelete()"
       @product-favorite="handleProductFavorite($event)"
       @checkout-supplier="handleCheckoutSupplier($event)">
-      <div class="flex flex-col lg:flex-row gap-5 items-start flex-1">
-        <section class="w-full lg:min-w-0 lg:flex-1 space-y-4">
+      <div class="flex flex-col xl:flex-row gap-5 items-start flex-1">
+        <section class="w-full xl:min-w-0 xl:flex-1 space-y-4">
           ${CartHeader()}
           ${BatchSelectBar({ totalCount: totalItems, selectedCount })}
           <div class="sc-cart-supplier-list space-y-4">
@@ -69,7 +69,7 @@ export function CartPage({ suppliers, summary, assuranceItems }: CartPageProps):
           </div>
         </section>
 
-        <section class="w-full lg:w-[425px] lg:sticky lg:top-6 self-start z-10">
+        <section class="w-full xl:w-[425px] xl:sticky xl:top-6 self-start z-10">
           ${CartSummary(summary, assuranceItems)}
         </section>
       </div>

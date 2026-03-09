@@ -71,7 +71,7 @@ function renderAssurance(items: AssuranceItem[]): string {
     .join('');
 
   return `
-    <div class="hidden lg:flex flex-col gap-3 border-t border-[#e5e5e5] pt-5 mt-5">
+    <div class="hidden xl:flex flex-col gap-3 border-t border-[#e5e5e5] pt-5 mt-5">
       <div class="flex items-center justify-between font-bold text-sm leading-5 text-[#222] mb-2" data-i18n="cart.orderProtection">${t('cart.orderProtection')}</div>
       <ul class="list-none p-0 m-0 flex flex-col gap-3">${rows}</ul>
     </div>
@@ -87,8 +87,8 @@ export function CartSummary(
     : '';
 
   return `
-    <div class="sc-shopping-cart-summary-container w-full lg:w-[425px] max-h-[calc(100vh-120px)] p-4 sm:p-5 lg:p-8 bg-white border border-[#e5e5e5] rounded-lg overflow-y-auto [&::-webkit-scrollbar]:w-[6px] [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-black/20 hover:[&::-webkit-scrollbar-thumb]:bg-black/30 [&::-webkit-scrollbar-thumb]:rounded-full">
-      <div class="block text-base sm:text-lg lg:text-xl font-bold leading-7 text-[#222] mb-3 sm:mb-4 lg:mb-5"><span data-i18n="cart.orderSummary">${t('cart.orderSummary')}</span> (<span class="sc-summary-selected-count">${data.selectedCount}</span> ${t('common.item')})</div>
+    <div class="sc-shopping-cart-summary-container w-full xl:w-[425px] max-h-[calc(100vh-120px)] p-4 sm:p-5 xl:p-8 bg-white border border-[#e5e5e5] rounded-lg overflow-y-auto [&::-webkit-scrollbar]:w-[6px] [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-black/20 hover:[&::-webkit-scrollbar-thumb]:bg-black/30 [&::-webkit-scrollbar-thumb]:rounded-full">
+      <div class="block text-base sm:text-lg xl:text-xl font-bold leading-7 text-[#222] mb-3 sm:mb-4 xl:mb-5"><span data-i18n="cart.orderSummary">${t('cart.orderSummary')}</span> (<span class="sc-summary-selected-count">${data.selectedCount}</span> ${t('common.item')})</div>
 
       ${renderThumbnailGrid(data.items)}
       ${viewAllLink}

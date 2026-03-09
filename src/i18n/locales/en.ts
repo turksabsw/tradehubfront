@@ -744,6 +744,8 @@ const en = {
       promoTradeAssuranceSubtitle: 'Shop safely with verified suppliers',
       promoFastDelivery: 'Fast Delivery',
       promoFastDeliverySubtitle: '7-day delivery guarantee',
+      viewAll: 'View all',
+      minOrder: 'Min. order: {{count}} pcs',
     },
 
     // ============================================================

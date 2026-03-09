@@ -744,6 +744,8 @@ const tr = {
       promoTradeAssuranceSubtitle: 'Doğrulanmış tedarikçilerle güvenli alışveriş',
       promoFastDelivery: 'Hızlı Teslimat',
       promoFastDeliverySubtitle: '7 gün içinde teslimat garantisi',
+      viewAll: 'Tümünü gör',
+      minOrder: 'Min. sipariş: {{count}} Adet',
     },
 
     // ============================================================

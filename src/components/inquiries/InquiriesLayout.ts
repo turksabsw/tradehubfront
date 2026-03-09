@@ -50,38 +50,38 @@ export function InquiriesLayout(): string {
       <!-- Tabs -->
       <div class="flex border-b border-(--color-border-default,#e5e5e5) overflow-x-auto">
         ${TABS.map((tab, i) => `
-          <button class="inq-tabs__tab px-6 max-sm:px-3 py-3.5 text-[13px] font-normal text-(--color-text-muted,#666666) bg-transparent border-none border-b-2 border-transparent cursor-pointer transition-[color,border-color] duration-150 whitespace-nowrap hover:text-(--color-text-heading,#111827) ${i === 0 ? 'inq-tabs__tab--active !text-(--color-text-heading,#111827) !font-semibold !border-b-(--color-text-heading)' : ''}" data-tab="${tab.id}">
+          <button class="inq-tabs__tab px-6 max-md:px-3 py-3.5 max-md:py-2.5 text-[13px] max-md:text-xs font-normal text-(--color-text-muted,#666666) bg-transparent border-none border-b-2 border-transparent cursor-pointer transition-[color,border-color] duration-150 whitespace-nowrap hover:text-(--color-text-heading,#111827) ${i === 0 ? 'inq-tabs__tab--active !text-(--color-text-heading,#111827) !font-semibold !border-b-(--color-text-heading)' : ''}" data-tab="${tab.id}">
             ${tab.label}
           </button>
         `).join('')}
       </div>
 
       <!-- Action Bar -->
-      <div class="flex items-center justify-between px-5 py-3 border-b border-(--color-border-light,#f0f0f0) gap-4 flex-wrap max-md:flex-col max-md:items-start">
+      <div class="flex items-center justify-between px-5 max-md:px-3 py-3 max-md:py-2 border-b border-(--color-border-light,#f0f0f0) gap-3 max-md:gap-2 flex-wrap">
         <div class="flex items-center gap-2">
-          <div class="inline-flex items-center gap-1 px-3 py-1.5 text-[13px] text-(--color-text-muted,#666666) border border-(--color-border-medium,#d1d5db) rounded cursor-pointer bg-(--color-surface,#ffffff) transition-[border-color] duration-150 hover:border-(--color-text-placeholder)">
+          <div class="inline-flex items-center gap-1 px-3 max-md:px-2 py-1.5 text-[13px] max-md:text-xs text-(--color-text-muted,#666666) border border-(--color-border-medium,#d1d5db) rounded cursor-pointer bg-(--color-surface,#ffffff) transition-[border-color] duration-150 hover:border-(--color-text-placeholder)">
             <span>${t('inquiries.moveTo')}</span>
             <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
             </svg>
           </div>
-          <button class="px-4 py-1.5 text-[13px] text-(--color-cta-primary,#333333) border border-(--color-cta-primary,#333333) rounded bg-transparent cursor-pointer transition-[background,color] duration-150 hover:bg-(--color-secondary-50,#f5f5f5)">${t('inquiries.deleteBtn')}</button>
+          <button class="px-4 max-md:px-2.5 py-1.5 text-[13px] max-md:text-xs text-(--color-cta-primary,#333333) border border-(--color-cta-primary,#333333) rounded bg-transparent cursor-pointer transition-[background,color] duration-150 hover:bg-(--color-secondary-50,#f5f5f5)">${t('inquiries.deleteBtn')}</button>
         </div>
-        <div class="flex items-center gap-3">
-          <label class="inline-flex items-center gap-1.5 text-[13px] text-(--color-text-muted,#666666) cursor-pointer">
+        <div class="flex items-center gap-3 max-md:gap-2 flex-wrap">
+          <label class="inline-flex items-center gap-1.5 text-[13px] max-md:text-xs text-(--color-text-muted,#666666) cursor-pointer">
             <input type="checkbox" class="w-3.5 h-3.5 accent-(--color-cta-primary,#cc9900)" />
             <span>${t('inquiries.newReply')}</span>
           </label>
-          <div class="inline-flex items-center gap-1 px-3.5 py-1.5 text-[13px] text-(--color-text-heading,#111827) border border-(--color-border-medium,#d1d5db) rounded-full cursor-pointer bg-(--color-surface,#ffffff) transition-[border-color] duration-150 hover:border-(--color-text-placeholder)">
+          <div class="inline-flex items-center gap-1 px-3.5 max-md:px-2.5 py-1.5 text-[13px] max-md:text-xs text-(--color-text-heading,#111827) border border-(--color-border-medium,#d1d5db) rounded-full cursor-pointer bg-(--color-surface,#ffffff) transition-[border-color] duration-150 hover:border-(--color-text-placeholder)">
             <span>${t('inquiries.allRequests')}</span>
             <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
             </svg>
           </div>
           <div class="inq-actions__search inline-flex items-center border border-(--color-border-medium,#d1d5db) rounded overflow-hidden">
-            <input type="text" placeholder="${t('inquiries.searchPlaceholder')}" class="inq-actions__search-input w-40 max-md:w-[120px] max-sm:w-[80px] h-8 px-2.5 text-[13px] text-(--color-text-body,#333333) border-none outline-none bg-(--color-surface,#ffffff) placeholder:text-(--color-text-placeholder,#999999) focus:shadow-[inset_0_0_0_1px_var(--color-cta-primary,#cc9900)]" />
-            <button class="flex items-center justify-center w-8 h-8 border-none border-l border-l-(--color-border-medium,#d1d5db) bg-(--color-surface-muted,#fafafa) text-(--color-text-muted,#666666) cursor-pointer transition-[background,color] duration-150 hover:bg-(--color-border-light) hover:text-(--color-text-heading,#111827)" aria-label="${t('inquiries.searchPlaceholder')}">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <input type="text" placeholder="${t('inquiries.searchPlaceholder')}" class="inq-actions__search-input w-40 max-lg:w-[120px] max-md:w-[80px] h-8 max-md:h-7 px-2.5 max-md:px-2 text-[13px] max-md:text-xs text-(--color-text-body,#333333) border-none outline-none bg-(--color-surface,#ffffff) placeholder:text-(--color-text-placeholder,#999999) focus:shadow-[inset_0_0_0_1px_var(--color-cta-primary,#cc9900)]" />
+            <button class="flex items-center justify-center w-8 max-md:w-7 h-8 max-md:h-7 border-none border-l border-l-(--color-border-medium,#d1d5db) bg-(--color-surface-muted,#fafafa) text-(--color-text-muted,#666666) cursor-pointer transition-[background,color] duration-150 hover:bg-(--color-border-light) hover:text-(--color-text-heading,#111827)" aria-label="${t('inquiries.searchPlaceholder')}">
+              <svg class="w-4 h-4 max-md:w-3.5 max-md:h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <circle cx="11" cy="11" r="8"/>
                 <path stroke-linecap="round" d="m21 21-4.35-4.35"/>
               </svg>

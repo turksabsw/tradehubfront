@@ -22,13 +22,13 @@ export function PaymentMethodSection({ initialExpanded = false, suppliers, isSup
 
   const renderPaymentMethods = () => {
     if (!suppliers || suppliers.length === 0) {
-      return `<p class="text-[#6b7280] text-base p-6" data-i18n="checkout.paymentMethodsAfterAddress">${t('checkout.paymentMethodsAfterAddress')}</p>`;
+      return `<p class="text-[#6b7280] text-base p-4 sm:p-6" data-i18n="checkout.paymentMethodsAfterAddress">${t('checkout.paymentMethodsAfterAddress')}</p>`;
     }
 
     if (suppliers.length > 1) {
       const supplierNames = isSupplierCheckout ? suppliers.map(s => s.name).join(', ') : 'iSTOC';
       return `
-        <div class="p-6 bg-[#fafafa]" x-data="{ selectedMethod: 'kredi_karti' }">
+        <div class="p-4 sm:p-6 bg-[#fafafa]" x-data="{ selectedMethod: 'kredi_karti' }">
           <h3 class="text-sm font-semibold text-[#111827] mb-4" data-i18n="checkout.paymentMethodFor" data-i18n-options='{"name":"${supplierNames}"}'>${t('checkout.paymentMethodFor', { name: supplierNames })}</h3>
           <div class="flex flex-col gap-3">
             <!-- Option 1: Kredi veya Banka Kartı -->
@@ -40,10 +40,10 @@ export function PaymentMethodSection({ initialExpanded = false, suppliers, isSup
                   <span class="block text-sm font-bold text-[#111827]" data-i18n="checkout.creditDebitCard">${t('checkout.creditDebitCard')}</span>
                   <span class="block text-xs text-[#6b7280] mt-1" data-i18n="checkout.creditCardDesc">${t('checkout.creditCardDesc')}</span>
                 </div>
-                <span class="absolute top-4 right-4 text-xs font-bold px-2 py-1 rounded" style="color: var(--btn-bg, #ff6600); background-color: var(--color-primary-100, #ffeedd);" data-i18n="common.recommended">${t('common.recommended')}</span>
+                <span class="absolute top-3 right-3 sm:top-4 sm:right-4 text-xs font-bold px-2 py-1 rounded" style="color: var(--btn-bg, #ff6600); background-color: var(--color-primary-100, #ffeedd);" data-i18n="common.recommended">${t('common.recommended')}</span>
               </label>
 
-              <div x-show="selectedMethod === 'kredi_karti'" x-cloak style="display: none;" class="px-4 pb-4">
+              <div x-show="selectedMethod === 'kredi_karti'" x-cloak style="display: none;" class="px-3 pb-3 sm:px-4 sm:pb-4">
                 <div class="pt-4 border-t" style="border-color: var(--color-border-default, #e5e5e5);">
                   <div class="space-y-3 max-w-md"
                        x-data="{
@@ -190,7 +190,7 @@ export function PaymentMethodSection({ initialExpanded = false, suppliers, isSup
     const supplier = suppliers[0];
     const paymentName = isSupplierCheckout ? supplier.name : 'iSTOC';
     return `
-      <div class="p-6 bg-[#fafafa]" x-data="{ selectedMethod: 'elden' }">
+      <div class="p-4 sm:p-6 bg-[#fafafa]" x-data="{ selectedMethod: 'elden' }">
         <h3 class="text-sm font-semibold text-[#111827] mb-4" data-i18n="checkout.paymentMethodFor" data-i18n-options='{"name":"${paymentName}"}'>${t('checkout.paymentMethodFor', { name: paymentName })}</h3>
         <div class="flex flex-col gap-3">
           <!-- Option 1: Elden Taksit -->
@@ -201,9 +201,9 @@ export function PaymentMethodSection({ initialExpanded = false, suppliers, isSup
               <span class="block text-sm font-bold text-[#111827]" data-i18n="checkout.handInstallment">${t('checkout.handInstallment')}</span>
               <span class="block text-xs text-[#6b7280] mt-1" data-i18n="checkout.handInstallmentDesc">${t('checkout.handInstallmentDesc')}</span>
             </div>
-            <span class="absolute top-4 right-4 text-xs font-bold px-2 py-1 rounded" style="color: var(--btn-bg, #ff6600); background-color: var(--color-primary-100, #ffeedd);" data-i18n="common.recommended">${t('common.recommended')}</span>
+            <span class="absolute top-3 right-3 sm:top-4 sm:right-4 text-xs font-bold px-2 py-1 rounded" style="color: var(--btn-bg, #ff6600); background-color: var(--color-primary-100, #ffeedd);" data-i18n="common.recommended">${t('common.recommended')}</span>
           </label>
-          
+
           <!-- Option 2: Satıcı ile Anlaşmalı -->
           <label class="flex items-start gap-3 p-4 border rounded-lg cursor-pointer transition-colors group"
                  :style="selectedMethod === 'anlasmali' ? 'border-color: var(--btn-bg, #ff6600); background-color: var(--color-primary-50, #fff9f5);' : 'border-color: var(--color-border-default, #e5e5e5); background-color: var(--color-surface, #ffffff);'">
@@ -225,7 +225,7 @@ export function PaymentMethodSection({ initialExpanded = false, suppliers, isSup
               </div>
             </label>
             
-            <div x-show="selectedMethod === 'kredi_karti'" x-cloak style="display: none;" class="px-4 pb-4">
+            <div x-show="selectedMethod === 'kredi_karti'" x-cloak style="display: none;" class="px-3 pb-3 sm:px-4 sm:pb-4">
               <div class="pt-4 border-t" style="border-color: var(--color-border-default, #e5e5e5);">
                 <div class="space-y-3 max-w-md"
                      x-data="{
@@ -368,7 +368,7 @@ export function PaymentMethodSection({ initialExpanded = false, suppliers, isSup
       ${!initialExpanded ? 'x-cloak' : ''}
     >
       <button
-        class="checkout-section__header checkout-section__header--toggle w-full flex items-center gap-3 py-5 px-6 cursor-pointer hover:bg-[#fafafa] transition-colors"
+        class="checkout-section__header checkout-section__header--toggle w-full flex items-center gap-3 py-4 px-4 sm:py-5 sm:px-6 cursor-pointer hover:bg-[#fafafa] transition-colors"
         :aria-expanded="expanded"
         aria-expanded="${initialExpanded ? 'true' : 'false'}"
         @click="toggle()"

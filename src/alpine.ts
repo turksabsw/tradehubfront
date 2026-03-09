@@ -3089,7 +3089,10 @@ Alpine.data('sidebar', () => ({
     allItems.forEach((el) => {
       const href = el.getAttribute('href') || '';
       const hrefPath = href.split('#')[0]; // strip hash
-      const isActive = hrefPath && currentPath.endsWith(hrefPath.replace(/^\//, ''));
+      const hrefHash = href.includes('#') ? '#' + href.split('#')[1] : '';
+      const pathMatches = hrefPath && currentPath.endsWith(hrefPath.replace(/^\//, ''));
+      // Items with hash in href: only active when both path AND hash match
+      const isActive = pathMatches && (hrefHash === '' || window.location.hash === hrefHash);
 
       // Remove old active styling
       el.classList.remove(...activeClasses, 'bg-green-50', 'text-green-600');

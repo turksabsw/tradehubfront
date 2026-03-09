@@ -23,9 +23,9 @@ appEl.innerHTML = `
 
   <!-- Page body: Sidebar + Inquiries -->
   <div class="bg-[#F5F5F5] min-h-screen">
-    <div class="max-w-[1425px] mx-auto px-4 max-sm:px-2 flex gap-[14px]">
+    <div class="max-w-[1425px] mx-auto px-4 max-sm:px-1 flex gap-1 md:gap-[14px]">
       <!-- Sidebar Column -->
-      <div class="w-[72px] xl:w-[260px] flex-shrink-0 pt-4 max-md:hidden">
+      <div class="w-[52px] md:w-[72px] xl:w-[260px] flex-shrink-0 pt-4">
         ${renderSidebar()}
       </div>
 

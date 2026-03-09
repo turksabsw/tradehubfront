@@ -76,7 +76,7 @@ export function renderSidebar(expanded = true): string {
   const discoverItem = getDiscoverItem();
 
   const sections = sidebarSections.map((s) => renderSection(s, expanded)).join('');
-  const widthClass = expanded ? 'w-[72px] xl:w-[260px]' : 'w-[72px]';
+  const widthClass = expanded ? 'w-[52px] md:w-[72px] xl:w-[260px]' : 'w-[52px] md:w-[72px]';
 
   const discoverLink = `
     <div class="sidebar__discover border-t border-gray-200 dark:border-gray-700 mt-auto pt-2 pb-3">

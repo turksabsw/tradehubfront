@@ -89,56 +89,56 @@ function renderAddressSelectorModal(): string {
       @keydown.escape.window="closeAddressSelector()"
     >
       <div class="w-full max-w-[840px] max-h-[88vh] overflow-hidden rounded-xl bg-white shadow-xl">
-        <div class="flex items-center justify-between px-6 py-5 border-b border-[#e5e7eb]">
-          <h3 class="text-[32px] font-bold text-[#111827] leading-tight">Select shipping address</h3>
+        <div class="flex items-center justify-between px-4 py-4 sm:px-6 sm:py-5 border-b border-[#e5e7eb]">
+          <h3 class="text-lg sm:text-xl xl:text-[32px] font-bold text-[#111827] leading-tight">Select shipping address</h3>
           <button type="button" class="text-[#111827] hover:opacity-70" @click="closeAddressSelector()">
-            <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M18 6L6 18M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <svg class="w-6 h-6 sm:w-8 sm:h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M18 6L6 18M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
         </div>
 
-        <div class="px-6 py-5 overflow-y-auto max-h-[56vh]">
+        <div class="px-4 py-4 sm:px-6 sm:py-5 overflow-y-auto max-h-[56vh]">
           <button
             type="button"
-            class="h-12 rounded-full border border-[#111827] px-6 text-[16px] font-semibold text-[#111827] hover:bg-[#f9fafb]"
+            class="h-10 sm:h-12 rounded-full border border-[#111827] px-4 sm:px-6 text-sm sm:text-[16px] font-semibold text-[#111827] hover:bg-[#f9fafb]"
             @click="openAddAddressModal()"
           >
             + Add an address
           </button>
 
-          <div class="mt-5 border-t border-[#e5e7eb] pt-5 space-y-4">
+          <div class="mt-4 sm:mt-5 border-t border-[#e5e7eb] pt-4 sm:pt-5 space-y-3 sm:space-y-4">
             <template x-for="address in savedAddresses" :key="address.id">
               <div
-                class="rounded-lg border p-4"
+                class="rounded-lg border p-3 sm:p-4"
                 :class="pendingAddressId === address.id ? 'border-[#111827]' : 'border-[#e5e7eb]'"
               >
-                <div class="flex items-start gap-3">
+                <div class="flex items-start gap-2 sm:gap-3">
                   <input
                     type="radio"
-                    class="mt-1 h-5 w-5 accent-[#111827]"
+                    class="mt-1 h-4 w-4 sm:h-5 sm:w-5 accent-[#111827]"
                     :value="address.id"
                     x-model="pendingAddressId"
                   />
                   <div class="flex-1 min-w-0">
-                    <div class="flex items-start justify-between gap-3">
+                    <div class="flex items-start justify-between gap-2 sm:gap-3">
                       <div>
-                        <p class="text-[16px] font-semibold text-[#111827]" x-text="address.firstName + ' ' + address.lastName"></p>
-                        <p class="mt-1 text-[16px] text-[#374151]" x-text="address.fullAddress"></p>
-                        <p class="mt-1 text-[16px] text-[#374151]" x-text="address.phonePrefix + ' ' + address.phone"></p>
+                        <p class="text-sm sm:text-[16px] font-semibold text-[#111827]" x-text="address.firstName + ' ' + address.lastName"></p>
+                        <p class="mt-1 text-xs sm:text-[14px] text-[#374151]" x-text="address.fullAddress"></p>
+                        <p class="mt-1 text-xs sm:text-[14px] text-[#374151]" x-text="address.phonePrefix + ' ' + address.phone"></p>
                         <button
                           type="button"
-                          class="mt-2 text-[16px] underline text-[#374151] hover:text-[#111827]"
+                          class="mt-2 text-xs sm:text-[14px] underline text-[#374151] hover:text-[#111827]"
                           x-show="!address.isDefault"
                           @click="setDefaultAddress(address.id)"
                         >
                           Set as default
                         </button>
                       </div>
-                      <div class="flex items-center gap-2">
+                      <div class="flex items-center gap-1.5 sm:gap-2">
                         <button type="button" class="text-[#374151] hover:text-[#111827]" @click="startEditAddress(address.id)">
-                          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 113 3L7 19l-4 1 1-4 12.5-12.5z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                          <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 113 3L7 19l-4 1 1-4 12.5-12.5z" stroke-linecap="round" stroke-linejoin="round"/></svg>
                         </button>
                         <button type="button" class="text-[#374151] hover:text-[#111827]" @click="deleteAddress(address.id)">
-                          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                          <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6" stroke-linecap="round" stroke-linejoin="round"/></svg>
                         </button>
                       </div>
                     </div>
@@ -149,17 +149,17 @@ function renderAddressSelectorModal(): string {
           </div>
         </div>
 
-        <div class="flex items-center justify-end gap-3 border-t border-[#e5e7eb] px-6 py-5">
+        <div class="flex flex-col sm:flex-row items-center justify-end gap-3 border-t border-[#e5e7eb] px-4 py-4 sm:px-6 sm:py-5">
           <button
             type="button"
-            class="min-w-[200px] th-btn-outline th-btn-pill"
+            class="min-w-0 w-full sm:min-w-[200px] sm:w-auto th-btn-outline th-btn-pill"
             @click="closeAddressSelector()"
           >
             Cancel
           </button>
           <button
             type="button"
-            class="min-w-[200px] th-btn th-btn-pill"
+            class="min-w-0 w-full sm:min-w-[200px] sm:w-auto th-btn th-btn-pill"
             @click="confirmSelectedAddress()"
           >
             Ship to this address
@@ -181,7 +181,7 @@ function renderAddAddressModal(countryOptions: string): string {
       <div class="w-full max-w-[980px] max-h-[92vh] overflow-hidden rounded-xl bg-white shadow-xl">
         <div class="flex items-center justify-between border-b border-[#e5e7eb] px-6 py-5">
           <div>
-            <h3 class="text-[32px] font-bold text-[#111827]" x-text="isEditingAddress ? 'Edit address' : 'Add address'">Add address</h3>
+            <h3 class="text-xl sm:text-2xl xl:text-[32px] font-bold text-[#111827]" x-text="isEditingAddress ? 'Edit address' : 'Add address'">Add address</h3>
             <p class="mt-1 text-[14px] text-[#198f35]">Your information is encrypted and secure</p>
           </div>
           <button type="button" class="text-[#111827] hover:opacity-70" @click="closeAddAddressModal()">
@@ -217,8 +217,8 @@ function renderAddAddressModal(countryOptions: string): string {
             <div>
               <label class="block text-[14px] text-[#6b7280] mb-1">Street address or P.O. box *</label>
               <div class="relative">
-                <input class="w-full h-12 rounded-lg border border-[#d1d5db] px-3 pr-[180px] text-[14px] text-[#111827] outline-none focus:border-[#111827]" type="text" x-model="addAddressForm.street" />
-                <button type="button" class="absolute right-3 top-1/2 -translate-y-1/2 text-[14px] text-[var(--color-primary-500)] hover:text-[var(--color-primary-700)]" @click="useCurrentLocationForAddForm()">Use my current location</button>
+                <input class="w-full h-12 rounded-lg border border-[#d1d5db] px-3 sm:pr-[180px] text-[14px] text-[#111827] outline-none focus:border-[#111827]" type="text" x-model="addAddressForm.street" />
+                <button type="button" class="hidden sm:flex absolute right-3 top-1/2 -translate-y-1/2 text-[14px] text-[var(--color-primary-500)] hover:text-[var(--color-primary-700)]" @click="useCurrentLocationForAddForm()">Use my current location</button>
               </div>
               <p class="mt-1 text-[12px] text-[#dc2626]" x-show="addFormErrors.street">Required</p>
             </div>
@@ -253,17 +253,17 @@ function renderAddAddressModal(countryOptions: string): string {
           </div>
         </div>
 
-        <div class="flex items-center justify-end gap-3 border-t border-[#e5e7eb] px-6 py-5">
+        <div class="flex flex-col sm:flex-row items-center justify-end gap-3 border-t border-[#e5e7eb] px-4 py-4 sm:px-6 sm:py-5">
           <button
             type="button"
-            class="min-w-[200px] th-btn-outline th-btn-pill"
+            class="min-w-0 w-full sm:min-w-[200px] sm:w-auto th-btn-outline th-btn-pill"
             @click="closeAddAddressModal()"
           >
             Cancel
           </button>
           <button
             type="button"
-            class="min-w-[200px] th-btn th-btn-pill"
+            class="min-w-0 w-full sm:min-w-[200px] sm:w-auto th-btn th-btn-pill"
             @click="submitAddAddress()"
           >
             Submit
@@ -290,12 +290,12 @@ export function ShippingAddressForm(props: ShippingAddressFormProps = {}): strin
 
   return `
     <section class="checkout-section mb-4" id="shipping-address-section" x-data="shippingForm">
-      <div class="flex items-center gap-3 p-4 lg:p-5">
+      <div class="flex items-center gap-3 p-3 sm:p-4 xl:p-5">
         <div class="flex items-center justify-center w-7 h-7 rounded-full bg-[var(--color-primary-500)] text-white text-sm font-semibold shrink-0">1</div>
-        <h2 class="text-base lg:text-lg font-semibold text-[var(--color-text-primary)]">${pageContent.shippingAddressTitle}</h2>
+        <h2 class="text-base xl:text-lg font-semibold text-[var(--color-text-primary)]">${pageContent.shippingAddressTitle}</h2>
       </div>
 
-      <div class="checkout-section__content px-4 lg:px-5 pb-5">
+      <div class="checkout-section__content px-3 sm:px-4 xl:px-5 pb-5">
         <div
           class="rounded-xl border border-[#e5e7eb] bg-white p-4"
           x-cloak
