@@ -70,7 +70,7 @@ appEl.innerHTML = `
   <div class="bg-[#F5F5F5] min-h-screen">
     <div class="max-w-[1425px] mx-auto px-[clamp(0.5rem,0.3rem+1vw,1.5rem)] flex gap-1 md:gap-[14px]">
       <!-- Sidebar Column -->
-      <div class="max-[480px]:hidden w-[52px] md:w-[72px] xl:w-[260px] flex-shrink-0 pt-4">
+      <div class="w-[52px] md:w-[72px] xl:w-[260px] flex-shrink-0 pt-4">
         ${renderSidebar()}
       </div>
 
