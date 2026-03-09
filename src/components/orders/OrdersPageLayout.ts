@@ -56,9 +56,9 @@ function renderAllOrders(): string {
     <div x-data="ordersListComponent()" x-cloak>
       <template x-if="!selectedOrder"><div>
       <!-- Header -->
-      <div class="flex items-center justify-between px-7 max-sm:px-3 pt-6 pb-5 border-b border-gray-100">
-        <h1 class="text-[22px] max-sm:text-lg font-bold text-gray-900" data-i18n="orders.yourOrders">${t('orders.yourOrders')}</h1>
-        <button class="px-5 max-sm:px-3 py-2 text-sm max-sm:text-xs text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer whitespace-nowrap transition-colors hover:border-gray-400 hover:bg-gray-50">
+      <div class="flex items-center justify-between gap-2 px-5 max-sm:px-3 pt-6 max-[480px]:pt-4 pb-5 max-[480px]:pb-3 border-b border-gray-100">
+        <h1 class="text-[22px] max-sm:text-lg max-[480px]:text-base font-bold text-gray-900" data-i18n="orders.yourOrders">${t('orders.yourOrders')}</h1>
+        <button data-modal="remittance-modal" class="px-5 max-sm:px-3 max-[480px]:px-2.5 py-2 text-sm max-sm:text-xs text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer whitespace-nowrap transition-colors hover:border-gray-400 hover:bg-gray-50">
           ${t('orders.submitRemittanceProof')}
         </button>
       </div>
@@ -81,43 +81,37 @@ function renderAllOrders(): string {
       </div>
 
       <!-- Search & Filter Bar -->
-      <div class="flex items-center gap-3 px-7 max-sm:px-3 py-4 flex-wrap max-sm:gap-2">
+      <div class="flex items-center gap-2.5 px-5 max-sm:px-3 py-4 flex-wrap">
         <!-- Search Input -->
-        <div class="flex items-center flex-1 min-w-[200px] max-w-[420px] max-sm:max-w-full max-sm:min-w-full border border-gray-300 rounded-sm overflow-hidden bg-white"
-             :class="searchQuery.trim() ? 'border-amber-400 ring-1 ring-amber-200' : ''">
+        <div class="relative flex-1 min-w-[180px] max-w-[380px] max-sm:max-w-full max-sm:min-w-full">
+          <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="8"/><path stroke-linecap="round" d="m21 21-4.35-4.35"/>
+          </svg>
           <input
             type="text"
             x-model.debounce.300ms="searchQuery"
             @keydown.escape="searchQuery = ''"
             placeholder="${t('orders.searchPlaceholder')}"
-            class="flex-1 h-10 px-3 text-sm text-gray-700 border-none outline-none bg-transparent placeholder:text-gray-400"
+            class="w-full h-9 pl-9 pr-8 text-sm text-gray-700 border border-gray-300 rounded-lg outline-none bg-white placeholder:text-gray-400 transition-colors focus:border-gray-400 focus:ring-1 focus:ring-gray-200"
+            :class="searchQuery.trim() ? 'border-amber-400! ring-1! ring-amber-200!' : ''"
           />
-          <!-- Clear button when searching -->
           <button
             x-show="searchQuery.trim()"
             @click="searchQuery = ''"
-            class="flex items-center justify-center w-8 h-10 text-gray-400 hover:text-gray-600 cursor-pointer bg-transparent border-none transition-colors"
-            title="${t('common.clear')}"
+            class="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 cursor-pointer bg-transparent border-none transition-colors p-0"
           >
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" d="M6 18L18 6M6 6l12 12"/>
-            </svg>
-          </button>
-          <button class="flex items-center justify-center w-10 h-10 border-l border-gray-300 bg-gray-50 hover:bg-gray-100 cursor-pointer transition-colors">
-            <svg class="w-[18px] h-[18px] text-gray-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <circle cx="11" cy="11" r="8"/><path stroke-linecap="round" d="m21 21-4.35-4.35"/>
-            </svg>
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 18L18 6M6 6l12 12"/></svg>
           </button>
         </div>
 
-        <!-- Order Date Dropdown (no nested x-data — uses parent state) -->
+        <!-- Order Date Dropdown -->
         <div class="relative">
           <button
             @click="dateOpen = !dateOpen; timeOpen = false"
-            class="flex items-center gap-2 h-10 px-3 text-sm border rounded-sm cursor-pointer transition-colors whitespace-nowrap"
+            class="flex items-center gap-2 h-9 px-3 text-sm border rounded-lg cursor-pointer transition-colors whitespace-nowrap"
             :class="dateFilter !== 'all' && dateFilter !== 'custom'
               ? 'text-amber-700 bg-amber-50 border-amber-300 hover:bg-amber-100'
-              : 'text-gray-700 bg-white border-gray-300 hover:bg-gray-50'"
+              : 'text-gray-600 bg-white border-gray-300 hover:bg-gray-50'"
           >
             <span x-text="dateFilterLabel"></span>
             <svg class="w-3.5 h-3.5 transition-transform" :class="dateOpen ? 'rotate-180' : ''" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -133,7 +127,7 @@ function renderAllOrders(): string {
             x-transition:leave="transition ease-in duration-100"
             x-transition:leave-start="opacity-100 translate-y-0"
             x-transition:leave-end="opacity-0 translate-y-1"
-            class="absolute top-full left-0 mt-1 bg-white border border-gray-200 rounded-md shadow-lg z-20 py-1 min-w-[160px]"
+            class="absolute top-full left-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg z-20 py-1 min-w-[160px]"
           >
             <button @click="setDateFilter('all')"
               class="flex items-center justify-between w-full text-left px-4 py-2.5 text-sm hover:bg-gray-50 cursor-pointer bg-transparent border-none transition-colors"
@@ -170,7 +164,7 @@ function renderAllOrders(): string {
         <div class="relative">
           <button
             @click="timeOpen = !timeOpen; dateOpen = false"
-            class="flex items-center gap-2 h-10 px-3 text-sm border rounded-sm cursor-pointer transition-colors whitespace-nowrap"
+            class="flex items-center gap-2 h-9 px-3 text-sm border rounded-lg cursor-pointer transition-colors whitespace-nowrap"
             :class="dateFilter === 'custom'
               ? 'text-amber-700 bg-amber-50 border-amber-300 hover:bg-amber-100'
               : 'text-gray-400 bg-white border-gray-300 hover:bg-gray-50'"
@@ -189,29 +183,29 @@ function renderAllOrders(): string {
             x-transition:leave="transition ease-in duration-100"
             x-transition:leave-start="opacity-100 translate-y-0"
             x-transition:leave-end="opacity-0 translate-y-1"
-            class="absolute top-full right-0 max-sm:left-0 max-sm:right-auto mt-1 bg-white border border-gray-200 rounded-md shadow-lg z-20 p-4 min-w-[280px]"
+            class="absolute top-full right-0 max-sm:left-0 max-sm:right-auto mt-1 bg-white border border-gray-200 rounded-lg shadow-lg z-20 p-4 min-w-[280px]"
           >
             <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">${t('orders.selectDateRange')}</p>
             <div class="flex items-center gap-2 mb-3">
               <div class="flex-1">
                 <label class="block text-xs text-gray-500 mb-1">${t('orders.startDate')}</label>
                 <input type="date" x-model="dateFrom"
-                  class="w-full h-9 px-2 text-sm border border-gray-300 rounded-sm outline-none bg-white text-gray-700 focus:border-amber-400 focus:ring-1 focus:ring-amber-200" />
+                  class="w-full h-9 px-2 text-sm border border-gray-300 rounded-lg outline-none bg-white text-gray-700 focus:border-amber-400 focus:ring-1 focus:ring-amber-200" />
               </div>
               <span class="text-gray-300 mt-4">—</span>
               <div class="flex-1">
                 <label class="block text-xs text-gray-500 mb-1">${t('orders.endDate')}</label>
                 <input type="date" x-model="dateTo"
-                  class="w-full h-9 px-2 text-sm border border-gray-300 rounded-sm outline-none bg-white text-gray-700 focus:border-amber-400 focus:ring-1 focus:ring-amber-200" />
+                  class="w-full h-9 px-2 text-sm border border-gray-300 rounded-lg outline-none bg-white text-gray-700 focus:border-amber-400 focus:ring-1 focus:ring-amber-200" />
               </div>
             </div>
             <div class="flex items-center justify-end gap-2">
               <button @click="clearTimeRange()"
-                class="px-3 py-1.5 text-xs text-gray-500 bg-transparent border border-gray-300 rounded cursor-pointer hover:bg-gray-50 transition-colors">
+                class="px-3 py-1.5 text-xs text-gray-500 bg-transparent border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
                 ${t('common.clear')}
               </button>
               <button @click="applyTimeRange()"
-                class="px-3 py-1.5 text-xs text-white bg-gray-900 border border-gray-900 rounded cursor-pointer hover:bg-gray-800 transition-colors"
+                class="px-3 py-1.5 text-xs text-white bg-gray-900 border border-gray-900 rounded-lg cursor-pointer hover:bg-gray-800 transition-colors"
                 :class="!(dateFrom || dateTo) ? 'opacity-40 cursor-not-allowed' : ''"
                 :disabled="!(dateFrom || dateTo)">
                 ${t('common.apply')}
@@ -231,7 +225,7 @@ function renderAllOrders(): string {
       </div>
 
       <!-- Info Banner -->
-      <div class="mx-7 max-sm:mx-3 mb-4 px-4 py-3 bg-amber-50 border border-amber-200 rounded-sm">
+      <div class="mx-7 max-sm:mx-3 max-[480px]:mx-2 mb-4 px-4 max-[480px]:px-3 py-3 bg-amber-50 border border-amber-200 rounded-sm">
         <div class="flex items-start gap-2.5">
           <svg class="w-5 h-5 text-amber-500 shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 24 24">
             <path d="M3 9l1.5-1.5L6 9V5.5a2.5 2.5 0 015 0V9l1.5-1.5L14 9v5a7 7 0 01-14 0V9z" opacity="0"/>
@@ -263,7 +257,7 @@ function renderAllOrders(): string {
       </template>
 
       <!-- Orders List -->
-      <div class="px-7 max-sm:px-3 pb-6 space-y-4">
+      <div class="px-7 max-sm:px-3 max-[480px]:px-2 pb-6 space-y-4 max-[480px]:space-y-3">
         <template x-if="filteredOrders.length === 0">
           <div class="flex flex-col items-center justify-center gap-3 py-16 text-center">
             ${EMPTY_RECEIPT_ICON}
@@ -288,86 +282,77 @@ function renderAllOrders(): string {
         </template>
 
         <template x-for="order in filteredOrders" :key="order.id">
-          <div class="border border-gray-200 rounded-sm overflow-hidden bg-white">
-            <!-- Order Header -->
-            <div class="flex items-center justify-between gap-3 px-5 max-sm:px-3 py-3 bg-[#F8F8F8] border-b border-gray-200 flex-wrap max-sm:gap-1.5">
-              <div class="flex items-center gap-4 flex-wrap max-sm:gap-2 text-[13px] max-sm:text-xs text-gray-600">
-                <span class="flex items-center gap-1.5">
-                  <svg class="w-4 h-4 text-amber-500 shrink-0" viewBox="0 0 20 20" fill="currentColor">
-                    <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
-                  </svg>
-                  <span class="font-medium text-amber-700" x-text="'${t('orders.orderPrefix')} ' + order.orderNumber"></span>
-                </span>
-                <span class="max-sm:hidden text-gray-300">|</span>
-                <span x-text="'${t('orders.orderTime')}: ' + order.orderDate"></span>
-                <span class="max-sm:hidden text-gray-300">|</span>
-                <span class="flex items-center gap-1">
-                  <span>${t('orders.totalLabel')}:</span>
-                  <strong class="text-gray-900" x-text="order.currency + ' ' + order.total"></strong>
-                  <svg class="w-3.5 h-3.5 text-gray-400 cursor-help" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                    <circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 16v-4m0-4h.01"/>
-                  </svg>
-                </span>
-              </div>
-              <div class="flex items-center gap-2 text-[13px] max-sm:text-xs text-gray-600 shrink-0">
-                <span>${t('orders.supplierLabel')}: <strong class="text-gray-700" x-text="order.seller"></strong></span>
-                <a href="#" class="text-blue-600 hover:underline font-medium whitespace-nowrap hidden">Chat now</a>
-              </div>
-            </div>
+          <div class="border border-gray-200 rounded-lg overflow-hidden bg-white">
 
-            <!-- Order Body -->
-            <div class="px-5 max-sm:px-3 py-4 flex flex-col md:flex-row gap-6 border-b border-gray-100">
-              <div class="flex-1 min-w-0">
-                <!-- Status -->
-                <p class="text-sm font-bold mb-3" :class="order.statusColor" x-text="order.status"></p>
-
-                <!-- Products -->
-                <template x-for="product in order.products" :key="product.name">
-                  <div class="flex items-start gap-4 max-sm:gap-3 mb-4 last:mb-0">
-                    <!-- Product Image -->
-                    <div class="w-20 h-20 max-sm:w-16 max-sm:h-16 rounded-sm border border-gray-200 overflow-hidden shrink-0 bg-gray-50">
-                      <img :src="product.image" :alt="product.name" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\\'flex items-center justify-center w-full h-full text-gray-300\\'><svg class=\\'w-8 h-8\\' fill=\\'none\\' stroke=\\'currentColor\\' stroke-width=\\'1.5\\' viewBox=\\'0 0 24 24\\'><rect x=\\'3\\' y=\\'3\\' width=\\'18\\' height=\\'18\\' rx=\\'2\\'/><circle cx=\\'8.5\\' cy=\\'8.5\\' r=\\'1.5\\'/><path d=\\'M21 15l-5-5L5 21\\'/></svg></div>'" />
-                    </div>
-
-                    <!-- Product Info -->
-                    <div class="flex-1 min-w-0 flex items-center justify-between gap-4 max-sm:flex-col max-sm:items-start max-sm:gap-2">
-                      <div class="min-w-0 flex-1">
-                        <a href="#" class="text-sm text-gray-800 hover:text-blue-600 transition-colors line-clamp-2 leading-snug block" x-text="product.name"></a>
-                        <div class="flex items-center gap-1.5 mt-1.5 flex-wrap">
-                          <span class="text-xs text-gray-500" x-text="product.variation"></span>
-                          <span class="text-xs text-gray-500 px-1">|</span>
-                          <span class="text-xs text-gray-500" x-text="order.currency + ' ' + product.unitPrice"></span>
-                          <span class="text-xs text-gray-500 px-1">|</span>
-                          <span class="text-xs text-gray-500" x-text="product.quantity + ' ${t('orders.piece')}'"></span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </template>
-              </div>
-
-              <!-- Action Buttons -->
-              <div class="flex flex-col md:w-[220px] shrink-0 border-l border-gray-100 md:pl-6 max-md:-mx-5 max-md:px-5 max-md:pt-4 max-md:border-t justify-center gap-3">
-                <button @click="window.location.href='${getBaseUrl()}pages/order/order-success.html'" class="w-full th-btn th-btn-pill">
-                  ${t('orders.makePayment')}
-                </button>
-                <div class="flex items-center justify-center gap-4 text-xs">
-                  <button @click="viewDetail(order)" class="text-gray-700 hover:text-blue-600 hover:underline bg-transparent border-none cursor-pointer p-0 font-medium">
-                    ${t('orders.viewDetails')}
-                  </button>
+            <!-- ── Card Header ── -->
+            <div class="px-5 max-sm:px-3 py-3 bg-[#FAFAFA] border-b border-gray-200">
+              <div class="flex items-center justify-between gap-3 max-[480px]:gap-2 flex-wrap">
+                <!-- Left: Order info -->
+                <div class="flex items-center gap-2 text-[13px] max-[480px]:text-xs text-gray-500 flex-wrap max-sm:gap-1.5">
+                  <span class="inline-flex items-center gap-1 font-semibold text-gray-800">
+                    <svg class="w-4 h-4 text-amber-500" viewBox="0 0 20 20" fill="currentColor"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
+                    <span x-text="order.orderNumber"></span>
+                  </span>
                   <span class="text-gray-300">|</span>
-                  <button class="text-gray-700 hover:text-blue-600 hover:underline bg-transparent border-none cursor-pointer p-0 font-medium">
+                  <span x-text="order.orderDate" class="max-sm:hidden"></span>
+                  <span class="text-gray-300 max-sm:hidden">|</span>
+                  <span class="max-[380px]:hidden">${t('orders.supplierLabel')}: <strong class="text-gray-700" x-text="order.seller"></strong></span>
+                </div>
+                <!-- Right: Status + Cancel + Total -->
+                <div class="flex items-center gap-2 max-[480px]:gap-1.5">
+                  <button @click="cancellingOrder = order; openModal('showCancelOrder')" class="text-gray-400 hover:text-red-500 bg-transparent border-none cursor-pointer transition-colors text-xs whitespace-nowrap">
                     ${t('orders.cancelOrderBtn')}
                   </button>
+                  <span class="text-gray-300">|</span>
+                  <span class="inline-flex items-center px-2.5 py-0.5 max-[480px]:px-1.5 rounded text-[11px] max-[480px]:text-[10px] font-bold uppercase tracking-wide"
+                        :class="order.statusColor === 'text-amber-600' ? 'bg-amber-100 text-amber-700'
+                              : order.statusColor === 'text-green-600' ? 'bg-green-100 text-green-700'
+                              : order.statusColor === 'text-blue-600' ? 'bg-blue-100 text-blue-700'
+                              : order.statusColor === 'text-red-600' ? 'bg-red-100 text-red-700'
+                              : 'bg-gray-100 text-gray-700'"
+                        x-text="order.status"></span>
+                  <span class="text-[15px] max-[480px]:text-[13px] font-bold text-gray-900" x-text="order.currency + ' ' + order.total"></span>
                 </div>
               </div>
             </div>
-            
-            <!-- Contact Supplier Footer -->
-            <div class="px-5 max-sm:px-3 py-3 bg-gray-50 border-t border-gray-100 flex items-center justify-between">
-              <div class="text-[13px] text-gray-600 flex items-center gap-2">
-                 <svg class="w-4 h-4 text-blue-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg> 
-                 <a href="#" class="text-gray-700 font-medium hover:text-blue-600">${t('orders.contactSupplier')}</a>
+
+            <!-- ── Product Rows ── -->
+            <div class="divide-y divide-gray-100">
+              <template x-for="product in order.products" :key="product.name">
+                <div class="flex items-center gap-4 max-sm:gap-3 px-5 max-sm:px-3 py-3.5">
+                  <!-- Image -->
+                  <div class="w-[60px] h-[60px] max-sm:w-12 max-sm:h-12 rounded-md border border-gray-100 overflow-hidden shrink-0 bg-gray-50">
+                    <img :src="product.image" :alt="product.name" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\\'flex items-center justify-center w-full h-full text-gray-300\\'><svg class=\\'w-6 h-6\\' fill=\\'none\\' stroke=\\'currentColor\\' stroke-width=\\'1.5\\' viewBox=\\'0 0 24 24\\'><rect x=\\'3\\' y=\\'3\\' width=\\'18\\' height=\\'18\\' rx=\\'2\\'/><circle cx=\\'8.5\\' cy=\\'8.5\\' r=\\'1.5\\'/><path d=\\'M21 15l-5-5L5 21\\'/></svg></div>'" />
+                  </div>
+                  <!-- Name + Specs -->
+                  <div class="flex-1 min-w-0">
+                    <a href="#" class="text-sm text-gray-800 hover:text-blue-600 transition-colors line-clamp-1 leading-snug" x-text="product.name"></a>
+                    <p class="text-xs text-gray-400 mt-1 truncate" x-text="product.variation"></p>
+                  </div>
+                  <!-- Price & Qty -->
+                  <div class="text-right shrink-0 max-sm:hidden">
+                    <p class="text-sm font-medium text-gray-800" x-text="order.currency + ' ' + product.unitPrice"></p>
+                    <p class="text-xs text-gray-400 mt-0.5" x-text="'x' + product.quantity"></p>
+                  </div>
+                </div>
+              </template>
+            </div>
+
+            <!-- ── Action Bar ── -->
+            <div class="flex flex-wrap items-center justify-between gap-3 max-[480px]:gap-2 px-5 max-sm:px-3 py-3 border-t border-gray-200 bg-[#FAFAFA]">
+              <!-- Link -->
+              <a :href="'${getBaseUrl()}pages/dashboard/messages.html?seller=' + encodeURIComponent(order.seller)" class="text-gray-500 hover:text-blue-600 flex items-center gap-1.5 transition-colors whitespace-nowrap text-[13px] max-[480px]:text-xs">
+                <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+                ${t('orders.contactSupplier')}
+              </a>
+              <!-- Buttons -->
+              <div class="flex items-center gap-2.5 max-[480px]:w-full">
+                <button @click="viewDetail(order)" class="h-9 px-5 max-[480px]:px-3 max-[480px]:flex-1 text-[13px] max-[480px]:text-xs text-gray-700 bg-white border border-gray-300 rounded-lg cursor-pointer font-medium whitespace-nowrap transition-colors hover:border-gray-400 hover:bg-gray-50">
+                  ${t('orders.viewDetails')}
+                </button>
+                <button @click="window.location.href='${getBaseUrl()}pages/order/order-success.html'" class="h-9 px-5 max-[480px]:px-3 max-[480px]:flex-1 text-[13px] max-[480px]:text-xs font-medium text-white bg-(--color-cta-primary) border border-(--color-cta-primary) rounded-lg cursor-pointer whitespace-nowrap transition-colors hover:bg-(--color-cta-primary-hover)">
+                  ${t('orders.makePayment')}
+                </button>
               </div>
             </div>
           </div>
@@ -1104,15 +1089,19 @@ function renderAllOrders(): string {
         </div>
       </template>
 
-      <!-- Modal 6: Cancel Order -->
+      </div></template>
+
+      <!-- ════════════════════════════════════════
+           CANCEL ORDER MODAL (shared by list & detail)
+           ════════════════════════════════════════ -->
       <template x-if="showCancelOrder">
         <div class="fixed inset-0 z-50 flex items-center justify-center p-4" @keydown.escape.window="closeModal('showCancelOrder')">
-          <div class="absolute inset-0 bg-black/50" @click="closeModal('showCancelOrder')"></div>
+          <div class="absolute inset-0 bg-black/50" @click="cancelReason = ''; cancellingOrder = null; closeModal('showCancelOrder')"></div>
           <div class="relative bg-white rounded-xl shadow-2xl w-full max-w-md max-h-[85vh] overflow-hidden" @click.stop>
             <!-- Header -->
             <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200">
               <h3 class="text-lg font-bold text-gray-900">${t('orders.cancelOrderTitle')}</h3>
-              <button @click="closeModal('showCancelOrder')" class="flex items-center justify-center w-8 h-8 text-gray-400 hover:text-gray-600 bg-transparent border-none cursor-pointer rounded-full hover:bg-gray-100 transition-colors">
+              <button @click="cancelReason = ''; cancellingOrder = null; closeModal('showCancelOrder')" class="flex items-center justify-center w-8 h-8 text-gray-400 hover:text-gray-600 bg-transparent border-none cursor-pointer rounded-full hover:bg-gray-100 transition-colors">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 18L18 6M6 6l12 12"/></svg>
               </button>
             </div>
@@ -1161,13 +1150,13 @@ function renderAllOrders(): string {
             </div>
             <!-- Footer -->
             <div class="px-6 py-4 border-t border-gray-100 flex items-center justify-end gap-3">
-              <button @click="closeModal('showCancelOrder')"
+              <button @click="confirmCancelOrder()"
                 :class="cancelReason ? 'th-btn th-btn-pill' : 'bg-gray-200 text-gray-400 border-gray-200 cursor-not-allowed rounded-full'"
                 :disabled="!cancelReason"
                 class="px-6 py-2 text-sm font-medium rounded-full cursor-pointer transition-colors border">
                 ${t('orders.confirmCancel')}
               </button>
-              <button @click="cancelReason = ''; closeModal('showCancelOrder')" class="th-btn-outline th-btn-pill">
+              <button @click="cancelReason = ''; cancellingOrder = null; closeModal('showCancelOrder')" class="th-btn-outline th-btn-pill">
                 ${t('common.cancel')}
               </button>
             </div>
@@ -1175,7 +1164,281 @@ function renderAllOrders(): string {
         </div>
       </template>
 
-      </div></template>
+    </div>
+
+      <!-- ════════════════════════════════════════
+           REMITTANCE PROOF MODAL
+           ════════════════════════════════════════ -->
+      <div class="os-modal hidden fixed inset-0 z-[9999] items-center justify-center" id="remittance-modal">
+        <div class="os-modal__overlay absolute inset-0 bg-black/45"></div>
+        <div class="os-modal__dialog relative bg-white rounded-xl w-[740px] max-w-[calc(100vw-32px)] max-h-[calc(100vh-64px)] overflow-y-auto shadow-[0_20px_60px_rgba(0,0,0,0.2)]" style="animation: osModalIn 200ms ease-out"
+             x-data="remittanceComponent()">
+
+          <!-- Modal Header -->
+          <div class="flex items-center justify-between px-6 pt-5 pb-4 border-b border-gray-100 sticky top-0 bg-white z-10 rounded-t-xl">
+            <div class="flex items-center gap-3">
+              <h3 class="text-lg font-bold text-gray-900">${t('orders.submitRemittanceProof')}</h3>
+              <!-- Step indicator -->
+              <div class="flex items-center gap-1.5" x-show="step !== 'success'">
+                <span class="w-2 h-2 rounded-full transition-colors" :class="step === 'upload' ? 'bg-amber-500' : 'bg-gray-300'"></span>
+                <span class="w-2 h-2 rounded-full transition-colors" :class="step === 'form' || step === 'submitting' ? 'bg-amber-500' : 'bg-gray-300'"></span>
+              </div>
+            </div>
+            <button @click="reset()" class="os-modal__close bg-transparent border-none cursor-pointer p-1.5 rounded-lg flex items-center justify-center transition-colors hover:bg-gray-100" aria-label="${t('common.close')}">
+              <svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M12 4L4 12M4 4l8 8" stroke="#666" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+
+          <!-- ═══ STEP 1: Upload ═══ -->
+          <div x-show="step === 'upload'" x-transition class="p-6">
+            <!-- Error message -->
+            <template x-if="errors.file">
+              <div class="flex items-center gap-2 px-4 py-2.5 mb-4 bg-red-50 border border-red-200 rounded-lg text-sm text-red-600">
+                <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M12 9v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span x-text="errors.file"></span>
+              </div>
+            </template>
+
+            <!-- Upload Zone -->
+            <div class="border-2 border-dashed rounded-xl p-8 max-sm:p-5 text-center transition-colors cursor-pointer"
+                 :class="dragging ? 'border-amber-400 bg-amber-50/60' : hasFile ? 'border-green-300 bg-green-50/30' : 'border-gray-300 bg-gray-50/50 hover:border-gray-400'"
+                 @dragover.prevent="dragging = true"
+                 @dragleave.prevent="dragging = false"
+                 @drop.prevent="dragging = false; handleFiles($event.dataTransfer.files)">
+
+              <div class="flex flex-col md:flex-row items-center gap-6 md:gap-10">
+                <!-- Document Preview -->
+                <div class="w-[140px] h-[180px] shrink-0 bg-white border border-gray-200 rounded-lg flex items-center justify-center shadow-sm overflow-hidden relative">
+                  <!-- No file -->
+                  <template x-if="!hasFile">
+                    <div class="text-center">
+                      <svg class="w-12 h-12 text-gray-300 mx-auto mb-2" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24">
+                        <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                      </svg>
+                      <p class="text-[11px] text-gray-400">${t('orders.remitPreview')}</p>
+                    </div>
+                  </template>
+                  <!-- Image preview -->
+                  <template x-if="hasFile && filePreviewUrl">
+                    <img :src="filePreviewUrl" class="w-full h-full object-contain" />
+                  </template>
+                  <!-- PDF file -->
+                  <template x-if="hasFile && !filePreviewUrl">
+                    <div class="text-center px-3">
+                      <svg class="w-10 h-10 text-red-400 mx-auto mb-1" fill="currentColor" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm-1 2l5 5h-5V4zM8.5 14a1 1 0 110-2 1 1 0 010 2zm7 0h-4a.5.5 0 010-1h4a.5.5 0 010 1zm0 3h-4a.5.5 0 010-1h4a.5.5 0 010 1z"/></svg>
+                      <p class="text-[10px] text-gray-500 truncate" x-text="fileName"></p>
+                    </div>
+                  </template>
+                  <!-- Remove button -->
+                  <button x-show="hasFile" @click.stop="removeFile()"
+                    class="absolute top-1 right-1 w-5 h-5 flex items-center justify-center bg-red-500 text-white rounded-full text-xs cursor-pointer border-none hover:bg-red-600 transition-colors">
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                  </button>
+                </div>
+
+                <!-- Upload Info -->
+                <div class="flex-1 text-left max-md:text-center">
+                  <p class="text-sm text-gray-600 mb-1">
+                    <span class="text-amber-600 font-semibold">*</span>
+                    ${t('orders.remitUploadHint')}
+                  </p>
+                  <div class="text-[13px] text-gray-500 space-y-0.5 mb-4">
+                    <p><strong class="text-gray-700">${t('orders.remitDocClear')}</strong></p>
+                    <p>${t('orders.remitFileSize')}: 20 MB</p>
+                    <p>${t('orders.remitFormats')}: JPG, JPEG, PNG, GIF, PDF</p>
+                    <p>${t('orders.remitManualLink')} <a href="#" class="text-blue-600 hover:underline">${t('orders.remitEnterManually')}</a></p>
+                  </div>
+
+                  <!-- File info badge when uploaded -->
+                  <template x-if="hasFile">
+                    <div class="flex items-center gap-2 mb-3 text-sm text-green-700 bg-green-50 px-3 py-1.5 rounded-full border border-green-200 inline-flex">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                      <span x-text="fileName" class="truncate max-w-[200px]"></span>
+                      <span class="text-green-500 text-xs" x-text="'(' + fileSize + ')'"></span>
+                    </div>
+                  </template>
+
+                  <label class="inline-flex items-center gap-2 px-6 py-2.5 text-sm font-medium text-white bg-(--color-cta-primary) rounded-full cursor-pointer transition-colors hover:bg-(--color-cta-primary-hover)">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+                    <span x-text="hasFile ? '${t('orders.remitChangeFile')}' : '${t('orders.remitUploadFile')}'"></span>
+                    <input type="file" accept=".jpg,.jpeg,.png,.gif,.pdf" class="hidden"
+                           @change="handleFiles($event.target.files)" />
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Continue Button -->
+            <div class="flex justify-end mt-5">
+              <button @click="goToForm()"
+                class="px-6 py-2.5 text-sm font-medium text-white bg-(--color-cta-primary) rounded-lg cursor-pointer transition-all hover:bg-(--color-cta-primary-hover)"
+                :class="!hasFile ? 'opacity-40 cursor-not-allowed! scale-[0.98]' : 'hover:shadow-md'">
+                ${t('orders.remitContinue')}
+                <svg class="w-4 h-4 inline ml-1 -mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M9 5l7 7-7 7"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- ═══ STEP 2: Form ═══ -->
+          <div x-show="step === 'form'" x-transition class="p-6">
+            <!-- Success Banner -->
+            <div class="flex items-center gap-2 px-4 py-2.5 mb-5 bg-green-50 border border-green-200 rounded-lg text-sm text-green-700">
+              <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              ${t('orders.remitUploadSuccess')}
+            </div>
+
+            <div class="flex gap-6 max-md:flex-col">
+              <!-- Left: Preview -->
+              <div class="w-[220px] max-md:w-full shrink-0 space-y-3">
+                <div class="w-full aspect-[3/4] bg-gray-50 border border-gray-200 rounded-lg flex items-center justify-center overflow-hidden">
+                  <template x-if="filePreviewUrl">
+                    <img :src="filePreviewUrl" class="w-full h-full object-contain" />
+                  </template>
+                  <template x-if="!filePreviewUrl">
+                    <div class="text-center">
+                      <svg class="w-10 h-10 text-red-400 mx-auto mb-1" fill="currentColor" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm-1 2l5 5h-5V4z"/></svg>
+                      <p class="text-xs text-gray-500 truncate px-2" x-text="fileName"></p>
+                    </div>
+                  </template>
+                </div>
+                <button @click="removeFile()" class="w-full text-center text-xs text-gray-400 hover:text-red-500 bg-transparent border-none cursor-pointer transition-colors">
+                  ${t('orders.remitChangeFile')}
+                </button>
+              </div>
+
+              <!-- Right: Form -->
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center justify-between mb-4">
+                  <p class="text-sm text-gray-600">${t('orders.remitFormHint')}</p>
+                  <button @click="clearForm()" class="text-xs text-gray-400 hover:text-gray-600 bg-transparent border-none cursor-pointer flex items-center gap-1 transition-colors">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                    ${t('orders.remitClearAll')}
+                  </button>
+                </div>
+
+                <div class="space-y-4">
+                  <!-- Beneficiary Account -->
+                  <div>
+                    <label class="block text-sm text-gray-700 mb-1.5">
+                      <span class="text-red-500">*</span> ${t('orders.remitBeneficiaryAccount')}
+                    </label>
+                    <input type="text" x-model="form.beneficiaryAccount"
+                      @blur="submitted && validateField('beneficiaryAccount')"
+                      :class="errors.beneficiaryAccount ? 'border-red-400! ring-1! ring-red-200!' : ''"
+                      placeholder="${t('orders.remitPlaceholderEnter')}"
+                      class="w-full h-10 px-3 text-sm border border-gray-300 rounded-lg outline-none bg-white text-gray-700 transition-colors focus:border-amber-400 focus:ring-1 focus:ring-amber-200" />
+                    <p x-show="errors.beneficiaryAccount" class="text-xs text-red-500 mt-1">${t('common.required')}</p>
+                  </div>
+
+                  <!-- Remittance Date -->
+                  <div>
+                    <label class="block text-sm text-gray-700 mb-1.5">
+                      <span class="text-red-500">*</span> ${t('orders.remitDate')}
+                    </label>
+                    <input type="date" x-model="form.remittanceDate"
+                      @blur="submitted && validateField('remittanceDate')"
+                      :class="errors.remittanceDate ? 'border-red-400! ring-1! ring-red-200!' : ''"
+                      class="w-full h-10 px-3 text-sm border border-gray-300 rounded-lg outline-none bg-white text-gray-700 transition-colors focus:border-amber-400 focus:ring-1 focus:ring-amber-200" />
+                    <p x-show="errors.remittanceDate" class="text-xs text-red-500 mt-1">${t('common.required')}</p>
+                  </div>
+
+                  <!-- Amount -->
+                  <div>
+                    <label class="block text-sm text-gray-700 mb-1.5">
+                      <span class="text-red-500">*</span> ${t('orders.remitAmount')}
+                    </label>
+                    <div class="flex gap-2">
+                      <select x-model="form.currency"
+                        class="h-10 px-3 text-sm border border-gray-300 rounded-lg outline-none bg-white text-gray-700 transition-colors focus:border-amber-400 focus:ring-1 focus:ring-amber-200 w-[100px]">
+                        <option value="USD">USD</option>
+                        <option value="EUR">EUR</option>
+                        <option value="GBP">GBP</option>
+                        <option value="TRY">TRY</option>
+                        <option value="CNY">CNY</option>
+                      </select>
+                      <input type="number" step="0.01" min="0" x-model="form.amount"
+                        @blur="submitted && validateField('amount')"
+                        :class="errors.amount ? 'border-red-400! ring-1! ring-red-200!' : ''"
+                        placeholder="${t('orders.remitPlaceholderEnter')}"
+                        class="flex-1 h-10 px-3 text-sm border border-gray-300 rounded-lg outline-none bg-white text-gray-700 transition-colors focus:border-amber-400 focus:ring-1 focus:ring-amber-200" />
+                    </div>
+                    <p x-show="errors.amount" class="text-xs text-red-500 mt-1">${t('common.required')}</p>
+                  </div>
+
+                  <!-- Bank Name -->
+                  <div>
+                    <label class="block text-sm text-gray-700 mb-1.5">
+                      <span class="text-red-500">*</span> ${t('orders.remitBankName')}
+                    </label>
+                    <input type="text" x-model="form.bankName"
+                      @blur="submitted && validateField('bankName')"
+                      :class="errors.bankName ? 'border-red-400! ring-1! ring-red-200!' : ''"
+                      placeholder="${t('orders.remitPlaceholderEnter')}"
+                      class="w-full h-10 px-3 text-sm border border-gray-300 rounded-lg outline-none bg-white text-gray-700 transition-colors focus:border-amber-400 focus:ring-1 focus:ring-amber-200" />
+                    <p x-show="errors.bankName" class="text-xs text-red-500 mt-1">${t('common.required')}</p>
+                  </div>
+
+                  <!-- Sender Name -->
+                  <div>
+                    <label class="block text-sm text-gray-700 mb-1.5">
+                      <span class="text-red-500">*</span> ${t('orders.remitSenderName')}
+                    </label>
+                    <input type="text" x-model="form.senderName"
+                      @blur="submitted && validateField('senderName')"
+                      :class="errors.senderName ? 'border-red-400! ring-1! ring-red-200!' : ''"
+                      placeholder="${t('orders.remitPlaceholderEnter')}"
+                      class="w-full h-10 px-3 text-sm border border-gray-300 rounded-lg outline-none bg-white text-gray-700 transition-colors focus:border-amber-400 focus:ring-1 focus:ring-amber-200" />
+                    <p x-show="errors.senderName" class="text-xs text-red-500 mt-1">${t('common.required')}</p>
+                  </div>
+
+                  <!-- Smart Prediction Note -->
+                  <div class="flex items-start gap-2 px-3 py-2.5 bg-amber-50 border border-amber-200 rounded-lg text-[13px] text-amber-700 leading-relaxed">
+                    <svg class="w-4 h-4 shrink-0 mt-0.5 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z"/></svg>
+                    ${t('orders.remitSmartPrediction')}
+                  </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="flex items-center justify-between mt-6 gap-3">
+                  <button @click="step = 'upload'"
+                    class="px-4 py-2.5 text-sm text-gray-600 bg-transparent border border-gray-300 rounded-lg cursor-pointer font-medium transition-colors hover:bg-gray-50">
+                    <svg class="w-4 h-4 inline mr-1 -mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M15 19l-7-7 7-7"/></svg>
+                    ${t('common.back')}
+                  </button>
+                  <button @click="submitRemittance()"
+                    class="inline-flex items-center gap-2 px-8 py-2.5 text-sm font-medium text-white bg-(--color-cta-primary) rounded-lg cursor-pointer transition-all hover:bg-(--color-cta-primary-hover) hover:shadow-md"
+                    :class="!isFormValid ? 'opacity-60' : ''">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                    ${t('orders.remitCheckStatus')}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ═══ STEP: Submitting ═══ -->
+          <div x-show="step === 'submitting'" x-transition class="p-12 text-center">
+            <div class="inline-flex items-center justify-center w-16 h-16 mb-4">
+              <svg class="w-12 h-12 text-amber-500 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/></svg>
+            </div>
+            <h4 class="text-lg font-bold text-gray-900 mb-2">${t('orders.remitSubmitting')}</h4>
+            <p class="text-sm text-gray-500">${t('orders.remitPleaseWait')}</p>
+          </div>
+
+          <!-- ═══ STEP: Success ═══ -->
+          <div x-show="step === 'success'" x-transition class="p-12 text-center">
+            <div class="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-4">
+              <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            </div>
+            <h4 class="text-lg font-bold text-gray-900 mb-2">${t('orders.remitSuccessTitle')}</h4>
+            <p class="text-sm text-gray-500 mb-6 max-w-[360px] mx-auto">${t('orders.remitSuccessDesc')}</p>
+            <button @click="reset()" class="os-modal__close px-6 py-2.5 text-sm font-medium text-white bg-(--color-cta-primary) rounded-lg cursor-pointer transition-colors hover:bg-(--color-cta-primary-hover)">
+              ${t('common.close')}
+            </button>
+          </div>
+        </div>
+      </div>
+
     </div>
   `;
 }
@@ -1237,11 +1500,11 @@ function renderRefunds(): string {
 
 function renderReviews(): string {
   return `
-    <div class="flex items-center justify-between px-7 max-sm:px-3 pt-6 pb-5 border-b border-(--color-border-light,#f0f0f0)">
-      <h1 class="text-[22px] font-bold text-(--color-text-heading,#111827)">${t('orders.myReviews')}</h1>
-      <div class="flex items-center gap-1">
+    <div class="flex items-center justify-between flex-wrap gap-2 px-7 max-sm:px-3 max-[380px]:px-3 pt-6 pb-5 border-b border-(--color-border-light,#f0f0f0)">
+      <h1 class="text-[22px] max-sm:text-lg font-bold text-(--color-text-heading,#111827)">${t('orders.myReviews')}</h1>
+      <div class="flex items-center gap-1 shrink-0">
         <span class="text-[13px] text-(--color-text-muted,#666)">${t('orders.scoringRules')}</span>
-        <svg class="w-4 h-4" fill="none" stroke="#999" stroke-width="1.5" viewBox="0 0 24 24">
+        <svg class="w-4 h-4 shrink-0" fill="none" stroke="#999" stroke-width="1.5" viewBox="0 0 24 24">
           <circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 16v-4m0-4h.01"/>
         </svg>
       </div>
@@ -1252,9 +1515,9 @@ function renderReviews(): string {
     </div>
 
     <div class="flex justify-end px-7 max-sm:px-3 py-3">
-      <div class="flex border border-(--color-border-medium,#d1d5db) rounded overflow-hidden">
-        <input type="text" placeholder="${t('orders.reviewSearchPlaceholder')}" class="os-reviews-toolbar__input w-[240px] max-sm:w-[160px] h-8 px-2.5 text-[13px] border-none outline-none text-(--color-text-body,#333)" />
-        <button class="flex items-center justify-center w-8 h-8 border-none border-l border-l-(--color-border-medium,#d1d5db) bg-(--color-surface-muted,#fafafa) text-(--color-text-muted,#666) cursor-pointer hover:bg-(--color-border-light) hover:text-(--color-text-heading,#111827)" aria-label="${t('common.search')}">
+      <div class="flex border border-(--color-border-medium,#d1d5db) rounded overflow-hidden w-full max-w-[320px] max-sm:max-w-full">
+        <input type="text" placeholder="${t('orders.reviewSearchPlaceholder')}" class="os-reviews-toolbar__input flex-1 min-w-0 h-8 px-2.5 text-[13px] border-none outline-none text-(--color-text-body,#333)" />
+        <button class="flex items-center justify-center w-8 h-8 shrink-0 border-none border-l border-l-(--color-border-medium,#d1d5db) bg-(--color-surface-muted,#fafafa) text-(--color-text-muted,#666) cursor-pointer hover:bg-(--color-border-light) hover:text-(--color-text-heading,#111827)" aria-label="${t('common.search')}">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <circle cx="11" cy="11" r="8"/><path stroke-linecap="round" d="m21 21-4.35-4.35"/>
           </svg>
@@ -1632,9 +1895,9 @@ function renderNav(activeId: string): string {
   return getNavItems().map(item => {
     const isActive = item.id === activeId;
     const activeClasses = isActive
-      ? 'orders-page__nav-link--active font-semibold text-(--color-text-heading,#111827) border-l-(--color-text-heading) underline underline-offset-[3px]'
-      : 'text-(--color-text-body,#333)';
-    return `<a href="#${item.id}" class="orders-page__nav-link block py-2.5 px-5 text-sm no-underline border-l-[3px] border-l-transparent transition-colors leading-[1.4] hover:bg-(--color-surface-muted,#fafafa) hover:text-(--color-text-heading,#111827) max-md:whitespace-nowrap max-md:border-l-0 max-md:px-3 max-md:py-2 max-md:text-[13px] max-md:rounded-full max-md:border max-md:border-(--color-border-medium,#d1d5db) max-md:shrink-0 ${activeClasses}" data-nav="${item.id}">${item.label}</a>`;
+      ? 'orders-page__nav-link--active text-gray-900 border-b-2 border-gray-900 font-semibold'
+      : 'text-gray-500 border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300';
+    return `<button type="button" class="orders-page__nav-link py-3 px-4 max-sm:px-3 text-sm max-sm:text-[13px] whitespace-nowrap transition-colors shrink-0 bg-transparent border-none cursor-pointer ${activeClasses}" data-nav="${item.id}">${item.label}</button>`;
   }).join('');
 }
 
@@ -1643,13 +1906,11 @@ export function OrdersPageLayout(): string {
   const renderFn = SECTIONS[activeId] ?? renderAllOrders;
 
   return `
-    <div class="orders-page flex bg-(--color-surface,#fff) rounded-lg min-h-[calc(100vh-80px)] overflow-hidden max-md:flex-col max-md:rounded-none max-md:min-h-0">
-      <aside class="orders-page__nav w-[240px] shrink-0 border-r border-(--color-border-light,#f0f0f0) py-6 max-md:w-full max-md:border-r-0 max-md:border-b max-md:border-b-(--color-border-light,#f0f0f0) max-md:py-3">
-        <h2 class="text-base font-bold text-(--color-text-heading,#111827) px-5 pb-4 max-md:pb-2 max-md:px-4 max-md:text-sm" data-i18n="orders.orderManagement">${t('orders.orderManagement')}</h2>
-        <nav class="orders-page__nav-links flex flex-col max-md:flex-row max-md:overflow-x-auto max-md:px-3 max-md:gap-1 max-md:scrollbar-hide">
-          ${renderNav(activeId)}
-        </nav>
-      </aside>
+    <div class="orders-page bg-(--color-surface,#fff) rounded-lg min-h-[calc(100vh-80px)] max-md:rounded-none max-md:min-h-0">
+      <!-- Top Tab Navigation -->
+      <nav class="orders-page__nav-links flex overflow-x-auto scrollbar-hide border-b border-(--color-border-light,#e5e7eb) px-3 max-sm:px-1 bg-(--color-surface,#fff)">
+        ${renderNav(activeId)}
+      </nav>
       <div class="orders-page__content flex-1 flex flex-col min-w-0" id="orders-content">
         ${renderFn()}
       </div>
@@ -1674,8 +1935,10 @@ export function initOrdersPageLayout(): void {
       const isActive = link.dataset.nav === activeId;
       link.classList.toggle('orders-page__nav-link--active', isActive);
       link.classList.toggle('font-semibold', isActive);
-      link.classList.toggle('underline', isActive);
-      link.classList.toggle('underline-offset-[3px]', isActive);
+      link.classList.toggle('text-gray-900', isActive);
+      link.classList.toggle('border-gray-900', isActive);
+      link.classList.toggle('text-gray-500', !isActive);
+      link.classList.toggle('border-transparent', !isActive);
     });
 
     // Init inner tabs
@@ -1688,9 +1951,8 @@ export function initOrdersPageLayout(): void {
   window.addEventListener('hashchange', navigate);
 
   // Nav link clicks
-  document.querySelectorAll<HTMLAnchorElement>('.orders-page__nav-link').forEach(link => {
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
+  document.querySelectorAll<HTMLButtonElement>('.orders-page__nav-link').forEach(link => {
+    link.addEventListener('click', () => {
       const id = link.dataset.nav ?? 'all-orders';
       window.location.hash = id;
     });
