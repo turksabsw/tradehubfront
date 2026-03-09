@@ -2,6 +2,7 @@ import Alpine from 'alpinejs'
 import { t, getCurrentLang } from './i18n'
 import { showToast } from './utils/toast'
 import { initLinkRewriter } from './utils/url'
+import { addToFavorites } from './stores/favorites'
 import {
   filterAndSortReviews,
   renderReviewCard,
@@ -1160,19 +1161,14 @@ Alpine.data('cartPage', () => ({
     const snapshot = cartStore.getProduct(productId);
     if (!snapshot) return;
 
-    // Save to local storage mock
-    try {
-      const stored = localStorage.getItem('tradehub-favorites') || '[]';
-      const parsed = JSON.parse(stored);
-      parsed.push({
-        id: productId,
-        image: snapshot.product.skus[0]?.skuImage || 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=300&h=300&fit=crop',
-        title: snapshot.product.title,
-        priceRange: `$${snapshot.product.skus[0]?.unitPrice || 0}`,
-        minOrder: snapshot.product.moqLabel || 'Min. order: 1 piece'
-      });
-      localStorage.setItem('tradehub-favorites', JSON.stringify(parsed));
-    } catch (e) { /* ignore storage errors */ }
+    // Save to favorites store
+    addToFavorites({
+      id: productId,
+      image: snapshot.product.skus[0]?.skuImage || 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=300&h=300&fit=crop',
+      title: snapshot.product.title,
+      priceRange: `$${snapshot.product.skus[0]?.unitPrice || 0}`,
+      minOrder: snapshot.product.moqLabel || 'Min. order: 1 piece'
+    });
 
     showFavoriteToast();
 

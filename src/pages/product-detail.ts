@@ -51,7 +51,9 @@ const mockProduct = getMockProduct();
 import { initAnimatedPlaceholder } from '../utils/animatedPlaceholder'
 import { t } from '../i18n'
 import { isLoggedIn } from '../utils/auth'
-import { showToast } from '../utils/toast'
+
+// Favorites
+import { openFavoritesDropdown, updateFavoriteButtons } from '../components/favorites/FavoritesDropdown'
 
 // Build breadcrumb from product category data (skip first "Ana Sayfa" since Breadcrumb adds it)
 const pdCrumbs = mockProduct.category.slice(1).map((label, i, arr) => ({
@@ -152,82 +154,37 @@ initFavorites();
 // Start Alpine LAST — after innerHTML is set so it can find all x-data directives in the DOM
 startAlpine();
 
-/* ── Favorites logic ── */
+/* ── Favorites logic (YouTube-like dropdown) ── */
 function initFavorites(): void {
-  const STORAGE_KEY = 'tradehub-favorites';
   const productId = mockProduct.id;
+  const productData = {
+    id: productId,
+    image: mockProduct.images[0]?.src || '',
+    title: mockProduct.title,
+    priceRange: `$${mockProduct.priceTiers[0]?.price || 0}`,
+    minOrder: `Min. order: ${mockProduct.moq} ${mockProduct.unit}`,
+  };
 
-  // Check if already favorited
-  function isFavorited(): boolean {
-    try {
-      const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-      return stored.some((f: { id: string }) => f.id === productId);
-    } catch { return false; }
-  }
+  // Set initial button state
+  updateFavoriteButtons(productId);
 
-  // Update all favorite button visuals
-  function updateButtons(active: boolean): void {
-    document.querySelectorAll<HTMLButtonElement>('[data-favorite-btn]').forEach(btn => {
-      const svg = btn.querySelector('svg');
-      if (!svg) return;
-      if (active) {
-        svg.setAttribute('fill', '#ef4444');
-        svg.setAttribute('stroke', '#ef4444');
-        btn.style.color = '#ef4444';
-      } else {
-        svg.setAttribute('fill', 'none');
-        svg.setAttribute('stroke', 'currentColor');
-        btn.style.color = '';
-      }
-    });
-  }
-
-  // Set initial state
-  updateButtons(isFavorited());
-
-  // Toggle favorite
-  function toggleFavorite(): void {
-    if (!isLoggedIn()) {
-      showLoginModal();
-      return;
-    }
-
-    try {
-      const stored: { id: string }[] = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-      const index = stored.findIndex(f => f.id === productId);
-
-      if (index >= 0) {
-        // Remove from favorites
-        stored.splice(index, 1);
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(stored));
-        updateButtons(false);
-        showToast({ message: t('product.removedFromFavorites'), type: 'info' });
-      } else {
-        // Add to favorites
-        stored.push({
-          id: productId,
-          image: mockProduct.images[0]?.src || '',
-          title: mockProduct.title,
-          priceRange: `$${mockProduct.priceTiers[0]?.price || 0}`,
-          minOrder: `Min. order: ${mockProduct.moq} ${mockProduct.unit}`,
-        } as any);
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(stored));
-        updateButtons(true);
-        showToast({
-          message: t('cart.movedToFavorites'),
-          type: 'success',
-          link: { text: t('cart.favorites'), href: '/pages/dashboard/favorites.html' },
-        });
-      }
-    } catch { /* ignore storage errors */ }
-  }
-
-  // Wire up click handlers
+  // Wire up click handlers — open dropdown instead of simple toggle
   document.querySelectorAll<HTMLButtonElement>('[data-favorite-btn]').forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
       e.stopPropagation();
-      toggleFavorite();
+
+      if (!isLoggedIn()) {
+        showLoginModal();
+        return;
+      }
+
+      openFavoritesDropdown(btn, productData);
     });
+  });
+
+  // Listen for favorites changes (from dropdown or other sources)
+  window.addEventListener('favorites-changed', () => {
+    updateFavoriteButtons(productId);
   });
 }

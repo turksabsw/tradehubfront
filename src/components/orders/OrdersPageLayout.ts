@@ -63,21 +63,32 @@ function renderAllOrders(): string {
         </button>
       </div>
 
-      <!-- Status Tabs — dynamic counts -->
-      <div class="border-b border-gray-200 overflow-x-auto scrollbar-hide">
-        <div class="flex px-7 max-sm:px-3 min-w-max">
-          ${getOrderStatusTabs().map(tab => `
-            <button
-              @click="activeTab = '${tab.id}'"
-              :class="activeTab === '${tab.id}'
-                ? 'text-gray-900 border-b-2 border-gray-900 font-medium'
-                : 'text-gray-500 border-b-2 border-transparent hover:text-gray-700'"
-              class="py-3 px-4 max-sm:px-2.5 text-sm max-sm:text-xs whitespace-nowrap transition-colors bg-transparent cursor-pointer"
-            >
-              ${tab.label}<template x-if="tabCount('${tab.id}') > 0"><span class="text-gray-400 ml-0.5" x-text="'(' + tabCount('${tab.id}') + ')'"></span></template>
-            </button>
-          `).join('')}
+      <!-- Status Tabs — dynamic counts, horizontal scroll -->
+      <div class="relative border-b border-gray-200" id="order-tabs-wrapper">
+        <!-- Left fade + arrow -->
+        <button type="button" id="order-tabs-left" class="absolute left-0 top-0 bottom-0 z-10 w-8 items-center justify-center bg-gradient-to-r from-white via-white/80 to-transparent cursor-pointer border-none hidden" aria-label="Scroll left">
+          <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+        </button>
+        <!-- Scrollable tab container -->
+        <div class="overflow-x-auto scrollbar-hide" id="order-tabs-scroll">
+          <div class="flex px-7 max-sm:px-3 min-w-max">
+            ${getOrderStatusTabs().map(tab => `
+              <button
+                @click="activeTab = '${tab.id}'"
+                :class="activeTab === '${tab.id}'
+                  ? 'text-gray-900 border-b-2 border-gray-900 font-medium'
+                  : 'text-gray-500 border-b-2 border-transparent hover:text-gray-700'"
+                class="py-3 px-4 max-sm:px-2.5 text-sm max-sm:text-xs whitespace-nowrap transition-colors bg-transparent cursor-pointer"
+              >
+                ${tab.label}<template x-if="tabCount('${tab.id}') > 0"><span class="text-gray-400 ml-0.5" x-text="'(' + tabCount('${tab.id}') + ')'"></span></template>
+              </button>
+            `).join('')}
+          </div>
         </div>
+        <!-- Right fade + arrow -->
+        <button type="button" id="order-tabs-right" class="absolute right-0 top-0 bottom-0 z-10 w-8 items-center justify-center bg-gradient-to-l from-white via-white/80 to-transparent cursor-pointer border-none hidden" aria-label="Scroll right">
+          <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+        </button>
       </div>
 
       <!-- Search & Filter Bar -->
@@ -1945,6 +1956,7 @@ export function initOrdersPageLayout(): void {
     initInnerTabs();
     initPillFilters();
     initTaxModals();
+    initOrderTabsScroll();
   }
 
   // Hash change listener
@@ -1962,6 +1974,7 @@ export function initOrdersPageLayout(): void {
   initInnerTabs();
   initPillFilters();
   initTaxModals();
+  initOrderTabsScroll();
 }
 
 function initInnerTabs(): void {
@@ -2040,4 +2053,82 @@ function initTaxModals(): void {
       if (openModalEl) closeModal(openModalEl);
     }
   });
+}
+
+/* ────────────────────────────────────────
+   ORDER TABS HORIZONTAL SCROLL
+   ──────────────────────────────────────── */
+function initOrderTabsScroll(): void {
+  const scrollEl = document.getElementById('order-tabs-scroll');
+  const leftBtn = document.getElementById('order-tabs-left');
+  const rightBtn = document.getElementById('order-tabs-right');
+  if (!scrollEl || !leftBtn || !rightBtn) return;
+
+  const SCROLL_STEP = 150;
+
+  function updateArrows(): void {
+    const { scrollLeft, scrollWidth, clientWidth } = scrollEl!;
+    const canScrollLeft = scrollLeft > 2;
+    const canScrollRight = scrollLeft < scrollWidth - clientWidth - 2;
+
+    leftBtn!.style.display = canScrollLeft ? 'flex' : 'none';
+    rightBtn!.style.display = canScrollRight ? 'flex' : 'none';
+  }
+
+  leftBtn.addEventListener('click', () => {
+    scrollEl.scrollBy({ left: -SCROLL_STEP, behavior: 'smooth' });
+  });
+
+  rightBtn.addEventListener('click', () => {
+    scrollEl.scrollBy({ left: SCROLL_STEP, behavior: 'smooth' });
+  });
+
+  scrollEl.addEventListener('scroll', updateArrows, { passive: true });
+  window.addEventListener('resize', updateArrows);
+
+  // Mouse wheel horizontal scroll support
+  scrollEl.addEventListener('wheel', (e) => {
+    if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+      const { scrollLeft, scrollWidth, clientWidth } = scrollEl;
+      const canScroll = scrollWidth > clientWidth;
+      if (!canScroll) return;
+
+      // Prevent vertical scroll only when tabs can scroll
+      const atStart = scrollLeft <= 0 && e.deltaY < 0;
+      const atEnd = scrollLeft >= scrollWidth - clientWidth && e.deltaY > 0;
+      if (!atStart && !atEnd) {
+        e.preventDefault();
+        scrollEl.scrollLeft += e.deltaY;
+      }
+    }
+  }, { passive: false });
+
+  // Drag to scroll
+  let isDragging = false;
+  let startX = 0;
+  let scrollStart = 0;
+
+  scrollEl.addEventListener('mousedown', (e) => {
+    isDragging = true;
+    startX = e.pageX;
+    scrollStart = scrollEl.scrollLeft;
+    scrollEl.style.cursor = 'grabbing';
+    scrollEl.style.userSelect = 'none';
+  });
+
+  document.addEventListener('mousemove', (e) => {
+    if (!isDragging) return;
+    const dx = e.pageX - startX;
+    scrollEl.scrollLeft = scrollStart - dx;
+  });
+
+  document.addEventListener('mouseup', () => {
+    if (!isDragging) return;
+    isDragging = false;
+    scrollEl.style.cursor = '';
+    scrollEl.style.userSelect = '';
+  });
+
+  // Initial check
+  requestAnimationFrame(updateArrows);
 }
