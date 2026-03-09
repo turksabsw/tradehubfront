@@ -659,9 +659,7 @@ function initPayModals(): void {
         const brand = firstDigit === '4' ? 'VISA' : firstDigit === '5' ? 'MC' : firstDigit === '3' ? 'AMEX' : 'CARD';
 
         // Save to store
-        if ((window as any).addSavedCard) {
-          (window as any).addSavedCard({ cardNumber, expiry, cardholderName, brand });
-        }
+        paymentCardStore.addCard({ cardNumber, expiry, cardholderName, brand });
 
         // Get the masked card (last 4 digits)
         const masked = cardNumber.replace(/\d(?=\d{4})/g, '*');

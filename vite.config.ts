@@ -62,7 +62,7 @@ function notFoundFallbackPlugin(): Plugin {
         configureServer(server) {
             // Return handler runs AFTER Vite's built-in middleware
             return () => {
-                server.middlewares.use((req, res, next) => {
+                server.middlewares.use((req, _res, next) => {
                     const url = req.url?.split('?')[0] ?? '/';
                     // Skip internal Vite paths, assets, and node_modules
                     if (url.startsWith('/@') || url.startsWith('/src/') || url.startsWith('/node_modules/') || url.includes('.')) {
@@ -101,6 +101,24 @@ export default defineConfig({
                     resolve(__dirname, file),
                 ])
             ),
+            output: {
+                manualChunks(id) {
+                    // Vendor: Alpine.js
+                    if (id.includes('node_modules/alpinejs')) return 'vendor-alpine';
+                    // Vendor: Flowbite
+                    if (id.includes('node_modules/flowbite')) return 'vendor-flowbite';
+                    // Vendor: Swiper
+                    if (id.includes('node_modules/swiper')) return 'vendor-swiper';
+                    // Vendor: i18next
+                    if (id.includes('node_modules/i18next')) return 'vendor-i18next';
+                    // Vendor: DOMPurify
+                    if (id.includes('node_modules/dompurify')) return 'vendor-dompurify';
+                    // App: i18n locale files (large)
+                    if (id.includes('src/i18n/locales/')) return 'locales';
+                    // App: Alpine data modules
+                    if (id.includes('src/alpine/')) return 'alpine';
+                },
+            },
         },
     },
 })

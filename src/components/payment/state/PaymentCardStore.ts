@@ -6,6 +6,15 @@ export interface SavedCard {
     brand: string;
 }
 
+// Extend Window for typed global access (needed by inline onclick handlers in templates)
+declare global {
+    interface Window {
+        removeSavedCard: (id: string) => void;
+        addSavedCard: (card: Omit<SavedCard, 'id'>) => void;
+        getSavedCards: () => SavedCard[];
+    }
+}
+
 export const paymentCardStore = {
     getCards(): SavedCard[] {
         try {
@@ -29,7 +38,7 @@ export const paymentCardStore = {
     }
 };
 
-// Expose globally for vanilla HTML onclick handlers
-(window as any).removeSavedCard = paymentCardStore.removeCard.bind(paymentCardStore);
-(window as any).addSavedCard = paymentCardStore.addCard.bind(paymentCardStore);
-(window as any).getSavedCards = paymentCardStore.getCards.bind(paymentCardStore);
+// Expose globally for inline HTML onclick handlers in templates
+window.removeSavedCard = paymentCardStore.removeCard.bind(paymentCardStore);
+window.addSavedCard = paymentCardStore.addCard.bind(paymentCardStore);
+window.getSavedCards = paymentCardStore.getCards.bind(paymentCardStore);

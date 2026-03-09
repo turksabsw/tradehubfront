@@ -2,6 +2,7 @@ import i18next from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import en from './locales/en';
 import tr from './locales/tr';
+import { sanitizeHtml } from '../utils/sanitize';
 
 export const SUPPORTED_LANGS = ['en', 'tr'] as const;
 export type SupportedLang = (typeof SUPPORTED_LANGS)[number];
@@ -102,7 +103,7 @@ export function updatePageTranslations(): void {
     const key = el.getAttribute('data-i18n-html');
     if (!key) return;
     const opts = parseI18nOptions(el);
-    el.innerHTML = i18next.t(key, opts) as string;
+    el.innerHTML = sanitizeHtml(i18next.t(key, opts) as string);
   });
 }
 
