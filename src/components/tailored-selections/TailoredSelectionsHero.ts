@@ -5,17 +5,17 @@
  */
 
 import Swiper from 'swiper';
-import { Navigation } from 'swiper/modules';
+import { Navigation, EffectCoverflow } from 'swiper/modules';
 import 'swiper/swiper-bundle.css';
 import { t } from '../../i18n';
 import type { TailoredCategory } from '../../data/mockTailoredSelections';
 
 function renderCategorySlide(category: TailoredCategory, index: number): string {
-    return `
-    <div class="swiper-slide" style="height: auto;">
+  return `
+    <div class="swiper-slide" style="height: auto;" data-bg-color="${category.bgColor}">
       <div
         class="relative rounded-xl overflow-hidden h-full min-h-[280px] sm:min-h-[320px] lg:min-h-[360px] group cursor-pointer"
-        style="background: linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.65) 100%);"
+        style="--list-card-background-color: ${category.bgColor}; --list-card-border-color: #6a6145; background-color: var(--list-card-background-color); border: 1px solid var(--list-card-border-color);"
       >
         <!-- Background image -->
         <img
@@ -24,8 +24,11 @@ function renderCategorySlide(category: TailoredCategory, index: number): string 
           loading="${index <= 2 ? 'eager' : 'lazy'}"
           class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
-        <!-- Gradient overlay -->
-        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
+        <!-- Dynamic Gradient overlay using category's bgColor to fade into image -->
+        <div 
+          class="absolute inset-0"
+          style="background: linear-gradient(to top, var(--list-card-background-color) 10%, transparent 80%);"
+        ></div>
 
         <!-- Content overlay -->
         <div class="relative z-10 flex flex-col justify-end h-full p-5 sm:p-6">
@@ -51,47 +54,55 @@ function renderCategorySlide(category: TailoredCategory, index: number): string 
 }
 
 export function initTailoredSelectionsHero(): void {
-    const el = document.querySelector<HTMLElement>('.ts-hero-swiper');
-    if (!el) return;
+  const el = document.querySelector<HTMLElement>('.ts-hero-swiper');
+  if (!el) return;
 
-    new Swiper(el, {
-        modules: [Navigation],
-        spaceBetween: 16,
-        centeredSlides: true,
-        loop: true,
-        navigation: {
-            nextEl: '.ts-hero-next',
-            prevEl: '.ts-hero-prev',
-        },
-        breakpoints: {
-            0: {
-                slidesPerView: 1.15,
-                spaceBetween: 8,
-            },
-            480: {
-                slidesPerView: 1.3,
-                spaceBetween: 12,
-            },
-            768: {
-                slidesPerView: 1.8,
-                spaceBetween: 16,
-            },
-            1024: {
-                slidesPerView: 2.5,
-                spaceBetween: 16,
-            },
-            1280: {
-                slidesPerView: 3,
-                spaceBetween: 20,
-            },
-        },
-    });
+  new Swiper(el, {
+    modules: [Navigation, EffectCoverflow],
+    effect: 'coverflow',
+    coverflowEffect: {
+      rotate: 0,
+      stretch: 80, // pulls side slides closer to the center
+      depth: 150, // pushes them slightly backward to shrink them
+      modifier: 1,
+      slideShadows: true,
+    },
+    centeredSlides: true,
+    loop: true,
+    navigation: {
+      nextEl: '.ts-hero-next',
+      prevEl: '.ts-hero-prev',
+    },
+    on: {
+      slideChange: function (swiper) {
+        const activeSlide = swiper.slides[swiper.activeIndex];
+        if (activeSlide) {
+          const bgColor = activeSlide.getAttribute('data-bg-color');
+          if (bgColor) {
+            const heroSection = document.getElementById('ts-hero-section');
+            if (heroSection) {
+              heroSection.style.setProperty('--floor-background-color', bgColor);
+            }
+          }
+        }
+      }
+    },
+    breakpoints: {
+      0: { slidesPerView: 1.15 },
+      480: { slidesPerView: 1.3 },
+      768: { slidesPerView: 1.8 },
+      1024: { slidesPerView: 2.1 }, // exactly right for typical laptop screen
+      1280: { slidesPerView: 2.3 }, // wider screens
+      1536: { slidesPerView: 2.5 }, // 3 cards neatly fit the max-1440px container
+    },
+  });
 }
 
 export function TailoredSelectionsHero(categories: TailoredCategory[]): string {
-    return `
-    <section class="relative overflow-hidden" style="background: linear-gradient(180deg, #3a2a1a 0%, #5c3d2e 40%, #4a3425 100%);">
-      <!-- Decorative elements -->
+  const initialBg = categories.length > 0 ? categories[0].bgColor : '#373224';
+  return `
+    <section id="ts-hero-section" class="relative overflow-hidden" style="--floor-background-color: ${initialBg}; background-color: var(--floor-background-color); transition: background-color 0.5s ease;">
+      <!-- Decorative elements (optional, can be removed if not needed since background is dynamic now) -->
       <div class="absolute inset-0 pointer-events-none overflow-hidden">
         <div class="absolute -top-20 -left-20 w-64 h-64 rounded-full" style="background: radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 70%);"></div>
         <div class="absolute top-10 right-10 w-48 h-48 rounded-full" style="background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%);"></div>
@@ -132,9 +143,11 @@ export function TailoredSelectionsHero(categories: TailoredCategory[]): string {
         </div>
       </div>
 
-      <!-- Down arrow indicator -->
-      <div class="flex justify-center pb-3 sm:pb-4">
-        <div class="w-0 h-0 border-l-[14px] border-r-[14px] border-t-[12px] border-l-transparent border-r-transparent" style="border-top-color: var(--products-bg, #f5f5f5);"></div>
+      <!-- Upward arrow indicator (light triangle cutting into dark background) -->
+      <div class="absolute bottom-0 left-1/2 -translate-x-1/2 z-20 flex items-end">
+        <svg fill="none" height="15" viewBox="0 0 32 15" width="32" xmlns="http://www.w3.org/2000/svg" class="block">
+          <path d="M14.683 1.25513C15.437 0.595339 16.5631 0.595338 17.317 1.25513L30.9322 13.1683C32.115 14.2033 31.396 16.1423 29.8322 16.1423H2.16788C0.604044 16.1423 -0.114946 14.2033 1.0678 13.1683L14.683 1.25513Z" fill="var(--products-bg, #f5f5f5)"/>
+        </svg>
       </div>
     </section>
   `;

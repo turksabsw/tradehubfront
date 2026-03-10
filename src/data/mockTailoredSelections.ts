@@ -9,6 +9,7 @@ export interface TailoredCategory {
     description: string;
     descriptionKey: string;
     imageSrc: string;
+    bgColor: string;
 }
 
 export interface TailoredProduct {
@@ -41,6 +42,7 @@ export function getTailoredCategories(): TailoredCategory[] {
             description: 'You have shown interest in drawstring style shopping bags suited to versatile retail items. We reviewed 800+ related items and curated 5k+ top picks...',
             descriptionKey: 'tailoredPage.cat.drawstringBagsDesc',
             imageSrc: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=800&h=500&q=80',
+            bgColor: '#2a3132', // Dark slate
         },
         {
             id: 'hiking-shoes',
@@ -49,6 +51,7 @@ export function getTailoredCategories(): TailoredCategory[] {
             description: 'In Sports & Entertainment, Hiking Shoes thrive; our list weighs price, sales, and channel trends. Insulated yet breathable pairs span cold climbs to hot...',
             descriptionKey: 'tailoredPage.cat.hikingShoesDesc',
             imageSrc: 'https://images.unsplash.com/photo-1551107696-a4b0c5a0d9a2?auto=format&fit=crop&w=800&h=500&q=80',
+            bgColor: '#373224', // Dark olive/brown
         },
         {
             id: 'shoulder-bags',
@@ -57,6 +60,7 @@ export function getTailoredCategories(): TailoredCategory[] {
             description: "In the market for men's shoulder bags? We selected 1,000+ top picks with secure zipper closures to match your needs.",
             descriptionKey: 'tailoredPage.cat.shoulderBagsDesc',
             imageSrc: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=800&h=500&q=80',
+            bgColor: '#1a1f24', // Dark blue/grey
         },
         {
             id: 'phone-cases',
@@ -65,6 +69,7 @@ export function getTailoredCategories(): TailoredCategory[] {
             description: 'Protect your devices with our curated selection of phone cases. From slim to rugged, transparent to designer — 3,000+ options reviewed.',
             descriptionKey: 'tailoredPage.cat.phoneCasesDesc',
             imageSrc: 'https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?auto=format&fit=crop&w=800&h=500&q=80',
+            bgColor: '#1F1A1B', // Dark charcoal/brown
         },
         {
             id: 'tactical-gear',
@@ -73,6 +78,7 @@ export function getTailoredCategories(): TailoredCategory[] {
             description: 'Military-grade tactical gear and outdoor equipment. We analyzed 2,500+ products across durability, price point, and buyer reviews.',
             descriptionKey: 'tailoredPage.cat.tacticalGearDesc',
             imageSrc: 'https://images.unsplash.com/photo-1533628635777-112b2239b1c7?auto=format&fit=crop&w=800&h=500&q=80',
+            bgColor: '#2c3325', // Dark green
         },
     ];
 }

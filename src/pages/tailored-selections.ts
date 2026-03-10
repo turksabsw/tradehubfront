@@ -41,8 +41,8 @@ const products = getTailoredProducts();
 /* ── Breadcrumb ── */
 
 const breadcrumbItems = [
-    { label: t('tailoredPage.breadcrumbHome'), href: '/' },
-    { label: t('tailoredPage.breadcrumb') },
+  { label: t('tailoredPage.breadcrumbHome'), href: '/' },
+  { label: t('tailoredPage.breadcrumb') },
 ];
 
 /* ── Page Assembly ── */
@@ -50,8 +50,23 @@ const breadcrumbItems = [
 const appEl = document.querySelector<HTMLDivElement>('#app')!;
 appEl.classList.add('relative');
 appEl.innerHTML = `
-  <!-- Header -->
-  <div id="sticky-header" class="sticky top-0 z-[30]" style="background-color:var(--header-scroll-bg);border-bottom:1px solid var(--header-scroll-border)">
+  <!-- Mobile Header (visible only on small screens) -->
+  <div class="sticky top-0 z-[30] flex items-center justify-between px-3 py-2.5 md:hidden" style="background-color: var(--header-scroll-bg, #fff); border-bottom: 1px solid var(--header-scroll-border, #e5e7eb);">
+    <a href="/" class="flex items-center justify-center w-9 h-9 rounded-full hover:bg-gray-100 transition-colors" aria-label="Back">
+      <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+      </svg>
+    </a>
+    <h1 class="text-base font-semibold text-gray-900" data-i18n="tailoredPage.title">${t('tailoredPage.title')}</h1>
+    <button class="flex items-center justify-center w-9 h-9 rounded-full hover:bg-gray-100 transition-colors" aria-label="Search">
+      <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Desktop Header (hidden on mobile) -->
+  <div id="sticky-header" class="sticky top-0 z-[30] hidden md:block" style="background-color:var(--header-scroll-bg);border-bottom:1px solid var(--header-scroll-border)">
     ${TopBar()}
     ${SubHeader()}
   </div>
@@ -63,8 +78,8 @@ appEl.innerHTML = `
     <!-- Hero Section with Category Carousel -->
     ${TailoredSelectionsHero(categories)}
 
-    <!-- Breadcrumb -->
-    <div class="container-boxed pt-4 pb-2" style="background: var(--products-bg, #f5f5f5);">
+    <!-- Breadcrumb (hidden on mobile) -->
+    <div class="container-boxed pt-4 pb-2 hidden md:block" style="background: var(--products-bg, #f5f5f5);">
       ${Breadcrumb(breadcrumbItems)}
     </div>
 

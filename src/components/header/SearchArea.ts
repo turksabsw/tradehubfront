@@ -320,7 +320,3 @@ export function initSearchArea(): void {
     }
   }
 }
-init();
-    }
-  }
-}
