@@ -2409,6 +2409,25 @@ const en = {
         fullCustomization: 'Full customization',
         highRdCapacity: 'High R&D capacity',
         fortune500Collab: 'Fortune 500 collaboration',
+        // Sidebar filter labels
+        searchProcess: 'Search process',
+        searchingRequirements: 'Searching based on your requirements',
+        selectingSuppliers: 'Selecting suppliers by business insights',
+        filters: 'Filters',
+        marchExpo: 'March Expo',
+        tradeAssurance: 'Trade Assurance',
+        tradeAssuranceDesc: 'Protects your orders on iSTOC.com',
+        supplierFeatures: 'Supplier features',
+        verifiedSupplier: 'Verified Supplier',
+        verifiedProSupplier: 'Verified Pro Supplier',
+        storeReviews: 'Store reviews',
+        storeReviewsDesc: 'Based on a 5-star rating system',
+        ratingFourUp: '4.0 & up',
+        ratingFourFiveUp: '4.5 & up',
+        ratingFive: '5.0',
+        productFeatures: 'Product features',
+        paidSamples: 'Paid samples',
+        showManufacturersOnly: 'Show manufacturers only',
       },
 
       // Manufacturer list
@@ -2435,6 +2454,11 @@ const en = {
         next: 'Next',
         addToFavorites: 'Add to favorites',
         odmService: 'ODM service available',
+        // Stats labels
+        onTimeDeliveryLabel: 'On-time delivery',
+        reorderRate: 'Reorder rate',
+        responseTimeLabel: 'Response time',
+        onlineRevenue: 'Online revenue',
       },
     },
 
@@ -3914,6 +3938,13 @@ const en = {
     groupRouters: 'Routers',
     groupPowerBanks: 'Power Banks',
     groupMedicalInstruments: 'Medical Instruments',
+  },
+
+  // ── Promo Banner ────────────────────────────────────
+  promo: {
+    campaignName: 'Spring Deals',
+    campaignMessage: 'Limited-time offer: up to 20% off on 8M+ hot picks',
+    exploreNow: 'Explore now',
   },
 
   // ── Dropshipping ────────────────────────────────────

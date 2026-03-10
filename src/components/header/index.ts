@@ -15,3 +15,6 @@ export { initStickyHeaderSearch } from './StickyHeaderSearch';
 // MegaMenu component - full-width category dropdown
 export { MegaMenu, initMegaMenu, megaCategories, getCategoryIcon } from './MegaMenu';
 export type { MegaMenuCategory } from './MegaMenu';
+
+// PromoBanner component - top promotional banner (Alibaba-style)
+export { PromoBanner, initPromoBanner } from './PromoBanner';

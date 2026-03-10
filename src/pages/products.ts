@@ -9,7 +9,7 @@ import { initFlowbite } from 'flowbite'
 import { t } from '../i18n'
 
 // Header components (reuse from main page)
-import { TopBar, initMobileDrawer, SubHeader, MegaMenu, initMegaMenu, initHeaderCart } from '../components/header'
+import { TopBar, initMobileDrawer, MegaMenu, initMegaMenu, initHeaderCart, PromoBanner, initPromoBanner } from '../components/header'
 import { initLanguageSelector } from '../components/header/TopBar'
 
 // Shared components
@@ -98,10 +98,12 @@ const productsBreadcrumb = (() => {
 const appEl = document.querySelector<HTMLDivElement>('#app')!;
 appEl.classList.add('relative');
 appEl.innerHTML = `
+  <!-- Promo Banner -->
+  ${PromoBanner()}
+
   <!-- Sticky Header -->
   <div id="sticky-header" class="sticky top-0 z-(--z-header)" style="background-color:var(--header-scroll-bg);border-bottom:1px solid var(--header-scroll-border)">
     ${TopBar()}
-    ${SubHeader()}
   </div>
 
   ${MegaMenu()}
@@ -180,6 +182,9 @@ appEl.innerHTML = `
   ${ListingCartDrawer()}
   ${ShippingModal()}
 `;
+
+// Initialize promo banner dismiss behavior
+initPromoBanner();
 
 // Initialize custom component behaviors FIRST (before Flowbite can interfere)
 initMegaMenu();

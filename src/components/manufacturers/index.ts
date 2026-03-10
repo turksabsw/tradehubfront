@@ -7,10 +7,10 @@ export function ManufacturersLayout(): string {
     <div class="container-boxed pt-4">
       <!-- 1) Top Hero Section -->
       ${ManufacturersHero()}
-      
+
       <!-- 2) Horizontal Category Bar -->
       ${HorizontalCategoryBar()}
-      
+
       <!-- 3) Manufacturer List -->
       ${ManufacturerList()}
     </div>

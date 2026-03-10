@@ -2400,6 +2400,25 @@ const tr = {
         fullCustomization: 'Tam özelleştirme',
         highRdCapacity: 'Yüksek Ar-Ge kapasitesi',
         fortune500Collab: 'Fortune 500 ile İş Birliği',
+        // Sidebar filter labels
+        searchProcess: 'Arama süreci',
+        searchingRequirements: 'Gereksinimlerinize göre aranıyor',
+        selectingSuppliers: 'İş analizlerine göre tedarikçiler seçiliyor',
+        filters: 'Filtreler',
+        marchExpo: 'Mart Fuarı',
+        tradeAssurance: 'Ticaret Güvencesi',
+        tradeAssuranceDesc: 'iSTOC.com siparişlerinizi korur',
+        supplierFeatures: 'Tedarikçi özellikleri',
+        verifiedSupplier: 'Doğrulanmış Tedarikçi',
+        verifiedProSupplier: 'Doğrulanmış Pro Tedarikçi',
+        storeReviews: 'Mağaza değerlendirmeleri',
+        storeReviewsDesc: '5 yıldızlı derecelendirme sistemine göre',
+        ratingFourUp: '4.0 ve üzeri',
+        ratingFourFiveUp: '4.5 ve üzeri',
+        ratingFive: '5.0',
+        productFeatures: 'Ürün özellikleri',
+        paidSamples: 'Ücretli numuneler',
+        showManufacturersOnly: 'Sadece üreticileri göster',
       },
 
       // Manufacturer list
@@ -2426,6 +2445,11 @@ const tr = {
         next: 'Sonraki',
         addToFavorites: 'Favorilere ekle',
         odmService: 'ODM hizmeti olanağı',
+        // Stats labels
+        onTimeDeliveryLabel: 'Zamanında teslimat',
+        reorderRate: 'Yeniden sipariş oranı',
+        responseTimeLabel: 'Yanıt süresi',
+        onlineRevenue: 'Online gelir',
       },
     },
 
@@ -3904,6 +3928,13 @@ const tr = {
     groupRouters: 'Routerlar',
     groupPowerBanks: 'Taşınabilir Şarj Cihazları',
     groupMedicalInstruments: 'Tıbbi Cihazlar',
+  },
+
+  // ── Promo Banner ────────────────────────────────────
+  promo: {
+    campaignName: 'Bahar Fırsatları',
+    campaignMessage: 'Sınırlı süreli teklif: 8M+ popüler üründe %20\'ye varan indirim',
+    exploreNow: 'Keşfet',
   },
 
   // ── Dropshipping ────────────────────────────────────

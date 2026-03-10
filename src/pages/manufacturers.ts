@@ -3,7 +3,7 @@ import { initFlowbite } from 'flowbite'
 import { t } from '../i18n'
 
 // Header components
-import { TopBar, MobileSearchTabs, initMobileDrawer, SubHeader, initStickyHeaderSearch, MegaMenu, initMegaMenu } from '../components/header'
+import { TopBar, MobileSearchTabs, initMobileDrawer, initStickyHeaderSearch, MegaMenu, initMegaMenu, PromoBanner, initPromoBanner } from '../components/header'
 import { initLanguageSelector } from '../components/header/TopBar'
 
 // Shared components
@@ -28,10 +28,12 @@ const appEl = document.querySelector<HTMLDivElement>('#app')!;
 appEl.classList.add('relative');
 
 appEl.innerHTML = `
+  <!-- Promo Banner -->
+  ${PromoBanner()}
+
   <!-- Sticky Header (global, stays sticky across full page) -->
   <div id="sticky-header" class="sticky top-0 z-(--z-header) transition-colors duration-200" style="background-color:var(--header-scroll-bg);border-bottom:1px solid var(--header-scroll-border)">
     ${TopBar()}
-    ${SubHeader()}
   </div>
 
   <!-- Mobile Search Tabs (Products | Manufacturers) — non-sticky -->
@@ -56,6 +58,9 @@ appEl.innerHTML = `
   <!-- Floating Panel -->
   ${FloatingPanel()}
 `
+
+// Initialize promo banner
+initPromoBanner();
 
 // Initialize custom component behaviors FIRST (before Flowbite can interfere)
 initMegaMenu();
