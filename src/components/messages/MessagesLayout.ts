@@ -10,9 +10,9 @@ import { t } from '../../i18n';
 
 export function MessagesLayout(): string {
   return `
-    <div x-data="messagesComponent" class="flex flex-col h-[calc(100vh-48px)] max-md:h-auto max-md:min-h-[calc(100vh-48px)] bg-(--color-surface,#ffffff) rounded-lg max-sm:rounded-none overflow-hidden" x-cloak>
+    <div x-data="messagesComponent" class="flex flex-col h-[calc(100vh-48px)] max-2xl:h-auto max-2xl:min-h-[calc(100vh-48px)] bg-(--color-surface,#ffffff) rounded-lg max-sm:rounded-none overflow-hidden" x-cloak>
       <!-- 3-panel grid -->
-      <div class="relative flex flex-1 min-h-0 max-md:flex-col">
+      <div class="relative flex flex-1 min-h-0 max-2xl:flex-col">
         ${InboxPanel()}
         ${MessageList()}
         ${MessageContent()}

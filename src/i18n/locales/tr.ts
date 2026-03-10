@@ -36,6 +36,7 @@ const tr = {
       item: 'ürün',
       turkish: 'Türkçe',
       english: 'English',
+      clear: 'Temizle',
     },
 
     // ============================================================

@@ -155,45 +155,60 @@ function renderPaymentManagement(): string {
              $refs.numInput.value = this.ccNum;
           }
         }">
-          <div class="flex gap-2 flex-wrap mb-5">
+          <div class="flex gap-2 flex-wrap mb-5 p-3 bg-[#fafafa] rounded-lg border border-[#f0f0f0]">
             <!-- VISA -->
-            <div class="h-7 px-2 border rounded flex items-center justify-center bg-white transition-opacity" :class="brand && brand !== 'VISA' ? 'opacity-30' : 'opacity-100'" style="border-color: var(--color-border-default, #e5e5e5);">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png" class="h-3 object-contain" alt="Visa" />
+            <div class="flex items-center justify-center h-9 px-2.5 border rounded-md bg-white transition-all duration-200" :class="brand && brand !== 'VISA' ? 'opacity-25 grayscale' : 'opacity-100'" style="border-color: var(--color-border-default, #e5e5e5); min-width: 56px;">
+              <img src="/src/assets/images/visa.svg" class="h-5 w-auto object-contain" alt="Visa" />
             </div>
             <!-- Mastercard -->
-            <div class="h-7 px-2 border rounded flex items-center justify-center bg-white transition-opacity" :class="brand && brand !== 'MC' ? 'opacity-30' : 'opacity-100'" style="border-color: var(--color-border-default, #e5e5e5);">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/1280px-Mastercard-logo.svg.png" class="h-4 object-contain" alt="Mastercard" />
+            <div class="flex items-center justify-center h-9 px-2.5 border rounded-md bg-white transition-all duration-200" :class="brand && brand !== 'MC' ? 'opacity-25 grayscale' : 'opacity-100'" style="border-color: var(--color-border-default, #e5e5e5); min-width: 56px;">
+              <img src="/src/assets/images/mastercard.svg" class="h-7 w-auto object-contain" alt="Mastercard" />
             </div>
             <!-- AMEX -->
-            <div class="h-7 px-2 border rounded flex items-center justify-center bg-white transition-opacity" :class="brand && brand !== 'AMEX' ? 'opacity-30' : 'opacity-100'" style="border-color: var(--color-border-default, #e5e5e5);">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/American_Express_logo_%282018%29.svg/1200px-American_Express_logo_%282018%29.svg.png" class="h-4 object-contain" alt="Amex" />
+            <div class="flex items-center justify-center h-9 px-2.5 border rounded-md bg-white transition-all duration-200" :class="brand && brand !== 'AMEX' ? 'opacity-25 grayscale' : 'opacity-100'" style="border-color: var(--color-border-default, #e5e5e5); min-width: 56px;">
+              <img src="/src/assets/images/amex.svg" class="h-7 w-auto object-contain" alt="Amex" />
             </div>
-            <!-- Diğer logolar (Görsel tutarlılık için) -->
-            <div class="h-7 px-2 border rounded flex items-center justify-center bg-white transition-opacity text-[10px] font-bold text-[#ff6000]" :class="brand ? 'opacity-30' : 'opacity-100'" style="border-color: var(--color-border-default, #e5e5e5);">Discover</div>
-            <div class="h-7 px-2 border rounded flex items-center justify-center bg-white transition-opacity text-[10px] font-bold text-[#0e4c96]" :class="brand ? 'opacity-30' : 'opacity-100'" style="border-color: var(--color-border-default, #e5e5e5);">JCB</div>
+            <!-- Discover -->
+            <div class="flex items-center justify-center h-9 px-2.5 border rounded-md bg-white transition-all duration-200" :class="brand ? 'opacity-25 grayscale' : 'opacity-100'" style="border-color: var(--color-border-default, #e5e5e5); min-width: 56px;">
+              <img src="/src/assets/images/discover.svg" class="h-7 w-auto object-contain" alt="Discover" />
+            </div>
+            <!-- JCB -->
+            <div class="flex items-center justify-center h-9 px-2.5 border rounded-md bg-white transition-all duration-200" :class="brand ? 'opacity-25 grayscale' : 'opacity-100'" style="border-color: var(--color-border-default, #e5e5e5); min-width: 56px;">
+              <img src="/src/assets/images/jcb.svg" class="h-7 w-auto object-contain" alt="JCB" />
+            </div>
           </div>
           <div class="mb-4">
-            <input id="pay-card-num" x-ref="numInput" x-model="ccNum" @input="formatCard" type="text" class="w-full py-2.5 px-3.5 text-sm border border-border-strong rounded-lg outline-none text-text-primary transition-[border-color] duration-150 focus:border-[#999]" placeholder="${t('payment.cardNumberPlaceholder')}" maxlength="19" />
+            <label class="block text-xs font-semibold text-text-secondary mb-1.5">${t('payment.cardNumberPlaceholder')}</label>
+            <input id="pay-card-num" x-ref="numInput" x-model="ccNum" @input="formatCard" type="text" class="th-input w-full" placeholder="${t('payment.cardNumberPlaceholder')}" maxlength="19" />
           </div>
           <div class="flex gap-3 mb-4">
-            <input id="pay-card-fn" type="text" class="flex-1 py-2.5 px-3.5 text-sm border border-border-strong rounded-lg outline-none text-text-primary transition-[border-color] duration-150 focus:border-[#999]" placeholder="${t('payment.firstNamePlaceholder')}" />
-            <input id="pay-card-ln" type="text" class="flex-1 py-2.5 px-3.5 text-sm border border-border-strong rounded-lg outline-none text-text-primary transition-[border-color] duration-150 focus:border-[#999]" placeholder="${t('payment.lastNamePlaceholder')}" />
+            <div class="flex-1">
+              <label class="block text-xs font-semibold text-text-secondary mb-1.5">${t('payment.firstNamePlaceholder')}</label>
+              <input id="pay-card-fn" type="text" class="th-input w-full" placeholder="${t('payment.firstNamePlaceholder')}" />
+            </div>
+            <div class="flex-1">
+              <label class="block text-xs font-semibold text-text-secondary mb-1.5">${t('payment.lastNamePlaceholder')}</label>
+              <input id="pay-card-ln" type="text" class="th-input w-full" placeholder="${t('payment.lastNamePlaceholder')}" />
+            </div>
           </div>
-          <div class="flex gap-3 max-sm:gap-2 mb-4 items-center flex-wrap">
-            <select id="pay-card-month" class="py-2.5 px-3.5 max-sm:py-2 max-sm:px-2.5 text-sm max-sm:text-xs border border-border-strong rounded-lg outline-none text-text-primary bg-surface cursor-pointer min-w-[80px] max-sm:min-w-[60px]"><option value="">${t('payment.monthPlaceholder')}</option>${Array.from({ length: 12 }, (_, i) => `<option value="${String(i + 1).padStart(2, '0')}">${String(i + 1).padStart(2, '0')}</option>`).join('')}</select>
-            <span class="text-base text-text-tertiary px-0.5">/</span>
-            <select id="pay-card-year" class="py-2.5 px-3.5 max-sm:py-2 max-sm:px-2.5 text-sm max-sm:text-xs border border-border-strong rounded-lg outline-none text-text-primary bg-surface cursor-pointer min-w-[90px] max-sm:min-w-[70px]"><option value="">${t('payment.yearPlaceholder')}</option>${Array.from({ length: 10 }, (_, i) => `<option value="${2025 + i}">${2025 + i}</option>`).join('')}</select>
-            <div class="flex items-center gap-2 ml-auto">
-              <input type="text" class="w-[100px] max-sm:w-[80px] py-2.5 px-3.5 max-sm:py-2 max-sm:px-2.5 text-sm max-sm:text-xs border border-border-strong rounded-lg outline-none text-text-primary transition-[border-color] duration-150 focus:border-[#999]" placeholder="CVV/CVC *" maxlength="4" />
-              <div class="flex gap-1 opacity-60 max-sm:hidden">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 5a2 2 0 012-2h8a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V5z" stroke="#999" stroke-width="1.2"/><path d="M2 7h12" stroke="#999" stroke-width="1.2"/></svg>
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="#999" stroke-width="1.2"/><path d="M8 5v3m0 2.5h.01" stroke="#999" stroke-width="1.2" stroke-linecap="round"/></svg>
+          <div class="flex gap-3 max-sm:gap-2 mb-2 items-end flex-wrap">
+            <div class="flex-1 min-w-[150px]">
+              <label class="block text-xs font-semibold text-text-secondary mb-1.5">${t('payment.monthPlaceholder')} / ${t('payment.yearPlaceholder')}</label>
+              <div class="flex items-center gap-2">
+                <select id="pay-card-month" class="th-input flex-1 cursor-pointer"><option value="">${t('payment.monthPlaceholder')}</option>${Array.from({ length: 12 }, (_, i) => `<option value="${String(i + 1).padStart(2, '0')}">${String(i + 1).padStart(2, '0')}</option>`).join('')}</select>
+                <span class="text-text-tertiary font-medium">/</span>
+                <select id="pay-card-year" class="th-input flex-1 cursor-pointer"><option value="">${t('payment.yearPlaceholder')}</option>${Array.from({ length: 10 }, (_, i) => `<option value="${2025 + i}">${2025 + i}</option>`).join('')}</select>
               </div>
+            </div>
+            <div class="w-[110px] max-sm:w-full">
+              <label class="block text-xs font-semibold text-text-secondary mb-1.5">CVV/CVC</label>
+              <input type="text" class="th-input w-full" placeholder="CVV/CVC" maxlength="4" />
             </div>
           </div>
         </div>
-        <div class="flex justify-end gap-2.5 px-6 max-sm:px-4 pb-5 pt-4 border-t border-[#f0f0f0]">
-          <button class="pay-modal__btn--primary th-btn-dark max-sm:w-full">${t('payment.saveBtn')}</button>
+        <div class="flex justify-end gap-2.5 px-6 max-sm:px-4 pb-5 pt-4 border-t border-[#f0f0f0] max-sm:flex-col">
+          <button class="pay-modal__close py-2.5 px-6 text-sm font-medium rounded-lg border border-border-strong bg-surface text-text-secondary cursor-pointer transition-all duration-150 hover:border-[#bbb] hover:bg-surface-muted max-sm:w-full max-sm:order-2">${t('payment.cancelBtn')}</button>
+          <button class="pay-modal__btn--primary th-btn max-sm:w-full max-sm:order-1" style="padding-top: 0.625rem; padding-bottom: 0.625rem; padding-left: 1.5rem; padding-right: 1.5rem;">${t('payment.saveBtn')}</button>
         </div>
       </div>
     </div>

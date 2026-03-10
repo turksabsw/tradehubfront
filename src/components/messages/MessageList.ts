@@ -13,8 +13,8 @@ const TRADEHUB_AVATAR = `<svg class="w-full h-full" viewBox="0 0 40 40" fill="no
 
 export function MessageList(): string {
   return `
-    <div class="w-[360px] max-lg:flex-1 max-lg:w-auto max-md:w-full max-md:max-h-none flex-shrink-0 max-lg:flex-shrink max-lg:min-w-0 border-r border-(--color-border-light,#f0f0f0) max-lg:border-r-0 flex flex-col bg-(--color-surface,#ffffff)"
-         :class="{ 'max-md:hidden': selectedConversation }">
+    <div class="w-[360px] max-2xl:w-full max-2xl:max-h-none flex-shrink-0 border-r border-(--color-border-light,#f0f0f0) max-2xl:border-r-0 flex flex-col bg-(--color-surface,#ffffff)"
+         :class="{ 'max-2xl:hidden': selectedConversation }">
       <!-- Header -->
       <div class="flex items-center justify-between px-5 pt-4 pb-3 max-sm:px-3 border-b border-(--color-border-light,#f0f0f0)">
         <div class="flex items-center gap-2">

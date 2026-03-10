@@ -36,6 +36,7 @@ const en = {
       item: 'item',
       turkish: 'Turkish',
       english: 'English',
+      clear: 'Clear',
     },
 
     // ============================================================

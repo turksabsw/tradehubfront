@@ -15,7 +15,7 @@ export function MessageContent(): string {
   return `
     <!-- Empty state (no conversation selected) — hidden on mobile always, hidden on lg+ when conversation selected -->
     <div x-show="!selectedConversation"
-         class="flex-1 flex items-center justify-center bg-(--color-surface,#ffffff) min-w-0 max-lg:hidden">
+         class="flex-1 flex items-center justify-center bg-(--color-surface,#ffffff) min-w-0 max-2xl:hidden">
       <div class="flex flex-col items-center gap-5 p-10 text-center">
         <div class="w-[160px] h-[120px]">
           <svg width="160" height="120" viewBox="0 0 160 120" fill="none">
@@ -45,13 +45,13 @@ export function MessageContent(): string {
          x-transition:enter="transition ease-out duration-200"
          x-transition:enter-start="opacity-0"
          x-transition:enter-end="opacity-100"
-         class="flex-1 flex flex-col bg-(--color-surface,#ffffff) min-w-0 max-md:absolute max-md:inset-0 max-md:z-10">
+         class="flex-1 flex flex-col bg-(--color-surface,#ffffff) min-w-0 max-2xl:absolute max-2xl:inset-0 max-2xl:z-10">
 
       <!-- Chat Header -->
       <div class="flex items-center gap-3 px-5 max-sm:px-3 py-3 border-b border-(--color-border-light,#f0f0f0) flex-shrink-0">
         <!-- Back button (mobile) -->
         <button @click="backToList()"
-                class="lg:hidden flex items-center justify-center w-8 h-8 border-none bg-transparent text-(--color-text-body,#333333) cursor-pointer rounded-full hover:bg-(--color-surface-muted,#fafafa) transition-colors flex-shrink-0">
+                class="2xl:hidden flex items-center justify-center w-8 h-8 border-none bg-transparent text-(--color-text-body,#333333) cursor-pointer rounded-full hover:bg-(--color-surface-muted,#fafafa) transition-colors flex-shrink-0">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
           </svg>

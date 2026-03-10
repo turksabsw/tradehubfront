@@ -56,9 +56,9 @@ function renderAllOrders(): string {
     <div x-data="ordersListComponent()" x-cloak>
       <template x-if="!selectedOrder"><div>
       <!-- Header -->
-      <div class="flex items-center justify-between gap-2 px-5 max-sm:px-3 pt-6 max-[480px]:pt-4 pb-5 max-[480px]:pb-3 border-b border-gray-100">
+      <div class="flex items-start justify-between gap-2 px-5 max-sm:px-3 pt-6 max-[480px]:pt-4 pb-5 max-[480px]:pb-3 border-b border-gray-100 max-[360px]:flex-col max-[360px]:items-start">
         <h1 class="text-[22px] max-sm:text-lg max-[480px]:text-base font-bold text-gray-900" data-i18n="orders.yourOrders">${t('orders.yourOrders')}</h1>
-        <button data-modal="remittance-modal" class="px-5 max-sm:px-3 max-[480px]:px-2.5 py-2 text-sm max-sm:text-xs text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer whitespace-nowrap transition-colors hover:border-gray-400 hover:bg-gray-50">
+        <button data-modal="remittance-modal" class="shrink-0 px-5 max-sm:px-3 max-[480px]:px-2.5 py-2 text-sm max-sm:text-xs text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer whitespace-nowrap transition-colors hover:border-gray-400 hover:bg-gray-50 max-[360px]:self-start">
           ${t('orders.submitRemittanceProof')}
         </button>
       </div>
@@ -171,16 +171,17 @@ function renderAllOrders(): string {
           </div>
         </div>
 
-        <!-- Time Range Picker -->
-        <div class="relative">
+        <!-- Time Range Picker (icon-only button) -->
+        <div class="relative" x-data>
           <button
+            id="cal-btn"
             @click="timeOpen = !timeOpen; dateOpen = false"
-            class="flex items-center gap-2 h-9 px-3 text-sm border rounded-lg cursor-pointer transition-colors whitespace-nowrap"
+            class="flex items-center justify-center h-9 w-9 border rounded-lg cursor-pointer transition-colors"
             :class="dateFilter === 'custom'
               ? 'text-amber-700 bg-amber-50 border-amber-300 hover:bg-amber-100'
               : 'text-gray-400 bg-white border-gray-300 hover:bg-gray-50'"
+            :title="timeRangeLabel"
           >
-            <span x-text="timeRangeLabel"></span>
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
               <rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>
             </svg>
@@ -194,17 +195,18 @@ function renderAllOrders(): string {
             x-transition:leave="transition ease-in duration-100"
             x-transition:leave-start="opacity-100 translate-y-0"
             x-transition:leave-end="opacity-0 translate-y-1"
-            class="absolute top-full right-0 max-sm:left-0 max-sm:right-auto mt-1 bg-white border border-gray-200 rounded-lg shadow-lg z-20 p-4 min-w-[280px]"
+            class="absolute top-full mt-1 bg-white border border-gray-200 rounded-lg shadow-xl z-50 p-3"
+            style="right: 0; width: min(260px, calc(100vw - 70px));"
           >
-            <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">${t('orders.selectDateRange')}</p>
-            <div class="flex items-center gap-2 mb-3">
-              <div class="flex-1">
+            <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">${t('orders.selectDateRange')}</p>
+            <!-- Date inputs stacked vertically to fit narrow screens -->
+            <div class="flex flex-col gap-2 mb-3">
+              <div>
                 <label class="block text-xs text-gray-500 mb-1">${t('orders.startDate')}</label>
                 <input type="date" x-model="dateFrom"
                   class="w-full h-9 px-2 text-sm border border-gray-300 rounded-lg outline-none bg-white text-gray-700 focus:border-amber-400 focus:ring-1 focus:ring-amber-200" />
               </div>
-              <span class="text-gray-300 mt-4">—</span>
-              <div class="flex-1">
+              <div>
                 <label class="block text-xs text-gray-500 mb-1">${t('orders.endDate')}</label>
                 <input type="date" x-model="dateTo"
                   class="w-full h-9 px-2 text-sm border border-gray-300 rounded-lg outline-none bg-white text-gray-700 focus:border-amber-400 focus:ring-1 focus:ring-amber-200" />
@@ -296,35 +298,27 @@ function renderAllOrders(): string {
           <div class="border border-gray-200 rounded-lg overflow-hidden bg-white">
 
             <!-- ── Card Header ── -->
-            <div class="px-5 max-sm:px-3 py-3 bg-[#FAFAFA] border-b border-gray-200">
-              <div class="flex items-center justify-between gap-3 max-[480px]:gap-2 flex-wrap">
-                <!-- Left: Order info -->
-                <div class="flex items-center gap-2 text-[13px] max-[480px]:text-xs text-gray-500 flex-wrap max-sm:gap-1.5">
-                  <span class="inline-flex items-center gap-1 font-semibold text-gray-800">
-                    <svg class="w-4 h-4 text-amber-500" viewBox="0 0 20 20" fill="currentColor"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
-                    <span x-text="order.orderNumber"></span>
-                  </span>
-                  <span class="text-gray-300">|</span>
-                  <span x-text="order.orderDate" class="max-sm:hidden"></span>
-                  <span class="text-gray-300 max-sm:hidden">|</span>
-                  <span class="max-[380px]:hidden">${t('orders.supplierLabel')}: <strong class="text-gray-700" x-text="order.seller"></strong></span>
-                </div>
-                <!-- Right: Status + Cancel + Total -->
-                <div class="flex items-center gap-2 max-[480px]:gap-1.5">
-                  <button @click="cancellingOrder = order; openModal('showCancelOrder')" class="text-gray-400 hover:text-red-500 bg-transparent border-none cursor-pointer transition-colors text-xs whitespace-nowrap">
-                    ${t('orders.cancelOrderBtn')}
-                  </button>
-                  <span class="text-gray-300">|</span>
-                  <span class="inline-flex items-center px-2.5 py-0.5 max-[480px]:px-1.5 rounded text-[11px] max-[480px]:text-[10px] font-bold uppercase tracking-wide"
-                        :class="order.statusColor === 'text-amber-600' ? 'bg-amber-100 text-amber-700'
-                              : order.statusColor === 'text-green-600' ? 'bg-green-100 text-green-700'
-                              : order.statusColor === 'text-blue-600' ? 'bg-blue-100 text-blue-700'
-                              : order.statusColor === 'text-red-600' ? 'bg-red-100 text-red-700'
-                              : 'bg-gray-100 text-gray-700'"
-                        x-text="order.status"></span>
-                  <span class="text-[15px] max-[480px]:text-[13px] font-bold text-gray-900" x-text="order.currency + ' ' + order.total"></span>
-                </div>
+            <div class="px-4 max-sm:px-3 py-3 bg-[#FAFAFA] border-b border-gray-200">
+              <!-- Row 1: Order number (always full width) -->
+              <div class="flex items-center gap-1 mb-1.5 min-w-0">
+                <svg class="w-3.5 h-3.5 text-amber-500 shrink-0" viewBox="0 0 20 20" fill="currentColor"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
+                <span class="text-[12px] font-semibold text-gray-800 truncate" x-text="order.orderNumber"></span>
               </div>
+              <!-- Row 2: Status badge on left, Total on right -->
+              <div class="flex items-center justify-between gap-1 mb-1">
+                <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide shrink-0"
+                      :class="order.statusColor === 'text-amber-600' ? 'bg-amber-100 text-amber-700'
+                            : order.statusColor === 'text-green-600' ? 'bg-green-100 text-green-700'
+                            : order.statusColor === 'text-blue-600' ? 'bg-blue-100 text-blue-700'
+                            : order.statusColor === 'text-red-600' ? 'bg-red-100 text-red-700'
+                            : 'bg-gray-100 text-gray-700'"
+                      x-text="order.status"></span>
+                <span class="text-[13px] font-bold text-gray-900 shrink-0" x-text="order.currency + ' ' + order.total"></span>
+              </div>
+              <!-- Row 3: Cancel order link -->
+              <button @click="cancellingOrder = order; openModal('showCancelOrder')" class="text-gray-400 hover:text-red-500 bg-transparent border-none cursor-pointer transition-colors text-[11px] whitespace-nowrap p-0">
+                ${t('orders.cancelOrderBtn')}
+              </button>
             </div>
 
             <!-- ── Product Rows ── -->
@@ -350,18 +344,18 @@ function renderAllOrders(): string {
             </div>
 
             <!-- ── Action Bar ── -->
-            <div class="flex flex-wrap items-center justify-between gap-3 max-[480px]:gap-2 px-5 max-sm:px-3 py-3 border-t border-gray-200 bg-[#FAFAFA]">
-              <!-- Link -->
-              <a :href="'${getBaseUrl()}pages/dashboard/messages.html?seller=' + encodeURIComponent(order.seller)" class="text-gray-500 hover:text-blue-600 flex items-center gap-1.5 transition-colors whitespace-nowrap text-[13px] max-[480px]:text-xs">
+            <div class="flex flex-col gap-2 px-4 max-sm:px-3 py-3 border-t border-gray-200 bg-[#FAFAFA]">
+              <!-- Contact Supplier link -->
+              <a :href="'${getBaseUrl()}pages/dashboard/messages.html?seller=' + encodeURIComponent(order.seller)" class="text-gray-500 hover:text-blue-600 flex items-center gap-1.5 transition-colors text-[13px] max-[480px]:text-xs w-fit">
                 <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
                 ${t('orders.contactSupplier')}
               </a>
-              <!-- Buttons -->
-              <div class="flex items-center gap-2.5 max-[480px]:w-full">
-                <button @click="viewDetail(order)" class="h-9 px-5 max-[480px]:px-3 max-[480px]:flex-1 text-[13px] max-[480px]:text-xs text-gray-700 bg-white border border-gray-300 rounded-lg cursor-pointer font-medium whitespace-nowrap transition-colors hover:border-gray-400 hover:bg-gray-50">
+              <!-- Action Buttons - full width, each takes half -->
+              <div class="flex items-center gap-2 w-full">
+                <button @click="viewDetail(order)" class="h-9 px-2 flex-1 min-w-0 text-[12px] text-gray-700 bg-white border border-gray-300 rounded-lg cursor-pointer font-medium transition-colors hover:border-gray-400 hover:bg-gray-50 overflow-hidden text-ellipsis whitespace-nowrap">
                   ${t('orders.viewDetails')}
                 </button>
-                <button @click="window.location.href='${getBaseUrl()}pages/order/order-success.html'" class="h-9 px-5 max-[480px]:px-3 max-[480px]:flex-1 text-[13px] max-[480px]:text-xs font-medium text-white bg-(--color-cta-primary) border border-(--color-cta-primary) rounded-lg cursor-pointer whitespace-nowrap transition-colors hover:bg-(--color-cta-primary-hover)">
+                <button @click="window.location.href='${getBaseUrl()}pages/order/order-success.html'" class="h-9 px-2 flex-1 min-w-0 text-[12px] font-medium text-white bg-(--color-cta-primary) border border-(--color-cta-primary) rounded-lg cursor-pointer transition-colors hover:bg-(--color-cta-primary-hover) overflow-hidden text-ellipsis whitespace-nowrap">
                   ${t('orders.makePayment')}
                 </button>
               </div>

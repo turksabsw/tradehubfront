@@ -116,7 +116,7 @@ function renderDesktopSearchBar(): string {
           </div>
 
           <!-- Search Dropdown (shown on input focus) -->
-          <div id="search-dropdown" class="hidden absolute left-0 right-0 z-10 rounded-md px-3 sm:px-5 py-2.5 sm:py-3 shadow-lg mt-2" style="background-color:var(--search-dropdown-bg);border:1px solid var(--search-dropdown-border)">
+          <div id="search-dropdown" class="hidden absolute left-0 right-0 z-[200] rounded-md px-3 sm:px-5 py-2.5 sm:py-3 shadow-lg mt-2" style="background-color:var(--search-dropdown-bg);border:1px solid var(--search-dropdown-border)">
             <!-- Deep Search Row -->
             <div class="flex items-center justify-between mb-2.5">
               <div class="flex items-center gap-2 text-sm" style="color:var(--search-dropdown-text)">
