@@ -63,22 +63,22 @@ function getDefaultFaqs(): FaqItem[] {
 
 function renderTaxSection(section: TaxSection): string {
   return `
-    <div class="flex items-center justify-between gap-6 p-6 border border-border-default rounded-lg max-md:flex-col max-md:items-start">
+    <div class="flex items-center justify-between gap-5 p-6 max-sm:p-4 border border-border-default rounded-lg max-md:flex-col max-md:items-start max-md:gap-4">
       <div class="flex-1 min-w-0">
-        <h3 class="text-[15px] font-bold mb-2 m-0" style="color:var(--color-text-heading, #111827)">${section.title}</h3>
-        <p class="text-[13px] leading-normal m-0" style="color:var(--color-text-muted, #666666)">${section.description}</p>
+        <h3 class="text-[15px] max-sm:text-sm font-bold mb-2 m-0" style="color:var(--color-text-heading, #111827)">${section.title}</h3>
+        <p class="text-[13px] max-sm:text-xs leading-normal m-0" style="color:var(--color-text-muted, #666666)">${section.description}</p>
       </div>
-      <button class="th-btn-outline th-btn-pill whitespace-nowrap flex-shrink-0" type="button">${section.buttonLabel}</button>
+      <button class="th-btn-outline th-btn-pill th-btn-sm flex-shrink-0 text-[13px] whitespace-normal text-center" type="button">${section.buttonLabel}</button>
     </div>
   `;
 }
 
 function renderFaqCard(faq: FaqItem): string {
   return `
-    <div class="p-5 border border-border-default rounded-lg">
-      <h4 class="text-sm font-bold mb-2 m-0" style="color:var(--color-text-heading, #111827)">${faq.title}</h4>
-      <p class="text-[13px] leading-normal mb-2 m-0" style="color:var(--color-text-muted, #666666)">${faq.description}</p>
-      ${faq.linkText ? `<a href="#" class="text-[13px] text-blue-600 underline">${faq.linkText}</a>` : ''}
+    <div class="p-5 max-sm:p-4 border border-border-default rounded-lg">
+      <h4 class="text-sm max-sm:text-[13px] font-bold mb-2 m-0" style="color:var(--color-text-heading, #111827)">${faq.title}</h4>
+      <p class="text-[13px] max-sm:text-xs leading-normal mb-2 m-0" style="color:var(--color-text-muted, #666666)">${faq.description}</p>
+      ${faq.linkText ? `<a href="#" class="text-[13px] max-sm:text-xs text-blue-600 underline">${faq.linkText}</a>` : ''}
     </div>
   `;
 }
@@ -88,18 +88,20 @@ export function SettingsTaxInfo(sections?: TaxSection[], faqs?: FaqItem[]): stri
   const faqItems = faqs || getDefaultFaqs();
 
   return `
-    <div class="bg-white rounded-lg p-8 max-md:p-5">
-      <h2 class="text-xl font-bold mb-5 m-0" style="color:var(--color-text-heading, #111827)">${t('settings.taxInfoTitle')}</h2>
+    <div class="bg-white rounded-lg p-8 max-md:p-5 max-sm:p-3.5">
+      <h2 class="text-xl max-sm:text-lg font-bold mb-5 m-0" style="color:var(--color-text-heading, #111827)">${t('settings.taxInfoTitle')}</h2>
 
       <div class="flex border-b-2 border-border-default mb-5">
-        <button class="tax-info__tab py-2.5 px-5 text-sm font-medium bg-none border-none border-b-2 -mb-[2px] cursor-pointer transition-all" style="color:var(--color-text-heading, #111827); border-bottom-color:var(--color-text-heading)" data-tab="vergi">${t('settings.taxInfoTab')}</button>
-        <button class="tax-info__tab py-2.5 px-5 text-sm font-medium bg-none border-none border-b-2 border-transparent -mb-[2px] cursor-pointer transition-all" style="color:var(--color-text-muted, #666666)" data-tab="gumruk">${t('settings.customsTab')}</button>
+        <button class="tax-info__tab py-2.5 px-5 max-sm:px-3 text-sm max-sm:text-[13px] font-medium bg-none border-none border-b-2 -mb-[2px] cursor-pointer transition-all" style="color:var(--color-text-heading, #111827); border-bottom-color:var(--color-text-heading)" data-tab="vergi">${t('settings.taxInfoTab')}</button>
+        <button class="tax-info__tab py-2.5 px-5 max-sm:px-3 text-sm max-sm:text-[13px] font-medium bg-none border-none border-b-2 border-transparent -mb-[2px] cursor-pointer transition-all" style="color:var(--color-text-muted, #666666)" data-tab="gumruk">${t('settings.customsTab')}</button>
       </div>
 
-      <div class="flex items-center gap-2.5 py-3 px-4 bg-blue-50 rounded-md text-[13px] text-blue-800 mb-6 flex-wrap">
-        <span class="flex-shrink-0">${ICONS.info}</span>
-        <span>${t('settings.taxBannerText')}</span>
-        <a href="#" class="text-blue-600 font-medium no-underline ml-auto hover:underline">${t('settings.taxBannerLink')}</a>
+      <div class="flex items-start gap-2.5 py-3 px-4 max-sm:px-3 bg-blue-50 rounded-md text-[13px] max-sm:text-xs text-blue-800 mb-6 max-sm:mb-4">
+        <span class="flex-shrink-0 mt-0.5">${ICONS.info}</span>
+        <div class="flex-1 min-w-0">
+          <span>${t('settings.taxBannerText')}</span>
+          <a href="#" class="text-blue-600 font-medium no-underline hover:underline ml-1">${t('settings.taxBannerLink')}</a>
+        </div>
       </div>
 
       <div class="flex flex-col gap-4 mb-8" id="tax-tab-vergi">
@@ -110,8 +112,8 @@ export function SettingsTaxInfo(sections?: TaxSection[], faqs?: FaqItem[]): stri
         <div class="p-10 text-center text-sm" style="color:var(--color-text-placeholder, #999999)">${t('settings.customsPlaceholder')}</div>
       </div>
 
-      <h3 class="text-lg font-bold mb-4 m-0" style="color:var(--color-text-heading, #111827)">${t('settings.faqTitle')}</h3>
-      <div class="grid grid-cols-3 gap-4 max-md:grid-cols-1">
+      <h3 class="text-lg max-sm:text-base font-bold mb-4 m-0" style="color:var(--color-text-heading, #111827)">${t('settings.faqTitle')}</h3>
+      <div class="grid grid-cols-3 gap-4 max-lg:grid-cols-2 max-md:grid-cols-1 max-sm:gap-3">
         ${faqItems.map(renderFaqCard).join('')}
       </div>
     </div>

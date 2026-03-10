@@ -3945,13 +3945,13 @@ footer {
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
 }
 
-.ad-pref__toggle input:checked+.ad-pref__toggle-slider,
-.email-pref__toggle input:checked+.email-pref__toggle-slider {
+input:checked+.ad-pref__toggle-slider,
+input:checked+.email-pref__toggle-slider {
     background: var(--toggle-active-bg, #cc9900);
 }
 
-.ad-pref__toggle input:checked+.ad-pref__toggle-slider::before,
-.email-pref__toggle input:checked+.email-pref__toggle-slider::before {
+input:checked+.ad-pref__toggle-slider::before,
+input:checked+.email-pref__toggle-slider::before {
     transform: translateX(22px);
 }
 
@@ -4346,7 +4346,7 @@ footer {
     line-height: 1.4;
 }
 
-/* Responsive: ds-sidebar-col — migrated to Tailwind in dropshipping.ts */
+/* Responsive: ds-sidebar-col — handled via Tailwind in dropshipping.ts */
 
 /* ── Page Navigation ───────────────────────────────────────────── */
 
@@ -4395,9 +4395,6 @@ footer {
 }
 
 .ds-filters__row {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
     padding: 8px 0;
     border-bottom: 1px solid var(--color-border-light, #f0f0f0);
 }
@@ -4407,12 +4404,9 @@ footer {
 }
 
 .ds-filters__label {
-    flex-shrink: 0;
-    width: 100px;
     font-size: 13px;
     font-weight: 600;
     color: var(--color-text-body, #333);
-    padding-top: 6px;
 }
 
 .ds-filters__chips {
@@ -4421,8 +4415,6 @@ footer {
     gap: 8px;
     align-items: center;
 }
-
-/* Responsive: ds-filters — migrated to Tailwind in DropshippingLayout.ts */
 
 /* ── Chips (stateful) ──────────────────────────────────────────── */
 
@@ -4493,13 +4485,9 @@ footer {
 
 /* ── Category Tags (stateful + hover dropdown) ─────────────────── */
 
-.ds-category-row {
-    position: relative;
-}
+/* ds-category-row: position handled via Tailwind in DropshippingLayout.ts */
 
-.ds-category-row .ds-filters__chips {
-    padding-right: 140px;
-}
+/* ds-category-row chips padding: handled via Tailwind in DropshippingLayout.ts */
 
 .ds-category-tag {
     display: inline-flex;
@@ -4570,9 +4558,6 @@ footer {
 }
 
 .ds-category-toggle {
-    position: absolute;
-    right: 0;
-    top: 5px;
     display: inline-flex;
     align-items: center;
     gap: 4px;
@@ -4627,13 +4612,7 @@ footer {
 
 /* ── Product Grid ──────────────────────────────────────────────── */
 
-.ds-product-grid {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    column-gap: 24px;
-    row-gap: 32px;
-    padding: 24px 28px;
-}
+/* ds-product-grid: layout handled via Tailwind in DropshippingLayout.ts */
 
 /* Card hover effects (parent→child) */
 .ds-card__img:hover .ds-card__img-overlay {
@@ -4644,8 +4623,6 @@ footer {
 .ds-card:hover .ds-card__title {
     color: var(--color-cta-primary, #cc9900);
 }
-
-/* Responsive: ds-product-grid — migrated to Tailwind in DropshippingLayout.ts */
 
 /* ── Orders (stateful tabs) ────────────────────────────────────── */
 

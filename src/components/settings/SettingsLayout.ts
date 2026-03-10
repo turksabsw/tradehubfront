@@ -50,8 +50,8 @@ function renderSettingsItem(item: SettingsItem): string {
 
   return `
     <a href="${item.href}" class="flex items-center justify-between py-3 no-underline transition-colors rounded -mx-2 px-2 hover:bg-(--color-surface-muted,#fafafa) group">
-      <span class="text-sm" style="color:var(--color-text-body, #333333); group-hover:color:var(--color-text-heading, #111827)">${item.label}</span>
-      <span class="flex items-center gap-2">
+      <span class="text-sm max-sm:text-[13px]" style="color:var(--color-text-body, #333333); group-hover:color:var(--color-text-heading, #111827)">${item.label}</span>
+      <span class="flex items-center gap-2 flex-shrink-0">
         ${rightContent}
         ${ICONS.chevron}
       </span>
@@ -69,12 +69,12 @@ interface SettingsCard {
 
 function renderSettingsCard(card: SettingsCard): string {
   return `
-    <div class="bg-white rounded-lg p-6 max-sm:p-4">
+    <div class="bg-white rounded-lg p-6 max-sm:p-3.5">
       <div class="flex items-center gap-2.5">
         <span class="flex items-center justify-center" style="color:var(--color-text-body, #333333)">${card.icon}</span>
-        <h2 class="text-base font-bold m-0" style="color:var(--color-text-heading, #111827)">${card.title}</h2>
+        <h2 class="text-base max-sm:text-[15px] font-bold m-0" style="color:var(--color-text-heading, #111827)">${card.title}</h2>
       </div>
-      <div class="h-px bg-gray-200 my-4"></div>
+      <div class="h-px bg-gray-200 my-4 max-sm:my-3"></div>
       <div class="flex flex-col">
         ${card.items.map(renderSettingsItem).join('')}
       </div>
@@ -86,33 +86,33 @@ function renderSettingsCard(card: SettingsCard): string {
 
 function renderProfileHeader(): string {
   return `
-    <div class="flex items-center justify-between gap-6 bg-white rounded-lg py-6 px-8 max-md:flex-col max-md:items-start max-md:p-5 max-sm:p-3 max-md:gap-4">
-      <div class="flex items-center gap-5 max-sm:flex-col max-sm:items-start">
+    <div class="flex items-center justify-between gap-6 bg-white rounded-lg py-6 px-8 max-lg:flex-col max-lg:items-start max-lg:px-5 max-lg:py-5 max-sm:px-3 max-sm:py-3 max-lg:gap-4">
+      <div class="flex items-center gap-5 max-sm:flex-col max-sm:items-start min-w-0">
         <div class="relative flex-shrink-0">
-          <div class="w-[72px] h-[72px] rounded-full flex items-center justify-center border-3 border-primary-200" style="background:linear-gradient(135deg, var(--color-primary-400, #e6b212) 0%, var(--color-primary-500, #cc9900) 100%)">
-            <span class="text-[32px] font-bold text-white lowercase leading-none">m</span>
+          <div class="w-[72px] h-[72px] max-sm:w-[60px] max-sm:h-[60px] rounded-full flex items-center justify-center border-3 border-primary-200" style="background:linear-gradient(135deg, var(--color-primary-400, #e6b212) 0%, var(--color-primary-500, #cc9900) 100%)">
+            <span class="text-[32px] max-sm:text-[26px] font-bold text-white lowercase leading-none">m</span>
           </div>
-          <button class="absolute -bottom-0.5 -left-0.5 w-7 h-7 rounded-full bg-white border border-border-default flex items-center justify-center cursor-pointer transition-all hover:bg-surface-raised" style="color:var(--color-text-muted, #666666)" title="${t('settings.changePhoto')}">
+          <button class="absolute -bottom-0.5 -left-0.5 w-7 h-7 max-sm:w-6 max-sm:h-6 rounded-full bg-white border border-border-default flex items-center justify-center cursor-pointer transition-all hover:bg-surface-raised" style="color:var(--color-text-muted, #666666)" title="${t('settings.changePhoto')}">
             ${ICONS.camera}
           </button>
         </div>
-        <div class="flex flex-col gap-1">
-          <h2 class="text-lg font-bold mb-1 m-0" style="color:var(--color-text-heading, #111827)">Metin K.</h2>
-          <div class="flex items-center gap-2 text-[13px]">
-            <span class="max-sm:min-w-0" style="color:var(--color-text-placeholder, #999999); min-width:110px">${t('settings.emailLayoutLabel')}</span>
-            <span class="font-mono max-sm:text-[12px] max-sm:break-all" style="color:var(--color-text-body, #333333)">met***@gmail.com</span>
-            <button class="inline-flex items-center justify-center w-6 h-6 border-none bg-none rounded cursor-pointer transition-all hover:bg-surface-raised" style="color:var(--color-text-placeholder, #999999)" title="${t('settings.changeEmailNav')}">${ICONS.edit}</button>
+        <div class="flex flex-col gap-1 min-w-0">
+          <h2 class="text-lg max-sm:text-base font-bold mb-1 m-0" style="color:var(--color-text-heading, #111827)">Metin K.</h2>
+          <div class="flex items-center gap-2 text-[13px] max-sm:text-xs flex-wrap">
+            <span class="min-w-[110px] max-sm:min-w-0 flex-shrink-0" style="color:var(--color-text-placeholder, #999999)">${t('settings.emailLayoutLabel')}</span>
+            <span class="font-mono truncate" style="color:var(--color-text-body, #333333)">met***@gmail.com</span>
+            <button class="inline-flex items-center justify-center w-6 h-6 border-none bg-none rounded cursor-pointer transition-all hover:bg-surface-raised flex-shrink-0" style="color:var(--color-text-placeholder, #999999)" title="${t('settings.changeEmailNav')}">${ICONS.edit}</button>
           </div>
-          <div class="flex items-center gap-2 text-[13px]">
-            <span class="max-sm:min-w-0" style="color:var(--color-text-placeholder, #999999); min-width:110px">${t('settings.membershipNumber')}</span>
-            <span class="font-mono max-sm:text-[12px] max-sm:break-all" style="color:var(--color-text-body, #333333)">tr29243492599miuy</span>
-            <button x-ref="copyBtn" @click="copyMemberId()" class="inline-flex items-center justify-center w-6 h-6 border-none bg-none rounded cursor-pointer transition-all hover:bg-surface-raised" style="color:var(--color-text-placeholder, #999999)" title="${t('settings.copyTooltip')}">${ICONS.copy}</button>
+          <div class="flex items-center gap-2 text-[13px] max-sm:text-xs flex-wrap">
+            <span class="min-w-[110px] max-sm:min-w-0 flex-shrink-0" style="color:var(--color-text-placeholder, #999999)">${t('settings.membershipNumber')}</span>
+            <span class="font-mono truncate" style="color:var(--color-text-body, #333333)">tr29243492599miuy</span>
+            <button x-ref="copyBtn" @click="copyMemberId()" class="inline-flex items-center justify-center w-6 h-6 border-none bg-none rounded cursor-pointer transition-all hover:bg-surface-raised flex-shrink-0" style="color:var(--color-text-placeholder, #999999)" title="${t('settings.copyTooltip')}">${ICONS.copy}</button>
           </div>
         </div>
       </div>
-      <div class="flex items-center gap-4 flex-shrink-0 max-md:w-full">
-        <a href="#profilim" class="inline-flex items-center justify-center px-6 max-sm:px-3 h-10 rounded-full text-sm max-sm:text-[13px] font-semibold no-underline transition-all whitespace-nowrap text-white max-md:flex-1 max-md:text-center" style="background:var(--color-text-heading)">${t('settings.editProfile')}</a>
-        <a href="/pages/auth/login.html" class="inline-flex items-center justify-center px-6 max-sm:px-3 h-10 rounded-full text-sm max-sm:text-[13px] font-semibold no-underline transition-all whitespace-nowrap bg-none hover:underline max-md:flex-1 max-md:text-center" style="color:var(--color-text-body, #333333)">${t('settings.signOut')}</a>
+      <div class="flex items-center gap-4 flex-shrink-0 max-lg:w-full">
+        <a href="#profilim" class="inline-flex items-center justify-center px-6 max-sm:px-3 h-10 rounded-full text-sm max-sm:text-[13px] font-semibold no-underline transition-all whitespace-nowrap text-white max-lg:flex-1 max-lg:text-center" style="background:var(--color-text-heading)">${t('settings.editProfile')}</a>
+        <a href="/pages/auth/login.html" class="inline-flex items-center justify-center px-6 max-sm:px-3 h-10 rounded-full text-sm max-sm:text-[13px] font-semibold no-underline transition-all whitespace-nowrap bg-none hover:underline max-lg:flex-1 max-lg:text-center" style="color:var(--color-text-body, #333333)">${t('settings.signOut')}</a>
       </div>
     </div>
   `;
@@ -174,12 +174,12 @@ function renderBackHeader(): string {
 function renderDefaultView(): string {
   return `
     ${renderProfileHeader()}
-    <div class="flex gap-5 items-start max-md:flex-col">
-      <div class="flex-1 min-w-0 flex flex-col gap-5">
+    <div class="flex gap-5 items-start max-lg:flex-col mt-5">
+      <div class="flex-1 min-w-0 flex flex-col gap-5 max-lg:w-full">
         ${renderSettingsCard(getAccountInfoCard())}
         ${renderSettingsCard(getPreferencesCard())}
       </div>
-      <div class="flex-1 min-w-0">
+      <div class="flex-1 min-w-0 max-lg:w-full">
         ${renderSettingsCard(getSecurityCard())}
       </div>
     </div>

@@ -82,7 +82,7 @@ function renderDsCard(card: ProductListingCard): string {
     : '';
 
   return `
-    <a href="${card.href}" class="ds-card flex flex-col no-underline text-inherit relative" target="_blank">
+    <a href="${card.href}" class="ds-card flex flex-col no-underline text-inherit relative min-w-0 overflow-hidden" target="_blank">
       <div class="ds-card__img relative w-full aspect-square overflow-hidden rounded-lg bg-surface-raised">
         <img src="${imgUrl}" alt="${card.name}" loading="lazy" class="w-full h-full object-contain" />
         <div class="ds-card__img-overlay absolute left-1/2 bottom-2 -translate-x-1/2 h-[42px] flex items-center justify-center opacity-0 transition-opacity pointer-events-none z-[2]">
@@ -134,8 +134,8 @@ function getActiveSection(): SectionId {
 
 function renderHeroBanner(): string {
   return `
-    <div class="ds-hero flex items-start justify-between gap-6 bg-gradient-to-br from-amber-100 via-amber-200 to-amber-300 p-8 max-md:flex-col max-md:p-4 max-md:gap-4 max-[480px]:p-3">
-      <div class="flex-1 max-w-[62%] flex flex-col items-start gap-3 max-md:max-w-full">
+    <div class="ds-hero flex items-start justify-between gap-6 bg-gradient-to-br from-amber-100 via-amber-200 to-amber-300 p-8 max-lg:flex-col max-lg:p-4 max-lg:gap-4 max-[480px]:p-3">
+      <div class="flex-1 max-w-[62%] flex flex-col items-start gap-3 max-lg:max-w-full">
         <h1 class="inline-flex items-center flex-wrap gap-2 text-2xl font-bold text-gray-800 m-0 leading-[1.4] max-md:text-lg max-[480px]:text-base">
           ${t('dropshipping.heroTitle')}
           <span class="ds-hero__platforms inline-flex items-center gap-2 ml-1 max-[900px]:gap-1.5 max-[360px]:gap-1">
@@ -168,7 +168,7 @@ function renderHeroBanner(): string {
           </a>
         </div>
       </div>
-      <div class="ds-hero__search-wrapper flex-shrink-0 md:min-w-[468px] pt-1 max-md:w-full">
+      <div class="ds-hero__search-wrapper flex-shrink-0 lg:min-w-[468px] pt-1 max-lg:w-full">
         <div class="flex items-center h-10 bg-white border-2 border-primary-500 rounded-full py-1 pl-5 pr-1 max-md:w-full">
           <input type="text" class="flex-1 p-0 border-none outline-none text-sm leading-[18px] text-secondary-800 bg-transparent min-w-0 placeholder:text-secondary-300" placeholder="${t('dropshipping.searchPlaceholder')}" />
           <button class="inline-flex items-center gap-1.5 px-5 h-8 bg-primary-500 text-white border-none rounded-full text-sm font-semibold cursor-pointer transition-colors whitespace-nowrap flex-shrink-0 hover:bg-primary-600 max-[480px]:px-3.5 max-[480px]:text-[13px]">
@@ -189,8 +189,8 @@ function renderCollectionFilters(): string {
     )
     .join('');
   return `
-    <div class="ds-filters__row max-md:flex-col max-md:gap-1.5">
-      <span class="ds-filters__label max-md:w-auto max-md:pt-0">${t('dropshipping.collectionLabel')}</span>
+    <div class="ds-filters__row flex items-start gap-3 max-md:flex-col max-md:gap-1.5">
+      <span class="ds-filters__label shrink-0 w-[100px] pt-1.5 max-md:w-auto max-md:pt-0">${t('dropshipping.collectionLabel')}</span>
       <div class="ds-filters__chips max-[480px]:gap-1.5">${chips}</div>
     </div>
   `;
@@ -207,8 +207,8 @@ function renderCountryFilters(): string {
     )
     .join('');
   return `
-    <div class="ds-filters__row max-md:flex-col max-md:gap-1.5">
-      <span class="ds-filters__label max-md:w-auto max-md:pt-0">${t('dropshipping.shippingLabel')}</span>
+    <div class="ds-filters__row flex items-start gap-3 max-md:flex-col max-md:gap-1.5">
+      <span class="ds-filters__label shrink-0 w-[100px] pt-1.5 max-md:w-auto max-md:pt-0">${t('dropshipping.shippingLabel')}</span>
       <div class="ds-filters__chips max-[480px]:gap-1.5">${chips}</div>
     </div>
   `;
@@ -216,8 +216,8 @@ function renderCountryFilters(): string {
 
 function renderDropdownFilters(): string {
   return `
-    <div class="ds-filters__row max-md:flex-col max-md:gap-1.5">
-      <span class="ds-filters__label max-md:w-auto max-md:pt-0">${t('dropshipping.otherFilterLabel')}</span>
+    <div class="ds-filters__row flex items-start gap-3 max-md:flex-col max-md:gap-1.5">
+      <span class="ds-filters__label shrink-0 w-[100px] pt-1.5 max-md:w-auto max-md:pt-0">${t('dropshipping.otherFilterLabel')}</span>
       <div class="ds-filters__chips max-[480px]:gap-1.5">
         <select class="ds-select"><option>${t('dropshipping.supplierCountry')}</option></select>
         <select class="ds-select"><option>${t('dropshipping.warehouse')}</option></select>
@@ -250,12 +250,12 @@ function renderCategoryFilters(): string {
   const hidden = allTags.slice(VISIBLE_COUNT);
 
   return `
-    <div class="ds-filters__row ds-category-row max-md:flex-col max-md:gap-1.5">
-      <span class="ds-filters__label max-md:w-auto max-md:pt-0">${t('dropshipping.categoryLabel')}</span>
-      <div class="ds-filters__chips max-[480px]:gap-1.5 ds-category-chips max-md:!pr-0">
+    <div class="ds-filters__row ds-category-row relative flex items-start gap-3 max-md:flex-col max-md:gap-1.5">
+      <span class="ds-filters__label shrink-0 w-[100px] pt-1.5 max-md:w-auto max-md:pt-0">${t('dropshipping.categoryLabel')}</span>
+      <div class="ds-filters__chips max-[480px]:gap-1.5 ds-category-chips pr-[140px] max-md:pr-0">
         ${visible.map((t) => renderCategoryTag(t, false)).join('')}
         ${hidden.map((t) => renderCategoryTag(t, true)).join('')}
-        <button class="ds-category-toggle max-md:static" data-expanded="false">
+        <button class="ds-category-toggle absolute right-0 top-[5px] max-md:static max-md:mt-1" data-expanded="false">
           ${t('dropshipping.viewAllCategories')}
           <svg class="ds-category-toggle__icon" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
         </button>
@@ -276,7 +276,7 @@ function renderProductGrid(): string {
         <option>${t('dropshipping.salesHighToLow')}</option>
       </select>
     </div>
-    <div class="ds-product-grid max-[1200px]:grid-cols-4 max-[1200px]:gap-x-5 max-[1200px]:gap-y-7 max-[1200px]:p-5 max-[900px]:grid-cols-3 max-[900px]:gap-x-4 max-[900px]:gap-y-6 max-[900px]:p-4 max-md:grid-cols-2 max-md:gap-x-3 max-md:gap-y-5 max-md:p-3 max-[480px]:gap-x-2 max-[480px]:gap-y-4 max-[480px]:p-2 max-[360px]:gap-x-1.5 max-[360px]:gap-y-3 max-[360px]:p-1.5">
+    <div class="ds-product-grid grid grid-cols-6 gap-x-6 gap-y-8 p-6 max-[1200px]:grid-cols-4 max-[1200px]:gap-x-5 max-[1200px]:gap-y-7 max-[1200px]:p-5 max-[900px]:grid-cols-3 max-[900px]:gap-x-4 max-[900px]:gap-y-6 max-[900px]:p-4 max-md:grid-cols-2 max-md:gap-x-3 max-md:gap-y-5 max-md:p-3 max-[480px]:gap-x-2 max-[480px]:gap-y-4 max-[480px]:p-2 max-[360px]:gap-x-1.5 max-[360px]:gap-y-3 max-[360px]:p-1.5">
       ${cards}
     </div>
   `;

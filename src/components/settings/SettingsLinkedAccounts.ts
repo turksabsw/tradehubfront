@@ -35,12 +35,12 @@ function renderAccountRow(account: LinkedAccount): string {
     : `<span class="text-[13px]" style="color:var(--color-text-placeholder, #999999)">${t('settings.linkedNotConnected')}</span>`;
 
   return `
-    <div class="linked-acc__row flex items-center justify-between py-4 px-6 border-b border-border-default last:border-b-0 max-sm:px-4 max-sm:py-3">
-      <div class="flex items-center gap-3">
+    <div class="linked-acc__row flex items-center justify-between py-4 px-6 border-b border-border-default last:border-b-0 max-sm:px-3 max-sm:py-3 max-sm:gap-2">
+      <div class="flex items-center gap-3 max-sm:gap-2">
         <span class="flex items-center flex-shrink-0">${account.icon}</span>
-        <span class="text-sm font-medium" style="color:var(--color-text-heading, #111827)">${account.name}</span>
+        <span class="text-sm max-sm:text-[13px] font-medium" style="color:var(--color-text-heading, #111827)">${account.name}</span>
       </div>
-      <div class="linked-acc__right flex items-center gap-4">
+      <div class="linked-acc__right flex items-center gap-4 max-sm:gap-2 flex-shrink-0">
         ${statusHtml}
       </div>
     </div>

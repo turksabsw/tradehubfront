@@ -114,13 +114,13 @@ function renderMainView(): string {
     <!-- Header -->
     <div class="flex items-center justify-between px-7 max-sm:px-3 pt-6 pb-5 max-sm:flex-col max-sm:items-start max-sm:gap-3">
       <h1 class="text-[20px] font-bold text-gray-900">${t('subscription.aiMode')}</h1>
-      <button class="px-5 py-2 text-[14px] text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer hover:border-gray-400 transition-colors" id="sub-manage-btn">${t('subscription.managePlan')}</button>
+      <button class="px-5 max-sm:px-4 py-2 max-sm:py-1.5 text-[14px] max-sm:text-[13px] text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer hover:border-gray-400 transition-colors" id="sub-manage-btn">${t('subscription.managePlan')}</button>
     </div>
 
     <!-- Current Plan Card -->
     <div class="mx-7 max-sm:mx-3 border border-border-default rounded-[10px] overflow-hidden">
       <div class="flex items-center justify-between px-6 pt-6 pb-5 max-md:flex-col max-md:items-start max-md:gap-3">
-        <span class="text-[22px] font-bold text-gray-900">${t('subscription.currentPlanFree')}</span>
+        <span class="text-[22px] max-sm:text-[18px] font-bold text-gray-900">${t('subscription.currentPlanFree')}</span>
         <div class="flex items-center gap-3 text-[14px] text-gray-500 border border-border-default rounded-lg px-4 py-2.5">
           <span>${t('subscription.aiModeTasks')}</span>
           <span class="text-[18px] font-bold text-gray-900">3</span>
@@ -128,7 +128,7 @@ function renderMainView(): string {
       </div>
       <div class="flex items-center justify-between px-6 py-3.5 bg-primary-50 text-[14px] text-gray-700 max-md:flex-col max-md:items-start max-md:gap-3">
         <span>${t('subscription.tryBeforeUpgrade')}</span>
-        <button class="th-btn-dark th-btn-pill whitespace-nowrap" id="sub-try-btn">${t('subscription.tryAiModeFree')}</button>
+        <button class="th-btn-dark th-btn-pill whitespace-nowrap max-sm:!py-2 max-sm:!px-4 max-sm:!text-[13px]" id="sub-try-btn">${t('subscription.tryAiModeFree')}</button>
       </div>
     </div>
 
@@ -162,7 +162,7 @@ function renderMainView(): string {
 function renderFeatureItem(f: PlanFeature): string {
   const icon = f.icon === 'sparkle' ? SPARKLE_ICON : CHECK_ICON;
   const text = f.bold ? `${f.bold} ${f.text}` : f.text;
-  return `<li class="flex items-center gap-2 text-[14px] text-gray-700"><span class="shrink-0 w-4 h-4 flex items-center justify-center">${icon}</span><span>${text}</span></li>`;
+  return `<li class="flex items-start gap-2 text-[14px] max-sm:text-[13px] text-gray-700"><span class="shrink-0 w-4 h-4 mt-0.5 flex items-center justify-center">${icon}</span><span>${text}</span></li>`;
 }
 
 function renderPlanCard(plan: Plan, isYearly: boolean): string {
@@ -173,30 +173,30 @@ function renderPlanCard(plan: Plan, isYearly: boolean): string {
 
   let btnHtml: string;
   if (plan.currentPlan) {
-    btnHtml = `<button class="w-full py-3 px-5 text-[14px] font-semibold rounded-full bg-gray-200 text-gray-400 cursor-default" disabled>${t('subscription.currentPlan')}</button>`;
+    btnHtml = `<button class="w-full py-3 max-sm:py-2 px-5 text-[14px] max-sm:text-[13px] font-semibold rounded-full bg-gray-200 text-gray-400 cursor-default" disabled>${t('subscription.currentPlan')}</button>`;
   } else if (plan.popular) {
-    btnHtml = `<button class="w-full th-btn th-btn-pill">${t('subscription.startFreeTrial')}</button>`;
+    btnHtml = `<button class="w-full th-btn th-btn-pill max-sm:!py-2 max-sm:!px-4 max-sm:!text-[13px]">${t('subscription.startFreeTrial')}</button>`;
   } else {
-    btnHtml = `<button class="w-full th-btn-dark th-btn-pill">${t('subscription.startFreeTrial')}</button>`;
+    btnHtml = `<button class="w-full th-btn-dark th-btn-pill max-sm:!py-2 max-sm:!px-4 max-sm:!text-[13px]">${t('subscription.startFreeTrial')}</button>`;
   }
 
   return `
-    <div class="${borderClass} rounded-[10px] p-7 flex flex-col">
-      <div class="mb-5">
+    <div class="${borderClass} rounded-[10px] p-7 max-sm:p-5 flex flex-col">
+      <div class="mb-5 max-sm:mb-4">
         <div class="flex items-center justify-between mb-2">
           <h3 class="text-[18px] font-bold text-gray-900">${plan.name}</h3>
           ${popularBadge}
         </div>
-        <div class="mb-1">
-          <span class="text-[28px] font-bold text-gray-900">${formatPrice(price)}</span>
-          <span class="text-[14px] text-gray-400 ml-0.5">${t('subscription.perMonth')}</span>
+        <div class="mb-1 flex items-baseline flex-wrap gap-x-1">
+          <span class="text-[28px] max-sm:text-[24px] font-bold text-gray-900">${formatPrice(price)}</span>
+          <span class="text-[14px] text-gray-400">${t('subscription.perMonth')}</span>
         </div>
         ${billing ? `<p class="text-[13px] text-gray-400 m-0">${billing}</p>` : ''}
       </div>
-      <div class="mb-6">
+      <div class="mb-6 max-sm:mb-4">
         ${btnHtml}
       </div>
-      <ul class="list-none p-0 m-0 flex flex-col gap-3 border-t border-gray-100 pt-5">
+      <ul class="list-none p-0 m-0 flex flex-col gap-3 max-sm:gap-2.5 border-t border-gray-100 pt-5 max-sm:pt-4">
         ${plan.features.map(f => renderFeatureItem(f)).join('')}
       </ul>
     </div>
@@ -206,9 +206,9 @@ function renderPlanCard(plan: Plan, isYearly: boolean): string {
 function renderPricingView(): string {
   const cards = getPlans().map(p => renderPlanCard(p, false)).join('');
   const faqItems = getFaqItems().map(item => `
-    <details class="border-b border-gray-100 py-4 group">
-      <summary class="text-[14px] font-semibold text-gray-900 cursor-pointer list-none flex justify-between items-center after:content-['▾'] after:text-[16px] after:text-gray-400 after:transition-transform after:duration-200 group-open:after:rotate-180">${item.q}</summary>
-      <p class="pt-3 pb-1 text-[13px] text-gray-500 leading-relaxed m-0">${item.a}</p>
+    <details class="border-b border-gray-100 py-4 max-sm:py-3 group">
+      <summary class="text-[14px] max-sm:text-[13px] font-semibold text-gray-900 cursor-pointer list-none flex justify-between items-center gap-3 after:content-['▾'] after:text-[16px] after:text-gray-400 after:transition-transform after:duration-200 after:shrink-0 group-open:after:rotate-180">${item.q}</summary>
+      <p class="pt-3 max-sm:pt-2 pb-1 text-[13px] max-sm:text-[12px] text-gray-500 leading-relaxed m-0">${item.a}</p>
     </details>
   `).join('');
 
@@ -223,21 +223,21 @@ function renderPricingView(): string {
 
     <!-- Billing Toggle -->
     <div class="flex justify-center my-5 mb-7" id="sub-billing-toggle">
-      <button class="sub-billing-toggle__btn sub-billing-toggle__btn--active px-7 py-2.5 text-[14px] bg-white border border-border-default cursor-pointer transition-all rounded-l-full border-r-0" data-billing="monthly">${t('subscription.monthly')}</button>
-      <button class="sub-billing-toggle__btn px-7 py-2.5 text-[14px] text-gray-500 bg-white border border-border-default cursor-pointer transition-all rounded-r-full" data-billing="yearly">${t('subscription.yearly')} <span class="text-primary-500 font-semibold ml-1">${t('subscription.yearlySaving')}</span></button>
+      <button class="sub-billing-toggle__btn sub-billing-toggle__btn--active px-7 max-sm:px-4 py-2.5 max-sm:py-2 text-[14px] max-sm:text-[13px] bg-white border border-border-default cursor-pointer transition-all rounded-l-full border-r-0" data-billing="monthly">${t('subscription.monthly')}</button>
+      <button class="sub-billing-toggle__btn px-7 max-sm:px-4 py-2.5 max-sm:py-2 text-[14px] max-sm:text-[13px] text-gray-500 bg-white border border-border-default cursor-pointer transition-all rounded-r-full" data-billing="yearly">${t('subscription.yearly')} <span class="text-primary-500 font-semibold ml-1">${t('subscription.yearlySaving')}</span></button>
     </div>
 
     <!-- Pricing Cards -->
-    <div class="grid grid-cols-3 max-md:grid-cols-1 gap-5 px-7 max-sm:px-3 pb-8" id="sub-pricing-grid">
+    <div class="grid grid-cols-3 max-2xl:grid-cols-1 gap-5 max-2xl:gap-4 px-7 max-sm:px-3 pb-8 max-2xl:max-w-lg max-2xl:mx-auto" id="sub-pricing-grid">
       ${cards}
     </div>
 
     <!-- FAQ -->
-    <div class="px-7 max-sm:px-3 pb-7 border-t border-gray-100 mt-2">
-      <div class="flex items-center justify-between py-6 pb-4">
-        <h2 class="text-[16px] font-bold text-gray-900">${t('subscription.faqTitle')}</h2>
-        <a href="#" class="flex items-center gap-1.5 text-[13px] text-gray-500 no-underline hover:text-gray-900 transition-colors">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="#666" stroke-width="1.2"/><path d="M6.5 6.5a1.5 1.5 0 113 0c0 .83-.67 1-1.5 1.5M8 11.5h.01" stroke="#666" stroke-width="1.2" stroke-linecap="round"/></svg>
+    <div class="px-7 max-sm:px-3 pb-7 max-sm:pb-5 border-t border-gray-100 mt-2">
+      <div class="flex items-center justify-between py-5 max-sm:py-4 pb-3 max-sm:pb-2">
+        <h2 class="text-[16px] max-sm:text-[15px] font-bold text-gray-900">${t('subscription.faqTitle')}</h2>
+        <a href="#" class="flex items-center gap-1.5 text-[13px] max-sm:text-[12px] text-gray-500 no-underline hover:text-gray-900 transition-colors shrink-0">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" class="max-sm:w-3.5 max-sm:h-3.5"><circle cx="8" cy="8" r="7" stroke="#666" stroke-width="1.2"/><path d="M6.5 6.5a1.5 1.5 0 113 0c0 .83-.67 1-1.5 1.5M8 11.5h.01" stroke="#666" stroke-width="1.2" stroke-linecap="round"/></svg>
           ${t('subscription.getHelp')}
         </a>
       </div>
