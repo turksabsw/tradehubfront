@@ -190,7 +190,7 @@ export function TailoredSelections(): string {
               ><span data-i18n="tailored.title">${t('tailored.title')}</span></h2>
             </div>
             <a
-              href="/collections"
+              href="/pages/tailored-selections.html"
               class="flex-shrink-0 text-[13px] font-semibold transition-colors duration-150 hover:underline"
               style="color: var(--tailored-link-color, #111827);"
             ><span data-i18n="common.viewMore">${t('common.viewMore')}</span> &gt;</a>

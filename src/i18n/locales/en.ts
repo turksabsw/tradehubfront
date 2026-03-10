@@ -36,6 +36,7 @@ const en = {
       item: 'item',
       turkish: 'Turkish',
       english: 'English',
+      loadMore: 'Load more',
     },
 
     // ============================================================
@@ -2157,6 +2158,28 @@ const en = {
       fashionForward: 'Fashion Forward',
       audioSound: 'Audio & Sound',
       smartAccessories: 'Smart Accessories',
+    },
+
+    // ============================================================
+    // TAILORED SELECTIONS PAGE (View More)
+    // ============================================================
+    tailoredPage: {
+      title: 'Tailored Selections',
+      breadcrumb: 'Tailored Selections',
+      breadcrumbHome: 'Home',
+      insights: 'Insights',
+      cat: {
+        drawstringBags: 'Drawstring Shopping Bags',
+        drawstringBagsDesc: 'You have shown interest in drawstring style shopping bags suited to versatile retail items. We reviewed 800+ related items and curated 5k+ top picks...',
+        hikingShoes: 'All Season Hiking Shoes',
+        hikingShoesDesc: 'In Sports & Entertainment, Hiking Shoes thrive; our list weighs price, sales, and channel trends. Insulated yet breathable pairs span cold climbs to hot...',
+        shoulderBags: "Men's Zipper Shoulder Bags",
+        shoulderBagsDesc: "In the market for men's shoulder bags? We selected 1,000+ top picks with secure zipper closures to match your needs.",
+        phoneCases: 'Premium Phone Cases',
+        phoneCasesDesc: 'Protect your devices with our curated selection of phone cases. From slim to rugged, transparent to designer — 3,000+ options reviewed.',
+        tacticalGear: 'Tactical & Outdoor Gear',
+        tacticalGearDesc: 'Military-grade tactical gear and outdoor equipment. We analyzed 2,500+ products across durability, price point, and buyer reviews.',
+      },
     },
 
     // ============================================================

@@ -36,6 +36,7 @@ const tr = {
       item: 'ürün',
       turkish: 'Türkçe',
       english: 'English',
+      loadMore: 'Daha fazla yükle',
     },
 
     // ============================================================
@@ -2148,6 +2149,28 @@ const tr = {
       fashionForward: 'Moda Trendleri',
       audioSound: 'Ses ve Müzik',
       smartAccessories: 'Akıllı Aksesuarlar',
+    },
+
+    // ============================================================
+    // TAILORED SELECTIONS PAGE (View More)
+    // ============================================================
+    tailoredPage: {
+      title: 'Size Özel Seçimler',
+      breadcrumb: 'Size Özel Seçimler',
+      breadcrumbHome: 'Ana Sayfa',
+      insights: 'İçgörüler',
+      cat: {
+        drawstringBags: 'Büzgülü Alışveriş Çantaları',
+        drawstringBagsDesc: 'Çok yönlü perakende ürünlerine uygun büzgülü tarzda alışveriş çantalarına ilgi gösterdiniz. 800+ ilgili ürünü inceledik ve 5.000+ en iyi seçimi derledik...',
+        hikingShoes: 'Her Mevsim Yürüyüş Ayakkabıları',
+        hikingShoesDesc: 'Spor ve Eğlence kategorisinde Yürüyüş Ayakkabıları öne çıkıyor; listemiz fiyat, satış ve kanal trendlerini değerlendiriyor.',
+        shoulderBags: 'Erkek Fermuarlı Omuz Çantaları',
+        shoulderBagsDesc: 'İhtiyaçlarınıza uygun güvenli fermuarlı kapama ile 1.000+ en iyi ürünü seçtik.',
+        phoneCases: 'Premium Telefon Kılıfları',
+        phoneCasesDesc: 'Cihazlarınızı küratörlü telefon kılıfı seçimimizle koruyun. İnce\'den sağlam\'a, şeffaf\'tan tasarımcı\'ya — 3.000+ seçenek incelendi.',
+        tacticalGear: 'Taktik ve Outdoor Ekipman',
+        tacticalGearDesc: 'Askeri düzeyde taktik ekipman ve outdoor malzemeleri. Dayanıklılık, fiyat aralığı ve alıcı yorumları üzerinden 2.500+ ürün analiz edildi.',
+      },
     },
 
     // ============================================================
