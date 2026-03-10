@@ -1,7 +1,12 @@
 /**
  * TailoredSelectionsHero Component
- * Dark gradient hero section with Swiper carousel of category cards.
- * Each card has background image, title, description, and "Insights" link.
+ * Dark hero section with Swiper coverflow carousel of category cards.
+ * Dimensions match the Alibaba reference exactly:
+ *   – Section height: ~419px (desktop)
+ *   – Title wrapper: 1440px max-width, ~100px height
+ *   – Swiper coverflow height: 291px
+ *   – Center card: ~520×291, padding 16px
+ *   – Side cards: ~442×247, scaled down via coverflow
  */
 
 import Swiper from 'swiper';
@@ -14,33 +19,33 @@ function renderCategorySlide(category: TailoredCategory, index: number): string 
   return `
     <div class="swiper-slide" style="height: auto;" data-bg-color="${category.bgColor}">
       <div
-        class="relative rounded-xl overflow-hidden h-full min-h-[280px] sm:min-h-[320px] lg:min-h-[360px] group cursor-pointer"
-        style="--list-card-background-color: ${category.bgColor}; --list-card-border-color: #6a6145; background-color: var(--list-card-background-color); border: 1px solid var(--list-card-border-color);"
+        class="list-card-container relative rounded-xl overflow-hidden h-full group cursor-pointer"
+        style="--list-card-background-color: ${category.bgColor}; --list-card-border-color: #6a6145; --list-card-description-max-lines: 2; background-color: var(--list-card-background-color); border: 1px solid var(--list-card-border-color); padding: 16px;"
       >
-        <!-- Background image -->
+        <!-- Background image (--background-image) -->
         <img
           src="${category.imageSrc}"
           alt="${category.title}"
           loading="${index <= 2 ? 'eager' : 'lazy'}"
           class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
-        <!-- Dynamic Gradient overlay using category's bgColor to fade into image -->
-        <div 
+        <!-- Dynamic Gradient overlay -->
+        <div
           class="absolute inset-0"
           style="background: linear-gradient(to top, var(--list-card-background-color) 10%, transparent 80%);"
         ></div>
 
         <!-- Content overlay -->
-        <div class="relative z-10 flex flex-col justify-end h-full p-5 sm:p-6">
-          <h3 class="text-white font-bold text-lg sm:text-xl leading-tight mb-2">
+        <div class="relative z-10 flex flex-col justify-end h-full">
+          <h3 class="list-card-header-title text-white font-bold text-base sm:text-lg leading-tight mb-1">
             ${category.title}
           </h3>
-          <p class="text-white/85 text-sm leading-relaxed line-clamp-2 mb-3">
+          <p class="list-card-content text-white/80 text-[13px] leading-[1.4] mb-2" style="display:-webkit-box;-webkit-line-clamp:var(--list-card-description-max-lines, 2);-webkit-box-orient:vertical;overflow:hidden;">
             ${category.description}
           </p>
           <a
             href="/pages/tailored-selections.html"
-            class="inline-flex items-center gap-1.5 text-white text-sm font-medium hover:underline"
+            class="full-report inline-flex items-center gap-1.5 text-white text-sm font-medium hover:underline"
           >
             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
               <path d="M12 2L9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2z"/>
@@ -62,10 +67,11 @@ export function initTailoredSelectionsHero(): void {
     effect: 'coverflow',
     coverflowEffect: {
       rotate: 0,
-      stretch: 80, // pulls side slides closer to the center
-      depth: 150, // pushes them slightly backward to shrink them
+      stretch: 0,
+      depth: 100,
       modifier: 1,
       slideShadows: true,
+      scale: 0.85,
     },
     centeredSlides: true,
     loop: true,
@@ -85,15 +91,15 @@ export function initTailoredSelectionsHero(): void {
             }
           }
         }
-      }
+      },
     },
     breakpoints: {
       0: { slidesPerView: 1.15 },
       480: { slidesPerView: 1.3 },
-      768: { slidesPerView: 1.8 },
-      1024: { slidesPerView: 2.1 }, // exactly right for typical laptop screen
-      1280: { slidesPerView: 2.3 }, // wider screens
-      1536: { slidesPerView: 2.5 }, // 3 cards neatly fit the max-1440px container
+      768: { slidesPerView: 1.6 },
+      1024: { slidesPerView: 2.2 },
+      1200: { slidesPerView: 2.6 },
+      1440: { slidesPerView: 2.8 },
     },
   });
 }
@@ -101,22 +107,23 @@ export function initTailoredSelectionsHero(): void {
 export function TailoredSelectionsHero(categories: TailoredCategory[]): string {
   const initialBg = categories.length > 0 ? categories[0].bgColor : '#373224';
   return `
-    <section id="ts-hero-section" class="relative overflow-hidden" style="--floor-background-color: ${initialBg}; background-color: var(--floor-background-color); transition: background-color 0.5s ease;">
-      <!-- Decorative elements (optional, can be removed if not needed since background is dynamic now) -->
-      <div class="absolute inset-0 pointer-events-none overflow-hidden">
-        <div class="absolute -top-20 -left-20 w-64 h-64 rounded-full" style="background: radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 70%);"></div>
-        <div class="absolute top-10 right-10 w-48 h-48 rounded-full" style="background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%);"></div>
-      </div>
+    <section
+      id="ts-hero-section"
+      class="alimod-sourcing-list-switch-floor relative overflow-hidden h-[320px] sm:h-[350px] md:h-[380px] xl:h-[419px]"
+      style="--floor-background-color: ${initialBg}; --list-card-border-color: #6a6145; background-color: var(--floor-background-color); transition: background-color 0.5s ease;"
+    >
 
-      <div class="relative z-10 pt-8 pb-4 sm:pt-12 sm:pb-6 lg:pt-16 lg:pb-8">
-        <!-- Title -->
-        <h1 class="text-white text-center text-2xl sm:text-3xl lg:text-4xl font-bold mb-8 sm:mb-10 lg:mb-12">
+      <!-- Title wrapper: max-width 1440px -->
+      <div class="page-title-wrapper flex items-center justify-center mx-auto h-[60px] sm:h-[70px] xl:h-[100px]" style="max-width: 1440px; margin: 0 auto;">
+        <h1 class="page-title text-white text-center font-semibold whitespace-nowrap hidden xl:block" style="font-size: 32px; line-height: 42px;">
           <span data-i18n="tailoredPage.title">${t('tailoredPage.title')}</span>
         </h1>
+      </div>
 
-        <!-- Category Carousel -->
-        <div class="group/hero relative max-w-[1400px] mx-auto px-4 sm:px-6">
-          <div class="swiper ts-hero-swiper overflow-hidden" aria-label="Tailored selection categories">
+      <!-- Coverflow Slider -->
+      <div class="hugo5-coverflow-slider relative flex mx-auto overflow-hidden" style="max-width: 1440px; min-width: 0;">
+        <div class="group/hero relative w-full">
+          <div class="swiper ts-hero-swiper overflow-hidden h-[230px] sm:h-[250px] md:h-[270px] xl:h-[291px]" aria-label="Tailored selection categories">
             <div class="swiper-wrapper" style="align-items: stretch;">
               ${categories.map((c, i) => renderCategorySlide(c, i)).join('')}
             </div>
@@ -125,7 +132,7 @@ export function TailoredSelectionsHero(categories: TailoredCategory[]): string {
           <!-- Navigation arrows -->
           <button
             aria-label="Previous categories"
-            class="ts-hero-prev absolute left-1 sm:left-2 top-1/2 z-10 h-10 w-10 -translate-y-1/2 flex items-center justify-center rounded-full bg-white/90 text-gray-700 shadow-lg transition-all duration-200 hover:bg-white hover:text-gray-900 hover:scale-110 disabled:opacity-0 disabled:pointer-events-none"
+            class="ts-hero-prev swiper-button absolute left-2 sm:left-4 top-1/2 z-10 h-10 w-10 -translate-y-1/2 flex items-center justify-center rounded-full bg-white/90 text-gray-700 shadow-lg transition-all duration-200 hover:bg-white hover:text-gray-900 hover:scale-110 disabled:opacity-0 disabled:pointer-events-none"
           >
             <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
@@ -134,7 +141,7 @@ export function TailoredSelectionsHero(categories: TailoredCategory[]): string {
 
           <button
             aria-label="Next categories"
-            class="ts-hero-next absolute right-1 sm:right-2 top-1/2 z-10 h-10 w-10 -translate-y-1/2 flex items-center justify-center rounded-full bg-white/90 text-gray-700 shadow-lg transition-all duration-200 hover:bg-white hover:text-gray-900 hover:scale-110 disabled:opacity-0 disabled:pointer-events-none"
+            class="ts-hero-next swiper-button absolute right-2 sm:right-4 top-1/2 z-10 h-10 w-10 -translate-y-1/2 flex items-center justify-center rounded-full bg-white/90 text-gray-700 shadow-lg transition-all duration-200 hover:bg-white hover:text-gray-900 hover:scale-110 disabled:opacity-0 disabled:pointer-events-none"
           >
             <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
@@ -143,10 +150,11 @@ export function TailoredSelectionsHero(categories: TailoredCategory[]): string {
         </div>
       </div>
 
-      <!-- Upward arrow indicator (light triangle cutting into dark background) -->
-      <div class="absolute bottom-0 left-1/2 -translate-x-1/2 z-20 flex items-end">
+
+      <!-- Triangle indicator -->
+      <div class="triangle-indicator absolute bottom-0 left-1/2 -translate-x-1/2 z-20 flex items-end">
         <svg fill="none" height="15" viewBox="0 0 32 15" width="32" xmlns="http://www.w3.org/2000/svg" class="block">
-          <path d="M14.683 1.25513C15.437 0.595339 16.5631 0.595338 17.317 1.25513L30.9322 13.1683C32.115 14.2033 31.396 16.1423 29.8322 16.1423H2.16788C0.604044 16.1423 -0.114946 14.2033 1.0678 13.1683L14.683 1.25513Z" fill="var(--products-bg, #f5f5f5)"/>
+          <path d="M14.683 1.25513C15.437 0.595339 16.5631 0.595338 17.317 1.25513L30.9322 13.1683C32.115 14.2033 31.396 16.1423 29.8322 16.1423H2.16788C0.604044 16.1423 -0.114946 14.2033 1.0678 13.1683L14.683 1.25513Z" fill="white"/>
         </svg>
       </div>
     </section>

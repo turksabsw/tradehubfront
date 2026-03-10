@@ -38,6 +38,15 @@ import { initAnimatedPlaceholder } from '../utils/animatedPlaceholder'
 const categories = getTailoredCategories();
 const products = getTailoredProducts();
 
+/* ── Category Pills HTML ── */
+
+const categoryPillsHtml = categories.map(cat => `
+  <button class="ts-cat-pill flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-gray-100 hover:bg-gray-200 text-xs font-medium text-gray-700 shrink-0 transition-colors" data-cat-id="${cat.id}">
+    <img src="${cat.imageSrc}" alt="" class="w-7 h-7 rounded object-cover" loading="lazy" />
+    <span class="whitespace-nowrap">${cat.title}</span>
+  </button>
+`).join('');
+
 /* ── Breadcrumb ── */
 
 const breadcrumbItems = [
@@ -50,23 +59,52 @@ const breadcrumbItems = [
 const appEl = document.querySelector<HTMLDivElement>('#app')!;
 appEl.classList.add('relative');
 appEl.innerHTML = `
-  <!-- Mobile Header (visible only on small screens) -->
-  <div class="sticky top-0 z-[30] flex items-center justify-between px-3 py-2.5 md:hidden" style="background-color: var(--header-scroll-bg, #fff); border-bottom: 1px solid var(--header-scroll-border, #e5e7eb);">
-    <a href="/" class="flex items-center justify-center w-9 h-9 rounded-full hover:bg-gray-100 transition-colors" aria-label="Back">
-      <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-      </svg>
-    </a>
-    <h1 class="text-base font-semibold text-gray-900" data-i18n="tailoredPage.title">${t('tailoredPage.title')}</h1>
-    <button class="flex items-center justify-center w-9 h-9 rounded-full hover:bg-gray-100 transition-colors" aria-label="Search">
-      <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-      </svg>
-    </button>
+  <!-- Scoped CSS for mobile header scroll states -->
+  <style>
+    /* Default: transparent header with white text/icons */
+    #ts-mobile-header {
+      background-color: transparent;
+      border-bottom: 1px solid transparent;
+    }
+    #ts-mobile-header .ts-hdr-title { color: #fff; }
+    #ts-mobile-header .ts-hdr-icon { color: #fff; }
+
+    /* Scrolled: white header with dark text/icons */
+    #ts-mobile-header.is-scrolled {
+      background-color: #fff !important;
+      border-bottom: 1px solid #e5e7eb !important;
+    }
+    #ts-mobile-header.is-scrolled .ts-hdr-title { color: #111827 !important; }
+    #ts-mobile-header.is-scrolled .ts-hdr-icon { color: #374151 !important; }
+  </style>
+
+  <!-- Mobile Sticky Container (visible below xl:1280px) -->
+  <div id="ts-mobile-sticky" class="sticky top-0 z-[30] xl:hidden">
+    <!-- Mobile Header Bar -->
+    <div id="ts-mobile-header" class="flex items-center justify-between px-3 py-2.5 lg:px-5 lg:py-3 transition-all duration-300">
+      <a href="/" class="flex items-center justify-center w-9 h-9 lg:w-11 lg:h-11 rounded-full transition-colors" aria-label="Back">
+        <svg class="ts-hdr-icon w-5 h-5 lg:w-6 lg:h-6 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+        </svg>
+      </a>
+      <h1 class="ts-hdr-title text-base lg:text-xl font-semibold transition-colors duration-300" data-i18n="tailoredPage.title">${t('tailoredPage.title')}</h1>
+      <button class="flex items-center justify-center w-9 h-9 lg:w-11 lg:h-11 rounded-full transition-colors" aria-label="Search">
+        <svg class="ts-hdr-icon w-5 h-5 lg:w-6 lg:h-6 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Category Pills (hidden initially, revealed on scroll past hero) -->
+    <div id="ts-category-pills" class="overflow-x-auto bg-white border-b border-gray-200 scrollbar-hide" style="display:none;">
+      <div class="flex gap-2 px-3 py-2">
+        ${categoryPillsHtml}
+      </div>
+    </div>
   </div>
 
-  <!-- Desktop Header (hidden on mobile) -->
-  <div id="sticky-header" class="sticky top-0 z-[30] hidden md:block" style="background-color:var(--header-scroll-bg);border-bottom:1px solid var(--header-scroll-border)">
+  <!-- Desktop Header (visible at xl:1280px+) -->
+  <div id="sticky-header" class="sticky top-0 z-[30] hidden xl:block" style="background-color:var(--header-scroll-bg);border-bottom:1px solid var(--header-scroll-border)">
     ${TopBar()}
     ${SubHeader()}
   </div>
@@ -78,13 +116,16 @@ appEl.innerHTML = `
     <!-- Hero Section with Category Carousel -->
     ${TailoredSelectionsHero(categories)}
 
-    <!-- Breadcrumb (hidden on mobile) -->
-    <div class="container-boxed pt-4 pb-2 hidden md:block" style="background: var(--products-bg, #f5f5f5);">
-      ${Breadcrumb(breadcrumbItems)}
-    </div>
+    <!-- Products area: rounded top corners, overlaps hero bottom -->
+    <div class="relative z-10 -mt-3 rounded-t-2xl" style="background: var(--products-bg, #f5f5f5);">
+      <!-- Breadcrumb (desktop only) -->
+      <div class="container-boxed pt-5 pb-2 hidden xl:block">
+        ${Breadcrumb(breadcrumbItems)}
+      </div>
 
-    <!-- Product Grid -->
-    ${TailoredProductGrid(products)}
+      <!-- Product Grid -->
+      ${TailoredProductGrid(products)}
+    </div>
   </main>
 
   <!-- Footer -->
@@ -106,3 +147,55 @@ initMobileDrawer();
 initLanguageSelector();
 initTailoredSelectionsHero();
 initAnimatedPlaceholder('#topbar-compact-search-input');
+initTailoredScrollBehavior();
+
+/* ── Scroll-based header & category pills behavior ── */
+
+function initTailoredScrollBehavior(): void {
+  const mobileHeader = document.getElementById('ts-mobile-header');
+  const categoryPills = document.getElementById('ts-category-pills');
+  const heroSection = document.getElementById('ts-hero-section');
+
+  if (!mobileHeader || !categoryPills || !heroSection) return;
+
+  // Pull hero section behind the transparent header so dark bg shows through
+  const applyHeroOverlap = () => {
+    if (window.innerWidth < 1280) {
+      const headerH = mobileHeader.offsetHeight;
+      heroSection.style.marginTop = `-${headerH}px`;
+    } else {
+      heroSection.style.marginTop = '0';
+    }
+  };
+
+  applyHeroOverlap();
+  window.addEventListener('resize', applyHeroOverlap);
+
+  // Track states to avoid redundant DOM updates
+  let wasScrolled = false;
+  let werePillsVisible = false;
+
+  const applyScrollState = () => {
+    // Use getBoundingClientRect for reliable scroll detection
+    const heroRect = heroSection.getBoundingClientRect();
+    const headerH = mobileHeader.offsetHeight;
+
+    // Header turns white as soon as hero starts scrolling up
+    const isScrolled = heroRect.top < -10;
+    // Category pills appear when hero is fully behind the header
+    const showPills = heroRect.bottom <= headerH + 5;
+
+    if (isScrolled !== wasScrolled) {
+      wasScrolled = isScrolled;
+      mobileHeader.classList.toggle('is-scrolled', isScrolled);
+    }
+
+    if (showPills !== werePillsVisible) {
+      werePillsVisible = showPills;
+      categoryPills.style.display = showPills ? '' : 'none';
+    }
+  };
+
+  window.addEventListener('scroll', applyScrollState, { passive: true });
+  applyScrollState(); // Initial check
+}

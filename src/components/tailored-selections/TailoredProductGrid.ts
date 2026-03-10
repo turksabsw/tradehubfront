@@ -44,7 +44,7 @@ function renderProductCard(product: TailoredProduct, index: number): string {
       aria-label="${safeName}"
     >
       <!-- Image area -->
-      <div class="relative aspect-square w-full overflow-hidden rounded-lg bg-gray-100 mb-2">
+      <div class="relative aspect-square w-full overflow-hidden rounded-xl bg-gray-100 mb-2">
         <img
           class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
           src="${product.imageSrc}"
@@ -147,11 +147,11 @@ function renderProductCard(product: TailoredProduct, index: number): string {
 
 export function TailoredProductGrid(products: TailoredProduct[]): string {
     return `
-    <section class="pb-8 lg:pb-12" style="background: var(--products-bg, #f5f5f5);">
+    <section class="pt-4 pb-8 lg:pb-12">
       <div class="container-boxed">
         <div
           id="ts-product-grid"
-          class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4"
+          class="grid grid-cols-2 xl:grid-cols-5 gap-4 sm:gap-5"
           role="list"
           aria-label="Tailored selection products"
         >
