@@ -160,8 +160,7 @@ export function TopDealsGrid(): string {
     <section class="mt-4" aria-label="Top deals products">
       <div
         id="top-deals-grid"
-        class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5"
-        style="gap: 20px;"
+        class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-2.5 sm:gap-4 md:gap-5"
         role="list"
         aria-label="Deal products"
       >

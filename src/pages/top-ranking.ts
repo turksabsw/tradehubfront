@@ -28,6 +28,8 @@ import { startAlpine } from '../alpine'
 // Top Ranking components
 import {
   TopRankingHero,
+  TopRankingMobileHeader,
+  TopRankingStickyMobileHeader,
   TopRankingCategoryTabs,
   TopRankingSortPills,
   TopRankingGrid,
@@ -53,7 +55,7 @@ Alpine.data('topRankingPage', () => ({
   activeTab: 'all',
   activeSort: 'hot-selling',
 
-  // Dropdown state
+  // Dropdown state (desktop)
   regionDropdownOpen: false,
   categoryDropdownOpen: false,
   pendingRegion: 'europe' as string,
@@ -62,6 +64,11 @@ Alpine.data('topRankingPage', () => ({
   categoryDropdownLevel: 1 as 1 | 2,
   selectedMainCategory: null as string | null,
   pendingSubCategory: null as string | null,
+
+  // Mobile bottom sheet state
+  showRegionSheet: false,
+  showCategorySheet: false,
+  showTabSheet: false,
 
   // Tab scroll state
   canScrollLeft: false,
@@ -163,34 +170,48 @@ const breadcrumbItems = [
 const appEl = document.querySelector<HTMLDivElement>('#app')!;
 appEl.classList.add('relative');
 appEl.innerHTML = `
-  <!-- Header -->
-  <div id="sticky-header" class="z-[30]" style="background-color:var(--header-scroll-bg);border-bottom:1px solid var(--header-scroll-border)">
+  <!-- Header (desktop only — mobile uses compact hero header) -->
+  <div id="sticky-header" class="hidden lg:block z-[30]" style="background-color:var(--header-scroll-bg);border-bottom:1px solid var(--header-scroll-border)">
     ${TopBar()}
     ${SubHeader()}
   </div>
 
   ${MegaMenu()}
 
+  <!-- Sticky compact mobile header (appears on scroll) -->
+  ${TopRankingStickyMobileHeader()}
+
   <!-- Main Content -->
   <main x-data="topRankingPage">
+    <!-- Mobile compact hero header (scrolls with content) -->
+    <div id="tr-mobile-hero-sentinel">
+      ${TopRankingMobileHeader()}
+    </div>
+
     <!-- Hero (full-width background with breadcrumb inside) -->
     <section class="relative z-20" style="background: linear-gradient(0deg, var(--color-primary-100, #fdf0c3) 1%, var(--color-primary-50, #fef9e7) 100%);">
-      <!-- Decorative circles -->
-      <div class="absolute inset-0 overflow-hidden pointer-events-none">
+      <!-- Decorative circles (desktop only) -->
+      <div class="hidden lg:block absolute inset-0 overflow-hidden pointer-events-none">
         <div class="absolute -top-10 left-[5%] w-48 h-48 rounded-full bg-primary-200/20"></div>
         <div class="absolute top-1/3 right-[3%] w-36 h-36 rounded-full bg-primary-200/15"></div>
       </div>
-      <!-- Breadcrumb -->
-      <div class="relative z-10 container-boxed pt-2 lg:pt-3">
+      <!-- Breadcrumb (desktop only) -->
+      <div class="hidden lg:block relative z-10 container-boxed pt-2 lg:pt-3">
         ${Breadcrumb(breadcrumbItems)}
       </div>
       ${TopRankingHero()}
     </section>
 
-    <!-- Sticky tabs + sort pills bar (outside hero) -->
-    <div id="sticky-tabs" class="sticky top-0 z-10 bg-surface transition-shadow duration-200">
+    <!-- Category tabs (scrolls away on mobile, sticky on desktop) -->
+    <div id="tr-category-tabs" class="bg-surface">
       <div class="container-boxed">
         ${TopRankingCategoryTabs()}
+      </div>
+    </div>
+
+    <!-- Sort pills (always sticky) -->
+    <div id="sticky-tabs" class="sticky top-0 z-10 bg-surface transition-shadow duration-200">
+      <div class="container-boxed">
         ${TopRankingSortPills()}
       </div>
     </div>
@@ -221,6 +242,39 @@ initMobileDrawer();
 initLanguageSelector();
 initRankingCategoryTabs();
 initAnimatedPlaceholder('#topbar-compact-search-input');
+
+// Show/hide sticky compact mobile header based on hero visibility
+// Also adjust sort pills sticky position when mobile header appears
+const mobileHeroSentinel = document.getElementById('tr-mobile-hero-sentinel');
+const stickyMobileHeader = document.getElementById('tr-sticky-mobile-header');
+const stickyPills = document.getElementById('sticky-tabs');
+
+if (mobileHeroSentinel && stickyMobileHeader) {
+  const heroObserver = new IntersectionObserver(
+    ([entry]) => {
+      if (entry.isIntersecting) {
+        // Hero is visible — hide sticky header
+        stickyMobileHeader.classList.add('-translate-y-full', 'opacity-0', 'pointer-events-none');
+        stickyMobileHeader.classList.remove('translate-y-0', 'opacity-100', 'pointer-events-auto');
+        // Reset sort pills to top:0
+        if (stickyPills && window.innerWidth < 1024) {
+          stickyPills.style.top = '0px';
+        }
+      } else {
+        // Hero scrolled away — show sticky header
+        stickyMobileHeader.classList.remove('-translate-y-full', 'opacity-0', 'pointer-events-none');
+        stickyMobileHeader.classList.add('translate-y-0', 'opacity-100', 'pointer-events-auto');
+        // Push sort pills below sticky mobile header
+        if (stickyPills && window.innerWidth < 1024) {
+          const headerHeight = stickyMobileHeader.offsetHeight;
+          stickyPills.style.top = headerHeight + 'px';
+        }
+      }
+    },
+    { threshold: 0 }
+  );
+  heroObserver.observe(mobileHeroSentinel);
+}
 
 // Add bottom border to sticky tabs when they become stuck
 const stickyTabs = document.getElementById('sticky-tabs');

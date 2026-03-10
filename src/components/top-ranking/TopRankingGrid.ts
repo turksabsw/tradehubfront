@@ -53,7 +53,7 @@ export function TopRankingGrid(): string {
     <section class="mt-4" aria-label="Top ranking products">
       <div
         id="top-ranking-grid"
-        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5"
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-5"
         role="list"
         aria-label="Ranking category groups"
       >

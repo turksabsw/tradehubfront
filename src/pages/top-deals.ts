@@ -28,6 +28,8 @@ import { startAlpine } from '../alpine'
 // Top Deals components
 import {
   TopDealsHero,
+  TopDealsMobileHeader,
+  TopDealsStickyMobileHeader,
   TopDealsPromoBar,
   TopDealsCategoryTabs,
   TopDealsSubFilters,
@@ -57,6 +59,7 @@ Alpine.data('topDealsPage', () => ({
   visibleCount: ITEMS_PER_PAGE,
   canScrollLeft: false,
   canScrollRight: true,
+  showCategorySheet: false,
   allProducts: allProducts,
 
   get subFilters(): { id: string; labelKey: string }[] {
@@ -134,22 +137,34 @@ const breadcrumbItems = [
 const appEl = document.querySelector<HTMLDivElement>('#app')!;
 appEl.classList.add('relative');
 appEl.innerHTML = `
-  <!-- Header (non-sticky on this page) -->
-  <div id="sticky-header" class="z-[30]" style="background-color:var(--header-scroll-bg);border-bottom:1px solid var(--header-scroll-border)">
+  <!-- Header (desktop only on this page — mobile uses compact hero header) -->
+  <div id="sticky-header" class="hidden md:block z-[30]" style="background-color:var(--header-scroll-bg);border-bottom:1px solid var(--header-scroll-border)">
     ${TopBar()}
     ${SubHeader()}
   </div>
 
   ${MegaMenu()}
 
+  <!-- Sticky compact mobile header (appears on scroll) -->
+  ${TopDealsStickyMobileHeader()}
+
   <!-- Main Content -->
   <main x-data="topDealsPage">
+    <!-- Mobile compact hero header (full-width, orange gradient) -->
+    <div id="td-mobile-hero-sentinel">
+      ${TopDealsMobileHeader()}
+    </div>
+
     <!-- Hero + Promo (non-sticky, scrolls away) -->
-    <section class="pt-6 lg:pt-8" style="background: var(--products-bg, #f9fafb);">
+    <section class="md:pt-6 lg:pt-8" style="background: var(--products-bg, #f9fafb);">
       <div class="container-boxed">
-        ${Breadcrumb(breadcrumbItems)}
+        <div class="hidden md:block">
+          ${Breadcrumb(breadcrumbItems)}
+        </div>
         ${TopDealsHero()}
-        ${TopDealsPromoBar()}
+        <div class="hidden md:block">
+          ${TopDealsPromoBar()}
+        </div>
       </div>
     </section>
 
@@ -187,6 +202,27 @@ initMobileDrawer();
 initLanguageSelector();
 initCategoryTabs();
 initAnimatedPlaceholder('#topbar-compact-search-input');
+
+// Show/hide sticky compact mobile header based on hero visibility
+const mobileHeroSentinel = document.getElementById('td-mobile-hero-sentinel');
+const stickyMobileHeader = document.getElementById('td-sticky-mobile-header');
+if (mobileHeroSentinel && stickyMobileHeader) {
+  const heroObserver = new IntersectionObserver(
+    ([entry]) => {
+      if (entry.isIntersecting) {
+        // Hero is visible — hide sticky header
+        stickyMobileHeader.classList.add('-translate-y-full', 'opacity-0', 'pointer-events-none');
+        stickyMobileHeader.classList.remove('translate-y-0', 'opacity-100', 'pointer-events-auto');
+      } else {
+        // Hero scrolled away — show sticky header
+        stickyMobileHeader.classList.remove('-translate-y-full', 'opacity-0', 'pointer-events-none');
+        stickyMobileHeader.classList.add('translate-y-0', 'opacity-100', 'pointer-events-auto');
+      }
+    },
+    { threshold: 0 }
+  );
+  heroObserver.observe(mobileHeroSentinel);
+}
 
 // Add bottom border to sticky tabs when they become stuck
 const stickyTabs = document.getElementById('sticky-tabs');

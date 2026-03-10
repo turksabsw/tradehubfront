@@ -2,7 +2,7 @@
  * Top Ranking Components Barrel Export
  */
 
-export { TopRankingHero } from './TopRankingHero';
+export { TopRankingHero, TopRankingMobileHeader, TopRankingStickyMobileHeader } from './TopRankingHero';
 export { TopRankingFilters } from './TopRankingFilters';
 export { TopRankingCategoryTabs, initRankingCategoryTabs } from './TopRankingCategoryTabs';
 export { TopRankingSortPills } from './TopRankingSortPills';
