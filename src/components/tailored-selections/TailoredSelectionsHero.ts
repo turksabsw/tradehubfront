@@ -129,10 +129,10 @@ export function TailoredSelectionsHero(categories: TailoredCategory[]): string {
             </div>
           </div>
 
-          <!-- Navigation arrows -->
+          <!-- Navigation arrows (hidden on mobile — swipe works) -->
           <button
             aria-label="Previous categories"
-            class="ts-hero-prev swiper-button absolute left-2 sm:left-4 top-1/2 z-10 h-10 w-10 -translate-y-1/2 flex items-center justify-center rounded-full bg-white/90 text-gray-700 shadow-lg transition-all duration-200 hover:bg-white hover:text-gray-900 hover:scale-110 disabled:opacity-0 disabled:pointer-events-none"
+            class="ts-hero-prev swiper-button absolute left-4 top-1/2 z-10 h-10 w-10 -translate-y-1/2 hidden md:flex items-center justify-center rounded-full bg-white/90 text-gray-700 shadow-lg transition-all duration-200 hover:bg-white hover:text-gray-900 hover:scale-110 disabled:opacity-0 disabled:pointer-events-none"
           >
             <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
@@ -141,7 +141,7 @@ export function TailoredSelectionsHero(categories: TailoredCategory[]): string {
 
           <button
             aria-label="Next categories"
-            class="ts-hero-next swiper-button absolute right-2 sm:right-4 top-1/2 z-10 h-10 w-10 -translate-y-1/2 flex items-center justify-center rounded-full bg-white/90 text-gray-700 shadow-lg transition-all duration-200 hover:bg-white hover:text-gray-900 hover:scale-110 disabled:opacity-0 disabled:pointer-events-none"
+            class="ts-hero-next swiper-button absolute right-4 top-1/2 z-10 h-10 w-10 -translate-y-1/2 hidden md:flex items-center justify-center rounded-full bg-white/90 text-gray-700 shadow-lg transition-all duration-200 hover:bg-white hover:text-gray-900 hover:scale-110 disabled:opacity-0 disabled:pointer-events-none"
           >
             <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
@@ -152,7 +152,7 @@ export function TailoredSelectionsHero(categories: TailoredCategory[]): string {
 
 
       <!-- Triangle indicator -->
-      <div class="triangle-indicator absolute bottom-0 left-1/2 -translate-x-1/2 z-20 flex items-end">
+      <div class="triangle-indicator absolute bottom-0 left-1/2 -translate-x-1/2 flex items-end">
         <svg fill="none" height="15" viewBox="0 0 32 15" width="32" xmlns="http://www.w3.org/2000/svg" class="block">
           <path d="M14.683 1.25513C15.437 0.595339 16.5631 0.595338 17.317 1.25513L30.9322 13.1683C32.115 14.2033 31.396 16.1423 29.8322 16.1423H2.16788C0.604044 16.1423 -0.114946 14.2033 1.0678 13.1683L14.683 1.25513Z" fill="white"/>
         </svg>
